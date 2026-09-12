@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -185,7 +185,6 @@ void SAL_CALL SfxScriptLibraryContainer::writeLibraryElement
 	const OUString& aElementName,
 	const Reference< XOutputStream >& xOutput
 )
-	throw(Exception)
 {
 	// Create sax writer
 	Reference< XExtendedDocumentHandler > xHandler(
@@ -193,7 +192,7 @@ void SAL_CALL SfxScriptLibraryContainer::writeLibraryElement
 			OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.xml.sax.Writer") ) ), UNO_QUERY );
 	if( !xHandler.is() )
 	{
-		OSL_ENSURE( 0, "### couln't create sax-writer component\n" );
+		OSL_ENSURE( 0, "### couldn't create sax-writer component\n" );
 		return;
 	}
 
@@ -241,7 +240,7 @@ void SAL_CALL SfxScriptLibraryContainer::writeLibraryElement
 
 Any SAL_CALL SfxScriptLibraryContainer::importLibraryElement
 	( const Reference < XNameContainer >& xLib,
-	  const OUString& aElementName, const OUString& aFile, 
+	  const OUString& aElementName, const OUString& aFile,
 	  const uno::Reference< io::XInputStream >& xInStream )
 {
 	Any aRetAny;
@@ -250,7 +249,7 @@ Any SAL_CALL SfxScriptLibraryContainer::importLibraryElement
 		OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.xml.sax.Parser") ) ), UNO_QUERY );
 	if( !xParser.is() )
 	{
-		OSL_ENSURE( 0, "### couln't create sax parser component\n" );
+		OSL_ENSURE( 0, "### couldn't create sax parser component\n" );
 		return aRetAny;
 	}
 
@@ -363,7 +362,7 @@ Any SAL_CALL SfxScriptLibraryContainer::importLibraryElement
 				}
 				catch(uno::Exception&)
 				{
-					OSL_TRACE("Failed to get documument object for %s", rtl::OUStringToOString( aElementName, RTL_TEXTENCODING_UTF8 ).getStr() );
+					OSL_TRACE("Failed to get document object for %s", rtl::OUStringToOString( aElementName, RTL_TEXTENCODING_UTF8 ).getStr() );
 				}
 			}
 		}
@@ -409,7 +408,6 @@ void SAL_CALL SfxScriptLibraryContainer::importFromOldStorage( const ::rtl::OUSt
 
 // Methods XLibraryContainerPassword
 sal_Bool SAL_CALL SfxScriptLibraryContainer::isLibraryPasswordProtected( const OUString& Name )
-    throw (NoSuchElementException, RuntimeException)
 {
     LibraryContainerMethodGuard aGuard( *this );
     SfxLibrary* pImplLib = getImplLib( Name );
@@ -418,7 +416,6 @@ sal_Bool SAL_CALL SfxScriptLibraryContainer::isLibraryPasswordProtected( const O
 }
 
 sal_Bool SAL_CALL SfxScriptLibraryContainer::isLibraryPasswordVerified( const OUString& Name )
-    throw (IllegalArgumentException, NoSuchElementException, RuntimeException)
 {
     LibraryContainerMethodGuard aGuard( *this );
     SfxLibrary* pImplLib = getImplLib( Name );
@@ -430,7 +427,6 @@ sal_Bool SAL_CALL SfxScriptLibraryContainer::isLibraryPasswordVerified( const OU
 
 sal_Bool SAL_CALL SfxScriptLibraryContainer::verifyLibraryPassword
     ( const OUString& Name, const OUString& Password )
-        throw (IllegalArgumentException, NoSuchElementException, RuntimeException)
 {
     LibraryContainerMethodGuard aGuard( *this );
     SfxLibrary* pImplLib = getImplLib( Name );
@@ -451,7 +447,7 @@ sal_Bool SAL_CALL SfxScriptLibraryContainer::verifyLibraryPassword
         bSuccess = implLoadPasswordLibrary( pImplLib, Name, sal_True );
         if( bSuccess )
         {
-            // The library gets modified by verifiying the password, because other-
+            // The library gets modified by verifying the password, because other-
             // wise for saving the storage would be copied and that doesn't work
             // with mtg's storages when the password is verified
             pImplLib->implSetModified( sal_True );
@@ -467,7 +463,6 @@ sal_Bool SAL_CALL SfxScriptLibraryContainer::verifyLibraryPassword
 
 void SAL_CALL SfxScriptLibraryContainer::changeLibraryPassword( const OUString& Name,
     const OUString& OldPassword, const OUString& NewPassword )
-        throw (IllegalArgumentException, NoSuchElementException, RuntimeException)
 {
     LibraryContainerMethodGuard aGuard( *this );
     SfxLibrary* pImplLib = getImplLib( Name );
@@ -535,7 +530,7 @@ void SAL_CALL SfxScriptLibraryContainer::changeLibraryPassword( const OUString& 
 
         if( !bStorage && !pImplLib->mbDoc50Password )
         {
-            // Store applictaion basic crypted
+            // Store application basic crypted
 			uno::Reference< embed::XStorage > xStorage;
             storeLibraries_Impl( xStorage, sal_False );
             bKillUncryptedFiles = sal_True;
@@ -870,7 +865,6 @@ sal_Bool SfxScriptLibraryContainer::implStorePasswordLibrary( SfxLibrary* pLib, 
 
 sal_Bool SfxScriptLibraryContainer::implLoadPasswordLibrary
     ( SfxLibrary* pLib, const OUString& Name, sal_Bool bVerifyPasswordOnly )
-        throw(WrappedTargetException, RuntimeException)
 {
 	sal_Bool bRet = sal_True;
 
@@ -931,7 +925,7 @@ sal_Bool SfxScriptLibraryContainer::implLoadPasswordLibrary
 			}
 			catch( uno::Exception& )
 			{
-				OSL_ENSURE( 0, "### couln't open sub storage for library\n" );
+				OSL_ENSURE( 0, "### couldn't open sub storage for library\n" );
 				return sal_False;
 			}
 		}
@@ -1003,7 +997,7 @@ sal_Bool SfxScriptLibraryContainer::implLoadPasswordLibrary
 							throw io::IOException(); // read access denied, seems to be impossible
 
 						Reference< XNameContainer > xLib( pLib );
-			            Any aAny = importLibraryElement( xLib, 
+			            Any aAny = importLibraryElement( xLib,
 										aElementName, aSourceStreamName,
 									   	xInStream );
 			            if( pLib->hasByName( aElementName ) )
@@ -1109,9 +1103,9 @@ sal_Bool SfxScriptLibraryContainer::implLoadPasswordLibrary
 									throw io::IOException(); // read access denied, seems to be impossible
 
 								Reference< XNameContainer > xLib( pLib );
-			                    Any aAny = importLibraryElement( xLib, 
-												aElementName, 
-												aSourceStreamName, 
+			                    Any aAny = importLibraryElement( xLib,
+												aElementName,
+												aSourceStreamName,
 												xInStream );
 			                    if( pLib->hasByName( aElementName ) )
                                 {
@@ -1160,12 +1154,12 @@ void createRegistryInfo_SfxScriptLibraryContainer()
     static OAutoRegistration< SfxScriptLibraryContainer > aAutoRegistration;
 }
 
-::rtl::OUString SAL_CALL SfxScriptLibraryContainer::getImplementationName( ) throw (RuntimeException)
+::rtl::OUString SAL_CALL SfxScriptLibraryContainer::getImplementationName( )
 {
     return getImplementationName_static();
 }
 
-Sequence< ::rtl::OUString > SAL_CALL SfxScriptLibraryContainer::getSupportedServiceNames( ) throw (RuntimeException)
+Sequence< ::rtl::OUString > SAL_CALL SfxScriptLibraryContainer::getSupportedServiceNames( )
 {
     return getSupportedServiceNames_static();
 }
@@ -1195,7 +1189,6 @@ OUString SfxScriptLibraryContainer::getImplementationName_static()
 
 Reference< XInterface > SAL_CALL SfxScriptLibraryContainer::Create
     ( const Reference< XComponentContext >& )
-        throw( Exception )
 {
     Reference< XInterface > xRet =
         static_cast< XInterface* >( static_cast< OWeakObject* >(new SfxScriptLibraryContainer()) );
@@ -1275,8 +1268,8 @@ bool SAL_CALL SfxScriptLibrary::isLibraryElementValid( ::com::sun::star::uno::An
 IMPLEMENT_FORWARD_XINTERFACE2( SfxScriptLibrary, SfxLibrary, SfxScriptLibrary_BASE );
 IMPLEMENT_FORWARD_XTYPEPROVIDER2( SfxScriptLibrary, SfxLibrary, SfxScriptLibrary_BASE );
 
-script::ModuleInfo SAL_CALL 
-SfxScriptLibrary::getModuleInfo( const ::rtl::OUString& ModuleName ) throw (NoSuchElementException, WrappedTargetException, RuntimeException)
+script::ModuleInfo SAL_CALL
+SfxScriptLibrary::getModuleInfo( const ::rtl::OUString& ModuleName )
 {
     if ( !hasModuleInfo( ModuleName ) )
         throw NoSuchElementException();
@@ -1284,7 +1277,7 @@ SfxScriptLibrary::getModuleInfo( const ::rtl::OUString& ModuleName ) throw (NoSu
 }
 
 sal_Bool SAL_CALL
-SfxScriptLibrary::hasModuleInfo( const ::rtl::OUString& ModuleName ) throw (RuntimeException)
+SfxScriptLibrary::hasModuleInfo( const ::rtl::OUString& ModuleName )
 {
     sal_Bool bRes = sal_False;
     ModuleInfoMap::iterator it = mModuleInfos.find( ModuleName );
@@ -1295,14 +1288,14 @@ SfxScriptLibrary::hasModuleInfo( const ::rtl::OUString& ModuleName ) throw (Runt
     return bRes;
 }
 
-void SAL_CALL SfxScriptLibrary::insertModuleInfo( const ::rtl::OUString& ModuleName, const script::ModuleInfo& ModuleInfo ) throw (IllegalArgumentException, ElementExistException, WrappedTargetException, RuntimeException)
+void SAL_CALL SfxScriptLibrary::insertModuleInfo( const ::rtl::OUString& ModuleName, const script::ModuleInfo& ModuleInfo )
 {
     if ( hasModuleInfo( ModuleName ) )
         throw ElementExistException();
     mModuleInfos[ ModuleName ] = ModuleInfo;
 }
 
-void SAL_CALL SfxScriptLibrary::removeModuleInfo( const ::rtl::OUString& ModuleName ) throw (NoSuchElementException, WrappedTargetException, RuntimeException)
+void SAL_CALL SfxScriptLibrary::removeModuleInfo( const ::rtl::OUString& ModuleName )
 {
         // #FIXME add NoSuchElementException to the spec
     if ( !hasModuleInfo( ModuleName ) )

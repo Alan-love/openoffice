@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -40,7 +40,7 @@ ListenerMultiplexerBase::~ListenerMultiplexerBase()
 }
 
 // ::com::sun::star::uno::XInterface
-::com::sun::star::uno::Any ListenerMultiplexerBase::queryInterface( const ::com::sun::star::uno::Type & rType ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Any ListenerMultiplexerBase::queryInterface( const ::com::sun::star::uno::Type & rType )
 {
 	return ::cppu::queryInterface( rType, SAL_STATIC_CAST( ::com::sun::star::uno::XInterface*, this ) );
 }
@@ -55,7 +55,7 @@ EventListenerMultiplexer::EventListenerMultiplexer( ::cppu::OWeakObject& rSource
 }
 
 // ::com::sun::star::uno::XInterface
-::com::sun::star::uno::Any EventListenerMultiplexer::queryInterface( const ::com::sun::star::uno::Type & rType ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Any EventListenerMultiplexer::queryInterface( const ::com::sun::star::uno::Type & rType )
 {
 	::com::sun::star::uno::Any aRet = ::cppu::queryInterface( rType,
 										SAL_STATIC_CAST( ::com::sun::star::lang::XEventListener*, this ) );
@@ -63,7 +63,7 @@ EventListenerMultiplexer::EventListenerMultiplexer( ::cppu::OWeakObject& rSource
 }
 
 // ::com::sun::star::lang::XEventListener
-void EventListenerMultiplexer::disposing( const ::com::sun::star::lang::EventObject& ) throw(::com::sun::star::uno::RuntimeException)
+void EventListenerMultiplexer::disposing( const ::com::sun::star::lang::EventObject& )
 {
 }
 
@@ -156,7 +156,7 @@ IMPL_LISTENERMULTIPLEXER_BASEMETHODS( ContainerListenerMultiplexer, ::com::sun::
 IMPL_LISTENERMULTIPLEXER_LISTENERMETHOD( ContainerListenerMultiplexer, ::com::sun::star::container::XContainerListener, elementInserted, ::com::sun::star::container::ContainerEvent )
 IMPL_LISTENERMULTIPLEXER_LISTENERMETHOD( ContainerListenerMultiplexer, ::com::sun::star::container::XContainerListener, elementRemoved, ::com::sun::star::container::ContainerEvent )
 IMPL_LISTENERMULTIPLEXER_LISTENERMETHOD( ContainerListenerMultiplexer, ::com::sun::star::container::XContainerListener, elementReplaced, ::com::sun::star::container::ContainerEvent )
-	
+
 //	----------------------------------------------------
 //	class SpinListenerMultiplexer
 //	----------------------------------------------------

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -271,13 +271,12 @@ uno::Sequence<rtl::OUString> ScFunctionAccess::getSupportedServiceNames_Static()
 
 // XServiceInfo
 
-rtl::OUString SAL_CALL ScFunctionAccess::getImplementationName() throw(uno::RuntimeException)
+rtl::OUString SAL_CALL ScFunctionAccess::getImplementationName()
 {
 	return rtl::OUString::createFromAscii( "ScFunctionAccess" );
 }
 
 sal_Bool SAL_CALL ScFunctionAccess::supportsService( const rtl::OUString& rServiceName )
-													throw(uno::RuntimeException)
 {
 	String aServiceStr(rServiceName);
 	return aServiceStr.EqualsAscii( SCFUNCTIONACCESS_SERVICE ) ||
@@ -285,7 +284,6 @@ sal_Bool SAL_CALL ScFunctionAccess::supportsService( const rtl::OUString& rServi
 }
 
 uno::Sequence<rtl::OUString> SAL_CALL ScFunctionAccess::getSupportedServiceNames()
-													throw(uno::RuntimeException)
 {
 	uno::Sequence<rtl::OUString> aRet(2);
 	rtl::OUString* pArray = aRet.getArray();
@@ -297,7 +295,6 @@ uno::Sequence<rtl::OUString> SAL_CALL ScFunctionAccess::getSupportedServiceNames
 // XPropertySet (document settings)
 
 uno::Reference<beans::XPropertySetInfo> SAL_CALL ScFunctionAccess::getPropertySetInfo()
-														throw(uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
 	static uno::Reference<beans::XPropertySetInfo> aRef(
@@ -307,9 +304,6 @@ uno::Reference<beans::XPropertySetInfo> SAL_CALL ScFunctionAccess::getPropertySe
 
 void SAL_CALL ScFunctionAccess::setPropertyValue(
 						const rtl::OUString& aPropertyName, const uno::Any& aValue )
-				throw(beans::UnknownPropertyException, beans::PropertyVetoException,
-						lang::IllegalArgumentException, lang::WrappedTargetException,
-						uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
 
@@ -332,8 +326,6 @@ void SAL_CALL ScFunctionAccess::setPropertyValue(
 }
 
 uno::Any SAL_CALL ScFunctionAccess::getPropertyValue( const rtl::OUString& aPropertyName )
-				throw(beans::UnknownPropertyException, lang::WrappedTargetException,
-						uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
 
@@ -412,8 +404,8 @@ public:
 	// 1) virtual void visitElem( long& nCol, long& nRow, const double& elem )
 	// 2) virtual void visitElem( long& nCol, long& nRow, const rtl::OUString& elem )
 	// 3) virtual void visitElem( long& nCol, long& nRow, const uno::Any& elem )
-	// the other types methods are here just to reflect the orig code and for 
-	// completeness. 
+	// the other types methods are here just to reflect the orig code and for
+	// completeness.
 
 	void visitElem( long nCol, long nRow, const sal_Int16& elem )
 	{
@@ -465,23 +457,23 @@ public:
 	}
 	bool hasArgError() { return mbArgError; }
 };
-	
+
 template< class seq >
-class SequencesContainer 
+class SequencesContainer
 {
 	uno::Sequence< uno::Sequence< seq > > maSeq;
-	
+
 	long& mrDocRow;
 	bool mbOverflow;
 	bool mbArgError;
 	ScDocument* mpDoc;
 	ScTokenArray& mrTokenArr;
-		
+
 public:
 	SequencesContainer( const uno::Any& rArg, ScTokenArray& rTokenArr, long& rDocRow, ScDocument* pDoc ) :
         mrDocRow( rDocRow ), mbOverflow(false), mbArgError(false), mpDoc( pDoc ), mrTokenArr( rTokenArr )
-	{ 
-		rArg >>= maSeq; 
+	{
+		rArg >>= maSeq;
 	}
 
 	void process()
@@ -490,7 +482,7 @@ public:
 		long nStartRow = mrDocRow;
 		long nRowCount = maSeq.getLength();
 		long nMaxColCount = 0;
-		const uno::Sequence< seq >* pRowArr = maSeq.getConstArray();		
+		const uno::Sequence< seq >* pRowArr = maSeq.getConstArray();
 		for ( long nRow=0; nRow<nRowCount; nRow++ )
 		{
 			long nColCount = pRowArr[nRow].getLength();
@@ -499,7 +491,7 @@ public:
 			const seq* pColArr = pRowArr[nRow].getConstArray();
 			for (long nCol=0; nCol<nColCount; nCol++)
 				if ( nCol <= MAXCOL && mrDocRow <= MAXROW )
-					aVisitor.visitElem( nCol, mrDocRow, pColArr[ nCol ] );	
+					aVisitor.visitElem( nCol, mrDocRow, pColArr[ nCol ] );
 				else
 					mbOverflow=true;
 			mrDocRow++;
@@ -523,13 +515,11 @@ static void processSequences( ScDocument* pDoc, const uno::Any& rArg, ScTokenArr
 	aContainer.process();
 	rArgErr = aContainer.getArgError();
 	rOverflow = aContainer.getOverflow();
-} 
+}
 };
 
 uno::Any SAL_CALL ScFunctionAccess::callFunction( const rtl::OUString& aName,
 							const uno::Sequence<uno::Any>& aArguments )
-				throw(container::NoSuchElementException, lang::IllegalArgumentException,
-						uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
 
@@ -615,23 +605,23 @@ uno::Any SAL_CALL ScFunctionAccess::callFunction( const rtl::OUString& aName,
 		}
 		else if ( aType.equals( getCppuType( (uno::Sequence< uno::Sequence<sal_Int16> > *)0 ) ) )
 		{
-			ArrayOfArrayProc<sal_Int16>::processSequences( pDoc, rArg, aTokenArr, nDocRow, bArgErr, bOverflow );	
+			ArrayOfArrayProc<sal_Int16>::processSequences( pDoc, rArg, aTokenArr, nDocRow, bArgErr, bOverflow );
 		}
 		else if ( aType.equals( getCppuType( (uno::Sequence< uno::Sequence<sal_Int32> > *)0 ) ) )
 		{
-			ArrayOfArrayProc<sal_Int32>::processSequences( pDoc, rArg, aTokenArr, nDocRow, bArgErr, bOverflow );	
+			ArrayOfArrayProc<sal_Int32>::processSequences( pDoc, rArg, aTokenArr, nDocRow, bArgErr, bOverflow );
 		}
 		else if ( aType.equals( getCppuType( (uno::Sequence< uno::Sequence<double> > *)0 ) ) )
 		{
-			ArrayOfArrayProc<double>::processSequences( pDoc, rArg, aTokenArr, nDocRow, bArgErr, bOverflow );	
+			ArrayOfArrayProc<double>::processSequences( pDoc, rArg, aTokenArr, nDocRow, bArgErr, bOverflow );
 		}
 		else if ( aType.equals( getCppuType( (uno::Sequence< uno::Sequence<rtl::OUString> > *)0 ) ) )
 		{
-			ArrayOfArrayProc<rtl::OUString>::processSequences( pDoc, rArg, aTokenArr, nDocRow, bArgErr, bOverflow );	
+			ArrayOfArrayProc<rtl::OUString>::processSequences( pDoc, rArg, aTokenArr, nDocRow, bArgErr, bOverflow );
 		}
 		else if ( aType.equals( getCppuType( (uno::Sequence< uno::Sequence<uno::Any> > *)0 ) ) )
 		{
-			ArrayOfArrayProc<uno::Any>::processSequences( pDoc, rArg, aTokenArr, nDocRow, bArgErr, bOverflow );	
+			ArrayOfArrayProc<uno::Any>::processSequences( pDoc, rArg, aTokenArr, nDocRow, bArgErr, bOverflow );
 		}
 		else if ( aType.equals( getCppuType( (uno::Reference<table::XCellRange>*)0 ) ) )
 		{
@@ -737,5 +727,3 @@ uno::Any SAL_CALL ScFunctionAccess::callFunction( const rtl::OUString& aName,
 
 	return aRet;
 }
-
-

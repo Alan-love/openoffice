@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -41,7 +41,7 @@ namespace DOM
     /**
     The number of nodes in this map.
     */
-    sal_Int32 SAL_CALL CAttributesMap::getLength() throw (RuntimeException)
+    sal_Int32 SAL_CALL CAttributesMap::getLength()
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -63,7 +63,7 @@ namespace DOM
     Retrieves a node specified by local name
     */
     Reference< XNode > SAL_CALL
-    CAttributesMap::getNamedItem(OUString const& name) throw (RuntimeException)
+    CAttributesMap::getNamedItem(OUString const& name)
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -95,7 +95,6 @@ namespace DOM
     Reference< XNode > SAL_CALL
     CAttributesMap::getNamedItemNS(
             OUString const& namespaceURI, OUString const& localName)
-    throw (RuntimeException)
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -130,7 +129,7 @@ namespace DOM
     Returns the indexth item in the map.
     */
     Reference< XNode > SAL_CALL
-    CAttributesMap::item(sal_Int32 index) throw (RuntimeException)
+    CAttributesMap::item(sal_Int32 index)
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -161,7 +160,6 @@ namespace DOM
     */
     Reference< XNode > SAL_CALL
     CAttributesMap::removeNamedItem(OUString const& name)
-    throw (RuntimeException)
     {
         // no MutexGuard needed: m_pElement is const
         Reference< XAttr > const xAttr(m_pElement->getAttributeNode(name));
@@ -182,7 +180,6 @@ namespace DOM
     Reference< XNode > SAL_CALL
     CAttributesMap::removeNamedItemNS(
             OUString const& namespaceURI, OUString const& localName)
-    throw (RuntimeException)
     {
         // no MutexGuard needed: m_pElement is const
         Reference< XAttr > const xAttr(
@@ -203,7 +200,6 @@ namespace DOM
     */
     Reference< XNode > SAL_CALL
     CAttributesMap::setNamedItem(Reference< XNode > const& xNode)
-    throw (RuntimeException)
     {
         Reference< XAttr > const xAttr(xNode, UNO_QUERY);
         if (!xNode.is()) {
@@ -223,7 +219,6 @@ namespace DOM
     */
     Reference< XNode > SAL_CALL
     CAttributesMap::setNamedItemNS(Reference< XNode > const& xNode)
-    throw (RuntimeException)
     {
         Reference< XAttr > const xAttr(xNode, UNO_QUERY);
         if (!xNode.is()) {

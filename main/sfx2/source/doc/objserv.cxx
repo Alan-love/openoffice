@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -155,12 +155,11 @@ public:
 
 	void SetPreventClose( sal_Bool bPrevent ) { m_bPreventClose = bPrevent; }
 
-    virtual void SAL_CALL queryClosing( const lang::EventObject& aEvent, sal_Bool bDeliverOwnership )
-        throw ( uno::RuntimeException, util::CloseVetoException );
+    virtual void SAL_CALL queryClosing( const lang::EventObject& aEvent, sal_Bool bDeliverOwnership );
 
-    virtual void SAL_CALL notifyClosing( const lang::EventObject& aEvent ) throw ( uno::RuntimeException ) ;
+    virtual void SAL_CALL notifyClosing( const lang::EventObject& aEvent ) ;
 
-	virtual void SAL_CALL disposing( const lang::EventObject& aEvent ) throw ( uno::RuntimeException ) ;
+	virtual void SAL_CALL disposing( const lang::EventObject& aEvent ) ;
 
 } ;
 
@@ -171,7 +170,6 @@ SfxClosePreventer_Impl::SfxClosePreventer_Impl()
 }
 
 void SAL_CALL SfxClosePreventer_Impl::queryClosing( const lang::EventObject&, sal_Bool bDeliverOwnership )
-        throw ( uno::RuntimeException, util::CloseVetoException )
 {
 	if ( m_bPreventClose )
 	{
@@ -182,10 +180,10 @@ void SAL_CALL SfxClosePreventer_Impl::queryClosing( const lang::EventObject&, sa
 	}
 }
 
-void SAL_CALL SfxClosePreventer_Impl::notifyClosing( const lang::EventObject& ) throw ( uno::RuntimeException )
+void SAL_CALL SfxClosePreventer_Impl::notifyClosing( const lang::EventObject& )
 {}
 
-void SAL_CALL SfxClosePreventer_Impl::disposing( const lang::EventObject& ) throw ( uno::RuntimeException )
+void SAL_CALL SfxClosePreventer_Impl::disposing( const lang::EventObject& )
 {}
 
 //=========================================================================
@@ -518,7 +516,7 @@ void SfxObjectShell::ExecFile_Impl(SfxRequest &rReq)
 						rReq.AppendItem( SfxBoolItem( SID_SAVETO, sal_True ) );
 				}
 
-				// TODO/LATER: do the following GUI related actions in standalown method
+				// TODO/LATER: do the following GUI related actions in standalone method
 				// ========================================================================================================
 				// Introduce a status indicator for GUI operation
 				SFX_REQUEST_ARG( rReq, pStatusIndicatorItem, SfxUnoAnyItem, SID_PROGRESS_STATUSBAR_CONTROL, sal_False );

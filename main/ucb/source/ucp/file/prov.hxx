@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 #ifndef _PROV_HXX_
 #define _PROV_HXX_
@@ -42,8 +40,6 @@
 
 // FileProvider
 
-
-
 namespace fileaccess {
 
 	// Forward declaration
@@ -54,7 +50,7 @@ namespace fileaccess {
 	class FileProvider:
 		public cppu::OWeakObject,
 		public com::sun::star::lang::XServiceInfo,
-        public com::sun::star::lang::XInitialization,
+		public com::sun::star::lang::XInitialization,
 		public com::sun::star::lang::XTypeProvider,
 		public com::sun::star::ucb::XContentProvider,
 		public com::sun::star::ucb::XContentIdentifierFactory,
@@ -70,8 +66,7 @@ namespace fileaccess {
 		// XInterface
 		virtual com::sun::star::uno::Any SAL_CALL
 		queryInterface(
-			const com::sun::star::uno::Type& aType )
-			throw( com::sun::star::uno::RuntimeException);
+			const com::sun::star::uno::Type& aType );
 
 		virtual void SAL_CALL
 		acquire(
@@ -86,18 +81,15 @@ namespace fileaccess {
 		// XServiceInfo
 		virtual rtl::OUString SAL_CALL
 		getImplementationName(
-			void )
-			throw( com::sun::star::uno::RuntimeException );
+			void );
 
 		virtual sal_Bool SAL_CALL
 		supportsService(
-			const rtl::OUString& ServiceName )
-			throw(com::sun::star::uno::RuntimeException );
+			const rtl::OUString& ServiceName );
 
 		virtual com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL
 		getSupportedServiceNames(
-			void )
-			throw( com::sun::star::uno::RuntimeException );
+			void );
 
 
 		static com::sun::star::uno::Reference< com::sun::star::lang::XSingleServiceFactory > SAL_CALL
@@ -112,108 +104,79 @@ namespace fileaccess {
 
 		XTYPEPROVIDER_DECL()
 
-        // XInitialization
-        virtual void SAL_CALL
-        initialize( 
-            const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aArguments ) 
-            throw (::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException);
+		// XInitialization
+		virtual void SAL_CALL
+		initialize(
+			const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aArguments );
 
 
 		// XContentProvider
 		virtual com::sun::star::uno::Reference< com::sun::star::ucb::XContent > SAL_CALL
 		queryContent(
-			const com::sun::star::uno::Reference< com::sun::star::ucb::XContentIdentifier >& Identifier )
-			throw( com::sun::star::ucb::IllegalIdentifierException,
-				   com::sun::star::uno::RuntimeException );
+			const com::sun::star::uno::Reference< com::sun::star::ucb::XContentIdentifier >& Identifier );
 
 		// XContentIdentifierFactory
 
 		virtual com::sun::star::uno::Reference< com::sun::star::ucb::XContentIdentifier > SAL_CALL
 		createContentIdentifier(
-			const rtl::OUString& ContentId )
-			throw( com::sun::star::uno::RuntimeException );
+			const rtl::OUString& ContentId );
 
 
 		virtual sal_Int32 SAL_CALL
 		compareContentIds(
 			const com::sun::star::uno::Reference< com::sun::star::ucb::XContentIdentifier >& Id1,
-			const com::sun::star::uno::Reference< com::sun::star::ucb::XContentIdentifier >& Id2 )
-			throw( com::sun::star::uno::RuntimeException );
+			const com::sun::star::uno::Reference< com::sun::star::ucb::XContentIdentifier >& Id2 );
 
-		// XProperySet
+		// XPropertySet
 
 		virtual com::sun::star::uno::Reference< com::sun::star::beans::XPropertySetInfo > SAL_CALL
-		getPropertySetInfo(  )
-			throw( com::sun::star::uno::RuntimeException );
+		getPropertySetInfo(  );
 
 		virtual void SAL_CALL
 		setPropertyValue(
 			const rtl::OUString& aPropertyName,
-			const com::sun::star::uno::Any& aValue )
-			throw( com::sun::star::beans::UnknownPropertyException,
-				   com::sun::star::beans::PropertyVetoException,
-				   com::sun::star::lang::IllegalArgumentException,
-				   com::sun::star::lang::WrappedTargetException,
-				   com::sun::star::uno::RuntimeException );
+			const com::sun::star::uno::Any& aValue );
 
 		virtual com::sun::star::uno::Any SAL_CALL
 		getPropertyValue(
-			const rtl::OUString& PropertyName )
-			throw( com::sun::star::beans::UnknownPropertyException,
-				   com::sun::star::lang::WrappedTargetException,
-				   com::sun::star::uno::RuntimeException );
+			const rtl::OUString& PropertyName );
 
 		virtual void SAL_CALL
 		addPropertyChangeListener(
 			const rtl::OUString& aPropertyName,
-			const com::sun::star::uno::Reference< com::sun::star::beans::XPropertyChangeListener >& xListener )
-			throw( com::sun::star::beans::UnknownPropertyException,
-				   com::sun::star::lang::WrappedTargetException,
-				   com::sun::star::uno::RuntimeException);
+			const com::sun::star::uno::Reference< com::sun::star::beans::XPropertyChangeListener >& xListener );
 
 		virtual void SAL_CALL
 		removePropertyChangeListener(
 			const rtl::OUString& aPropertyName,
-			const com::sun::star::uno::Reference< com::sun::star::beans::XPropertyChangeListener >& aListener )
-			throw( com::sun::star::beans::UnknownPropertyException,
-				   com::sun::star::lang::WrappedTargetException,
-				   com::sun::star::uno::RuntimeException );
+			const com::sun::star::uno::Reference< com::sun::star::beans::XPropertyChangeListener >& aListener );
 
 		virtual void SAL_CALL
 		addVetoableChangeListener(
 			const rtl::OUString& PropertyName,
-			const com::sun::star::uno::Reference< com::sun::star::beans::XVetoableChangeListener >& aListener )
-			throw( com::sun::star::beans::UnknownPropertyException,
-				   com::sun::star::lang::WrappedTargetException,
-				   com::sun::star::uno::RuntimeException );
+			const com::sun::star::uno::Reference< com::sun::star::beans::XVetoableChangeListener >& aListener );
 
 		virtual void SAL_CALL
 		removeVetoableChangeListener(
 			const rtl::OUString& PropertyName,
-			const com::sun::star::uno::Reference< com::sun::star::beans::XVetoableChangeListener >& aListener )
-			throw( com::sun::star::beans::UnknownPropertyException,
-				   com::sun::star::lang::WrappedTargetException,
-				   com::sun::star::uno::RuntimeException);
+			const com::sun::star::uno::Reference< com::sun::star::beans::XVetoableChangeListener >& aListener );
 
 
 		// XFileIdentifierConverter
 
 		virtual sal_Int32 SAL_CALL
-		getFileProviderLocality( const rtl::OUString& BaseURL )
-			throw( com::sun::star::uno::RuntimeException );
+		getFileProviderLocality( const rtl::OUString& BaseURL );
 
 		virtual rtl::OUString SAL_CALL getFileURLFromSystemPath( const rtl::OUString& BaseURL,
-																 const rtl::OUString& SystemPath )
-			throw( com::sun::star::uno::RuntimeException );
+																 const rtl::OUString& SystemPath );
 
-		virtual rtl::OUString SAL_CALL getSystemPathFromFileURL( const rtl::OUString& URL )
-			throw( com::sun::star::uno::RuntimeException );
+		virtual rtl::OUString SAL_CALL getSystemPathFromFileURL( const rtl::OUString& URL );
 
 
 	private:
-        // methods
-        void SAL_CALL init();
-        
+		// methods
+		void SAL_CALL init();
+
 		// Members
 		com::sun::star::uno::Reference< com::sun::star::lang::XMultiServiceFactory >  m_xMultiServiceFactory;
 
@@ -228,7 +191,8 @@ namespace fileaccess {
 		shell*                                                                        m_pMyShell;
 	};
 
-}       // end namespace fileaccess
+} // end namespace fileaccess
 
 #endif
 
+/* vim: set noet sw=4 ts=4: */

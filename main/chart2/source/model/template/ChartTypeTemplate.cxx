@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 #include "ChartTypeTemplate.hxx"
 #include "PropertyHelper.hxx"
 #include "macros.hxx"
@@ -150,7 +150,6 @@ ChartTypeTemplate::~ChartTypeTemplate()
 uno::Reference< XDiagram > SAL_CALL ChartTypeTemplate::createDiagramByDataSource(
     const uno::Reference< data::XDataSource >& xDataSource,
     const uno::Sequence< beans::PropertyValue >& aArguments )
-    throw (uno::RuntimeException)
 {
     Reference< XDiagram > xDia;
 
@@ -189,13 +188,11 @@ uno::Reference< XDiagram > SAL_CALL ChartTypeTemplate::createDiagramByDataSource
 }
 
 sal_Bool SAL_CALL ChartTypeTemplate::supportsCategories()
-    throw (uno::RuntimeException)
 {
     return sal_True;
 }
 
 void SAL_CALL ChartTypeTemplate::changeDiagram( const uno::Reference< XDiagram >& xDiagram )
-    throw (uno::RuntimeException)
 {
     if( ! xDiagram.is())
         return;
@@ -273,7 +270,6 @@ void SAL_CALL ChartTypeTemplate::changeDiagramData(
     const Reference< chart2::XDiagram >& xDiagram,
     const Reference< chart2::data::XDataSource >& xDataSource,
     const Sequence< beans::PropertyValue >& aArguments )
-    throw (uno::RuntimeException)
 {
     if( ! (xDiagram.is() &&
            xDataSource.is()) )
@@ -329,7 +325,6 @@ void SAL_CALL ChartTypeTemplate::changeDiagramData(
 sal_Bool SAL_CALL ChartTypeTemplate::matchesTemplate(
     const Reference< chart2::XDiagram >& xDiagram,
     sal_Bool /* bAdaptProperties */ )
-    throw (uno::RuntimeException)
 {
     sal_Bool bResult = sal_False;
 
@@ -382,7 +377,6 @@ sal_Bool SAL_CALL ChartTypeTemplate::matchesTemplate(
 }
 
 Reference< chart2::XDataInterpreter > SAL_CALL ChartTypeTemplate::getDataInterpreter()
-    throw (uno::RuntimeException)
 {
     if( ! m_xDataInterpreter.is())
         m_xDataInterpreter.set( new DataInterpreter( GetComponentContext() ) );
@@ -395,7 +389,6 @@ void SAL_CALL ChartTypeTemplate::applyStyle(
     ::sal_Int32 nChartTypeIndex,
     ::sal_Int32 /* nSeriesIndex */,
     ::sal_Int32 /* nSeriesCount */ )
-    throw (uno::RuntimeException)
 {
     // sset stacking mode
     Reference< beans::XPropertySet > xSeriesProp( xSeries, uno::UNO_QUERY );
@@ -433,7 +426,6 @@ void SAL_CALL ChartTypeTemplate::applyStyle(
 }
 
 void SAL_CALL ChartTypeTemplate::applyStyles( const Reference< chart2::XDiagram >& xDiagram )
-    throw (uno::RuntimeException)
 {
     // apply chart-type specific styles, like "symbols on" for example
     Sequence< Sequence< Reference< XDataSeries > > > aNewSeriesSeq(
@@ -450,7 +442,6 @@ void SAL_CALL ChartTypeTemplate::applyStyles( const Reference< chart2::XDiagram 
 }
 
 void SAL_CALL ChartTypeTemplate::resetStyles( const Reference< chart2::XDiagram >& xDiagram )
-    throw (uno::RuntimeException)
 {
     // reset number format if we had percent stacking on
     sal_Bool bPercent = (getStackMode(0) == StackMode_Y_STACKED_PERCENT);
@@ -531,7 +522,6 @@ void SAL_CALL ChartTypeTemplate::resetStyles( const Reference< chart2::XDiagram 
 
 // ____ XServiceName ____
     ::rtl::OUString SAL_CALL ChartTypeTemplate::getServiceName()
-    throw (uno::RuntimeException)
 {
     return m_aServiceName;
 }
@@ -650,7 +640,7 @@ void ChartTypeTemplate::adaptScales(
                         aData.Categories = xCategories;
                         if(bSupportsCategories)
                         {
-                            
+
                             Reference< XChartType > xChartType( getChartTypeForNewSeries(Sequence< Reference< XChartType > >() ));
                             bool bSupportsDates = ::chart::ChartTypeHelper::isSupportingDateAxis( xChartType, 2, nDimensionX );
                             if( aData.AxisType != AxisType::CATEGORY && ( aData.AxisType != AxisType::DATE || !bSupportsDates) )
@@ -740,8 +730,8 @@ void ChartTypeTemplate::createAxes(
 void ChartTypeTemplate::adaptAxes(
     const Sequence< Reference< XCoordinateSystem > > & rCoordSys )
 {
-    //adapt properties of exsisting axes and remove superfluous axes
-    
+    //adapt properties of existing axes and remove superfluous axes
+
     if( rCoordSys.getLength() > 0 )
     {
         for( sal_Int32 nCooSysIdx=0; nCooSysIdx < rCoordSys.getLength(); ++nCooSysIdx )

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -79,19 +79,16 @@ namespace XPath
     }
 
     Sequence< OUString > SAL_CALL CXPathAPI::getSupportedServiceNames()
-        throw (RuntimeException)
     {
         return CXPathAPI::_getSupportedServiceNames();
     }
 
     OUString SAL_CALL CXPathAPI::getImplementationName()
-        throw (RuntimeException)
     {
         return CXPathAPI::_getImplementationName();
     }
 
     sal_Bool SAL_CALL CXPathAPI::supportsService(const OUString& aServiceName)
-        throw (RuntimeException)
     {
         Sequence< OUString > supported = CXPathAPI::_getSupportedServiceNames();
         for (sal_Int32 i=0; i<supported.getLength(); i++)
@@ -106,7 +103,6 @@ namespace XPath
     void SAL_CALL CXPathAPI::registerNS(
 			const OUString& aPrefix,
 			const OUString& aURI)
-        throw (RuntimeException)
     {
         ::osl::MutexGuard const g(m_Mutex);
 
@@ -116,7 +112,6 @@ namespace XPath
     void SAL_CALL CXPathAPI::unregisterNS(
 			const OUString& aPrefix,
 			const OUString& aURI)
-        throw (RuntimeException)
     {
         ::osl::MutexGuard const g(m_Mutex);
 
@@ -221,20 +216,18 @@ namespace XPath
     Reference< XNodeList > SAL_CALL CXPathAPI::selectNodeList(
             const Reference< XNode >& contextNode,
             const OUString& expr)
-        throw (RuntimeException, XPathException)
     {
 		Reference< XXPathObject > xobj = eval(contextNode, expr);
 		return xobj->getNodeList();
     }
 
     /**
-     * same as selectNodeList but registers all name space decalratiosn found on namespaceNode
+     * same as selectNodeList but registers all name space decelerations found on namespaceNode
      */
     Reference< XNodeList > SAL_CALL CXPathAPI::selectNodeListNS(
             const Reference< XNode >&  contextNode,
             const OUString& expr,
             const Reference< XNode >&  namespaceNode)
-        throw (RuntimeException, XPathException)
     {
         lcl_collectRegisterNamespaces(*this, namespaceNode);
         return selectNodeList(contextNode, expr);
@@ -246,7 +239,6 @@ namespace XPath
     Reference< XNode > SAL_CALL CXPathAPI::selectSingleNode(
             const Reference< XNode >& contextNode,
             const OUString& expr)
-        throw (RuntimeException, XPathException)
     {
         Reference< XNodeList > aList = selectNodeList(contextNode, expr);
         Reference< XNode > aNode = aList->item(0);
@@ -261,13 +253,16 @@ namespace XPath
             const Reference< XNode >& contextNode,
             const OUString& expr,
             const Reference< XNode >&  namespaceNode )
-        throw (RuntimeException, XPathException)
     {
         lcl_collectRegisterNamespaces(*this, namespaceNode);
         return selectSingleNode(contextNode, expr);
     }
 
-    static OUString make_error_message(const xmlErrorPtr pError)
+#if LIBXML_VERSION >= 21200
+    static OUString make_error_message(const xmlError *pError)
+#else
+    static OUString make_error_message(xmlError *pError)
+#endif
     {
         ::rtl::OUStringBuffer buf;
         if (pError->message) {
@@ -312,7 +307,11 @@ namespace XPath
             OSL_ENSURE(sal_False, msg.getStr());
         }
 
-        static void structured_error_func(void * userData, const xmlErrorPtr error)
+#if LIBXML_VERSION >= 21200
+        static void structured_error_func(void * userData, const xmlError *error)
+#else
+        static void structured_error_func(void * userData, xmlError *error)
+#endif
         {
             (void) userData;
             ::rtl::OUStringBuffer buf(
@@ -336,7 +335,6 @@ namespace XPath
     Reference< XXPathObject > SAL_CALL CXPathAPI::eval(
             Reference< XNode > const& xContextNode,
 			const OUString& expr)
-        throw (RuntimeException, XPathException)
     {
         if (!xContextNode.is()) { throw RuntimeException(); }
 
@@ -411,7 +409,6 @@ namespace XPath
 			const Reference< XNode >& contextNode,
 			const OUString& expr,
 			const Reference< XNode >& namespaceNode)
-        throw (RuntimeException, XPathException)
     {
         lcl_collectRegisterNamespaces(*this, namespaceNode);
         return eval(contextNode, expr);
@@ -424,7 +421,6 @@ namespace XPath
 	 */
     void SAL_CALL CXPathAPI::registerExtension(
 			const OUString& aName)
-        throw (RuntimeException)
     {
         ::osl::MutexGuard const g(m_Mutex);
 
@@ -440,7 +436,6 @@ namespace XPath
 	 */
     void SAL_CALL CXPathAPI::registerExtensionInstance(
             Reference< XXPathExtension> const& xExtension)
-        throw (RuntimeException)
     {
         if (!xExtension.is()) {
             throw RuntimeException();

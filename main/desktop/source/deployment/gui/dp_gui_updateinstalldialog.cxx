@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -59,7 +59,7 @@
 #include "com/sun/star/deployment/ui/LicenseDialog.hpp"
 #include "com/sun/star/task/XInteractionHandler.hpp"
 #include "com/sun/star/ui/dialogs/XExecutableDialog.hpp"
-#include "com/sun/star/ui/dialogs/ExecutableDialogResults.hpp"  
+#include "com/sun/star/ui/dialogs/ExecutableDialogResults.hpp"
 #include "com/sun/star/task/XInteractionAbort.hpp"
 #include "com/sun/star/task/XInteractionApprove.hpp"
 
@@ -101,7 +101,7 @@ public:
 
     void stop();
 
-    
+
 
 private:
     Thread(Thread &); // not defined
@@ -140,32 +140,29 @@ class UpdateCommandEnv
     friend class UpdateInstallDialog::Thread;
 
     UpdateInstallDialog & m_updateDialog;
-    ::rtl::Reference<UpdateInstallDialog::Thread> m_installThread; 
+    ::rtl::Reference<UpdateInstallDialog::Thread> m_installThread;
     cssu::Reference< cssu::XComponentContext > m_xContext;
 
 public:
     virtual ~UpdateCommandEnv();
-    UpdateCommandEnv( cssu::Reference< cssu::XComponentContext > const & xCtx, 
+    UpdateCommandEnv( cssu::Reference< cssu::XComponentContext > const & xCtx,
         UpdateInstallDialog & updateDialog,
         ::rtl::Reference<UpdateInstallDialog::Thread>const & thread);
 
     // XCommandEnvironment
     virtual cssu::Reference<css::task::XInteractionHandler > SAL_CALL
-    getInteractionHandler() throw (cssu::RuntimeException);
+    getInteractionHandler();
     virtual cssu::Reference<css::ucb::XProgressHandler >
-    SAL_CALL getProgressHandler() throw (cssu::RuntimeException);
+    SAL_CALL getProgressHandler();
 
     // XInteractionHandler
     virtual void SAL_CALL handle(
-        cssu::Reference<css::task::XInteractionRequest > const & xRequest )
-        throw (cssu::RuntimeException);
+        cssu::Reference<css::task::XInteractionRequest > const & xRequest );
 
     // XProgressHandler
-    virtual void SAL_CALL push( cssu::Any const & Status )
-        throw (cssu::RuntimeException);
-    virtual void SAL_CALL update( cssu::Any const & Status )
-        throw (cssu::RuntimeException);
-    virtual void SAL_CALL pop() throw (cssu::RuntimeException);
+    virtual void SAL_CALL push( cssu::Any const & Status );
+    virtual void SAL_CALL update( cssu::Any const & Status );
+    virtual void SAL_CALL pop();
 };
 
 
@@ -194,13 +191,13 @@ void UpdateInstallDialog::Thread::stop() {
 
 UpdateInstallDialog::Thread::~Thread() {}
 
-void UpdateInstallDialog::Thread::execute() 
+void UpdateInstallDialog::Thread::execute()
 {
     try {
-        downloadExtensions();    
+        downloadExtensions();
         installExtensions();
     }
-    catch (...) 
+    catch (...)
     {
     }
 
@@ -213,7 +210,7 @@ void UpdateInstallDialog::Thread::execute()
     {
         //make sure m_dialog is still alive
         ::vos::OGuard g(Application::GetSolarMutex());
-        if (! m_stop) 
+        if (! m_stop)
              m_dialog.updateDone();
     }
     //UpdateCommandEnv keeps a reference to Thread and prevents destruction. Therefore remove it.
@@ -222,7 +219,7 @@ void UpdateInstallDialog::Thread::execute()
 
 
 UpdateInstallDialog::UpdateInstallDialog(
-    Window * parent,  
+    Window * parent,
     std::vector<dp_gui::UpdateData> & aVecUpdateData,
     cssu::Reference< cssu::XComponentContext > const & xCtx):
     ModalDialog(
@@ -240,7 +237,7 @@ UpdateInstallDialog::UpdateInstallDialog(
         m_sErrorDownload(String(DpGuiResId(RID_DLG_UPDATE_INSTALL_ERROR_DOWNLOAD))),
         m_sErrorInstallation(String(DpGuiResId(RID_DLG_UPDATE_INSTALL_ERROR_INSTALLATION))),
         m_sErrorLicenseDeclined(String(DpGuiResId(RID_DLG_UPDATE_INSTALL_ERROR_LIC_DECLINED))),
-        m_sNoInstall(String(DpGuiResId(RID_DLG_UPDATE_INSTALL_EXTENSION_NOINSTALL))),       
+        m_sNoInstall(String(DpGuiResId(RID_DLG_UPDATE_INSTALL_EXTENSION_NOINSTALL))),
         m_sThisErrorOccurred(String(DpGuiResId(RID_DLG_UPDATE_INSTALL_THIS_ERROR_OCCURRED))),
         m_ft_action(this, DpGuiResId(RID_DLG_UPDATE_INSTALL_DOWNLOADING)),
         m_statusbar(this,DpGuiResId(RID_DLG_UPDATE_INSTALL_STATUSBAR)),
@@ -264,21 +261,21 @@ UpdateInstallDialog::UpdateInstallDialog(
 
 UpdateInstallDialog::~UpdateInstallDialog() {}
 
-sal_Bool UpdateInstallDialog::Close() 
+sal_Bool UpdateInstallDialog::Close()
 {
     m_thread->stop();
     return ModalDialog::Close();
 }
 
-short UpdateInstallDialog::Execute() 
-{   
+short UpdateInstallDialog::Execute()
+{
     m_thread->launch();
     return ModalDialog::Execute();
 }
 
 
 // make sure the solar mutex is locked before calling
-void UpdateInstallDialog::updateDone() 
+void UpdateInstallDialog::updateDone()
 {
     if (!m_bError)
         m_mle_info.InsertText(m_sNoErrors);
@@ -288,8 +285,8 @@ void UpdateInstallDialog::updateDone()
 }
 // make sure the solar mutex is locked before calling
 //sets an error message in the text area
-void UpdateInstallDialog::setError(INSTALL_ERROR err, ::rtl::OUString const & sExtension, 
-    OUString const & exceptionMessage) 
+void UpdateInstallDialog::setError(INSTALL_ERROR err, ::rtl::OUString const & sExtension,
+    OUString const & exceptionMessage)
 {
     String sError;
     m_bError = true;
@@ -297,13 +294,13 @@ void UpdateInstallDialog::setError(INSTALL_ERROR err, ::rtl::OUString const & sE
     switch (err)
     {
     case ERROR_DOWNLOAD:
-        sError = m_sErrorDownload; 
+        sError = m_sErrorDownload;
         break;
     case ERROR_INSTALLATION:
-        sError = m_sErrorInstallation; 
+        sError = m_sErrorInstallation;
         break;
     case ERROR_LICENSE_DECLINED:
-        sError = m_sErrorLicenseDeclined; 
+        sError = m_sErrorLicenseDeclined;
         break;
 
     default:
@@ -311,14 +308,14 @@ void UpdateInstallDialog::setError(INSTALL_ERROR err, ::rtl::OUString const & sE
     }
 
     sError.SearchAndReplace(String(OUSTR("%NAME")), String(sExtension), 0);
-    //We want to have an empty line between the error messages. However, 
+    //We want to have an empty line between the error messages. However,
     //there shall be no empty line after the last entry.
     if (m_bNoEntry)
         m_bNoEntry = false;
     else
         m_mle_info.InsertText(OUSTR("\n"));
     m_mle_info.InsertText(sError);
-    //Insert more information about the error 
+    //Insert more information about the error
     if (exceptionMessage.getLength())
         m_mle_info.InsertText(m_sThisErrorOccurred + exceptionMessage + OUSTR("\n"));
 
@@ -326,13 +323,13 @@ void UpdateInstallDialog::setError(INSTALL_ERROR err, ::rtl::OUString const & sE
     m_mle_info.InsertText(OUSTR("\n"));
 }
 
-void UpdateInstallDialog::setError(OUString const & exceptionMessage) 
+void UpdateInstallDialog::setError(OUString const & exceptionMessage)
 {
     m_bError = true;
     m_mle_info.InsertText(exceptionMessage + OUSTR("\n"));
 }
 
-IMPL_LINK(UpdateInstallDialog, cancelHandler, void *, EMPTYARG) 
+IMPL_LINK(UpdateInstallDialog, cancelHandler, void *, EMPTYARG)
 {
     m_thread->stop();
     EndDialog(RET_CANCEL);
@@ -343,7 +340,7 @@ IMPL_LINK(UpdateInstallDialog, cancelHandler, void *, EMPTYARG)
 
 void UpdateInstallDialog::Thread::downloadExtensions()
 {
-    try 
+    try
     {
         //create the download directory in the temp folder
         OUString sTempDir;
@@ -353,35 +350,35 @@ void UpdateInstallDialog::Thread::downloadExtensions()
         //create a unique name for the directory
         OUString tempEntry, destFolder;
         if (::osl::File::createTempFile(&sTempDir, 0, &tempEntry ) != ::osl::File::E_None)
-            throw cssu::Exception(OUSTR("Could not create a temporary file in ") + sTempDir + 
+            throw cssu::Exception(OUSTR("Could not create a temporary file in ") + sTempDir +
              OUSTR(". No extensions will be installed"), 0 );
-     
+
         tempEntry = tempEntry.copy( tempEntry.lastIndexOf( '/' ) + 1 );
-        
+
         destFolder = dp_misc::makeURL( sTempDir, tempEntry );
         destFolder += OUSTR("_");
         m_sDownloadFolder = destFolder;
-        try 
+        try
         {
             dp_misc::create_folder(0, destFolder, m_updateCmdEnv.get(), true );
-        } catch (cssu::Exception & e) 
+        } catch (cssu::Exception & e)
         {
             throw cssu::Exception(e.Message + OUSTR(" No extensions will be installed."), 0);
         }
 
-        
+
         sal_uInt16 count = 0;
         typedef std::vector<UpdateData>::iterator It;
         for (It i = m_aVecUpdateData.begin(); i != m_aVecUpdateData.end(); i++)
         {
             UpdateData & curData = *i;
-           
+
             if (!curData.aUpdateInfo.is() || curData.aUpdateSource.is())
                 continue;
-            //We assume that m_aVecUpdateData contains only information about extensions which 
+            //We assume that m_aVecUpdateData contains only information about extensions which
             //can be downloaded directly.
             OSL_ASSERT(curData.sWebsiteURL.getLength() == 0);
- 
+
 			//update the name of the extension which is to be downloaded
             {
                 ::vos::OGuard g(Application::GetSolarMutex());
@@ -400,7 +397,7 @@ void UpdateInstallDialog::Thread::downloadExtensions()
             OSL_ENSURE(seqDownloadURLs.getLength() > 0, "No download URL provided!");
             for (sal_Int32 j = 0; j < seqDownloadURLs.getLength(); j++)
             {
-                try 
+                try
                 {
                     OSL_ENSURE(seqDownloadURLs[j].getLength() > 0, "Download URL is empty!");
                     download(seqDownloadURLs[j], curData);
@@ -415,7 +412,7 @@ void UpdateInstallDialog::Thread::downloadExtensions()
                     //cases. Therefore ignore and continue.
                     continue;
                 }
-            } 
+            }
             //update the progress and display download error
             {
                 ::vos::OGuard g(Application::GetSolarMutex());
@@ -436,11 +433,11 @@ void UpdateInstallDialog::Thread::downloadExtensions()
                         buf.appendAscii(". ");
                         buf.append(j->second.Message);
                     }
-                    m_dialog.setError(UpdateInstallDialog::ERROR_DOWNLOAD, curData.aInstalledPackage->getDisplayName(), 
+                    m_dialog.setError(UpdateInstallDialog::ERROR_DOWNLOAD, curData.aInstalledPackage->getDisplayName(),
                         buf.makeStringAndClear());
                 }
             }
-     
+
         }
     }
     catch (cssu::Exception & e)
@@ -467,7 +464,7 @@ void UpdateInstallDialog::Thread::installExtensions()
     sal_uInt16 count = 0;
     typedef std::vector<UpdateData>::iterator It;
     for (It i = m_aVecUpdateData.begin(); i != m_aVecUpdateData.end(); i++, count++)
-    {         
+    {
         //update the name of the extension which is to be installed
         {
             ::vos::OGuard g(Application::GetSolarMutex());
@@ -546,7 +543,7 @@ void UpdateInstallDialog::Thread::installExtensions()
         {
             exc = e;
             bError = true;
-        }     
+        }
 
         if (bLicenseDeclined)
         {
@@ -554,7 +551,7 @@ void UpdateInstallDialog::Thread::installExtensions()
             if (m_stop) {
                 return;
             }
-            m_dialog.setError(UpdateInstallDialog::ERROR_LICENSE_DECLINED, 
+            m_dialog.setError(UpdateInstallDialog::ERROR_LICENSE_DECLINED,
                 curData.aInstalledPackage->getDisplayName(), OUString());
         }
         else if (!xExtension.is() || bError)
@@ -563,7 +560,7 @@ void UpdateInstallDialog::Thread::installExtensions()
             if (m_stop) {
                 return;
             }
-            m_dialog.setError(UpdateInstallDialog::ERROR_INSTALLATION, 
+            m_dialog.setError(UpdateInstallDialog::ERROR_INSTALLATION,
                 curData.aInstalledPackage->getDisplayName(), exc.Message);
         }
     }
@@ -582,7 +579,7 @@ void UpdateInstallDialog::Thread::removeTempDownloads()
 {
     if (m_sDownloadFolder.getLength())
     {
-        dp_misc::erase_path(m_sDownloadFolder, 
+        dp_misc::erase_path(m_sDownloadFolder,
             cssu::Reference<css::ucb::XCommandEnvironment>(),false /* no throw: ignore errors */ );
         //remove also the temp file which we have used to create the unique name
         OUString tempFile = m_sDownloadFolder.copy(0, m_sDownloadFolder.getLength() - 1);
@@ -614,16 +611,16 @@ void UpdateInstallDialog::Thread::download(OUString const & sDownloadURL, Update
 
     destFolder = dp_misc::makeURL( m_sDownloadFolder, tempEntry );
     destFolder += OUSTR("_");
-    
+
     ::ucbhelper::Content destFolderContent;
     dp_misc::create_folder( &destFolderContent, destFolder, m_updateCmdEnv.get() );
 
-    ::ucbhelper::Content sourceContent;    
-    dp_misc::create_ucb_content( &sourceContent, sDownloadURL, m_updateCmdEnv.get() ); 
+    ::ucbhelper::Content sourceContent;
+    dp_misc::create_ucb_content( &sourceContent, sDownloadURL, m_updateCmdEnv.get() );
 
 	const OUString sTitle(sourceContent.getPropertyValue(
 		                  dp_misc::StrTitle::get() ).get<OUString>() );
-    
+
 	if (destFolderContent.transferContent(
             sourceContent, ::ucbhelper::InsertOperation_COPY,
             sTitle, css::ucb::NameClash::OVERWRITE ))
@@ -643,7 +640,7 @@ void UpdateInstallDialog::Thread::download(OUString const & sDownloadURL, Update
 
 // -------------------------------------------------------------------------------------------------------
 
-UpdateCommandEnv::UpdateCommandEnv( cssu::Reference< cssu::XComponentContext > const & xCtx, 
+UpdateCommandEnv::UpdateCommandEnv( cssu::Reference< cssu::XComponentContext > const & xCtx,
     UpdateInstallDialog & updateDialog,
     ::rtl::Reference<UpdateInstallDialog::Thread>const & thread)
     : m_updateDialog( updateDialog ),
@@ -660,14 +657,12 @@ UpdateCommandEnv::~UpdateCommandEnv()
 // XCommandEnvironment
 //______________________________________________________________________________
 cssu::Reference<css::task::XInteractionHandler> UpdateCommandEnv::getInteractionHandler()
-throw (cssu::RuntimeException)
 {
     return this;
 }
 
 //______________________________________________________________________________
 cssu::Reference<css::ucb::XProgressHandler> UpdateCommandEnv::getProgressHandler()
-throw (cssu::RuntimeException)
 {
     return this;
 }
@@ -675,14 +670,13 @@ throw (cssu::RuntimeException)
 // XInteractionHandler
 void UpdateCommandEnv::handle(
     cssu::Reference< css::task::XInteractionRequest> const & xRequest )
-    throw (cssu::RuntimeException)
 {
     cssu::Any request( xRequest->getRequest() );
     OSL_ASSERT( request.getValueTypeClass() == cssu::TypeClass_EXCEPTION );
     dp_misc::TRACE(OUSTR("[dp_gui_cmdenv.cxx] incoming request:\n")
         + ::comphelper::anyToString(request) + OUSTR("\n\n"));
-    
-    css::deployment::VersionException verExc;	
+
+    css::deployment::VersionException verExc;
     bool approve = false;
     bool abort = false;
 
@@ -690,7 +684,7 @@ void UpdateCommandEnv::handle(
     {   //We must catch the version exception during the update,
         //because otherwise the user would be confronted with the dialogs, asking
         //them if they want to replace an already installed version of the same extension.
-        //During an update we assume that we always want to replace the old version with the 
+        //During an update we assume that we always want to replace the old version with the
         //new version.
         approve = true;
     }
@@ -722,7 +716,7 @@ void UpdateCommandEnv::handle(
             else if (abort) {
                 cssu::Reference< css::task::XInteractionAbort > xInteractionAbort(
                     pConts[ pos ], cssu::UNO_QUERY );
-                if (xInteractionAbort.is()) {           
+                if (xInteractionAbort.is()) {
                     xInteractionAbort->select();
                     // don't query again for ongoing continuations:
                     abort = false;
@@ -734,17 +728,15 @@ void UpdateCommandEnv::handle(
 
 // XProgressHandler
 void UpdateCommandEnv::push( cssu::Any const & /*Status*/ )
-throw (cssu::RuntimeException)
 {
 }
 
 
 void UpdateCommandEnv::update( cssu::Any const & /*Status */)
-throw (cssu::RuntimeException)
 {
 }
 
-void UpdateCommandEnv::pop() throw (cssu::RuntimeException)
+void UpdateCommandEnv::pop()
 {
 }
 

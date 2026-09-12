@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -212,7 +212,7 @@ OUString lcl_GetRawString( ScDocument* pDoc, const ScAddress& rPos )
                 }
             }
         }
-    }    
+    }
     return aVal;
 }
 } // anonymous namespace
@@ -231,7 +231,7 @@ uno::Sequence< rtl::OUString > SAL_CALL ScXMLOOoExport_getSupportedServiceNames(
 }
 
 uno::Reference< uno::XInterface > SAL_CALL ScXMLOOoExport_createInstance(
-				const uno::Reference< lang::XMultiServiceFactory > & rSMgr ) throw( uno::Exception )
+				const uno::Reference< lang::XMultiServiceFactory > & rSMgr )
 {
 	// #110680#
 	// return (cppu::OWeakObject*)new ScXMLExport(EXPORT_ALL);
@@ -250,7 +250,7 @@ uno::Sequence< rtl::OUString > SAL_CALL ScXMLOOoExport_Meta_getSupportedServiceN
 }
 
 uno::Reference< uno::XInterface > SAL_CALL ScXMLOOoExport_Meta_createInstance(
-				const uno::Reference< lang::XMultiServiceFactory > & rSMgr ) throw( uno::Exception )
+				const uno::Reference< lang::XMultiServiceFactory > & rSMgr )
 {
 	// #110680#
 	// return (cppu::OWeakObject*)new ScXMLExport(EXPORT_META);
@@ -269,7 +269,7 @@ uno::Sequence< rtl::OUString > SAL_CALL ScXMLOOoExport_Styles_getSupportedServic
 }
 
 uno::Reference< uno::XInterface > SAL_CALL ScXMLOOoExport_Styles_createInstance(
-				const uno::Reference< lang::XMultiServiceFactory > & rSMgr ) throw( uno::Exception )
+				const uno::Reference< lang::XMultiServiceFactory > & rSMgr )
 {
 	// #110680#
 	// return (cppu::OWeakObject*)new ScXMLExport(EXPORT_STYLES|EXPORT_MASTERSTYLES|EXPORT_AUTOSTYLES|EXPORT_FONTDECLS);
@@ -288,7 +288,7 @@ uno::Sequence< rtl::OUString > SAL_CALL ScXMLOOoExport_Content_getSupportedServi
 }
 
 uno::Reference< uno::XInterface > SAL_CALL ScXMLOOoExport_Content_createInstance(
-				const uno::Reference< lang::XMultiServiceFactory > & rSMgr ) throw( uno::Exception )
+				const uno::Reference< lang::XMultiServiceFactory > & rSMgr )
 {
 	// #110680#
 	// return (cppu::OWeakObject*)new ScXMLExport(EXPORT_AUTOSTYLES|EXPORT_CONTENT|EXPORT_SCRIPTS|EXPORT_FONTDECLS);
@@ -307,7 +307,7 @@ uno::Sequence< rtl::OUString > SAL_CALL ScXMLOOoExport_Settings_getSupportedServ
 }
 
 uno::Reference< uno::XInterface > SAL_CALL ScXMLOOoExport_Settings_createInstance(
-				const uno::Reference< lang::XMultiServiceFactory > & rSMgr ) throw( uno::Exception )
+				const uno::Reference< lang::XMultiServiceFactory > & rSMgr )
 {
 	// #110680#
 	// return (cppu::OWeakObject*)new ScXMLExport(EXPORT_SETTINGS);
@@ -329,7 +329,7 @@ uno::Sequence< rtl::OUString > SAL_CALL ScXMLOasisExport_getSupportedServiceName
 }
 
 uno::Reference< uno::XInterface > SAL_CALL ScXMLOasisExport_createInstance(
-				const uno::Reference< lang::XMultiServiceFactory > & rSMgr ) throw( uno::Exception )
+				const uno::Reference< lang::XMultiServiceFactory > & rSMgr )
 {
 	return (cppu::OWeakObject*)new ScXMLExport(rSMgr, EXPORT_ALL|EXPORT_OASIS);
 }
@@ -347,7 +347,7 @@ uno::Sequence< rtl::OUString > SAL_CALL ScXMLOasisExport_Meta_getSupportedServic
 }
 
 uno::Reference< uno::XInterface > SAL_CALL ScXMLOasisExport_Meta_createInstance(
-				const uno::Reference< lang::XMultiServiceFactory > & rSMgr ) throw( uno::Exception )
+				const uno::Reference< lang::XMultiServiceFactory > & rSMgr )
 {
 	return (cppu::OWeakObject*)new ScXMLExport(rSMgr, EXPORT_META|EXPORT_OASIS);
 }
@@ -365,7 +365,7 @@ uno::Sequence< rtl::OUString > SAL_CALL ScXMLOasisExport_Styles_getSupportedServ
 }
 
 uno::Reference< uno::XInterface > SAL_CALL ScXMLOasisExport_Styles_createInstance(
-				const uno::Reference< lang::XMultiServiceFactory > & rSMgr ) throw( uno::Exception )
+				const uno::Reference< lang::XMultiServiceFactory > & rSMgr )
 {
 	return (cppu::OWeakObject*)new ScXMLExport(rSMgr, EXPORT_STYLES|EXPORT_MASTERSTYLES|EXPORT_AUTOSTYLES|EXPORT_FONTDECLS|EXPORT_OASIS);
 }
@@ -383,7 +383,7 @@ uno::Sequence< rtl::OUString > SAL_CALL ScXMLOasisExport_Content_getSupportedSer
 }
 
 uno::Reference< uno::XInterface > SAL_CALL ScXMLOasisExport_Content_createInstance(
-				const uno::Reference< lang::XMultiServiceFactory > & rSMgr ) throw( uno::Exception )
+				const uno::Reference< lang::XMultiServiceFactory > & rSMgr )
 {
 	return (cppu::OWeakObject*)new ScXMLExport(rSMgr, EXPORT_AUTOSTYLES|EXPORT_CONTENT|EXPORT_SCRIPTS|EXPORT_FONTDECLS|EXPORT_OASIS);
 }
@@ -401,7 +401,7 @@ uno::Sequence< rtl::OUString > SAL_CALL ScXMLOasisExport_Settings_getSupportedSe
 }
 
 uno::Reference< uno::XInterface > SAL_CALL ScXMLOasisExport_Settings_createInstance(
-				const uno::Reference< lang::XMultiServiceFactory > & rSMgr ) throw( uno::Exception )
+				const uno::Reference< lang::XMultiServiceFactory > & rSMgr )
 {
 	return (cppu::OWeakObject*)new ScXMLExport(rSMgr, EXPORT_SETTINGS|EXPORT_OASIS);
 }
@@ -1840,7 +1840,7 @@ void ScXMLExport::_ExportContent()
 					}
 				}
 			}
-			
+
 			IncrementProgressBar(sal_False);
         }
     }
@@ -3031,7 +3031,7 @@ void ScXMLExport::WriteCell(ScMyCell& aCell, sal_Int32 nEqualCellCount)
 
 	if (!bIsEmpty)
 	{
-        if ((aCell.nType == table::CellContentType_TEXT && IsEditCell(aCell)) || 
+        if ((aCell.nType == table::CellContentType_TEXT && IsEditCell(aCell)) ||
             (aCell.nType == table::CellContentType_FORMULA && IsMultiLineFormulaCell(aCell)))
 		{
             bEditCell = sal_True;
@@ -3534,7 +3534,7 @@ sal_Bool ScXMLExport::IsMultiLineFormulaCell(ScMyCell& rCell) const
         return static_cast<ScFormulaCell*>(rCell.pBaseCell)->IsMultilineResult();
     }
 
-    ScAddress aAddr(static_cast<SCCOL>(rCell.aCellAddress.Column), 
+    ScAddress aAddr(static_cast<SCCOL>(rCell.aCellAddress.Column),
                     static_cast<SCROW>(rCell.aCellAddress.Row),
                     static_cast<SCTAB>(rCell.aCellAddress.Sheet));
     ScBaseCell* pBaseCell = pDoc ? pDoc->GetCell(aAddr) : NULL;
@@ -3923,7 +3923,7 @@ void ScXMLExport::WriteNamedExpressions(const com::sun::star::uno::Reference <co
 						else if( nWhichTable !=MAXTABCOUNT)
 							continue;
                         uno::Reference <sheet::XNamedRange2> xNamedRange(xNamedRanges->getByScopeName(sRangeScope,sNamedRange), uno::UNO_QUERY);
-						//range scope name support 
+						//range scope name support
 						if (xNamedRange.is())
 						{
 							uno::Reference <container::XNamed> xNamed (xNamedRange, uno::UNO_QUERY);
@@ -3931,9 +3931,9 @@ void ScXMLExport::WriteNamedExpressions(const com::sun::star::uno::Reference <co
 							if (xNamed.is() && xCellRangeReferrer.is())
 							{
 								rtl::OUString sOUName(xNamed->getName());
-							
+
 								AddAttribute(sAttrName, sOUName);
-								
+
 								OUString sOUBaseCellAddress;
 								ScRangeStringConverter::GetStringFromAddress( sOUBaseCellAddress,
 									xNamedRange->getReferencePosition(), pDoc, FormulaGrammar::CONV_OOO, ' ', sal_False, SCA_ABS_3D );
@@ -4511,7 +4511,6 @@ sal_uInt32 ScXMLExport::exportDoc( enum XMLTokenEnum eClass )
 
 // XExporter
 void SAL_CALL ScXMLExport::setSourceDocument( const uno::Reference<lang::XComponent>& xComponent )
-							throw(lang::IllegalArgumentException, uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
 	SvXMLExport::setSourceDocument( xComponent );
@@ -4541,7 +4540,6 @@ void SAL_CALL ScXMLExport::setSourceDocument( const uno::Reference<lang::XCompon
 
 // XFilter
 sal_Bool SAL_CALL ScXMLExport::filter( const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& aDescriptor )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
     if (pDoc)
@@ -4553,7 +4551,6 @@ sal_Bool SAL_CALL ScXMLExport::filter( const ::com::sun::star::uno::Sequence< ::
 }
 
 void SAL_CALL ScXMLExport::cancel()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
     if (pDoc)
@@ -4563,7 +4560,6 @@ void SAL_CALL ScXMLExport::cancel()
 
 // XInitialization
 void SAL_CALL ScXMLExport::initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aArguments )
-	throw(::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
 	SvXMLExport::initialize(aArguments);
@@ -4571,7 +4567,6 @@ void SAL_CALL ScXMLExport::initialize( const ::com::sun::star::uno::Sequence< ::
 
 // XServiceInfo
 ::rtl::OUString SAL_CALL ScXMLExport::getImplementationName(  )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
 
@@ -4618,14 +4613,12 @@ void SAL_CALL ScXMLExport::initialize( const ::com::sun::star::uno::Sequence< ::
 }
 
 sal_Bool SAL_CALL ScXMLExport::supportsService( const ::rtl::OUString& ServiceName )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
 	return SvXMLExport::supportsService( ServiceName );
 }
 
 ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL ScXMLExport::getSupportedServiceNames(  )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
 	return SvXMLExport::getSupportedServiceNames();
@@ -4633,7 +4626,6 @@ sal_Bool SAL_CALL ScXMLExport::supportsService( const ::rtl::OUString& ServiceNa
 
 // XUnoTunnel
 sal_Int64 SAL_CALL ScXMLExport::getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
 	return SvXMLExport::getSomething(aIdentifier);
@@ -4645,4 +4637,3 @@ void ScXMLExport::DisposingModel()
 	pDoc = NULL;
 	xCurrentTable = 0;
 }
-

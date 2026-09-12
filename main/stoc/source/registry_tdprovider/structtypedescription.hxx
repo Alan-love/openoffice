@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -56,37 +56,34 @@ public:
 
     virtual ~StructTypeDescription();
 
-    virtual com::sun::star::uno::TypeClass SAL_CALL getTypeClass()
-        throw (com::sun::star::uno::RuntimeException);
+    virtual com::sun::star::uno::TypeClass SAL_CALL getTypeClass();
 
-    virtual rtl::OUString SAL_CALL getName()
-        throw (com::sun::star::uno::RuntimeException);
+    virtual rtl::OUString SAL_CALL getName();
 
     virtual
     com::sun::star::uno::Reference<
         com::sun::star::reflection::XTypeDescription >
-    SAL_CALL getBaseType() throw (com::sun::star::uno::RuntimeException);
+    SAL_CALL getBaseType();
 
     virtual
     com::sun::star::uno::Sequence<
         com::sun::star::uno::Reference<
             com::sun::star::reflection::XTypeDescription > >
-    SAL_CALL getMemberTypes() throw (com::sun::star::uno::RuntimeException);
+    SAL_CALL getMemberTypes();
 
     virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL
-    getMemberNames() throw (com::sun::star::uno::RuntimeException);
+    getMemberNames();
 
     virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL
-    getTypeParameters() throw (com::sun::star::uno::RuntimeException);
+    getTypeParameters();
 
     virtual
     com::sun::star::uno::Sequence<
         com::sun::star::uno::Reference<
             com::sun::star::reflection::XTypeDescription > >
-    SAL_CALL getTypeArguments() throw (com::sun::star::uno::RuntimeException);
+    SAL_CALL getTypeArguments();
 
-    virtual sal_Bool SAL_CALL isPublished()
-        throw (com::sun::star::uno::RuntimeException);
+    virtual sal_Bool SAL_CALL isPublished();
 
 private:
     StructTypeDescription(StructTypeDescription &); // not implemented

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -50,7 +50,7 @@ OInputCompStream::OInputCompStream( OWriteStream_Impl& aImpl,
 	OSL_ENSURE( m_pImpl->m_rMutexRef.Is(), "No mutex is provided!\n" );
 	if ( !m_pImpl->m_rMutexRef.Is() )
 		throw uno::RuntimeException(); // just a disaster
-	
+
 	OSL_ENSURE( xStream.is(), "No stream is provided!\n" );
 }
 
@@ -88,7 +88,6 @@ OInputCompStream::~OInputCompStream()
 
 //-----------------------------------------------
 uno::Any SAL_CALL OInputCompStream::queryInterface( const uno::Type& rType )
-		throw( uno::RuntimeException )
 {
 	uno::Any aReturn;
 
@@ -109,7 +108,7 @@ uno::Any SAL_CALL OInputCompStream::queryInterface( const uno::Type& rType )
 		aReturn <<= ::cppu::queryInterface
 					(	rType
 						,	static_cast<embed::XRelationshipAccess*> ( this ) );
-	
+
 		if ( aReturn.hasValue() == sal_True )
 			return aReturn ;
 	}
@@ -118,11 +117,7 @@ uno::Any SAL_CALL OInputCompStream::queryInterface( const uno::Type& rType )
 }
 
 //-----------------------------------------------
-sal_Int32 SAL_CALL OInputCompStream::readBytes( uno::Sequence< sal_Int8 >& aData, sal_Int32 nBytesToRead ) 
-		throw ( io::NotConnectedException,
-				io::BufferSizeExceededException,
-				io::IOException,
-				uno::RuntimeException )
+sal_Int32 SAL_CALL OInputCompStream::readBytes( uno::Sequence< sal_Int8 >& aData, sal_Int32 nBytesToRead )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 	if ( m_bDisposed )
@@ -141,11 +136,7 @@ sal_Int32 SAL_CALL OInputCompStream::readBytes( uno::Sequence< sal_Int8 >& aData
 }
 
 //-----------------------------------------------
-sal_Int32 SAL_CALL OInputCompStream::readSomeBytes( uno::Sequence< sal_Int8 >& aData, sal_Int32 nMaxBytesToRead ) 
-		throw ( io::NotConnectedException,
-				io::BufferSizeExceededException,
-				io::IOException,
-				uno::RuntimeException )
+sal_Int32 SAL_CALL OInputCompStream::readSomeBytes( uno::Sequence< sal_Int8 >& aData, sal_Int32 nMaxBytesToRead )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 	if ( m_bDisposed )
@@ -165,11 +156,7 @@ sal_Int32 SAL_CALL OInputCompStream::readSomeBytes( uno::Sequence< sal_Int8 >& a
 }
 
 //-----------------------------------------------
-void SAL_CALL OInputCompStream::skipBytes( sal_Int32 nBytesToSkip ) 
-		throw ( io::NotConnectedException,
-				io::BufferSizeExceededException,
-				io::IOException,
-				uno::RuntimeException )
+void SAL_CALL OInputCompStream::skipBytes( sal_Int32 nBytesToSkip )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 	if ( m_bDisposed )
@@ -189,10 +176,7 @@ void SAL_CALL OInputCompStream::skipBytes( sal_Int32 nBytesToSkip )
 }
 
 //-----------------------------------------------
-sal_Int32 SAL_CALL OInputCompStream::available(  ) 
-		throw ( io::NotConnectedException,
-				io::IOException,
-				uno::RuntimeException )
+sal_Int32 SAL_CALL OInputCompStream::available(  )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 	if ( m_bDisposed )
@@ -212,17 +196,13 @@ sal_Int32 SAL_CALL OInputCompStream::available(  )
 }
 
 //-----------------------------------------------
-void SAL_CALL OInputCompStream::closeInput(  ) 
-		throw ( io::NotConnectedException,
-				io::IOException,
-				uno::RuntimeException )
+void SAL_CALL OInputCompStream::closeInput(  )
 {
 	dispose();
 }
 
 //-----------------------------------------------
 uno::Reference< io::XInputStream > SAL_CALL OInputCompStream::getInputStream()
-		throw ( uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 	if ( m_bDisposed )
@@ -239,7 +219,6 @@ uno::Reference< io::XInputStream > SAL_CALL OInputCompStream::getInputStream()
 
 //-----------------------------------------------
 uno::Reference< io::XOutputStream > SAL_CALL OInputCompStream::getOutputStream()
-		throw ( uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 	if ( m_bDisposed )
@@ -282,7 +261,6 @@ void OInputCompStream::InternalDispose()
 
 //-----------------------------------------------
 void SAL_CALL OInputCompStream::dispose(  )
-		throw ( uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 	if ( m_bDisposed )
@@ -310,7 +288,6 @@ void SAL_CALL OInputCompStream::dispose(  )
 
 //-----------------------------------------------
 void SAL_CALL OInputCompStream::addEventListener( const uno::Reference< lang::XEventListener >& xListener )
-		throw ( uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 	if ( m_bDisposed )
@@ -327,7 +304,6 @@ void SAL_CALL OInputCompStream::addEventListener( const uno::Reference< lang::XE
 
 //-----------------------------------------------
 void SAL_CALL OInputCompStream::removeEventListener( const uno::Reference< lang::XEventListener >& xListener )
-		throw ( uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 	if ( m_bDisposed )
@@ -342,8 +318,6 @@ void SAL_CALL OInputCompStream::removeEventListener( const uno::Reference< lang:
 
 //-----------------------------------------------
 sal_Bool SAL_CALL OInputCompStream::hasByID(  const ::rtl::OUString& sID )
-		throw ( io::IOException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -369,9 +343,6 @@ sal_Bool SAL_CALL OInputCompStream::hasByID(  const ::rtl::OUString& sID )
 
 //-----------------------------------------------
 ::rtl::OUString SAL_CALL OInputCompStream::getTargetByID(  const ::rtl::OUString& sID  )
-		throw ( container::NoSuchElementException,
-				io::IOException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -394,9 +365,6 @@ sal_Bool SAL_CALL OInputCompStream::hasByID(  const ::rtl::OUString& sID )
 
 //-----------------------------------------------
 ::rtl::OUString SAL_CALL OInputCompStream::getTypeByID(  const ::rtl::OUString& sID  )
-		throw ( container::NoSuchElementException,
-				io::IOException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -419,9 +387,6 @@ sal_Bool SAL_CALL OInputCompStream::hasByID(  const ::rtl::OUString& sID )
 
 //-----------------------------------------------
 uno::Sequence< beans::StringPair > SAL_CALL OInputCompStream::getRelationshipByID(  const ::rtl::OUString& sID  )
-		throw ( container::NoSuchElementException,
-				io::IOException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -444,14 +409,12 @@ uno::Sequence< beans::StringPair > SAL_CALL OInputCompStream::getRelationshipByI
 					return aSeq[nInd1];
 				break;
 			}
-	
+
 	throw container::NoSuchElementException();
 }
 
 //-----------------------------------------------
 uno::Sequence< uno::Sequence< beans::StringPair > > SAL_CALL OInputCompStream::getRelationshipsByType(  const ::rtl::OUString& sType  )
-		throw ( io::IOException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -486,7 +449,6 @@ uno::Sequence< uno::Sequence< beans::StringPair > > SAL_CALL OInputCompStream::g
 
 //-----------------------------------------------
 uno::Sequence< uno::Sequence< beans::StringPair > > SAL_CALL OInputCompStream::getAllRelationships()
-		throw (io::IOException, uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -515,9 +477,6 @@ uno::Sequence< uno::Sequence< beans::StringPair > > SAL_CALL OInputCompStream::g
 
 //-----------------------------------------------
 void SAL_CALL OInputCompStream::insertRelationshipByID(  const ::rtl::OUString& /*sID*/, const uno::Sequence< beans::StringPair >& /*aEntry*/, ::sal_Bool /*bReplace*/  )
-		throw ( container::ElementExistException,
-				io::IOException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -535,9 +494,6 @@ void SAL_CALL OInputCompStream::insertRelationshipByID(  const ::rtl::OUString& 
 
 //-----------------------------------------------
 void SAL_CALL OInputCompStream::removeRelationshipByID(  const ::rtl::OUString& /*sID*/  )
-		throw ( container::NoSuchElementException,
-				io::IOException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -555,9 +511,6 @@ void SAL_CALL OInputCompStream::removeRelationshipByID(  const ::rtl::OUString& 
 
 //-----------------------------------------------
 void SAL_CALL OInputCompStream::insertRelationships(  const uno::Sequence< uno::Sequence< beans::StringPair > >& /*aEntries*/, ::sal_Bool /*bReplace*/  )
-		throw ( container::ElementExistException,
-				io::IOException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -575,8 +528,6 @@ void SAL_CALL OInputCompStream::insertRelationships(  const uno::Sequence< uno::
 
 //-----------------------------------------------
 void SAL_CALL OInputCompStream::clearRelationships()
-		throw ( io::IOException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -594,7 +545,6 @@ void SAL_CALL OInputCompStream::clearRelationships()
 
 //-----------------------------------------------
 uno::Reference< beans::XPropertySetInfo > SAL_CALL OInputCompStream::getPropertySetInfo()
-		throw ( uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -610,11 +560,6 @@ uno::Reference< beans::XPropertySetInfo > SAL_CALL OInputCompStream::getProperty
 
 //-----------------------------------------------
 void SAL_CALL OInputCompStream::setPropertyValue( const ::rtl::OUString& aPropertyName, const uno::Any& /*aValue*/ )
-		throw ( beans::UnknownPropertyException,
-				beans::PropertyVetoException,
-				lang::IllegalArgumentException,
-				lang::WrappedTargetException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -639,9 +584,6 @@ void SAL_CALL OInputCompStream::setPropertyValue( const ::rtl::OUString& aProper
 
 //-----------------------------------------------
 uno::Any SAL_CALL OInputCompStream::getPropertyValue( const ::rtl::OUString& aProp )
-		throw ( beans::UnknownPropertyException,
-				lang::WrappedTargetException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -674,12 +616,9 @@ uno::Any SAL_CALL OInputCompStream::getPropertyValue( const ::rtl::OUString& aPr
 
 
 //-----------------------------------------------
-void SAL_CALL OInputCompStream::addPropertyChangeListener( 
+void SAL_CALL OInputCompStream::addPropertyChangeListener(
     const ::rtl::OUString& /*aPropertyName*/,
     const uno::Reference< beans::XPropertyChangeListener >& /*xListener*/ )
-		throw ( beans::UnknownPropertyException,
-				lang::WrappedTargetException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -697,9 +636,6 @@ void SAL_CALL OInputCompStream::addPropertyChangeListener(
 void SAL_CALL OInputCompStream::removePropertyChangeListener(
     const ::rtl::OUString& /*aPropertyName*/,
     const uno::Reference< beans::XPropertyChangeListener >& /*aListener*/ )
-		throw ( beans::UnknownPropertyException,
-				lang::WrappedTargetException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -717,9 +653,6 @@ void SAL_CALL OInputCompStream::removePropertyChangeListener(
 void SAL_CALL OInputCompStream::addVetoableChangeListener(
     const ::rtl::OUString& /*PropertyName*/,
     const uno::Reference< beans::XVetoableChangeListener >& /*aListener*/ )
-		throw ( beans::UnknownPropertyException,
-				lang::WrappedTargetException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -737,9 +670,6 @@ void SAL_CALL OInputCompStream::addVetoableChangeListener(
 void SAL_CALL OInputCompStream::removeVetoableChangeListener(
     const ::rtl::OUString& /*PropertyName*/,
     const uno::Reference< beans::XVetoableChangeListener >& /*aListener*/ )
-		throw ( beans::UnknownPropertyException,
-				lang::WrappedTargetException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 
@@ -751,5 +681,3 @@ void SAL_CALL OInputCompStream::removeVetoableChangeListener(
 
 	//TODO:
 }
-
-

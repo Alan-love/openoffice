@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -128,13 +128,11 @@ IMPLEMENT_FORWARD_XTYPEPROVIDER3( ScAccessibleCell, ScAccessibleCellBase, Access
 
 uno::Reference< XAccessible > SAL_CALL ScAccessibleCell::getAccessibleAtPoint(
 		const awt::Point& rPoint )
-		throw (uno::RuntimeException)
 {
     return AccessibleStaticTextBase::getAccessibleAtPoint(rPoint);
 }
 
 void SAL_CALL ScAccessibleCell::grabFocus(  )
-		throw (uno::RuntimeException)
 {
  	ScUnoGuard aGuard;
     IsObjectValid();
@@ -150,7 +148,6 @@ void SAL_CALL ScAccessibleCell::grabFocus(  )
 }
 
 Rectangle ScAccessibleCell::GetBoundingBoxOnScreen(void) const
-		throw (uno::RuntimeException)
 {
 	Rectangle aCellRect(GetBoundingBox());
 	if (mpViewShell)
@@ -167,7 +164,6 @@ Rectangle ScAccessibleCell::GetBoundingBoxOnScreen(void) const
 }
 
 Rectangle ScAccessibleCell::GetBoundingBox(void) const
-		throw (uno::RuntimeException)
 {
 	Rectangle aCellRect;
 	if (mpViewShell)
@@ -212,22 +208,18 @@ Rectangle ScAccessibleCell::GetBoundingBox(void) const
 
 sal_Int32 SAL_CALL
 	ScAccessibleCell::getAccessibleChildCount(void)
-    				throw (uno::RuntimeException)
 {
     return AccessibleStaticTextBase::getAccessibleChildCount();
 }
 
 uno::Reference< XAccessible > SAL_CALL
 	ScAccessibleCell::getAccessibleChild(sal_Int32 nIndex)
-        throw (uno::RuntimeException,
-		lang::IndexOutOfBoundsException)
 {
     return AccessibleStaticTextBase::getAccessibleChild(nIndex);
 }
 
 uno::Reference<XAccessibleStateSet> SAL_CALL
 	ScAccessibleCell::getAccessibleStateSet(void)
-    throw (uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
 	uno::Reference<XAccessibleStateSet> xParentStates;
@@ -283,7 +275,6 @@ uno::Reference<XAccessibleStateSet> SAL_CALL
 
 uno::Reference<XAccessibleRelationSet> SAL_CALL
    	ScAccessibleCell::getAccessibleRelationSet(void)
-    throw (uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
     IsObjectValid();
@@ -300,14 +291,12 @@ uno::Reference<XAccessibleRelationSet> SAL_CALL
 	//=====  XServiceInfo  ====================================================
 
 ::rtl::OUString SAL_CALL ScAccessibleCell::getImplementationName(void)
-        throw (uno::RuntimeException)
 {
 	return rtl::OUString(RTL_CONSTASCII_USTRINGPARAM ("ScAccessibleCell"));
 }
 
 uno::Sequence< ::rtl::OUString> SAL_CALL
 	ScAccessibleCell::getSupportedServiceNames(void)
-        throw (uno::RuntimeException)
 {
 	uno::Sequence< ::rtl::OUString > aSequence = ScAccessibleContextBase::getSupportedServiceNames();
     sal_Int32 nOldSize(aSequence.getLength());
@@ -509,8 +498,7 @@ void ScAccessibleCell::AddRelation(const ScRange& rRange,
 	return oldOUString;
 }
 
-uno::Any SAL_CALL ScAccessibleCell::getExtendedAttributes() 
-		throw (::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::uno::RuntimeException) 
+uno::Any SAL_CALL ScAccessibleCell::getExtendedAttributes()
 {
 	uno::Any strRet;
 	if (mpViewShell)
@@ -520,30 +508,30 @@ uno::Any SAL_CALL ScAccessibleCell::getExtendedAttributes()
 		::rtl::OUString strFor = mpViewShell->GetFormula(maCellAddress) ;
 		strFor = strFor.replaceAt(0,1,::rtl::OUString::createFromAscii(""));
 		strFor = ReplaceFourChar(strFor);
-		strFor =::rtl::OUString::createFromAscii("Formula:") + strFor;		
-		strFor +=strSplit; 
+		strFor =::rtl::OUString::createFromAscii("Formula:") + strFor;
+		strFor +=strSplit;
 		strFor +=::rtl::OUString::createFromAscii("Note:");
-		strFor +=ReplaceFourChar(GetAllDisplayNote());		
-		strFor +=strSplit; 
+		strFor +=ReplaceFourChar(GetAllDisplayNote());
+		strFor +=strSplit;
 		strFor += getShadowAttrs();//the string returned contains the spliter ";"
 		strFor += getBorderAttrs();//the string returned contains the spliter ";"
 		//end of cell attributes
 		if( mpDoc )
 		{
-			strFor += ::rtl::OUString::createFromAscii("isdropdown:");			
-			if( IsDropdown() ) 
+			strFor += ::rtl::OUString::createFromAscii("isdropdown:");
+			if( IsDropdown() )
 				strFor+= ::rtl::OUString::createFromAscii("true");
 			else
 				strFor+= ::rtl::OUString::createFromAscii("false");
 			strFor += ::rtl::OUString::createFromAscii(";");
 		}
 		strRet <<= strFor ;
-	}	
+	}
 	return strRet;
 }
 
 // cell has its own ParaIndent property, so when calling character attributes on cell, the ParaIndent should replace the ParaLeftMargin if its value is not zero.
-uno::Sequence< beans::PropertyValue > SAL_CALL ScAccessibleCell::getCharacterAttributes( sal_Int32 nIndex, const ::com::sun::star::uno::Sequence< ::rtl::OUString >& aRequestedAttributes ) throw (lang::IndexOutOfBoundsException, uno::RuntimeException)
+uno::Sequence< beans::PropertyValue > SAL_CALL ScAccessibleCell::getCharacterAttributes( sal_Int32 nIndex, const ::com::sun::star::uno::Sequence< ::rtl::OUString >& aRequestedAttributes )
 {
 	uno::Sequence< beans::PropertyValue > aAttribs = AccessibleStaticTextBase::getCharacterAttributes( nIndex, aRequestedAttributes );
 	beans::PropertyValue *pAttribs = aAttribs.getArray();
@@ -551,7 +539,7 @@ uno::Sequence< beans::PropertyValue > SAL_CALL ScAccessibleCell::getCharacterAtt
 	sal_uInt16 nParaIndent = static_cast< const SfxUInt16Item* >( mpDoc->GetAttr( maCellAddress.Col(), maCellAddress.Row(), maCellAddress.Tab(), ATTR_INDENT ) )->GetValue();
 	if (nParaIndent > 0)
 	{
-		::rtl::OUString sLeftMarginName (::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("ParaLeftMargin")));		
+		::rtl::OUString sLeftMarginName (::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("ParaLeftMargin")));
 		for (int i = 0; i < aAttribs.getLength(); ++i)
 		{
 			if (sLeftMarginName == pAttribs[i].Name)
@@ -571,10 +559,10 @@ sal_Bool ScAccessibleCell::IsFormulaMode()
 	{
 		return pSheet->IsFormulaMode();
 	}
-	return sal_False;	
+	return sal_False;
 }
 sal_Bool ScAccessibleCell::IsDropdown()
-{	
+{
 	sal_uInt16 nPosX = maCellAddress.Col();
 	sal_uInt16 nPosY = sal_uInt16(maCellAddress.Row());
 	sal_uInt16 nTab = maCellAddress.Tab();
@@ -589,7 +577,7 @@ sal_Bool ScAccessibleCell::IsDropdown()
 	pAttr = (ScMergeFlagAttr*)mpDoc->GetAttr( nPosX, nPosY, nTab, ATTR_MERGE_FLAG );
 	if( pAttr->HasAutoFilter() )
 	{
-		return sal_True;	
+		return sal_True;
 	}
 	else
 	{

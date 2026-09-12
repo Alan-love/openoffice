@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -61,13 +61,13 @@ struct SfxItemPropertySimpleEntry
         nFlags( 0 ),
         nMemberId( 0 ){}
 
-    SfxItemPropertySimpleEntry(sal_uInt16 _nWID, const com::sun::star::uno::Type* _pType, 
+    SfxItemPropertySimpleEntry(sal_uInt16 _nWID, const com::sun::star::uno::Type* _pType,
                                long _nFlags, sal_uInt8 _nMemberId) :
         nWID(      _nWID ),
         pType(     _pType ),
         nFlags(    _nFlags ),
         nMemberId( _nMemberId ){}
-    
+
     SfxItemPropertySimpleEntry( const SfxItemPropertyMapEntry* pMapEntry ) :
         nWID(      pMapEntry->nWID ),
         pType(     pMapEntry->pType ),
@@ -82,28 +82,27 @@ struct SfxItemPropertyNamedEntry : public SfxItemPropertySimpleEntry
         SfxItemPropertySimpleEntry( rSimpleEntry ),
         sName( rName ){}
 
-};    
+};
 typedef std::vector< SfxItemPropertyNamedEntry > PropertyEntryVector_t;
 class SfxItemPropertyMap_Impl;
 class SVL_DLLPUBLIC SfxItemPropertyMap
 {
     SfxItemPropertyMap_Impl* m_pImpl;
-public: 
+public:
     SfxItemPropertyMap( const SfxItemPropertyMapEntry* pEntries );
     SfxItemPropertyMap( const SfxItemPropertyMap* pSource );
     ~SfxItemPropertyMap();
-        
+
     const SfxItemPropertySimpleEntry*  getByName( const ::rtl::OUString &rName ) const;
     com::sun::star::uno::Sequence< com::sun::star::beans::Property > getProperties() const;
-    com::sun::star::beans::Property getPropertyByName( const ::rtl::OUString rName ) const 
-        throw( ::com::sun::star::beans::UnknownPropertyException );
+    com::sun::star::beans::Property getPropertyByName( const ::rtl::OUString rName ) const;
     sal_Bool hasPropertyByName( const ::rtl::OUString& rName ) const;
 
     void mergeProperties( const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::Property >& rPropSeq );
     PropertyEntryVector_t getPropertyEntries() const;
     sal_uInt32 getSize() const;
 
-};    
+};
 /* -----------------------------21.02.00 11:19--------------------------------
 
  ---------------------------------------------------------------------------*/
@@ -121,33 +120,22 @@ public:
 
     void getPropertyValue( const SfxItemPropertySimpleEntry& rEntry,
                                           const SfxItemSet& rSet,
-                                          com::sun::star::uno::Any& rAny) const
-                                          throw(::com::sun::star::uno::RuntimeException);
+                                          com::sun::star::uno::Any& rAny) const;
 	void getPropertyValue( const ::rtl::OUString &rName,
 											const SfxItemSet& rSet,
-											com::sun::star::uno::Any& rAny) const
-											throw(::com::sun::star::uno::RuntimeException,
-													::com::sun::star::beans::UnknownPropertyException);
+											com::sun::star::uno::Any& rAny) const;
 	com::sun::star::uno::Any
 		getPropertyValue( const ::rtl::OUString &rName,
-											const SfxItemSet& rSet ) const
-											throw(::com::sun::star::uno::RuntimeException,
-													::com::sun::star::beans::UnknownPropertyException);
+											const SfxItemSet& rSet ) const;
     void                    setPropertyValue( const SfxItemPropertySimpleEntry& rEntry,
                                           const com::sun::star::uno::Any& aVal,
-                                          SfxItemSet& rSet ) const
-                                          throw(::com::sun::star::uno::RuntimeException,
-                                                  com::sun::star::lang::IllegalArgumentException);
+                                          SfxItemSet& rSet ) const;
 	void					setPropertyValue( const ::rtl::OUString& rPropertyName,
 											const com::sun::star::uno::Any& aVal,
-											SfxItemSet& rSet ) const
-											throw(::com::sun::star::uno::RuntimeException,
-													com::sun::star::lang::IllegalArgumentException,
-													::com::sun::star::beans::UnknownPropertyException);
+											SfxItemSet& rSet ) const;
 
 	com::sun::star::beans::PropertyState
-        getPropertyState(const ::rtl::OUString& rName, const SfxItemSet& rSet)const
-                                    throw(com::sun::star::beans::UnknownPropertyException);
+        getPropertyState(const ::rtl::OUString& rName, const SfxItemSet& rSet)const;
     com::sun::star::beans::PropertyState
         getPropertyState(const SfxItemPropertySimpleEntry& rEntry, const SfxItemSet& rSet) const
                                     throw();
@@ -173,17 +161,13 @@ public:
     virtual ~SfxItemPropertySetInfo();
 
     virtual ::com::sun::star::uno::Sequence< ::com::sun::star::beans::Property > SAL_CALL
-		getProperties(  )
-			throw(::com::sun::star::uno::RuntimeException);
+		getProperties(  );
 
 	virtual ::com::sun::star::beans::Property SAL_CALL
-		getPropertyByName( const ::rtl::OUString& aName )
-			throw(::com::sun::star::beans::UnknownPropertyException,
-					::com::sun::star::uno::RuntimeException);
+		getPropertyByName( const ::rtl::OUString& aName );
 
 	virtual sal_Bool SAL_CALL
-		hasPropertyByName( const ::rtl::OUString& Name )
-			throw(::com::sun::star::uno::RuntimeException);
+		hasPropertyByName( const ::rtl::OUString& Name );
 
     const SfxItemPropertyMap* getMap() const;
 };
@@ -200,16 +184,13 @@ public:
                             virtual ~SfxExtItemPropertySetInfo();
 
     virtual ::com::sun::star::uno::Sequence< ::com::sun::star::beans::Property > SAL_CALL
-		getProperties(  )
-			throw(::com::sun::star::uno::RuntimeException);
+		getProperties(  );
 
 	virtual ::com::sun::star::beans::Property SAL_CALL
-		getPropertyByName( const ::rtl::OUString& aName )
-			throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::uno::RuntimeException);
+		getPropertyByName( const ::rtl::OUString& aName );
 
 	virtual sal_Bool SAL_CALL
-		hasPropertyByName( const ::rtl::OUString& Name )
-			throw(::com::sun::star::uno::RuntimeException);
+		hasPropertyByName( const ::rtl::OUString& Name );
 };
 
 #endif

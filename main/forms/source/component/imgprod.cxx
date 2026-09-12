@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -82,7 +82,7 @@ ImgProdLockBytes::ImgProdLockBytes( ::com::sun::star::uno::Reference< ::com::sun
 		do
 		{
 			::com::sun::star::uno::Sequence< sal_Int8 > aReadSeq;
-			
+
 			nRead = xStmRef->readSomeBytes( aReadSeq, nBytesToRead );
 
 			if( nRead )
@@ -209,7 +209,7 @@ ImageProducer::~ImageProducer()
 // ------------------------------------------------------------
 
 // ::com::sun::star::uno::XInterface
-::com::sun::star::uno::Any ImageProducer::queryInterface( const ::com::sun::star::uno::Type & rType ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Any ImageProducer::queryInterface( const ::com::sun::star::uno::Type & rType )
 {
 	::com::sun::star::uno::Any aRet = ::cppu::queryInterface( rType,
 										SAL_STATIC_CAST( ::com::sun::star::lang::XInitialization*, this ),
@@ -219,7 +219,7 @@ ImageProducer::~ImageProducer()
 
 // ------------------------------------------------------------
 
-void ImageProducer::addConsumer( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XImageConsumer >& rxConsumer ) throw(::com::sun::star::uno::RuntimeException)
+void ImageProducer::addConsumer( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XImageConsumer >& rxConsumer )
 {
 	DBG_ASSERT( rxConsumer.is(), "::AddConsumer(...): No consumer referenced!" );
 	if( rxConsumer.is() )
@@ -228,7 +228,7 @@ void ImageProducer::addConsumer( const ::com::sun::star::uno::Reference< ::com::
 
 // ------------------------------------------------------------
 
-void ImageProducer::removeConsumer( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XImageConsumer >& rxConsumer ) throw(::com::sun::star::uno::RuntimeException)
+void ImageProducer::removeConsumer( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XImageConsumer >& rxConsumer )
 {
 	for( sal_uInt32 n = maConsList.Count(); n; )
 	{
@@ -302,7 +302,7 @@ void ImageProducer::NewDataAvailable()
 
 // ------------------------------------------------------------
 
-void ImageProducer::startProduction() throw(::com::sun::star::uno::RuntimeException)
+void ImageProducer::startProduction()
 {
 	if( maConsList.Count() || maDoneHdl.IsSet() )
 	{
@@ -424,7 +424,7 @@ void ImageProducer::ImplInitConsumer( const Graphic& rGraphic )
 			if( nPalCount )
 			{
 				aRGBPal = ::com::sun::star::uno::Sequence< sal_Int32 >( nPalCount + 1 );
-				
+
 				sal_Int32* pTmp = aRGBPal.getArray();
 
 				for( sal_uInt32 i = 0; i < nPalCount; i++, pTmp++ )
@@ -596,7 +596,7 @@ void ImageProducer::ImplUpdateConsumer( const Graphic& rGraphic )
 	}
 }
 
-void ImageProducer::initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aArguments ) throw (::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException)
+void ImageProducer::initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aArguments )
 {
 	if ( aArguments.getLength() == 1 )
 	{

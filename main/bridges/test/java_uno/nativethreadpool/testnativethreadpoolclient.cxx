@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -67,17 +67,15 @@ public:
 private:
     virtual ~Client() {}
 
-    virtual sal_Int32 SAL_CALL run(css::uno::Sequence< rtl::OUString > const &)
-        throw (css::uno::RuntimeException);
+    virtual sal_Int32 SAL_CALL run(css::uno::Sequence< rtl::OUString > const &);
 
-    virtual sal_Int32 SAL_CALL get() throw (css::uno::RuntimeException);
+    virtual sal_Int32 SAL_CALL get();
 
     css::uno::Reference< css::uno::XComponentContext > context;
     osl::ThreadData data;
 };
 
 sal_Int32 Client::run(css::uno::Sequence< rtl::OUString > const &)
-    throw (css::uno::RuntimeException)
 {
     css::uno::Reference< css::lang::XMultiComponentFactory > factory(
         context->getServiceManager());
@@ -138,13 +136,12 @@ sal_Int32 Client::run(css::uno::Sequence< rtl::OUString > const &)
     return success ? 0 : 1;
 }
 
-sal_Int32 Client::get() throw (css::uno::RuntimeException) {
+sal_Int32 Client::get() {
     return reinterpret_cast< sal_Int32 >(data.getData());
 }
 
 css::uno::Reference< css::uno::XInterface > SAL_CALL create(
     css::uno::Reference< css::uno::XComponentContext > const & context)
-    SAL_THROW((css::uno::Exception))
 {
     return static_cast< cppu::OWeakObject * >(new Client(context));
 }

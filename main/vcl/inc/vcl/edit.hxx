@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -134,12 +134,12 @@ protected:
     using vcl::unohelper::DragAndDropClient::dragEnter;
     using vcl::unohelper::DragAndDropClient::dragExit;
     using vcl::unohelper::DragAndDropClient::dragOver;
-    virtual void        dragGestureRecognized( const ::com::sun::star::datatransfer::dnd::DragGestureEvent& dge ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void        dragDropEnd( const ::com::sun::star::datatransfer::dnd::DragSourceDropEvent& dsde ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void        drop( const ::com::sun::star::datatransfer::dnd::DropTargetDropEvent& dtde ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void        dragEnter( const ::com::sun::star::datatransfer::dnd::DropTargetDragEnterEvent& dtdee ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void        dragExit( const ::com::sun::star::datatransfer::dnd::DropTargetEvent& dte ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void        dragOver( const ::com::sun::star::datatransfer::dnd::DropTargetDragEvent& dtde ) throw (::com::sun::star::uno::RuntimeException);
+    virtual void        dragGestureRecognized( const ::com::sun::star::datatransfer::dnd::DragGestureEvent& dge );
+    virtual void        dragDropEnd( const ::com::sun::star::datatransfer::dnd::DragSourceDropEvent& dsde );
+    virtual void        drop( const ::com::sun::star::datatransfer::dnd::DropTargetDropEvent& dtde );
+    virtual void        dragEnter( const ::com::sun::star::datatransfer::dnd::DropTargetDragEnterEvent& dtdee );
+    virtual void        dragExit( const ::com::sun::star::datatransfer::dnd::DropTargetEvent& dte );
+    virtual void        dragOver( const ::com::sun::star::datatransfer::dnd::DropTargetDragEvent& dtde );
 
     protected:
     virtual void FillLayoutData() const;
@@ -231,7 +231,7 @@ public:
 	virtual xub_StrLen	GetMaxVisChars() const;
 
     xub_StrLen          GetCharPos( const Point& rWindowPos ) const;
-    
+
     // shows a warning box saying "text too long, truncated"
     static void         ShowTruncationWarning( Window* pParent );
 
@@ -243,7 +243,7 @@ public:
 
 	virtual XubString GetSurroundingText() const;
 	virtual Selection GetSurroundingTextSelection() const;
-	
+
 	// returns the minimum size a bordered Edit should have given the current
 	// global style settings (needed by sc's inputwin.cxx)
 	static Size GetMinimumEditSize();

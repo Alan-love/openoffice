@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -76,7 +76,7 @@ class TableListFacade : public ::cppu::BaseMutex
 {
     OTableTreeListBox&          m_rTableList;
     Reference< XConnection >    m_xConnection;
-    ::rtl::Reference< comphelper::OContainerListenerAdapter>                    
+    ::rtl::Reference< comphelper::OContainerListenerAdapter>
                                 m_pContainerListener;
     bool                        m_bAllowViews;
 
@@ -89,16 +89,16 @@ public:
     {
     }
     virtual ~TableListFacade();
-    
+
 
 private:
     virtual void    updateTableObjectList( bool _bAllowViews );
     virtual String  getSelectedName( String& _out_rAliasName ) const;
     virtual bool    isLeafSelected() const;
     // OContainerListener
-    virtual void _elementInserted( const ::com::sun::star::container::ContainerEvent& _rEvent ) throw(::com::sun::star::uno::RuntimeException);
-	virtual void _elementRemoved( const  ::com::sun::star::container::ContainerEvent& _rEvent ) throw(::com::sun::star::uno::RuntimeException);
-	virtual void _elementReplaced( const ::com::sun::star::container::ContainerEvent& _rEvent ) throw(::com::sun::star::uno::RuntimeException);
+    virtual void _elementInserted( const ::com::sun::star::container::ContainerEvent& _rEvent );
+	virtual void _elementRemoved( const  ::com::sun::star::container::ContainerEvent& _rEvent );
+	virtual void _elementReplaced( const ::com::sun::star::container::ContainerEvent& _rEvent );
 };
 
 TableListFacade::~TableListFacade()
@@ -128,8 +128,8 @@ String TableListFacade::getSelectedName( String& _out_rAliasName ) const
 	try
 	{
         Reference< XDatabaseMetaData > xMeta( m_xConnection->getMetaData(), UNO_QUERY_THROW );
-        if (  !aCatalog.getLength() 
-			&& aSchema.getLength() 
+        if (  !aCatalog.getLength()
+			&& aSchema.getLength()
 			&& xMeta->supportsCatalogsInDataManipulation()
 			&& !xMeta->supportsSchemasInDataManipulation() )
 		{
@@ -149,17 +149,17 @@ String TableListFacade::getSelectedName( String& _out_rAliasName ) const
     return aComposedName;
 }
 // -----------------------------------------------------------------------------
-void TableListFacade::_elementInserted( const container::ContainerEvent& /*_rEvent*/ )  throw(::com::sun::star::uno::RuntimeException)
+void TableListFacade::_elementInserted( const container::ContainerEvent& /*_rEvent*/ )
 {
     updateTableObjectList(m_bAllowViews);
 }
 // -----------------------------------------------------------------------------
-void TableListFacade::_elementRemoved( const container::ContainerEvent& /*_rEvent*/ ) throw(::com::sun::star::uno::RuntimeException)
+void TableListFacade::_elementRemoved( const container::ContainerEvent& /*_rEvent*/ )
 {
     updateTableObjectList(m_bAllowViews);
 }
 // -----------------------------------------------------------------------------
-void TableListFacade::_elementReplaced( const container::ContainerEvent& /*_rEvent*/ ) throw(::com::sun::star::uno::RuntimeException)
+void TableListFacade::_elementReplaced( const container::ContainerEvent& /*_rEvent*/ )
 {
 }
 //------------------------------------------------------------------------------
@@ -170,7 +170,7 @@ void TableListFacade::updateTableObjectList( bool _bAllowViews )
     try
     {
 	    Reference< XTablesSupplier > xTableSupp( m_xConnection, UNO_QUERY_THROW );
-        
+
 	    Reference< XViewsSupplier > xViewSupp;
 	    Reference< XNameAccess > xTables, xViews;
 	    Sequence< ::rtl::OUString > sTables, sViews;
@@ -244,7 +244,7 @@ class QueryListFacade : public ::cppu::BaseMutex
 {
     SvTreeListBox&              m_rQueryList;
     Reference< XConnection >    m_xConnection;
-    ::rtl::Reference< comphelper::OContainerListenerAdapter>                    
+    ::rtl::Reference< comphelper::OContainerListenerAdapter>
                                 m_pContainerListener;
 
 public:
@@ -260,9 +260,9 @@ private:
     virtual String  getSelectedName( String& _out_rAliasName ) const;
     virtual bool    isLeafSelected() const;
     // OContainerListener
-    virtual void _elementInserted( const ::com::sun::star::container::ContainerEvent& _rEvent ) throw(::com::sun::star::uno::RuntimeException);
-	virtual void _elementRemoved( const  ::com::sun::star::container::ContainerEvent& _rEvent ) throw(::com::sun::star::uno::RuntimeException);
-	virtual void _elementReplaced( const ::com::sun::star::container::ContainerEvent& _rEvent ) throw(::com::sun::star::uno::RuntimeException);
+    virtual void _elementInserted( const ::com::sun::star::container::ContainerEvent& _rEvent );
+	virtual void _elementRemoved( const  ::com::sun::star::container::ContainerEvent& _rEvent );
+	virtual void _elementReplaced( const ::com::sun::star::container::ContainerEvent& _rEvent );
 };
 QueryListFacade::~QueryListFacade()
 {
@@ -270,19 +270,19 @@ QueryListFacade::~QueryListFacade()
         m_pContainerListener->dispose();
 }
 // -----------------------------------------------------------------------------
-void QueryListFacade::_elementInserted( const container::ContainerEvent& _rEvent )  throw(::com::sun::star::uno::RuntimeException)
+void QueryListFacade::_elementInserted( const container::ContainerEvent& _rEvent )
 {
     ::rtl::OUString sName;
     if ( _rEvent.Accessor >>= sName )
         m_rQueryList.InsertEntry( sName );
 }
 // -----------------------------------------------------------------------------
-void QueryListFacade::_elementRemoved( const container::ContainerEvent& /*_rEvent*/ ) throw(::com::sun::star::uno::RuntimeException)
+void QueryListFacade::_elementRemoved( const container::ContainerEvent& /*_rEvent*/ )
 {
     updateTableObjectList(true);
 }
 // -----------------------------------------------------------------------------
-void QueryListFacade::_elementReplaced( const container::ContainerEvent& /*_rEvent*/ ) throw(::com::sun::star::uno::RuntimeException)
+void QueryListFacade::_elementReplaced( const container::ContainerEvent& /*_rEvent*/ )
 {
 }
 
@@ -526,4 +526,3 @@ String OAddTableDlg::getDialogTitleForContext( IAddTableDialogContext& _rContext
 }
 
 // -----------------------------------------------------------------------------
-

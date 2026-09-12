@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -43,7 +43,7 @@ namespace stoc_connector {
 
 		{
 			::osl::MutexGuard guard(pCon->_mutex);
-			if(!*notified) 
+			if(!*notified)
 			{
 				*notified = sal_True;
 				listeners = pCon->_listeners;
@@ -82,7 +82,7 @@ namespace stoc_connector {
 		xStreamListener->closed();
 	}
 
-	
+
 	SocketConnection::SocketConnection( const OUString &sConnectionDescription ) :
 		m_nStatus( 0 ),
 		m_sDescription( sConnectionDescription ),
@@ -103,7 +103,7 @@ namespace stoc_connector {
 	{
 		g_moduleCount.modCnt.release( &g_moduleCount.modCnt );
 	}
-	
+
 	void SocketConnection::completeConnectionString()
 	{
 		sal_Int32 nPort;
@@ -123,10 +123,8 @@ namespace stoc_connector {
 
 		m_sDescription += buf.makeStringAndClear();
 	}
-	
+
 	sal_Int32 SocketConnection::read( Sequence < sal_Int8 > & aReadBytes , sal_Int32 nBytesToRead )
-			throw(::com::sun::star::io::IOException,
-				  ::com::sun::star::uno::RuntimeException)
 	{
 		if( ! m_nStatus )
 		{
@@ -142,20 +140,20 @@ namespace stoc_connector {
 			{
 				OUString message(RTL_CONSTASCII_USTRINGPARAM("ctr_socket.cxx:SocketConnection::read: error - "));
 				message += m_socket.getErrorAsString();
-				
+
 				IOException ioException(message, Reference<XInterface>(static_cast<XConnection *>(this)));
-				
+
 				Any any;
 				any <<= ioException;
-				
+
 				notifyListeners(this, &_error, callError(any));
-				
+
 				throw ioException;
 			}
 
 			return i;
 		}
-		else 
+		else
 		{
 			OUString message(RTL_CONSTASCII_USTRINGPARAM("ctr_socket.cxx:SocketConnection::read: error - connection already closed"));
 
@@ -171,8 +169,6 @@ namespace stoc_connector {
 	}
 
 	void SocketConnection::write( const Sequence < sal_Int8 > &seq )
-			throw(::com::sun::star::io::IOException,
-				  ::com::sun::star::uno::RuntimeException)
 	{
 		if( ! m_nStatus )
 		{
@@ -180,18 +176,18 @@ namespace stoc_connector {
 			{
 				OUString message(RTL_CONSTASCII_USTRINGPARAM("ctr_socket.cxx:SocketConnection::write: error - "));
 				message += m_socket.getErrorAsString();
-				
+
 				IOException ioException(message, Reference<XInterface>(static_cast<XConnection *>(this)));
-				
+
 				Any any;
 				any <<= ioException;
-				
+
 				notifyListeners(this, &_error, callError(any));
 
 				throw ioException;
 			}
 		}
-		else 
+		else
 		{
 			OUString message(RTL_CONSTASCII_USTRINGPARAM("ctr_socket.cxx:SocketConnection::write: error - connection already closed"));
 
@@ -207,15 +203,11 @@ namespace stoc_connector {
 	}
 
 	void SocketConnection::flush( )
-			throw(::com::sun::star::io::IOException,
-				  ::com::sun::star::uno::RuntimeException)
 	{
 
 	}
 
 	void SocketConnection::close()
-			throw(::com::sun::star::io::IOException,
-				  ::com::sun::star::uno::RuntimeException)
 	{
 			// ensure that close is called only once
 		if( 1 == osl_incrementInterlockedCount( (&m_nStatus) ) )
@@ -226,7 +218,6 @@ namespace stoc_connector {
 	}
 
 	OUString SocketConnection::getDescription()
-			throw( ::com::sun::star::uno::RuntimeException)
 	{
 		return m_sDescription;
 	}
@@ -234,18 +225,17 @@ namespace stoc_connector {
 
 
 	// XConnectionBroadcaster
-	void SAL_CALL SocketConnection::addStreamListener(const Reference<XStreamListener> & aListener) throw(RuntimeException)
+	void SAL_CALL SocketConnection::addStreamListener(const Reference<XStreamListener> & aListener)
 	{
 		MutexGuard guard(_mutex);
 
 		_listeners.insert(aListener);
 	}
 
-	void SAL_CALL SocketConnection::removeStreamListener(const Reference<XStreamListener> & aListener) throw(RuntimeException)
+	void SAL_CALL SocketConnection::removeStreamListener(const Reference<XStreamListener> & aListener)
 	{
 		MutexGuard guard(_mutex);
 
 		_listeners.erase(aListener);
 	}
 }
-

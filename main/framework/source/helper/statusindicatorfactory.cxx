@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -126,8 +126,6 @@ StatusIndicatorFactory::~StatusIndicatorFactory()
 
 //-----------------------------------------------
 void SAL_CALL StatusIndicatorFactory::initialize(const css::uno::Sequence< css::uno::Any >& lArguments)
-    throw(css::uno::Exception       ,
-          css::uno::RuntimeException)
 {
     ::comphelper::SequenceAsHashMap lArgs(lArguments);
 
@@ -147,7 +145,6 @@ void SAL_CALL StatusIndicatorFactory::initialize(const css::uno::Sequence< css::
 
 //-----------------------------------------------
 css::uno::Reference< css::task::XStatusIndicator > SAL_CALL StatusIndicatorFactory::createStatusIndicator()
-    throw(css::uno::RuntimeException)
 {
     StatusIndicator* pIndicator = new StatusIndicator(this);
     css::uno::Reference< css::task::XStatusIndicator > xIndicator(static_cast< ::cppu::OWeakObject* >(pIndicator), css::uno::UNO_QUERY_THROW);
@@ -157,7 +154,6 @@ css::uno::Reference< css::task::XStatusIndicator > SAL_CALL StatusIndicatorFacto
 
 //-----------------------------------------------
 void SAL_CALL StatusIndicatorFactory::update()
-    throw(css::uno::RuntimeException)
 {
     // SAFE -> ----------------------------------
     WriteGuard aWriteLock(m_aLock);
@@ -515,7 +511,7 @@ void StatusIndicatorFactory::impl_showProgress()
     // <- SAFE ----------------------------------
 
     css::uno::Reference< css::task::XStatusIndicator > xProgress;
-    
+
     if (xFrame.is())
     {
         // use frame layouted progress implementation
@@ -531,7 +527,7 @@ void StatusIndicatorFactory::impl_showProgress()
                 // CreateElement does nothing if there is already a valid progress.
                 xLayoutManager->createElement( PROGRESS_RESOURCE );
                 xLayoutManager->showElement( PROGRESS_RESOURCE );
-                
+
                 css::uno::Reference< css::ui::XUIElement > xProgressBar = xLayoutManager->getElement(PROGRESS_RESOURCE);
                 if (xProgressBar.is())
                     xProgress = css::uno::Reference< css::task::XStatusIndicator >(xProgressBar->getRealInterface(), css::uno::UNO_QUERY);

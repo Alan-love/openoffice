@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -52,9 +52,9 @@ class SvNumberFormatsSupplierObj;
 //	----------------------------------------------------
 //	class VCLXMultiLineEdit
 //	----------------------------------------------------
-class VCLXMultiLineEdit :	public ::com::sun::star::awt::XTextComponent, 
-							public ::com::sun::star::awt::XTextArea, 
-							public ::com::sun::star::awt::XTextLayoutConstrains, 
+class VCLXMultiLineEdit :	public ::com::sun::star::awt::XTextComponent,
+							public ::com::sun::star::awt::XTextArea,
+							public ::com::sun::star::awt::XTextLayoutConstrains,
 							public VCLXWindow
 {
 private:
@@ -69,46 +69,46 @@ public:
 					~VCLXMultiLineEdit();
 
 	// ::com::sun::star::uno::XInterface
-    ::com::sun::star::uno::Any					SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType ) throw(::com::sun::star::uno::RuntimeException);
+    ::com::sun::star::uno::Any					SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType );
 	void										SAL_CALL acquire() throw()	{ VCLXWindow::acquire(); }
 	void										SAL_CALL release() throw()	{ VCLXWindow::release(); }
 
     // ::com::sun::star::lang::XTypeProvider
-	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type >	SAL_CALL getTypes() throw(::com::sun::star::uno::RuntimeException);
-	::com::sun::star::uno::Sequence< sal_Int8 >						SAL_CALL getImplementationId() throw(::com::sun::star::uno::RuntimeException);
+	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type >	SAL_CALL getTypes();
+	::com::sun::star::uno::Sequence< sal_Int8 >						SAL_CALL getImplementationId();
 
 	// ::com::sun::star::awt::XTextComponent
-    void SAL_CALL addTextListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XTextListener >& l ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL removeTextListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XTextListener >& l ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setText( const ::rtl::OUString& aText ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL insertText( const ::com::sun::star::awt::Selection& Sel, const ::rtl::OUString& Text ) throw(::com::sun::star::uno::RuntimeException);
-    ::rtl::OUString SAL_CALL getText(  ) throw(::com::sun::star::uno::RuntimeException);
-    ::rtl::OUString SAL_CALL getSelectedText(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setSelection( const ::com::sun::star::awt::Selection& aSelection ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::awt::Selection SAL_CALL getSelection(  ) throw(::com::sun::star::uno::RuntimeException);
-    sal_Bool SAL_CALL isEditable(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setEditable( sal_Bool bEditable ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setMaxTextLen( sal_Int16 nLen ) throw(::com::sun::star::uno::RuntimeException);
-    sal_Int16 SAL_CALL getMaxTextLen(  ) throw(::com::sun::star::uno::RuntimeException);
+    void SAL_CALL addTextListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XTextListener >& l );
+    void SAL_CALL removeTextListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XTextListener >& l );
+    void SAL_CALL setText( const ::rtl::OUString& aText );
+    void SAL_CALL insertText( const ::com::sun::star::awt::Selection& Sel, const ::rtl::OUString& Text );
+    ::rtl::OUString SAL_CALL getText(  );
+    ::rtl::OUString SAL_CALL getSelectedText(  );
+    void SAL_CALL setSelection( const ::com::sun::star::awt::Selection& aSelection );
+    ::com::sun::star::awt::Selection SAL_CALL getSelection(  );
+    sal_Bool SAL_CALL isEditable(  );
+    void SAL_CALL setEditable( sal_Bool bEditable );
+    void SAL_CALL setMaxTextLen( sal_Int16 nLen );
+    sal_Int16 SAL_CALL getMaxTextLen(  );
 
 	//XTextArea
-    ::rtl::OUString SAL_CALL getTextLines(  ) throw(::com::sun::star::uno::RuntimeException);
+    ::rtl::OUString SAL_CALL getTextLines(  );
 
 	// ::com::sun::star::awt::XLayoutConstrains
-    ::com::sun::star::awt::Size SAL_CALL getMinimumSize(  ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::awt::Size SAL_CALL getPreferredSize(  ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::awt::Size SAL_CALL calcAdjustedSize( const ::com::sun::star::awt::Size& aNewSize ) throw(::com::sun::star::uno::RuntimeException);
+    ::com::sun::star::awt::Size SAL_CALL getMinimumSize(  );
+    ::com::sun::star::awt::Size SAL_CALL getPreferredSize(  );
+    ::com::sun::star::awt::Size SAL_CALL calcAdjustedSize( const ::com::sun::star::awt::Size& aNewSize );
 
 	// ::com::sun::star::awt::XTextLayoutConstrains
-    ::com::sun::star::awt::Size SAL_CALL getMinimumSize( sal_Int16 nCols, sal_Int16 nLines ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL getColumnsAndLines( sal_Int16& nCols, sal_Int16& nLines ) throw(::com::sun::star::uno::RuntimeException);
+    ::com::sun::star::awt::Size SAL_CALL getMinimumSize( sal_Int16 nCols, sal_Int16 nLines );
+    void SAL_CALL getColumnsAndLines( sal_Int16& nCols, sal_Int16& nLines );
 
 	// ::com::sun::star::awt::XVclWindowPeer
-    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::uno::Any SAL_CALL getProperty( const ::rtl::OUString& PropertyName ) throw(::com::sun::star::uno::RuntimeException);
+    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value );
+    ::com::sun::star::uno::Any SAL_CALL getProperty( const ::rtl::OUString& PropertyName );
 
     // ::com::sun::star::awt::XWindow
-    void SAL_CALL setFocus(  ) throw(::com::sun::star::uno::RuntimeException);
+    void SAL_CALL setFocus(  );
 
     static void     ImplGetPropertyIds( std::list< sal_uInt16 > &aIds );
     virtual void    GetPropertyIds( std::list< sal_uInt16 > &aIds ) { return ImplGetPropertyIds( aIds ); }
@@ -131,38 +131,38 @@ public:
 	void 			SetWindow( Window* pWindow );
 
 	// ::com::sun::star::uno::XInterface
-    ::com::sun::star::uno::Any					SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType ) throw(::com::sun::star::uno::RuntimeException);
+    ::com::sun::star::uno::Any					SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType );
 	void										SAL_CALL acquire() throw()	{ VCLXWindow::acquire(); }
 	void										SAL_CALL release() throw()	{ VCLXWindow::release(); }
 
     // ::com::sun::star::lang::XTypeProvider
-	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type >	SAL_CALL getTypes() throw(::com::sun::star::uno::RuntimeException);
-	::com::sun::star::uno::Sequence< sal_Int8 >						SAL_CALL getImplementationId() throw(::com::sun::star::uno::RuntimeException);
+	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type >	SAL_CALL getTypes();
+	::com::sun::star::uno::Sequence< sal_Int8 >						SAL_CALL getImplementationId();
 
 	// ::com::sun::star::awt::XTextComponent
-    void SAL_CALL addTextListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XTextListener >& l ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL removeTextListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XTextListener >& l ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setText( const ::rtl::OUString& aText ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL insertText( const ::com::sun::star::awt::Selection& Sel, const ::rtl::OUString& Text ) throw(::com::sun::star::uno::RuntimeException);
-    ::rtl::OUString SAL_CALL getText(  ) throw(::com::sun::star::uno::RuntimeException);
-    ::rtl::OUString SAL_CALL getSelectedText(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setSelection( const ::com::sun::star::awt::Selection& aSelection ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::awt::Selection SAL_CALL getSelection(  ) throw(::com::sun::star::uno::RuntimeException);
-    sal_Bool SAL_CALL isEditable(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setEditable( sal_Bool bEditable ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setMaxTextLen( sal_Int16 nLen ) throw(::com::sun::star::uno::RuntimeException);
-    sal_Int16 SAL_CALL getMaxTextLen(  ) throw(::com::sun::star::uno::RuntimeException);
+    void SAL_CALL addTextListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XTextListener >& l );
+    void SAL_CALL removeTextListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XTextListener >& l );
+    void SAL_CALL setText( const ::rtl::OUString& aText );
+    void SAL_CALL insertText( const ::com::sun::star::awt::Selection& Sel, const ::rtl::OUString& Text );
+    ::rtl::OUString SAL_CALL getText(  );
+    ::rtl::OUString SAL_CALL getSelectedText(  );
+    void SAL_CALL setSelection( const ::com::sun::star::awt::Selection& aSelection );
+    ::com::sun::star::awt::Selection SAL_CALL getSelection(  );
+    sal_Bool SAL_CALL isEditable(  );
+    void SAL_CALL setEditable( sal_Bool bEditable );
+    void SAL_CALL setMaxTextLen( sal_Int16 nLen );
+    sal_Int16 SAL_CALL getMaxTextLen(  );
 
 	// ::com::sun::star::awt::XLayoutConstrains
-    ::com::sun::star::awt::Size SAL_CALL getMinimumSize(  ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::awt::Size SAL_CALL getPreferredSize(  ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::awt::Size SAL_CALL calcAdjustedSize( const ::com::sun::star::awt::Size& aNewSize ) throw(::com::sun::star::uno::RuntimeException);
+    ::com::sun::star::awt::Size SAL_CALL getMinimumSize(  );
+    ::com::sun::star::awt::Size SAL_CALL getPreferredSize(  );
+    ::com::sun::star::awt::Size SAL_CALL calcAdjustedSize( const ::com::sun::star::awt::Size& aNewSize );
 
 	// ::com::sun::star::awt::XTextLayoutConstrains
-    ::com::sun::star::awt::Size SAL_CALL getMinimumSize( sal_Int16 nCols, sal_Int16 nLines ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL getColumnsAndLines( sal_Int16& nCols, sal_Int16& nLines ) throw(::com::sun::star::uno::RuntimeException);
+    ::com::sun::star::awt::Size SAL_CALL getMinimumSize( sal_Int16 nCols, sal_Int16 nLines );
+    void SAL_CALL getColumnsAndLines( sal_Int16& nCols, sal_Int16& nLines );
 
-    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value) throw(::com::sun::star::uno::RuntimeException);
+    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value);
 
     static void     ImplGetPropertyIds( std::list< sal_uInt16 > &aIds );
     virtual void    GetPropertyIds( std::list< sal_uInt16 > &aIds ) { return ImplGetPropertyIds( aIds ); }
@@ -179,16 +179,16 @@ protected:
 	sal_Bool					bIsStandardSupplier;
 
 	sal_Int32					nKeyToSetDelayed;
-	
-	FormattedField*				GetFormattedField() const { return (FormattedField*)GetWindow(); }	
+
+	FormattedField*				GetFormattedField() const { return (FormattedField*)GetWindow(); }
 
 public:
 	SVTXFormattedField();
 	~SVTXFormattedField();
 
 	// ::com::sun::star::awt::XVclWindowPeer
-    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::uno::Any SAL_CALL getProperty( const ::rtl::OUString& PropertyName ) throw(::com::sun::star::uno::RuntimeException);
+    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value );
+    ::com::sun::star::uno::Any SAL_CALL getProperty( const ::rtl::OUString& PropertyName );
 
 protected:
 	::com::sun::star::uno::Reference< ::com::sun::star::util::XNumberFormatsSupplier >  getFormatsSupplier(void) const;
@@ -244,16 +244,16 @@ typedef ::cppu::ImplInheritanceHelper3  <   VCLXGraphicControl
                                         ,   ::com::sun::star::awt::XItemEventBroadcaster
                                         >   SVTXRoadmap_Base;
 class SVTXRoadmap : public SVTXRoadmap_Base
-                    
-                    
+
+
 {
 private:
     ItemListenerMultiplexer 	maItemListeners;
-    
+
     RMItemData CurRMItemData;
     RMItemData GetRMItemData( const ::com::sun::star::container::ContainerEvent& _rEvent );
 
-protected:	
+protected:
     ::svt::ORoadmap*				GetRoadmap() const { return (::svt::ORoadmap*)GetWindow(); }
     void                            ProcessWindowEvent( const VclWindowEvent& rVclWindowEvent );
 
@@ -262,24 +262,24 @@ protected:
 public:
 	SVTXRoadmap();
 
-    void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source ) throw(::com::sun::star::uno::RuntimeException) { VCLXWindow::disposing( Source ); }
+    void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source ) { VCLXWindow::disposing( Source ); }
 
 	// ::com::sun::star::awt::XVclWindowPeer
-    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value ) throw(::com::sun::star::uno::RuntimeException);
+    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value );
 
-    ::com::sun::star::uno::Any SAL_CALL getProperty( const ::rtl::OUString& PropertyName ) throw(::com::sun::star::uno::RuntimeException);
+    ::com::sun::star::uno::Any SAL_CALL getProperty( const ::rtl::OUString& PropertyName );
 
     // XContainerListener
-    void SAL_CALL elementInserted( const ::com::sun::star::container::ContainerEvent& rEvent )throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL elementRemoved( const ::com::sun::star::container::ContainerEvent& rEvent )throw(::com::sun::star::uno::RuntimeException); 
-    void SAL_CALL elementReplaced( const ::com::sun::star::container::ContainerEvent& rEvent )throw(::com::sun::star::uno::RuntimeException); 
+    void SAL_CALL elementInserted( const ::com::sun::star::container::ContainerEvent& rEvent );
+    void SAL_CALL elementRemoved( const ::com::sun::star::container::ContainerEvent& rEvent );
+    void SAL_CALL elementReplaced( const ::com::sun::star::container::ContainerEvent& rEvent );
 
     // XItemEventBroadcaster
-    virtual void SAL_CALL addItemListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XItemListener >& l ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL removeItemListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XItemListener >& l ) throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL addItemListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XItemListener >& l );
+    virtual void SAL_CALL removeItemListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XItemListener >& l );
 
     // XPropertyChangeListener
-    virtual void SAL_CALL propertyChange( const ::com::sun::star::beans::PropertyChangeEvent& evt ) throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL propertyChange( const ::com::sun::star::beans::PropertyChangeEvent& evt );
 
 protected:
 
@@ -302,31 +302,31 @@ public:
 					~SVTXNumericField();
 
 	// ::com::sun::star::uno::XInterface
-    ::com::sun::star::uno::Any					SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType ) throw(::com::sun::star::uno::RuntimeException);
+    ::com::sun::star::uno::Any					SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType );
 	void										SAL_CALL acquire() throw()	{ SVTXFormattedField::acquire(); }
 	void										SAL_CALL release() throw()	{ SVTXFormattedField::release(); }
 
     // ::com::sun::star::lang::XTypeProvider
-	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type >	SAL_CALL getTypes() throw(::com::sun::star::uno::RuntimeException);
-	::com::sun::star::uno::Sequence< sal_Int8 >						SAL_CALL getImplementationId() throw(::com::sun::star::uno::RuntimeException);
+	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type >	SAL_CALL getTypes();
+	::com::sun::star::uno::Sequence< sal_Int8 >						SAL_CALL getImplementationId();
 
 	// ::com::sun::star::awt::XNumericField
-    void SAL_CALL setValue( double Value ) throw(::com::sun::star::uno::RuntimeException);
-    double SAL_CALL getValue(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setMin( double Value ) throw(::com::sun::star::uno::RuntimeException);
-    double SAL_CALL getMin(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setMax( double Value ) throw(::com::sun::star::uno::RuntimeException);
-    double SAL_CALL getMax(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setFirst( double Value ) throw(::com::sun::star::uno::RuntimeException);
-    double SAL_CALL getFirst(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setLast( double Value ) throw(::com::sun::star::uno::RuntimeException);
-    double SAL_CALL getLast(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setSpinSize( double Value ) throw(::com::sun::star::uno::RuntimeException);
-    double SAL_CALL getSpinSize(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setDecimalDigits( sal_Int16 nDigits ) throw(::com::sun::star::uno::RuntimeException);
-    sal_Int16 SAL_CALL getDecimalDigits(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setStrictFormat( sal_Bool bStrict ) throw(::com::sun::star::uno::RuntimeException);
-    sal_Bool SAL_CALL isStrictFormat(  ) throw(::com::sun::star::uno::RuntimeException);
+    void SAL_CALL setValue( double Value );
+    double SAL_CALL getValue(  );
+    void SAL_CALL setMin( double Value );
+    double SAL_CALL getMin(  );
+    void SAL_CALL setMax( double Value );
+    double SAL_CALL getMax(  );
+    void SAL_CALL setFirst( double Value );
+    double SAL_CALL getFirst(  );
+    void SAL_CALL setLast( double Value );
+    double SAL_CALL getLast(  );
+    void SAL_CALL setSpinSize( double Value );
+    double SAL_CALL getSpinSize(  );
+    void SAL_CALL setDecimalDigits( sal_Int16 nDigits );
+    sal_Int16 SAL_CALL getDecimalDigits(  );
+    void SAL_CALL setStrictFormat( sal_Bool bStrict );
+    sal_Bool SAL_CALL isStrictFormat(  );
 
     static void     ImplGetPropertyIds( std::list< sal_uInt16 > &aIds );
     virtual void    GetPropertyIds( std::list< sal_uInt16 > &aIds ) { return ImplGetPropertyIds( aIds ); }
@@ -342,35 +342,35 @@ public:
 					~SVTXCurrencyField();
 
 	// ::com::sun::star::uno::XInterface
-    ::com::sun::star::uno::Any					SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType ) throw(::com::sun::star::uno::RuntimeException);
+    ::com::sun::star::uno::Any					SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType );
 	void										SAL_CALL acquire() throw()	{ SVTXFormattedField::acquire(); }
 	void										SAL_CALL release() throw()	{ SVTXFormattedField::release(); }
 
     // ::com::sun::star::lang::XTypeProvider
-	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type >	SAL_CALL getTypes() throw(::com::sun::star::uno::RuntimeException);
-	::com::sun::star::uno::Sequence< sal_Int8 >						SAL_CALL getImplementationId() throw(::com::sun::star::uno::RuntimeException);
+	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type >	SAL_CALL getTypes();
+	::com::sun::star::uno::Sequence< sal_Int8 >						SAL_CALL getImplementationId();
 
 	// ::com::sun::star::awt::XVclWindowPeer
-    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::uno::Any SAL_CALL getProperty( const ::rtl::OUString& PropertyName ) throw(::com::sun::star::uno::RuntimeException);
+    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value );
+    ::com::sun::star::uno::Any SAL_CALL getProperty( const ::rtl::OUString& PropertyName );
 
 	// ::com::sun::star::awt::XCurrencyField
-    void SAL_CALL setValue( double Value ) throw(::com::sun::star::uno::RuntimeException);
-    double SAL_CALL getValue(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setMin( double Value ) throw(::com::sun::star::uno::RuntimeException);
-    double SAL_CALL getMin(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setMax( double Value ) throw(::com::sun::star::uno::RuntimeException);
-    double SAL_CALL getMax(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setFirst( double Value ) throw(::com::sun::star::uno::RuntimeException);
-    double SAL_CALL getFirst(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setLast( double Value ) throw(::com::sun::star::uno::RuntimeException);
-    double SAL_CALL getLast(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setSpinSize( double Value ) throw(::com::sun::star::uno::RuntimeException);
-    double SAL_CALL getSpinSize(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setDecimalDigits( sal_Int16 nDigits ) throw(::com::sun::star::uno::RuntimeException);
-    sal_Int16 SAL_CALL getDecimalDigits(  ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setStrictFormat( sal_Bool bStrict ) throw(::com::sun::star::uno::RuntimeException);
-    sal_Bool SAL_CALL isStrictFormat(  ) throw(::com::sun::star::uno::RuntimeException);
+    void SAL_CALL setValue( double Value );
+    double SAL_CALL getValue(  );
+    void SAL_CALL setMin( double Value );
+    double SAL_CALL getMin(  );
+    void SAL_CALL setMax( double Value );
+    double SAL_CALL getMax(  );
+    void SAL_CALL setFirst( double Value );
+    double SAL_CALL getFirst(  );
+    void SAL_CALL setLast( double Value );
+    double SAL_CALL getLast(  );
+    void SAL_CALL setSpinSize( double Value );
+    double SAL_CALL getSpinSize(  );
+    void SAL_CALL setDecimalDigits( sal_Int16 nDigits );
+    sal_Int16 SAL_CALL getDecimalDigits(  );
+    void SAL_CALL setStrictFormat( sal_Bool bStrict );
+    sal_Bool SAL_CALL isStrictFormat(  );
 
     static void     ImplGetPropertyIds( std::list< sal_uInt16 > &aIds );
     virtual void    GetPropertyIds( std::list< sal_uInt16 > &aIds ) { return ImplGetPropertyIds( aIds ); }
@@ -379,7 +379,7 @@ public:
 //	----------------------------------------------------
 //	class VCLXProgressBar
 //	----------------------------------------------------
-class VCLXProgressBar :	public ::com::sun::star::awt::XProgressBar, 
+class VCLXProgressBar :	public ::com::sun::star::awt::XProgressBar,
 						public VCLXWindow
 {
 private:
@@ -395,24 +395,24 @@ public:
 					~VCLXProgressBar();
 
 	// ::com::sun::star::uno::XInterface
-    ::com::sun::star::uno::Any					SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType ) throw(::com::sun::star::uno::RuntimeException);
+    ::com::sun::star::uno::Any					SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType );
 	void										SAL_CALL acquire() throw()	{ VCLXWindow::acquire(); }
 	void										SAL_CALL release() throw()	{ VCLXWindow::release(); }
 
     // ::com::sun::star::lang::XTypeProvider
-	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type >	SAL_CALL getTypes() throw(::com::sun::star::uno::RuntimeException);
-	::com::sun::star::uno::Sequence< sal_Int8 >						SAL_CALL getImplementationId() throw(::com::sun::star::uno::RuntimeException);
+	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type >	SAL_CALL getTypes();
+	::com::sun::star::uno::Sequence< sal_Int8 >						SAL_CALL getImplementationId();
 
-	// ::com::sun::star::awt::XProgressBar	
-    void SAL_CALL setForegroundColor( sal_Int32 nColor ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setBackgroundColor( sal_Int32 nColor ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setValue( sal_Int32 nValue ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL setRange(	sal_Int32 nMin, sal_Int32 nMax ) throw(::com::sun::star::uno::RuntimeException );
-    sal_Int32 SAL_CALL getValue() throw(::com::sun::star::uno::RuntimeException);
-		
+	// ::com::sun::star::awt::XProgressBar
+    void SAL_CALL setForegroundColor( sal_Int32 nColor );
+    void SAL_CALL setBackgroundColor( sal_Int32 nColor );
+    void SAL_CALL setValue( sal_Int32 nValue );
+    void SAL_CALL setRange(	sal_Int32 nMin, sal_Int32 nMax );
+    sal_Int32 SAL_CALL getValue();
+
 	// ::com::sun::star::awt::VclWindowPeer
-    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::uno::Any SAL_CALL getProperty( const ::rtl::OUString& PropertyName ) throw(::com::sun::star::uno::RuntimeException);
+    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value );
+    ::com::sun::star::uno::Any SAL_CALL getProperty( const ::rtl::OUString& PropertyName );
 
     static void     ImplGetPropertyIds( std::list< sal_uInt16 > &aIds );
     virtual void    GetPropertyIds( std::list< sal_uInt16 > &aIds ) { return ImplGetPropertyIds( aIds ); }
@@ -428,7 +428,7 @@ public:
 					~SVTXDateField();
 
 	// ::com::sun::star::awt::VclWindowPeer
-    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value ) throw(::com::sun::star::uno::RuntimeException);
+    void SAL_CALL setProperty( const ::rtl::OUString& PropertyName, const ::com::sun::star::uno::Any& Value );
 
     static void     ImplGetPropertyIds( std::list< sal_uInt16 > &aIds );
     virtual void    GetPropertyIds( std::list< sal_uInt16 > &aIds ) { return ImplGetPropertyIds( aIds ); }

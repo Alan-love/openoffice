@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -56,7 +56,6 @@ bool SAL_CALL XInputStream_impl::CtorSuccess()
 uno::Any SAL_CALL
 XInputStream_impl::queryInterface(
 	const uno::Type& rType )
-	throw( uno::RuntimeException)
 {
 	uno::Any aRet = cppu::queryInterface( rType,
 										  SAL_STATIC_CAST( io::XInputStream*,this ),
@@ -88,18 +87,14 @@ sal_Int32 SAL_CALL
 XInputStream_impl::readBytes(
 			     uno::Sequence< sal_Int8 >& aData,
 			     sal_Int32 nBytesToRead )
-	throw( io::NotConnectedException,
-		   io::BufferSizeExceededException,
-		   io::IOException,
-		   uno::RuntimeException)
 {
 	if( ! m_bIsOpen )
         throw io::IOException();
-    
+
     aData.realloc(nBytesToRead);
     //TODO! translate memory exhaustion (if it were detectable...) into
     // io::BufferSizeExceededException
-    
+
 	sal_uInt64 nrc;
 	m_aFile.read( aData.getArray(),sal_uInt64(nBytesToRead),nrc );
 
@@ -115,10 +110,6 @@ sal_Int32 SAL_CALL
 XInputStream_impl::readSomeBytes(
 	uno::Sequence< sal_Int8 >& aData,
 	sal_Int32 nMaxBytesToRead )
-	throw( io::NotConnectedException,
-		   io::BufferSizeExceededException,
-		   io::IOException,
-		   uno::RuntimeException)
 {
 	return readBytes( aData,nMaxBytesToRead );
 }
@@ -127,10 +118,6 @@ XInputStream_impl::readSomeBytes(
 void SAL_CALL
 XInputStream_impl::skipBytes(
 	sal_Int32 nBytesToSkip )
-	throw( io::NotConnectedException,
-		   io::BufferSizeExceededException,
-		   io::IOException,
-		   uno::RuntimeException)
 {
 	m_aFile.setPos( osl_Pos_Current, sal_uInt64( nBytesToSkip ) );
 }
@@ -139,9 +126,6 @@ XInputStream_impl::skipBytes(
 sal_Int32 SAL_CALL
 XInputStream_impl::available(
 	void )
-	throw( io::NotConnectedException,
-		   io::IOException,
-		   uno::RuntimeException)
 {
 	return 0;
 }
@@ -150,9 +134,6 @@ XInputStream_impl::available(
 void SAL_CALL
 XInputStream_impl::closeInput(
 	void )
-	throw( io::NotConnectedException,
-		   io::IOException,
-		   uno::RuntimeException )
 {
 	if( m_bIsOpen )
 	{
@@ -167,9 +148,6 @@ XInputStream_impl::closeInput(
 void SAL_CALL
 XInputStream_impl::seek(
 	sal_Int64 location )
-	throw( lang::IllegalArgumentException,
-		   io::IOException,
-		   uno::RuntimeException )
 {
 	if( location < 0 )
 		throw lang::IllegalArgumentException();
@@ -181,8 +159,6 @@ XInputStream_impl::seek(
 sal_Int64 SAL_CALL
 XInputStream_impl::getPosition(
 	void )
-	throw( io::IOException,
-		   uno::RuntimeException )
 {
 	sal_uInt64 uPos;
 	if( osl::FileBase::E_None != m_aFile.getPos( uPos ) )
@@ -193,8 +169,6 @@ XInputStream_impl::getPosition(
 sal_Int64 SAL_CALL
 XInputStream_impl::getLength(
 	void )
-	throw( io::IOException,
-		   uno::RuntimeException )
 {
 	osl::FileBase::RC	err;
 	sal_uInt64			uCurrentPos, uEndPos;

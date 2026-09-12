@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -43,9 +43,9 @@ class ScVbaInterior :  public ScVbaInterior_BASE
 	css::uno::Reference< css::beans::XPropertySet > m_xProps;
 	ScDocument* m_pScDoc;
     Color m_aPattColor;
-    sal_Int32 m_nPattern; 
+    sal_Int32 m_nPattern;
 
-        css::uno::Reference< css::container::XIndexAccess > getPalette(); 
+        css::uno::Reference< css::container::XIndexAccess > getPalette();
     css::uno::Reference< css::container::XNameContainer > GetAttributeContainer();
     css::uno::Any SetAttributeData( sal_Int32 nValue );
     sal_Int32 GetAttributeData( css::uno::Any aValue );
@@ -61,24 +61,23 @@ protected:
     void SetMixedColor();
 public:
         ScVbaInterior( const css::uno::Reference< ov::XHelperInterface >& xParent,  const css::uno::Reference< css::uno::XComponentContext >& xContext,
-                 const css::uno::Reference< css::beans::XPropertySet >& xProps, ScDocument* pScDoc = NULL) throw ( css::lang::IllegalArgumentException);
+                 const css::uno::Reference< css::beans::XPropertySet >& xProps, ScDocument* pScDoc = NULL);
 
         virtual ~ScVbaInterior(){}
 
-	virtual css::uno::Any SAL_CALL getColor() throw (css::uno::RuntimeException) ;
-	virtual void SAL_CALL setColor( const css::uno::Any& _color ) throw (css::uno::RuntimeException) ;
+	virtual css::uno::Any SAL_CALL getColor() ;
+	virtual void SAL_CALL setColor( const css::uno::Any& _color ) ;
 
-	virtual css::uno::Any SAL_CALL getColorIndex() throw ( css::uno::RuntimeException);
-	virtual void SAL_CALL setColorIndex( const css::uno::Any& _colorindex ) throw ( css::uno::RuntimeException );
-    virtual css::uno::Any SAL_CALL getPattern() throw (css::uno::RuntimeException);
-    virtual void SAL_CALL setPattern( const css::uno::Any& _pattern ) throw (css::uno::RuntimeException);
-    virtual css::uno::Any SAL_CALL getPatternColor() throw (css::uno::RuntimeException);
-    virtual void SAL_CALL setPatternColor( const css::uno::Any& _patterncolor ) throw (css::uno::RuntimeException);
-    virtual css::uno::Any SAL_CALL getPatternColorIndex() throw (css::uno::RuntimeException);
-    virtual void SAL_CALL setPatternColorIndex( const css::uno::Any& _patterncolorindex ) throw (css::uno::RuntimeException); 
+	virtual css::uno::Any SAL_CALL getColorIndex();
+	virtual void SAL_CALL setColorIndex( const css::uno::Any& _colorindex );
+    virtual css::uno::Any SAL_CALL getPattern();
+    virtual void SAL_CALL setPattern( const css::uno::Any& _pattern );
+    virtual css::uno::Any SAL_CALL getPatternColor();
+    virtual void SAL_CALL setPatternColor( const css::uno::Any& _patterncolor );
+    virtual css::uno::Any SAL_CALL getPatternColorIndex();
+    virtual void SAL_CALL setPatternColorIndex( const css::uno::Any& _patterncolorindex );
 	//XHelperInterface
 	virtual rtl::OUString& getServiceImplName();
 	virtual css::uno::Sequence<rtl::OUString> getServiceNames();
 };
 #endif
-

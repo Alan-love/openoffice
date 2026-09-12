@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -57,8 +57,6 @@ uno::Reference< uno::XInterface > SAL_CALL VCLBitmapCreator::impl_staticCreateSe
 //-------------------------------------------------------------------------
 
 uno::Reference< uno::XInterface > SAL_CALL VCLBitmapCreator::createInstance()
-		throw ( uno::Exception,
-				uno::RuntimeException)
 {
 	BitmapEx aBitmap;
 	uno::Reference< uno::XInterface> aResult( VCLUnoHelper::CreateBitmap( aBitmap ), uno::UNO_QUERY );
@@ -69,8 +67,6 @@ uno::Reference< uno::XInterface > SAL_CALL VCLBitmapCreator::createInstance()
 //-------------------------------------------------------------------------
 uno::Reference< uno::XInterface > SAL_CALL VCLBitmapCreator::createInstanceWithArguments(
 												const uno::Sequence< uno::Any >& aArguments )
-		throw ( uno::Exception,
-				uno::RuntimeException)
 {
 	if ( aArguments.getLength() != 1 )
 		throw uno::Exception(); // TODO
@@ -92,14 +88,12 @@ uno::Reference< uno::XInterface > SAL_CALL VCLBitmapCreator::createInstanceWithA
 
 //-------------------------------------------------------------------------
 ::rtl::OUString SAL_CALL VCLBitmapCreator::getImplementationName()
-		throw ( uno::RuntimeException )
 {
 	return impl_staticGetImplementationName();
 }
 
 //-------------------------------------------------------------------------
 sal_Bool SAL_CALL VCLBitmapCreator::supportsService( const ::rtl::OUString& ServiceName )
-		throw ( uno::RuntimeException )
 {
 	uno::Sequence< ::rtl::OUString > aSeq = impl_staticGetSupportedServiceNames();
 
@@ -112,8 +106,6 @@ sal_Bool SAL_CALL VCLBitmapCreator::supportsService( const ::rtl::OUString& Serv
 
 //-------------------------------------------------------------------------
 uno::Sequence< ::rtl::OUString > SAL_CALL VCLBitmapCreator::getSupportedServiceNames()
-		throw ( uno::RuntimeException )
 {
 	return impl_staticGetSupportedServiceNames();
 }
-

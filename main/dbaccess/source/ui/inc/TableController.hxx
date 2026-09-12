@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -59,12 +59,12 @@ namespace dbaui
 
 		sal_Bool		m_bAllowAutoIncrementValue; // no : 1 NO BIT , is true when the datasource has a AutoIncrementValue property in their info property
 		sal_Bool		m_bNew		: 1;		// is true when we create a new table
-		
+
 
 		void reSyncRows();
 		void assignTable();					// set the table if a name is given
 		void loadData();
-		sal_Bool checkColumns(sal_Bool _bNew) throw(::com::sun::star::sdbc::SQLException);		// check if we have double column names
+		sal_Bool checkColumns(sal_Bool _bNew);		// check if we have double column names
 		String createUniqueName(const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess>& _rxTables,const String& _rDefault);
 		void appendColumns(::com::sun::star::uno::Reference< ::com::sun::star::sdbcx::XColumnsSupplier>& _rxColSup,sal_Bool _bNew,sal_Bool _bKeyColumns = sal_False);
 		void appendPrimaryKey(::com::sun::star::uno::Reference< ::com::sun::star::sdbcx::XKeysSupplier>& _rxSup,sal_Bool _bNew);
@@ -72,9 +72,9 @@ namespace dbaui
 		void dropPrimaryKey();
 		::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess> getKeyColumns() const;
 		::rtl::OUString createUniqueName(const ::rtl::OUString& _rName);
-		
+
 		void reload();
-		
+
 		// all the features which should be handled by this class
 		virtual void			describeSupportedFeatures();
 		// state of a feature. 'feature' may be the handle of a ::com::sun::star::util::URL somebody requested a dispatch interface for OR a toolbar slot.
@@ -85,7 +85,7 @@ namespace dbaui
 		virtual void losingConnection( );
 
 		virtual ::rtl::OUString getPrivateTitle( ) const;
-		
+
 		void		doEditIndexes();
 		sal_Bool	doSaveDoc(sal_Bool _bSaveAs);
 
@@ -94,7 +94,7 @@ namespace dbaui
 		OTableController(const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory >& _rM);
 
 		::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet >		getTable() { return m_xTable;}
-		
+
 		sal_Bool isAddAllowed()		const;
 		sal_Bool isDropAllowed()	const;
 		sal_Bool isAlterAllowed()	const;
@@ -102,7 +102,7 @@ namespace dbaui
 
 		inline sal_Bool					isAutoIncrementValueEnabled()	const { return m_bAllowAutoIncrementValue; }
 		inline const ::rtl::OUString&	getAutoIncrementValue()			const { return m_sAutoIncrementValue; }
-					
+
 		virtual void impl_onModifyChanged();
 
 		inline ::std::vector< ::boost::shared_ptr<OTableRow> >*	getRows() { return &m_vRowList; }
@@ -114,29 +114,29 @@ namespace dbaui
 
 		inline TOTypeInfoSP					getTypeInfo(sal_Int32 _nPos) const { return m_aTypeInfoIndex[_nPos]->second; }
 		TOTypeInfoSP						getTypeInfoByType(sal_Int32 _nDataType) const;
-											
+
 		inline TOTypeInfoSP					getTypeInfoFallBack() const { return m_pTypeInfo; }
-											
+
 		virtual sal_Bool					Construct(Window* pParent);
 		// XEventListener
-		virtual void SAL_CALL				disposing( const ::com::sun::star::lang::EventObject& Source ) throw(::com::sun::star::uno::RuntimeException);
+		virtual void SAL_CALL				disposing( const ::com::sun::star::lang::EventObject& Source );
 
 		// ::com::sun::star::frame::XController
-		virtual sal_Bool SAL_CALL			suspend(sal_Bool bSuspend) throw( ::com::sun::star::uno::RuntimeException );
+		virtual sal_Bool SAL_CALL			suspend(sal_Bool bSuspend);
 
 		// ::com::sun::star::lang::XComponent
 		virtual void		SAL_CALL disposing();
 
 		// XServiceInfo
-		virtual ::rtl::OUString SAL_CALL getImplementationName() throw(::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::uno::Sequence< ::rtl::OUString> SAL_CALL getSupportedServiceNames() throw(::com::sun::star::uno::RuntimeException);
+		virtual ::rtl::OUString SAL_CALL getImplementationName();
+		virtual ::com::sun::star::uno::Sequence< ::rtl::OUString> SAL_CALL getSupportedServiceNames();
 		// need by registration
-		static ::rtl::OUString getImplementationName_Static() throw( ::com::sun::star::uno::RuntimeException );
-		static ::com::sun::star::uno::Sequence< ::rtl::OUString > getSupportedServiceNames_Static(void) throw( ::com::sun::star::uno::RuntimeException );
+		static ::rtl::OUString getImplementationName_Static();
+		static ::com::sun::star::uno::Sequence< ::rtl::OUString > getSupportedServiceNames_Static(void);
 		static ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >
 				SAL_CALL Create(const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory >&);
 
-		// 
+		//
 		virtual void Load(const ::com::sun::star::uno::Reference< ::com::sun::star::io::XObjectInputStream>& _rxIn);
 		virtual void Save(const ::com::sun::star::uno::Reference< ::com::sun::star::io::XObjectOutputStream>& _rxOut);
 
@@ -147,5 +147,3 @@ namespace dbaui
 	};
 }
 #endif // DBUI_TABLECONTROLLER_HXX
-
-

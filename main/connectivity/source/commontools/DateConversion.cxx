@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_dbtools.hxx"
 
 
 #include "connectivity/dbconversion.hxx"
@@ -145,10 +145,10 @@ using namespace ::com::sun::star::beans;
 					// check if this is really a timestamp or only a date
 					if ( bOk )
 					{
-						if (bQuote) 
+						if (bQuote)
                             aRet.appendAscii("{TS '");
 						aRet.append(DBTypeConversion::toDateTimeString(aDateTime));
-						if (bQuote) 
+						if (bQuote)
                             aRet.appendAscii("'}");
 						break;
 					}
@@ -175,10 +175,10 @@ using namespace ::com::sun::star::beans;
                     else
                         bOk = _rVal >>= aDate;
                     OSL_VERIFY_RES( bOk, "DBTypeConversion::toSQLString: _rVal is not date!");
-					if (bQuote) 
+					if (bQuote)
                         aRet.appendAscii("{D '");
 					aRet.append(DBTypeConversion::toDateString(aDate));
-					if (bQuote) 
+					if (bQuote)
                         aRet.appendAscii("'}");
 				}	break;
 				case DataType::TIME:
@@ -202,10 +202,10 @@ using namespace ::com::sun::star::beans;
                     else
                         bOk = _rVal >>= aTime;
                     OSL_VERIFY_RES( bOk,"DBTypeConversion::toSQLString: _rVal is not time!");
-					if (bQuote) 
+					if (bQuote)
                         aRet.appendAscii("{T '");
 					aRet.append(DBTypeConversion::toTimeString(aTime));
-					if (bQuote) 
+					if (bQuote)
                         aRet.appendAscii("'}");
 				} break;
 			}
@@ -246,7 +246,7 @@ void DBTypeConversion::setValue(const Reference<XColumnUpdate>& xVariant,
 								const ::rtl::OUString& rString,
 								sal_Int32 nKey,
 								sal_Int16 nFieldType,
-								sal_Int16 nKeyType) throw(::com::sun::star::lang::IllegalArgumentException)
+								sal_Int16 nKeyType)
 {
 	double fValue = 0;
 	if (rString.getLength())
@@ -319,7 +319,7 @@ void DBTypeConversion::setValue(const Reference<XColumnUpdate>& xVariant,
 void DBTypeConversion::setValue(const Reference<XColumnUpdate>& xVariant,
 								const Date& rNullDate,
 								const double& rValue,
-								sal_Int16 nKeyType) throw(::com::sun::star::lang::IllegalArgumentException)
+								sal_Int16 nKeyType)
 {
 	switch (nKeyType & ~NumberFormat::DEFINED)
 	{

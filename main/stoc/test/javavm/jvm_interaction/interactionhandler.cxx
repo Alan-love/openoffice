@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -72,16 +72,15 @@ using namespace com::sun::star::task;
 
 class Context: public WeakImplHelper1<XCurrentContext>
 {
-    virtual Any SAL_CALL getValueByName( const OUString& Name ) throw (RuntimeException);
+    virtual Any SAL_CALL getValueByName( const OUString& Name );
 };
 
 class InteractionHandler: public WeakImplHelper1<XInteractionHandler>
 {
-    virtual void SAL_CALL handle( const Reference< XInteractionRequest >& Request )
-        throw (RuntimeException);
+    virtual void SAL_CALL handle( const Reference< XInteractionRequest >& Request );
 };
 
-Any SAL_CALL Context::getValueByName( const OUString& Name) throw (RuntimeException)
+Any SAL_CALL Context::getValueByName( const OUString& Name)
 {
     Any retVal;
     if( Name.equals( OUSTR(INTERACTION_HANDLER_NAME)))
@@ -94,7 +93,6 @@ Any SAL_CALL Context::getValueByName( const OUString& Name) throw (RuntimeExcept
 }
 
 void SAL_CALL InteractionHandler::handle( const Reference< XInteractionRequest >& Request )
-        throw (RuntimeException)
 {
     Any anyExc= Request->getRequest();
     Sequence<Reference< XInteractionContinuation> >seqCont= Request->getContinuations();
@@ -114,7 +112,7 @@ void SAL_CALL InteractionHandler::handle( const Reference< XInteractionRequest >
         if(retry.is())
             break;
     }
-    
+
 //     if( abort.is())
 //         abort->select();
 
@@ -133,14 +131,14 @@ void SAL_CALL InteractionHandler::handle( const Reference< XInteractionRequest >
 sal_Bool test1(const Reference< XMultiServiceFactory > & xMgr )
 {
     sal_Bool retVal= sal_True;
-	setCurrentContext( Reference<XCurrentContext>( static_cast<XWeak*>(new Context()), UNO_QUERY)); 
+	setCurrentContext( Reference<XCurrentContext>( static_cast<XWeak*>(new Context()), UNO_QUERY));
 
   	OUString sVMService( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.java.JavaVirtualMachine"));
 	Reference<XInterface> xXInt= xMgr->createInstance(sVMService);
 	if( ! xXInt.is())
 		return sal_False;
 	Reference<XJavaVM> xVM( xXInt, UNO_QUERY);
-	if( ! xVM.is()) 
+	if( ! xVM.is())
 		return sal_False;
 
 
@@ -154,27 +152,27 @@ sal_Bool test1(const Reference< XMultiServiceFactory > & xMgr )
     }
     catch (JavaNotConfiguredException& e)
     {
-        OString msg= OUStringToOString(e.Message, osl_getThreadTextEncoding()); 
+        OString msg= OUStringToOString(e.Message, osl_getThreadTextEncoding());
         printf("JavaNotConfiguredException: %s\n", msg.getStr());
     }
     catch (JavaVMCreationFailureException& e)
     {
-        OString msg= OUStringToOString(e.Message, osl_getThreadTextEncoding()); 
+        OString msg= OUStringToOString(e.Message, osl_getThreadTextEncoding());
         printf("JavaVMCreationFailureException: %s\n", msg.getStr());
     }
     catch (MissingJavaRuntimeException& e)
     {
-        OString msg= OUStringToOString(e.Message, osl_getThreadTextEncoding()); 
+        OString msg= OUStringToOString(e.Message, osl_getThreadTextEncoding());
         printf("MissingJavaRuntimeException: %s\n", msg.getStr());
     }
     catch (JavaDisabledException& e)
     {
-        OString msg= OUStringToOString(e.Message, osl_getThreadTextEncoding()); 
+        OString msg= OUStringToOString(e.Message, osl_getThreadTextEncoding());
         printf("JavaDisabledException: %s\n", msg.getStr());
     }
     catch (RuntimeException & e)
     {
-        OString msg= OUStringToOString(e.Message, osl_getThreadTextEncoding()); 
+        OString msg= OUStringToOString(e.Message, osl_getThreadTextEncoding());
         printf("###RuntimeException: %s\n", msg.getStr());
         retVal= sal_False;
     }
@@ -190,12 +188,10 @@ SAL_IMPLEMENT_MAIN()
 	Reference< XComponentContext > context= bootstrap_InitialComponentContext(xreg);
 	Reference<XMultiComponentFactory> fac= context->getServiceManager();
 	Reference<XMultiServiceFactory> xMgr( fac, UNO_QUERY);
-	
+
 	sal_Bool bSucc = sal_False;
     bSucc= test1(xMgr);
 	Reference< XComponent > xCompContext( context, UNO_QUERY );
 	xCompContext->dispose();
 	return (bSucc ? 0 : -1);
 }
-
-

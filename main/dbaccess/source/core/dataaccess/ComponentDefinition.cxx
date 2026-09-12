@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -88,18 +88,18 @@ protected:
 public:
     OColumnPropertyListener(OComponentDefinition* _pComponent) : m_pComponent(_pComponent){}
     // XPropertyChangeListener
-	virtual void SAL_CALL propertyChange( const PropertyChangeEvent& /*_rEvent*/ ) throw (RuntimeException)
+	virtual void SAL_CALL propertyChange( const PropertyChangeEvent& /*_rEvent*/ )
     {
         if ( m_pComponent )
             m_pComponent->notifyDataSourceModified();
     }
 	// XEventListener
-	virtual void SAL_CALL disposing( const EventObject& /*_rSource*/ ) throw (RuntimeException)
+	virtual void SAL_CALL disposing( const EventObject& /*_rSource*/ )
     {
     }
     void clear() { m_pComponent = NULL; }
 };
-DBG_NAME(OComponentDefinition_Impl)    
+DBG_NAME(OComponentDefinition_Impl)
 OComponentDefinition_Impl::OComponentDefinition_Impl()
 {
     DBG_CTOR(OComponentDefinition_Impl,NULL);
@@ -107,7 +107,7 @@ OComponentDefinition_Impl::OComponentDefinition_Impl()
 // -----------------------------------------------------------------------------
 OComponentDefinition_Impl::~OComponentDefinition_Impl()
 {
-    DBG_DTOR(OComponentDefinition_Impl,NULL);    
+    DBG_DTOR(OComponentDefinition_Impl,NULL);
 }
 //==========================================================================
 //= OComponentDefinition
@@ -174,29 +174,29 @@ IMPLEMENT_IMPLEMENTATION_ID(OComponentDefinition);
 IMPLEMENT_GETTYPES3(OComponentDefinition,ODataSettings,OContentHelper,OComponentDefinition_BASE);
 IMPLEMENT_FORWARD_XINTERFACE3( OComponentDefinition,OContentHelper,ODataSettings,OComponentDefinition_BASE)
 //--------------------------------------------------------------------------
-::rtl::OUString OComponentDefinition::getImplementationName_static(  ) throw(RuntimeException)
+::rtl::OUString OComponentDefinition::getImplementationName_static(  )
 {
 	return ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.comp.dba.OComponentDefinition"));
 }
 
 //--------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OComponentDefinition::getImplementationName(  ) throw(RuntimeException)
+::rtl::OUString SAL_CALL OComponentDefinition::getImplementationName(  )
 {
 	return getImplementationName_static();
 }
 
 //--------------------------------------------------------------------------
-Sequence< ::rtl::OUString > OComponentDefinition::getSupportedServiceNames_static(  ) throw(RuntimeException)
+Sequence< ::rtl::OUString > OComponentDefinition::getSupportedServiceNames_static(  )
 {
 	Sequence< ::rtl::OUString > aServices(2);
 	aServices.getArray()[0] = SERVICE_SDB_TABLEDEFINITION;
 	aServices.getArray()[1] = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.ucb.Content"));
-	
+
 	return aServices;
 }
 
 //--------------------------------------------------------------------------
-Sequence< ::rtl::OUString > SAL_CALL OComponentDefinition::getSupportedServiceNames(  ) throw(RuntimeException)
+Sequence< ::rtl::OUString > SAL_CALL OComponentDefinition::getSupportedServiceNames(  )
 {
 	return getSupportedServiceNames_static();
 }
@@ -228,7 +228,7 @@ IPropertyArrayHelper* OComponentDefinition::createArrayHelper( ) const
 	return new OPropertyArrayHelper(aProps);
 }
 //--------------------------------------------------------------------------
-Reference< XPropertySetInfo > SAL_CALL OComponentDefinition::getPropertySetInfo(  ) throw(RuntimeException)
+Reference< XPropertySetInfo > SAL_CALL OComponentDefinition::getPropertySetInfo(  )
 {
 	Reference<XPropertySetInfo> xInfo( createPropertySetInfo( getInfoHelper() ) );
 	return xInfo;
@@ -243,7 +243,7 @@ Reference< XPropertySetInfo > SAL_CALL OComponentDefinition::getPropertySetInfo(
 }
 
 // -----------------------------------------------------------------------------
-Reference< XNameAccess> OComponentDefinition::getColumns() throw (RuntimeException)
+Reference< XNameAccess> OComponentDefinition::getColumns()
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	::connectivity::checkDisposed(OContentHelper::rBHelper.bDisposed);
@@ -273,7 +273,7 @@ OColumn* OComponentDefinition::createColumn(const ::rtl::OUString& _rName) const
 	if ( aFind != rDefinition.end() )
     {
         aFind->second->addPropertyChangeListener(::rtl::OUString(),m_xColumnPropertyListener.getRef());
-		return new OTableColumnWrapper( aFind->second, aFind->second, true );        
+		return new OTableColumnWrapper( aFind->second, aFind->second, true );
     }
     OSL_ENSURE( false, "OComponentDefinition::createColumn: is this a valid case?" );
         // This here is the last place creating a OTableColumn, and somehow /me thinks it is not needed ...
@@ -285,13 +285,13 @@ Reference< XPropertySet > OComponentDefinition::createColumnDescriptor()
 	return new OTableColumnDescriptor( true );
 }
 // -----------------------------------------------------------------------------
-void OComponentDefinition::setFastPropertyValue_NoBroadcast(sal_Int32 nHandle,const Any& rValue) throw (Exception)
+void OComponentDefinition::setFastPropertyValue_NoBroadcast(sal_Int32 nHandle,const Any& rValue)
 {
 	ODataSettings::setFastPropertyValue_NoBroadcast(nHandle,rValue);
 	notifyDataSourceModified();
 }
 // -----------------------------------------------------------------------------
-void OComponentDefinition::columnDropped(const ::rtl::OUString& _sName) 
+void OComponentDefinition::columnDropped(const ::rtl::OUString& _sName)
 {
     getDefinition().erase( _sName );
 	notifyDataSourceModified();
@@ -321,4 +321,3 @@ void OComponentDefinition::columnAppended( const Reference< XPropertySet >& _rxS
 //........................................................................
 }	// namespace dbaccess
 //........................................................................
-

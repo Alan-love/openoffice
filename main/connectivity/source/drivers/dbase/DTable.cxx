@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_dbase.hxx"
 #include "dbase/DTable.hxx"
 #include <com/sun/star/sdbc/ColumnValue.hpp>
 #include <com/sun/star/sdbc/DataType.hpp>
@@ -83,7 +83,7 @@ using namespace ::com::sun::star::i18n;
 #define FIELD_DESCRIPTOR_TERMINATOR 0x0D
 #define DBF_EOL                     0x1A
 
-namespace 
+namespace
 {
 sal_Int32 lcl_getFileSize(SvStream& _rStream)
 {
@@ -103,7 +103,7 @@ sal_Int32 lcl_getFileSize(SvStream& _rStream)
 void lcl_CalcJulDate(sal_Int32& _nJulianDate,sal_Int32& _nJulianTime,const com::sun::star::util::DateTime _aDateTime)
 {
     com::sun::star::util::DateTime aDateTime = _aDateTime;
-	// weird: months fix 
+	// weird: months fix
     if (aDateTime.Month > 12)
 	{
 	    aDateTime.Month--;
@@ -130,15 +130,15 @@ void lcl_CalcJulDate(sal_Int32& _nJulianDate,sal_Int32& _nJulianTime,const com::
 	sal_Int32 ia = iy0 / 100;
 	sal_Int32 ib = 2 - ia + (ia >> 2);
 	/* calculate julian date	*/
-	if ( aDateTime.Year <= 0 ) 
+	if ( aDateTime.Year <= 0 )
     {
 		_nJulianDate = (sal_Int32) ((365.25 * iy0) - 0.75)
 			+ (sal_Int32) (30.6001 * (im0 + 1) )
 			+ aDateTime.Day + 1720994;
-	} // if ( _aDateTime.Year <= 0 ) 
-    else 
+	} // if ( _aDateTime.Year <= 0 )
+    else
     {
-		_nJulianDate = static_cast<sal_Int32>( ((365.25 * iy0) 
+		_nJulianDate = static_cast<sal_Int32>( ((365.25 * iy0)
 			+ (sal_Int32) (30.6001 * (im0 + 1))
 			+ aDateTime.Day + 1720994));
 	}
@@ -268,7 +268,7 @@ void ODbaseTable::readHeader()
 			case dBaseIIIMemo:
 			case FoxProMemo:
 				m_pFileStream->SetNumberFormatInt(NUMBERFORMAT_INT_LITTLEENDIAN);
-                if ( m_aHeader.db_frei[17] != 0x00 
+                if ( m_aHeader.db_frei[17] != 0x00
                     && !m_aHeader.db_frei[18] && !m_aHeader.db_frei[19] && getConnection()->isTextEncodingDefaulted() )
                 {
                     switch(m_aHeader.db_frei[17])
@@ -356,7 +356,7 @@ void ODbaseTable::fillColumns()
 		sal_Int32 nPrecision = aDBFColumn.db_flng;
 		sal_Int32 eType;
         sal_Bool bIsCurrency = sal_False;
-        
+
         char cType[2];
         cType[0] = aDBFColumn.db_typ;
         cType[1] = 0;
@@ -509,7 +509,7 @@ void ODbaseTable::construct()
 
 	OSL_ENSURE( m_pConnection->matchesExtension( aURL.getExtension() ),
 		"ODbaseTable::ODbaseTable: invalid extension!");
-		// getEntry is expected to ensure the corect file name
+		// getEntry is expected to ensure the correct file name
 
 	m_pFileStream = createStream_simpleError( sFileName, STREAM_READWRITE | STREAM_NOCREATE | STREAM_SHARE_DENYWRITE);
 	m_bWriteable = ( m_pFileStream != NULL );
@@ -721,7 +721,7 @@ void ODbaseTable::refreshIndexes()
 						aVector.push_back(aURL.getBase());
 					}
 				}
-				catch(Exception&) // a execption is thrown when no file exists
+				catch(Exception&) // an exception is thrown when no file exists
 				{
 				}
 			}
@@ -742,7 +742,7 @@ void SAL_CALL ODbaseTable::disposing(void)
 	m_aColumns = NULL;
 }
 // -------------------------------------------------------------------------
-Sequence< Type > SAL_CALL ODbaseTable::getTypes(  ) throw(RuntimeException)
+Sequence< Type > SAL_CALL ODbaseTable::getTypes(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseTable::getTypes" );
 	Sequence< Type > aTypes = OTable_TYPEDEF::getTypes();
@@ -766,7 +766,7 @@ Sequence< Type > SAL_CALL ODbaseTable::getTypes(  ) throw(RuntimeException)
 }
 
 // -------------------------------------------------------------------------
-Any SAL_CALL ODbaseTable::queryInterface( const Type & rType ) throw(RuntimeException)
+Any SAL_CALL ODbaseTable::queryInterface( const Type & rType )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseTable::queryInterface" );
 	if( rType == ::getCppuType((const Reference<XKeysSupplier>*)0)	||
@@ -796,7 +796,7 @@ Sequence< sal_Int8 > ODbaseTable::getUnoTunnelImplementationId()
 
 // com::sun::star::lang::XUnoTunnel
 //------------------------------------------------------------------
-sal_Int64 ODbaseTable::getSomething( const Sequence< sal_Int8 > & rId ) throw (RuntimeException)
+sal_Int64 ODbaseTable::getSomething( const Sequence< sal_Int8 > & rId )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseTable::getSomething" );
 	return (rId.getLength() == 16 && 0 == rtl_compareMemory(getUnoTunnelImplementationId().getConstArray(),  rId.getConstArray(), 16 ) )
@@ -842,14 +842,14 @@ sal_Bool ODbaseTable::fetchRow(OValueRefRow& _rRow,const OSQLColumns & _rCols, s
 		}
 		switch(nType)
 		{
-            case DataType::INTEGER:		
+            case DataType::INTEGER:
             case DataType::DOUBLE:
             case DataType::TIMESTAMP:
-			case DataType::DATE:		
-            case DataType::BIT:			
-			case DataType::LONGVARCHAR:	
-            case DataType::LONGVARBINARY:   
-                nLen = m_aRealFieldLengths[i-1]; 
+			case DataType::DATE:
+            case DataType::BIT:
+			case DataType::LONGVARCHAR:
+            case DataType::LONGVARBINARY:
+                nLen = m_aRealFieldLengths[i-1];
                 break;
 			case DataType::DECIMAL:
 				if(_bUseTableDefs)
@@ -857,7 +857,7 @@ sal_Bool ODbaseTable::fetchRow(OValueRefRow& _rRow,const OSQLColumns & _rCols, s
 				else
 					nLen = SvDbaseConverter::ConvertPrecisionToDbase(nLen,getINT32((*aIter)->getPropertyValue(OMetaConnection::getPropMap().getNameByIndex(PROPERTY_ID_SCALE))));
 				break;	// das Vorzeichen und das Komma
-			
+
             case DataType::BINARY:
 			case DataType::OTHER:
 				nByteOffset += nLen;
@@ -890,7 +890,7 @@ sal_Bool ODbaseTable::fetchRow(OValueRefRow& _rRow,const OSQLColumns & _rCols, s
                 *(_rRow->get())[i] = ::rtl::OUString(aStr);
 			else// keine StringLaenge, dann NULL
                 (_rRow->get())[i]->setNull();
-				
+
 			pData[nLen] = cLast;
 		} // if (nType == DataType::CHAR || nType == DataType::VARCHAR)
         else if ( DataType::TIMESTAMP == nType )
@@ -932,7 +932,7 @@ sal_Bool ODbaseTable::fetchRow(OValueRefRow& _rRow,const OSQLColumns & _rCols, s
                     {
                         sal_Int64 nValue = 0;
                         memcpy(&nValue, pData, nLen);
-            
+
                         if ( m_aScales[i-1] )
                             d = (double)(nValue / pow(10.0,(int)m_aScales[i-1]));
                         else
@@ -942,7 +942,7 @@ sal_Bool ODbaseTable::fetchRow(OValueRefRow& _rRow,const OSQLColumns & _rCols, s
                     {
                         memcpy(&d, pData, nLen);
                     }
-            
+
                 *(_rRow->get())[i] = d;
             } else {
                 (_rRow->get())[i]->setNull();
@@ -1094,7 +1094,7 @@ sal_Bool ODbaseTable::CreateImpl()
 			delete pFileStream;
 		}
 	}
-	catch(Exception&) // a execption is thrown when no file exists
+	catch(Exception&) // an exception is thrown when no file exists
 	{
 	}
 
@@ -1111,7 +1111,7 @@ sal_Bool ODbaseTable::CreateImpl()
 			Content aContent(aURL.GetMainURL(INetURLObject::NO_DECODE),Reference<XCommandEnvironment>());
 			aContent.executeCommand( rtl::OUString::createFromAscii( "delete" ),bool2any( sal_True ) );
 		}
-		catch(Exception&) // a execption is thrown when no file exists
+		catch(Exception&) // an exception is thrown when no file exists
 		{
 		}
 		return sal_False;
@@ -1128,7 +1128,7 @@ sal_Bool ODbaseTable::CreateImpl()
 		{
 			bMemoAlreadyExists = aMemo1Content.isDocument();
 		}
-		catch(Exception&) // a execption is thrown when no file exists
+		catch(Exception&) // an exception is thrown when no file exists
 		{
 		}
 		if (bMemoAlreadyExists)
@@ -1142,7 +1142,7 @@ sal_Bool ODbaseTable::CreateImpl()
 			}
 			catch(const Exception&)
 			{
-                
+
                 const ::rtl::OUString sError( getConnection()->getResources().getResourceStringWithSubstitution(
                         STR_COULD_NOT_DELETE_FILE,
                         "$name$", aName
@@ -1200,7 +1200,7 @@ sal_Bool ODbaseTable::CreateFile(const INetURLObject& aFile, sal_Bool& bCreateMe
     Reference<XIndexAccess> xColumns(getColumns(),UNO_QUERY);
 	Reference<XPropertySet> xCol;
     const ::rtl::OUString sPropType = OMetaConnection::getPropMap().getNameByIndex(PROPERTY_ID_TYPE);
-    
+
     try
 	{
         const sal_Int32 nCount = xColumns->getCount();
@@ -1212,7 +1212,7 @@ sal_Bool ODbaseTable::CreateFile(const INetURLObject& aFile, sal_Bool& bCreateMe
 			switch (getINT32(xCol->getPropertyValue(sPropType)))
 			{
                 case DataType::DOUBLE:
-                case DataType::INTEGER:                
+                case DataType::INTEGER:
                 case DataType::TIMESTAMP:
                 case DataType::LONGVARBINARY:
                     nDbaseType = VisualFoxPro;
@@ -1256,7 +1256,7 @@ sal_Bool ODbaseTable::CreateFile(const INetURLObject& aFile, sal_Bool& bCreateMe
     const ::rtl::OUString sPropName = OMetaConnection::getPropMap().getNameByIndex(PROPERTY_ID_NAME);
     const ::rtl::OUString sPropPrec = OMetaConnection::getPropMap().getNameByIndex(PROPERTY_ID_PRECISION);
     const ::rtl::OUString sPropScale = OMetaConnection::getPropMap().getNameByIndex(PROPERTY_ID_SCALE);
-    
+
 	try
 	{
 		const sal_Int32 nCount = xColumns->getCount();
@@ -1333,7 +1333,7 @@ sal_Bool ODbaseTable::CreateFile(const INetURLObject& aFile, sal_Bool& bCreateMe
             if ( nDbaseType == VisualFoxPro )
                 (*m_pFileStream) << (nRecLength-1);
             else
-			    m_pFileStream->Write(aBuffer, 4);			
+			    m_pFileStream->Write(aBuffer, 4);
 
 			switch(cTyp)
 			{
@@ -1343,7 +1343,7 @@ sal_Bool ODbaseTable::CreateFile(const INetURLObject& aFile, sal_Bool& bCreateMe
 					{
 						throwInvalidColumnType(STR_INVALID_COLUMN_PRECISION, aName);
 					}
-					(*m_pFileStream) << (sal_uInt8) Min((sal_uIntPtr)nPrecision, 255UL);      //Feldlaenge
+					(*m_pFileStream) << (sal_uInt8) Min(nPrecision, (sal_Int32)255UL);      //Feldlaenge
                     nRecLength = nRecLength + (sal_uInt16)::std::min((sal_uInt16)nPrecision, (sal_uInt16)255UL);
 					(*m_pFileStream) << (sal_uInt8)0;                                                                //Nachkommastellen
 					break;
@@ -1546,7 +1546,7 @@ sal_Bool ODbaseTable::InsertRow(OValueRefVector& rRow, sal_Bool bFlush,const Ref
     sal_Bool bInsertRow = UpdateBuffer( rRow, NULL, _xCols );
 	if ( bInsertRow )
 	{
-		nFileSize = lcl_getFileSize(*m_pFileStream);		
+		nFileSize = lcl_getFileSize(*m_pFileStream);
 
 		if (HasMemoFields() && m_pMemoStream)
 		{
@@ -1817,14 +1817,14 @@ sal_Bool ODbaseTable::UpdateBuffer(OValueRefVector& rRow, OValueRefRow pOrgRow,c
                 bSetZero = true;
             case DataType::LONGVARBINARY:
 			case DataType::DATE:
-            case DataType::BIT:			
+            case DataType::BIT:
 			case DataType::LONGVARCHAR:
-                nLen = m_aRealFieldLengths[i]; 
+                nLen = m_aRealFieldLengths[i];
                 break;
 			case DataType::DECIMAL:
 				nLen = SvDbaseConverter::ConvertPrecisionToDbase(nLen,nScale);
 				break;	// das Vorzeichen und das Komma
-			default:					
+			default:
                 break;
 
 		} // switch (nType)
@@ -1946,7 +1946,7 @@ sal_Bool ODbaseTable::UpdateBuffer(OValueRefVector& rRow, OValueRefRow pOrgRow,c
                         }
                         const double d = rRow.get()[nPos]->getValue();
                         m_pColumns->getByIndex(i) >>= xCol;
-                        
+
                         if (getBOOL(xCol->getPropertyValue(OMetaConnection::getPropMap().getNameByIndex(PROPERTY_ID_ISCURRENCY)))) // Currency wird gesondert behandelt
                         {
                             sal_Int64 nValue = 0;
@@ -2032,7 +2032,7 @@ sal_Bool ODbaseTable::UpdateBuffer(OValueRefVector& rRow, OValueRefRow pOrgRow,c
 
                     // convert the string, using the connection's encoding
                     ::rtl::OString sEncoded;
-                   
+
                     DBTypeConversion::convertUnicodeStringToLength( sStringToWrite, sEncoded, nLen, m_eEncoding );
                     memcpy( pData, sEncoded.getStr(), sEncoded.getLength() );
 
@@ -2203,7 +2203,7 @@ sal_Bool ODbaseTable::WriteMemo(ORowSetValue& aVariable, sal_uIntPtr& rBlockNr)
 
 // -----------------------------------------------------------------------------
 // XAlterTable
-void SAL_CALL ODbaseTable::alterColumnByName( const ::rtl::OUString& colName, const Reference< XPropertySet >& descriptor ) throw(SQLException, NoSuchElementException, RuntimeException)
+void SAL_CALL ODbaseTable::alterColumnByName( const ::rtl::OUString& colName, const Reference< XPropertySet >& descriptor )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseTable::alterColumnByName" );
 	::osl::MutexGuard aGuard(m_aMutex);
@@ -2216,7 +2216,7 @@ void SAL_CALL ODbaseTable::alterColumnByName( const ::rtl::OUString& colName, co
 	alterColumn(m_pColumns->findColumn(colName)-1,descriptor,xOldColumn);
 }
 // -------------------------------------------------------------------------
-void SAL_CALL ODbaseTable::alterColumnByIndex( sal_Int32 index, const Reference< XPropertySet >& descriptor ) throw(SQLException, ::com::sun::star::lang::IndexOutOfBoundsException, RuntimeException)
+void SAL_CALL ODbaseTable::alterColumnByIndex( sal_Int32 index, const Reference< XPropertySet >& descriptor )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseTable::alterColumnByIndex" );
 	::osl::MutexGuard aGuard(m_aMutex);
@@ -2344,7 +2344,7 @@ Reference< XDatabaseMetaData> ODbaseTable::getMetaData() const
 	return getConnection()->getMetaData();
 }
 // -------------------------------------------------------------------------
-void SAL_CALL ODbaseTable::rename( const ::rtl::OUString& newName ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::container::ElementExistException, ::com::sun::star::uno::RuntimeException)
+void SAL_CALL ODbaseTable::rename( const ::rtl::OUString& newName )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseTable::rename" );
 	::osl::MutexGuard aGuard(m_aMutex);
@@ -2403,7 +2403,7 @@ namespace
 	}
 }
 // -------------------------------------------------------------------------
-void SAL_CALL ODbaseTable::renameImpl( const ::rtl::OUString& newName ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::container::ElementExistException, ::com::sun::star::uno::RuntimeException)
+void SAL_CALL ODbaseTable::renameImpl( const ::rtl::OUString& newName )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseTable::getEntry" );
 	::osl::MutexGuard aGuard(m_aMutex);
@@ -2636,7 +2636,7 @@ void ODbaseTable::throwInvalidDbaseFormat()
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseTable::throwInvalidDbaseFormat" );
 	FileClose();
 	// no dbase file
-    
+
     const ::rtl::OUString sError( getConnection()->getResources().getResourceStringWithSubstitution(
                 STR_INVALID_DBASE_FILE,
                 "$filename$", getEntry(m_pConnection,m_Name)

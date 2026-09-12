@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartcontroller.hxx"
 
 #include "UpDownBarWrapper.hxx"
 #include "macros.hxx"
@@ -65,7 +65,7 @@ private:
     Sequence< Property > lcl_GetPropertySequence()
     {
         ::std::vector< ::com::sun::star::beans::Property > aProperties;
-        
+
         ::chart::LineProperties::AddPropertiesToVector( aProperties );
         ::chart::FillProperties::AddPropertiesToVector( aProperties );
         //::chart::NamedProperties::AddPropertiesToVector( aProperties );
@@ -121,7 +121,7 @@ private:
     void lcl_AddDefaultsToMap( ::chart::tPropertyValueMap & rOutMap )
     {
         ::chart::LineProperties::AddDefaultsToMap( rOutMap );
-        ::chart::FillProperties::AddDefaultsToMap( rOutMap );        
+        ::chart::FillProperties::AddDefaultsToMap( rOutMap );
     }
 };
 
@@ -152,7 +152,6 @@ UpDownBarWrapper::~UpDownBarWrapper()
 
 // ____ XComponent ____
 void SAL_CALL UpDownBarWrapper::dispose()
-    throw (uno::RuntimeException)
 {
     Reference< uno::XInterface > xSource( static_cast< ::cppu::OWeakObject* >( this ) );
     m_aEventListenerContainer.disposeAndClear( lang::EventObject( xSource ) );
@@ -160,14 +159,12 @@ void SAL_CALL UpDownBarWrapper::dispose()
 
 void SAL_CALL UpDownBarWrapper::addEventListener(
     const Reference< lang::XEventListener >& xListener )
-    throw (uno::RuntimeException)
 {
 	m_aEventListenerContainer.addInterface( xListener );
 }
 
 void SAL_CALL UpDownBarWrapper::removeEventListener(
     const Reference< lang::XEventListener >& aListener )
-    throw (uno::RuntimeException)
 {
 	m_aEventListenerContainer.removeInterface( aListener );
 }
@@ -179,12 +176,10 @@ void SAL_CALL UpDownBarWrapper::removeEventListener(
 
 //XPropertySet
 uno::Reference< beans::XPropertySetInfo > SAL_CALL UpDownBarWrapper::getPropertySetInfo()
-                    throw (uno::RuntimeException)
 {
     return *StaticUpDownBarWrapperInfo::get();
 }
 void SAL_CALL UpDownBarWrapper::setPropertyValue( const ::rtl::OUString& rPropertyName, const uno::Any& rValue )
-                    throw (beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException, uno::RuntimeException)
 {
     Reference< beans::XPropertySet > xPropSet(0);
 
@@ -206,7 +201,6 @@ void SAL_CALL UpDownBarWrapper::setPropertyValue( const ::rtl::OUString& rProper
         xPropSet->setPropertyValue( rPropertyName, rValue );
 }
 uno::Any SAL_CALL UpDownBarWrapper::getPropertyValue( const ::rtl::OUString& rPropertyName )
-                    throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
     Any aRet;
 
@@ -232,22 +226,18 @@ uno::Any SAL_CALL UpDownBarWrapper::getPropertyValue( const ::rtl::OUString& rPr
 }
 
 void SAL_CALL UpDownBarWrapper::addPropertyChangeListener( const ::rtl::OUString& /*aPropertyName*/, const uno::Reference< beans::XPropertyChangeListener >& /*xListener*/ )
-                    throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
     OSL_ENSURE(false,"not implemented");
 }
 void SAL_CALL UpDownBarWrapper::removePropertyChangeListener( const ::rtl::OUString& /*aPropertyName*/, const uno::Reference< beans::XPropertyChangeListener >& /*aListener*/ )
-                    throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
     OSL_ENSURE(false,"not implemented");
 }
 void SAL_CALL UpDownBarWrapper::addVetoableChangeListener( const ::rtl::OUString& /*PropertyName*/, const uno::Reference< beans::XVetoableChangeListener >& /*aListener*/ )
-                    throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
     OSL_ENSURE(false,"not implemented");
 }
 void SAL_CALL UpDownBarWrapper::removeVetoableChangeListener( const ::rtl::OUString& /*PropertyName*/, const uno::Reference< beans::XVetoableChangeListener >& /*aListener*/ )
-                    throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
     OSL_ENSURE(false,"not implemented");
 }
@@ -255,7 +245,6 @@ void SAL_CALL UpDownBarWrapper::removeVetoableChangeListener( const ::rtl::OUStr
 //XMultiPropertySet
 //getPropertySetInfo() already declared in XPropertySet
 void SAL_CALL UpDownBarWrapper::setPropertyValues( const uno::Sequence< ::rtl::OUString >& rNameSeq, const uno::Sequence< uno::Any >& rValueSeq )
-                    throw (beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException, uno::RuntimeException)
 {
     bool bUnknownProperty = false;
     sal_Int32 nMinCount = std::min( rValueSeq.getLength(), rNameSeq.getLength() );
@@ -277,7 +266,6 @@ void SAL_CALL UpDownBarWrapper::setPropertyValues( const uno::Sequence< ::rtl::O
 //        throw beans::UnknownPropertyException();
 }
 uno::Sequence< uno::Any > SAL_CALL UpDownBarWrapper::getPropertyValues( const uno::Sequence< ::rtl::OUString >& rNameSeq )
-                    throw (uno::RuntimeException)
 {
     Sequence< Any > aRetSeq;
     if( rNameSeq.getLength() )
@@ -292,35 +280,30 @@ uno::Sequence< uno::Any > SAL_CALL UpDownBarWrapper::getPropertyValues( const un
     return aRetSeq;
 }
 void SAL_CALL UpDownBarWrapper::addPropertiesChangeListener( const uno::Sequence< ::rtl::OUString >& /* aPropertyNames */, const uno::Reference< beans::XPropertiesChangeListener >& /* xListener */ )
-                    throw (uno::RuntimeException)
 {
     OSL_ENSURE(false,"not implemented");
 }
 void SAL_CALL UpDownBarWrapper::removePropertiesChangeListener( const uno::Reference< beans::XPropertiesChangeListener >& /* xListener */ )
-                    throw (uno::RuntimeException)
 {
     OSL_ENSURE(false,"not implemented");
 }
 void SAL_CALL UpDownBarWrapper::firePropertiesChangeEvent( const uno::Sequence< ::rtl::OUString >& /* aPropertyNames */, const uno::Reference< beans::XPropertiesChangeListener >& /* xListener */ )
-                    throw (uno::RuntimeException)
 {
     OSL_ENSURE(false,"not implemented");
 }
 
 //XPropertyState
 beans::PropertyState SAL_CALL UpDownBarWrapper::getPropertyState( const ::rtl::OUString& rPropertyName )
-                    throw (beans::UnknownPropertyException, uno::RuntimeException)
 {
     uno::Any aDefault( this->getPropertyDefault( rPropertyName ) );
     uno::Any aValue( this->getPropertyValue( rPropertyName ) );
-    
+
     if( aDefault == aValue )
         return beans::PropertyState_DEFAULT_VALUE;
 
     return beans::PropertyState_DIRECT_VALUE;
 }
 uno::Sequence< beans::PropertyState > SAL_CALL UpDownBarWrapper::getPropertyStates( const uno::Sequence< ::rtl::OUString >& rNameSeq )
-                    throw (beans::UnknownPropertyException, uno::RuntimeException)
 {
     Sequence< beans::PropertyState > aRetSeq;
     if( rNameSeq.getLength() )
@@ -335,13 +318,11 @@ uno::Sequence< beans::PropertyState > SAL_CALL UpDownBarWrapper::getPropertyStat
     return aRetSeq;
 }
 void SAL_CALL UpDownBarWrapper::setPropertyToDefault( const ::rtl::OUString& rPropertyName )
-                    throw (beans::UnknownPropertyException, uno::RuntimeException)
 {
     this->setPropertyValue( rPropertyName, this->getPropertyDefault(rPropertyName) );
 }
 
 uno::Any SAL_CALL UpDownBarWrapper::getPropertyDefault( const ::rtl::OUString& rPropertyName )
-                    throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
     const tPropertyValueMap& rStaticDefaults = *StaticUpDownBarWrapperDefaults::get();
     tPropertyValueMap::const_iterator aFound( rStaticDefaults.find( getInfoHelper().getHandleByName( rPropertyName ) ) );
@@ -353,7 +334,6 @@ uno::Any SAL_CALL UpDownBarWrapper::getPropertyDefault( const ::rtl::OUString& r
 //XMultiPropertyStates
 //getPropertyStates() already declared in XPropertyState
 void SAL_CALL UpDownBarWrapper::setAllPropertiesToDefault(  )
-                    throw (uno::RuntimeException)
 {
     const Sequence< beans::Property >& rPropSeq = *StaticUpDownBarWrapperPropertyArray::get();
     for(sal_Int32 nN=0; nN<rPropSeq.getLength(); nN++)
@@ -363,7 +343,6 @@ void SAL_CALL UpDownBarWrapper::setAllPropertiesToDefault(  )
     }
 }
 void SAL_CALL UpDownBarWrapper::setPropertiesToDefault( const uno::Sequence< ::rtl::OUString >& rNameSeq )
-                    throw (beans::UnknownPropertyException, uno::RuntimeException)
 {
     for(sal_Int32 nN=0; nN<rNameSeq.getLength(); nN++)
     {
@@ -372,7 +351,6 @@ void SAL_CALL UpDownBarWrapper::setPropertiesToDefault( const uno::Sequence< ::r
     }
 }
 uno::Sequence< uno::Any > SAL_CALL UpDownBarWrapper::getPropertyDefaults( const uno::Sequence< ::rtl::OUString >& rNameSeq )
-                    throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
     Sequence< Any > aRetSeq;
     if( rNameSeq.getLength() )

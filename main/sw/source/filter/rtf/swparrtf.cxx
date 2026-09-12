@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,21 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_sw.hxx"
 
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil -*- */
 #include <hintids.hxx>
 #include <stack>
 #include <tools/errinf.hxx>
@@ -112,7 +111,7 @@ inline const SvxFontHeightItem& GetSize(const SfxItemSet& rSet,sal_Bool bInP=sal
 inline const SvxLRSpaceItem& GetLRSpace(const SfxItemSet& rSet,sal_Bool bInP=sal_True)
     { return (const SvxLRSpaceItem&)rSet.Get( RES_LR_SPACE,bInP); }
 
-/*  */
+/* */
 
 extern "C" SAL_DLLPUBLIC_EXPORT Reader* SAL_CALL ImportRTF()
 {
@@ -1615,10 +1614,10 @@ void SwRTFParser::NextToken( int nToken )
     switch( nToken )
     {
     case RTF_FOOTNOTE:
-    {    
+    {
         //We can only insert a footnote if we're not inside a footnote. e.g.
         //#i7713#
-        
+
         // in insert mode it's also possible to be inside of a footnote!
         bool bInsertIntoFootnote = false;
         if( !IsNewDoc() )
@@ -1882,7 +1881,7 @@ void SwRTFParser::NextToken( int nToken )
     case RTF_REVDTTM:
         if (pRedlineInsert != NULL)
             pRedlineInsert->aStamp = sw::ms::DTTM2DateTime(nTokenValue);
-            
+
         break;
 
     case RTF_REVDTTMDEL:
@@ -3796,7 +3795,7 @@ void SwRTFParser::ReadHeaderFooter( int nToken, SwPageDesc* pPageDesc )
         SetNewGroup( sal_False );           // { - Klammer war kein Group-Start!
     mbIsFootnote = bOldIsFootnote;
     GetAttrStack() = aSaveStack;
-    
+
     aFlyArr.Insert( &aSaveArray, 0 );
     aSaveArray.Remove( 0, aSaveArray.Count() );
     bContainsPara = bContainsParaCache;
@@ -4368,7 +4367,7 @@ void SwRTFParser::RestoreState()
 }
 #endif
 
-/**/
+/* */
 
 BookmarkPosition::BookmarkPosition(const SwPaM &rPaM)
     : maMkNode(rPaM.GetMark()->nNode),

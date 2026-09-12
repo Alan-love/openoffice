@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,25 +7,25 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
- 
+
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_filter.hxx"
 
 #include <cstdio>
-#include "svgfilter.hxx" 
+#include "svgfilter.hxx"
 #include <vos/mutex.hxx>
 
 #include <com/sun/star/drawing/XDrawPage.hpp>
@@ -84,8 +84,7 @@ SVGFilter::~SVGFilter()
 
 // -----------------------------------------------------------------------------
 
-sal_Bool SAL_CALL SVGFilter::filter( const Sequence< PropertyValue >& rDescriptor ) 
-	throw (RuntimeException)
+sal_Bool SAL_CALL SVGFilter::filter( const Sequence< PropertyValue >& rDescriptor )
 {
 	vos::OGuard aGuard( Application::GetSolarMutex() );
     Window*     pFocusWindow = Application::GetFocusWindow();
@@ -116,24 +115,24 @@ sal_Bool SAL_CALL SVGFilter::filter( const Sequence< PropertyValue >& rDescripto
             }
         }
 
-        uno::Reference< frame::XDesktop > xDesktop( mxMSF->createInstance( ::rtl::OUString::createFromAscii( "com.sun.star.frame.Desktop" ) ), 
+        uno::Reference< frame::XDesktop > xDesktop( mxMSF->createInstance( ::rtl::OUString::createFromAscii( "com.sun.star.frame.Desktop" ) ),
 													uno::UNO_QUERY);
 		if( xDesktop.is() )
 		{
 			uno::Reference< frame::XFrame > xFrame( xDesktop->getCurrentFrame() );
-			
+
 			if( xFrame.is() )
 			{
 				uno::Reference< frame::XController > xController( xFrame->getController() );
-				
+
 				if( xController.is() )
 				{
 					uno::Reference< drawing::XDrawView > xDrawView( xController, uno::UNO_QUERY );
-					
+
 					if( xDrawView.is() )
 					{
 						uno::Reference< drawing::XDrawPage > xDrawPage( xDrawView->getCurrentPage() );
-						
+
 						if( xDrawPage.is() )
 						{
 							uno::Reference< beans::XPropertySet >( xDrawPage, uno::UNO_QUERY )->
@@ -163,7 +162,7 @@ sal_Bool SAL_CALL SVGFilter::filter( const Sequence< PropertyValue >& rDescripto
 
         if(bSelectionOnly && bGotSelection && 0 == xShapes->getCount())
         {
-            // #124608# export selection, got xShapes but no shape selected -> nothing 
+            // #124608# export selection, got xShapes but no shape selected -> nothing
             // to export, we are done (maybe return true, but a hint that nothing was done
             // may be useful; it may have happened by error)
             bRet = sal_False;
@@ -212,14 +211,13 @@ sal_Bool SAL_CALL SVGFilter::filter( const Sequence< PropertyValue >& rDescripto
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL SVGFilter::cancel( ) throw (RuntimeException)
+void SAL_CALL SVGFilter::cancel( )
 {
 }
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL SVGFilter::setSourceDocument( const Reference< XComponent >& xDoc ) 
-	throw (IllegalArgumentException, RuntimeException)
+void SAL_CALL SVGFilter::setSourceDocument( const Reference< XComponent >& xDoc )
 {
 	mxSrcDoc = xDoc;
 }
@@ -227,8 +225,7 @@ void SAL_CALL SVGFilter::setSourceDocument( const Reference< XComponent >& xDoc 
 // -----------------------------------------------------------------------------
 
 #ifdef SOLAR_JAVA
-void SAL_CALL SVGFilter::setTargetDocument( const Reference< XComponent >& xDoc ) 
-	throw (::com::sun::star::lang::IllegalArgumentException, RuntimeException)
+void SAL_CALL SVGFilter::setTargetDocument( const Reference< XComponent >& xDoc )
 {
 	mxDstDoc = xDoc;
 }
@@ -236,30 +233,27 @@ void SAL_CALL SVGFilter::setTargetDocument( const Reference< XComponent >& xDoc 
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL SVGFilter::initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& /* aArguments */ ) 
-	throw (Exception, RuntimeException)
+void SAL_CALL SVGFilter::initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& /* aArguments */ )
 {
 }
 
 // -----------------------------------------------------------------------------
 
 OUString SVGFilter_getImplementationName ()
-	throw (RuntimeException)
 {
     return OUString ( RTL_CONSTASCII_USTRINGPARAM ( SVG_FILTER_IMPLEMENTATION_NAME ) );
 }
 
 // -----------------------------------------------------------------------------
 
-sal_Bool SAL_CALL SVGFilter_supportsService( const OUString& rServiceName ) 
-	throw (RuntimeException)
+sal_Bool SAL_CALL SVGFilter_supportsService( const OUString& rServiceName )
 {
     return( rServiceName.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM ( SVG_FILTER_SERVICE_NAME ) ) );
 }
 
 // -----------------------------------------------------------------------------
 
-Sequence< OUString > SAL_CALL SVGFilter_getSupportedServiceNames(  ) throw (RuntimeException)
+Sequence< OUString > SAL_CALL SVGFilter_getSupportedServiceNames(  )
 {
 	Sequence < OUString > aRet(1);
     OUString* pArray = aRet.getArray();
@@ -269,30 +263,28 @@ Sequence< OUString > SAL_CALL SVGFilter_getSupportedServiceNames(  ) throw (Runt
 
 // -----------------------------------------------------------------------------
 
-Reference< XInterface > SAL_CALL SVGFilter_createInstance( const Reference< XMultiServiceFactory > & rSMgr) throw( Exception )
+Reference< XInterface > SAL_CALL SVGFilter_createInstance( const Reference< XMultiServiceFactory > & rSMgr)
 {
 	return (cppu::OWeakObject*) new SVGFilter( rSMgr );
 }
 
 // -----------------------------------------------------------------------------
 
-OUString SAL_CALL SVGFilter::getImplementationName(  ) 
-	throw (RuntimeException)
+OUString SAL_CALL SVGFilter::getImplementationName(  )
 {
 	return SVGFilter_getImplementationName();
 }
 
 // -----------------------------------------------------------------------------
 
-sal_Bool SAL_CALL SVGFilter::supportsService( const OUString& rServiceName ) 
-	throw (RuntimeException)
+sal_Bool SAL_CALL SVGFilter::supportsService( const OUString& rServiceName )
 {
     return SVGFilter_supportsService( rServiceName );
 }
 
 // -----------------------------------------------------------------------------
 
-::com::sun::star::uno::Sequence< OUString > SAL_CALL SVGFilter::getSupportedServiceNames(  ) throw (RuntimeException)
+::com::sun::star::uno::Sequence< OUString > SAL_CALL SVGFilter::getSupportedServiceNames(  )
 {
     return SVGFilter_getSupportedServiceNames();
 }

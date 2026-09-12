@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -41,7 +41,7 @@
 namespace canvas
 {
     /** Helper template base class for XGraphicDevice implementations.
-        
+
     	This base class provides partial implementations of the
     	XGraphicDevice-related interface, such as XColorSpace.
 
@@ -101,10 +101,10 @@ namespace canvas
         derives from multiple UNO interface (were each provides its
         own version of XInterface, making the conversion ambiguous)
      */
-    template< class Base, 
+    template< class Base,
               class DeviceHelper,
-              class Mutex=::osl::MutexGuard, 
-              class UnambiguousBase=::com::sun::star::uno::XInterface > class GraphicDeviceBase : 
+              class Mutex=::osl::MutexGuard,
+              class UnambiguousBase=::com::sun::star::uno::XInterface > class GraphicDeviceBase :
         public Base
     {
     public:
@@ -128,15 +128,15 @@ namespace canvas
                                          ("DeviceHandle",
                                           boost::bind(&DeviceHelper::getDeviceHandle,
                                                       boost::ref(maDeviceHelper)))
-                                         ("SurfaceHandle",  
+                                         ("SurfaceHandle",
                                           boost::bind(&DeviceHelper::getSurfaceHandle,
                                                       boost::ref(maDeviceHelper)))
-                                         ("DumpScreenContent",  
+                                         ("DumpScreenContent",
                                           boost::bind(&ThisType::getDumpScreenContent,
                                                       this),
                                           boost::bind(&ThisType::setDumpScreenContent,
                                                       this,
-                                                      _1))); 
+                                                      _1)));
         }
 
 #if defined __SUNPRO_CC
@@ -153,50 +153,49 @@ namespace canvas
         }
 
         // XGraphicDevice
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XBufferController > SAL_CALL getBufferController(  ) throw (::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XBufferController > SAL_CALL getBufferController(  )
         {
             return ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XBufferController >();
         }
 
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XColorSpace > SAL_CALL getDeviceColorSpace(  ) throw (::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XColorSpace > SAL_CALL getDeviceColorSpace(  )
         {
             MutexType aGuard( BaseType::m_aMutex );
 
             return maDeviceHelper.getColorSpace();
         }
 
-        virtual ::com::sun::star::geometry::RealSize2D SAL_CALL getPhysicalResolution(  ) throw (::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::geometry::RealSize2D SAL_CALL getPhysicalResolution(  )
         {
             MutexType aGuard( BaseType::m_aMutex );
 
             return maDeviceHelper.getPhysicalResolution();
         }
 
-        virtual ::com::sun::star::geometry::RealSize2D SAL_CALL getPhysicalSize(  ) throw (::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::geometry::RealSize2D SAL_CALL getPhysicalSize(  )
         {
             MutexType aGuard( BaseType::m_aMutex );
 
             return maDeviceHelper.getPhysicalSize();
         }
 
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XLinePolyPolygon2D > SAL_CALL createCompatibleLinePolyPolygon( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Sequence< ::com::sun::star::geometry::RealPoint2D > >& points ) throw (::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XLinePolyPolygon2D > SAL_CALL createCompatibleLinePolyPolygon( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Sequence< ::com::sun::star::geometry::RealPoint2D > >& points )
         {
             MutexType aGuard( BaseType::m_aMutex );
 
             return maDeviceHelper.createCompatibleLinePolyPolygon( this, points );
         }
 
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XBezierPolyPolygon2D > SAL_CALL createCompatibleBezierPolyPolygon( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Sequence< ::com::sun::star::geometry::RealBezierSegment2D > >& points ) throw (::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XBezierPolyPolygon2D > SAL_CALL createCompatibleBezierPolyPolygon( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Sequence< ::com::sun::star::geometry::RealBezierSegment2D > >& points )
         {
             MutexType aGuard( BaseType::m_aMutex );
 
             return maDeviceHelper.createCompatibleBezierPolyPolygon( this, points );
         }
 
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XBitmap > SAL_CALL createCompatibleBitmap( const ::com::sun::star::geometry::IntegerSize2D& size ) throw (::com::sun::star::lang::IllegalArgumentException, 
-                                                                                                                                                                                         ::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XBitmap > SAL_CALL createCompatibleBitmap( const ::com::sun::star::geometry::IntegerSize2D& size )
         {
-            tools::verifyBitmapSize(size, 
+            tools::verifyBitmapSize(size,
                                     BOOST_CURRENT_FUNCTION,
                                     static_cast< UnambiguousBaseType* >(this));
 
@@ -205,10 +204,9 @@ namespace canvas
             return maDeviceHelper.createCompatibleBitmap( this, size );
         }
 
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XVolatileBitmap > SAL_CALL createVolatileBitmap( const ::com::sun::star::geometry::IntegerSize2D& size ) throw (::com::sun::star::lang::IllegalArgumentException, 
-                                                                                                                                                                                               ::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XVolatileBitmap > SAL_CALL createVolatileBitmap( const ::com::sun::star::geometry::IntegerSize2D& size )
         {
-            tools::verifyBitmapSize(size, 
+            tools::verifyBitmapSize(size,
                                     BOOST_CURRENT_FUNCTION,
                                     static_cast< UnambiguousBaseType* >(this));
 
@@ -217,10 +215,9 @@ namespace canvas
             return maDeviceHelper.createVolatileBitmap( this, size );
         }
 
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XBitmap > SAL_CALL createCompatibleAlphaBitmap( const ::com::sun::star::geometry::IntegerSize2D& size ) throw (::com::sun::star::lang::IllegalArgumentException, 
-                                                                                                                                                                                              ::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XBitmap > SAL_CALL createCompatibleAlphaBitmap( const ::com::sun::star::geometry::IntegerSize2D& size )
         {
-            tools::verifyBitmapSize(size, 
+            tools::verifyBitmapSize(size,
                                     BOOST_CURRENT_FUNCTION,
                                     static_cast< UnambiguousBaseType* >(this));
 
@@ -229,10 +226,9 @@ namespace canvas
             return maDeviceHelper.createCompatibleAlphaBitmap( this, size );
         }
 
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XVolatileBitmap > SAL_CALL createVolatileAlphaBitmap( const ::com::sun::star::geometry::IntegerSize2D& size ) throw (::com::sun::star::lang::IllegalArgumentException, 
-                                                                                                                                                                                                    ::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XVolatileBitmap > SAL_CALL createVolatileAlphaBitmap( const ::com::sun::star::geometry::IntegerSize2D& size )
         {
-            tools::verifyBitmapSize(size, 
+            tools::verifyBitmapSize(size,
                                     BOOST_CURRENT_FUNCTION,
                                     static_cast< UnambiguousBaseType* >(this));
 
@@ -241,19 +237,19 @@ namespace canvas
             return maDeviceHelper.createVolatileAlphaBitmap( this, size );
         }
 
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > SAL_CALL getParametricPolyPolygonFactory(  ) throw (::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > SAL_CALL getParametricPolyPolygonFactory(  )
         {
             return this;
         }
 
-        virtual ::sal_Bool SAL_CALL hasFullScreenMode(  ) throw (::com::sun::star::uno::RuntimeException)
+        virtual ::sal_Bool SAL_CALL hasFullScreenMode(  )
         {
             MutexType aGuard( BaseType::m_aMutex );
 
             return maDeviceHelper.hasFullScreenMode();
         }
 
-        virtual ::sal_Bool SAL_CALL enterFullScreenMode( ::sal_Bool bEnter ) throw (::com::sun::star::uno::RuntimeException)
+        virtual ::sal_Bool SAL_CALL enterFullScreenMode( ::sal_Bool bEnter )
         {
             MutexType aGuard( BaseType::m_aMutex );
 
@@ -261,7 +257,7 @@ namespace canvas
         }
 
         // XMultiServiceFactory
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface > SAL_CALL createInstance( const ::rtl::OUString& aServiceSpecifier ) throw (::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface > SAL_CALL createInstance( const ::rtl::OUString& aServiceSpecifier )
         {
             return ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XParametricPolyPolygon2D >(
                 ParametricPolyPolygon::create(this,
@@ -269,22 +265,22 @@ namespace canvas
                                               ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >()));
         }
 
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface > SAL_CALL createInstanceWithArguments( const ::rtl::OUString& aServiceSpecifier, const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& Arguments ) throw (::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface > SAL_CALL createInstanceWithArguments( const ::rtl::OUString& aServiceSpecifier, const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& Arguments )
         {
             return ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XParametricPolyPolygon2D >(
                 ParametricPolyPolygon::create(this,
-                                              aServiceSpecifier, 
+                                              aServiceSpecifier,
                                               Arguments));
         }
 
-        virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getAvailableServiceNames(  ) throw (::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getAvailableServiceNames(  )
         {
             return ParametricPolyPolygon::getAvailableServiceNames();
         }
 
 
         // XUpdatable
-        virtual void SAL_CALL update() throw (com::sun::star::uno::RuntimeException)
+        virtual void SAL_CALL update()
         {
             MutexType aGuard( BaseType::m_aMutex );
 
@@ -294,65 +290,51 @@ namespace canvas
 
 
         // XPropertySet
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL getPropertySetInfo() throw (::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL getPropertySetInfo()
         {
             MutexType aGuard( BaseType::m_aMutex );
             return maPropHelper.getPropertySetInfo();
         }
 
-        virtual void SAL_CALL setPropertyValue( const ::rtl::OUString&            aPropertyName, 
-                                                const ::com::sun::star::uno::Any& aValue ) throw (::com::sun::star::beans::UnknownPropertyException, 
-                                                                                                  ::com::sun::star::beans::PropertyVetoException, 
-                                                                                                  ::com::sun::star::lang::IllegalArgumentException, 
-                                                                                                  ::com::sun::star::lang::WrappedTargetException, 
-                                                                                                  ::com::sun::star::uno::RuntimeException)
+        virtual void SAL_CALL setPropertyValue( const ::rtl::OUString&            aPropertyName,
+                                                const ::com::sun::star::uno::Any& aValue )
         {
             MutexType aGuard( BaseType::m_aMutex );
             maPropHelper.setPropertyValue( aPropertyName, aValue );
         }
 
-        virtual ::com::sun::star::uno::Any SAL_CALL getPropertyValue( const ::rtl::OUString& aPropertyName ) throw (::com::sun::star::beans::UnknownPropertyException, 
-                                                                                                                    ::com::sun::star::lang::WrappedTargetException, 
-                                                                                                                    ::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Any SAL_CALL getPropertyValue( const ::rtl::OUString& aPropertyName )
         {
             MutexType aGuard( BaseType::m_aMutex );
             return maPropHelper.getPropertyValue( aPropertyName );
         }
 
-        virtual void SAL_CALL addPropertyChangeListener( const ::rtl::OUString& aPropertyName, 
-                                                         const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener >& xListener ) throw (::com::sun::star::beans::UnknownPropertyException, 
-                                                                                                                                                                        ::com::sun::star::lang::WrappedTargetException, 
-                                                                                                                                                                        ::com::sun::star::uno::RuntimeException)
+        virtual void SAL_CALL addPropertyChangeListener( const ::rtl::OUString& aPropertyName,
+                                                         const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener >& xListener )
         {
             MutexType aGuard( BaseType::m_aMutex );
             maPropHelper.addPropertyChangeListener( aPropertyName,
                                                     xListener );
         }
 
-        virtual void SAL_CALL removePropertyChangeListener( const ::rtl::OUString& aPropertyName, 
-                                                            const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener >& xListener ) throw (::com::sun::star::beans::UnknownPropertyException, 
-                                                                                                                                                                           ::com::sun::star::lang::WrappedTargetException, 
-                                                                                                                                                                           ::com::sun::star::uno::RuntimeException)
+        virtual void SAL_CALL removePropertyChangeListener( const ::rtl::OUString& aPropertyName,
+                                                            const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener >& xListener )
         {
             MutexType aGuard( BaseType::m_aMutex );
             maPropHelper.removePropertyChangeListener( aPropertyName,
                                                        xListener );
         }
 
-        virtual void SAL_CALL addVetoableChangeListener( const ::rtl::OUString& aPropertyName, 
-                                                         const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XVetoableChangeListener >& xListener ) throw (::com::sun::star::beans::UnknownPropertyException, 
-                                                                                                                                                                        ::com::sun::star::lang::WrappedTargetException, 
-                                                                                                                                                                        ::com::sun::star::uno::RuntimeException)
+        virtual void SAL_CALL addVetoableChangeListener( const ::rtl::OUString& aPropertyName,
+                                                         const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XVetoableChangeListener >& xListener )
         {
             MutexType aGuard( BaseType::m_aMutex );
             maPropHelper.addVetoableChangeListener( aPropertyName,
                                                     xListener );
         }
 
-        virtual void SAL_CALL removeVetoableChangeListener( const ::rtl::OUString& aPropertyName, 
-                                                            const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XVetoableChangeListener >& xListener ) throw (::com::sun::star::beans::UnknownPropertyException, 
-                                                                                                                                                                           ::com::sun::star::lang::WrappedTargetException, 
-                                                                                                                                                                           ::com::sun::star::uno::RuntimeException)
+        virtual void SAL_CALL removeVetoableChangeListener( const ::rtl::OUString& aPropertyName,
+                                                            const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XVetoableChangeListener >& xListener )
         {
             MutexType aGuard( BaseType::m_aMutex );
             maPropHelper.removeVetoableChangeListener( aPropertyName,

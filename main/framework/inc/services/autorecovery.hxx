@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -72,7 +72,7 @@ namespace framework
 /** @short  hold all needed informations for an asynchronous dispatch alive.
 
     @descr  Because some operations are forced to be executed asynchronously
-            (e.g. requested by our CreashSave/Recovery dialog) ... we must make sure
+            (e.g. requested by our CrashSave/Recovery dialog) ... we must make sure
             that these informations won't be set as "normal" members of our AutoRecovery
             instance. Otherwise they can disturb our normal AutoSave-timer handling.
             e.g. it can be unclear then, which progress has to be used for storing documents ...
@@ -149,7 +149,7 @@ class AutoRecovery  : public  css::lang::XTypeProvider
 
         /** These values are used as flags and represent the current state of a document.
             Every state of the life time of a document has to be recognized here.
-    
+
             @attention  Do not change (means reorganize) already used numbers.
                         There exists some code inside SVX, which uses the same numbers,
                         to analyze such document states.
@@ -171,7 +171,7 @@ class AutoRecovery  : public  css::lang::XTypeProvider
             E_TRY_SAVE = 8,
             E_TRY_LOAD_BACKUP = 16,
             E_TRY_LOAD_ORIGINAL = 32,
-            
+
             /* FINAL STATES */
 
             /// the Auto/Emergency saved document isn't useable any longer
@@ -451,16 +451,13 @@ class AutoRecovery  : public  css::lang::XTypeProvider
         //---------------------------------------
         // css.frame.XDispatch
         virtual void SAL_CALL dispatch(const css::util::URL&                                  aURL      ,
-                                       const css::uno::Sequence< css::beans::PropertyValue >& lArguments)
-            throw(css::uno::RuntimeException);
+                                       const css::uno::Sequence< css::beans::PropertyValue >& lArguments);
 
         virtual void SAL_CALL addStatusListener(const css::uno::Reference< css::frame::XStatusListener >& xListener,
-                                                const css::util::URL&                                     aURL     )
-            throw(css::uno::RuntimeException);
+                                                const css::util::URL&                                     aURL     );
 
         virtual void SAL_CALL removeStatusListener(const css::uno::Reference< css::frame::XStatusListener >& xListener,
-                                                   const css::util::URL&                                     aURL     )
-            throw(css::uno::RuntimeException);
+                                                   const css::util::URL&                                     aURL     );
 
         //---------------------------------------
         // css.document.XEventListener
@@ -473,24 +470,20 @@ class AutoRecovery  : public  css::lang::XTypeProvider
             @param  aEvent
                     points to the new created/opened document.
          */
-        virtual void SAL_CALL notifyEvent(const css::document::EventObject& aEvent)
-            throw(css::uno::RuntimeException);
+        virtual void SAL_CALL notifyEvent(const css::document::EventObject& aEvent);
 
         //---------------------------------------
         // css.util.XChangesListener
-        virtual void SAL_CALL changesOccurred(const css::util::ChangesEvent& aEvent)
-            throw(css::uno::RuntimeException);
-            
+        virtual void SAL_CALL changesOccurred(const css::util::ChangesEvent& aEvent);
+
         //---------------------------------------
         // css.util.XModifyListener
-        virtual void SAL_CALL modified(const css::lang::EventObject& aEvent)
-            throw(css::uno::RuntimeException);
+        virtual void SAL_CALL modified(const css::lang::EventObject& aEvent);
 
         //---------------------------------------
         // css.lang.XEventListener
         using cppu::OPropertySetHelper::disposing;
-        virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent)
-            throw(css::uno::RuntimeException);
+        virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent);
 
     //___________________________________________
     // helper
@@ -503,20 +496,17 @@ class AutoRecovery  : public  css::lang::XTypeProvider
 		virtual sal_Bool SAL_CALL convertFastPropertyValue(      css::uno::Any& aConvertedValue,
                                                                  css::uno::Any&	aOldValue      ,
                                                                  sal_Int32		nHandle        ,
-                                                           const css::uno::Any&	aValue         )
-            throw(css::lang::IllegalArgumentException);
+                                                           const css::uno::Any&	aValue         );
 
 		virtual void SAL_CALL setFastPropertyValue_NoBroadcast(      sal_Int32      nHandle,
-                                                               const css::uno::Any& aValue )
-            throw(css::uno::Exception);
+                                                               const css::uno::Any& aValue );
         using cppu::OPropertySetHelper::getFastPropertyValue;
 		virtual void SAL_CALL getFastPropertyValue(css::uno::Any& aValue ,
                                                    sal_Int32      nHandle) const;
 
 		virtual ::cppu::IPropertyArrayHelper& SAL_CALL getInfoHelper();
 
-		virtual css::uno::Reference< css::beans::XPropertySetInfo > SAL_CALL getPropertySetInfo()
-            throw(css::uno::RuntimeException);
+		virtual css::uno::Reference< css::beans::XPropertySetInfo > SAL_CALL getPropertySetInfo();
     //___________________________________________
     // helper
 
@@ -526,7 +516,7 @@ class AutoRecovery  : public  css::lang::XTypeProvider
         /** @short  open the underlying configuration.
 
             @descr  This method must be called every time
-                    a configuartion call is needed. Because
+                    a configuration call is needed. Because
                     method works together with the member
                     m_xCFG, open it on demand and cache it
                     afterwards.
@@ -569,7 +559,7 @@ class AutoRecovery  : public  css::lang::XTypeProvider
             @threadsafe
           */
         void implts_readAutoSaveConfig();
-        
+
         //---------------------------------------
         // TODO document me
         void implts_flushConfigItem(const AutoRecovery::TDocumentInfo& rInfo                ,
@@ -650,9 +640,9 @@ class AutoRecovery  : public  css::lang::XTypeProvider
                     the new document, which should be deregistered.
 
             @param  bStopListening
-                    sal_False: must be used in case this method is called withion disposing() of the document,
+                    sal_False: must be used in case this method is called within disposing() of the document,
                            where it make no sense to deregister our listener. The container dies ...
-                    sal_True : must be used in case this method is used on "dergistration" of this document, where
+                    sal_True : must be used in case this method is used on "deregistration" of this document, where
                            we must deregister our listener .-)
 
             @threadsafe
@@ -663,7 +653,7 @@ class AutoRecovery  : public  css::lang::XTypeProvider
         //---------------------------------------
         // TODO document me
         void implts_markDocumentModifiedAgainstLastBackup(const css::uno::Reference< css::frame::XModel >& xDocument);
-        
+
         //---------------------------------------
         // TODO document me
         void implts_updateModifiedState(const css::uno::Reference< css::frame::XModel >& xDocument);
@@ -902,14 +892,14 @@ class AutoRecovery  : public  css::lang::XTypeProvider
         //---------------------------------------
         /** try to make sure that all changed config items (not our used
             config access only) will be flushed back to disc.
-            
+
             E.g. our svtools::ConfigItems() has to be flushed explicitly .-(
-            
+
             Note: This method can't fail. Flushing of config entries is an
                   optional feature. Errors can be ignored.
          */
         void impl_flushALLConfigChanges();
-         
+
         //---------------------------------------
         // TODO document me
         AutoRecovery::EFailureSafeResult implts_copyFile(const ::rtl::OUString& sSource    ,
@@ -984,29 +974,29 @@ class AutoRecovery  : public  css::lang::XTypeProvider
         void impl_forgetProgress(const AutoRecovery::TDocumentInfo&               rInfo    ,
                                        ::comphelper::MediaDescriptor&             rArgs    ,
                                  const css::uno::Reference< css::frame::XFrame >& xNewFrame);
-                                 
+
         //---------------------------------------
         /** try to remove the specified file from disc.
-        
+
             Every URL supported by our UCB component can be used here.
             Further it doesn't matter if the file really exists or not.
-            Because removing a non exsistent file will have the same
+            Because removing a non existent file will have the same
             result at the end ... a non existing file .-)
 
             On the other side removing of files from disc is an optional
             feature. If we are not able doing so ... it's not a real problem.
             Ok - users disc place will be smaller then ... but we should produce
             a crash during crash save because we can't delete a temporary file only !
-            
+
             @param  sURL
                     the url of the file, which should be removed.
          */
         static void st_impl_removeFile(const ::rtl::OUString& sURL);
-        
+
         //---------------------------------------
         /** try to remove ".lock" file from disc if office will be terminated
             not using the official way .-)
-            
+
             This method has to be handled "optional". So every error inside
             has to be ignored ! This method CAN'T FAIL ... it can forget something only .-)
          */

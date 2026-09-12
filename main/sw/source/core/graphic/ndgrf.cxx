@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
@@ -183,6 +183,9 @@ sal_Bool SwGrfNode::ReRead(
 
     ASSERT( pGraphic || pGrfObj || rGrfName.Len(),
         "GraphicNode without a name, Graphic or GraphicObject" );
+
+    if ( GetDoc()->GetLinkManager().urlIsVendor( rGrfName ) )
+        return sal_False;
 
     // ReadRead mit Namen
     if ( refLink.Is() )
@@ -765,12 +768,12 @@ void SwGrfNode::ReleaseLink()
 
         // #15508# added extra processing after getting rid of the link. Use whatever is
         // known from the formally linked graphic to get to a state as close to a directly
-        // unlinked insterted graphic as possible. Goal is to have a valid GfxLink at the
+        // unlinked inserted graphic as possible. Goal is to have a valid GfxLink at the
         // ImplGraphic (see there) that holds temporary data to the original data and type
         // information about the original data. Only when this is given will
         // SvXMLGraphicHelper::ImplInsertGraphicURL which is used at export use that type
         // and use the original graphic at export for the ODF, without evtl. recoding
-        // of trhe bitmap graphic data to something without loss (e.g. PNG) but bigger
+        // of the bitmap graphic data to something without loss (e.g. PNG) but bigger
         if ( bHasOriginalData )
         {
             // #15508# if we have the original data at the Graphic, let it survive

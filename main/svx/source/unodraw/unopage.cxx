@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -86,7 +86,7 @@ SvxDrawPage::SvxDrawPage( SdrPage* pInPage ) throw()
 , mpPage( pInPage )
 , mpModel( 0 )
 {
-    DBG_CTOR(SvxDrawPage,NULL);    
+    DBG_CTOR(SvxDrawPage,NULL);
 	// Am Broadcaster anmelden
 	if( mpPage )
 		mpModel = mpPage->GetModel();
@@ -109,7 +109,7 @@ SvxDrawPage::SvxDrawPage() throw()
 , mpModel( NULL )
 , mpView( NULL )
 {
-    DBG_CTOR(SvxDrawPage,NULL);    
+    DBG_CTOR(SvxDrawPage,NULL);
 }
 
 //----------------------------------------------------------------------
@@ -121,7 +121,7 @@ SvxDrawPage::~SvxDrawPage() throw()
         acquire();
 		dispose();
     }
-    DBG_DTOR(SvxDrawPage,NULL);    
+    DBG_DTOR(SvxDrawPage,NULL);
 }
 
 //----------------------------------------------------------------------
@@ -190,7 +190,6 @@ void SvxDrawPage::disposing() throw()
 //----------------------------------------------------------------------
 
 void SvxDrawPage::dispose()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	OGuard aSolarGuard( Application::GetSolarMutex() );
 
@@ -247,7 +246,7 @@ void SvxDrawPage::dispose()
 
 //----------------------------------------------------------------------
 
-void SAL_CALL SvxDrawPage::addEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& aListener ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL SvxDrawPage::addEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& aListener )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -259,7 +258,7 @@ void SAL_CALL SvxDrawPage::addEventListener( const ::com::sun::star::uno::Refere
 
 //----------------------------------------------------------------------
 
-void SAL_CALL SvxDrawPage::removeEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& aListener ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL SvxDrawPage::removeEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& aListener )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -299,7 +298,6 @@ void SvxDrawPage::Notify( SfxBroadcaster&, const SfxHint& /*rHint*/ )
 //----------------------------------------------------------------------
 
 void SAL_CALL SvxDrawPage::add( const uno::Reference< drawing::XShape >& xShape )
-	throw( uno::RuntimeException )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -332,7 +330,6 @@ void SAL_CALL SvxDrawPage::add( const uno::Reference< drawing::XShape >& xShape 
 
 //----------------------------------------------------------------------
 void SAL_CALL SvxDrawPage::remove( const Reference< drawing::XShape >& xShape )
-	throw( uno::RuntimeException )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -369,7 +366,6 @@ void SAL_CALL SvxDrawPage::remove( const Reference< drawing::XShape >& xShape )
 //----------------------------------------------------------------------
 
 sal_Int32 SAL_CALL SvxDrawPage::getCount()
-	throw( uno::RuntimeException )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -381,7 +377,6 @@ sal_Int32 SAL_CALL SvxDrawPage::getCount()
 
 //----------------------------------------------------------------------
 uno::Any SAL_CALL SvxDrawPage::getByIndex( sal_Int32 Index )
-	throw( lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -405,14 +400,12 @@ uno::Any SAL_CALL SvxDrawPage::getByIndex( sal_Int32 Index )
 //----------------------------------------------------------------------
 
 uno::Type SAL_CALL SvxDrawPage::getElementType()
-	throw( uno::RuntimeException )
 {
 	return INTERFACE_TYPE( drawing::XShape );
 }
 
 //----------------------------------------------------------------------
 sal_Bool SAL_CALL SvxDrawPage::hasElements()
-	throw( uno::RuntimeException )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -480,7 +473,6 @@ void SvxDrawPage::_SelectObjectInView( const Reference< drawing::XShape > & xSha
 
 //----------------------------------------------------------------------
 Reference< drawing::XShapeGroup > SAL_CALL SvxDrawPage::group( const Reference< drawing::XShapes >& xShapes )
-	throw( uno::RuntimeException )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -519,7 +511,6 @@ Reference< drawing::XShapeGroup > SAL_CALL SvxDrawPage::group( const Reference< 
 
 //----------------------------------------------------------------------
 void SAL_CALL SvxDrawPage::ungroup( const Reference< drawing::XShapeGroup >& aGroup )
-	throw( uno::RuntimeException )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -925,18 +916,17 @@ SdrObject *SvxDrawPage::CreateSdrObject( const Reference< drawing::XShape > & xS
 //----------------------------------------------------------------------
 // ::com::sun::star::lang::XServiceInfo
 //----------------------------------------------------------------------
-OUString SAL_CALL SvxDrawPage::getImplementationName() throw( uno::RuntimeException )
+OUString SAL_CALL SvxDrawPage::getImplementationName()
 {
 	return OUString( RTL_CONSTASCII_USTRINGPARAM("SvxDrawPage"));
 }
 
 sal_Bool SAL_CALL SvxDrawPage::supportsService( const OUString& ServiceName )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return comphelper::ServiceInfoHelper::supportsService( ServiceName, getSupportedServiceNames() );
 }
 
-uno::Sequence< OUString > SAL_CALL SvxDrawPage::getSupportedServiceNames() throw( uno::RuntimeException )
+uno::Sequence< OUString > SAL_CALL SvxDrawPage::getSupportedServiceNames()
 {
 	uno::Sequence< OUString > aSeq( 1 );
 	aSeq.getArray()[0] = OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.drawing.ShapeCollection" ));
@@ -989,7 +979,7 @@ SdrPage* GetSdrPageFromXDrawPage( uno::Reference< drawing::XDrawPage > xDrawPage
 	if(xDrawPage.is())
 	{
 		SvxDrawPage* pDrawPage = SvxDrawPage::getImplementation( xDrawPage );
-		
+
 		if(pDrawPage)
 		{
 			return pDrawPage->GetSdrPage();

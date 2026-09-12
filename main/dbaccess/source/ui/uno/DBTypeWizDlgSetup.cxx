@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -51,7 +51,7 @@
 
 using namespace dbaui;
 namespace css = ::com::sun::star;
-                         
+
 extern "C" void SAL_CALL createRegistryInfo_ODBTypeWizDialogSetup()
 {
 	static OMultiInstanceAutoRegistration< ODBTypeWizDialogSetup > aAutoRegistration;
@@ -82,7 +82,7 @@ ODBTypeWizDialogSetup::ODBTypeWizDialogSetup(const Reference< XMultiServiceFacto
 		&m_bStartTableWizard, getBooleanCppuType());
 }
 //-------------------------------------------------------------------------
-Sequence<sal_Int8> SAL_CALL ODBTypeWizDialogSetup::getImplementationId(  ) throw(RuntimeException)
+Sequence<sal_Int8> SAL_CALL ODBTypeWizDialogSetup::getImplementationId(  )
 {
 	static ::cppu::OImplementationId aId;
 	return aId.getImplementationId();
@@ -96,25 +96,25 @@ Reference< XInterface > SAL_CALL ODBTypeWizDialogSetup::Create(const Reference< 
 }
 
 //-------------------------------------------------------------------------
-::rtl::OUString SAL_CALL ODBTypeWizDialogSetup::getImplementationName() throw(RuntimeException)
+::rtl::OUString SAL_CALL ODBTypeWizDialogSetup::getImplementationName()
 {
 	return getImplementationName_Static();
 }
 
 //-------------------------------------------------------------------------
-::rtl::OUString ODBTypeWizDialogSetup::getImplementationName_Static() throw(RuntimeException)
+::rtl::OUString ODBTypeWizDialogSetup::getImplementationName_Static()
 {
 	return ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("org.openoffice.comp.dbu.ODBTypeWizDialogSetup"));
 }
 
 //-------------------------------------------------------------------------
-::comphelper::StringSequence SAL_CALL ODBTypeWizDialogSetup::getSupportedServiceNames() throw(RuntimeException)
+::comphelper::StringSequence SAL_CALL ODBTypeWizDialogSetup::getSupportedServiceNames()
 {
 	return getSupportedServiceNames_Static();
 }
 
 //-------------------------------------------------------------------------
-::comphelper::StringSequence ODBTypeWizDialogSetup::getSupportedServiceNames_Static() throw(RuntimeException)
+::comphelper::StringSequence ODBTypeWizDialogSetup::getSupportedServiceNames_Static()
 {
 	::comphelper::StringSequence aSupported(1);
 	aSupported.getArray()[0] = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.sdb.DatabaseWizardDialog"));
@@ -122,7 +122,7 @@ Reference< XInterface > SAL_CALL ODBTypeWizDialogSetup::Create(const Reference< 
 }
 
 //-------------------------------------------------------------------------
-Reference<XPropertySetInfo>  SAL_CALL ODBTypeWizDialogSetup::getPropertySetInfo() throw(RuntimeException)
+Reference<XPropertySetInfo>  SAL_CALL ODBTypeWizDialogSetup::getPropertySetInfo()
 {
 	return createPropertySetInfo( getInfoHelper() );
 }
@@ -159,4 +159,3 @@ void ODBTypeWizDialogSetup::executedDialog(sal_Int16 _nExecutionResult)
 //.........................................................................
 }	// namespace dbaui
 //.........................................................................
-

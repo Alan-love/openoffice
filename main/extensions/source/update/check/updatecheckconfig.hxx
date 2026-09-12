@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -42,14 +42,14 @@ struct IByNameAccess
 class NamedValueByNameAccess : public IByNameAccess
 {
     const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::NamedValue >& m_rValues;
-    
+
 public:
     NamedValueByNameAccess(
         const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::NamedValue >& rValues) :
         m_rValues(rValues) {} ;
 
     virtual ~NamedValueByNameAccess();
-        
+
     virtual ::com::sun::star::uno::Any getValue(const sal_Char * pName);
 };
 
@@ -61,17 +61,17 @@ class UpdateCheckROModel
 {
 public:
     UpdateCheckROModel(IByNameAccess& aNameAccess) : m_aNameAccess(aNameAccess) {};
-    
+
     bool isAutoCheckEnabled() const;
     bool isDownloadPaused() const;
     rtl::OUString getLocalFileName() const;
     sal_Int64 getDownloadSize() const;
-    
+
     rtl::OUString getUpdateEntryVersion() const;
     void getUpdateEntry(UpdateInfo& rInfo) const;
-        
+
 private:
-    
+
     rtl::OUString getStringValue(const sal_Char *) const;
 
     IByNameAccess& m_aNameAccess;
@@ -93,14 +93,14 @@ class UpdateCheckConfig : public ::cppu::WeakImplHelper3<
                        const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameContainer >& xAvailableUpdates,
                        const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameContainer >& xIgnoredUpdates,
                        const ::rtl::Reference< UpdateCheckConfigListener >& rListener );
-    
+
     virtual ~UpdateCheckConfig();
 
 public:
-    
+
     static ::com::sun::star::uno::Sequence< rtl::OUString > getServiceNames();
     static rtl::OUString getImplName();
-    
+
     static ::rtl::Reference< UpdateCheckConfig > get(
         const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext >& xContext,
         const ::rtl::Reference< UpdateCheckConfigListener >& rListener = ::rtl::Reference< UpdateCheckConfigListener >());
@@ -125,11 +125,11 @@ public:
     /* Reset values of previously remembered update
      */
     void clearUpdateFound();
-    
+
     /* Stores the specified data of an available update
      */
     void storeUpdateFound(const UpdateInfo& rInfo, const rtl::OUString& aCurrentBuild);
-    
+
     // Returns the local file name of a started download
     rtl::OUString getLocalFileName() const;
 
@@ -138,13 +138,13 @@ public:
 
     // stores the local file name of a just started download
     void storeLocalFileName(const rtl::OUString& rFileName, sal_Int64 nFileSize);
-    
+
     // Removes the local file name of a download
     void clearLocalFileName();
-    
+
     // Stores the bool value for manually paused downloads
     void storeDownloadPaused(bool paused);
-    
+
     // Returns the directory that acts as the user's desktop
     static rtl::OUString getDesktopDirectory();
 
@@ -158,50 +158,32 @@ public:
                                 const rtl::OUString& rVersion );
 
     // XElementAccess
-    virtual ::com::sun::star::uno::Type SAL_CALL getElementType(  )
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL hasElements(  )
-        throw (::com::sun::star::uno::RuntimeException);
-    
+    virtual ::com::sun::star::uno::Type SAL_CALL getElementType(  );
+    virtual sal_Bool SAL_CALL hasElements(  );
+
     // XNameAccess
-    virtual ::com::sun::star::uno::Any SAL_CALL getByName( const ::rtl::OUString& aName )
-        throw (::com::sun::star::container::NoSuchElementException,
-               ::com::sun::star::lang::WrappedTargetException,
-               ::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getElementNames(  )
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual ::sal_Bool SAL_CALL hasByName( const ::rtl::OUString& aName )
-        throw (::com::sun::star::uno::RuntimeException);
-    
+    virtual ::com::sun::star::uno::Any SAL_CALL getByName( const ::rtl::OUString& aName );
+    virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getElementNames(  );
+    virtual ::sal_Bool SAL_CALL hasByName( const ::rtl::OUString& aName );
+
     // XNameReplace
-    virtual void SAL_CALL replaceByName( const ::rtl::OUString& aName, const ::com::sun::star::uno::Any& aElement )
-        throw (::com::sun::star::lang::IllegalArgumentException,
-               ::com::sun::star::container::NoSuchElementException,
-               ::com::sun::star::lang::WrappedTargetException,
-               ::com::sun::star::uno::RuntimeException);
-    
+    virtual void SAL_CALL replaceByName( const ::rtl::OUString& aName, const ::com::sun::star::uno::Any& aElement );
+
     // XChangesBatch
-    virtual void SAL_CALL commitChanges(  )
-        throw (::com::sun::star::lang::WrappedTargetException,
-               ::com::sun::star::uno::RuntimeException);
-    virtual ::sal_Bool SAL_CALL hasPendingChanges(  )
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::util::ElementChange > SAL_CALL getPendingChanges(  )
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL commitChanges(  );
+    virtual ::sal_Bool SAL_CALL hasPendingChanges(  );
+    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::util::ElementChange > SAL_CALL getPendingChanges(  );
 
     // XServiceInfo
-    virtual rtl::OUString SAL_CALL getImplementationName()
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL supportsService(rtl::OUString const & serviceName)
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual rtl::OUString SAL_CALL getImplementationName();
+    virtual sal_Bool SAL_CALL supportsService(rtl::OUString const & serviceName);
+    virtual ::com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames();
 
 private:
 
     static rtl::OUString getSubVersion( const rtl::OUString& rVersion, sal_Int32 *nIndex );
     static bool isVersionGreater( const rtl::OUString& rVersion1, const rtl::OUString& rVersion2 );
-    
+
     const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameContainer > m_xContainer;
     const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameContainer > m_xAvailableUpdates;
     const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameContainer > m_xIgnoredUpdates;
@@ -213,7 +195,6 @@ private:
 
 template <typename T>
 T getValue( const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::NamedValue >& rNamedValues, const sal_Char * pszName )
-    throw (::com::sun::star::uno::RuntimeException)
 {
     for( sal_Int32 n=0; n < rNamedValues.getLength(); n++ )
     {
@@ -233,6 +214,6 @@ T getValue( const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::Name
             return value;
         }
     }
-    
+
     return T();
 }

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -40,7 +40,7 @@ ScVbaFillFormat::ScVbaFillFormat( const uno::Reference< XHelperInterface >& xPar
 }
 
 void
-ScVbaFillFormat::setFillStyle( drawing::FillStyle nFillStyle ) throw (uno::RuntimeException)
+ScVbaFillFormat::setFillStyle( drawing::FillStyle nFillStyle )
 {
     m_nFillStyle = nFillStyle;
     if( m_nFillStyle == drawing::FillStyle_GRADIENT )
@@ -71,15 +71,15 @@ ScVbaFillFormat::setFillStyle( drawing::FillStyle nFillStyle ) throw (uno::Runti
 }
 
 void
-ScVbaFillFormat::setForeColorAndInternalStyle( sal_Int32 nForeColor ) throw (css::uno::RuntimeException)
+ScVbaFillFormat::setForeColorAndInternalStyle( sal_Int32 nForeColor )
 {
     m_nForeColor = nForeColor;
     setFillStyle( m_nFillStyle );
 }
 
 // Attributes
-sal_Bool SAL_CALL 
-ScVbaFillFormat::getVisible() throw (uno::RuntimeException)
+sal_Bool SAL_CALL
+ScVbaFillFormat::getVisible()
 {
     drawing::FillStyle nFillStyle;
     m_xPropertySet->getPropertyValue( rtl::OUString::createFromAscii("FillStyle") ) >>= nFillStyle;
@@ -88,8 +88,8 @@ ScVbaFillFormat::getVisible() throw (uno::RuntimeException)
     return sal_True;
 }
 
-void SAL_CALL 
-ScVbaFillFormat::setVisible( sal_Bool _visible ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaFillFormat::setVisible( sal_Bool _visible )
 {
     drawing::FillStyle aFillStyle;
     m_xPropertySet->getPropertyValue( rtl::OUString::createFromAscii("FillStyle") ) >>= aFillStyle;
@@ -106,8 +106,8 @@ ScVbaFillFormat::setVisible( sal_Bool _visible ) throw (uno::RuntimeException)
     }
 }
 
-double SAL_CALL 
-ScVbaFillFormat::getTransparency() throw (uno::RuntimeException)
+double SAL_CALL
+ScVbaFillFormat::getTransparency()
 {
     sal_Int16 nTransparence = 0;
     double dTransparence = 0;
@@ -117,8 +117,8 @@ ScVbaFillFormat::getTransparency() throw (uno::RuntimeException)
     return dTransparence;
 }
 
-void SAL_CALL 
-ScVbaFillFormat::setTransparency( double _transparency ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaFillFormat::setTransparency( double _transparency )
 {
     sal_Int16 nTransparence = static_cast< sal_Int16 >( _transparency * 100 );
     m_xPropertySet->setPropertyValue( rtl::OUString::createFromAscii( "FillTransparence" ), uno::makeAny( nTransparence ) );
@@ -126,14 +126,14 @@ ScVbaFillFormat::setTransparency( double _transparency ) throw (uno::RuntimeExce
 
 
 // Methods
-void SAL_CALL 
-ScVbaFillFormat::Solid() throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaFillFormat::Solid()
 {
     setFillStyle( drawing::FillStyle_SOLID );
 }
 
-void SAL_CALL 
-ScVbaFillFormat::TwoColorGradient( sal_Int32 style, sal_Int32 /*variant*/ ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaFillFormat::TwoColorGradient( sal_Int32 style, sal_Int32 /*variant*/ )
 {
     if( style == office::MsoGradientStyle::msoGradientHorizontal )
     {
@@ -157,16 +157,16 @@ ScVbaFillFormat::TwoColorGradient( sal_Int32 style, sal_Int32 /*variant*/ ) thro
     }
 }
 
-uno::Reference< msforms::XColorFormat > SAL_CALL 
-ScVbaFillFormat::BackColor() throw (uno::RuntimeException)
+uno::Reference< msforms::XColorFormat > SAL_CALL
+ScVbaFillFormat::BackColor()
 {
     if( !m_xColorFormat.is() )
         m_xColorFormat.set( new ScVbaColorFormat( getParent(), mxContext, this, m_xShape, ColorFormatType::FILLFORMAT_BACKCOLOR ) );
     return m_xColorFormat;
 }
 
-uno::Reference< msforms::XColorFormat > SAL_CALL 
-ScVbaFillFormat::ForeColor() throw (uno::RuntimeException)
+uno::Reference< msforms::XColorFormat > SAL_CALL
+ScVbaFillFormat::ForeColor()
 {
     if( !m_xColorFormat.is() )
         m_xColorFormat.set( new ScVbaColorFormat( getParent(), mxContext, this, m_xShape, ColorFormatType::FILLFORMAT_FORECOLOR ) );
@@ -192,4 +192,3 @@ ScVbaFillFormat::getServiceNames()
     }
     return aServiceNames;
 }
-

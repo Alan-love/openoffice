@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,24 +7,20 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_sc.hxx"
-
-
 
 // INCLUDE ---------------------------------------------------------------
 
@@ -888,7 +884,7 @@ sal_Bool ScDocFunc::PutData( const ScAddress& rPos, ScEditEngineDefaulter& rEngi
 	if ( bEditCell )
 	{
         // #i61702# With bLoseContent set, the content of rEngine isn't restored
-        // (used in loading XML, where after the removeActionLock call the API obejct's
+        // (used in loading XML, where after the removeActionLock call the API object's
         // EditEngine isn't accessed again.
         sal_Bool bLoseContent = pDoc->IsImportingXML();
 
@@ -1145,7 +1141,7 @@ bool ScDocFunc::ReplaceNote( const ScAddress& rPos, const String& rNoteText, con
             aOldData = pOldNote->GetNoteData();
         }
 
-        // collect drawing undo actions for deleting/inserting caption obejcts
+        // collect drawing undo actions for deleting/inserting caption objects
         if( pUndoMgr )
             pDrawLayer->BeginCalcUndo(false);
 
@@ -2472,7 +2468,7 @@ sal_Bool ScDocFunc::MoveBlock( const ScRange& rSource, const ScAddress& rDestPos
         clipdoc does not contain a drawing layer.
         #i102056# Passing IDF_NOTE only would overwrite cell contents with
         empty note cells, therefore the special modifier IDF_ADDNOTES is passed
-        here too which changes the behaviour of ScColumn::CopyFromClip() to not
+        here too which changes the behavior of ScColumn::CopyFromClip() to not
         touch existing cells. */
 	if ( pClipDoc->GetDrawLayer() )
         pDoc->CopyFromClip( aPasteDest, aDestMark, IDF_NOTE | IDF_ADDNOTES | IDF_OBJECTS,
@@ -2596,8 +2592,8 @@ uno::Reference< uno::XInterface > GetDocModuleObject( SfxObjectShell& rDocSh, St
     uno::Reference< uno::XInterface > xDocModuleApiObject;
     if ( xSF.is() )
     {
-        xVBACodeNamedObjectAccess.set( xSF->createInstance( rtl::OUString(RTL_CONSTASCII_USTRINGPARAM( "ooo.vba.VBAObjectModuleObjectProvider"))), uno::UNO_QUERY );    
-        xDocModuleApiObject.set( xVBACodeNamedObjectAccess->getByName( sCodeName ), uno::UNO_QUERY );    
+        xVBACodeNamedObjectAccess.set( xSF->createInstance( rtl::OUString(RTL_CONSTASCII_USTRINGPARAM( "ooo.vba.VBAObjectModuleObjectProvider"))), uno::UNO_QUERY );
+        xDocModuleApiObject.set( xVBACodeNamedObjectAccess->getByName( sCodeName ), uno::UNO_QUERY );
     }
     return xDocModuleApiObject;
 
@@ -2631,7 +2627,7 @@ void VBA_InsertModule( ScDocument& rDoc, SCTAB nTab, String& sModuleName, String
         // if the Module with codename exists then find a new name
         sal_Int32 nNum = 0;
         String genModuleName;
-        if ( sModuleName.Len() ) 
+        if ( sModuleName.Len() )
             sModuleName = sModuleName;
         else
         {
@@ -2640,7 +2636,7 @@ void VBA_InsertModule( ScDocument& rDoc, SCTAB nTab, String& sModuleName, String
         }
         while( xLib->hasByName( genModuleName  ) )
             genModuleName = rtl::OUString::createFromAscii( "Sheet" ) + rtl::OUString::valueOf( ++nNum );
-        
+
         uno::Any aSourceAny;
         rtl::OUString sTmpSource = sSource;
         if ( sTmpSource.getLength() == 0 )
@@ -2695,7 +2691,7 @@ sal_Bool ScDocFunc::InsertTable( SCTAB nTab, const String& rName, sal_Bool bReco
 
 
     // Strange loop, also basic is loaded too early ( InsertTable )
-    // is called via the xml import for sheets in described in odf 
+    // is called via the xml import for sheets in described in odf
     sal_Bool bInsertDocModule = false;
 
     if(  !rDocShell.GetDocument()->IsImportingXML() )
@@ -2924,37 +2920,37 @@ sal_Bool ScDocFunc::SetLayoutRTL( SCTAB nTab, sal_Bool bRTL, sal_Bool /* bApi */
 //UNUSED2009-05 sal_Bool ScDocFunc::SetGrammar( formula::FormulaGrammar::Grammar eGrammar )
 //UNUSED2009-05 {
 //UNUSED2009-05     ScDocument* pDoc = rDocShell.GetDocument();
-//UNUSED2009-05 
+//UNUSED2009-05
 //UNUSED2009-05     if ( pDoc->GetGrammar() == eGrammar )
 //UNUSED2009-05         return sal_True;
-//UNUSED2009-05 
+//UNUSED2009-05
 //UNUSED2009-05     sal_Bool bUndo(pDoc->IsUndoEnabled());
 //UNUSED2009-05     ScDocShellModificator aModificator( rDocShell );
-//UNUSED2009-05 
+//UNUSED2009-05
 //UNUSED2009-05     pDoc->SetGrammar( eGrammar );
-//UNUSED2009-05 
+//UNUSED2009-05
 //UNUSED2009-05     if (bUndo)
 //UNUSED2009-05     {
 //UNUSED2009-05         rDocShell.GetUndoManager()->AddUndoAction( new ScUndoSetGrammar( &rDocShell, eGrammar ) );
 //UNUSED2009-05     }
-//UNUSED2009-05 
+//UNUSED2009-05
 //UNUSED2009-05     rDocShell.PostPaint( 0,0,0,MAXCOL,MAXROW,MAXTAB, PAINT_ALL );
-//UNUSED2009-05 
+//UNUSED2009-05
 //UNUSED2009-05     ScTabViewShell* pViewSh = ScTabViewShell::GetActiveViewShell();
 //UNUSED2009-05     if (NULL != pViewSh)
 //UNUSED2009-05     {
 //UNUSED2009-05         pViewSh->UpdateInputHandler( sal_False, sal_False );
 //UNUSED2009-05     }
-//UNUSED2009-05 
+//UNUSED2009-05
 //UNUSED2009-05     aModificator.SetDocumentModified();
-//UNUSED2009-05 
+//UNUSED2009-05
 //UNUSED2009-05     SfxBindings* pBindings = rDocShell.GetViewBindings();
 //UNUSED2009-05     if (pBindings)
 //UNUSED2009-05     {
 //UNUSED2009-05         // erAck: 2006-09-07T22:19+0200  commented out in CWS scr1c1
 //UNUSED2009-05         //pBindings->Invalidate( FID_TAB_USE_R1C1 );
 //UNUSED2009-05     }
-//UNUSED2009-05 
+//UNUSED2009-05
 //UNUSED2009-05     return sal_True;
 //UNUSED2009-05 }
 
@@ -3302,8 +3298,8 @@ sal_Bool ScDocFunc::InsertPageBreak( sal_Bool bColumn, const ScAddress& rPos,
 	if (nPos == 0)
 		return sal_False;					// erste Spalte / Zeile
 
-    ScBreakType nBreak = bColumn ? 
-        pDoc->HasColBreak(static_cast<SCCOL>(nPos), nTab) : 
+    ScBreakType nBreak = bColumn ?
+        pDoc->HasColBreak(static_cast<SCCOL>(nPos), nTab) :
         pDoc->HasRowBreak(static_cast<SCROW>(nPos), nTab);
     if (nBreak & BREAK_MANUAL)
         return true;
@@ -3669,7 +3665,7 @@ sal_Bool ScDocFunc::ChangeIndent( const ScMarkData& rMark, sal_Bool bIncrement, 
 		pBindings->Invalidate( SID_ALIGNBLOCK );
 		pBindings->Invalidate( SID_ALIGNCENTERHOR );
 		pBindings->Invalidate( SID_ATTR_LRSPACE );
-		pBindings->Invalidate( SID_ATTR_PARA_ADJUST_LEFT );			
+		pBindings->Invalidate( SID_ATTR_PARA_ADJUST_LEFT );
 		pBindings->Invalidate( SID_ATTR_PARA_ADJUST_RIGHT );
 		pBindings->Invalidate( SID_ATTR_PARA_ADJUST_BLOCK );
 		pBindings->Invalidate( SID_ATTR_PARA_ADJUST_CENTER);
@@ -4885,6 +4881,4 @@ sal_Bool ScDocFunc::InsertAreaLink( const String& rFile, const String& rFilter,
 	return sal_True;
 }
 
-
-
-
+/* vim: set noet sw=4 ts=4: */

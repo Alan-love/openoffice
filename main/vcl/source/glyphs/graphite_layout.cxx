@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,20 +7,20 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
- 
+
 // Description: An implementation of the SalLayout interface that uses the
 //              Graphite engine.
 
@@ -150,11 +150,11 @@ namespace
 
 
 
-// Impementation of the GraphiteLayout::Glyphs container class.
+// Implementation of the GraphiteLayout::Glyphs container class.
 //    This is an extended vector class with methods added to enable
 //        o Correctly filling with glyphs.
 //        o Querying clustering relationships.
-//        o manipulations that affect neighouring glyphs.
+//        o manipulations that affect neighbouring glyphs.
 
 const int GraphiteLayout::EXTRA_CONTEXT_LENGTH = 10;
 #ifdef GRCACHE
@@ -1048,7 +1048,11 @@ void GraphiteLayout::expandOrCondense(ImplLayoutArgs &rArgs)
                     size_t nCharIndex = mvGlyph2Char[i];
                     mvCharDxs[nCharIndex] += nOffset;
                     // adjust char dxs for rest of characters in cluster
-                    while (++nCharIndex < mvGlyph2Char.size())
+                    // Bug #126768: vectors mvGlyph2Char and mvChar2BaseGlyph may have different sizes
+                    size_t nMaxCharIndex = mvGlyph2Char.size();
+                    if ( nMaxCharIndex > mvChar2BaseGlyph.size() )
+                        nMaxCharIndex = mvChar2BaseGlyph.size();
+                    while ( ++nCharIndex < nMaxCharIndex )
                     {
                         int nChar2Base = (mvChar2BaseGlyph[nCharIndex] == -1)? -1 : (int)(mvChar2BaseGlyph[nCharIndex] & GLYPH_INDEX_MASK);
                         if (nChar2Base == -1 || nChar2Base == static_cast<int>(i))

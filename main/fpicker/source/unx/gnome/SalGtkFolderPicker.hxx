@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -45,13 +45,13 @@
 #include <list>
 
 //----------------------------------------------------------
-// class declaration		
+// class declaration
 //----------------------------------------------------------
 
-class SalGtkFolderPicker : 
+class SalGtkFolderPicker :
         public SalGtkPicker,
 	public cppu::WeakImplHelper3<
-	::com::sun::star::ui::dialogs::XFolderPicker,	
+	::com::sun::star::ui::dialogs::XFolderPicker,
 	::com::sun::star::lang::XServiceInfo,
         ::com::sun::star::util::XCancellable >
 {
@@ -63,69 +63,58 @@ class SalGtkFolderPicker :
 		//------------------------------------------------------------------------------------
 		// XExecutableDialog functions
 		//------------------------------------------------------------------------------------
-	
-		virtual void SAL_CALL setTitle( const ::rtl::OUString& aTitle ) 
-			throw( ::com::sun::star::uno::RuntimeException );
 
-		virtual sal_Int16 SAL_CALL execute(  ) 
-			throw( ::com::sun::star::uno::RuntimeException );
+		virtual void SAL_CALL setTitle( const ::rtl::OUString& aTitle );
+
+		virtual sal_Int16 SAL_CALL execute(  );
 
 		//------------------------------------------------------------------------------------
 		// XFolderPicker functions
 		//------------------------------------------------------------------------------------
 
-		virtual void SAL_CALL setDisplayDirectory( const rtl::OUString& rDirectory )
-			throw( com::sun::star::lang::IllegalArgumentException, com::sun::star::uno::RuntimeException );
+		virtual void SAL_CALL setDisplayDirectory( const rtl::OUString& rDirectory );
 
-		virtual rtl::OUString SAL_CALL getDisplayDirectory(  )
-			throw( com::sun::star::uno::RuntimeException );
+		virtual rtl::OUString SAL_CALL getDisplayDirectory(  );
 
-		virtual rtl::OUString SAL_CALL getDirectory( )
-			throw( com::sun::star::uno::RuntimeException );
+		virtual rtl::OUString SAL_CALL getDirectory( );
 
-		virtual void SAL_CALL setDescription( const rtl::OUString& rDescription )
-			throw( com::sun::star::uno::RuntimeException );
+		virtual void SAL_CALL setDescription( const rtl::OUString& rDescription );
 
 
 		//------------------------------------------------
 		// XServiceInfo
-		//------------------------------------------------ 
+		//------------------------------------------------
 
-		virtual ::rtl::OUString SAL_CALL getImplementationName(	 )
-			throw(::com::sun::star::uno::RuntimeException);
+		virtual ::rtl::OUString SAL_CALL getImplementationName(	 );
 
-		virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName ) 
-			throw(::com::sun::star::uno::RuntimeException);
+		virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName );
 
-		virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  ) 
-			throw(::com::sun::star::uno::RuntimeException);
+		virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  );
 
 		//------------------------------------------------
 		// XCancellable
 		//------------------------------------------------
 
-		virtual void SAL_CALL cancel( )
-			throw( ::com::sun::star::uno::RuntimeException );
+		virtual void SAL_CALL cancel( );
 
 		//------------------------------------------------
 		// XEventListener
 		//------------------------------------------------
 
-		virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& aEvent ) 
-			throw(::com::sun::star::uno::RuntimeException);
+		virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& aEvent );
 
 	private:
 		// prevent copy and assignment
-		SalGtkFolderPicker( const SalGtkFolderPicker& );           
+		SalGtkFolderPicker( const SalGtkFolderPicker& );
 		SalGtkFolderPicker& operator=( const SalGtkFolderPicker& );
 	private:
-		// to instanciate own services
+		// to instantiate own services
 		::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > m_xServiceMgr;
 
 #if 0
-	public: 
+	public:
 		 virtual ~SalGtkFolderPicker();
 #endif
-}; 
+};
 
 #endif // _SALGTKFOLDERPICKER_HXX_

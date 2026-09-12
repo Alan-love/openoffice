@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -71,14 +71,12 @@ void SAL_CALL PresenterCurrentSlideObserver::disposing (void)
 
 void SAL_CALL PresenterCurrentSlideObserver::beginEvent (
     const Reference<animations::XAnimationNode>& rNode)
-    throw (css::uno::RuntimeException)
 {
     (void)rNode;
 }
 
 void SAL_CALL PresenterCurrentSlideObserver::endEvent (
     const Reference<animations::XAnimationNode>& rNode)
-    throw(css::uno::RuntimeException)
 {
     (void)rNode;
 }
@@ -86,23 +84,19 @@ void SAL_CALL PresenterCurrentSlideObserver::endEvent (
 void SAL_CALL PresenterCurrentSlideObserver::repeat (
     const css::uno::Reference<css::animations::XAnimationNode>& rNode,
     sal_Int32)
-    throw (com::sun::star::uno::RuntimeException)
 {
     (void)rNode;
 }
 
 void SAL_CALL PresenterCurrentSlideObserver::paused (void)
-    throw (com::sun::star::uno::RuntimeException)
 {
 }
 
 void SAL_CALL PresenterCurrentSlideObserver::resumed (void)
-    throw (css::uno::RuntimeException)
 {
 }
 
 void SAL_CALL PresenterCurrentSlideObserver::slideEnded (sal_Bool bReverse)
-    throw (css::uno::RuntimeException)
 {
     // Determine whether the new current slide (the one after the one that
     // just ended) is the slide past the last slide in the presentation,
@@ -114,24 +108,20 @@ void SAL_CALL PresenterCurrentSlideObserver::slideEnded (sal_Bool bReverse)
 }
 
 void SAL_CALL PresenterCurrentSlideObserver::hyperLinkClicked (const rtl::OUString &)
-    throw (css::uno::RuntimeException)
 {
 }
 
 void SAL_CALL PresenterCurrentSlideObserver::slideTransitionStarted (void)
-    throw (css::uno::RuntimeException)
 {
 	if( mpPresenterController.is() )
 		mpPresenterController->UpdateCurrentSlide(0);
 }
 
 void SAL_CALL PresenterCurrentSlideObserver::slideTransitionEnded (void)
-    throw (css::uno::RuntimeException)
 {
 }
 
 void SAL_CALL PresenterCurrentSlideObserver::slideAnimationsEnded (void)
-    throw (css::uno::RuntimeException)
 {
 }
 
@@ -139,7 +129,6 @@ void SAL_CALL PresenterCurrentSlideObserver::slideAnimationsEnded (void)
 
 void SAL_CALL PresenterCurrentSlideObserver::disposing (
     const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     if (rEvent.Source == Reference<XInterface>(static_cast<XWeak*>(mpPresenterController.get())))
         dispose();

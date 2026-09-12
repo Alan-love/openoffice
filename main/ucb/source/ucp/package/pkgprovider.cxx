@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -69,7 +69,6 @@ public:
     // XInterface
     virtual uno::Any SAL_CALL
     queryInterface( const uno::Type& aType )
-        throw( uno::RuntimeException )
     { return m_xNA->queryInterface( aType ); }
     virtual void SAL_CALL
     acquire() throw()
@@ -81,11 +80,9 @@ public:
     // XHierarchicalNameAccess
     virtual uno::Any SAL_CALL
     getByHierarchicalName( const rtl::OUString& aName )
-        throw( container::NoSuchElementException, uno::RuntimeException )
     { return m_xNA->getByHierarchicalName( aName ); }
     virtual sal_Bool SAL_CALL
     hasByHierarchicalName( const rtl::OUString& aName )
-        throw( uno::RuntimeException )
     { return m_xNA->hasByHierarchicalName( aName ); }
 };
 
@@ -200,7 +197,6 @@ ONE_INSTANCE_SERVICE_FACTORY_IMPL( ContentProvider );
 // virtual
 uno::Reference< ucb::XContent > SAL_CALL ContentProvider::queryContent(
             const uno::Reference< ucb::XContentIdentifier >& Identifier )
-    throw( ucb::IllegalIdentifierException, uno::RuntimeException )
 {
     if ( !Identifier.is() )
         return uno::Reference< ucb::XContent >();
@@ -258,7 +254,7 @@ ContentProvider::createPackage( const rtl::OUString & rName, const rtl::OUString
         Packages::const_iterator it = m_pPackages->find( rURL );
         if ( it != m_pPackages->end() )
         {
-            // Already instanciated. Return package.
+            // Already instantiated. Return package.
             return (*it).second->m_xNA;
         }
     }
@@ -323,4 +319,3 @@ sal_Bool ContentProvider::removePackage( const rtl::OUString & rName )
     }
     return sal_False;
 }
-

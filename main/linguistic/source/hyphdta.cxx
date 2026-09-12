@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -58,9 +58,9 @@ HyphenatedWord::HyphenatedWord(const OUString &rWord, sal_Int16 nLang, sal_Int16
     nLanguage       (nLang)
 {
     String aSingleQuote( GetLocaleDataWrapper( nLanguage ).getQuotationMarkEnd() );
-    DBG_ASSERT( 1 == aSingleQuote.Len(), "unexpectend length of quotation mark" );
+    DBG_ASSERT( 1 == aSingleQuote.Len(), "unexpected length of quotation mark" );
     if (aSingleQuote.Len())
-    { 
+    {
         // ignore typographical apostrophes (which got replaced in original
         // word when being checked for hyphenation) in results.
         OUString aTmpWord( rWord );
@@ -80,7 +80,6 @@ HyphenatedWord::~HyphenatedWord()
 
 
 OUString SAL_CALL HyphenatedWord::getWord()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return aWord;
@@ -88,7 +87,6 @@ OUString SAL_CALL HyphenatedWord::getWord()
 
 
 Locale SAL_CALL HyphenatedWord::getLocale()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -98,7 +96,6 @@ Locale SAL_CALL HyphenatedWord::getLocale()
 
 
 sal_Int16 SAL_CALL HyphenatedWord::getHyphenationPos()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return nHyphenationPos;
@@ -106,7 +103,6 @@ sal_Int16 SAL_CALL HyphenatedWord::getHyphenationPos()
 
 
 OUString SAL_CALL HyphenatedWord::getHyphenatedWord()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return aHyphenatedWord;
@@ -114,7 +110,6 @@ OUString SAL_CALL HyphenatedWord::getHyphenatedWord()
 
 
 sal_Int16 SAL_CALL HyphenatedWord::getHyphenPos()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return nHyphPos;
@@ -122,7 +117,6 @@ sal_Int16 SAL_CALL HyphenatedWord::getHyphenPos()
 
 
 sal_Bool SAL_CALL HyphenatedWord::isAlternativeSpelling()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return bIsAltSpelling;
@@ -149,7 +143,6 @@ PossibleHyphens::~PossibleHyphens()
 
 
 OUString SAL_CALL PossibleHyphens::getWord()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return aWord;
@@ -157,7 +150,6 @@ OUString SAL_CALL PossibleHyphens::getWord()
 
 
 Locale SAL_CALL PossibleHyphens::getLocale()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return CreateLocale( nLanguage );
@@ -165,7 +157,6 @@ Locale SAL_CALL PossibleHyphens::getLocale()
 
 
 OUString SAL_CALL PossibleHyphens::getPossibleHyphens()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return aWordWithHyphens;
@@ -173,7 +164,6 @@ OUString SAL_CALL PossibleHyphens::getPossibleHyphens()
 
 
 Sequence< sal_Int16 > SAL_CALL PossibleHyphens::getHyphenationPositions()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return aOrigHyphenPos;
@@ -198,4 +188,3 @@ com::sun::star::uno::Reference < com::sun::star::linguistic2::XPossibleHyphens >
 ///////////////////////////////////////////////////////////////////////////
 
 }	// namespace linguistic
-

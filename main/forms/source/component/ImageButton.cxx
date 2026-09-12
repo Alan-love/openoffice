@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -108,13 +108,13 @@ void OImageButtonModel::describeFixedProperties( Sequence< Property >& _rProps )
 }
 
 //------------------------------------------------------------------------------
-::rtl::OUString OImageButtonModel::getServiceName() throw ( ::com::sun::star::uno::RuntimeException)
+::rtl::OUString OImageButtonModel::getServiceName()
 {
 	return FRM_COMPONENT_IMAGEBUTTON;	// old (non-sun) name for compatibility !
 }
 
 //------------------------------------------------------------------------------
-void OImageButtonModel::write(const Reference<XObjectOutputStream>& _rxOutStream) throw ( ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException)
+void OImageButtonModel::write(const Reference<XObjectOutputStream>& _rxOutStream)
 {
 	OControlModel::write(_rxOutStream);
 
@@ -129,7 +129,7 @@ void OImageButtonModel::write(const Reference<XObjectOutputStream>& _rxOutStream
 }
 
 //------------------------------------------------------------------------------
-void OImageButtonModel::read(const Reference<XObjectInputStream>& _rxInStream) throw ( ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException)
+void OImageButtonModel::read(const Reference<XObjectInputStream>& _rxInStream)
 {
 	OControlModel::read(_rxInStream);
 
@@ -214,7 +214,7 @@ OImageButtonControl::OImageButtonControl(const Reference<XMultiServiceFactory>& 
 
 // UNO Anbindung
 //------------------------------------------------------------------------------
-Any SAL_CALL OImageButtonControl::queryAggregation(const Type& _rType) throw (RuntimeException)
+Any SAL_CALL OImageButtonControl::queryAggregation(const Type& _rType)
 {
 	Any aReturn = OClickableImageBaseControl::queryAggregation(_rType);
 	if (!aReturn.hasValue())
@@ -224,7 +224,7 @@ Any SAL_CALL OImageButtonControl::queryAggregation(const Type& _rType) throw (Ru
 }
 
 //------------------------------------------------------------------------------
-void OImageButtonControl::mousePressed(const awt::MouseEvent& e) throw ( ::com::sun::star::uno::RuntimeException)
+void OImageButtonControl::mousePressed(const awt::MouseEvent& e)
 {
     ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
 
@@ -248,17 +248,17 @@ void OImageButtonControl::mousePressed(const awt::MouseEvent& e) throw ( ::com::
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL OImageButtonControl::mouseReleased(const awt::MouseEvent& /*e*/) throw ( RuntimeException)
+void SAL_CALL OImageButtonControl::mouseReleased(const awt::MouseEvent& /*e*/)
 {
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL OImageButtonControl::mouseEntered(const awt::MouseEvent& /*e*/) throw ( RuntimeException)
+void SAL_CALL OImageButtonControl::mouseEntered(const awt::MouseEvent& /*e*/)
 {
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL OImageButtonControl::mouseExited(const awt::MouseEvent& /*e*/) throw ( RuntimeException)
+void SAL_CALL OImageButtonControl::mouseExited(const awt::MouseEvent& /*e*/)
 {
 }
 
@@ -266,4 +266,3 @@ void SAL_CALL OImageButtonControl::mouseExited(const awt::MouseEvent& /*e*/) thr
 //.........................................................................
 }	// namespace frm
 //.........................................................................
-

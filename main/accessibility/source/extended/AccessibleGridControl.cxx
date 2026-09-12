@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -128,7 +128,6 @@ void SAL_CALL AccessibleGridControl::disposing()
 // XAccessibleContext ---------------------------------------------------------
 
 sal_Int32 SAL_CALL AccessibleGridControl::getAccessibleChildCount()
-    throw ( uno::RuntimeException )
 {
 	TCSolarGuard aSolarGuard;
 	::osl::MutexGuard aGuard( getOslMutex() );
@@ -139,7 +138,6 @@ sal_Int32 SAL_CALL AccessibleGridControl::getAccessibleChildCount()
 
 Reference< XAccessible > SAL_CALL
 AccessibleGridControl::getAccessibleChild( sal_Int32 nChildIndex )
-    throw ( lang::IndexOutOfBoundsException, uno::RuntimeException )
 {
 	TCSolarGuard aSolarGuard;
 	::osl::MutexGuard aGuard( getOslMutex() );
@@ -184,7 +182,6 @@ AccessibleGridControl::getAccessibleChild( sal_Int32 nChildIndex )
 // -----------------------------------------------------------------------------
 
 sal_Int16 SAL_CALL AccessibleGridControl::getAccessibleRole()
-    throw ( uno::RuntimeException )
 {
 	ensureIsAlive();
 	return AccessibleRole::PANEL;
@@ -195,7 +192,6 @@ sal_Int16 SAL_CALL AccessibleGridControl::getAccessibleRole()
 
 Reference< XAccessible > SAL_CALL
 AccessibleGridControl::getAccessibleAtPoint( const awt::Point& rPoint )
-    throw ( uno::RuntimeException )
 {
 	TCSolarGuard aSolarGuard;
 	::osl::MutexGuard aGuard( getOslMutex() );
@@ -226,7 +222,6 @@ AccessibleGridControl::getAccessibleAtPoint( const awt::Point& rPoint )
 // -----------------------------------------------------------------------------
 
 void SAL_CALL AccessibleGridControl::grabFocus()
-    throw ( uno::RuntimeException )
 {
 	TCSolarGuard aSolarGuard;
 	::osl::MutexGuard aGuard( getOslMutex() );
@@ -236,7 +231,6 @@ void SAL_CALL AccessibleGridControl::grabFocus()
 // -----------------------------------------------------------------------------
 
 Any SAL_CALL AccessibleGridControl::getAccessibleKeyBinding()
-    throw ( uno::RuntimeException )
 {
 	ensureIsAlive();
 	return Any();
@@ -246,7 +240,6 @@ Any SAL_CALL AccessibleGridControl::getAccessibleKeyBinding()
 // XServiceInfo ---------------------------------------------------------------
 
 OUString SAL_CALL AccessibleGridControl::getImplementationName()
-    throw ( uno::RuntimeException )
 {
 	return OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.accessibility.AccessibleGridControl" ) );
 }
@@ -420,14 +413,14 @@ void AccessibleGridControlAccess::dispose()
 }
 
 // -----------------------------------------------------------------------------
-Reference< XAccessibleContext > SAL_CALL AccessibleGridControlAccess::getAccessibleContext() throw ( RuntimeException )
+Reference< XAccessibleContext > SAL_CALL AccessibleGridControlAccess::getAccessibleContext()
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 
 	DBG_ASSERT( ( m_pContext && m_xContext.is() ) || ( !m_pContext && !m_xContext.is() ),
         "accessibility/extended/AccessibleGridControlAccess::getAccessibleContext: inconsistency!" );
 
-	// if the context died meanwhile (we're no listener, so it won't tell us explicitily when this happens),
+	// if the context died meanwhile (we're no listener, so it won't tell us explicitly when this happens),
 	// then reset an re-create.
 	if ( m_pContext && !m_pContext->isAlive() )
 		m_xContext = m_pContext = NULL;

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -40,21 +40,21 @@ public:
     ~PanesIndexAccess(){}
 
     // XIndexAccess
-    virtual sal_Int32 SAL_CALL getCount(  ) throw (uno::RuntimeException)
+    virtual sal_Int32 SAL_CALL getCount(  )
     {
         return 1;
     }
-    virtual uno::Any SAL_CALL getByIndex( sal_Int32 Index ) throw (lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
+    virtual uno::Any SAL_CALL getByIndex( sal_Int32 Index )
     {
         if( Index != 1 )
             throw container::NoSuchElementException();
-        return uno::makeAny( uno::Reference< word::XPane >( new SwVbaPane( mxParent,  mxContext, mxModel ) ) );    
+        return uno::makeAny( uno::Reference< word::XPane >( new SwVbaPane( mxParent,  mxContext, mxModel ) ) );
     }
-    virtual uno::Type SAL_CALL getElementType(  ) throw (uno::RuntimeException)
+    virtual uno::Type SAL_CALL getElementType(  )
     {
         return word::XPane::static_type(0);
     }
-    virtual sal_Bool SAL_CALL hasElements(  ) throw (uno::RuntimeException)
+    virtual sal_Bool SAL_CALL hasElements(  )
     {
         return sal_True;
     }
@@ -66,12 +66,12 @@ class PanesEnumWrapper : public EnumerationHelper_BASE
 	sal_Int32 nIndex;
 public:
 	PanesEnumWrapper( const uno::Reference< container::XIndexAccess >& xIndexAccess ) : m_xIndexAccess( xIndexAccess ), nIndex( 0 ) {}
-	virtual ::sal_Bool SAL_CALL hasMoreElements(  ) throw (uno::RuntimeException)
+	virtual ::sal_Bool SAL_CALL hasMoreElements(  )
 	{
 		return ( nIndex < m_xIndexAccess->getCount() );
 	}
 
-	virtual uno::Any SAL_CALL nextElement(  ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
+	virtual uno::Any SAL_CALL nextElement(  )
 	{
 		if ( nIndex < m_xIndexAccess->getCount() )
 			return m_xIndexAccess->getByIndex( nIndex++ );
@@ -84,12 +84,12 @@ SwVbaPanes::SwVbaPanes( const uno::Reference< XHelperInterface >& xParent, const
 }
 // XEnumerationAccess
 uno::Type
-SwVbaPanes::getElementType() throw (uno::RuntimeException)
+SwVbaPanes::getElementType()
 {
 	return word::XPane::static_type(0);
 }
 uno::Reference< container::XEnumeration >
-SwVbaPanes::createEnumeration() throw (uno::RuntimeException)
+SwVbaPanes::createEnumeration()
 {
     return new PanesEnumWrapper( m_xIndexAccess );
 }
@@ -100,14 +100,14 @@ SwVbaPanes::createCollectionObject( const css::uno::Any& aSource )
     return aSource;
 }
 
-rtl::OUString& 
+rtl::OUString&
 SwVbaPanes::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("SwVbaPanes") );
 	return sImplName;
 }
 
-css::uno::Sequence<rtl::OUString> 
+css::uno::Sequence<rtl::OUString>
 SwVbaPanes::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > sNames;

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -125,7 +125,6 @@ void CacheUpdateListener::stopListening()
     07.03.2004 08:17
 -----------------------------------------------*/
 void SAL_CALL  CacheUpdateListener::changesOccurred(const css::util::ChangesEvent& aEvent)
-    throw(css::uno::RuntimeException)
 {
     // SAFE ->
     ::osl::ResettableMutexGuard aLock(m_aLock);
@@ -206,7 +205,7 @@ void SAL_CALL  CacheUpdateListener::changesOccurred(const css::util::ChangesEven
         catch(const css::container::NoSuchElementException&)
             {
                 // can be ignored! Because we must be aware that
-                // sItem was removed from the condfiguration and we forced an update of the cache.
+                // sItem was removed from the configuration and we forced an update of the cache.
                 // But we know, that the cache is up-to-date know and has thrown this exception afterwards .-)
             }
         // NO FLUSH! Otherwise we start a never ending story here .-)
@@ -228,7 +227,6 @@ void SAL_CALL  CacheUpdateListener::changesOccurred(const css::util::ChangesEven
     05.03.2004 08:44
 -----------------------------------------------*/
 void SAL_CALL CacheUpdateListener::disposing(const css::lang::EventObject& aEvent)
-    throw(css::uno::RuntimeException)
 {
     // SAFE ->
     ::osl::ResettableMutexGuard aLock(m_aLock);

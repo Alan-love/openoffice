@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,7 +49,7 @@ public:
 
 	const PropertyMap* getPropertyMap() const throw();
 
-	Property getPropertyByName( const OUString& aName ) throw( UnknownPropertyException );
+	Property getPropertyByName( const OUString& aName );
 	sal_Bool hasPropertyByName( const OUString& aName ) throw();
 
 private:
@@ -135,7 +135,7 @@ const PropertyMap* PropertyMapImpl::getPropertyMap() const throw()
 	return &maPropertyMap;
 }
 
-Property PropertyMapImpl::getPropertyByName( const OUString& aName ) throw( UnknownPropertyException )
+Property PropertyMapImpl::getPropertyByName( const OUString& aName )
 {
 	PropertyMap::iterator aIter = maPropertyMap.find( aName );
 
@@ -174,17 +174,17 @@ void PropertySetInfo::remove( const rtl::OUString& aName ) throw()
 	mpMap->remove( aName );
 }
 
-Sequence< ::com::sun::star::beans::Property > SAL_CALL PropertySetInfo::getProperties() throw(::com::sun::star::uno::RuntimeException)
+Sequence< ::com::sun::star::beans::Property > SAL_CALL PropertySetInfo::getProperties()
 {
 	return mpMap->getProperties();
 }
 
-Property SAL_CALL PropertySetInfo::getPropertyByName( const ::rtl::OUString& aName ) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::uno::RuntimeException)
+Property SAL_CALL PropertySetInfo::getPropertyByName( const ::rtl::OUString& aName )
 {
 	return mpMap->getPropertyByName( aName );
 }
 
-sal_Bool SAL_CALL PropertySetInfo::hasPropertyByName( const ::rtl::OUString& Name ) throw(::com::sun::star::uno::RuntimeException)
+sal_Bool SAL_CALL PropertySetInfo::hasPropertyByName( const ::rtl::OUString& Name )
 {
 	return mpMap->hasPropertyByName( Name );
 }

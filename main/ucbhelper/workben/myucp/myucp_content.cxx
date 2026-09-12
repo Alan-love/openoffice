@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -115,7 +115,6 @@ void SAL_CALL Content::release()
 //=========================================================================
 // virtual
 uno::Any SAL_CALL Content::queryInterface( const uno::Type & rType )
-    throw ( uno::RuntimeException )
 {
     uno::Any aRet;
 
@@ -139,7 +138,6 @@ XTYPEPROVIDER_COMMON_IMPL( Content );
 //=========================================================================
 // virtual
 uno::Sequence< uno::Type > SAL_CALL Content::getTypes()
-    throw( uno::RuntimeException )
 {
 	// @@@ Add own interfaces.
 
@@ -176,9 +174,8 @@ uno::Sequence< uno::Type > SAL_CALL Content::getTypes()
 
 // virtual
 rtl::OUString SAL_CALL Content::getImplementationName()
-    throw( uno::RuntimeException )
 {
-    // @@@ Adjust implementation name. 
+    // @@@ Adjust implementation name.
     // Prefix with reversed company domain name.
     return rtl::OUString::createFromAscii( "com.sun.star.comp.myucp.Content" );
 }
@@ -186,7 +183,6 @@ rtl::OUString SAL_CALL Content::getImplementationName()
 //=========================================================================
 // virtual
 uno::Sequence< rtl::OUString > SAL_CALL Content::getSupportedServiceNames()
-    throw( uno::RuntimeException )
 {
 	// @@@ Adjust macro name.
     uno::Sequence< rtl::OUString > aSNS( 1 );
@@ -203,7 +199,6 @@ uno::Sequence< rtl::OUString > SAL_CALL Content::getSupportedServiceNames()
 
 // virtual
 rtl::OUString SAL_CALL Content::getContentType()
-    throw( uno::RuntimeException )
 {
 	// @@@ Adjust macro name ( def in myucp_provider.hxx ).
     return rtl::OUString::createFromAscii( MYUCP_CONTENT_TYPE );
@@ -220,9 +215,6 @@ uno::Any SAL_CALL Content::execute(
         const ucb::Command& aCommand,
         sal_Int32 /* CommandId */,
         const uno::Reference< ucb::XCommandEnvironment >& Environment )
-    throw( uno::Exception,
-           ucb::CommandAbortedException,
-           uno::RuntimeException )
 {
     uno::Any aRet;
 
@@ -459,7 +451,6 @@ uno::Any SAL_CALL Content::execute(
 //=========================================================================
 // virtual
 void SAL_CALL Content::abort( sal_Int32 )
-    throw( uno::RuntimeException )
 {
 	// @@@ Implement logic to abort running commands, if this makes
 	//     sense for your content.
@@ -487,7 +478,7 @@ uno::Reference< sdbc::XRow > Content::getPropertyValues(
             const uno::Reference< lang::XMultiServiceFactory >& rSMgr,
             const uno::Sequence< beans::Property >& rProperties,
             const ContentProperties& rData,
-            const rtl::Reference< 
+            const rtl::Reference<
                 ::ucbhelper::ContentProviderImplHelper >& rProvider,
             const rtl::OUString& rContentId )
 {
@@ -823,7 +814,7 @@ void Content::queryChildren( ContentRefList& rChildren )
 {
 	// @@@ Adapt method to your URL scheme...
 
-	// Obtain a list with a snapshot of all currently instanciated contents
+	// Obtain a list with a snapshot of all currently instantiated contents
 	// from provider and extract the contents which are direct children
 	// of this content.
 
@@ -847,7 +838,7 @@ void Content::queryChildren( ContentRefList& rChildren )
 	while ( it != end )
 	{
 		::ucbhelper::ContentImplHelperRef xChild = (*it);
-		::rtl::OUString aChildURL 
+		::rtl::OUString aChildURL
               = xChild->getIdentifier()->getContentIdentifier();
 
 		// Is aURL a prefix of aChildURL?
@@ -874,14 +865,13 @@ void Content::insert(
         const uno::Reference< io::XInputStream > & xInputStream,
         sal_Bool bReplaceExisting,
         const uno::Reference< ucb::XCommandEnvironment >& Environment )
-    throw( uno::Exception )
 {
 	osl::ClearableGuard< osl::Mutex > aGuard( m_aMutex );
 
 	// Check, if all required properties were set.
 
 #if 0
-    // @@@ add checks for property presence 
+    // @@@ add checks for property presence
 	if ( m_aProps.xxxx == yyyyy )
 	{
         OSL_ENSURE( sal_False, "Content::insert - property value missing!" );
@@ -949,7 +939,6 @@ void Content::insert(
 
 //=========================================================================
 void Content::destroy( sal_Bool bDeletePhysical )
-    throw( uno::Exception )
 {
 	// @@@ take care about bDeletePhysical -> trashcan support
 
@@ -959,7 +948,7 @@ void Content::destroy( sal_Bool bDeletePhysical )
 
 	osl::Guard< osl::Mutex > aGuard( m_aMutex );
 
-	// Process instanciated children...
+	// Process instantiated children...
 
 	ContentRefList aChildren;
 	queryChildren( aChildren );
@@ -975,5 +964,3 @@ void Content::destroy( sal_Bool bDeletePhysical )
 }
 
 #endif // IMPLEMENT_COMMAND_DELETE
-
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -46,9 +46,9 @@ public:
 	virtual StringSequence SAL_CALL getSupportedServiceNames() throw();
 
 // ::com::sun::star::io::XPersistObject
-	virtual ::rtl::OUString SAL_CALL getServiceName() throw ( ::com::sun::star::uno::RuntimeException);
-	virtual void SAL_CALL write(const ::com::sun::star::uno::Reference< ::com::sun::star::io::XObjectOutputStream>& _rxOutStream) throw ( ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException);
-	virtual void SAL_CALL read(const ::com::sun::star::uno::Reference< ::com::sun::star::io::XObjectInputStream>& _rxInStream) throw ( ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException);
+	virtual ::rtl::OUString SAL_CALL getServiceName();
+	virtual void SAL_CALL write(const ::com::sun::star::uno::Reference< ::com::sun::star::io::XObjectOutputStream>& _rxOutStream);
+	virtual void SAL_CALL read(const ::com::sun::star::uno::Reference< ::com::sun::star::io::XObjectInputStream>& _rxInStream);
 
     // OControlModel's property handling
 	virtual void describeFixedProperties(
@@ -79,17 +79,17 @@ public:
 
 	// UNO Anbindung
 	DECLARE_UNO3_AGG_DEFAULTS(OImageButtonControl, OClickableImageBaseControl);
-	virtual ::com::sun::star::uno::Any SAL_CALL queryAggregation(const ::com::sun::star::uno::Type& _rType) throw(::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Any SAL_CALL queryAggregation(const ::com::sun::star::uno::Type& _rType);
 
     // XEventListener
-	virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& _rSource) throw(::com::sun::star::uno::RuntimeException)
+	virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& _rSource)
 		{ OControl::disposing(_rSource); }
 
     // XMouseListener
-	virtual void SAL_CALL mousePressed(const ::com::sun::star::awt::MouseEvent& e) throw ( ::com::sun::star::uno::RuntimeException);
-	virtual void SAL_CALL mouseReleased(const ::com::sun::star::awt::MouseEvent& e) throw ( ::com::sun::star::uno::RuntimeException);
-	virtual void SAL_CALL mouseEntered(const ::com::sun::star::awt::MouseEvent& e) throw ( ::com::sun::star::uno::RuntimeException);
-	virtual void SAL_CALL mouseExited(const ::com::sun::star::awt::MouseEvent& e) throw ( ::com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL mousePressed(const ::com::sun::star::awt::MouseEvent& e);
+	virtual void SAL_CALL mouseReleased(const ::com::sun::star::awt::MouseEvent& e);
+	virtual void SAL_CALL mouseEntered(const ::com::sun::star::awt::MouseEvent& e);
+	virtual void SAL_CALL mouseExited(const ::com::sun::star::awt::MouseEvent& e);
 
     // prevent method hiding
     using OClickableImageBaseControl::disposing;
@@ -100,4 +100,3 @@ public:
 //.........................................................................
 
 #endif // _FRM_IMAGE_BUTTON_HXX_
-

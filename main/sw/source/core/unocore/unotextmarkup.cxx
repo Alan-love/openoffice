@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -63,7 +63,7 @@ SwXTextMarkup::~SwXTextMarkup()
      delete mpConversionMap;
 }
 
-uno::Reference< container::XStringKeyMap > SAL_CALL SwXTextMarkup::getMarkupInfoContainer() throw (uno::RuntimeException)
+uno::Reference< container::XStringKeyMap > SAL_CALL SwXTextMarkup::getMarkupInfoContainer()
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -72,7 +72,7 @@ uno::Reference< container::XStringKeyMap > SAL_CALL SwXTextMarkup::getMarkupInfo
 }
 
 void SAL_CALL SwXTextMarkup::commitTextRangeMarkup(::sal_Int32 nType, const ::rtl::OUString & aIdentifier, const uno::Reference< text::XTextRange> & xRange,
-                                                   const uno::Reference< container::XStringKeyMap > & xMarkupInfoContainer) throw (uno::RuntimeException)
+                                                   const uno::Reference< container::XStringKeyMap > & xMarkupInfoContainer)
 {
     vos::OGuard  aGuard(Application::GetSolarMutex());
 
@@ -102,7 +102,7 @@ void SAL_CALL SwXTextMarkup::commitTextRangeMarkup(::sal_Int32 nType, const ::rt
         SwPosition* startPos = aPam.Start();
         SwPosition* endPos   = aPam.End();
 
-        commitStringMarkup (nType, aIdentifier, startPos->nContent.GetIndex(), endPos->nContent.GetIndex() - startPos->nContent.GetIndex(), xMarkupInfoContainer);    	
+        commitStringMarkup (nType, aIdentifier, startPos->nContent.GetIndex(), endPos->nContent.GetIndex() - startPos->nContent.GetIndex(), xMarkupInfoContainer);
     }
     else if (pCursor)
     {
@@ -111,18 +111,17 @@ void SAL_CALL SwXTextMarkup::commitTextRangeMarkup(::sal_Int32 nType, const ::rt
         SwPosition* startPos = aPam.Start();
         SwPosition* endPos   = aPam.End();
 
-        commitStringMarkup (nType, aIdentifier, startPos->nContent.GetIndex(), endPos->nContent.GetIndex() - startPos->nContent.GetIndex(), xMarkupInfoContainer);    	
+        commitStringMarkup (nType, aIdentifier, startPos->nContent.GetIndex(), endPos->nContent.GetIndex() - startPos->nContent.GetIndex(), xMarkupInfoContainer);
     }
 }
 
 
-void SAL_CALL SwXTextMarkup::commitStringMarkup( 
-    ::sal_Int32 nType, 
-    const ::rtl::OUString & rIdentifier, 
-    ::sal_Int32 nStart, 
-    ::sal_Int32 nLength, 
-    const uno::Reference< container::XStringKeyMap > & xMarkupInfoContainer) 
-    throw (uno::RuntimeException)
+void SAL_CALL SwXTextMarkup::commitStringMarkup(
+    ::sal_Int32 nType,
+    const ::rtl::OUString & rIdentifier,
+    ::sal_Int32 nStart,
+    ::sal_Int32 nLength,
+    const uno::Reference< container::XStringKeyMap > & xMarkupInfoContainer)
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -145,7 +144,7 @@ void SAL_CALL SwXTextMarkup::commitStringMarkup(
             pWList = new SwWrongList( WRONGLIST_SPELL );
             mpTxtNode->SetWrong( pWList );
         }
-    }    
+    }
     else if ( nType == text::TextMarkupType::PROOFREADING || nType == text::TextMarkupType::SENTENCE )
     {
         IGrammarContact *pGrammarContact = getGrammarContact( *mpTxtNode );
@@ -274,7 +273,7 @@ void SAL_CALL SwXTextMarkup::commitStringMarkup(
         if( nType == text::TextMarkupType::SENTENCE )
             ((SwGrammarMarkUp*)pWList)->setSentence( static_cast< xub_StrLen >(nStart) );
         else
-            pWList->Insert( rIdentifier, xMarkupInfoContainer, 
+            pWList->Insert( rIdentifier, xMarkupInfoContainer,
 				static_cast< xub_StrLen >(nStart), static_cast< xub_StrLen >(nLength) );
 	}
 
@@ -283,14 +282,14 @@ void SAL_CALL SwXTextMarkup::commitStringMarkup(
 }
 
 
-void lcl_commitGrammarMarkUp( 
+void lcl_commitGrammarMarkUp(
     const ModelToViewHelper::ConversionMap* pConversionMap,
     SwGrammarMarkUp* pWList,
-    ::sal_Int32 nType, 
-    const ::rtl::OUString & rIdentifier, 
-    ::sal_Int32 nStart, 
-    ::sal_Int32 nLength, 
-    const uno::Reference< container::XStringKeyMap > & xMarkupInfoContainer) 
+    ::sal_Int32 nType,
+    const ::rtl::OUString & rIdentifier,
+    ::sal_Int32 nStart,
+    ::sal_Int32 nLength,
+    const uno::Reference< container::XStringKeyMap > & xMarkupInfoContainer)
 {
     ASSERT( nType == text::TextMarkupType::PROOFREADING || nType == text::TextMarkupType::SENTENCE, "Wrong mark-up type" )
     const ModelToViewHelper::ModelPosition aStartPos =
@@ -373,15 +372,14 @@ void lcl_commitGrammarMarkUp(
         if( nType == text::TextMarkupType::SENTENCE )
             ((SwGrammarMarkUp*)pWList)->setSentence( static_cast< xub_StrLen >(nStart+nLength) );
         else
-            pWList->Insert( rIdentifier, xMarkupInfoContainer, 
+            pWList->Insert( rIdentifier, xMarkupInfoContainer,
 				static_cast< xub_StrLen >(nStart), static_cast< xub_StrLen >(nLength) );
 	}
 }
 
 
 void SAL_CALL SwXTextMarkup::commitMultiTextMarkup(
-	const uno::Sequence< text::TextMarkupDescriptor > &rMarkups ) 
-throw (lang::IllegalArgumentException, uno::RuntimeException)
+	const uno::Sequence< text::TextMarkupDescriptor > &rMarkups )
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -409,11 +407,11 @@ throw (lang::IllegalArgumentException, uno::RuntimeException)
                 nSentenceMarkUpIndex = i;
             else    // there is already one sentence markup
                 throw lang::IllegalArgumentException();
-        } 
+        }
 		else if( pMarkups[i].nType != text::TextMarkupType::PROOFREADING )
             return;
     }
-    
+
     if( nSentenceMarkUpIndex == -1 )
         return;
 
@@ -442,18 +440,18 @@ throw (lang::IllegalArgumentException, uno::RuntimeException)
     if( pWList->GetBeginInv() < STRING_LEN )
     {
         const ModelToViewHelper::ModelPosition aSentenceEnd =
-            ModelToViewHelper::ConvertToModelPosition( mpConversionMap, 
+            ModelToViewHelper::ConvertToModelPosition( mpConversionMap,
                 pMarkups[nSentenceMarkUpIndex].nOffset + pMarkups[nSentenceMarkUpIndex].nLength );
         bAcceptGrammarError = (xub_StrLen)aSentenceEnd.mnPos > pWList->GetBeginInv();
         pWList->ClearGrammarList( (xub_StrLen)aSentenceEnd.mnPos );
     }
-    
+
     if( bAcceptGrammarError )
     {
         for( i = 0;  i < nLen;  ++i )
 		{
 			const text::TextMarkupDescriptor &rDesc = pMarkups[i];
-            lcl_commitGrammarMarkUp( mpConversionMap, pWList, rDesc.nType, 
+            lcl_commitGrammarMarkUp( mpConversionMap, pWList, rDesc.nType,
                 rDesc.aIdentifier, rDesc.nOffset, rDesc.nLength, rDesc.xMarkupInfoContainer );
 		}
     }
@@ -462,7 +460,7 @@ throw (lang::IllegalArgumentException, uno::RuntimeException)
         bRepaint = false;
         i = nSentenceMarkUpIndex;
 		const text::TextMarkupDescriptor &rDesc = pMarkups[i];
-        lcl_commitGrammarMarkUp( mpConversionMap, pWList, rDesc.nType, 
+        lcl_commitGrammarMarkUp( mpConversionMap, pWList, rDesc.nType,
             rDesc.aIdentifier, rDesc.nOffset, rDesc.nLength, rDesc.xMarkupInfoContainer );
     }
 
@@ -470,7 +468,7 @@ throw (lang::IllegalArgumentException, uno::RuntimeException)
         finishGrammarCheck( *mpTxtNode );
 
     return;
-}    
+}
 
 
 void SwXTextMarkup::Modify( const SfxPoolItem* /*pOld*/, const SfxPoolItem* /*pNew*/ )
@@ -480,7 +478,7 @@ void SwXTextMarkup::Modify( const SfxPoolItem* /*pOld*/, const SfxPoolItem* /*pN
     if ( GetRegisteredIn() )
         GetRegisteredInNonConst()->Remove( this );
     // <--
-    
+
     vos::OGuard aGuard(Application::GetSolarMutex());
     mpTxtNode = 0;
 }
@@ -492,7 +490,7 @@ SwXStringKeyMap::SwXStringKeyMap()
 {
 }
 
-uno::Any SAL_CALL SwXStringKeyMap::getValue(const ::rtl::OUString & aKey) throw (uno::RuntimeException, container::NoSuchElementException)
+uno::Any SAL_CALL SwXStringKeyMap::getValue(const ::rtl::OUString & aKey)
 {
     std::map< rtl::OUString, uno::Any >::const_iterator aIter = maMap.find( aKey );
     if ( aIter == maMap.end() )
@@ -501,12 +499,12 @@ uno::Any SAL_CALL SwXStringKeyMap::getValue(const ::rtl::OUString & aKey) throw 
     return (*aIter).second;
 }
 
-::sal_Bool SAL_CALL SwXStringKeyMap::hasValue(const ::rtl::OUString & aKey) throw (uno::RuntimeException)
+::sal_Bool SAL_CALL SwXStringKeyMap::hasValue(const ::rtl::OUString & aKey)
 {
     return maMap.find( aKey ) != maMap.end();
 }
 
-void SAL_CALL SwXStringKeyMap::insertValue(const ::rtl::OUString & aKey, const uno::Any & aValue) throw (uno::RuntimeException, lang::IllegalArgumentException, container::ElementExistException)
+void SAL_CALL SwXStringKeyMap::insertValue(const ::rtl::OUString & aKey, const uno::Any & aValue)
 {
     std::map< rtl::OUString, uno::Any >::const_iterator aIter = maMap.find( aKey );
     if ( aIter != maMap.end() )
@@ -515,12 +513,12 @@ void SAL_CALL SwXStringKeyMap::insertValue(const ::rtl::OUString & aKey, const u
     maMap[ aKey ] = aValue;
 }
 
-::sal_Int32 SAL_CALL SwXStringKeyMap::getCount() throw (uno::RuntimeException)
+::sal_Int32 SAL_CALL SwXStringKeyMap::getCount()
 {
     return maMap.size();
 }
 
-::rtl::OUString SAL_CALL SwXStringKeyMap::getKeyByIndex(::sal_Int32 nIndex) throw (uno::RuntimeException, lang::IndexOutOfBoundsException)
+::rtl::OUString SAL_CALL SwXStringKeyMap::getKeyByIndex(::sal_Int32 nIndex)
 {
     if ( (sal_uInt32)nIndex >= maMap.size() )
         throw lang::IndexOutOfBoundsException();
@@ -528,11 +526,10 @@ void SAL_CALL SwXStringKeyMap::insertValue(const ::rtl::OUString & aKey, const u
     return ::rtl::OUString();
 }
 
-uno::Any SAL_CALL SwXStringKeyMap::getValueByIndex(::sal_Int32 nIndex) throw (uno::RuntimeException, lang::IndexOutOfBoundsException)
+uno::Any SAL_CALL SwXStringKeyMap::getValueByIndex(::sal_Int32 nIndex)
 {
     if ( (sal_uInt32)nIndex >= maMap.size() )
         throw lang::IndexOutOfBoundsException();
 
     return uno::Any();
 }
-

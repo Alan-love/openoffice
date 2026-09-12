@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 #include "BubbleChartType.hxx"
 #include "PropertyHelper.hxx"
 #include "macros.hxx"
@@ -63,7 +63,7 @@ struct StaticBubbleChartTypeDefaults_Initializer
 private:
     void lcl_AddDefaultsToMap( ::chart::tPropertyValueMap & /*rOutMap*/ )
     {
-    }    
+    }
 };
 
 struct StaticBubbleChartTypeDefaults : public rtl::StaticAggregate< ::chart::tPropertyValueMap, StaticBubbleChartTypeDefaults_Initializer >
@@ -115,7 +115,7 @@ namespace chart
 {
 
 BubbleChartType::BubbleChartType(
-    const uno::Reference< uno::XComponentContext > & xContext ) 
+    const uno::Reference< uno::XComponentContext > & xContext )
 	: ChartType( xContext )
 {
 }
@@ -130,7 +130,6 @@ BubbleChartType::~BubbleChartType()
 
 // ____ XCloneable ____
 uno::Reference< util::XCloneable > SAL_CALL BubbleChartType::createClone()
-    throw (uno::RuntimeException)
 {
     return uno::Reference< util::XCloneable >( new BubbleChartType( *this ));
 }
@@ -138,8 +137,6 @@ uno::Reference< util::XCloneable > SAL_CALL BubbleChartType::createClone()
 // ____ XChartType ____
 Reference< chart2::XCoordinateSystem > SAL_CALL
     BubbleChartType::createCoordinateSystem( ::sal_Int32 DimensionCount )
-    throw (lang::IllegalArgumentException,
-           uno::RuntimeException)
 {
     Reference< chart2::XCoordinateSystem > xResult(
         new CartesianCoordinateSystem(
@@ -162,7 +159,7 @@ Reference< chart2::XCoordinateSystem > SAL_CALL
             aScaleData.AxisType = chart2::AxisType::SERIES;
         else
             aScaleData.AxisType = chart2::AxisType::REALNUMBER;
-           
+
         xAxis->setScaleData( aScaleData );
     }
 
@@ -170,13 +167,11 @@ Reference< chart2::XCoordinateSystem > SAL_CALL
 }
 
 ::rtl::OUString SAL_CALL BubbleChartType::getChartType()
-    throw (uno::RuntimeException)
 {
     return CHART2_SERVICE_NAME_CHARTTYPE_BUBBLE;
 }
 
 uno::Sequence< ::rtl::OUString > SAL_CALL BubbleChartType::getSupportedMandatoryRoles()
-    throw (uno::RuntimeException)
 {
     static uno::Sequence< ::rtl::OUString > aMandRolesSeq;
 
@@ -193,14 +188,12 @@ uno::Sequence< ::rtl::OUString > SAL_CALL BubbleChartType::getSupportedMandatory
 }
 
 OUString SAL_CALL BubbleChartType::getRoleOfSequenceForSeriesLabel()
-    throw (uno::RuntimeException)
 {
     return C2U( "values-size" );
 }
 
 // ____ OPropertySet ____
 uno::Any BubbleChartType::GetDefaultValue( sal_Int32 nHandle ) const
-    throw(beans::UnknownPropertyException)
 {
     const tPropertyValueMap& rStaticDefaults = *StaticBubbleChartTypeDefaults::get();
     tPropertyValueMap::const_iterator aFound( rStaticDefaults.find( nHandle ) );
@@ -217,7 +210,6 @@ uno::Any BubbleChartType::GetDefaultValue( sal_Int32 nHandle ) const
 
 // ____ XPropertySet ____
 uno::Reference< beans::XPropertySetInfo > SAL_CALL BubbleChartType::getPropertySetInfo()
-    throw (uno::RuntimeException)
 {
     return *StaticBubbleChartTypeInfo::get();
 }

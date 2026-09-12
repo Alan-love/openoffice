@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_dbpool2.hxx"
 #include "ZDriverWrapper.hxx"
 #include "ZConnectionPool.hxx"
 #include <osl/diagnose.h>
@@ -78,14 +78,14 @@ namespace connectivity
 	}
 
 	//--------------------------------------------------------------------
-	Any SAL_CALL ODriverWrapper::queryInterface( const Type& _rType ) throw (RuntimeException)
+	Any SAL_CALL ODriverWrapper::queryInterface( const Type& _rType )
 	{
 		Any aReturn = ODriverWrapper_BASE::queryInterface(_rType);
 		return aReturn.hasValue() ? aReturn : (m_xDriverAggregate.is() ? m_xDriverAggregate->queryAggregation(_rType) : aReturn);
 	}
 
 	//--------------------------------------------------------------------
-	Reference< XConnection > SAL_CALL ODriverWrapper::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info ) throw (SQLException, RuntimeException)
+	Reference< XConnection > SAL_CALL ODriverWrapper::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info )
 	{
 		Reference< XConnection > xConnection;
 		if (m_pConnectionPool)
@@ -98,13 +98,13 @@ namespace connectivity
 	}
 
 	//--------------------------------------------------------------------
-	sal_Bool SAL_CALL ODriverWrapper::acceptsURL( const ::rtl::OUString& url ) throw (SQLException, RuntimeException)
+	sal_Bool SAL_CALL ODriverWrapper::acceptsURL( const ::rtl::OUString& url )
 	{
 		return m_xDriver.is() && m_xDriver->acceptsURL(url);
 	}
 
 	//--------------------------------------------------------------------
-	Sequence< DriverPropertyInfo > SAL_CALL ODriverWrapper::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& info ) throw (SQLException, RuntimeException)
+	Sequence< DriverPropertyInfo > SAL_CALL ODriverWrapper::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& info )
 	{
 		Sequence< DriverPropertyInfo > aInfo;
 		if (m_xDriver.is())
@@ -113,13 +113,13 @@ namespace connectivity
 	}
 
 	//--------------------------------------------------------------------
-	sal_Int32 SAL_CALL ODriverWrapper::getMajorVersion(  ) throw (RuntimeException)
+	sal_Int32 SAL_CALL ODriverWrapper::getMajorVersion(  )
 	{
 		return m_xDriver.is() ? m_xDriver->getMajorVersion() : 0;
 	}
 
 	//--------------------------------------------------------------------
-	sal_Int32 SAL_CALL ODriverWrapper::getMinorVersion(  ) throw (RuntimeException)
+	sal_Int32 SAL_CALL ODriverWrapper::getMinorVersion(  )
 	{
 		return m_xDriver.is() ? m_xDriver->getMinorVersion() : 0;
 	}
@@ -127,5 +127,3 @@ namespace connectivity
 //........................................................................
 }	// namespace connectivity
 //........................................................................
-
-

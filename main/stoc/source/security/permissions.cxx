@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -497,7 +497,6 @@ OUString AllPermission::toString() const SAL_THROW( () )
 //__________________________________________________________________________________________________
 PermissionCollection::PermissionCollection(
     Sequence< Any > const & permissions, PermissionCollection const & addition )
-    SAL_THROW( (RuntimeException) )
     : m_head( addition.m_head )
 {
     Any const * perms = permissions.getConstArray();
@@ -581,7 +580,6 @@ static void demanded_diag(
 //--------------------------------------------------------------------------------------------------
 static void throwAccessControlException(
     Permission const & perm, Any const & demanded_perm )
-    SAL_THROW( (security::AccessControlException) )
 {
     OUStringBuffer buf( 48 );
     buf.appendAscii( RTL_CONSTASCII_STRINGPARAM("access denied: ") );
@@ -591,7 +589,6 @@ static void throwAccessControlException(
 }
 //==================================================================================================
 void PermissionCollection::checkPermission( Any const & perm ) const
-    SAL_THROW( (RuntimeException) )
 {
     Type const & demanded_type = perm.getValueType();
 

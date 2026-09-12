@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -286,8 +286,8 @@ public:
 /** retrieves kashida opportunities for a given text range.
    returns the number of kashida positions in the given text range
 
-   pKashidaPositions: buffer to reveive the char indices of the
-                      kashida opportunties relative to the paragraph
+   pKashidaPositions: buffer to receive the char indices of the
+                      kashida opportunities relative to the paragraph
 */
    sal_uInt16 GetKashidaPositions ( xub_StrLen nStt, xub_StrLen nLen,
                              xub_StrLen* pKashidaPosition );

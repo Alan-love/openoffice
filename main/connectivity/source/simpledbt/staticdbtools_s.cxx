@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_dbtools.hxx"
 #include <connectivity/virtualdbtools.hxx>
 #include "staticdbtools_s.hxx"
 #include "connectivity/dbconversion.hxx"
@@ -90,22 +90,21 @@ namespace connectivity
 
 	//----------------------------------------------------------------
 	Reference< XConnection> ODataAccessStaticTools::getConnection_withFeedback(const ::rtl::OUString& _rDataSourceName, const ::rtl::OUString& _rUser,
-		const ::rtl::OUString& _rPwd, const Reference< XMultiServiceFactory>& _rxFactory) const SAL_THROW ( (SQLException) )
+		const ::rtl::OUString& _rPwd, const Reference< XMultiServiceFactory>& _rxFactory) const
 	{
 		return ::dbtools::getConnection_withFeedback(_rDataSourceName, _rUser, _rPwd, _rxFactory);
 	}
 
 	//----------------------------------------------------------------
 	Reference< XConnection> ODataAccessStaticTools::connectRowset(const Reference< XRowSet>& _rxRowSet, const Reference< XMultiServiceFactory>& _rxFactory, sal_Bool _bSetAsActiveConnection) const
-		SAL_THROW ( (SQLException, WrappedTargetException, RuntimeException) )
 	{
 		return ::dbtools::connectRowset( _rxRowSet, _rxFactory, _bSetAsActiveConnection);
 	}
 
 	// ------------------------------------------------
 	Reference< XConnection> ODataAccessStaticTools::getRowSetConnection(
-				const Reference< XRowSet>& _rxRowSet) 
-				const SAL_THROW ( (RuntimeException) )
+				const Reference< XRowSet>& _rxRowSet)
+				const
 	{
 		return ::dbtools::getConnection(_rxRowSet);
 	}
@@ -205,4 +204,3 @@ namespace connectivity
 //........................................................................
 }	// namespace connectivity
 //........................................................................
-

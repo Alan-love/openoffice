@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -217,11 +217,11 @@ int MakeToken( YYSTYPE * pTokenVal ){
         if( InvalidAtom != nHashId )
         {
             KEY_STRUCT	aKey;
-            
+
             // Suche nach dem Schluesselwort
             if( pTC->aNmTb.Get( nHashId, &aKey ) )
             {
-                
+
                 // Schluesselwort gefunden
                 switch( aKey.nTyp )
                 {
@@ -233,7 +233,7 @@ int MakeToken( YYSTYPE * pTokenVal ){
                         break;
                     case CONSTNAME:
                         pTokenVal->constname.hashid = aKey.nName;
-                        pTokenVal->constname.nValue = aKey.yylval;
+                        pTokenVal->constname.nValue = (sal_Int32)aKey.yylval;
                         break;
                     case BOOLEAN:
                         pTokenVal->svbool = (sal_Bool)aKey.yylval;
@@ -241,9 +241,9 @@ int MakeToken( YYSTYPE * pTokenVal ){
                     case INCLUDE:
                         bLastInclude = sal_True;
                     default:
-                        pTokenVal->value = aKey.yylval;
+                        pTokenVal->value = (sal_Int32)aKey.yylval;
                 };
-                
+
                 return( aKey.nTyp );
             }
             else
@@ -254,14 +254,14 @@ int MakeToken( YYSTYPE * pTokenVal ){
         }
         else{		// Symbol
             RscDefine  * pDef;
-            
+
             pDef = pTC->aFileTab.FindDef( aBuf.getStr() );
             if( pDef ){
                 pTokenVal->defineele = pDef;
-                
+
                 return( RSCDEFINE );
             }
-            
+
             pTokenVal->string = const_cast<char*>(pStringContainer->putString( aBuf.getStr() ));
             return( SYMBOL );
         }
@@ -440,4 +440,3 @@ RscExpression * MacroParser( RscFileInst & rFileInst )
 	};
 	return( pExpression );
 }
-

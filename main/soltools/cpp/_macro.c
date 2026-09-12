@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #ifdef _MSC_VER
@@ -32,6 +32,25 @@
 #   define PATH_MAX _MAX_PATH
 #endif
 #include <limits.h>
+
+/*  The Microsoft C runtime used to define PATH_MAX in <limits.h> when _POSIX_
+    was defined, which is what the block at the top of this file is for.  The
+    UCRT -- VS2015 and every toolset since -- no longer does, and _POSIX_ no
+    longer selects anything, so PATH_MAX simply is not declared and the arrays
+    below become zero-sized.
+
+    512 is the value the old runtime supplied, and it is kept rather than
+    substituting _MAX_PATH (260, as the __IBMC__ branch above does): the
+    buffers here hold an include directory concatenated with a file name, and
+    260 is not enough for that inside this tree's own output directories.  The
+    uses are all bounds-checked against sizeof, so the size is a limit rather
+    than a hazard -- but narrowing it would silently start rejecting includes
+    that resolve today.
+
+    Inert wherever <limits.h> supplies a PATH_MAX of its own, VC9 included.  */
+#ifndef PATH_MAX
+#	define PATH_MAX 512
+#endif
 
 #include "cpp.h"
 
@@ -618,9 +637,9 @@ void
 						strncpy((char *) tt + len, (char *) ntp->t, ntp->len);
 						len += ntp->len;
 					}
-					
+
 					ntp = trp->tp + i;
-					i++;						
+					i++;
 				}
 				while (ntp < trp->lp);
 
@@ -775,4 +794,3 @@ void
     tp->len = op - outptr;
     outptr = op;
 }
-

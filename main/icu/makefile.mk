@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -44,6 +44,7 @@ TARFILE_ROOTDIR=icu
 
 # TODO file icu-mp.patch does not seem to be required
 PATCH_FILES=${TARFILE_NAME}.patch icu-win-layout.patch \
+	icu-parallel-build.patch \
 	icu-format-security.patch icu-win-icutu-dll-version.patch \
 	icu-vcproj-outputdirectory.patch
 
@@ -92,7 +93,7 @@ LDFLAGSADD += -Wl,--hash-style=both
 LDFLAGSADD += -Wl,-Bsymbolic-functions -Wl,--dynamic-list-cpp-new -Wl,--dynamic-list-cpp-typeinfo
 .ENDIF
 
-# FreeBSD with gcc from ports needs -Wl,-rpath= to find the matching libstdc++ 
+# FreeBSD with gcc from ports needs -Wl,-rpath= to find the matching libstdc++
 .IF "$(OS)"=="FREEBSD"
 LDFLAGSADD+=$(FBSD_GCC_RPATH)
 .ENDIF
@@ -216,6 +217,24 @@ CONFIGURE_ACTION+= $(PERL) ..$/..$/..$/..$/..$/createmak.pl ..$/..$/..$/..$/..$/
 
 .IF "$(CCNUMVER)"<="001400000000"
 BUILD_ACTION=cd allinone && nmake /f all.mak EXFLAGS="-EHsc" && cd ..$/..
+.ELIF "$(COMEX)"=="14"
+# ICU 4.2's test programs use the C++03 idiom `".."MACRO' -- a string literal
+# glued straight onto an identifier.  C++11 reads that as a user-defined
+# literal suffix, so a modern compiler stops with
+#     letest.cpp(418): error C3688: invalid literal suffix 'U_FILE_SEP_STRING'
+# and there are ~85 such sites across letest, intltest and iotest.
+#
+# None of them is delivered.  OUT2BIN and OUT2LIB below take the five
+# libraries, the five DLLs and three tools, and nothing else -- ICU's tests
+# are never built into the product and never run by this build.  So the fix
+# is to stop building them rather than to rewrite eighty-five lines of
+# vendored test code.
+#
+# This is all.mak's own ALL: list with letest, cintltst, intltest and iotest
+# removed, in its original order.  Naming the targets rather than patching
+# all.mak keeps the VC9 branch above and the default branch below reaching
+# ICU exactly as they always have.
+BUILD_ACTION=cd allinone && nmake /f all.mak EXFLAGS="-EHa -Zc:wchar_t-" stubdata common i18n cal date layout layoutex toolutil gensprep genprops genpname genctd icupkg gencnval derb makeconv genbidi ctestfw gentest genccode gennorm genrb gencase genuca gennames gencmn pkgdata uconv genbrk gencfu makedata && cd ..$/..
 .ELSE
 BUILD_ACTION=cd allinone && nmake /f all.mak EXFLAGS="-EHa -Zc:wchar_t-" && cd ..$/..
 .ENDIF
@@ -286,4 +305,3 @@ $(LB)$/icutu$(ICU_BUILD_LIBPOST).lib : $(PACKAGE_DIR)$/$(PREDELIVER_FLAG_FILE)
 # Changes in this makefile could also make a complete build necessary if
 # configure is affected.
 $(PACKAGE_DIR)$/$(UNTAR_FLAG_FILE) : makefile.mk
-

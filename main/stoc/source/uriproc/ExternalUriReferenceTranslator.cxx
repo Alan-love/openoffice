@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -61,22 +61,18 @@ public:
         css::uno::Reference< css::uno::XComponentContext > const & context):
         m_context(context) {}
 
-    virtual rtl::OUString SAL_CALL getImplementationName()
-        throw (css::uno::RuntimeException);
+    virtual rtl::OUString SAL_CALL getImplementationName();
 
-    virtual sal_Bool SAL_CALL supportsService(rtl::OUString const & serviceName)
-        throw (css::uno::RuntimeException);
+    virtual sal_Bool SAL_CALL supportsService(rtl::OUString const & serviceName);
 
     virtual css::uno::Sequence< rtl::OUString > SAL_CALL
-    getSupportedServiceNames() throw (css::uno::RuntimeException);
+    getSupportedServiceNames();
 
     virtual rtl::OUString SAL_CALL
-    translateToInternal(rtl::OUString const & externalUriReference)
-        throw (css::uno::RuntimeException);
+    translateToInternal(rtl::OUString const & externalUriReference);
 
     virtual rtl::OUString SAL_CALL
-    translateToExternal(rtl::OUString const & internalUriReference)
-        throw (css::uno::RuntimeException);
+    translateToExternal(rtl::OUString const & internalUriReference);
 
 private:
     Translator(Translator &); // not implemented
@@ -88,21 +84,18 @@ private:
 };
 
 rtl::OUString Translator::getImplementationName()
-    throw (css::uno::RuntimeException)
 {
     return
         stoc_services::ExternalUriReferenceTranslator::getImplementationName();
 }
 
 sal_Bool Translator::supportsService(rtl::OUString const & serviceName)
-    throw (css::uno::RuntimeException)
 {
     return stoc::uriproc::supportsService(
         getSupportedServiceNames(), serviceName);
 }
 
 css::uno::Sequence< rtl::OUString > Translator::getSupportedServiceNames()
-    throw (css::uno::RuntimeException)
 {
     return stoc_services::ExternalUriReferenceTranslator::
         getSupportedServiceNames();
@@ -110,7 +103,6 @@ css::uno::Sequence< rtl::OUString > Translator::getSupportedServiceNames()
 
 rtl::OUString Translator::translateToInternal(
     rtl::OUString const & externalUriReference)
-    throw (css::uno::RuntimeException)
 {
     if (!externalUriReference.matchIgnoreAsciiCaseAsciiL(
             RTL_CONSTASCII_STRINGPARAM("file:/")))
@@ -160,7 +152,6 @@ rtl::OUString Translator::translateToInternal(
 
 rtl::OUString Translator::translateToExternal(
     rtl::OUString const & internalUriReference)
-    throw (css::uno::RuntimeException)
 {
     if (!internalUriReference.matchIgnoreAsciiCaseAsciiL(
             RTL_CONSTASCII_STRINGPARAM("file://")))
@@ -211,7 +202,6 @@ namespace stoc_services  { namespace ExternalUriReferenceTranslator {
 
 css::uno::Reference< css::uno::XInterface > create(
     css::uno::Reference< css::uno::XComponentContext > const & context)
-    SAL_THROW((css::uno::Exception))
 {
     try {
         return static_cast< cppu::OWeakObject * >(new Translator(context));

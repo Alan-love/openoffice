@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -93,7 +93,7 @@ class ViewTabPage : public TabPage
 {
 public:
     ViewTabPage (Window* pParent) : TabPage(pParent) {}
-    virtual void Resize (void) 
+    virtual void Resize (void)
     { SetPosSizePixel(Point(0,0),GetParent()->GetOutputSizePixel()); }
 };
 
@@ -148,7 +148,7 @@ ViewTabBar::ViewTabBar (
     }
 
     mpTabControl->Show();
-    
+
     if (mpViewShellBase != NULL
         && rxViewTabBarId->isBoundToURL(
             FrameworkHelper::msCenterPaneURL, AnchorBindingMode_DIRECT))
@@ -199,7 +199,7 @@ void ViewTabBar::disposing (void)
         mpTabPage.reset();
         mpTabControl.reset();
     }
-    
+
     mxController = NULL;
 }
 
@@ -220,7 +220,7 @@ void ViewTabBar::disposing (void)
 {
     ::Window* pWindow = NULL;
     ViewShellBase* pBase = NULL;
-    
+
     // Tunnel through the controller and use the ViewShellBase to obtain the
     // view frame.
     try
@@ -269,7 +269,7 @@ void ViewTabBar::disposing (void)
         catch (RuntimeException&)
         {}
     }
-    
+
     return pWindow;
 }
 
@@ -280,7 +280,6 @@ void ViewTabBar::disposing (void)
 
 void SAL_CALL  ViewTabBar::notifyConfigurationChange (
     const ConfigurationChangeEvent& rEvent)
-    throw (RuntimeException)
 {
     if (rEvent.Type.equals(FrameworkHelper::msResourceActivationEvent)
         && rEvent.ResourceId->getResourceURL().match(FrameworkHelper::msViewURLPrefix)
@@ -297,7 +296,6 @@ void SAL_CALL  ViewTabBar::notifyConfigurationChange (
 
 void SAL_CALL ViewTabBar::disposing(
     const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     if (rEvent.Source == mxConfigurationController)
     {
@@ -314,7 +312,6 @@ void SAL_CALL ViewTabBar::disposing(
 void SAL_CALL ViewTabBar::addTabBarButtonAfter (
     const TabBarButton& rButton,
     const TabBarButton& rAnchor)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     const ::vos::OGuard aSolarGuard (Application::GetSolarMutex());
     AddTabBarButton(rButton, rAnchor);
@@ -324,7 +321,6 @@ void SAL_CALL ViewTabBar::addTabBarButtonAfter (
 
 
 void SAL_CALL ViewTabBar::appendTabBarButton (const TabBarButton& rButton)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     const ::vos::OGuard aSolarGuard (Application::GetSolarMutex());
     AddTabBarButton(rButton);
@@ -333,7 +329,6 @@ void SAL_CALL ViewTabBar::appendTabBarButton (const TabBarButton& rButton)
 
 
 void SAL_CALL ViewTabBar::removeTabBarButton (const TabBarButton& rButton)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     const ::vos::OGuard aSolarGuard (Application::GetSolarMutex());
     RemoveTabBarButton(rButton);
@@ -343,7 +338,6 @@ void SAL_CALL ViewTabBar::removeTabBarButton (const TabBarButton& rButton)
 
 
 sal_Bool SAL_CALL ViewTabBar::hasTabBarButton (const TabBarButton& rButton)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     const ::vos::OGuard aSolarGuard (Application::GetSolarMutex());
     return HasTabBarButton(rButton);
@@ -353,7 +347,6 @@ sal_Bool SAL_CALL ViewTabBar::hasTabBarButton (const TabBarButton& rButton)
 
 
 Sequence<TabBarButton> SAL_CALL ViewTabBar::getTabBarButtons (void)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     const ::vos::OGuard aSolarGuard (Application::GetSolarMutex());
     return GetTabBarButtons();
@@ -365,7 +358,6 @@ Sequence<TabBarButton> SAL_CALL ViewTabBar::getTabBarButtons (void)
 //----- XResource -------------------------------------------------------------
 
 Reference<XResourceId> SAL_CALL ViewTabBar::getResourceId (void)
-    throw (RuntimeException)
 {
     return mxViewTabBarId;
 }
@@ -374,7 +366,6 @@ Reference<XResourceId> SAL_CALL ViewTabBar::getResourceId (void)
 
 
 sal_Bool SAL_CALL ViewTabBar::isAnchorOnly (void)
-    throw (RuntimeException)
 {
     return false;
 }
@@ -404,8 +395,7 @@ const Sequence<sal_Int8>& ViewTabBar::getUnoTunnelId (void)
 
 
 sal_Int64 SAL_CALL ViewTabBar::getSomething (const Sequence<sal_Int8>& rId)
-    throw (RuntimeException)
-{    
+{
     sal_Int64 nResult = 0;
 
     if (rId.getLength() == 16
@@ -443,7 +433,7 @@ bool ViewTabBar::ActivatePage (void)
         catch (DeploymentException)
         {
         }
-        
+
         Client* pIPClient = NULL;
         if (mpViewShellBase != NULL)
             pIPClient = dynamic_cast<Client*>(mpViewShellBase->GetIPClient());
@@ -471,7 +461,7 @@ bool ViewTabBar::ActivatePage (void)
     {
         DBG_UNHANDLED_EXCEPTION();
     }
-    
+
     return false;
 }
 
@@ -525,7 +515,7 @@ void ViewTabBar::AddTabBarButton (
             }
         }
     }
-    
+
     AddTabBarButton(rButton,nIndex);
 }
 
@@ -549,7 +539,7 @@ void ViewTabBar::AddTabBarButton (
         && nPosition<=mpTabControl->GetPageCount())
     {
         sal_uInt16 nIndex ((sal_uInt16)nPosition);
-        
+
         // Insert the button into our local array.
         maTabBarButtons.insert(maTabBarButtons.begin()+nIndex, rButton);
         UpdateTabBarButtons();
@@ -583,7 +573,7 @@ bool ViewTabBar::HasTabBarButton (
     const ::com::sun::star::drawing::framework::TabBarButton& rButton)
 {
     bool bResult (false);
-    
+
     for (sal_uInt32 nIndex=0; nIndex<maTabBarButtons.size(); ++nIndex)
     {
         if (IsEqual(maTabBarButtons[nIndex], rButton))
@@ -703,7 +693,7 @@ void TabBarControl::Paint (const Rectangle& rRect)
 void TabBarControl::ActivatePage (void)
 {
     if (mpViewTabBar->ActivatePage())
-    {        
+    {
         // Call the parent so that the correct tab is highlighted.
         this->::TabControl::ActivatePage();
     }

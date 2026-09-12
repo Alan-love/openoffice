@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -83,7 +83,7 @@ BindDispatch_Impl::BindDispatch_Impl( const ::com::sun::star::uno::Reference< ::
     aStatus.IsEnabled = sal_True;
 }
 
-void SAL_CALL BindDispatch_Impl::disposing( const ::com::sun::star::lang::EventObject& ) throw( ::com::sun::star::uno::RuntimeException )
+void SAL_CALL BindDispatch_Impl::disposing( const ::com::sun::star::lang::EventObject& )
 {
 	if ( xDisp.is() )
 	{
@@ -92,7 +92,7 @@ void SAL_CALL BindDispatch_Impl::disposing( const ::com::sun::star::lang::EventO
 	}
 }
 
-void SAL_CALL  BindDispatch_Impl::statusChanged( const ::com::sun::star::frame::FeatureStateEvent& rEvent ) throw( ::com::sun::star::uno::RuntimeException )
+void SAL_CALL  BindDispatch_Impl::statusChanged( const ::com::sun::star::frame::FeatureStateEvent& rEvent )
 {
 	aStatus = rEvent;
     if ( !pCache )
@@ -569,5 +569,3 @@ void SfxStateCache::Dispatch( const SfxItemSet* pSet, sal_Bool bForceSynchron )
         pDispatch->Dispatch( aArgs, bForceSynchron );
 	}
 }
-
-

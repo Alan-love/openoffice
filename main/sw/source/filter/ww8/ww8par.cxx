@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,23 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_sw.hxx"
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil -*- */
 
 #include <com/sun/star/embed/ElementModes.hpp>
 #include <com/sun/star/embed/XStorage.hpp>
@@ -182,7 +181,7 @@ SwMacroInfo* GetMacroInfo( SdrObject* pObj, sal_Bool bCreate )             // st
 	        	return pData;
 	    	}
 	}
-	
+
     	return 0;
 };
 
@@ -204,7 +203,7 @@ void lclGetAbsPath( String& rPath, sal_uInt16 nLevel, SwDocShell* pDocShell)
        	bool bWasAbs = false;
         	rPath = pDocShell->GetMedium()->GetURLObject().smartRel2Abs( aTmpStr, bWasAbs ).GetMainURL( INetURLObject::NO_DECODE );
         	// full path as stored in SvxURLField must be encoded
-	} 
+	}
 }
 
 void lclIgnoreString32( SvMemoryStream& rStrm, bool b16Bit )
@@ -288,7 +287,7 @@ void SwWW8ImplReader::ReadEmbeddedData( SvMemoryStream& rStrm, SwDocShell* pDocS
 
 	sal_uInt8 maGuidFileMoniker[ 16 ] = {
 		0x03, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46 };
- 
+
 	sal_uInt8*	aGuid = new sal_uInt8[ 16 ];
 	sal_uInt32 nFlags;
 
@@ -308,7 +307,7 @@ void SwWW8ImplReader::ReadEmbeddedData( SvMemoryStream& rStrm, SwDocShell* pDocS
 
    	// target frame
     	if( ::get_flag( nFlags, WW8_HLINK_FRAME ) )
-	{       
+	{
 		::std::auto_ptr< String > FrmName;
 		FrmName.reset( new String );
 		lclAppendString32(*FrmName , rStrm , true);
@@ -339,7 +338,7 @@ void SwWW8ImplReader::ReadEmbeddedData( SvMemoryStream& rStrm, SwDocShell* pDocS
             		if( nStrLen )
             		{
 		                rStrm >> nStrLen;
-		                nStrLen /= 2;       
+		                nStrLen /= 2;
 						rStrm.SeekRel( 2 );
 		                xLongName.reset( new String );
 				lclAppendString32( *xLongName, rStrm,nStrLen, true );
@@ -352,7 +351,7 @@ void SwWW8ImplReader::ReadEmbeddedData( SvMemoryStream& rStrm, SwDocShell* pDocS
         	{
 			sal_uInt32 nStrLen;
             		rStrm >> nStrLen;
-            		nStrLen /= 2;       
+            		nStrLen /= 2;
             		xLongName.reset( new String );
 			lclAppendString32( *xLongName,rStrm, nStrLen, true );
             		if( !::get_flag( nFlags, WW8_HLINK_ABS ) )
@@ -388,7 +387,7 @@ void SwWW8ImplReader::ReadEmbeddedData( SvMemoryStream& rStrm, SwDocShell* pDocS
             		xLongName->Append( '#' );
             		xLongName->Append( *xTextMark );
         	}
-		hlStr.hLinkAddr = *xLongName;		
+		hlStr.hLinkAddr = *xLongName;
     	}
 }
 
@@ -821,10 +820,10 @@ SdrObject* SwMSDffManager::ProcessObj(SvStream& rSt,
             {
                 pObj->SetMergedItemSet(aSet);
                 pObj->SetModel(pSdrModel);
-                
+
                 if (bVerticalText && dynamic_cast< SdrTextObj* >( pObj ) )
                     dynamic_cast< SdrTextObj* >( pObj )->SetVerticalWriting(sal_True);
-                
+
                 if ( bIsSimpleDrawingTextBox )
                 {
                     if ( nTextRotationAngle )
@@ -843,7 +842,7 @@ SdrObject* SwMSDffManager::ProcessObj(SvStream& rSt,
                 if ( ( ( rObjData.nSpFlags & SP_FFLIPV ) || mnFix16Angle || nTextRotationAngle ) && dynamic_cast< SdrObjCustomShape* >( pObj ) )
                 {
                     SdrObjCustomShape* pCustomShape = dynamic_cast< SdrObjCustomShape* >( pObj );
-                    
+
                     double fExtraTextRotation = 0.0;
                     if ( mnFix16Angle && !( GetPropertyValue( DFF_Prop_FitTextToShape ) & 4 ) )
                     {	// text is already rotated, we have to take back the object rotation if DFF_Prop_RotateText is false
@@ -966,7 +965,7 @@ SdrObject* SwMSDffManager::ProcessObj(SvStream& rSt,
                               ? (MSO_LineStyle)GetPropertyValue(
                                                     DFF_Prop_lineStyle,
                                                     mso_lineSimple )
-                              : (MSO_LineStyle)USHRT_MAX;
+                              : mso_lineNone;
 
 		pImpRec->nFlags = rObjData.nSpFlags;
 
@@ -1032,10 +1031,10 @@ SdrObject* SwMSDffManager::ProcessObj(SvStream& rSt,
 				String aNameStr = GetPropertyString( DFF_Prop_wzName, rSt );
 				if(aNameStr.Len() > 0)
 					pInfo->SetName( aNameStr );
-			}				
+			}
 		}
-    	}	
-	
+    	}
+
 	return pObj;
 }
 
@@ -1140,13 +1139,13 @@ long lcl_GetTrueMargin(const SvxLRSpaceItem &rLR, const SwNumFmt &rFmt,
     return nExtraListIndent > 0 ? nExtraListIndent : 0;
 }
 
-void SyncIndentWithList( SvxLRSpaceItem &rLR, 
+void SyncIndentWithList( SvxLRSpaceItem &rLR,
                          const SwNumFmt &rFmt,
                          const bool bFirstLineOfstSet,
                          const bool bLeftIndentSet )
 {
     if ( rFmt.GetPositionAndSpaceMode() == SvxNumberFormat::LABEL_WIDTH_AND_POSITION )
-    {        
+    {
         long nWantedFirstLinePos;
         long nExtraListIndent = lcl_GetTrueMargin(rLR, rFmt, nWantedFirstLinePos);
         rLR.SetTxtLeft(nWantedFirstLinePos - nExtraListIndent);
@@ -1154,7 +1153,7 @@ void SyncIndentWithList( SvxLRSpaceItem &rLR,
     }
     else if ( rFmt.GetPositionAndSpaceMode() == SvxNumberFormat::LABEL_ALIGNMENT )
     {
-        if ( !bFirstLineOfstSet && bLeftIndentSet && 
+        if ( !bFirstLineOfstSet && bLeftIndentSet &&
              rFmt.GetFirstLineIndent() != 0 )
         {
             rLR.SetTxtFirstLineOfst( rFmt.GetFirstLineIndent() );
@@ -1197,11 +1196,11 @@ const SwNumFmt* SwWW8FltControlStack::GetNumFmtFromStack(const SwPosition &rPos,
 }
 
 //Modify here for #119405, by easyfan, 2012-05-24
-sal_Int32 SwWW8FltControlStack::GetCurrAttrCP() const 
+sal_Int32 SwWW8FltControlStack::GetCurrAttrCP() const
 {
 	return rReader.GetCurrAttrCP();
 }
-bool SwWW8FltControlStack::IsParaEndInCPs(sal_Int32 nStart,sal_Int32 nEnd,bool bSdOD) const 
+bool SwWW8FltControlStack::IsParaEndInCPs(sal_Int32 nStart,sal_Int32 nEnd,bool bSdOD) const
 {
 	return rReader.IsParaEndInCPs(nStart,nEnd,bSdOD);
 }
@@ -1228,7 +1227,7 @@ void SwWW8ReferencedFltEndStack::SetAttrInDoc( const SwPosition& rTmpPos,
     {
     case RES_FLTR_BOOKMARK:
         {
-            // suppress insertion of bookmark, which is recognized as an internal bookmark used for table-of-content 
+            // suppress insertion of bookmark, which is recognized as an internal bookmark used for table-of-content
             // and which is not referenced.
             bool bInsertBookmarkIntoDoc = true;
 
@@ -1290,7 +1289,7 @@ void SwWW8FltControlStack::SetAttrInDoc(const SwPosition& rTmpPos,
                         const SwNumFmt *pNum = 0;
                         pNum = GetNumFmtFromStack( *aRegion.GetPoint(), *pTxtNode );
                         if (!pNum)
-                        {        
+                        {
                             pNum = GetNumFmtFromTxtNode(*pTxtNode);
                         }
 
@@ -2060,7 +2059,7 @@ void SwWW8ImplReader::Read_HdFtTextAsHackedFrame(long nStart, long nLen,
     pFrame->SetFmtAttr(aSz);
     pFrame->SetFmtAttr(SwFmtSurround(SURROUND_THROUGHT));
     pFrame->SetFmtAttr(SwFmtHoriOrient(0, text::HoriOrientation::LEFT)); //iFOO
- 
+
     // #i43427# - send frame for header/footer into background.
     pFrame->SetFmtAttr( SvxOpaqueItem( RES_OPAQUE, false ) );
     SdrObject* pFrmObj = CreateContactObject( pFrame );
@@ -2453,7 +2452,7 @@ bool SwWW8ImplReader::ProcessSpecial(bool &rbReSync, WW8_CP nStartCp)
     WW8_TablePos aTabPos;
     WW8PLCFx_Cp_FKP* pPap = 0;
     bool bTableHasPositionInfo = false;
-    
+
     if (nCellLevel && !bVer67)
     {
         WW8PLCFxSave1 aSave;
@@ -2475,7 +2474,7 @@ bool SwWW8ImplReader::ProcessSpecial(bool &rbReSync, WW8_CP nStartCp)
         sal_uLong idcur = 0;
         if ( pPaM && pPaM->GetPoint() )
             idcur = pPaM->GetPoint()->nNode.GetIndex();
-    
+
         // Memory first table position info
         if ( !pFirstTablePap && idstart + 1 == idcur )
             pFirstTablePap = pPap;
@@ -2943,7 +2942,7 @@ bool SwWW8ImplReader::AddTextToParagraph(const String& rAddString)
 /*
 #ifdef DEBUG
 //!! does not compile with debug=t -> unresolved external (dbg_out),
-//!! sommeone who knows what he wants to get should fix this
+//!! someone who knows what he wants to get should fix this
 //        ::std::clog << "<addTextToParagraph>" << dbg_out(rAddString)
 //        << "</addTextToParagraph>" << ::std::endl;
 #endif
@@ -3168,7 +3167,7 @@ bool SwWW8ImplReader::ReadChar(long nPosCp, long nCpOfs)
 					}
 					if( nWordCode == 0x1 )
 						bReadObj = false;
-					pStrm->Seek( nCurPos );	
+					pStrm->Seek( nCurPos );
 				}
 				if( !bReadObj )
 				{
@@ -3417,7 +3416,7 @@ bool SwWW8ImplReader::IsParaEndInCPs(sal_Int32 nStart, sal_Int32 nEnd,bool bSdOD
 	//Revised for performance consideration
 	if (nStart == -1 || nEnd == -1 || nEnd < nStart )
 		return false;
-	
+
 	for (cp_vector::const_reverse_iterator aItr = maEndParaPos.rbegin(); aItr!= maEndParaPos.rend(); aItr++)
 	//End
 	{
@@ -3426,10 +3425,10 @@ bool SwWW8ImplReader::IsParaEndInCPs(sal_Int32 nStart, sal_Int32 nEnd,bool bSdOD
 		//*********but also sample with only left and the position of 0x0d is the edge of the right side***********//
 		if ( bSdOD && ( (nStart < *aItr && nEnd > *aItr) || ( nStart == nEnd && *aItr == nStart)) )
 			return true;
-		else if ( !bSdOD &&  (nStart < *aItr && nEnd >= *aItr) ) 
+		else if ( !bSdOD &&  (nStart < *aItr && nEnd >= *aItr) )
 			return true;
 	}
-	
+
 	return false;
 }
 //End of modification, by easyfan
@@ -3698,7 +3697,7 @@ bool SwWW8ImplReader::ReadText(long nStartCp, long nTextLen, ManTypes nType)
 #**************************************************************************/
 
 SwWW8ImplReader::SwWW8ImplReader(sal_uInt8 nVersionPara, SvStorage* pStorage,
-    SvStream* pSt, SwDoc& rD, const String& rBaseURL, bool bNewDoc) 
+    SvStream* pSt, SwDoc& rD, const String& rBaseURL, bool bNewDoc)
     : mpDocShell(rD.GetDocShell())
     , maTracer(*(mpDocShell->GetMedium()))
     , pStg(pStorage)
@@ -3826,10 +3825,10 @@ void wwSectionManager::SetSegmentToPageDesc(const wwSection &rSection,
     SetNumberingType(rSection, rPage);
 
     SwFrmFmt &rFmt = rPage.GetMaster();
-	
+
     if(mrReader.pWDop->fUseBackGroundInAllmodes)  // #i56806# Make sure mrReader is initialized
-		mrReader.GrafikCtor(); 
-	
+		mrReader.GrafikCtor();
+
 
     if (mrReader.pWDop->fUseBackGroundInAllmodes && mrReader.pMSDffManager)
     {
@@ -4037,7 +4036,7 @@ void wwSectionManager::InsertSegments()
         bool bProtected = SectionIsProtected(*aIter); // do we really  need this ?? I guess I have a different logic in editshell which disales this...
         if (bUseEnhFields && mrReader.pWDop->fProtEnabled && aIter->IsNotProtected())
         {
-            // here we have the special case that the whole document is protected, with the execption of this section.
+            // here we have the special case that the whole document is protected, with the exception of this section.
             // I want to address this when I do the section rework, so for the moment we disable the overall protection then...
             mrReader.rDoc.set(IDocumentSettingAccess::PROTECT_FORM, false );
         }
@@ -4952,7 +4951,7 @@ namespace
                 TimeValue aTime;
                 osl_getSystemTime( &aTime );
                 rtlRandomPool aRandomPool = rtl_random_createPool();
-                rtl_random_addBytes ( aRandomPool, &aTime, 8 ); 
+                rtl_random_addBytes ( aRandomPool, &aTime, 8 );
 
                 sal_uInt8 pDocId[ 16 ];
                 rtl_random_getBytes( aRandomPool, pDocId, 16 );
@@ -5699,6 +5698,3 @@ SdrObjUserData* SwMacroInfo::Clone( SdrObject* /*pObj*/ ) const
 {
    return new SwMacroInfo( *this );
 }
-
-
-

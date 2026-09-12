@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--***********************************************************
  *
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -19,8 +20,6 @@
  * under the License.
  *
  ***********************************************************-->
-
-
 
 <!--
 	For further documentation and updates visit https://xml.openoffice.org/odf2xhtml
@@ -347,7 +346,7 @@
 				A surrounding 'div' element taking over the image style solves that problem, but the div is invalid as child of a paragraph
 				Therefore the paragraph has to be exchanged with a HTML div element
 		-->
-		<!-- 2DO page alignment fix - PART1 -->
+		<!-- TODO page alignment fix - PART1 -->
 		<xsl:variable name="childText"><xsl:apply-templates mode="getAllTextChildren"/></xsl:variable>
 		<xsl:choose>
 			<xsl:when test="name() = 'text:p' and not(*) and (normalize-space($childText) = '')">
@@ -391,7 +390,7 @@
 						<xsl:with-param name="globalData" select="$globalData" />
 						<xsl:with-param name="previousFrameWidths" select="0"/>
 						<xsl:with-param name="previousFrameHeights" select="0"/>
-						<!-- 2DO for me (Svante) - Not used, uncertain 4now..
+						<!-- TODO for me (Svante) - Not used, uncertain for now..
 						<xsl:with-param name="pageMarginLeft">
 							<xsl:call-template name="getPageMarginLeft"/>
 						</xsl:with-param>-->
@@ -420,7 +419,7 @@
 							<xsl:variable name="paragraphName" select="@text:style-name" />
 							<xsl:variable name="imageParagraphStyle" select="$globalData/all-styles/style[@style:name = $paragraphName]/final-properties"/>
 							<!-- Only the left margin of the first paragraph of a list item will be added to the margin of the complete list (all levels)-->
-<!-- 2DO: left-margin in order with bidirectional -->
+<!-- TODO: left-margin in order with bidirectional -->
 							<xsl:choose>
 								<xsl:when test="contains($imageParagraphStyle, 'margin-left:')">
 									<xsl:call-template name="convert2cm">
@@ -480,7 +479,7 @@
 		<xsl:param name="parentMarginLeft" />
 		<xsl:param name="pageMarginLeft" />
 
-<!-- 2DO: EXCHANGE FOLLOWING SIBLING BY VARIABLE -->
+<!-- TODO: EXCHANGE FOLLOWING SIBLING BY VARIABLE -->
 		<xsl:variable name="followingSiblingNode" select="following-sibling::node()[1]"/>
 
 
@@ -798,7 +797,7 @@
 					<xsl:when test="$createDiv and normalize-space(.) != ''">
 						<!-- every following frame sibling till the next draw:frame
 							have to be encapsulated within a div with left indent.
-							To be moved altogether according the indent (usually right) -->
+							To be moved altogether according to the indent (usually right) -->
 						<xsl:comment>Next 'div' added for floating.</xsl:comment>
 						<xsl:element name="div">
 							<xsl:attribute name="style">
@@ -989,9 +988,9 @@
 		</xsl:variable>
 		<!-- if the frame is anchored on a paragraph -->
 		<xsl:if test="@text:anchor-type='paragraph'">
-			<xsl:comment>Next 'div' is emulating the top hight of a draw:frame.</xsl:comment>
+			<xsl:comment>Next 'div' is emulating the top height of a draw:frame.</xsl:comment>
 			<!-- When the svg:y is set relative to the paragraph content, the best way to emulate a positive height,
-			 is to add an invisible division between with a height.
+			 is to add an invisible division in between with a height.
 			 Often text will flow into this 'gap', which is handled separately!
 			 -->
 			<xsl:if test="$svgY &gt; 0">
@@ -1010,7 +1009,7 @@
 		<!--
 		<xsl:variable name="followingSibling" select="following-sibling::node()[1]"/>
 		<xsl:choose>
-		   HEURISTIC: if the frame is anchored on a paragraph and the above gab is big enough to hold a text line,
+			HEURISTIC: if the frame is anchored on a paragraph and the above gab is big enough to hold a text line,
 				move it behind the text
 			<xsl:when test="@text:anchor-type='paragraph' and
 				(
@@ -1079,7 +1078,7 @@
 				<!-- MIB -->
 				<xsl:text> padding:0; </xsl:text>
 				<xsl:if test="@text:anchor-type!='as-char'">
-					<!-- all images float (CSS float reltaive) with a left position calculated by svg:x - parentMarginLeft - previousFrameWidths -->
+					<!-- all images float (CSS float relative) with a left position calculated by svg:x - parentMarginLeft - previousFrameWidths -->
 					<xsl:text> float:left; position:relative; left:</xsl:text>
 					<xsl:value-of select="$leftPosition"/>
 					<xsl:text>cm; </xsl:text>
@@ -1510,13 +1509,13 @@
 			</xsl:if>
 			<xsl:attribute name="alt">
 				<xsl:choose>
-					<xsl:when test="../svg:desc">
-						<xsl:value-of select="../svg:desc"/>
+					<xsl:when test="../@svg:title">
+						<xsl:value-of select="../@svg:title"/>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:message>
 	Accessibility Warning:
-		 No alternate text ('svg:desc' element) set for
+		 No alternate text ('svg:title' element) set for
 		 image '
 							<xsl:value-of select="@xlink:href"/>'!
 						</xsl:message>
@@ -1986,7 +1985,7 @@
 										</xsl:if>
 										<xsl:attribute name="style">
 											<xsl:text>display:block;float:</xsl:text>
-											<!-- 2DO: Svante - copy this functionality for other used margin:left (in western country 'left') -->
+											<!-- TODO: Svante - copy this functionality for other used margin:left (in western country 'left') -->
 											<xsl:call-template name="getOppositeWritingDirection">
 												<xsl:with-param name="globalData" select="$globalData"/>
 												<xsl:with-param name="paraStyleName" select="descendant-or-self::*/@text:style-name"/>
@@ -2227,7 +2226,7 @@
 									<xsl:choose>
 										<!-- if it has content the counting is ended -->
 										<xsl:when test="*[name() = 'text:h' or name() = 'text:p'] or $isListHeader">
-											<!-- 2DO: Perhaps the children still have to be processed -->
+											<!-- TODO: Perhaps the children still have to be processed -->
 											<xsl:value-of select="$itemNumber + $pseudoLevel"/>
 										</xsl:when>
 										<xsl:otherwise>
@@ -2482,7 +2481,7 @@
 		<xsl:param name="listStyleName"/>
 		<xsl:param name="minLabelWidth"/>
 
-		<!-- 2DO page alignment fix - PART1 -->
+		<!-- TODO page alignment fix - PART1 -->
 
 		<!-- xhtml:p may only contain inline elements.
 			 If there is one frame beyond, div must be used! -->

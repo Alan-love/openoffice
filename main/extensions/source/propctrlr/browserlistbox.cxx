@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -181,10 +181,10 @@ namespace pcr
         ~PropertyControlContext_Impl();
 
         // XPropertyControlObserver
-        virtual void SAL_CALL focusGained( const Reference< XPropertyControl >& Control ) throw (RuntimeException);
-        virtual void SAL_CALL valueChanged( const Reference< XPropertyControl >& Control ) throw (RuntimeException);
+        virtual void SAL_CALL focusGained( const Reference< XPropertyControl >& Control );
+        virtual void SAL_CALL valueChanged( const Reference< XPropertyControl >& Control );
         // XPropertyControlContext
-        virtual void SAL_CALL activateNextControl( const Reference< XPropertyControl >& CurrentControl ) throw (RuntimeException);
+        virtual void SAL_CALL activateNextControl( const Reference< XPropertyControl >& CurrentControl );
 
         // IEventProcessor
         virtual void processEvent( const ::comphelper::AnyEvent& _rEvent );
@@ -192,7 +192,7 @@ namespace pcr
     private:
         /** processes the given event, i.e. notifies it to our IControlContext
             @param  _rEvent
-                the event no notify 
+                the event no notify
             @precond
                 our mutex (well, the SolarMutex) is locked
         */
@@ -277,21 +277,21 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL PropertyControlContext_Impl::focusGained( const Reference< XPropertyControl >& Control ) throw (RuntimeException)
+    void SAL_CALL PropertyControlContext_Impl::focusGained( const Reference< XPropertyControl >& Control )
     {
         DBG_TRACE( "PropertyControlContext_Impl: FOCUS_GAINED" );
         impl_notify_throw( Control, FOCUS_GAINED );
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL PropertyControlContext_Impl::valueChanged( const Reference< XPropertyControl >& Control ) throw (RuntimeException)
+    void SAL_CALL PropertyControlContext_Impl::valueChanged( const Reference< XPropertyControl >& Control )
     {
         DBG_TRACE( "PropertyControlContext_Impl: VALUE_CHANGED" );
         impl_notify_throw( Control, VALUE_CHANGED );
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL PropertyControlContext_Impl::activateNextControl( const Reference< XPropertyControl >& CurrentControl ) throw (RuntimeException)
+    void SAL_CALL PropertyControlContext_Impl::activateNextControl( const Reference< XPropertyControl >& CurrentControl )
     {
         DBG_TRACE( "PropertyControlContext_Impl: ACTIVATE_NEXT" );
         impl_notify_throw( CurrentControl, ACTIVATE_NEXT );
@@ -977,7 +977,7 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL OBrowserListBox::focusGained( const Reference< XPropertyControl >& _rxControl ) throw (RuntimeException)
+    void SAL_CALL OBrowserListBox::focusGained( const Reference< XPropertyControl >& _rxControl )
     {
         DBG_TESTSOLARMUTEX();
 
@@ -993,7 +993,7 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL OBrowserListBox::valueChanged( const Reference< XPropertyControl >& _rxControl ) throw (RuntimeException)
+    void SAL_CALL OBrowserListBox::valueChanged( const Reference< XPropertyControl >& _rxControl )
     {
         DBG_TESTSOLARMUTEX();
 
@@ -1015,7 +1015,7 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL OBrowserListBox::activateNextControl( const Reference< XPropertyControl >& _rxCurrentControl ) throw (RuntimeException)
+    void SAL_CALL OBrowserListBox::activateNextControl( const Reference< XPropertyControl >& _rxCurrentControl )
     {
         DBG_TESTSOLARMUTEX();
 
@@ -1199,7 +1199,7 @@ namespace pcr
             if ( _rPropertyData.bReadOnly )
             {
                 rLine.pLine->SetReadOnly( true );
-            
+
                 // user controls (i.e. the ones not provided by the usual
                 // XPropertyControlFactory) have no chance to know that they should be read-only,
                 // since XPropertyHandler::describePropertyLine does not transport this
@@ -1266,7 +1266,7 @@ namespace pcr
                 }
             }
 
-            return 1L; 
+            return 1L;
             // handled this. In particular, we also consume PageUp/Down events if we do not use them for scrolling,
             // otherwise they would be used to scroll the document view, which does not sound like it is desired by
             // the user.
@@ -1304,5 +1304,3 @@ namespace pcr
 //............................................................................
 } // namespace pcr
 //............................................................................
-
-

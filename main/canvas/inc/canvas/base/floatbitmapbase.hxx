@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -63,22 +63,20 @@ namespace canvas
         @see CanvasBase for further contractual requirements towards
         the CanvasHelper type, and some examples.
      */
-    template< class Base, 
-              class CanvasHelper, 
-              class Mutex=::osl::MutexGuard, 
-              class UnambiguousBase=::com::sun::star::uno::XInterface > class FloatBitmapBase : 
+    template< class Base,
+              class CanvasHelper,
+              class Mutex=::osl::MutexGuard,
+              class UnambiguousBase=::com::sun::star::uno::XInterface > class FloatBitmapBase :
         public BitmapCanvasBase< Base, CanvasHelper, Mutex, UnambiguousBase >
     {
     public:
         typedef BitmapCanvasBase< Base, CanvasHelper, Mutex, UnambiguousBase >	BaseType;
 
         // XIeeeFloatBitmap
-        virtual ::com::sun::star::uno::Sequence< float > SAL_CALL getData( ::com::sun::star::rendering::FloatingPointBitmapLayout&	bitmapLayout, 
-                                                                           const ::com::sun::star::geometry::IntegerRectangle2D& 	rect ) throw (::com::sun::star::lang::IndexOutOfBoundsException, 
-                                                                                                                                               ::com::sun::star::rendering::VolatileContentDestroyedException, 
-                                                                                                                                               ::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Sequence< float > SAL_CALL getData( ::com::sun::star::rendering::FloatingPointBitmapLayout&	bitmapLayout,
+                                                                           const ::com::sun::star::geometry::IntegerRectangle2D& 	rect )
         {
-            verifyInput(rect, 
+            verifyInput(rect,
                         static_cast< typename BaseType::UnambiguousBaseType* >(this));
             verifyIndexRange(rect, getSize() );
 
@@ -88,13 +86,11 @@ namespace canvas
                                                      rect );
         }
 
-        virtual void SAL_CALL setData( const ::com::sun::star::uno::Sequence< float >& 				 data, 
-                                       const ::com::sun::star::rendering::FloatingPointBitmapLayout& bitmapLayout, 
-                                       const ::com::sun::star::geometry::IntegerRectangle2D& 		 rect ) throw (::com::sun::star::lang::IllegalArgumentException, 
-                                                                                                                   ::com::sun::star::lang::IndexOutOfBoundsException,
-                                                                                                                   ::com::sun::star::uno::RuntimeException)
+        virtual void SAL_CALL setData( const ::com::sun::star::uno::Sequence< float >& 				 data,
+                                       const ::com::sun::star::rendering::FloatingPointBitmapLayout& bitmapLayout,
+                                       const ::com::sun::star::geometry::IntegerRectangle2D& 		 rect )
         {
-            verifyInput(bitmapLayout, rect, 
+            verifyInput(bitmapLayout, rect,
                         static_cast< typename BaseType::UnambiguousBaseType* >(this));
             verifyIndexRange(rect, getSize() );
 
@@ -106,13 +102,11 @@ namespace canvas
             BaseType::maCanvasHelper.setData( data, bitmapLayout, rect );
         }
 
-        virtual void SAL_CALL setPixel( const ::com::sun::star::uno::Sequence< float >& 				color, 
-                                        const ::com::sun::star::rendering::FloatingPointBitmapLayout&	bitmapLayout, 
-                                        const ::com::sun::star::geometry::IntegerPoint2D& 				pos ) throw (::com::sun::star::lang::IllegalArgumentException, 
-                                                                                                                     ::com::sun::star::lang::IndexOutOfBoundsException, 
-                                                                                                                     ::com::sun::star::uno::RuntimeException)
+        virtual void SAL_CALL setPixel( const ::com::sun::star::uno::Sequence< float >& 				color,
+                                        const ::com::sun::star::rendering::FloatingPointBitmapLayout&	bitmapLayout,
+                                        const ::com::sun::star::geometry::IntegerPoint2D& 				pos )
         {
-            verifyInput(bitmapLayout, pos, 
+            verifyInput(bitmapLayout, pos,
                         static_cast< typename BaseType::UnambiguousBaseType* >(this));
             verifyIndexRange(pos, getSize() );
 
@@ -124,12 +118,10 @@ namespace canvas
             BaseType::maCanvasHelper.setPixel( color, bitmapLayout, pos );
         }
 
-        virtual ::com::sun::star::uno::Sequence< float > SAL_CALL getPixel( ::com::sun::star::rendering::FloatingPointBitmapLayout& bitmapLayout, 
-                                                                            const ::com::sun::star::geometry::IntegerPoint2D& 		pos ) throw (::com::sun::star::lang::IndexOutOfBoundsException, 
-                                                                                                                                                 ::com::sun::star::rendering::VolatileContentDestroyedException, 
-                                                                                                                                                 ::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::uno::Sequence< float > SAL_CALL getPixel( ::com::sun::star::rendering::FloatingPointBitmapLayout& bitmapLayout,
+                                                                            const ::com::sun::star::geometry::IntegerPoint2D& 		pos )
         {
-            verifyInput(pos, 
+            verifyInput(pos,
                         static_cast< typename BaseType::UnambiguousBaseType* >(this));
             verifyIndexRange(pos, getSize() );
 
@@ -139,7 +131,7 @@ namespace canvas
                                                       pos );
         }
 
-        virtual ::com::sun::star::rendering::FloatingPointBitmapLayout SAL_CALL getMemoryLayout(  ) throw (::com::sun::star::uno::RuntimeException)
+        virtual ::com::sun::star::rendering::FloatingPointBitmapLayout SAL_CALL getMemoryLayout(  )
         {
             typename BaseType::MutexType aGuard( BaseType::m_aMutex );
 

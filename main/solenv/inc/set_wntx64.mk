@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -82,8 +82,15 @@ CDEFSOBJMT_X64+=-D_MT
 LINKFLAGS_X64=/MAP /OPT:NOREF
 .ENDIF
 
-# excetion handling protection
+# exception handling protection
+# /SAFESEH is x86-only -- x64 SEH is table-driven and the linker rejects the
+# flag outright with LNK1246.  This file predates a full x64 build: it was
+# written to cross-build the x64 shell extension from an x86 build, where
+# plain LINKFLAGS was still the x86 link.  gbuild's windows.mk already gates
+# -SAFESEH on CPUNAME==INTEL; the dmake path needs the same guard.
+.IF "$(CPUNAME)"=="INTEL"
 LINKFLAGS+=-safeseh
+.ENDIF
 
 # enable DEP
 LINKFLAGS+=-nxcompat
@@ -114,8 +121,19 @@ STDSLOCUI_X64=
 
 IMPLIBFLAGS_X64=-machine:X64
 
+# Both SDK and toolset moved their 64-bit libraries when the UCRT arrived.  The
+# SDK gained a version level and split its libraries into um/ and ucrt/; the
+# toolset renamed amd64/ to x64/.  This mirrors what set_soenv.in already does
+# for the main build's ILIB -- see the MSVC_MODERN branch there -- for the one
+# thing that computes its own paths instead, the 64-bit shell extension.
+.IF "$(COMEX)"=="14"
+LIBPATH_X64=$(PSDK_HOME)/lib/$(WINDOWS_SDK_VERSION)/um/x64
+LIBPATH_UCRT_X64=$(PSDK_HOME)/lib/$(WINDOWS_SDK_VERSION)/ucrt/x64
+LIBPATH_VC_X64=$(COMPATH)/lib/x64
+.ELSE
 LIBPATH_X64=$(PSDK_HOME)/lib/x64
 LIBPATH_VC_X64=$(COMPATH)/lib/amd64
+.ENDIF
 
 ADVAPI32LIB_X64=$(LIBPATH_X64)/advapi32.lib
 SHELL32LIB_X64=$(LIBPATH_X64)/shell32.lib
@@ -147,6 +165,12 @@ OLDNAMESLIB_X64=$(LIBPATH_VC_X64)/oldnames.lib
 MSIMG32LIB_X64=$(LIBPATH_X64)/msimg32.lib
 MSVCPRT_X64=$(LIBPATH_VC_X64)/msvcprt.lib
 MSVCRT_X64=$(LIBPATH_VC_X64)/msvcrt.lib
+.IF "$(COMEX)"=="14"
+# The same three-way CRT split the 32-bit build already deals with, reaching
+# the one target that names its CRT libraries by full path.  These consumers
+# all link -NODEFAULTLIB, so an unnamed library is an unlinked one.
+MSVCRT_X64+=$(LIBPATH_VC_X64)/vcruntime.lib $(LIBPATH_UCRT_X64)/ucrt.lib
+.ENDIF
 
 MISC_X64=$(MISC)/x64
 OBJ_X64=$(OBJ)/x64
@@ -211,4 +235,3 @@ $(SLO_X64)/%.obj : $(MISC_X64)/%.c
     $(CC_X64) @$(mktmp $(USE_CFLAGS_X64) $(INCLUDE_C) $(CFLAGSCC_X64) $(CFLAGSSLO_X64) $(USE_CDEFS_X64) $(CDEFSSLO_X64) $(CFLAGSAPPEND_X64) $(CFLAGSOUTOBJ)$(SLO_X64)/$*.obj $(MISC_X64)/$*.c )
 
 .ENDIF # "$(BUILD_X64)"!=""
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -120,12 +120,12 @@ public:
     }
 
 	// XServiceInfo
-	virtual OUString SAL_CALL getImplementationName() throw (RuntimeException);
-	virtual sal_Bool SAL_CALL supportsService( const OUString & rServiceName ) throw (RuntimeException);
-	virtual Sequence< OUString > SAL_CALL getSupportedServiceNames() throw (RuntimeException);
+	virtual OUString SAL_CALL getImplementationName();
+	virtual sal_Bool SAL_CALL supportsService( const OUString & rServiceName );
+	virtual Sequence< OUString > SAL_CALL getSupportedServiceNames();
 
 	// XMain
-    virtual sal_Int32 SAL_CALL run( const Sequence< OUString > & rArgs ) throw (RuntimeException);
+    virtual sal_Int32 SAL_CALL run( const Sequence< OUString > & rArgs );
 };
 
 //==================================================================================================
@@ -321,7 +321,6 @@ public:
 	void SAL_CALL callRecursivly(
 		const ::com::sun::star::uno::Reference< XRecursiveCall >& xCall,
 		sal_Int32 nToCall )
-		throw(::com::sun::star::uno::RuntimeException)
 		{
 			MutexGuard guard( m_mutex );
 			if( nToCall )
@@ -519,8 +518,62 @@ static sal_Bool performTest(
                     "all floats struct test");
             }
             {
+                TwoFloats aIn(1.25f, -2.5f);
+                TwoFloats aOut(xLBT->echoTwoFloats(aIn));
+                bRet &= check(aOut.a == aIn.a && aOut.b == aIn.b,
+                    "two-float HFA test");
+            }
+            {
+                ThreeDoubles aIn(1.25, -2.5, 9.75);
+                ThreeDoubles aOut(xLBT->echoThreeDoubles(aIn));
+                bRet &= check(
+                    aOut.a == aIn.a && aOut.b == aIn.b && aOut.c == aIn.c,
+                    "three-double HFA test");
+            }
+            {
+                MixedFloatLong aIn(1.25f, -123456);
+                MixedFloatLong aOut(xLBT->echoMixedFloatLong(aIn));
+                bRet &= check(aOut.a == aIn.a && aOut.b == aIn.b,
+                    "mixed float-long struct test");
+            }
+            {
+                OneByte aIn(-7);
+                OneByte aOut(xLBT->echoOneByte(aIn));
+                bRet &= check(aOut.value == aIn.value, "one-byte struct test");
+            }
+            {
+                ThreeLongs aIn(0x11223344, -7, 0x55667788);
+                ThreeLongs aOut(xLBT->echoThreeLongs(aIn));
+                bRet &= check(
+                    aOut.a == aIn.a && aOut.b == aIn.b && aOut.c == aIn.c,
+                    "three-long struct test");
+            }
+            {
                 sal_Int32 i2 = xLBT->testPPCAlignment(0, 0, 0, 0, 0xBEAF);
                 bRet &= check(i2 == 0xBEAF, "ppc-style alignment test");
+            }
+            {
+                sal_Int8 b = -2;
+                sal_Int8 c = 0x35;
+                sal_Int16 s = -1234;
+                sal_Int32 l = 0x11223344;
+                sal_Int8 d = -7;
+                sal_Int64 h = SAL_CONST_INT64(0x0102030405060708);
+                sal_Int64 expected = ((static_cast<sal_Int64>(b) << 56) |
+                    (static_cast<sal_uInt64>(static_cast<sal_uInt8>(c)) << 48) |
+                    (static_cast<sal_uInt64>(static_cast<sal_uInt16>(s)) << 32) |
+                    static_cast<sal_uInt32>(l)) ^
+                    (static_cast<sal_Int64>(d) << 24) ^ h;
+                bRet &= check(
+                    xLBT->testPackedStack(0, 1, 2, 3, 4, 5, 6, b, c, s, l, d, h)
+                        == expected,
+                    "packed stack argument test");
+            }
+            {
+                double result = xLBT->testFpStack(
+                    0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0,
+                    -3.25f, 9.5);
+                bRet &= check(result == 6.25, "fp stack argument test");
             }
             // Test extended attributes that raise exceptions:
             try {
@@ -973,7 +1026,7 @@ static sal_Bool raiseException( const Reference< XBridgeTest > & xLBT )
 				{
 #ifdef COMPCHECK
                     //When we check if a new compiler still works then we must not call
-                    //getRuntimeException because it uses cppu::getCaughtException which 
+                    //getRuntimeException because it uses cppu::getCaughtException which
                     //does only work if all libs are build with the same runtime.
                     return true;
 #else
@@ -1042,8 +1095,8 @@ uno_Sequence* cloneSequence(const uno_Sequence* val, const Type& type)
     typelib_TypeDescription* pTdElem = pIndirectTd->pType->pType;
     sal_Int8* buf = new sal_Int8[pTdElem->nSize * val->nElements];
     sal_Int8* pBufCur = buf;
-    
-    uno_Sequence* retSeq = NULL;    
+
+    uno_Sequence* retSeq = NULL;
     switch (pTdElem->eTypeClass)
     {
     case TypeClass_SEQUENCE:
@@ -1066,7 +1119,7 @@ uno_Sequence* cloneSequence(const uno_Sequence* val, const Type& type)
         break;
     }
     delete[] buf;
-    return retSeq;    
+    return retSeq;
 }
 
 template< class T>
@@ -1083,11 +1136,11 @@ inline bool makeSurrogate(
     rOut.clear();
     if (! rOriginal.is())
         return false;
-    
+
     Environment aCppEnv_official;
     Environment aUnoEnv_ano;
     Environment aCppEnv_ano;
-    
+
     OUString aCppEnvTypeName(
         RTL_CONSTASCII_USTRINGPARAM(CPPU_CURRENT_LANGUAGE_BINDING_NAME) );
     OUString aUnoEnvTypeName(
@@ -1103,7 +1156,7 @@ inline bool makeSurrogate(
     uno_createEnvironment(
         reinterpret_cast< uno_Environment ** >( &aUnoEnv_ano ),
         aUnoEnvTypeName.pData, 0 );
-    
+
     UnoInterfaceReference unoI;
     Mapping cpp2uno( aCppEnv_official.get(), aUnoEnv_ano.get() );
     Mapping uno2cpp( aUnoEnv_ano.get(), aCppEnv_ano.get() );
@@ -1131,13 +1184,12 @@ inline bool makeSurrogate(
             OUSTR("mapping binary UNO to C++ failed!"),
             Reference< XInterface >() );
     }
-    
+
 	return rOut.is();
 }
 
 //==================================================================================================
 sal_Int32 TestBridgeImpl::run( const Sequence< OUString > & rArgs )
-	throw (RuntimeException)
 {
     bool bRet = false;
     try
@@ -1192,7 +1244,7 @@ sal_Int32 TestBridgeImpl::run( const Sequence< OUString > & rArgs )
                 break;
             }
         }
-        
+
         if (! xOriginal.is())
         {
             throw RuntimeException(
@@ -1238,20 +1290,18 @@ sal_Int32 TestBridgeImpl::run( const Sequence< OUString > & rArgs )
     {
         printf( "\n> ### test failed!\n" );
     }
-    
+
 	return 0;
 }
 
 // XServiceInfo
 //__________________________________________________________________________________________________
 OUString TestBridgeImpl::getImplementationName()
-	throw (RuntimeException)
 {
 	return OUString( RTL_CONSTASCII_USTRINGPARAM(IMPLNAME) );
 }
 //__________________________________________________________________________________________________
 sal_Bool TestBridgeImpl::supportsService( const OUString & rServiceName )
-	throw (RuntimeException)
 {
 	const Sequence< OUString > & rSNL = getSupportedServiceNames();
 	const OUString * pArray = rSNL.getConstArray();
@@ -1264,7 +1314,6 @@ sal_Bool TestBridgeImpl::supportsService( const OUString & rServiceName )
 }
 //__________________________________________________________________________________________________
 Sequence< OUString > TestBridgeImpl::getSupportedServiceNames()
-	throw (RuntimeException)
 {
 	return bridge_test::getSupportedServiceNames();
 }
@@ -1302,7 +1351,7 @@ void * SAL_CALL component_getFactory(
                 bridge_test::TestBridgeImpl_create,
                 OUString( RTL_CONSTASCII_USTRINGPARAM(IMPLNAME) ),
                 bridge_test::getSupportedServiceNames() ) );
-        
+
 		if (xFactory.is())
 		{
 			xFactory->acquire();

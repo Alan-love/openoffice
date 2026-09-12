@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -50,7 +50,7 @@ class OOO_DLLPUBLIC_CHARTVIEW ExplicitValueProvider
 {
 public:
     /** Gives calculated scale and increment values for a given xAxis in the current view.
-        In contrast to the model data these explicit values are always complete as misssing auto properties are calculated.
+        In contrast to the model data these explicit values are always complete as missing auto properties are calculated.
         If the given Axis could not be found or for another reason no correct output can be given false is returned.
      */
     virtual sal_Bool getExplicitValuesForAxis(
@@ -100,7 +100,7 @@ public:
             , const ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDataSeries >& xSeries
             , sal_Int32 nPointIndex /*-1 for whole series*/
             , const ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDiagram >& xDiagram );
-    
+
     static sal_Int32 getExplicitPercentageNumberFormatKeyForDataLabel(
             const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet >& xSeriesOrPointProp
             , const ::com::sun::star::uno::Reference< ::com::sun::star::util::XNumberFormatsSupplier >& xNumberFormatsSupplier );

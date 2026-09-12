@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -55,7 +55,6 @@ Reference<XInterface> SAL_CALL PresenterHelperService_createInstance (
 
 
 ::rtl::OUString PresenterHelperService_getImplementationName (void)
-    throw(RuntimeException)
 {
     return OUString::createFromAscii("com.sun.star.comp.Draw.PresenterHelper");
 }
@@ -64,7 +63,6 @@ Reference<XInterface> SAL_CALL PresenterHelperService_createInstance (
 
 
 Sequence<rtl::OUString> SAL_CALL PresenterHelperService_getSupportedServiceNames (void)
-    throw (RuntimeException)
 {
 	static const ::rtl::OUString sServiceName(
         ::rtl::OUString::createFromAscii("com.sun.star.drawing.PresenterHelper"));
@@ -95,11 +93,10 @@ PresenterHelper::~PresenterHelper (void)
 //----- XInitialize -----------------------------------------------------------
 
 void SAL_CALL PresenterHelper::initialize (const Sequence<Any>& rArguments)
-    throw(Exception,RuntimeException)
 {
     (void)rArguments;
 }
-    
+
 
 
 
@@ -111,7 +108,6 @@ Reference<awt::XWindow> SAL_CALL PresenterHelper::createWindow (
     sal_Bool bInitiallyVisible,
     sal_Bool bEnableChildTransparentMode,
     sal_Bool bEnableParentClip)
-    throw (css::uno::RuntimeException)
 {
     ::Window* pParentWindow = VCLUnoHelper::GetWindow(rxParentWindow);
 
@@ -166,7 +162,6 @@ Reference<rendering::XCanvas> SAL_CALL PresenterHelper::createSharedCanvas (
     const Reference<rendering::XCanvas>& rxSharedCanvas,
     const Reference<awt::XWindow>& rxSharedWindow,
     const Reference<awt::XWindow>& rxWindow)
-    throw (css::uno::RuntimeException)
 {
     if ( ! rxSharedCanvas.is()
         || ! rxSharedWindow.is()
@@ -176,7 +171,7 @@ Reference<rendering::XCanvas> SAL_CALL PresenterHelper::createSharedCanvas (
             OUString::createFromAscii("illegal argument"),
             Reference<XInterface>(static_cast<XWeak*>(this)));
     }
-        
+
     if (rxWindow == rxSharedWindow)
         return rxSharedCanvas;
     else
@@ -195,7 +190,6 @@ Reference<rendering::XCanvas> SAL_CALL PresenterHelper::createCanvas (
     const Reference<awt::XWindow>& rxWindow,
     sal_Int16 nRequestedCanvasFeatures,
     const OUString& rsOptionalCanvasServiceName)
-    throw (css::uno::RuntimeException)
 {
     (void)nRequestedCanvasFeatures;
 
@@ -205,14 +199,14 @@ Reference<rendering::XCanvas> SAL_CALL PresenterHelper::createCanvas (
     if (pWindow != NULL)
     {
         Sequence<Any> aArg (5);
-        
+
         // common: first any is VCL pointer to window (for VCL canvas)
         aArg[0] = makeAny(reinterpret_cast<sal_Int64>(pWindow));
         aArg[1] = Any();
         aArg[2] = makeAny(::com::sun::star::awt::Rectangle());
         aArg[3] = makeAny(sal_False);
         aArg[4] = makeAny(rxWindow);
-        
+
         Reference<lang::XMultiServiceFactory> xFactory (
             mxComponentContext->getServiceManager(), UNO_QUERY_THROW);
         return Reference<rendering::XCanvas>(
@@ -232,7 +226,6 @@ Reference<rendering::XCanvas> SAL_CALL PresenterHelper::createCanvas (
 
 void SAL_CALL PresenterHelper::toTop (
     const Reference<awt::XWindow>& rxWindow)
-    throw (css::uno::RuntimeException)
 {
     ::Window* pWindow = VCLUnoHelper::GetWindow(rxWindow);
     if (pWindow != NULL)
@@ -248,11 +241,10 @@ void SAL_CALL PresenterHelper::toTop (
 Reference<rendering::XBitmap> SAL_CALL PresenterHelper::loadBitmap (
     const OUString& rsURL,
     const Reference<rendering::XCanvas>& rxCanvas)
-    throw (RuntimeException)
 {
     if ( ! rxCanvas.is())
         return NULL;
-    
+
 	::osl::MutexGuard aGuard (::osl::Mutex::getGlobalMutex());
 
     if (mpGraphicFilter.get() == NULL)
@@ -287,7 +279,6 @@ Reference<rendering::XBitmap> SAL_CALL PresenterHelper::loadBitmap (
 
 void SAL_CALL PresenterHelper::captureMouse (
     const Reference<awt::XWindow>& rxWindow)
-    throw (RuntimeException)
 {
 	::osl::MutexGuard aGuard (::osl::Mutex::getGlobalMutex());
 
@@ -303,7 +294,6 @@ void SAL_CALL PresenterHelper::captureMouse (
 
 
 void SAL_CALL PresenterHelper::releaseMouse (const Reference<awt::XWindow>& rxWindow)
-    throw (RuntimeException)
 {
 	::osl::MutexGuard aGuard (::osl::Mutex::getGlobalMutex());
 
@@ -321,7 +311,6 @@ void SAL_CALL PresenterHelper::releaseMouse (const Reference<awt::XWindow>& rxWi
 awt::Rectangle PresenterHelper::getWindowExtentsRelative (
     const Reference<awt::XWindow>& rxChildWindow,
     const Reference<awt::XWindow>& rxParentWindow)
-    throw (RuntimeException)
 {
     ::Window* pChildWindow = VCLUnoHelper::GetWindow(rxChildWindow);
     ::Window* pParentWindow = VCLUnoHelper::GetWindow(rxParentWindow);

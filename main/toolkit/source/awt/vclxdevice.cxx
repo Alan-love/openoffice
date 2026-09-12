@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -84,7 +84,7 @@ sal_Bool VCLXDevice::IsCreatedWithToolkit() const
 }
 
 // ::com::sun::star::uno::XInterface
-::com::sun::star::uno::Any VCLXDevice::queryInterface( const ::com::sun::star::uno::Type & rType ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Any VCLXDevice::queryInterface( const ::com::sun::star::uno::Type & rType )
 {
 	::com::sun::star::uno::Any aRet = ::cppu::queryInterface( rType,
 										SAL_STATIC_CAST( ::com::sun::star::awt::XDevice*, this ),
@@ -104,20 +104,20 @@ IMPL_XTYPEPROVIDER_START( VCLXDevice )
 IMPL_XTYPEPROVIDER_END
 
 
-// ::com::sun::star::awt::XDevice, 
-::com::sun::star::uno::Reference< ::com::sun::star::awt::XGraphics > VCLXDevice::createGraphics(  ) throw(::com::sun::star::uno::RuntimeException)
+// ::com::sun::star::awt::XDevice,
+::com::sun::star::uno::Reference< ::com::sun::star::awt::XGraphics > VCLXDevice::createGraphics(  )
 {
 	::vos::OGuard aGuard( GetMutex() );
-	
+
 	::com::sun::star::uno::Reference< ::com::sun::star::awt::XGraphics > xRef;
-	
+
 	if ( mpOutputDevice )
 		xRef = mpOutputDevice->CreateUnoGraphics();
 
 	return xRef;
 }
 
-::com::sun::star::uno::Reference< ::com::sun::star::awt::XDevice > VCLXDevice::createDevice( sal_Int32 nWidth, sal_Int32 nHeight ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Reference< ::com::sun::star::awt::XDevice > VCLXDevice::createDevice( sal_Int32 nWidth, sal_Int32 nHeight )
 {
 	::vos::OGuard aGuard( GetMutex() );
 
@@ -133,7 +133,7 @@ IMPL_XTYPEPROVIDER_END
 	return xRef;
 }
 
-::com::sun::star::awt::DeviceInfo VCLXDevice::getInfo() throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::awt::DeviceInfo VCLXDevice::getInfo()
 {
 	::vos::OGuard aGuard( GetMutex() );
 
@@ -143,12 +143,12 @@ IMPL_XTYPEPROVIDER_END
 	{
 		Size aDevSz;
 		OutDevType eDevType = mpOutputDevice->GetOutDevType();
-		if ( eDevType == OUTDEV_WINDOW ) 
+		if ( eDevType == OUTDEV_WINDOW )
 		{
 			aDevSz = ((Window*)mpOutputDevice)->GetSizePixel();
 			((Window*)mpOutputDevice)->GetBorder( aInfo.LeftInset, aInfo.TopInset, aInfo.RightInset, aInfo.BottomInset );
 		}
-		else if ( eDevType == OUTDEV_PRINTER ) 
+		else if ( eDevType == OUTDEV_PRINTER )
 		{
 			aDevSz = ((Printer*)mpOutputDevice)->GetPaperSizePixel();
 			Size aOutSz = mpOutputDevice->GetOutputSizePixel();
@@ -166,25 +166,25 @@ IMPL_XTYPEPROVIDER_END
 			aInfo.RightInset = 0;
 			aInfo.BottomInset = 0;
 		}
-		
+
 		aInfo.Width = aDevSz.Width();
 		aInfo.Height = aDevSz.Height();
-		
+
 		Size aTmpSz = mpOutputDevice->LogicToPixel( Size( 1000, 1000 ), MapMode( MAP_CM ) );
 		aInfo.PixelPerMeterX = aTmpSz.Width()/10;
 		aInfo.PixelPerMeterY = aTmpSz.Height()/10;
-		
+
 		aInfo.BitsPerPixel = mpOutputDevice->GetBitCount();
-		
+
 		aInfo.Capabilities = 0;
-		if ( mpOutputDevice->GetOutDevType() != OUTDEV_PRINTER ) 
+		if ( mpOutputDevice->GetOutDevType() != OUTDEV_PRINTER )
 			aInfo.Capabilities = ::com::sun::star::awt::DeviceCapability::RASTEROPERATIONS|::com::sun::star::awt::DeviceCapability::GETBITS;
 	}
 
 	return aInfo;
 }
 
-::com::sun::star::uno::Sequence< ::com::sun::star::awt::FontDescriptor > VCLXDevice::getFontDescriptors(  ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Sequence< ::com::sun::star::awt::FontDescriptor > VCLXDevice::getFontDescriptors(  )
 {
 	::vos::OGuard aGuard( GetMutex() );
 
@@ -203,7 +203,7 @@ IMPL_XTYPEPROVIDER_END
 	return aFonts;
 }
 
-::com::sun::star::uno::Reference< ::com::sun::star::awt::XFont > VCLXDevice::getFont( const ::com::sun::star::awt::FontDescriptor& rDescriptor ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Reference< ::com::sun::star::awt::XFont > VCLXDevice::getFont( const ::com::sun::star::awt::FontDescriptor& rDescriptor )
 {
 	::vos::OGuard aGuard( GetMutex() );
 
@@ -217,7 +217,7 @@ IMPL_XTYPEPROVIDER_END
 	return xRef;
 }
 
-::com::sun::star::uno::Reference< ::com::sun::star::awt::XBitmap > VCLXDevice::createBitmap( sal_Int32 nX, sal_Int32 nY, sal_Int32 nWidth, sal_Int32 nHeight ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Reference< ::com::sun::star::awt::XBitmap > VCLXDevice::createBitmap( sal_Int32 nX, sal_Int32 nY, sal_Int32 nWidth, sal_Int32 nHeight )
 {
 	::vos::OGuard aGuard( GetMutex() );
 
@@ -233,7 +233,7 @@ IMPL_XTYPEPROVIDER_END
 	return xBmp;
 }
 
-::com::sun::star::uno::Reference< ::com::sun::star::awt::XDisplayBitmap > VCLXDevice::createDisplayBitmap( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XBitmap >& rxBitmap ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Reference< ::com::sun::star::awt::XDisplayBitmap > VCLXDevice::createDisplayBitmap( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XBitmap >& rxBitmap )
 {
 	::vos::OGuard aGuard( GetMutex() );
 
@@ -248,8 +248,8 @@ IMPL_XTYPEPROVIDER_END
 VCLXVirtualDevice::~VCLXVirtualDevice()
 {
 	::vos::OGuard aGuard( GetMutex() );
-    
-    DestroyOutputDevice(); 
+
+    DestroyOutputDevice();
 }
 
 
@@ -263,10 +263,10 @@ VCLXVirtualDevice::~VCLXVirtualDevice()
 //     {
 //         return 0;
 //     }
-//     
+//
 //     return 1;
 // }
-// 
+//
 // ::sal_Int32 SAL_CALL VCLXDevice::getTextHeight(  ) throw (::com::sun::star::uno::RuntimeException)
 // {
 // 	::vos::OGuard aGuard( GetMutex() );
@@ -278,19 +278,19 @@ VCLXVirtualDevice::~VCLXVirtualDevice()
 // Interface implementation of ::com::sun::star::awt::XUnitConversion
 // -----------------------------------------------------------------------------
 
-::com::sun::star::awt::Point SAL_CALL VCLXDevice::convertPointToLogic( const ::com::sun::star::awt::Point& aPoint, ::sal_Int16 TargetUnit ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException)
+::com::sun::star::awt::Point SAL_CALL VCLXDevice::convertPointToLogic( const ::com::sun::star::awt::Point& aPoint, ::sal_Int16 TargetUnit )
 {
     (void)aPoint;
 	::vos::OGuard aGuard( GetMutex() );
-    if (TargetUnit == com::sun::star::util::MeasureUnit::PERCENT ) 
+    if (TargetUnit == com::sun::star::util::MeasureUnit::PERCENT )
     {
         // percentage not allowed here
         throw ::com::sun::star::lang::IllegalArgumentException();
     }
-    
+
     ::com::sun::star::awt::Point aAWTPoint(0,0);
     // X,Y
-    
+
 	if( mpOutputDevice )
 	{
         MapMode aMode(VCLUnoHelper::ConvertToMapModeUnit(TargetUnit));
@@ -298,12 +298,12 @@ VCLXVirtualDevice::~VCLXVirtualDevice()
 		::Point aDevPoint = mpOutputDevice->PixelToLogic(aVCLPoint, aMode );
         aAWTPoint = VCLUnoHelper::ConvertToAWTPoint(aDevPoint);
     }
-    
+
     return aAWTPoint;
 }
 
 
-::com::sun::star::awt::Point SAL_CALL VCLXDevice::convertPointToPixel( const ::com::sun::star::awt::Point& aPoint, ::sal_Int16 SourceUnit ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException)
+::com::sun::star::awt::Point SAL_CALL VCLXDevice::convertPointToPixel( const ::com::sun::star::awt::Point& aPoint, ::sal_Int16 SourceUnit )
 {
     (void)aPoint;
 	::vos::OGuard aGuard( GetMutex() );
@@ -313,7 +313,7 @@ VCLXVirtualDevice::~VCLXVirtualDevice()
         // pixel or percentage not allowed here
         throw ::com::sun::star::lang::IllegalArgumentException();
     }
-    
+
     ::com::sun::star::awt::Point aAWTPoint(0,0);
 
 	if( mpOutputDevice )
@@ -323,11 +323,11 @@ VCLXVirtualDevice::~VCLXVirtualDevice()
 		::Point aDevPoint = mpOutputDevice->LogicToPixel(aVCLPoint, aMode );
         aAWTPoint = VCLUnoHelper::ConvertToAWTPoint(aDevPoint);
     }
-    
+
     return aAWTPoint;
 }
 
-::com::sun::star::awt::Size SAL_CALL VCLXDevice::convertSizeToLogic( const ::com::sun::star::awt::Size& aSize, ::sal_Int16 TargetUnit ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException)
+::com::sun::star::awt::Size SAL_CALL VCLXDevice::convertSizeToLogic( const ::com::sun::star::awt::Size& aSize, ::sal_Int16 TargetUnit )
 {
     (void)aSize;
 	::vos::OGuard aGuard( GetMutex() );
@@ -336,11 +336,11 @@ VCLXVirtualDevice::~VCLXVirtualDevice()
         // percentage not allowed here
         throw ::com::sun::star::lang::IllegalArgumentException();
     }
-    
+
     ::com::sun::star::awt::Size aAWTSize(0,0);
     // Width, Height
 
-    
+
 	if( mpOutputDevice )
 	{
         MapMode aMode(VCLUnoHelper::ConvertToMapModeUnit(TargetUnit));
@@ -348,11 +348,11 @@ VCLXVirtualDevice::~VCLXVirtualDevice()
 		::Size aDevSz = mpOutputDevice->PixelToLogic(aVCLSize, aMode );
         aAWTSize = VCLUnoHelper::ConvertToAWTSize(aDevSz);
     }
-    
+
     return aAWTSize;
 }
 
-::com::sun::star::awt::Size SAL_CALL VCLXDevice::convertSizeToPixel( const ::com::sun::star::awt::Size& aSize, ::sal_Int16 SourceUnit ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException)
+::com::sun::star::awt::Size SAL_CALL VCLXDevice::convertSizeToPixel( const ::com::sun::star::awt::Size& aSize, ::sal_Int16 SourceUnit )
 {
     (void)aSize;
 	::vos::OGuard aGuard( GetMutex() );
@@ -362,7 +362,7 @@ VCLXVirtualDevice::~VCLXVirtualDevice()
         // pixel or percentage not allowed here
         throw ::com::sun::star::lang::IllegalArgumentException();
     }
-    
+
     ::com::sun::star::awt::Size aAWTSize(0,0);
     // Width, Height
 	if( mpOutputDevice )
@@ -372,7 +372,6 @@ VCLXVirtualDevice::~VCLXVirtualDevice()
 		::Size aDevSz = mpOutputDevice->LogicToPixel(aVCLSize, aMode );
         aAWTSize = VCLUnoHelper::ConvertToAWTSize(aDevSz);
     }
-    
+
     return aAWTSize;
 }
-

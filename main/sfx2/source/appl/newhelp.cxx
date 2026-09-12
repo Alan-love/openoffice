@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -2907,10 +2907,10 @@ void SfxHelpWindow_Impl::MakeLayout()
        	Window* pScreenWin = VCLUnoHelper::GetWindow( xWindow );
 
         /* #i55528#
-            Hide() / Show() will produce starnge effects.
+            Hide() / Show() will produce strange effects.
             The returned size (used later to be written back into the configuration)
-            isnt the right after a resize during the window is hidden.
-            If this resize is done if the window is visible evyrthing works as aspected.
+            isn't the right after a resize during the window is hidden.
+            If this resize is done if the window is visible everything works as expected.
             Some VCL-patches could not solve this problem so I've established the
             workaround: resize the help window if it's visible .-)
         */
@@ -3485,4 +3485,3 @@ void SfxAddHelpBookmarkDialog_Impl::SetTitle( const String& rTitle )
 	aTitleED.SetText( rTitle );
 	aTitleED.SetSelection( Selection( 0, rTitle.Len() ) );
 }
-

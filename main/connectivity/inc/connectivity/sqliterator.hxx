@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -61,7 +61,7 @@ namespace connectivity
     class OOO_DLLPUBLIC_DBTOOLS OSQLParseTreeIterator
 	{
 	private:
-		::com::sun::star::sdbc::SQLException            m_aErrors;		    // conatins the error while iterating through the statement
+		::com::sun::star::sdbc::SQLException            m_aErrors;		    // contains the error while iterating through the statement
 		const OSQLParseNode*				            m_pParseTree;		// aktueller ParseTree
 		const OSQLParser&					            m_rParser;			// if set used for general error messages from the context
 		OSQLStatementType					            m_eStatementType;	// Art des Statements
@@ -203,7 +203,7 @@ namespace connectivity
 
             @param _nIncludeMask
                 set of TraversalParts bits, specifying which information is to be collected.
-                Note TraversalParts is currently not 
+                Note TraversalParts is currently not
         */
         void traverseSome( sal_uInt32 _nIncludeMask );
 
@@ -245,7 +245,7 @@ namespace connectivity
 								::rtl::OUString& _out_rTableRange,
                                 ::rtl::OUString& _out_rColumnAliasIfPresent
                                 ) const;
-		
+
 		/** return the alias name of a column
 			@param	_pDerivedColumn
 				The parse node where SQL_ISRULE(_pDerivedColumn,derived_column) must be true
@@ -359,4 +359,3 @@ namespace connectivity
 }
 
 #endif // _CONNECTIVITY_PARSE_SQLITERATOR_HXX_
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -44,8 +44,8 @@ module com { module sun { module star { module ucb {
 
 	<p>Implementing a content provider proxy can be useful if the creation of
 	the real content provider object shall be deferred for some reason
-	(i.e. performance) until the first method gets called on it. Instaead of
-	instanciating and registering the real provider at the UCB, a proxy for
+	(i.e. performance) until the first method gets called on it. Instead of
+	instantiating and registering the real provider at the UCB, a proxy for
 	the	real provider can be created and registered at the UCB.
 
 	@see XContentProviderProxyFactory
@@ -55,7 +55,7 @@ published service ContentProviderProxy
 	//-------------------------------------------------------------------------
 	/** The implementation of
 	    <member scope="com::sun::star::uno">XInterface::queryInterface</member>
-		must instanciate the real provider and return the return value
+		must instantiate the real provider and return the return value
 		of a queryInterface call at the real provider, except for queries
 		for the interfaces implemented by the proxy itself. So the caller of
 		the queryInterface method at the proxy will get access to the real
@@ -73,12 +73,12 @@ published service ContentProviderProxy
 	interface com::sun::star::ucb::XContentProviderSupplier;
 
 	//-------------------------------------------------------------------------
-	/** a content provider implementation that wrappes the original provider.
+	/** a content provider implementation that wraps the original provider.
 	 */
 	interface com::sun::star::ucb::XContentProvider;
 
 	//-------------------------------------------------------------------------
-	/** a parameterized content provider implementation that wrappes the
+	/** a parameterized content provider implementation that wraps the
 	    original provider.
 	 */
 	interface com::sun::star::ucb::XParameterizedContentProvider;

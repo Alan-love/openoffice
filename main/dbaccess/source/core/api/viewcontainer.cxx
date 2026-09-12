@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -104,8 +104,8 @@ ObjectType OViewContainer::createObject(const ::rtl::OUString& _rName)
 		::rtl::OUString sCatalog,sSchema,sTable;
 		::dbtools::qualifiedNameComponents(m_xMetaData,
 											_rName,
-											sCatalog, 
-											sSchema, 
+											sCatalog,
+											sSchema,
 											sTable,
 											::dbtools::eInDataManipulation);
 		return new View(m_xConnection,
@@ -122,7 +122,7 @@ ObjectType OViewContainer::createObject(const ::rtl::OUString& _rName)
 Reference< XPropertySet > OViewContainer::createDescriptor()
 {
 	Reference< XPropertySet > xRet;
-	// frist we have to look if the master tables does support this
+	// first we have to look if the master tables does support this
 	// and if then create a table object as well with the master tables
 	Reference<XColumnsSupplier > xMasterColumnsSup;
 	Reference<XDataDescriptorFactory> xDataFactory(m_xMasterContainer,UNO_QUERY);
@@ -218,7 +218,7 @@ void OViewContainer::dropObject(sal_Int32 _nPos,const ::rtl::OUString _sElementN
     }
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OViewContainer::elementInserted( const ContainerEvent& Event ) throw (RuntimeException)
+void SAL_CALL OViewContainer::elementInserted( const ContainerEvent& Event )
 {
 	::osl::MutexGuard aGuard(m_rMutex);
 	::rtl::OUString sName;
@@ -235,7 +235,7 @@ void SAL_CALL OViewContainer::elementInserted( const ContainerEvent& Event ) thr
 	}
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OViewContainer::elementRemoved( const ContainerEvent& Event ) throw (RuntimeException)
+void SAL_CALL OViewContainer::elementRemoved( const ContainerEvent& Event )
 {
     ::osl::MutexGuard aGuard(m_rMutex);
 	::rtl::OUString sName;
@@ -255,11 +255,11 @@ void SAL_CALL OViewContainer::elementRemoved( const ContainerEvent& Event ) thro
 	}
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OViewContainer::disposing( const ::com::sun::star::lang::EventObject& /*Source*/ ) throw (RuntimeException)
+void SAL_CALL OViewContainer::disposing( const ::com::sun::star::lang::EventObject& /*Source*/ )
 {
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OViewContainer::elementReplaced( const ContainerEvent& /*Event*/ ) throw (RuntimeException)
+void SAL_CALL OViewContainer::elementReplaced( const ContainerEvent& /*Event*/ )
 {
 }
 // -----------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -65,7 +65,7 @@ StorageBridge::StorageBridge( const Reference< XComponentContext >& xContext,
 
 //*************************************************************************
 void
-StorageBridge::initStorage() throw ( ::com::sun::star::uno::RuntimeException )
+StorageBridge::initStorage()
 {
     try
     {
@@ -90,8 +90,6 @@ StorageBridge::initStorage() throw ( ::com::sun::star::uno::RuntimeException )
 //*************************************************************************
 Sequence< ::rtl::OUString >
 StorageBridge::getScriptLogicalNames()
-throw ( lang::IllegalArgumentException,
-        RuntimeException )
 {
     OSL_TRACE( "In StorageBridge getScriptLogicalNames...\n" );
     Sequence < ::rtl::OUString  > results;
@@ -110,7 +108,6 @@ throw ( lang::IllegalArgumentException,
 //*************************************************************************
 Sequence < Reference< storage::XScriptInfo > >
 StorageBridge::getImplementations( const ::rtl::OUString& queryURI )
-throw ( lang::IllegalArgumentException, RuntimeException )
 {
     OSL_TRACE( "In StorageBridge getImplementations...\n" );
     Sequence < Reference< storage::XScriptInfo > > results;
@@ -125,4 +122,4 @@ throw ( lang::IllegalArgumentException, RuntimeException )
     }
     return results;
 }
-}// namespace 
+}// namespace

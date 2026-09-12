@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,19 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
- 
+
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_sw.hxx"
@@ -156,7 +156,7 @@ sal_Bool SwAccessibleCell::_InvalidateMyCursorPos()
 		{
 			m_pAccTable->AddSelectionCell(this,bNew);
 		}
-	}	
+	}
 	return bChanged;
 }
 
@@ -180,7 +180,7 @@ sal_Bool SwAccessibleCell::_InvalidateChildrenCursorPos( const SwFrm *pFrm )
 				{
 					ASSERT( xAccImpl->GetFrm()->IsCellFrm(),
 						 	"table child is not a cell frame" )
-					bChanged = static_cast< SwAccessibleCell *>( 
+					bChanged = static_cast< SwAccessibleCell *>(
 							xAccImpl.getBodyPtr() )->_InvalidateMyCursorPos();
 				}
 				else
@@ -246,7 +246,7 @@ void SwAccessibleCell::_InvalidateCursorPos()
 	if (m_pAccTable)
 	{
 		m_pAccTable->FireSelectionEvent();
-	}		
+	}
 }
 
 sal_Bool SwAccessibleCell::HasCursor()
@@ -260,20 +260,17 @@ SwAccessibleCell::~SwAccessibleCell()
 }
 
 OUString SAL_CALL SwAccessibleCell::getAccessibleDescription (void)
-        throw (uno::RuntimeException)
 {
 	return GetName();
 }
 
 OUString SAL_CALL SwAccessibleCell::getImplementationName()
-        throw( uno::RuntimeException )
 {
 	return OUString(RTL_CONSTASCII_USTRINGPARAM(sImplementationName));
 }
 
 sal_Bool SAL_CALL SwAccessibleCell::supportsService(
 		const ::rtl::OUString& sTestServiceName)
-	throw (uno::RuntimeException)
 {
 	return sTestServiceName.equalsAsciiL( sServiceName,
 										  sizeof(sServiceName)-1 ) ||
@@ -282,7 +279,6 @@ sal_Bool SAL_CALL SwAccessibleCell::supportsService(
 }
 
 uno::Sequence< OUString > SAL_CALL SwAccessibleCell::getSupportedServiceNames()
-		throw( uno::RuntimeException )
 {
 	uno::Sequence< OUString > aRet(2);
 	OUString* pArray = aRet.getArray();
@@ -315,19 +311,18 @@ void SwAccessibleCell::InvalidatePosOrSize( const SwRect& rOldBox )
 // =====  XAccessibleInterface  ===========================================
 
 uno::Any SwAccessibleCell::queryInterface( const uno::Type& rType )
-    throw( uno::RuntimeException )
 {
 	if (rType == ::getCppuType((const uno::Reference<XAccessibleExtendedAttributes>*)0))
 	{
-		uno::Any aR; 
-		aR <<= uno::Reference<XAccessibleExtendedAttributes>(this); 
+		uno::Any aR;
+		aR <<= uno::Reference<XAccessibleExtendedAttributes>(this);
 		return aR;
 	}
 
 	if (rType == ::getCppuType((const uno::Reference<XAccessibleSelection>*)0))
 	{
-		uno::Any aR; 
-		aR <<= uno::Reference<XAccessibleSelection>(this); 
+		uno::Any aR;
+		aR <<= uno::Reference<XAccessibleSelection>(this);
 		return aR;
 	}
     if ( rType == ::getCppuType( static_cast< uno::Reference< XAccessibleValue > * >( 0 ) ) )
@@ -345,7 +340,6 @@ uno::Any SwAccessibleCell::queryInterface( const uno::Type& rType )
 
 //====== XTypeProvider ====================================================
 uno::Sequence< uno::Type > SAL_CALL SwAccessibleCell::getTypes()
-    throw(uno::RuntimeException)
 {
 	uno::Sequence< uno::Type > aTypes( SwAccessibleContext::getTypes() );
 
@@ -359,7 +353,6 @@ uno::Sequence< uno::Type > SAL_CALL SwAccessibleCell::getTypes()
 }
 
 uno::Sequence< sal_Int8 > SAL_CALL SwAccessibleCell::getImplementationId()
-		throw(uno::RuntimeException)
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
     static uno::Sequence< sal_Int8 > aId( 16 );
@@ -385,7 +378,6 @@ SwFrmFmt* SwAccessibleCell::GetTblBoxFormat() const
 
 //Implement TableCell currentValue
 uno::Any SwAccessibleCell::getCurrentValue( )
-    throw( uno::RuntimeException )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	CHECK_FOR_DEFUNC( XAccessibleValue );
@@ -393,24 +385,24 @@ uno::Any SwAccessibleCell::getCurrentValue( )
     uno::Any aAny;
 
     const SwCellFrm* pCellFrm = static_cast<const SwCellFrm*>( GetFrm() );
-    const SwStartNode *pSttNd = pCellFrm->GetTabBox()->GetSttNd();	
+    const SwStartNode *pSttNd = pCellFrm->GetTabBox()->GetSttNd();
 	if( pSttNd )
 	{
-		::rtl::OUString strRet;	
+		::rtl::OUString strRet;
 		SwNodeIndex aCntntIdx( *pSttNd, 0 );
 		SwCntntNode* pCNd=NULL;
-		for(int nIndex = 0 ; 
+		for(int nIndex = 0 ;
 			0 != ( pCNd = pSttNd->GetNodes().GoNext( &aCntntIdx ) ) &&
-			aCntntIdx.GetIndex() < pSttNd->EndOfSectionIndex(); 
+			aCntntIdx.GetIndex() < pSttNd->EndOfSectionIndex();
 			++nIndex )
 		{
 			if(pCNd && pCNd->IsTxtNode())
 			{
 				if (0 != nIndex)
 				{
-					strRet += ::rtl::OUString::createFromAscii(" ");					
+					strRet += ::rtl::OUString::createFromAscii(" ");
 				}
-				strRet +=((SwTxtNode*)pCNd)->GetTxt();				
+				strRet +=((SwTxtNode*)pCNd)->GetTxt();
 			}
 		}
 		aAny <<= strRet;
@@ -419,7 +411,6 @@ uno::Any SwAccessibleCell::getCurrentValue( )
 }
 
 sal_Bool SwAccessibleCell::setCurrentValue( const uno::Any& aNumber )
-    throw( uno::RuntimeException )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	CHECK_FOR_DEFUNC( XAccessibleValue );
@@ -435,7 +426,6 @@ sal_Bool SwAccessibleCell::setCurrentValue( const uno::Any& aNumber )
 }
 
 uno::Any SwAccessibleCell::getMaximumValue( )
-    throw( uno::RuntimeException )
 {
     uno::Any aAny;
     aAny <<= DBL_MAX;
@@ -443,7 +433,6 @@ uno::Any SwAccessibleCell::getMaximumValue( )
 }
 
 uno::Any SwAccessibleCell::getMinimumValue(  )
-    throw( uno::RuntimeException )
 {
     uno::Any aAny;
     aAny <<= -DBL_MAX;
@@ -474,30 +463,28 @@ uno::Any SwAccessibleCell::getMinimumValue(  )
 	return oldOUString;
 }
 
-::com::sun::star::uno::Any SAL_CALL SwAccessibleCell::getExtendedAttributes() 
-		throw (::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::uno::RuntimeException) 
+::com::sun::star::uno::Any SAL_CALL SwAccessibleCell::getExtendedAttributes()
 {
 	::com::sun::star::uno::Any strRet;
     SwFrmFmt *pFrmFmt = GetTblBoxFormat();
 	DBG_ASSERT(pFrmFmt,"Must be Valid");
-	
+
 	const SwTblBoxFormula& tbl_formula = pFrmFmt->GetTblBoxFormula();
 
 	::rtl::OUString strFormula = ReplaceFourChar(tbl_formula.GetFormula());
 	::rtl::OUString strFor = ::rtl::OUString::createFromAscii("Formula:");
 	strFor += strFormula;
-	strFor += ::rtl::OUString::createFromAscii(";") ; 
+	strFor += ::rtl::OUString::createFromAscii(";") ;
 	strRet <<= strFor;
 
 	return strRet;
 }
 
-sal_Int32 SAL_CALL SwAccessibleCell::getBackground() 
-		throw (::com::sun::star::uno::RuntimeException)
+sal_Int32 SAL_CALL SwAccessibleCell::getBackground()
 {
 	const SvxBrushItem &rBack = GetFrm()->GetAttrSet()->GetBackground();
 	sal_uInt32 crBack = rBack.GetColor().GetColor();
-	
+
 	if (COL_AUTO == crBack)
 	{
 		uno::Reference<XAccessible> xAccDoc = getAccessibleParent();
@@ -514,49 +501,41 @@ sal_Int32 SAL_CALL SwAccessibleCell::getBackground()
 }
 
 //=====  XAccessibleSelection  ============================================
-void SwAccessibleCell::selectAccessibleChild( 
-    sal_Int32 nChildIndex ) 
-	throw ( lang::IndexOutOfBoundsException, uno::RuntimeException )
+void SwAccessibleCell::selectAccessibleChild(
+    sal_Int32 nChildIndex )
 {
     aSelectionHelper.selectAccessibleChild(nChildIndex);
 }
 
-sal_Bool SwAccessibleCell::isAccessibleChildSelected( 
-    sal_Int32 nChildIndex ) 
-	throw ( lang::IndexOutOfBoundsException, uno::RuntimeException )
+sal_Bool SwAccessibleCell::isAccessibleChildSelected(
+    sal_Int32 nChildIndex )
 {
     return aSelectionHelper.isAccessibleChildSelected(nChildIndex);
 }
 
-void SwAccessibleCell::clearAccessibleSelection(  ) 
-	throw ( uno::RuntimeException )
+void SwAccessibleCell::clearAccessibleSelection(  )
 {
     aSelectionHelper.clearAccessibleSelection();
 }
 
-void SwAccessibleCell::selectAllAccessibleChildren(  ) 
-    throw ( uno::RuntimeException )
+void SwAccessibleCell::selectAllAccessibleChildren(  )
 {
     aSelectionHelper.selectAllAccessibleChildren();
 }
 
-sal_Int32 SwAccessibleCell::getSelectedAccessibleChildCount(  ) 
-    throw ( uno::RuntimeException )
+sal_Int32 SwAccessibleCell::getSelectedAccessibleChildCount(  )
 {
     return aSelectionHelper.getSelectedAccessibleChildCount();
 }
 
-uno::Reference<XAccessible> SwAccessibleCell::getSelectedAccessibleChild( 
-    sal_Int32 nSelectedChildIndex ) 
-	throw ( lang::IndexOutOfBoundsException, uno::RuntimeException)
+uno::Reference<XAccessible> SwAccessibleCell::getSelectedAccessibleChild(
+    sal_Int32 nSelectedChildIndex )
 {
     return aSelectionHelper.getSelectedAccessibleChild(nSelectedChildIndex);
 }
 
-void SwAccessibleCell::deselectAccessibleChild( 
-    sal_Int32 nSelectedChildIndex ) 
-	throw ( lang::IndexOutOfBoundsException, uno::RuntimeException )
+void SwAccessibleCell::deselectAccessibleChild(
+    sal_Int32 nSelectedChildIndex )
 {
     aSelectionHelper.deselectAccessibleChild(nSelectedChildIndex);
 }
-

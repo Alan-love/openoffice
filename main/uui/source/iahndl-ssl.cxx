@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -85,11 +85,11 @@ isDomainMatch(
               rtl::OUString hostName, uno::Sequence< ::rtl::OUString > certHostNames)
 {
     for ( int i = 0; i < certHostNames.getLength(); i++){
-        ::rtl::OUString element = certHostNames[i]; 
+        ::rtl::OUString element = certHostNames[i];
 
        if (element.getLength() == 0)
            continue;
-    
+
        if (hostName.equalsIgnoreAsciiCase( element ))
            return true;
 
@@ -144,7 +144,6 @@ executeUnknownAuthDialog(
     Window * pParent,
     uno::Reference< lang::XMultiServiceFactory > const & xServiceFactory,
     const uno::Reference< security::XCertificate >& rXCert)
-    SAL_THROW((uno::RuntimeException))
 {
     try
     {
@@ -158,7 +157,7 @@ executeUnknownAuthDialog(
                                    xServiceFactory,
                                    xManager.get()));
 
-        // Get correct ressource string
+        // Get correct resource string
         rtl::OUString aMessage;
 
         std::vector< rtl::OUString > aArguments;
@@ -193,7 +192,6 @@ executeSSLWarnDialog(
     const uno::Reference< security::XCertificate >& rXCert,
     sal_Int32 const & failure,
     const rtl::OUString & hostName )
-    SAL_THROW((uno::RuntimeException))
 {
     try
     {
@@ -207,7 +205,7 @@ executeSSLWarnDialog(
                               xServiceFactory,
                               xManager.get()));
 
-        // Get correct ressource string
+        // Get correct resource string
         rtl::OUString aMessage_1;
         std::vector< rtl::OUString > aArguments_1;
 
@@ -268,7 +266,6 @@ handleCertificateValidationRequest_(
     ucb::CertificateValidationRequest const & rRequest,
     uno::Sequence< uno::Reference< task::XInteractionContinuation > > const &
         rContinuations)
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Reference< task::XInteractionApprove > xApprove;
     uno::Reference< task::XInteractionAbort > xAbort;
@@ -288,14 +285,14 @@ handleCertificateValidationRequest_(
                                               xServiceFactory,
                                               rRequest.Certificate );
     }
-    
+
     uno::Sequence< uno::Reference< security::XCertificateExtension > > extensions = rRequest.Certificate->getExtensions();
     uno::Sequence< security::CertAltNameEntry > altNames;
     for (sal_Int32 i = 0 ; i < extensions.getLength(); i++){
         uno::Reference< security::XCertificateExtension >element = extensions[i];
 
         rtl::OString aId ( (const sal_Char *)element->getExtensionId().getArray(), element->getExtensionId().getLength());
-        if (aId.equals(OID_SUBJECT_ALTERNATIVE_NAME)) 
+        if (aId.equals(OID_SUBJECT_ALTERNATIVE_NAME))
         {
            uno::Reference< security::XSanExtension > sanExtension ( element, uno::UNO_QUERY );
            altNames =  sanExtension->getAlternativeNames();
@@ -305,7 +302,7 @@ handleCertificateValidationRequest_(
 
     ::rtl::OUString certHostName = getContentPart( rRequest.Certificate->getSubjectName() );
     uno::Sequence< ::rtl::OUString > certHostNames(altNames.getLength() + 1);
-    
+
     certHostNames[0] = certHostName;
 
     for(int n = 0; n < altNames.getLength(); ++n)
@@ -374,7 +371,6 @@ handleCertificateValidationRequest_(
 bool
 UUIInteractionHelper::handleCertificateValidationRequest(
     uno::Reference< task::XInteractionRequest > const & rRequest)
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Any aAnyRequest(rRequest->getRequest());
 
@@ -390,4 +386,3 @@ UUIInteractionHelper::handleCertificateValidationRequest(
 
     return false;
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -27,11 +27,11 @@
 
 #include "css1kywd.hxx"
 
-/*  */
+/* */
 
 sal_Char __FAR_DATA CSS1_CONSTASCII_DEF( sCSS_mimetype, "text/css" );
 
-/*  */
+/* */
 
 // ein par allgemeine Strings
 
@@ -66,7 +66,7 @@ sal_Char __FAR_DATA CSS1_CONSTASCII_DEF( sCSS1_UNIT_px, "px" );
 sal_Char __FAR_DATA CSS1_CONSTASCII_DEF( sCSS1_UNIT_em, "em" );
 sal_Char __FAR_DATA CSS1_CONSTASCII_DEF( sCSS1_UNIT_ex, "ex" );
 
-/*  */
+/* */
 
 // Strings fuer Font-Properties
 
@@ -123,7 +123,7 @@ sal_Char __FAR_DATA CSS1_CONSTASCII_DEF( sCSS1_P_font, "font" );
 
 
 
-/*  */
+/* */
 
 // Strings fuer Farb- und Hintergrund-Properties
 
@@ -147,7 +147,7 @@ sal_Char __FAR_DATA CSS1_CONSTASCII_DEF( sCSS1_PV_bottom, "bottom" );
 sal_Char __FAR_DATA CSS1_CONSTASCII_DEF( sCSS1_PV_scroll, "scroll" );
 
 
-/*  */
+/* */
 
 // Strings fuer Text-Properties
 
@@ -177,7 +177,7 @@ sal_Char __FAR_DATA CSS1_CONSTASCII_DEF( sCSS1_P_text_indent, "text-indent" );
 sal_Char __FAR_DATA CSS1_CONSTASCII_DEF( sCSS1_P_line_height, "line-height" );
 
 
-/*  */
+/* */
 
 // Strings fuer Box-Properties
 
@@ -228,7 +228,7 @@ sal_Char __FAR_DATA CSS1_CONSTASCII_DEF( sCSS1_P_height, "height" );
 
 sal_Char __FAR_DATA CSS1_CONSTASCII_DEF( sCSS1_P_float, "float" );
 
-/*  */
+/* */
 
 // Strings fuer Positioning
 
@@ -242,7 +242,7 @@ sal_Char __FAR_DATA CSS1_CONSTASCII_DEF( sCSS1_P_left, "left" );
 
 sal_Char __FAR_DATA CSS1_CONSTASCII_DEF( sCSS1_P_top, "top" );
 
-/*  */
+/* */
 
 // Feature: PrintExt
 

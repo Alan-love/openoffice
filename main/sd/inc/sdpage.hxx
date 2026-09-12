@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -318,10 +318,10 @@ public:
 	void getAlienAttributes( com::sun::star::uno::Any& rAttributes );
 
 	/** returns the main animation node */
-	::com::sun::star::uno::Reference< ::com::sun::star::animations::XAnimationNode > getAnimationNode() throw (::com::sun::star::uno::RuntimeException);
+	::com::sun::star::uno::Reference< ::com::sun::star::animations::XAnimationNode > getAnimationNode();
 
 	/** sets the main animation node */
-	void setAnimationNode( ::com::sun::star::uno::Reference< ::com::sun::star::animations::XAnimationNode >& xNode ) throw (::com::sun::star::uno::RuntimeException);
+	void setAnimationNode( ::com::sun::star::uno::Reference< ::com::sun::star::animations::XAnimationNode >& xNode );
 
 	/** returns a helper class to manipulate effects inside the main sequence */
 	boost::shared_ptr< sd::MainSequence > getMainSequence();
@@ -351,8 +351,8 @@ public:
 		like printing.
 	*/
 	virtual bool checkVisibility(
-		const sdr::contact::ViewObjectContact& rOriginal, 
-		const sdr::contact::DisplayInfo& rDisplayInfo, 
+		const sdr::contact::ViewObjectContact& rOriginal,
+		const sdr::contact::DisplayInfo& rDisplayInfo,
 		bool bEdit );
 
 	/** callback from the sd::View when a new paragraph for one object on this page is created */

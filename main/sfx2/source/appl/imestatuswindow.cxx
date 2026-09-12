@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -143,7 +143,6 @@ ImeStatusWindow::~ImeStatusWindow()
 }
 
 void SAL_CALL ImeStatusWindow::disposing(css::lang::EventObject const & )
-    throw (css::uno::RuntimeException)
 {
     osl::MutexGuard aGuard(m_aMutex);
     m_xConfig = 0;
@@ -152,7 +151,6 @@ void SAL_CALL ImeStatusWindow::disposing(css::lang::EventObject const & )
 
 void SAL_CALL
 ImeStatusWindow::propertyChange(css::beans::PropertyChangeEvent const & )
-    throw (css::uno::RuntimeException)
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
     SfxApplication* pApp = SfxApplication::Get();
@@ -224,4 +222,3 @@ css::uno::Reference< css::beans::XPropertySet > ImeStatusWindow::getConfig()
             this);
     return xConfig;
 }
-

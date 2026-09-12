@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -76,7 +76,7 @@ static const sal_Int16 DIC_VERSION_5 = 5;
 static const sal_Int16 DIC_VERSION_6 = 6;
 static const sal_Int16 DIC_VERSION_7 = 7;
 
-static sal_Bool getTag(const ByteString &rLine, 
+static sal_Bool getTag(const ByteString &rLine,
         const sal_Char *pTagName, ByteString &rTagValue)
 {
 	xub_StrLen nPos = rLine.Search( pTagName );
@@ -128,7 +128,7 @@ sal_Int16 ReadDicVersion( SvStreamPtr &rpStream, sal_uInt16 &nLng, sal_Bool &bNe
                 if (aTagValue == "<none>")
                     nLng = LANGUAGE_NONE;
                 else
-                    nLng = MsLangId::convertIsoStringToLanguage(OUString(aTagValue.GetBuffer(), 
+                    nLng = MsLangId::convertIsoStringToLanguage(OUString(aTagValue.GetBuffer(),
                                 aTagValue.Len(), RTL_TEXTENCODING_ASCII_US));
             }
 
@@ -146,7 +146,7 @@ sal_Int16 ReadDicVersion( SvStreamPtr &rpStream, sal_uInt16 &nLng, sal_Bool &bNe
         }
         if (!bSuccess)
             return -2;
-    }    
+    }
     else
     {
         sal_uInt16 nLen;
@@ -238,7 +238,7 @@ DictionaryNeo::DictionaryNeo(const OUString &rName,
             //! create physical representation of an **empty** dictionary
             //! that could be found by the dictionary-list implementation
             // (Note: empty dictionaries are not just empty files!)
-            DBG_ASSERT( !bIsReadonly, 
+            DBG_ASSERT( !bIsReadonly,
                     "DictionaryNeo: dictionaries should be writeable if they are to be saved" );
             if (!bIsReadonly)
                 saveEntries( rMainURL );
@@ -272,12 +272,12 @@ sal_uLong DictionaryNeo::loadEntries(const OUString &rMainURL)
         return 0;
 
     uno::Reference< lang::XMultiServiceFactory > xServiceFactory( utl::getProcessServiceFactory() );
-    
+
     // get XInputStream stream
     uno::Reference< io::XInputStream > xStream;
     try
     {
-        uno::Reference< ucb::XSimpleFileAccess > xAccess( xServiceFactory->createInstance( 
+        uno::Reference< ucb::XSimpleFileAccess > xAccess( xServiceFactory->createInstance(
                 A2OU( "com.sun.star.ucb.SimpleFileAccess" ) ), uno::UNO_QUERY_THROW );
         xStream = xAccess->openFileRead( rMainURL );
     }
@@ -384,7 +384,7 @@ sal_uLong DictionaryNeo::loadEntries(const OUString &rMainURL)
 
 	DBG_ASSERT(isSorted(), "lng : dictionary is not sorted");
 
-	// since this routine should be called only initialy (prior to any
+	// since this routine should be called only initially (prior to any
 	// modification to be saved) we reset the bIsModified flag here that
 	// was implicitly set by addEntry_Impl
 	bIsModified = sal_False;
@@ -393,7 +393,7 @@ sal_uLong DictionaryNeo::loadEntries(const OUString &rMainURL)
 }
 
 
-static ByteString formatForSave( 
+static ByteString formatForSave(
         const uno::Reference< XDictionaryEntry > &xEntry, rtl_TextEncoding eEnc )
 {
    ByteString aStr(xEntry->getDictionaryWord().getStr(), eEnc);
@@ -416,12 +416,12 @@ sal_uLong DictionaryNeo::saveEntries(const OUString &rURL)
     DBG_ASSERT(!INetURLObject( rURL ).HasError(), "lng : invalid URL");
 
     uno::Reference< lang::XMultiServiceFactory > xServiceFactory( utl::getProcessServiceFactory() );
-    
+
     // get XOutputStream stream
     uno::Reference< io::XStream > xStream;
     try
     {
-        uno::Reference< ucb::XSimpleFileAccess > xAccess( xServiceFactory->createInstance( 
+        uno::Reference< ucb::XSimpleFileAccess > xAccess( xServiceFactory->createInstance(
                 A2OU( "com.sun.star.ucb.SimpleFileAccess" ) ), uno::UNO_QUERY_THROW );
         xStream = xAccess->openFileReadWrite( rURL );
     }
@@ -702,7 +702,6 @@ sal_Bool DictionaryNeo::addEntry_Impl(const uno::Reference< XDictionaryEntry > x
 
 uno::Reference< XInterface > SAL_CALL DictionaryNeo_CreateInstance(
             const uno::Reference< XMultiServiceFactory > & /*rSMgr*/ )
-		throw(Exception)
 {
 	uno::Reference< XInterface > xService =
 			(cppu::OWeakObject*) new DictionaryNeo;
@@ -710,14 +709,12 @@ uno::Reference< XInterface > SAL_CALL DictionaryNeo_CreateInstance(
 }
 
 OUString SAL_CALL DictionaryNeo::getName(  )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return aDicName;
 }
 
 void SAL_CALL DictionaryNeo::setName( const OUString& aName )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -729,7 +726,6 @@ void SAL_CALL DictionaryNeo::setName( const OUString& aName )
 }
 
 DictionaryType SAL_CALL DictionaryNeo::getDictionaryType(  )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -737,7 +733,6 @@ DictionaryType SAL_CALL DictionaryNeo::getDictionaryType(  )
 }
 
 void SAL_CALL DictionaryNeo::setActive( sal_Bool bActivate )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -770,14 +765,12 @@ void SAL_CALL DictionaryNeo::setActive( sal_Bool bActivate )
 }
 
 sal_Bool SAL_CALL DictionaryNeo::isActive(  )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return bIsActive;
 }
 
 sal_Int32 SAL_CALL DictionaryNeo::getCount(  )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -787,7 +780,6 @@ sal_Int32 SAL_CALL DictionaryNeo::getCount(  )
 }
 
 Locale SAL_CALL DictionaryNeo::getLocale(  )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	Locale aRes;
@@ -795,7 +787,6 @@ Locale SAL_CALL DictionaryNeo::getLocale(  )
 }
 
 void SAL_CALL DictionaryNeo::setLocale( const Locale& aLocale )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	sal_Int16 nLanguageP = LocaleToLanguage( aLocale );
@@ -810,7 +801,6 @@ void SAL_CALL DictionaryNeo::setLocale( const Locale& aLocale )
 
 uno::Reference< XDictionaryEntry > SAL_CALL DictionaryNeo::getEntry(
 			const OUString& aWord )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -828,7 +818,6 @@ uno::Reference< XDictionaryEntry > SAL_CALL DictionaryNeo::getEntry(
 
 sal_Bool SAL_CALL DictionaryNeo::addEntry(
 			const uno::Reference< XDictionaryEntry >& xDicEntry )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -847,7 +836,6 @@ sal_Bool SAL_CALL DictionaryNeo::addEntry(
 sal_Bool SAL_CALL
 	DictionaryNeo::add( const OUString& rWord, sal_Bool bIsNegative,
 			const OUString& rRplcText )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -884,7 +872,6 @@ void lcl_SequenceRemoveElementAt(
 }
 
 sal_Bool SAL_CALL DictionaryNeo::remove( const OUString& aWord )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -923,7 +910,6 @@ sal_Bool SAL_CALL DictionaryNeo::remove( const OUString& aWord )
 }
 
 sal_Bool SAL_CALL DictionaryNeo::isFull(  )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -934,7 +920,6 @@ sal_Bool SAL_CALL DictionaryNeo::isFull(  )
 
 uno::Sequence< uno::Reference< XDictionaryEntry > >
 	SAL_CALL DictionaryNeo::getEntries(  )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -948,7 +933,6 @@ uno::Sequence< uno::Reference< XDictionaryEntry > >
 
 
 void SAL_CALL DictionaryNeo::clear(  )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -967,7 +951,6 @@ void SAL_CALL DictionaryNeo::clear(  )
 
 sal_Bool SAL_CALL DictionaryNeo::addDictionaryEventListener(
 			const uno::Reference< XDictionaryEventListener >& xListener )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -982,7 +965,6 @@ sal_Bool SAL_CALL DictionaryNeo::addDictionaryEventListener(
 
 sal_Bool SAL_CALL DictionaryNeo::removeDictionaryEventListener(
 			const uno::Reference< XDictionaryEventListener >& xListener )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -997,21 +979,18 @@ sal_Bool SAL_CALL DictionaryNeo::removeDictionaryEventListener(
 
 
 sal_Bool SAL_CALL DictionaryNeo::hasLocation()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return aMainURL.getLength() > 0;
 }
 
 OUString SAL_CALL DictionaryNeo::getLocation()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return aMainURL;
 }
 
 sal_Bool SAL_CALL DictionaryNeo::isReadonly()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -1019,7 +998,6 @@ sal_Bool SAL_CALL DictionaryNeo::isReadonly()
 }
 
 void SAL_CALL DictionaryNeo::store()
-		throw(io::IOException, RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -1039,7 +1017,6 @@ void SAL_CALL DictionaryNeo::store()
 void SAL_CALL DictionaryNeo::storeAsURL(
 			const OUString& aURL,
             const uno::Sequence< beans::PropertyValue >& /*rArgs*/ )
-		throw(io::IOException, RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -1060,7 +1037,6 @@ void SAL_CALL DictionaryNeo::storeAsURL(
 void SAL_CALL DictionaryNeo::storeToURL(
 			const OUString& aURL,
             const uno::Sequence< beans::PropertyValue >& /*rArgs*/ )
-		throw(io::IOException, RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -1125,21 +1101,18 @@ void DicEntry::splitDicFileWord(const OUString &rDicFileWord,
 }
 
 OUString SAL_CALL DicEntry::getDictionaryWord(  )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return aDicWord;
 }
 
 sal_Bool SAL_CALL DicEntry::isNegative(  )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return bIsNegativ;
 }
 
 OUString SAL_CALL DicEntry::getReplacementText(  )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return aReplacement;
@@ -1147,4 +1120,3 @@ OUString SAL_CALL DicEntry::getReplacementText(  )
 
 
 ///////////////////////////////////////////////////////////////////////////
-

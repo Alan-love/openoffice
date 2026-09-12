@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -53,31 +53,31 @@ class IdlAttributeFieldImpl
 public:
 	typelib_InterfaceAttributeTypeDescription * getAttributeTypeDescr()
 		{ return (typelib_InterfaceAttributeTypeDescription *)getTypeDescr(); }
-	
+
 	IdlAttributeFieldImpl( IdlReflectionServiceImpl * pReflection, const OUString & rName,
 						   typelib_TypeDescription * pTypeDescr, typelib_TypeDescription * pDeclTypeDescr )
 		: IdlMemberImpl( pReflection, rName, pTypeDescr, pDeclTypeDescr )
 		{}
-	
+
 	// XInterface
-	virtual Any SAL_CALL queryInterface( const Type & rType ) throw(::com::sun::star::uno::RuntimeException);
+	virtual Any SAL_CALL queryInterface( const Type & rType );
 	virtual void SAL_CALL acquire() throw();
 	virtual void SAL_CALL release() throw();
-	
+
 	// XTypeProvider
-	virtual Sequence< Type > SAL_CALL getTypes() throw (::com::sun::star::uno::RuntimeException);
-	virtual Sequence< sal_Int8 > SAL_CALL getImplementationId() throw (::com::sun::star::uno::RuntimeException);
-	
+	virtual Sequence< Type > SAL_CALL getTypes();
+	virtual Sequence< sal_Int8 > SAL_CALL getImplementationId();
+
 	// XIdlMember
-    virtual Reference< XIdlClass > SAL_CALL getDeclaringClass() throw(::com::sun::star::uno::RuntimeException);
-    virtual OUString SAL_CALL getName() throw(::com::sun::star::uno::RuntimeException);
+    virtual Reference< XIdlClass > SAL_CALL getDeclaringClass();
+    virtual OUString SAL_CALL getName();
 	// XIdlField
-    virtual Reference< XIdlClass > SAL_CALL getType() throw(::com::sun::star::uno::RuntimeException);
-    virtual FieldAccessMode SAL_CALL getAccessMode() throw(::com::sun::star::uno::RuntimeException);
-    virtual Any SAL_CALL get( const Any & rObj ) throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);    
-    virtual void SAL_CALL set( const Any & rObj, const Any & rValue ) throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::IllegalAccessException, ::com::sun::star::uno::RuntimeException);
+    virtual Reference< XIdlClass > SAL_CALL getType();
+    virtual FieldAccessMode SAL_CALL getAccessMode();
+    virtual Any SAL_CALL get( const Any & rObj );
+    virtual void SAL_CALL set( const Any & rObj, const Any & rValue );
 	// XIdlField2: getType, getAccessMode and get are equal to XIdlField
-    virtual void SAL_CALL set( Any & rObj, const Any & rValue ) throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::IllegalAccessException, ::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL set( Any & rObj, const Any & rValue );
 
 private:
     void checkException(
@@ -87,7 +87,6 @@ private:
 // XInterface
 //__________________________________________________________________________________________________
 Any IdlAttributeFieldImpl::queryInterface( const Type & rType )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	Any aRet( ::cppu::queryInterface( rType,
     								  static_cast< XIdlField * >( this ),
@@ -108,7 +107,6 @@ void IdlAttributeFieldImpl::release() throw()
 // XTypeProvider
 //__________________________________________________________________________________________________
 Sequence< Type > IdlAttributeFieldImpl::getTypes()
-	throw (::com::sun::star::uno::RuntimeException)
 {
 	static OTypeCollection * s_pTypes = 0;
 	if (! s_pTypes)
@@ -127,7 +125,6 @@ Sequence< Type > IdlAttributeFieldImpl::getTypes()
 }
 //__________________________________________________________________________________________________
 Sequence< sal_Int8 > IdlAttributeFieldImpl::getImplementationId()
-	throw (::com::sun::star::uno::RuntimeException)
 {
 	static OImplementationId * s_pId = 0;
 	if (! s_pId)
@@ -145,7 +142,6 @@ Sequence< sal_Int8 > IdlAttributeFieldImpl::getImplementationId()
 // XIdlMember
 //__________________________________________________________________________________________________
 Reference< XIdlClass > IdlAttributeFieldImpl::getDeclaringClass()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	if (! _xDeclClass.is())
 	{
@@ -162,7 +158,6 @@ Reference< XIdlClass > IdlAttributeFieldImpl::getDeclaringClass()
 }
 //__________________________________________________________________________________________________
 OUString IdlAttributeFieldImpl::getName()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return IdlMemberImpl::getName();
 }
@@ -170,21 +165,18 @@ OUString IdlAttributeFieldImpl::getName()
 // XIdlField
 //__________________________________________________________________________________________________
 Reference< XIdlClass > IdlAttributeFieldImpl::getType()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return getReflection()->forType(
         getAttributeTypeDescr()->pAttributeTypeRef );
 }
 //__________________________________________________________________________________________________
 FieldAccessMode IdlAttributeFieldImpl::getAccessMode()
-	throw(::com::sun::star::uno::RuntimeException)
 {
     return (((typelib_InterfaceAttributeTypeDescription *)getAttributeTypeDescr())->bReadOnly
 			? FieldAccessMode_READONLY : FieldAccessMode_READWRITE);
 }
 //__________________________________________________________________________________________________
 Any IdlAttributeFieldImpl::get( const Any & rObj )
-	throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException)
 {
 	uno_Interface * pUnoI = getReflection()->mapToUno(
         rObj, (typelib_InterfaceTypeDescription *)getDeclTypeDescr() );
@@ -193,14 +185,14 @@ Any IdlAttributeFieldImpl::get( const Any & rObj )
 	{
 		TypeDescription aTD( getAttributeTypeDescr()->pAttributeTypeRef );
 		typelib_TypeDescription * pTD = aTD.get();
-		
+
 		uno_Any aExc;
 		uno_Any * pExc = &aExc;
 		void * pReturn = alloca( pTD->nSize );
-		
+
 		(*pUnoI->pDispatcher)( pUnoI, getTypeDescr(), pReturn, 0, &pExc );
 		(*pUnoI->release)( pUnoI );
-		
+
         checkException(
             pExc,
             *static_cast< Reference< XInterface > const * >(rObj.getValue()));
@@ -217,7 +209,6 @@ Any IdlAttributeFieldImpl::get( const Any & rObj )
 }
 //__________________________________________________________________________________________________
 void IdlAttributeFieldImpl::set( Any & rObj, const Any & rValue )
-	throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::IllegalAccessException, ::com::sun::star::uno::RuntimeException)
 {
 	if (getAttributeTypeDescr()->bReadOnly)
 	{
@@ -225,7 +216,7 @@ void IdlAttributeFieldImpl::set( Any & rObj, const Any & rValue )
 			OUString( RTL_CONSTASCII_USTRINGPARAM("cannot set readonly attribute!") ),
 			(XWeak *)(OWeakObject *)this );
 	}
-	
+
 	uno_Interface * pUnoI = getReflection()->mapToUno(
         rObj, (typelib_InterfaceTypeDescription *)getDeclTypeDescr() );
 	OSL_ENSURE( pUnoI, "### illegal destination object given!" );
@@ -233,11 +224,11 @@ void IdlAttributeFieldImpl::set( Any & rObj, const Any & rValue )
 	{
 		TypeDescription aTD( getAttributeTypeDescr()->pAttributeTypeRef );
 		typelib_TypeDescription * pTD = aTD.get();
-		
+
 		// construct uno value to be set
 		void * pArgs[1];
 		void * pArg = pArgs[0] = alloca( pTD->nSize );
-		
+
 		sal_Bool bAssign;
 		if (pTD->eTypeClass == typelib_TypeClass_ANY)
 		{
@@ -280,14 +271,14 @@ void IdlAttributeFieldImpl::set( Any & rObj, const Any & rValue )
 				pTemp, pValueTD, 0 );
 			TYPELIB_DANGER_RELEASE( pValueTD );
 		}
-		
+
 		if (bAssign)
 		{
 			uno_Any aExc;
 			uno_Any * pExc = &aExc;
 			(*pUnoI->pDispatcher)( pUnoI, getTypeDescr(), 0, pArgs, &pExc );
 			(*pUnoI->release)( pUnoI );
-			
+
 			uno_destructData( pArg, pTD, 0 );
             checkException(
                 pExc,
@@ -296,7 +287,7 @@ void IdlAttributeFieldImpl::set( Any & rObj, const Any & rValue )
 			return;
 		}
 		(*pUnoI->release)( pUnoI );
-		
+
 		throw IllegalArgumentException(
 			OUString( RTL_CONSTASCII_USTRINGPARAM("illegal value given!") ),
 			*(const Reference< XInterface > *)rObj.getValue(), 1 );
@@ -307,7 +298,6 @@ void IdlAttributeFieldImpl::set( Any & rObj, const Any & rValue )
 }
 //__________________________________________________________________________________________________
 void IdlAttributeFieldImpl::set( const Any & rObj, const Any & rValue )
-	throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::IllegalAccessException, ::com::sun::star::uno::RuntimeException)
 {
     IdlAttributeFieldImpl::set( const_cast< Any & >( rObj ), rValue );
 }
@@ -350,11 +340,11 @@ class IdlInterfaceMethodImpl
 	Sequence< Reference< XIdlClass > > * _pExceptionTypes;
 	Sequence< Reference< XIdlClass > > * _pParamTypes;
 	Sequence< ParamInfo > *				 _pParamInfos;
-	
+
 public:
 	typelib_InterfaceMethodTypeDescription * getMethodTypeDescr()
 		{ return (typelib_InterfaceMethodTypeDescription *)getTypeDescr(); }
-	
+
 	IdlInterfaceMethodImpl( IdlReflectionServiceImpl * pReflection, const OUString & rName,
 							typelib_TypeDescription * pTypeDescr, typelib_TypeDescription * pDeclTypeDescr )
 		: IdlMemberImpl( pReflection, rName, pTypeDescr, pDeclTypeDescr )
@@ -363,26 +353,26 @@ public:
 		, _pParamInfos( 0 )
 		{}
 	virtual ~IdlInterfaceMethodImpl();
-	
+
 	// XInterface
-	virtual Any SAL_CALL queryInterface( const Type & rType ) throw(::com::sun::star::uno::RuntimeException);
+	virtual Any SAL_CALL queryInterface( const Type & rType );
 	virtual void SAL_CALL acquire() throw();
 	virtual void SAL_CALL release() throw();
-	
+
 	// XTypeProvider
-	virtual Sequence< Type > SAL_CALL getTypes() throw (::com::sun::star::uno::RuntimeException);
-	virtual Sequence< sal_Int8 > SAL_CALL getImplementationId() throw (::com::sun::star::uno::RuntimeException);
-	
+	virtual Sequence< Type > SAL_CALL getTypes();
+	virtual Sequence< sal_Int8 > SAL_CALL getImplementationId();
+
 	// XIdlMember
-    virtual Reference< XIdlClass > SAL_CALL getDeclaringClass() throw(::com::sun::star::uno::RuntimeException);
-    virtual OUString SAL_CALL getName() throw(::com::sun::star::uno::RuntimeException);
+    virtual Reference< XIdlClass > SAL_CALL getDeclaringClass();
+    virtual OUString SAL_CALL getName();
 	// XIdlMethod
-    virtual Reference< XIdlClass > SAL_CALL getReturnType() throw(::com::sun::star::uno::RuntimeException);
-    virtual Sequence< Reference< XIdlClass > > SAL_CALL getParameterTypes() throw(::com::sun::star::uno::RuntimeException);
-    virtual Sequence< ParamInfo > SAL_CALL getParameterInfos() throw(::com::sun::star::uno::RuntimeException);
-    virtual Sequence< Reference< XIdlClass > > SAL_CALL getExceptionTypes() throw(::com::sun::star::uno::RuntimeException);
-    virtual MethodMode SAL_CALL getMode() throw(::com::sun::star::uno::RuntimeException);
-    virtual Any SAL_CALL invoke( const Any & rObj, Sequence< Any > & rArgs ) throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::reflection::InvocationTargetException, ::com::sun::star::uno::RuntimeException);
+    virtual Reference< XIdlClass > SAL_CALL getReturnType();
+    virtual Sequence< Reference< XIdlClass > > SAL_CALL getParameterTypes();
+    virtual Sequence< ParamInfo > SAL_CALL getParameterInfos();
+    virtual Sequence< Reference< XIdlClass > > SAL_CALL getExceptionTypes();
+    virtual MethodMode SAL_CALL getMode();
+    virtual Any SAL_CALL invoke( const Any & rObj, Sequence< Any > & rArgs );
 };
 //__________________________________________________________________________________________________
 IdlInterfaceMethodImpl::~IdlInterfaceMethodImpl()
@@ -395,7 +385,6 @@ IdlInterfaceMethodImpl::~IdlInterfaceMethodImpl()
 // XInterface
 //__________________________________________________________________________________________________
 Any IdlInterfaceMethodImpl::queryInterface( const Type & rType )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	Any aRet( ::cppu::queryInterface( rType, static_cast< XIdlMethod * >( this ) ) );
 	return (aRet.hasValue() ? aRet : IdlMemberImpl::queryInterface( rType ));
@@ -414,7 +403,6 @@ void IdlInterfaceMethodImpl::release() throw()
 // XTypeProvider
 //__________________________________________________________________________________________________
 Sequence< Type > IdlInterfaceMethodImpl::getTypes()
-	throw (::com::sun::star::uno::RuntimeException)
 {
 	static OTypeCollection * s_pTypes = 0;
 	if (! s_pTypes)
@@ -432,7 +420,6 @@ Sequence< Type > IdlInterfaceMethodImpl::getTypes()
 }
 //__________________________________________________________________________________________________
 Sequence< sal_Int8 > IdlInterfaceMethodImpl::getImplementationId()
-	throw (::com::sun::star::uno::RuntimeException)
 {
 	static OImplementationId * s_pId = 0;
 	if (! s_pId)
@@ -450,7 +437,6 @@ Sequence< sal_Int8 > IdlInterfaceMethodImpl::getImplementationId()
 // XIdlMember
 //__________________________________________________________________________________________________
 Reference< XIdlClass > IdlInterfaceMethodImpl::getDeclaringClass()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	if (! _xDeclClass.is())
 	{
@@ -467,7 +453,6 @@ Reference< XIdlClass > IdlInterfaceMethodImpl::getDeclaringClass()
 }
 //__________________________________________________________________________________________________
 OUString IdlInterfaceMethodImpl::getName()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return IdlMemberImpl::getName();
 }
@@ -475,13 +460,11 @@ OUString IdlInterfaceMethodImpl::getName()
 // XIdlMethod
 //__________________________________________________________________________________________________
 Reference< XIdlClass > SAL_CALL IdlInterfaceMethodImpl::getReturnType()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return getReflection()->forType( getMethodTypeDescr()->pReturnTypeRef );
 }
 //__________________________________________________________________________________________________
 Sequence< Reference< XIdlClass > > IdlInterfaceMethodImpl::getExceptionTypes()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	if (! _pExceptionTypes)
 	{
@@ -492,11 +475,11 @@ Sequence< Reference< XIdlClass > > IdlInterfaceMethodImpl::getExceptionTypes()
 			Sequence< Reference< XIdlClass > > * pTempExceptionTypes =
 				new Sequence< Reference< XIdlClass > >( nExc );
 			Reference< XIdlClass > * pExceptionTypes = pTempExceptionTypes->getArray();
-			
+
 			typelib_TypeDescriptionReference ** ppExc =
                 getMethodTypeDescr()->ppExceptions;
 			IdlReflectionServiceImpl * pRefl = getReflection();
-			
+
 			while (nExc--)
 				pExceptionTypes[nExc] = pRefl->forType( ppExc[nExc] );
 
@@ -507,7 +490,6 @@ Sequence< Reference< XIdlClass > > IdlInterfaceMethodImpl::getExceptionTypes()
 }
 //__________________________________________________________________________________________________
 Sequence< Reference< XIdlClass > > IdlInterfaceMethodImpl::getParameterTypes()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	if (! _pParamTypes)
 	{
@@ -518,11 +500,11 @@ Sequence< Reference< XIdlClass > > IdlInterfaceMethodImpl::getParameterTypes()
 			Sequence< Reference< XIdlClass > > * pTempParamTypes =
 				new Sequence< Reference< XIdlClass > >( nParams );
 			Reference< XIdlClass > * pParamTypes = pTempParamTypes->getArray();
-			
+
 			typelib_MethodParameter * pTypelibParams =
                 getMethodTypeDescr()->pParams;
 			IdlReflectionServiceImpl * pRefl = getReflection();
-			
+
 			while (nParams--)
 				pParamTypes[nParams] = pRefl->forType( pTypelibParams[nParams].pTypeRef );
 
@@ -533,7 +515,6 @@ Sequence< Reference< XIdlClass > > IdlInterfaceMethodImpl::getParameterTypes()
 }
 //__________________________________________________________________________________________________
 Sequence< ParamInfo > IdlInterfaceMethodImpl::getParameterInfos()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	if (! _pParamInfos)
 	{
@@ -543,14 +524,14 @@ Sequence< ParamInfo > IdlInterfaceMethodImpl::getParameterInfos()
 			sal_Int32 nParams = getMethodTypeDescr()->nParams;
 			Sequence< ParamInfo > * pTempParamInfos = new Sequence< ParamInfo >( nParams );
 			ParamInfo * pParamInfos = pTempParamInfos->getArray();
-			
+
 			typelib_MethodParameter * pTypelibParams =
                 getMethodTypeDescr()->pParams;
-			
+
 			if (_pParamTypes) // use param types
 			{
 				const Reference< XIdlClass > * pParamTypes = _pParamTypes->getConstArray();
-				
+
 				while (nParams--)
 				{
 					const typelib_MethodParameter & rParam = pTypelibParams[nParams];
@@ -568,9 +549,9 @@ Sequence< ParamInfo > IdlInterfaceMethodImpl::getParameterInfos()
 				Sequence< Reference< XIdlClass > > * pTempParamTypes =
 					new Sequence< Reference< XIdlClass > >( nParams );
 				Reference< XIdlClass > * pParamTypes = pTempParamTypes->getArray();
-				
+
 				IdlReflectionServiceImpl * pRefl = getReflection();
-				
+
 				while (nParams--)
 				{
 					const typelib_MethodParameter & rParam = pTypelibParams[nParams];
@@ -582,10 +563,10 @@ Sequence< ParamInfo > IdlInterfaceMethodImpl::getParameterInfos()
 						rInfo.aMode = ParamMode_OUT;
 					rInfo.aType = pParamTypes[nParams] = pRefl->forType( rParam.pTypeRef );
 				}
-				
+
 				_pParamTypes = pTempParamTypes;
 			}
-			
+
 			_pParamInfos = pTempParamInfos;
 		}
 	}
@@ -593,16 +574,12 @@ Sequence< ParamInfo > IdlInterfaceMethodImpl::getParameterInfos()
 }
 //__________________________________________________________________________________________________
 MethodMode SAL_CALL IdlInterfaceMethodImpl::getMode()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return
         getMethodTypeDescr()->bOneWay ? MethodMode_ONEWAY : MethodMode_TWOWAY;
 }
 //__________________________________________________________________________________________________
 Any SAL_CALL IdlInterfaceMethodImpl::invoke( const Any & rObj, Sequence< Any > & rArgs )
-	throw(::com::sun::star::lang::IllegalArgumentException,
-		  ::com::sun::star::reflection::InvocationTargetException,
-		  ::com::sun::star::uno::RuntimeException)
 {
 	if (rObj.getValueTypeClass() == TypeClass_INTERFACE)
 	{
@@ -620,7 +597,7 @@ Any SAL_CALL IdlInterfaceMethodImpl::invoke( const Any & rObj, Sequence< Any > &
 			return Any();
 		}
 	}
-	
+
 	uno_Interface * pUnoI = getReflection()->mapToUno(
         rObj, (typelib_InterfaceTypeDescription *)getDeclTypeDescr() );
 	OSL_ENSURE( pUnoI, "### illegal destination object given!" );
@@ -634,13 +611,13 @@ Any SAL_CALL IdlInterfaceMethodImpl::invoke( const Any & rObj, Sequence< Any > &
 				OUString( RTL_CONSTASCII_USTRINGPARAM("arguments len differ!") ),
 				*(const Reference< XInterface > *)rObj.getValue(), 1 );
 		}
-		
+
 		Any * pCppArgs = rArgs.getArray();
 		typelib_MethodParameter * pParams = getMethodTypeDescr()->pParams;
 		typelib_TypeDescription * pReturnType = 0;
 		TYPELIB_DANGER_GET(
             &pReturnType, getMethodTypeDescr()->pReturnTypeRef );
-		
+
 		void * pUnoReturn = alloca( pReturnType->nSize );
 		void ** ppUnoArgs = (void **)alloca( sizeof(void *) * nParams *2 );
 		typelib_TypeDescription ** ppParamTypes = (typelib_TypeDescription **)(ppUnoArgs + nParams);
@@ -651,7 +628,7 @@ Any SAL_CALL IdlInterfaceMethodImpl::invoke( const Any & rObj, Sequence< Any > &
 			ppParamTypes[nPos] = 0;
 			TYPELIB_DANGER_GET( ppParamTypes + nPos, pParams[nPos].pTypeRef );
 			typelib_TypeDescription * pTD = ppParamTypes[nPos];
-			
+
 			ppUnoArgs[nPos] = alloca( pTD->nSize );
 			if (pParams[nPos].bIn)
 			{
@@ -701,13 +678,13 @@ Any SAL_CALL IdlInterfaceMethodImpl::invoke( const Any & rObj, Sequence< Any > &
 						pTemp, pValueTD, 0 );
 					TYPELIB_DANGER_RELEASE( pValueTD );
 				}
-				
+
 				if (! bAssign)
 				{
 					IllegalArgumentException aExc(
 						OUString( RTL_CONSTASCII_USTRINGPARAM("cannot coerce argument type during corereflection call!") ),
 						*(const Reference< XInterface > *)rObj.getValue(), (sal_Int16)nPos );
-					
+
 					// cleanup
 					while (nPos--)
 					{
@@ -717,19 +694,19 @@ Any SAL_CALL IdlInterfaceMethodImpl::invoke( const Any & rObj, Sequence< Any > &
 					}
 					TYPELIB_DANGER_RELEASE( pReturnType );
 					(*pUnoI->release)( pUnoI );
-					
+
 					throw aExc;
 				}
 			}
 		}
-		
+
 		uno_Any aUnoExc;
 		uno_Any * pUnoExc = &aUnoExc;
-		
+
 		(*pUnoI->pDispatcher)(
 			pUnoI, getTypeDescr(), pUnoReturn, ppUnoArgs, &pUnoExc );
 		(*pUnoI->release)( pUnoI );
-		
+
 		Any aRet;
 		if (pUnoExc)
 		{
@@ -741,7 +718,7 @@ Any SAL_CALL IdlInterfaceMethodImpl::invoke( const Any & rObj, Sequence< Any > &
 				TYPELIB_DANGER_RELEASE( ppParamTypes[nParams] );
 			}
 			TYPELIB_DANGER_RELEASE( pReturnType );
-			
+
 			InvocationTargetException aExc;
 			aExc.Context = *(const Reference< XInterface > *)rObj.getValue();
 			aExc.Message = OUString( RTL_CONSTASCII_USTRINGPARAM("exception occurred during invocation!") );
@@ -797,13 +774,12 @@ InterfaceIdlClassImpl::~InterfaceIdlClassImpl()
 {
 	for ( sal_Int32 nPos = _nMethods + _nAttributes; nPos--; )
 		typelib_typedescription_release( _pSortedMemberInit[nPos].second );
-	
+
 	delete [] _pSortedMemberInit;
 }
 
 //__________________________________________________________________________________________________
 Sequence< Reference< XIdlClass > > InterfaceIdlClassImpl::getSuperclasses()
-	throw(::com::sun::star::uno::RuntimeException)
 {
     MutexGuard aGuard(getMutexAccess());
     if (_xSuperClasses.getLength() == 0) {
@@ -823,7 +799,7 @@ void InterfaceIdlClassImpl::initMembers()
 	sal_Int32 nAll = getTypeDescr()->nAllMembers;
 	MemberInit * pSortedMemberInit = new MemberInit[nAll];
 	typelib_TypeDescriptionReference ** ppAllMembers = getTypeDescr()->ppAllMembers;
-	
+
 	for ( sal_Int32 nPos = 0; nPos < nAll; ++nPos )
 	{
 		sal_Int32 nIndex;
@@ -839,19 +815,18 @@ void InterfaceIdlClassImpl::initMembers()
 			nIndex = (nAll - _nAttributes);
 			// attributes at the back
 		}
-		
+
 		typelib_TypeDescription * pTD = 0;
 		typelib_typedescriptionreference_getDescription( &pTD, ppAllMembers[nPos] );
 		OSL_ENSURE( pTD, "### cannot get type description!" );
 		pSortedMemberInit[nIndex].first = ((typelib_InterfaceMemberTypeDescription *)pTD)->pMemberName;
 		pSortedMemberInit[nIndex].second = pTD;
 	}
-	
+
 	_pSortedMemberInit = pSortedMemberInit;
 }
 //__________________________________________________________________________________________________
 sal_Bool InterfaceIdlClassImpl::isAssignableFrom( const Reference< XIdlClass > & xType )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	if (xType.is() && xType->getTypeClass() == TypeClass_INTERFACE)
 	{
@@ -871,25 +846,23 @@ sal_Bool InterfaceIdlClassImpl::isAssignableFrom( const Reference< XIdlClass > &
 }
 //__________________________________________________________________________________________________
 Uik InterfaceIdlClassImpl::getUik()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return Uik(0, 0, 0, 0, 0);
         // Uiks are deprecated and this function must not be called
 }
 //__________________________________________________________________________________________________
 Sequence< Reference< XIdlMethod > > InterfaceIdlClassImpl::getMethods()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	MutexGuard aGuard( getMutexAccess() );
 	if (! _pSortedMemberInit)
 		initMembers();
-	
+
 	// create methods sequence
 	Sequence< Reference< XIdlMethod > > aRet( _nMethods );
 	Reference< XIdlMethod > * pRet = aRet.getArray();
 	for ( sal_Int32 nPos = _nMethods; nPos--; )
 	{
-		
+
 		/*_aName2Method[_pSortedMemberInit[nPos].first] = */pRet[nPos] = new IdlInterfaceMethodImpl(
 			getReflection(), _pSortedMemberInit[nPos].first,
 			_pSortedMemberInit[nPos].second, IdlClassImpl::getTypeDescr() );
@@ -898,12 +871,11 @@ Sequence< Reference< XIdlMethod > > InterfaceIdlClassImpl::getMethods()
 }
 //__________________________________________________________________________________________________
 Sequence< Reference< XIdlField > > InterfaceIdlClassImpl::getFields()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	MutexGuard aGuard( getMutexAccess() );
 	if (! _pSortedMemberInit)
 		initMembers();
-	
+
 	// create fields sequence
 	Sequence< Reference< XIdlField > > aRet( _nAttributes );
 	Reference< XIdlField > * pRet = aRet.getArray();
@@ -918,19 +890,18 @@ Sequence< Reference< XIdlField > > InterfaceIdlClassImpl::getFields()
 }
 //__________________________________________________________________________________________________
 Reference< XIdlMethod > InterfaceIdlClassImpl::getMethod( const OUString & rName )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	MutexGuard aGuard( getMutexAccess() );
 	if (! _pSortedMemberInit)
 		initMembers();
-	
+
 	Reference< XIdlMethod > xRet;
-	
+
 	// try weak map
 	const OUString2Method::const_iterator iFind( _aName2Method.find( rName ) );
 	if (iFind != _aName2Method.end())
 		xRet = (*iFind).second; // harden ref
-	
+
 	if (! xRet.is())
 	{
 		for ( sal_Int32 nPos = _nMethods; nPos--; )
@@ -948,19 +919,18 @@ Reference< XIdlMethod > InterfaceIdlClassImpl::getMethod( const OUString & rName
 }
 //__________________________________________________________________________________________________
 Reference< XIdlField > InterfaceIdlClassImpl::getField( const OUString & rName )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	MutexGuard aGuard( getMutexAccess() );
 	if (! _pSortedMemberInit)
 		initMembers();
-	
+
 	Reference< XIdlField > xRet;
-	
+
 	// try weak map
 	const OUString2Field::const_iterator iFind( _aName2Field.find( rName ) );
 	if (iFind != _aName2Field.end())
 		xRet = (*iFind).second; // harden ref
-	
+
 	if (! xRet.is())
 	{
 		for ( sal_Int32 nPos = _nAttributes; nPos--; )
@@ -978,12 +948,9 @@ Reference< XIdlField > InterfaceIdlClassImpl::getField( const OUString & rName )
 }
 //__________________________________________________________________________________________________
 void InterfaceIdlClassImpl::createObject( Any & rObj )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	// interfaces cannot be constructed
 	rObj.clear();
 }
 
 }
-
-

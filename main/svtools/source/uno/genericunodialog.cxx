@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -98,7 +98,7 @@ OGenericUnoDialog::~OGenericUnoDialog()
 }
 
 //-------------------------------------------------------------------------
-Any SAL_CALL OGenericUnoDialog::queryInterface(const Type& _rType) throw (RuntimeException)
+Any SAL_CALL OGenericUnoDialog::queryInterface(const Type& _rType)
 {
 	Any aReturn = OGenericUnoDialogBase::queryInterface(_rType);
 
@@ -113,7 +113,7 @@ Any SAL_CALL OGenericUnoDialog::queryInterface(const Type& _rType) throw (Runtim
 }
 
 //-------------------------------------------------------------------------
-Sequence<Type> SAL_CALL OGenericUnoDialog::getTypes(  ) throw(RuntimeException)
+Sequence<Type> SAL_CALL OGenericUnoDialog::getTypes(  )
 {
     return ::comphelper::concatSequences(
         OGenericUnoDialogBase::getTypes(),
@@ -122,14 +122,14 @@ Sequence<Type> SAL_CALL OGenericUnoDialog::getTypes(  ) throw(RuntimeException)
 }
 
 //-------------------------------------------------------------------------
-Sequence<sal_Int8> SAL_CALL OGenericUnoDialog::getImplementationId(  ) throw(RuntimeException)
+Sequence<sal_Int8> SAL_CALL OGenericUnoDialog::getImplementationId(  )
 {
 	static ::cppu::OImplementationId aId;
 	return aId.getImplementationId();
 }
 
 //-------------------------------------------------------------------------
-sal_Bool SAL_CALL OGenericUnoDialog::supportsService(const ::rtl::OUString& ServiceName) throw(RuntimeException)
+sal_Bool SAL_CALL OGenericUnoDialog::supportsService(const ::rtl::OUString& ServiceName)
 {
 	Sequence< ::rtl::OUString > aSupported(getSupportedServiceNames());
 	const ::rtl::OUString* pArray = aSupported.getConstArray();
@@ -140,7 +140,7 @@ sal_Bool SAL_CALL OGenericUnoDialog::supportsService(const ::rtl::OUString& Serv
 }
 
 //-------------------------------------------------------------------------
-void OGenericUnoDialog::setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any& rValue ) throw(Exception)
+void OGenericUnoDialog::setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any& rValue )
 {
 	// TODO : need some handling if we're currently executing ...
 
@@ -157,7 +157,7 @@ void OGenericUnoDialog::setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, con
 }
 
 //-------------------------------------------------------------------------
-sal_Bool OGenericUnoDialog::convertFastPropertyValue( Any& rConvertedValue, Any& rOldValue, sal_Int32 nHandle, const Any& rValue) throw(IllegalArgumentException)
+sal_Bool OGenericUnoDialog::convertFastPropertyValue( Any& rConvertedValue, Any& rOldValue, sal_Int32 nHandle, const Any& rValue)
 {
 	switch (nHandle)
 	{
@@ -178,7 +178,7 @@ sal_Bool OGenericUnoDialog::convertFastPropertyValue( Any& rConvertedValue, Any&
 }
 
 //-------------------------------------------------------------------------
-void SAL_CALL OGenericUnoDialog::setTitle( const ::rtl::OUString& _rTitle ) throw(RuntimeException)
+void SAL_CALL OGenericUnoDialog::setTitle( const ::rtl::OUString& _rTitle )
 {
     UnoDialogEntryGuard aGuard( *this );
 
@@ -234,13 +234,13 @@ bool OGenericUnoDialog::impl_ensureDialog_lck()
 }
 
 //-------------------------------------------------------------------------
-sal_Int16 SAL_CALL OGenericUnoDialog::execute(  ) throw(RuntimeException)
+sal_Int16 SAL_CALL OGenericUnoDialog::execute(  )
 {
     // both creation and execution of the dialog must be guarded with the SolarMutex, so be generous here
 	::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
 
 	Dialog* pDialogToExecute = NULL;
-	// create the dialog, if neccessary
+	// create the dialog, if necessary
 	{
 		UnoDialogEntryGuard aGuard( *this );
 
@@ -285,7 +285,7 @@ sal_Int16 SAL_CALL OGenericUnoDialog::execute(  ) throw(RuntimeException)
 
 #ifdef AWT_DIALOG
 //-------------------------------------------------------------------------
-void SAL_CALL OGenericUnoDialog::endExecute(  ) throw(RuntimeException)
+void SAL_CALL OGenericUnoDialog::endExecute(  )
 {
     UnoDialogEntryGuard aGuard( *this );
 	if (!m_bExecuting)
@@ -334,7 +334,7 @@ void OGenericUnoDialog::implInitialize(const Any& _rValue)
 }
 
 //-------------------------------------------------------------------------
-void SAL_CALL OGenericUnoDialog::initialize( const Sequence< Any >& aArguments ) throw(Exception, RuntimeException)
+void SAL_CALL OGenericUnoDialog::initialize( const Sequence< Any >& aArguments )
 {
     ::osl::MutexGuard aGuard( m_aMutex );
     if ( m_bInitialized )
@@ -366,4 +366,3 @@ IMPL_LINK( OGenericUnoDialog, OnDialogDying, VclWindowEvent*, _pEvent )
 //.........................................................................
 }	// namespace svt
 //.........................................................................
-

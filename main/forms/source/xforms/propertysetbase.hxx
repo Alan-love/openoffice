@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -246,7 +246,7 @@ protected:
     void notifyAndCachePropertyValue( sal_Int32 nHandle );
 
     /** initializes the property value cache for the given property, with its current value
-    
+
         Usually used to initialize the cache with values which are different from default
         constructed values. Say you have a boolean property whose initial state
         is <TRUE/>. Say you call <member>notifyAndCachePropertyValue</member> the first time: it will
@@ -266,14 +266,12 @@ protected:
     void initializePropertyValueCache( sal_Int32 nHandle );
 
     /// OPropertysetHelper methods
-    virtual sal_Bool SAL_CALL convertFastPropertyValue( Any_t& rConvertedValue, Any_t& rOldValue, sal_Int32 nHandle, const Any_t& rValue )
-		throw (::com::sun::star::lang::IllegalArgumentException);
-	virtual void SAL_CALL setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any_t& rValue )
-        throw (::com::sun::star::uno::Exception);
+    virtual sal_Bool SAL_CALL convertFastPropertyValue( Any_t& rConvertedValue, Any_t& rOldValue, sal_Int32 nHandle, const Any_t& rValue );
+	virtual void SAL_CALL setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any_t& rValue );
 	virtual void SAL_CALL getFastPropertyValue( Any_t& rValue, sal_Int32 nHandle ) const;
 
     virtual cppu::IPropertyArrayHelper& SAL_CALL getInfoHelper();
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL getPropertySetInfo(  ) throw(::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL getPropertySetInfo(  );
 
 public:
     /// helper struct for granting selective access to some notification-related methods
@@ -334,7 +332,7 @@ public:
     /** constructs a PropertyChangeNotifier
         @param rPropertySet
             the property set implementation whose property is going to be changed. Note
-            that this property set implementation must live at least as long as the 
+            that this property set implementation must live at least as long as the
             PropertyChangeNotifier instance does.
         @param nHandle
             the handle of the property which is going to be changed. Must be a valid property

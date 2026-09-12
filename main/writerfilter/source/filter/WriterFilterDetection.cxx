@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -52,7 +52,7 @@ WriterFilterDetection::~WriterFilterDetection()
 /*-- 22.02.2007 12:11:38---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-OUString WriterFilterDetection_getImplementationName () throw (uno::RuntimeException)
+OUString WriterFilterDetection_getImplementationName ()
 {
    return OUString ( RTL_CONSTASCII_USTRINGPARAM ( "com.sun.star.comp.Writer.WriterFilterDetector" ) );
 }
@@ -62,7 +62,6 @@ OUString WriterFilterDetection_getImplementationName () throw (uno::RuntimeExcep
 
   -----------------------------------------------------------------------*/
 OUString WriterFilterDetection::detect( uno::Sequence< beans::PropertyValue >& rDescriptor )
-   throw( uno::RuntimeException )
 {
     OUString sTypeName;
     bool bWord = false;
@@ -130,7 +129,7 @@ OUString WriterFilterDetection::detect( uno::Sequence< beans::PropertyValue >& r
                     {
                         bWord = true;
                         if( !sTypeName.getLength() )
-                            sTypeName = ::rtl::OUString( 
+                            sTypeName = ::rtl::OUString(
                                     RTL_CONSTASCII_STRINGPARAM( "writer_MS_Word_2007" ), RTL_TEXTENCODING_ASCII_US);
                         break;
                     }
@@ -149,14 +148,14 @@ OUString WriterFilterDetection::detect( uno::Sequence< beans::PropertyValue >& r
 /*-- 22.02.2007 12:11:38---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-sal_Bool WriterFilterDetection_supportsService( const OUString& ServiceName ) throw (uno::RuntimeException)
+sal_Bool WriterFilterDetection_supportsService( const OUString& ServiceName )
 {
    return (ServiceName.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM ( SERVICE_NAME1 ) ) );
 }
 /*-- 22.02.2007 12:11:38---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-uno::Sequence< OUString > WriterFilterDetection_getSupportedServiceNames(  ) throw (uno::RuntimeException)
+uno::Sequence< OUString > WriterFilterDetection_getSupportedServiceNames(  )
 {
    uno::Sequence < OUString > aRet(1);
    OUString* pArray = aRet.getArray();
@@ -168,29 +167,27 @@ uno::Sequence< OUString > WriterFilterDetection_getSupportedServiceNames(  ) thr
 
   -----------------------------------------------------------------------*/
 uno::Reference< uno::XInterface > WriterFilterDetection_createInstance( const uno::Reference< uno::XComponentContext >& xContext)
-                throw( uno::Exception )
 {
    return (cppu::OWeakObject*) new WriterFilterDetection( xContext );
 }
 /*-- 22.02.2007 12:11:38---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-OUString WriterFilterDetection::getImplementationName(  ) throw (uno::RuntimeException)
+OUString WriterFilterDetection::getImplementationName(  )
 {
    return WriterFilterDetection_getImplementationName();
 }
 /*-- 22.02.2007 12:11:38---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-sal_Bool WriterFilterDetection::supportsService( const OUString& rServiceName ) throw (uno::RuntimeException)
+sal_Bool WriterFilterDetection::supportsService( const OUString& rServiceName )
 {
     return WriterFilterDetection_supportsService( rServiceName );
 }
 /*-- 22.02.2007 12:11:38---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-uno::Sequence< OUString > WriterFilterDetection::getSupportedServiceNames(  ) throw (uno::RuntimeException)
+uno::Sequence< OUString > WriterFilterDetection::getSupportedServiceNames(  )
 {
     return WriterFilterDetection_getSupportedServiceNames();
 }
-

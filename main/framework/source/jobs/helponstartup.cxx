@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -94,18 +94,18 @@ DEFINE_INIT_SERVICE(HelpOnStartup,
                         m_xModuleManager = css::uno::Reference< css::frame::XModuleManager >(
                             m_xSMGR->createInstance(SERVICENAME_MODULEMANAGER),
                             css::uno::UNO_QUERY_THROW);
-                        
+
                         m_xDesktop = css::uno::Reference< css::frame::XFrame >(
                             m_xSMGR->createInstance(SERVICENAME_DESKTOP),
                             css::uno::UNO_QUERY_THROW);
-                        
+
                         m_xConfig = css::uno::Reference< css::container::XNameAccess >(
                             ::comphelper::ConfigurationHelper::openConfig(
                                 m_xSMGR,
                                 CFG_PACKAGE_MODULES,
                                 ::comphelper::ConfigurationHelper::E_READONLY),
                             css::uno::UNO_QUERY_THROW);
-                    
+
                         // ask for office locale
                         ::comphelper::ConfigurationHelper::readDirectKey(
                             m_xSMGR,
@@ -113,7 +113,7 @@ DEFINE_INIT_SERVICE(HelpOnStartup,
                             CFG_PATH_L10N,
                             CFG_KEY_LOCALE,
                             ::comphelper::ConfigurationHelper::E_READONLY) >>= m_sLocale;
-                            
+
                         // detect system
                         ::comphelper::ConfigurationHelper::readDirectKey(
                             m_xSMGR,
@@ -121,7 +121,7 @@ DEFINE_INIT_SERVICE(HelpOnStartup,
                             CFG_PATH_HELP,
                             CFG_KEY_HELPSYSTEM,
                             ::comphelper::ConfigurationHelper::E_READONLY) >>= m_sSystem;
-                            
+
                         // Start listening for disposing events of these services,
                         // so we can react e.g. for an office shutdown
                         css::uno::Reference< css::lang::XComponent > xComponent;
@@ -136,7 +136,7 @@ DEFINE_INIT_SERVICE(HelpOnStartup,
                             xComponent->addEventListener(static_cast< css::lang::XEventListener* >(this));
                     }
                    )
-                    
+
 //-----------------------------------------------
 HelpOnStartup::HelpOnStartup(const css::uno::Reference< css::lang::XMultiServiceFactory >& xSMGR)
     : ThreadHelpBase(     )
@@ -152,15 +152,12 @@ HelpOnStartup::~HelpOnStartup()
 //-----------------------------------------------
 // css.task.XJob
 css::uno::Any SAL_CALL HelpOnStartup::execute(const css::uno::Sequence< css::beans::NamedValue >& lArguments)
-    throw(css::lang::IllegalArgumentException,
-          css::uno::Exception                ,
-          css::uno::RuntimeException         )
 {
     // Analyze the given arguments; try to locate a model there and
     // classify it's used application module.
     ::rtl::OUString sModule = its_getModuleIdFromEnv(lArguments);
 
-    // Attention: We are bound to events for openeing any document inside the office.
+    // Attention: We are bound to events for opening any document inside the office.
     // That includes e.g. the help module itself. But we have to do nothing then!
     if (!sModule.getLength())
         return css::uno::Any();
@@ -168,7 +165,7 @@ css::uno::Any SAL_CALL HelpOnStartup::execute(const css::uno::Sequence< css::bea
     // check current state of the help module
     // a) help isn't open                       => show default page for the detected module
     // b) help shows any other default page(!) => show default page for the detected module
-    // c) help shows any other content         => do nothing (user travelled to any other content and leaved the set of default pages) 
+    // c) help shows any other content         => do nothing (user travelled to any other content and leaved the set of default pages)
     ::rtl::OUString sCurrentHelpURL                = its_getCurrentHelpURL();
     sal_Bool        bCurrentHelpURLIsAnyDefaultURL = its_isHelpUrlADefaultOne(sCurrentHelpURL);
     sal_Bool        bShowIt                        = sal_False;
@@ -200,7 +197,6 @@ css::uno::Any SAL_CALL HelpOnStartup::execute(const css::uno::Sequence< css::bea
 
 //-----------------------------------------------
 void SAL_CALL HelpOnStartup::disposing(const css::lang::EventObject& aEvent)
-    throw(css::uno::RuntimeException)
 {
     // SAFE ->
     ResetableGuard aLock(m_aLock);

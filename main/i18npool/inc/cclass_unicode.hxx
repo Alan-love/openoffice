@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -43,32 +43,31 @@ public:
 	cclass_Unicode(com::sun::star::uno::Reference < com::sun::star::lang::XMultiServiceFactory > xSMgr );
 	~cclass_Unicode();
 
-	virtual rtl::OUString SAL_CALL toUpper( const rtl::OUString& Text, sal_Int32 nPos, sal_Int32 nCount, 
-		const com::sun::star::lang::Locale& rLocale ) throw(com::sun::star::uno::RuntimeException);
-	virtual rtl::OUString SAL_CALL toLower( const rtl::OUString& Text, sal_Int32 nPos, sal_Int32 nCount, 
-		const com::sun::star::lang::Locale& rLocale ) throw(com::sun::star::uno::RuntimeException);
-	virtual rtl::OUString SAL_CALL toTitle( const rtl::OUString& Text, sal_Int32 nPos, sal_Int32 nCount, 
-		const com::sun::star::lang::Locale& rLocale ) throw(com::sun::star::uno::RuntimeException);
-	virtual sal_Int16 SAL_CALL getType( const rtl::OUString& Text, sal_Int32 nPos )  throw(com::sun::star::uno::RuntimeException);
-	virtual sal_Int16 SAL_CALL getCharacterDirection( const rtl::OUString& Text, sal_Int32 nPos ) 
-		throw(com::sun::star::uno::RuntimeException);
-	virtual sal_Int16 SAL_CALL getScript( const rtl::OUString& Text, sal_Int32 nPos ) throw(com::sun::star::uno::RuntimeException);
-	virtual sal_Int32 SAL_CALL getCharacterType( const rtl::OUString& text, sal_Int32 nPos, 
-		const com::sun::star::lang::Locale& rLocale ) throw(com::sun::star::uno::RuntimeException);
-	virtual sal_Int32 SAL_CALL getStringType( const rtl::OUString& text, sal_Int32 nPos, sal_Int32 nCount, 
-		const com::sun::star::lang::Locale& rLocale ) throw(com::sun::star::uno::RuntimeException);
-	virtual ParseResult SAL_CALL parseAnyToken( const rtl::OUString& Text, sal_Int32 nPos, 
-		const com::sun::star::lang::Locale& rLocale, sal_Int32 nStartCharFlags, const rtl::OUString& userDefinedCharactersStart, 
-		sal_Int32 nContCharFlags, const rtl::OUString& userDefinedCharactersCont ) throw(com::sun::star::uno::RuntimeException);
-	virtual ParseResult SAL_CALL parsePredefinedToken( sal_Int32 nTokenType, const rtl::OUString& Text, 
-		sal_Int32 nPos, const com::sun::star::lang::Locale& rLocale, sal_Int32 nStartCharFlags, 
-		const rtl::OUString& userDefinedCharactersStart, sal_Int32 nContCharFlags, 
-		const rtl::OUString& userDefinedCharactersCont ) throw(com::sun::star::uno::RuntimeException);
+	virtual rtl::OUString SAL_CALL toUpper( const rtl::OUString& Text, sal_Int32 nPos, sal_Int32 nCount,
+		const com::sun::star::lang::Locale& rLocale );
+	virtual rtl::OUString SAL_CALL toLower( const rtl::OUString& Text, sal_Int32 nPos, sal_Int32 nCount,
+		const com::sun::star::lang::Locale& rLocale );
+	virtual rtl::OUString SAL_CALL toTitle( const rtl::OUString& Text, sal_Int32 nPos, sal_Int32 nCount,
+		const com::sun::star::lang::Locale& rLocale );
+	virtual sal_Int16 SAL_CALL getType( const rtl::OUString& Text, sal_Int32 nPos );
+	virtual sal_Int16 SAL_CALL getCharacterDirection( const rtl::OUString& Text, sal_Int32 nPos );
+	virtual sal_Int16 SAL_CALL getScript( const rtl::OUString& Text, sal_Int32 nPos );
+	virtual sal_Int32 SAL_CALL getCharacterType( const rtl::OUString& text, sal_Int32 nPos,
+		const com::sun::star::lang::Locale& rLocale );
+	virtual sal_Int32 SAL_CALL getStringType( const rtl::OUString& text, sal_Int32 nPos, sal_Int32 nCount,
+		const com::sun::star::lang::Locale& rLocale );
+	virtual ParseResult SAL_CALL parseAnyToken( const rtl::OUString& Text, sal_Int32 nPos,
+		const com::sun::star::lang::Locale& rLocale, sal_Int32 nStartCharFlags, const rtl::OUString& userDefinedCharactersStart,
+		sal_Int32 nContCharFlags, const rtl::OUString& userDefinedCharactersCont );
+	virtual ParseResult SAL_CALL parsePredefinedToken( sal_Int32 nTokenType, const rtl::OUString& Text,
+		sal_Int32 nPos, const com::sun::star::lang::Locale& rLocale, sal_Int32 nStartCharFlags,
+		const rtl::OUString& userDefinedCharactersStart, sal_Int32 nContCharFlags,
+		const rtl::OUString& userDefinedCharactersCont );
 
 	//XServiceInfo
-	virtual rtl::OUString SAL_CALL getImplementationName() throw( com::sun::star::uno::RuntimeException );
-	virtual sal_Bool SAL_CALL supportsService(const rtl::OUString& ServiceName) throw( com::sun::star::uno::RuntimeException );
-	virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames() throw( com::sun::star::uno::RuntimeException );
+	virtual rtl::OUString SAL_CALL getImplementationName();
+	virtual sal_Bool SAL_CALL supportsService(const rtl::OUString& ServiceName);
+	virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames();
 
 protected:
 	const sal_Char *cClass;
@@ -179,6 +178,6 @@ private:
 
 };
 
-} } } } 
+} } } }
 
 #endif

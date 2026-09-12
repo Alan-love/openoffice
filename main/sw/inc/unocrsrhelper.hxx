@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -105,7 +105,7 @@ namespace SwUnoCursorHelper
 	void 						InsertFile(SwUnoCrsr* pUnoCrsr,
                                     const String& rURL,
                                     const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& rOptions
-                                    ) throw( com::sun::star::lang::IllegalArgumentException, com::sun::star::io::IOException, com::sun::star::uno::RuntimeException );
+                                    );
 
 	void 						getNumberingProperty(
 									SwPaM& rPam,
@@ -123,9 +123,8 @@ namespace SwUnoCursorHelper
     sal_Bool    DocInsertStringSplitCR(  SwDoc &rDoc,
                     const SwPaM &rNewCursor, const String &rText,
                     const bool bForceExpandHints );
-    void    makeRedline( SwPaM& rPaM, const ::rtl::OUString& RedlineType, 
-            const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& RedlineProperties ) 
-                throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
+    void    makeRedline( SwPaM& rPaM, const ::rtl::OUString& RedlineType,
+            const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& RedlineProperties );
 
 
     /// @param bTableMode: attributes should be applied to a table selection
@@ -155,19 +154,11 @@ namespace SwUnoCursorHelper
             const ::rtl::OUString & rPropertyName,
             const ::com::sun::star::uno::Any & rValue,
             const SetAttrMode nAttrMode = nsSetAttrMode::SETATTR_DEFAULT,
-            const bool bTableMode = false)
-        throw (::com::sun::star::beans::UnknownPropertyException,
-                ::com::sun::star::beans::PropertyVetoException,
-                ::com::sun::star::lang::IllegalArgumentException,
-                ::com::sun::star::lang::WrappedTargetException,
-                ::com::sun::star::uno::RuntimeException);
+            const bool bTableMode = false);
     ::com::sun::star::uno::Any  GetPropertyValue(
             SwPaM& rPaM,
             const SfxItemPropertySet & rPropSet,
-            const ::rtl::OUString & rPropertyName)
-        throw (::com::sun::star::beans::UnknownPropertyException,
-                ::com::sun::star::lang::WrappedTargetException,
-                ::com::sun::star::uno::RuntimeException);
+            const ::rtl::OUString & rPropertyName);
     ::com::sun::star::uno::Sequence<
                 ::com::sun::star::beans::PropertyState > GetPropertyStates(
             SwPaM & rPaM,
@@ -175,39 +166,28 @@ namespace SwUnoCursorHelper
             const ::com::sun::star::uno::Sequence< ::rtl::OUString >&
                 rPropertyNames,
             const SwGetPropertyStatesCaller eCaller =
-                SW_PROPERTY_STATE_CALLER_DEFAULT)
-        throw (::com::sun::star::beans::UnknownPropertyException,
-                ::com::sun::star::uno::RuntimeException);
+                SW_PROPERTY_STATE_CALLER_DEFAULT);
     ::com::sun::star::beans::PropertyState GetPropertyState(
             SwPaM & rPaM,
             const SfxItemPropertySet & rPropSet,
-            const ::rtl::OUString & rPropertyName)
-        throw (::com::sun::star::beans::UnknownPropertyException,
-                ::com::sun::star::uno::RuntimeException);
+            const ::rtl::OUString & rPropertyName);
     void SetPropertyToDefault(
             SwPaM & rPaM,
             const SfxItemPropertySet & rPropSet,
-            const ::rtl::OUString & rPropertyName)
-        throw (::com::sun::star::beans::UnknownPropertyException,
-                ::com::sun::star::uno::RuntimeException);
+            const ::rtl::OUString & rPropertyName);
     ::com::sun::star::uno::Any  GetPropertyDefault(
             SwPaM & rPaM,
             const SfxItemPropertySet & rPropSet,
-            const ::rtl::OUString & rPropertyName)
-        throw (::com::sun::star::beans::UnknownPropertyException,
-                ::com::sun::star::lang::WrappedTargetException,
-                ::com::sun::star::uno::RuntimeException);
+            const ::rtl::OUString & rPropertyName);
 
     bool SetPageDesc(
             const ::com::sun::star::uno::Any& rValue,
             SwDoc & rDoc, SfxItemSet & rSet);
-    void SetTxtFmtColl(const ::com::sun::star::uno::Any & rAny, SwPaM & rPaM)
-        throw (::com::sun::star::lang::IllegalArgumentException);
+    void SetTxtFmtColl(const ::com::sun::star::uno::Any & rAny, SwPaM & rPaM);
     bool SetCursorPropertyValue(
             SfxItemPropertySimpleEntry const& rEntry,
             ::com::sun::star::uno::Any const& rValue,
-            SwPaM & rPam, SfxItemSet & rItemSet)
-        throw (::com::sun::star::lang::IllegalArgumentException);
+            SwPaM & rPam, SfxItemSet & rItemSet);
 
 } // namespace SwUnoCursorHelper
 

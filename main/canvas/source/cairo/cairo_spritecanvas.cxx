@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -75,9 +75,9 @@ namespace cairocanvas
          */
         ENSURE_ARG_OR_THROW( maArguments.getLength() >= 4 &&
                              maArguments[0].getValueTypeClass() == uno::TypeClass_HYPER &&
-                             maArguments[4].getValueTypeClass() == uno::TypeClass_INTERFACE, 
+                             maArguments[4].getValueTypeClass() == uno::TypeClass_INTERFACE,
                              "CairoSpriteCanvas::initialize: wrong number of arguments, or wrong types" );
-        
+
         awt::Rectangle aRect;
         maArguments[2] >>= aRect;
 
@@ -92,17 +92,17 @@ namespace cairocanvas
             throw lang::NoSupportException(
                 ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM(
                                      "Parent window not VCL window, or canvas out-of-process!")),
-                NULL);            
+                NULL);
 
         bool bHasXRender = IsCairoWorking(pParentWindow);
-        ENSURE_ARG_OR_THROW( bHasXRender == true, 
+        ENSURE_ARG_OR_THROW( bHasXRender == true,
                              "CairoSpriteCanvas::SpriteCanvas: No RENDER extension" );
 
         Size aPixelSize( pParentWindow->GetOutputSizePixel() );
         const ::basegfx::B2ISize aSize( aPixelSize.Width(),
                                         aPixelSize.Height() );
 
-        ENSURE_ARG_OR_THROW( pParentWindow != NULL, 
+        ENSURE_ARG_OR_THROW( pParentWindow != NULL,
                              "CairoSpriteCanvas::initialize: invalid Window pointer" );
 
         // setup helper
@@ -111,7 +111,7 @@ namespace cairocanvas
                              aSize,
                              bIsFullscreen );
 
-        setWindow(uno::Reference<awt::XWindow2>(xParentWindow, uno::UNO_QUERY_THROW)); 
+        setWindow(uno::Reference<awt::XWindow2>(xParentWindow, uno::UNO_QUERY_THROW));
 
         maCanvasHelper.init( maRedrawManager,
                              *this,
@@ -130,17 +130,17 @@ namespace cairocanvas
         SpriteCanvasBaseT::disposing();
     }
 
-    ::sal_Bool SAL_CALL SpriteCanvas::showBuffer( ::sal_Bool bUpdateAll ) throw (uno::RuntimeException)
+    ::sal_Bool SAL_CALL SpriteCanvas::showBuffer( ::sal_Bool bUpdateAll )
     {
         return updateScreen( bUpdateAll );
     }
 
-    ::sal_Bool SAL_CALL SpriteCanvas::switchBuffer( ::sal_Bool bUpdateAll ) throw (uno::RuntimeException)
+    ::sal_Bool SAL_CALL SpriteCanvas::switchBuffer( ::sal_Bool bUpdateAll )
     {
         return updateScreen( bUpdateAll );
     }
 
-    sal_Bool SAL_CALL SpriteCanvas::updateScreen( sal_Bool bUpdateAll ) throw (uno::RuntimeException)
+    sal_Bool SAL_CALL SpriteCanvas::updateScreen( sal_Bool bUpdateAll )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
 
@@ -153,7 +153,7 @@ namespace cairocanvas
             mbSurfaceDirty);
     }
 
-    ::rtl::OUString SAL_CALL SpriteCanvas::getServiceName(  ) throw (uno::RuntimeException)
+    ::rtl::OUString SAL_CALL SpriteCanvas::getServiceName(  )
     {
         return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( SPRITECANVAS_SERVICE_NAME ) );
     }
@@ -210,7 +210,7 @@ namespace cairocanvas
     {
 		maCanvasHelper.setSize( rSize );
         // re-set background surface, in case it needed recreation
-		maCanvasHelper.setSurface( maDeviceHelper.getBufferSurface(), 
+		maCanvasHelper.setSurface( maDeviceHelper.getBufferSurface(),
                                    false );
     }
 

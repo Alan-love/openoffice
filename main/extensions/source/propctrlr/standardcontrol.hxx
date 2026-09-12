@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -109,9 +109,9 @@ namespace pcr
         OTimeControl( Window* pParent, WinBits nWinStyle );
 
         // XPropertyControl
-        virtual ::com::sun::star::uno::Any SAL_CALL getValue() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value ) throw (::com::sun::star::beans::IllegalTypeException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Type SAL_CALL getValueType() throw (::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Any SAL_CALL getValue();
+        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value );
+        virtual ::com::sun::star::uno::Type SAL_CALL getValueType();
     };
 
     //========================================================================
@@ -124,9 +124,9 @@ namespace pcr
         ODateControl( Window* pParent, WinBits nWinStyle );
 
         // XPropertyControl
-        virtual ::com::sun::star::uno::Any SAL_CALL getValue() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value ) throw (::com::sun::star::beans::IllegalTypeException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Type SAL_CALL getValueType() throw (::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Any SAL_CALL getValue();
+        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value );
+        virtual ::com::sun::star::uno::Type SAL_CALL getValueType();
     };
 
     //========================================================================
@@ -142,9 +142,9 @@ namespace pcr
         OEditControl( Window* _pParent, sal_Bool _bPassWord, WinBits nWinStyle );
 
         // XPropertyControl
-        virtual ::com::sun::star::uno::Any SAL_CALL getValue() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value ) throw (::com::sun::star::beans::IllegalTypeException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Type SAL_CALL getValueType() throw (::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Any SAL_CALL getValue();
+        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value );
+        virtual ::com::sun::star::uno::Type SAL_CALL getValueType();
 
     protected:
         virtual void modified();
@@ -160,9 +160,9 @@ namespace pcr
         ODateTimeControl( Window* pParent,WinBits nWinStyle );
 
         // XPropertyControl
-        virtual ::com::sun::star::uno::Any SAL_CALL getValue() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value ) throw (::com::sun::star::beans::IllegalTypeException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Type SAL_CALL getValueType() throw (::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Any SAL_CALL getValue();
+        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value );
+        virtual ::com::sun::star::uno::Type SAL_CALL getValueType();
     };
 
     //========================================================================
@@ -207,13 +207,13 @@ namespace pcr
         OHyperlinkControl( Window* _pParent, WinBits _nWinStyle );
 
         // XPropertyControl
-        virtual ::com::sun::star::uno::Any SAL_CALL getValue() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value ) throw (::com::sun::star::beans::IllegalTypeException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Type SAL_CALL getValueType() throw (::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Any SAL_CALL getValue();
+        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value );
+        virtual ::com::sun::star::uno::Type SAL_CALL getValueType();
 
         // XHyperlinkControl
-        virtual void SAL_CALL addActionListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XActionListener >& listener ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL removeActionListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XActionListener >& listener ) throw (::com::sun::star::uno::RuntimeException);
+        virtual void SAL_CALL addActionListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XActionListener >& listener );
+        virtual void SAL_CALL removeActionListener( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XActionListener >& listener );
 
     protected:
         // XComponent
@@ -253,22 +253,22 @@ namespace pcr
         ONumericControl( Window* pParent, WinBits nWinStyle );
 
         // XPropertyControl
-        virtual ::com::sun::star::uno::Any SAL_CALL getValue() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value ) throw (::com::sun::star::beans::IllegalTypeException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Type SAL_CALL getValueType() throw (::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Any SAL_CALL getValue();
+        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value );
+        virtual ::com::sun::star::uno::Type SAL_CALL getValueType();
 
         // XNumericControl
-        virtual ::sal_Int16 SAL_CALL getDecimalDigits() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setDecimalDigits( ::sal_Int16 _decimaldigits ) throw (::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::beans::Optional< double > SAL_CALL getMinValue() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setMinValue( const ::com::sun::star::beans::Optional< double >& _minvalue ) throw (::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::beans::Optional< double > SAL_CALL getMaxValue() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setMaxValue( const ::com::sun::star::beans::Optional< double >& _maxvalue ) throw (::com::sun::star::uno::RuntimeException);
-        virtual ::sal_Int16 SAL_CALL getDisplayUnit() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setDisplayUnit( ::sal_Int16 _displayunit ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-        virtual ::sal_Int16 SAL_CALL getValueUnit() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setValueUnit( ::sal_Int16 _valueunit ) throw (::com::sun::star::uno::RuntimeException);
-    
+        virtual ::sal_Int16 SAL_CALL getDecimalDigits();
+        virtual void SAL_CALL setDecimalDigits( ::sal_Int16 _decimaldigits );
+        virtual ::com::sun::star::beans::Optional< double > SAL_CALL getMinValue();
+        virtual void SAL_CALL setMinValue( const ::com::sun::star::beans::Optional< double >& _minvalue );
+        virtual ::com::sun::star::beans::Optional< double > SAL_CALL getMaxValue();
+        virtual void SAL_CALL setMaxValue( const ::com::sun::star::beans::Optional< double >& _maxvalue );
+        virtual ::sal_Int16 SAL_CALL getDisplayUnit();
+        virtual void SAL_CALL setDisplayUnit( ::sal_Int16 _displayunit );
+        virtual ::sal_Int16 SAL_CALL getValueUnit();
+        virtual void SAL_CALL setValueUnit( ::sal_Int16 _valueunit );
+
     private:
         /** converts an API value (<code>double</code>, as passed into <code>set[Max|Min|]Value) into
             a <code>long</code> value which can be passed to our NumericField.
@@ -298,15 +298,15 @@ namespace pcr
         OColorControl( Window* pParent, WinBits nWinStyle );
 
         // XPropertyControl
-        virtual ::com::sun::star::uno::Any SAL_CALL getValue() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value ) throw (::com::sun::star::beans::IllegalTypeException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Type SAL_CALL getValueType() throw (::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Any SAL_CALL getValue();
+        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value );
+        virtual ::com::sun::star::uno::Type SAL_CALL getValueType();
 
         // XStringListControl
-        virtual void SAL_CALL clearList(  ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL prependListEntry( const ::rtl::OUString& NewEntry ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL appendListEntry( const ::rtl::OUString& NewEntry ) throw (::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getListEntries(  ) throw (::com::sun::star::uno::RuntimeException);
+        virtual void SAL_CALL clearList(  );
+        virtual void SAL_CALL prependListEntry( const ::rtl::OUString& NewEntry );
+        virtual void SAL_CALL appendListEntry( const ::rtl::OUString& NewEntry );
+        virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getListEntries(  );
 
     protected:
         virtual void modified();
@@ -324,15 +324,15 @@ namespace pcr
         OListboxControl( Window* pParent, WinBits nWinStyle );
 
         // XPropertyControl
-        virtual ::com::sun::star::uno::Any SAL_CALL getValue() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value ) throw (::com::sun::star::beans::IllegalTypeException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Type SAL_CALL getValueType() throw (::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Any SAL_CALL getValue();
+        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value );
+        virtual ::com::sun::star::uno::Type SAL_CALL getValueType();
 
         // XStringListControl
-        virtual void SAL_CALL clearList(  ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL prependListEntry( const ::rtl::OUString& NewEntry ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL appendListEntry( const ::rtl::OUString& NewEntry ) throw (::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getListEntries(  ) throw (::com::sun::star::uno::RuntimeException);
+        virtual void SAL_CALL clearList(  );
+        virtual void SAL_CALL prependListEntry( const ::rtl::OUString& NewEntry );
+        virtual void SAL_CALL appendListEntry( const ::rtl::OUString& NewEntry );
+        virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getListEntries(  );
 
     protected:
         virtual void modified();
@@ -348,15 +348,15 @@ namespace pcr
         OComboboxControl( Window* pParent, WinBits nWinStyle );
 
         // XPropertyControl
-        virtual ::com::sun::star::uno::Any SAL_CALL getValue() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value ) throw (::com::sun::star::beans::IllegalTypeException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Type SAL_CALL getValueType() throw (::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Any SAL_CALL getValue();
+        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value );
+        virtual ::com::sun::star::uno::Type SAL_CALL getValueType();
 
         // XStringListControl
-        virtual void SAL_CALL clearList(  ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL prependListEntry( const ::rtl::OUString& NewEntry ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL appendListEntry( const ::rtl::OUString& NewEntry ) throw (::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getListEntries(  ) throw (::com::sun::star::uno::RuntimeException);
+        virtual void SAL_CALL clearList(  );
+        virtual void SAL_CALL prependListEntry( const ::rtl::OUString& NewEntry );
+        virtual void SAL_CALL appendListEntry( const ::rtl::OUString& NewEntry );
+        virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getListEntries(  );
 
     protected:
         DECL_LINK( OnEntrySelected, void* );
@@ -428,9 +428,9 @@ namespace pcr
         OMultilineEditControl( Window* pParent, MultiLineOperationMode _eMode, WinBits nWinStyle  );
 
         // XPropertyControl
-        virtual ::com::sun::star::uno::Any SAL_CALL getValue() throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value ) throw (::com::sun::star::beans::IllegalTypeException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Type SAL_CALL getValueType() throw (::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Any SAL_CALL getValue();
+        virtual void SAL_CALL setValue( const ::com::sun::star::uno::Any& _value );
+        virtual ::com::sun::star::uno::Type SAL_CALL getValueType();
     };
 
 //............................................................................
@@ -438,4 +438,3 @@ namespace pcr
 //............................................................................
 
 #endif // _EXTENSIONS_PROPCTRLR_STANDARDCONTROL_HXX_
-

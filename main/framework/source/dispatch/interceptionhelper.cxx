@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -91,7 +91,6 @@ InterceptionHelper::~InterceptionHelper()
 css::uno::Reference< css::frame::XDispatch > SAL_CALL InterceptionHelper::queryDispatch(const css::util::URL&  aURL            ,
                                                                                         const ::rtl::OUString& sTargetFrameName,
                                                                                               sal_Int32        nSearchFlags    )
-    throw(css::uno::RuntimeException)
 {
     // SAFE {
     ReadGuard aReadLock(m_aLock);
@@ -133,7 +132,6 @@ css::uno::Reference< css::frame::XDispatch > SAL_CALL InterceptionHelper::queryD
     31.03.2003 07:58
 -----------------------------------------------------------------------------*/
 css::uno::Sequence< css::uno::Reference< css::frame::XDispatch > > SAL_CALL InterceptionHelper::queryDispatches( const css::uno::Sequence< css::frame::DispatchDescriptor >& lDescriptor )
-    throw(css::uno::RuntimeException)
 {
           sal_Int32                                                          c           = lDescriptor.getLength();
           css::uno::Sequence< css::uno::Reference< css::frame::XDispatch > > lDispatches (c);
@@ -150,7 +148,6 @@ css::uno::Sequence< css::uno::Reference< css::frame::XDispatch > > SAL_CALL Inte
     31.03.2003 10:20
 -----------------------------------------------------------------------------*/
 void SAL_CALL InterceptionHelper::registerDispatchProviderInterceptor(const css::uno::Reference< css::frame::XDispatchProviderInterceptor >& xInterceptor)
-    throw(css::uno::RuntimeException)
 {
     // reject wrong calling of this interface method
     css::uno::Reference< css::frame::XDispatchProvider > xThis(static_cast< ::cppu::OWeakObject* >(this), css::uno::UNO_QUERY);
@@ -233,7 +230,6 @@ void SAL_CALL InterceptionHelper::registerDispatchProviderInterceptor(const css:
     31.03.2003 10:27
 -----------------------------------------------------------------------------*/
 void SAL_CALL InterceptionHelper::releaseDispatchProviderInterceptor(const css::uno::Reference< css::frame::XDispatchProviderInterceptor >& xInterceptor)
-    throw(css::uno::RuntimeException)
 {
     // reject wrong calling of this interface method
     css::uno::Reference< css::frame::XDispatchProvider > xThis(static_cast< ::cppu::OWeakObject* >(this), css::uno::UNO_QUERY);
@@ -284,7 +280,6 @@ void SAL_CALL InterceptionHelper::releaseDispatchProviderInterceptor(const css::
 -----------------------------------------------------------------------------*/
 #define FORCE_DESTRUCTION_OF_INTERCEPTION_CHAIN
 void SAL_CALL InterceptionHelper::disposing(const css::lang::EventObject& aEvent)
-    throw(css::uno::RuntimeException)
 {
     #ifdef FORCE_DESTRUCTION_OF_INTERCEPTION_CHAIN
     // SAFE ->

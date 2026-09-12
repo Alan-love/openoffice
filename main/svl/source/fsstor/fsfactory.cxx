@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -68,8 +68,6 @@ uno::Reference< uno::XInterface > SAL_CALL FSStorageFactory::impl_staticCreateSe
 
 //-------------------------------------------------------------------------
 uno::Reference< uno::XInterface > SAL_CALL FSStorageFactory::createInstance()
-	throw ( uno::Exception,
-			uno::RuntimeException )
 {
 	::rtl::OUString aTempURL;
 
@@ -78,11 +76,11 @@ uno::Reference< uno::XInterface > SAL_CALL FSStorageFactory::createInstance()
 	if ( !aTempURL.getLength() )
 		throw uno::RuntimeException(); // TODO: can not create tempfile
 
-	::ucbhelper::Content aResultContent( 
+	::ucbhelper::Content aResultContent(
         aTempURL, uno::Reference< ucb::XCommandEnvironment >() );
 
-	return uno::Reference< uno::XInterface >( 
-        static_cast< OWeakObject* >( 
+	return uno::Reference< uno::XInterface >(
+        static_cast< OWeakObject* >(
             new FSStorage(	aResultContent,
                             embed::ElementModes::READWRITE,
                             uno::Sequence< beans::PropertyValue >(),
@@ -93,8 +91,6 @@ uno::Reference< uno::XInterface > SAL_CALL FSStorageFactory::createInstance()
 //-------------------------------------------------------------------------
 uno::Reference< uno::XInterface > SAL_CALL FSStorageFactory::createInstanceWithArguments(
 			const uno::Sequence< uno::Any >& aArguments )
-	throw ( uno::Exception,
-			uno::RuntimeException )
 {
 	// The request for storage can be done with up to three arguments
 
@@ -143,7 +139,7 @@ uno::Reference< uno::XInterface > SAL_CALL FSStorageFactory::createInstanceWithA
 	// retrieve mediadescriptor and set storage properties
 	uno::Sequence< beans::PropertyValue > aDescr;
 	uno::Sequence< beans::PropertyValue > aPropsToSet;
-	
+
 	if ( nArgNum >= 3 )
 	{
 		if( aArguments[2] >>= aDescr )
@@ -187,28 +183,26 @@ uno::Reference< uno::XInterface > SAL_CALL FSStorageFactory::createInstanceWithA
 	else if ( !::utl::UCBContentHelper::IsFolder( aURL ) )
 		throw io::IOException(); // there is no such folder
 
-	::ucbhelper::Content aResultContent( 
+	::ucbhelper::Content aResultContent(
         aURL, uno::Reference< ucb::XCommandEnvironment >() );
 
 	// create storage based on source
-	return uno::Reference< uno::XInterface >( 
-        static_cast< OWeakObject* >( new FSStorage( aResultContent, 
-                                                    nStorageMode, 
-                                                    aPropsToSet, 
+	return uno::Reference< uno::XInterface >(
+        static_cast< OWeakObject* >( new FSStorage( aResultContent,
+                                                    nStorageMode,
+                                                    aPropsToSet,
                                                     m_xFactory ) ),
         uno::UNO_QUERY );
 }
 
 //-------------------------------------------------------------------------
 ::rtl::OUString SAL_CALL FSStorageFactory::getImplementationName()
-	throw ( uno::RuntimeException )
 {
 	return impl_staticGetImplementationName();
 }
 
 //-------------------------------------------------------------------------
 sal_Bool SAL_CALL FSStorageFactory::supportsService( const ::rtl::OUString& ServiceName )
-	throw ( uno::RuntimeException )
 {
 	uno::Sequence< ::rtl::OUString > aSeq = impl_staticGetSupportedServiceNames();
 
@@ -221,7 +215,6 @@ sal_Bool SAL_CALL FSStorageFactory::supportsService( const ::rtl::OUString& Serv
 
 //-------------------------------------------------------------------------
 uno::Sequence< ::rtl::OUString > SAL_CALL FSStorageFactory::getSupportedServiceNames()
-	throw ( uno::RuntimeException )
 {
 	return impl_staticGetSupportedServiceNames();
 }
@@ -261,4 +254,3 @@ SAL_DLLPUBLIC_EXPORT void * SAL_CALL component_getFactory (
 }
 
 } // extern "C"
-

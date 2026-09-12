@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -82,11 +82,9 @@ public:
 	// XSupportedLocales
     virtual ::com::sun::star::uno::Sequence<
 			::com::sun::star::lang::Locale > SAL_CALL
-		getLocales()
-			throw(::com::sun::star::uno::RuntimeException);
+		getLocales();
     virtual sal_Bool SAL_CALL
-		hasLocale( const ::com::sun::star::lang::Locale& aLocale )
-			throw(::com::sun::star::uno::RuntimeException);
+		hasLocale( const ::com::sun::star::lang::Locale& aLocale );
 
 	// XThesaurus
     virtual ::com::sun::star::uno::Sequence<
@@ -94,9 +92,7 @@ public:
 				::com::sun::star::linguistic2::XMeaning > > SAL_CALL
 		queryMeanings( const ::rtl::OUString& aTerm,
 				const ::com::sun::star::lang::Locale& aLocale,
-				const ::com::sun::star::beans::PropertyValues& aProperties )
-			throw(::com::sun::star::lang::IllegalArgumentException,
-				  ::com::sun::star::uno::RuntimeException);
+				const ::com::sun::star::beans::PropertyValues& aProperties );
 
 	// LinguDispatcher
 	virtual void
@@ -114,7 +110,7 @@ inline ::com::sun::star::uno::Reference<
 	::com::sun::star::beans::XPropertySet >
 		ThesaurusDispatcher::GetPropSet()
 {
-	return xPropSet.is() ? 
+	return xPropSet.is() ?
 		xPropSet : xPropSet = linguistic::GetLinguProperties();
 }
 
@@ -122,4 +118,3 @@ inline ::com::sun::star::uno::Reference<
 ///////////////////////////////////////////////////////////////////////////
 
 #endif
-

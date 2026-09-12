@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -788,7 +788,7 @@ void SmTableNode::Arrange(const OutputDevice &rDev, const SmFormat &rFormat)
     else
     {
         SmTmpDevice  aTmpDev ((OutputDevice &) rDev, sal_True);
-        aTmpDev.SetFont(GetFont());	
+        aTmpDev.SetFont(GetFont());
 
         SmRect aRect = (SmRect(aTmpDev, &rFormat, C2S("a"),
                                GetFont().GetBorderWidth()));
@@ -844,7 +844,7 @@ void SmLineNode::Arrange(const OutputDevice &rDev, const SmFormat &rFormat)
 	aTmpDev.SetFont(GetFont());
 
     if (nSize < 1)
-    { 
+    {
         // provide an empty rectangle with alignment parameters for the "current"
         // font (in order to make "a^1 {}_2^3 a_4" work correct, that is, have the
         // same sub-/supscript positions.)
@@ -2427,7 +2427,7 @@ void SmRectangleNode::Draw(OutputDevice &rDev, const Point &rPosition) const
 /**************************************************************************/
 
 
-SmTextNode::SmTextNode( SmNodeType eNodeType, const SmToken &rNodeToken, sal_uInt16 nFontDescP ) :	
+SmTextNode::SmTextNode( SmNodeType eNodeType, const SmToken &rNodeToken, sal_uInt16 nFontDescP ) :
     SmVisibleNode(eNodeType, rNodeToken)
 {
     nFontDesc = nFontDescP;
@@ -2608,14 +2608,14 @@ void SmMatrixNode::Arrange(const OutputDevice &rDev, const SmFormat &rFormat)
     {
         sal_uInt16 nIdx = nNodes - 1 - i;
         if (NULL != (pNode = GetSubNode(nIdx)))
-        {   
+        {
             pNode->Arrange(rDev, rFormat);
             int  nCol = nIdx % nNumCols;
             pColWidth[nCol] = Max(pColWidth[nCol], pNode->GetItalicWidth());
         }
     }
 
-	// norm distance from which the following two are calcutated
+	// norm distance from which the following two are calculated
 	const int  nNormDist = 3 * GetFont().GetSize().Height();
 
 	// define horizontal and vertical minimal distances that separate
@@ -2650,7 +2650,7 @@ void SmMatrixNode::Arrange(const OutputDevice &rDev, const SmFormat &rFormat)
             const SmNode *pCoNode   = pTmpNode->GetLeftMost();
             RectHorAlign  eHorAlign = pCoNode->GetRectHorAlign();
 
-			// caculate horizontal position of element depending on column
+			// calculate horizontal position of element depending on column
 			// and horizontal alignment
 			switch (eHorAlign)
 			{	case RHA_LEFT:
@@ -3010,7 +3010,7 @@ void SmSpecialNode::Prepare(const SmFormat &rFormat, const SmDocShell &rDocShell
         if (bItalic)
             Attributes() |= ATTR_ITALIC;
         else
-            Attributes() &= ~ATTR_ITALIC;;
+            Attributes() &= ~ATTR_ITALIC;
     }
 };
 
@@ -3145,6 +3145,3 @@ void SmBlankNode::Arrange(const OutputDevice &rDev, const SmFormat &rFormat)
 	SetItalicSpaces(0, 0);
 	SetWidth(nSpace);
 }
-
-
-

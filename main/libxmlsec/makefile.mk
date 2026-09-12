@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -49,8 +49,8 @@ TARFILE_MD5=1f24ab1d39f4a51faf22244c94a6203f
 #xmlsec1-nssdisablecallbacks.patch: Disable use of smime3 so don't need to package it
 #xmlsec1-customkeymanage.patch: Could we do this alternatively outside xmlsec
 #xmlsec1-nssmangleciphers.patch: Dubious, do we still need this ?
-#xmlsec1-noverify.patch: As per readme.txt. 
-#xmlsec1-mingw32.patch: Mingw32 support. 
+#xmlsec1-noverify.patch: As per readme.txt.
+#xmlsec1-mingw32.patch: Mingw32 support.
 #xmlsec1-mingw-customkeymanage-addmscrypto.patch builds the custom keymanager on mingw
 PATCH_FILES=\
    xmlsec1-configure.patch \
@@ -61,7 +61,9 @@ PATCH_FILES=\
    xmlsec1-nssmangleciphers.patch \
    xmlsec1-noverify.patch \
    xmlsec1-mingw32.patch \
-   xmlsec1-mingw-keymgr-mscrypto.patch
+   xmlsec1-mingw-keymgr-mscrypto.patch \
+   xmlsec1-nowin98.patch \
+   xmlsec1-ucrt-snprintf.patch
 
 .IF "$(GUI)"=="OS2"
 PATCH_FILES+=xmlsec1-os2.patch
@@ -113,7 +115,14 @@ CONFIGURE_FLAGS=crypto=$(CRYPTOLIB) debug=yes xslt=no iconv=no static=no include
 .ELSE
 CONFIGURE_FLAGS=crypto=$(CRYPTOLIB) xslt=no iconv=no static=no include=$(BASEINC) lib=$(BASELIB)
 .ENDIF
+# /OPT:NOWIN98 was removed from link.exe after VS2008 and is now LNK1117.
+# Switched off only for the UCRT toolset, so a VC9 build keeps the exact
+# link command line it has always had.
+.IF "$(COMEX)" == "14"
+BUILD_ACTION=nmake WIN98COMPAT=0
+.ELSE
 BUILD_ACTION=nmake
+.ENDIF
 BUILD_DIR=$(CONFIGURE_DIR)
 .ENDIF
 .ELSE
@@ -124,7 +133,7 @@ xmlsec_CFLAGS+=-m64
 .ENDIF
 
 .IF "$(SYSBASE)"!=""
-xmlsec_CFLAGS+=-I$(SYSBASE)$/usr$/include 
+xmlsec_CFLAGS+=-I$(SYSBASE)$/usr$/include
 .IF "$(COMNAME)"=="sunpro5"
 xmlsec_CFLAGS+=$(C_RESTRICTIONFLAGS)
 .ENDIF			# "$(COMNAME)"=="sunpro5"
@@ -151,6 +160,23 @@ LDFLAGS:=$(xmlsec_LDFLAGS)
 CONFIGURE_DIR=
 CONFIGURE_ACTION=.$/configure ADDCFLAGS="$(xmlsec_CFLAGS)" CPPFLAGS="$(xmlsec_CPPFLAGS)"
 CONFIGURE_FLAGS=--with-pic --disable-shared --disable-crypto-dl --with-libxslt=no --with-openssl=no --with-gnutls=no LIBXML2LIB="$(LIBXML2LIB)"
+# Pin xmlsec's libxml2 lookup to the prefix configure settled on.
+#
+# Without --with-libxml the AOO patches leave xmlsec resolving a bare
+# "xml2-config" off $PATH, which on a Mac carrying MacPorts/Homebrew is
+# often not the one --with-system-libxml named. The mis-pick is silent
+# until link time: newer libxml2 renamed the stack helpers but kept the
+# old spellings as macros (inputPush -> xmlCtxtPushInput, valuePush ->
+# xmlXPathValuePush), so xmlsec 1.2.14 built against post-rename headers
+# emits the new names and the older archive xmlsecurity links lacks them.
+# Compile-side counterpart to the absolute-path link fix in
+# xmlsecurity/util/makefile.mk and forms/util/makefile.mk; both are needed.
+#
+# Guarded on SYSTEM_LIBXML: the internal build already gets an
+# absolute-path xml2-config, which AC_PATH_PROG honors as-is.
+.IF "$(SYSTEM_LIBXML)"=="YES" && "$(LIBXML_PREFIX)"!=""
+CONFIGURE_FLAGS+=--with-libxml=$(LIBXML_PREFIX)
+.ENDIF
 # system-nss needs pkgconfig to get the information about nss
 # FIXME: This also will enable pkg-config usage for libxml2. It *seems*
 # that the internal headers still are used when they are there but....
@@ -168,7 +194,7 @@ BUILD_DIR=$(CONFIGURE_DIR)
 .ENDIF
 
 
-OUTDIR2INC=include$/xmlsec 
+OUTDIR2INC=include$/xmlsec
 
 .IF "$(OS)"=="WNT"
 .IF "$(COM)"=="GCC"
@@ -190,5 +216,3 @@ OUT2LIB+=src$/.libs$/libxmlsec1.a src$/nss$/.libs$/libxmlsec1-nss.a
 .INCLUDE : set_ext.mk
 .INCLUDE : target.mk
 .INCLUDE : tg_ext.mk
-
-

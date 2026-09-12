@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -86,10 +86,10 @@ namespace dbaui
 		Indexes::iterator insert(const String& _rName);
 		// commit a new index, which is already part if the collection, but does not have an equivalent in the
 		// data source, yet
-		void commitNewIndex(const Indexes::iterator& _rPos) SAL_THROW((::com::sun::star::sdbc::SQLException));
+		void commitNewIndex(const Indexes::iterator& _rPos);
 
 		// reset the data for the given index
-		void resetIndex(const Indexes::iterator& _rPos) SAL_THROW((::com::sun::star::sdbc::SQLException));
+		void resetIndex(const Indexes::iterator& _rPos);
 
 		// attach to a new key container
 		void attach(const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess >& _rxIndexes);
@@ -102,14 +102,14 @@ namespace dbaui
 		sal_Int32	size() const { return m_aIndexes.size(); }
 
 		/// drop an index, and remove it from the collection
-		sal_Bool	drop(const Indexes::iterator& _rPos) SAL_THROW((::com::sun::star::sdbc::SQLException));
+		sal_Bool	drop(const Indexes::iterator& _rPos);
 		/// simply drop the index described by the name, but don't remove the descriptor from the collection
-		sal_Bool	dropNoRemove(const Indexes::iterator& _rPos) SAL_THROW((::com::sun::star::sdbc::SQLException));
+		sal_Bool	dropNoRemove(const Indexes::iterator& _rPos);
 
 	protected:
 		void implConstructFrom(const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess >& _rxIndexes);
-		void implFillIndexInfo(OIndex& _rIndex, ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet > _rxDescriptor) SAL_THROW((::com::sun::star::uno::Exception));
-		void implFillIndexInfo(OIndex& _rIndex) SAL_THROW((::com::sun::star::uno::Exception));
+		void implFillIndexInfo(OIndex& _rIndex, ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet > _rxDescriptor);
+		void implFillIndexInfo(OIndex& _rIndex);
 	};
 
 
@@ -118,4 +118,3 @@ namespace dbaui
 //......................................................................
 
 #endif // _DBAUI_INDEXCOLLECTION_HXX_
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -30,7 +30,7 @@
 #ifndef TOOLS_DIAGNOSE_EX_H
 #include <tools/diagnose_ex.h>
 #endif
-#ifndef _COM_SUN_STAR_SDBCX_XAPPEND_HPP_ 
+#ifndef _COM_SUN_STAR_SDBCX_XAPPEND_HPP_
 #include <com/sun/star/sdbcx/XAppend.hpp>
 #endif
 #ifndef _COM_SUN_STAR_BEANS_XPROPERTYSET_HPP_
@@ -166,7 +166,7 @@ namespace dbaui
 	}
 
 	//------------------------------------------------------------------
-	void OIndexCollection::commitNewIndex(const Indexes::iterator& _rPos) SAL_THROW((SQLException))
+	void OIndexCollection::commitNewIndex(const Indexes::iterator& _rPos)
 	{
 		OSL_ENSURE(_rPos->isNew(), "OIndexCollection::commitNewIndex: index must be new!");
 
@@ -236,7 +236,7 @@ namespace dbaui
 	}
 
 	//------------------------------------------------------------------
-	sal_Bool OIndexCollection::dropNoRemove(const Indexes::iterator& _rPos) SAL_THROW((SQLException))
+	sal_Bool OIndexCollection::dropNoRemove(const Indexes::iterator& _rPos)
 	{
 		try
 		{
@@ -270,7 +270,7 @@ namespace dbaui
 	}
 
 	//------------------------------------------------------------------
-	sal_Bool OIndexCollection::drop(const Indexes::iterator& _rPos) SAL_THROW((SQLException))
+	sal_Bool OIndexCollection::drop(const Indexes::iterator& _rPos)
 	{
 		OSL_ENSURE((_rPos >= m_aIndexes.begin()) && (_rPos < m_aIndexes.end()),
 			"OIndexCollection::drop: invalid position (fasten your seatbelt .... this will crash)!");
@@ -285,7 +285,7 @@ namespace dbaui
 	}
 
 	//------------------------------------------------------------------
-	void OIndexCollection::implFillIndexInfo(OIndex& _rIndex) SAL_THROW((Exception))
+	void OIndexCollection::implFillIndexInfo(OIndex& _rIndex)
 	{
 		// get the UNO descriptor for the index
 		Reference< XPropertySet > xIndex;
@@ -299,7 +299,7 @@ namespace dbaui
 	}
 
 	//------------------------------------------------------------------
-	void OIndexCollection::implFillIndexInfo(OIndex& _rIndex, Reference< XPropertySet > _rxDescriptor) SAL_THROW((Exception))
+	void OIndexCollection::implFillIndexInfo(OIndex& _rIndex, Reference< XPropertySet > _rxDescriptor)
 	{
 		static const ::rtl::OUString s_sPrimaryIndexPropertyName = ::rtl::OUString::createFromAscii("IsPrimaryKeyIndex");
 		static const ::rtl::OUString s_sUniquePropertyName = ::rtl::OUString::createFromAscii("IsUnique");
@@ -349,7 +349,7 @@ namespace dbaui
 	}
 
 	//------------------------------------------------------------------
-	void OIndexCollection::resetIndex(const Indexes::iterator& _rPos) SAL_THROW((SQLException))
+	void OIndexCollection::resetIndex(const Indexes::iterator& _rPos)
 	{
 		OSL_ENSURE(_rPos >= m_aIndexes.begin() && _rPos < m_aIndexes.end(),
 			"OIndexCollection::resetIndex: invalid position!");
@@ -417,4 +417,3 @@ namespace dbaui
 //......................................................................
 }	// namespace dbaui
 //......................................................................
-

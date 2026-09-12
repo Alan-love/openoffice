@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -60,17 +60,17 @@ struct AttributeList_Impl
 	::std::vector<struct TagAttribute_Impl> vecAttribute;
 };
 
-sal_Int16 SAL_CALL AttributeList::getLength(void) throw( ::com::sun::star::uno::RuntimeException )
+sal_Int16 SAL_CALL AttributeList::getLength(void)
 {
 	return (sal_Int16)(m_pImpl->vecAttribute.size());
 }
 
-OUString SAL_CALL AttributeList::getNameByIndex(sal_Int16 i) throw( ::com::sun::star::uno::RuntimeException )
+OUString SAL_CALL AttributeList::getNameByIndex(sal_Int16 i)
 {
     return ( i < static_cast < sal_Int16 > (m_pImpl->vecAttribute.size()) ) ? m_pImpl->vecAttribute[i].sName : OUString();
 }
 
-OUString SAL_CALL AttributeList::getTypeByIndex(sal_Int16 i) throw( ::com::sun::star::uno::RuntimeException )
+OUString SAL_CALL AttributeList::getTypeByIndex(sal_Int16 i)
 {
 	if( i < static_cast < sal_Int16 > (m_pImpl->vecAttribute.size() ) ) {
 		return m_pImpl->vecAttribute[i].sType;
@@ -78,12 +78,12 @@ OUString SAL_CALL AttributeList::getTypeByIndex(sal_Int16 i) throw( ::com::sun::
 	return OUString();
 }
 
-OUString SAL_CALL  AttributeList::getValueByIndex(sal_Int16 i) throw( ::com::sun::star::uno::RuntimeException )
+OUString SAL_CALL  AttributeList::getValueByIndex(sal_Int16 i)
 {
     return ( i < static_cast < sal_Int16 > (m_pImpl->vecAttribute.size() ) ) ? m_pImpl->vecAttribute[i].sValue : OUString();
 }
 
-OUString SAL_CALL AttributeList::getTypeByName( const OUString& sName ) throw( ::com::sun::star::uno::RuntimeException )
+OUString SAL_CALL AttributeList::getTypeByName( const OUString& sName )
 {
 	::std::vector<struct TagAttribute_Impl>::iterator ii = m_pImpl->vecAttribute.begin();
 
@@ -95,7 +95,7 @@ OUString SAL_CALL AttributeList::getTypeByName( const OUString& sName ) throw( :
 	return OUString();
 }
 
-OUString SAL_CALL AttributeList::getValueByName(const OUString& sName) throw( ::com::sun::star::uno::RuntimeException )
+OUString SAL_CALL AttributeList::getValueByName(const OUString& sName)
 {
 	::std::vector<struct TagAttribute_Impl>::iterator ii = m_pImpl->vecAttribute.begin();
 
@@ -172,4 +172,3 @@ void AttributeList::AppendAttributeList( const uno::Reference< ::com::sun::star:
 }
 
 } // namespace comphelper
-

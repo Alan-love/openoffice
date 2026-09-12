@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -63,11 +63,11 @@ class ExpandContentProviderImpl : protected MutexHolder, public t_impl_helper
     uno::Reference< util::XMacroExpander > m_xMacroExpander;
     OUString expandUri(
         uno::Reference< ucb::XContentIdentifier > const & xIdentifier ) const;
-    
+
 protected:
     inline void check() const;
     virtual void SAL_CALL disposing();
-    
+
 public:
     inline ExpandContentProviderImpl(
         uno::Reference< uno::XComponentContext > const & xComponentContext )
@@ -78,23 +78,18 @@ public:
               uno::UNO_QUERY_THROW )
         {}
     virtual ~ExpandContentProviderImpl() throw ();
-    
+
     // XServiceInfo
-    virtual OUString SAL_CALL getImplementationName()
-        throw (uno::RuntimeException);
-    virtual sal_Bool SAL_CALL supportsService( OUString const & serviceName )
-        throw (uno::RuntimeException);
-    virtual uno::Sequence< OUString > SAL_CALL getSupportedServiceNames()
-        throw (uno::RuntimeException);
-    
+    virtual OUString SAL_CALL getImplementationName();
+    virtual sal_Bool SAL_CALL supportsService( OUString const & serviceName );
+    virtual uno::Sequence< OUString > SAL_CALL getSupportedServiceNames();
+
     // XContentProvider
     virtual uno::Reference< ucb::XContent > SAL_CALL queryContent(
-        uno::Reference< ucb::XContentIdentifier > const & xIdentifier )
-        throw (ucb::IllegalIdentifierException, uno::RuntimeException);
+        uno::Reference< ucb::XContentIdentifier > const & xIdentifier );
     virtual sal_Int32 SAL_CALL compareContentIds(
         uno::Reference< ucb::XContentIdentifier > const & xId1,
-        uno::Reference< ucb::XContentIdentifier > const & xId2 )
-        throw (uno::RuntimeException);
+        uno::Reference< ucb::XContentIdentifier > const & xId2 );
 };
 
 //______________________________________________________________________________
@@ -125,7 +120,6 @@ void ExpandContentProviderImpl::disposing()
 //==============================================================================
 static uno::Reference< uno::XInterface > SAL_CALL create(
     uno::Reference< uno::XComponentContext > const & xComponentContext )
-    SAL_THROW( (uno::Exception) )
 {
     return static_cast< ::cppu::OWeakObject * >(
         new ExpandContentProviderImpl( xComponentContext ) );
@@ -150,7 +144,6 @@ static uno::Sequence< OUString > SAL_CALL supportedServices()
 // XServiceInfo
 //______________________________________________________________________________
 OUString ExpandContentProviderImpl::getImplementationName()
-    throw (uno::RuntimeException)
 {
     check();
     return implName();
@@ -158,7 +151,6 @@ OUString ExpandContentProviderImpl::getImplementationName()
 
 //______________________________________________________________________________
 uno::Sequence< OUString > ExpandContentProviderImpl::getSupportedServiceNames()
-    throw (uno::RuntimeException)
 {
     check();
     return supportedServices();
@@ -167,7 +159,6 @@ uno::Sequence< OUString > ExpandContentProviderImpl::getSupportedServiceNames()
 //______________________________________________________________________________
 sal_Bool ExpandContentProviderImpl::supportsService(
     OUString const & serviceName )
-    throw (uno::RuntimeException)
 {
 //     check();
     uno::Sequence< OUString > supported_services( getSupportedServiceNames() );
@@ -206,11 +197,10 @@ OUString ExpandContentProviderImpl::expandUri(
 //______________________________________________________________________________
 uno::Reference< ucb::XContent > ExpandContentProviderImpl::queryContent(
     uno::Reference< ucb::XContentIdentifier > const & xIdentifier )
-    throw (ucb::IllegalIdentifierException, uno::RuntimeException)
 {
     check();
     OUString uri( expandUri( xIdentifier ) );
-    
+
     ::ucbhelper::Content ucb_content;
     if (::ucbhelper::Content::create(
             uri, uno::Reference< ucb::XCommandEnvironment >(), ucb_content ))
@@ -227,7 +217,6 @@ uno::Reference< ucb::XContent > ExpandContentProviderImpl::queryContent(
 sal_Int32 ExpandContentProviderImpl::compareContentIds(
     uno::Reference< ucb::XContentIdentifier > const & xId1,
     uno::Reference< ucb::XContentIdentifier > const & xId2 )
-    throw (uno::RuntimeException)
 {
     check();
     try

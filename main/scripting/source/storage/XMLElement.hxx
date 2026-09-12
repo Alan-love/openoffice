@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -36,9 +36,9 @@ namespace scripting_impl
 #define dcsssf ::drafts::com::sun::star::script::framework
 
 /*##################################################################################################
- 
+
  EXPORTING
- 
+
 ##################################################################################################*/
 
 //==================================================================================================
@@ -58,7 +58,7 @@ public:
     }
 
     /** Adds a sub element of element.
-     
+
      @param xElem element reference
     */
     void SAL_CALL addSubElement(
@@ -66,19 +66,19 @@ public:
         SAL_THROW( () );
 
     /** Gets sub element of given index.  The index follows order in which sub elements were added.
-     
+
      @param nIndex index of sub element
     */
-    css::uno::Reference< css::xml::sax::XAttributeList > SAL_CALL getSubElement( 
+    css::uno::Reference< css::xml::sax::XAttributeList > SAL_CALL getSubElement(
         sal_Int32 nIndex )
         SAL_THROW( () );
 
     /** Adds an attribute to elements.
-     
+
      @param rAttrName qname of attribute
      @param rValue value string of element
     */
-    void SAL_CALL addAttribute( ::rtl::OUString const & rAttrName, 
+    void SAL_CALL addAttribute( ::rtl::OUString const & rAttrName,
         ::rtl::OUString const & rValue )
         SAL_THROW( () );
 
@@ -93,31 +93,25 @@ public:
     }
 
     /** Dumps out element (and all sub elements).
-           
+
      @param xOut document handler to be written to
     */
     void SAL_CALL dump(
         css::uno::Reference< css::xml::sax::XExtendedDocumentHandler > const & xOut );
     /** Dumps out sub elements (and all further sub elements).
-           
+
      @param xOut document handler to be written to
     */
     void SAL_CALL dumpSubElements(
         css::uno::Reference< css::xml::sax::XExtendedDocumentHandler > const & xOut );
 
     // XAttributeList
-    virtual sal_Int16 SAL_CALL getLength()
-        throw ( css::uno::RuntimeException );
-    virtual ::rtl::OUString SAL_CALL getNameByIndex( sal_Int16 nPos )
-         throw ( css::uno::RuntimeException );
-    virtual ::rtl::OUString SAL_CALL getTypeByIndex( sal_Int16 nPos )
-        throw ( css::uno::RuntimeException );
-    virtual ::rtl::OUString SAL_CALL getTypeByName( ::rtl::OUString const & rName )
-        throw ( css::uno::RuntimeException );
-    virtual ::rtl::OUString SAL_CALL getValueByIndex( sal_Int16 nPos )
-        throw ( css::uno::RuntimeException );
-    virtual ::rtl::OUString SAL_CALL getValueByName( ::rtl::OUString const & rName )
-        throw ( css::uno::RuntimeException );
+    virtual sal_Int16 SAL_CALL getLength();
+    virtual ::rtl::OUString SAL_CALL getNameByIndex( sal_Int16 nPos );
+    virtual ::rtl::OUString SAL_CALL getTypeByIndex( sal_Int16 nPos );
+    virtual ::rtl::OUString SAL_CALL getTypeByName( ::rtl::OUString const & rName );
+    virtual ::rtl::OUString SAL_CALL getValueByIndex( sal_Int16 nPos );
+    virtual ::rtl::OUString SAL_CALL getValueByName( ::rtl::OUString const & rName );
 
 protected:
     ::rtl::OUString _name;

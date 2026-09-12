@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -198,7 +198,7 @@ rtl::OUString GetOUString( NSString* pStr )
     int nLen = [pStr length];
     if( nLen == 0 )
         return rtl::OUString();
-    
+
     rtl::OUStringBuffer aBuf( nLen+1 );
     aBuf.setLength( nLen );
     [pStr getCharacters: const_cast<sal_Unicode*>(aBuf.getStr())];
@@ -207,10 +207,6 @@ rtl::OUString GetOUString( NSString* pStr )
 
 void MacOSXBackend::setPropertyValue(
     rtl::OUString const &, css::uno::Any const &)
-    throw (
-        css::beans::UnknownPropertyException, css::beans::PropertyVetoException,
-        css::lang::IllegalArgumentException, css::lang::WrappedTargetException,
-        css::uno::RuntimeException)
 {
     throw css::lang::IllegalArgumentException(
         rtl::OUString(
@@ -220,9 +216,6 @@ void MacOSXBackend::setPropertyValue(
 
 css::uno::Any MacOSXBackend::getPropertyValue(
     rtl::OUString const & PropertyName)
-    throw (
-        css::beans::UnknownPropertyException, css::lang::WrappedTargetException,
-        css::uno::RuntimeException)
 {
     if (PropertyName.equalsAsciiL(
             RTL_CONSTASCII_STRINGPARAM("WorkPathVariable")))
@@ -232,7 +225,7 @@ css::uno::Any MacOSXBackend::getPropertyValue(
         if( pPaths && [pPaths count] > 0 )
         {
             aDocDir = GetOUString( [pPaths objectAtIndex: 0] );
-            
+
             rtl::OUString aDocURL;
             if( aDocDir.getLength() > 0 &&
                 osl_getFileURLFromSystemPath( aDocDir.pData, &aDocURL.pData ) == osl_File_E_None )
@@ -457,7 +450,6 @@ rtl::OUString SAL_CALL MacOSXBackend::getBackendName(void)
 //------------------------------------------------------------------------------
 
 rtl::OUString SAL_CALL MacOSXBackend::getImplementationName(void)
-    throw (uno::RuntimeException)
 {
     return getBackendName();
 }
@@ -475,7 +467,6 @@ uno::Sequence<rtl::OUString> SAL_CALL MacOSXBackend::getBackendServiceNames(void
 //------------------------------------------------------------------------------
 
 sal_Bool SAL_CALL MacOSXBackend::supportsService(const rtl::OUString& aServiceName)
-    throw (uno::RuntimeException)
 {
     uno::Sequence< rtl::OUString > const svc = getBackendServiceNames();
 
@@ -489,7 +480,6 @@ sal_Bool SAL_CALL MacOSXBackend::supportsService(const rtl::OUString& aServiceNa
 //------------------------------------------------------------------------------
 
 uno::Sequence<rtl::OUString> SAL_CALL MacOSXBackend::getSupportedServiceNames(void)
-    throw (uno::RuntimeException)
 {
     return getBackendServiceNames();
 }

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -227,20 +227,17 @@ XMLTransformerBase::~XMLTransformerBase() throw ()
 }
 
 void SAL_CALL XMLTransformerBase::startDocument( void )
-	throw( SAXException, RuntimeException )
 {
 	m_xHandler->startDocument();
 }
 
 void SAL_CALL XMLTransformerBase::endDocument( void )
-	throw( SAXException, RuntimeException)
 {
 	m_xHandler->endDocument();
 }
 
 void SAL_CALL XMLTransformerBase::startElement( const OUString& rName,
 										 const Reference< XAttributeList >& rAttrList )
-	throw(SAXException, RuntimeException)
 {
 	SvXMLNamespaceMap *pRewindMap = 0;
 
@@ -337,7 +334,6 @@ void SAL_CALL XMLTransformerBase::endElement( const OUString&
 rName
 #endif
 )
-	throw(SAXException, RuntimeException)
 {
 	if( !m_pContexts->empty() )
 	{
@@ -371,7 +367,6 @@ rName
 }
 
 void SAL_CALL XMLTransformerBase::characters( const OUString& rChars )
-	throw(SAXException, RuntimeException)
 {
 	if( !m_pContexts->empty() )
 	{
@@ -380,53 +375,47 @@ void SAL_CALL XMLTransformerBase::characters( const OUString& rChars )
 }
 
 void SAL_CALL XMLTransformerBase::ignorableWhitespace( const OUString& rWhitespaces )
-	throw(SAXException, RuntimeException)
 {
 	m_xHandler->ignorableWhitespace( rWhitespaces );
 }
 
 void SAL_CALL XMLTransformerBase::processingInstruction( const OUString& rTarget,
 									   const OUString& rData )
-	throw(SAXException, RuntimeException)
 {
 	m_xHandler->processingInstruction( rTarget, rData );
 }
 
 void SAL_CALL XMLTransformerBase::setDocumentLocator( const Reference< XLocator >& rLocator )
-	throw(SAXException, RuntimeException)
 {
 	m_xLocator = rLocator;
 }
 
 // XExtendedDocumentHandler
-void SAL_CALL XMLTransformerBase::startCDATA( void ) throw(SAXException, RuntimeException)
+void SAL_CALL XMLTransformerBase::startCDATA( void )
 {
 	if( m_xExtHandler.is() )
 		m_xExtHandler->startCDATA();
 }
 
-void SAL_CALL XMLTransformerBase::endCDATA( void ) throw(RuntimeException)
+void SAL_CALL XMLTransformerBase::endCDATA( void )
 {
 	if( m_xExtHandler.is() )
 		m_xExtHandler->endCDATA();
 }
 
 void SAL_CALL XMLTransformerBase::comment( const OUString& rComment )
-	throw(SAXException, RuntimeException)
 {
 	if( m_xExtHandler.is() )
 		m_xExtHandler->comment( rComment );
 }
 
 void SAL_CALL XMLTransformerBase::allowLineBreak( void )
-	throw(SAXException, RuntimeException)
 {
 	if( m_xExtHandler.is() )
 		m_xExtHandler->allowLineBreak();
 }
 
 void SAL_CALL XMLTransformerBase::unknown( const OUString& rString )
-	throw(SAXException, RuntimeException)
 {
 	if( m_xExtHandler.is() )
 		m_xExtHandler->unknown( rString );
@@ -434,7 +423,6 @@ void SAL_CALL XMLTransformerBase::unknown( const OUString& rString )
 
 // XInitialize
 void SAL_CALL XMLTransformerBase::initialize( const Sequence< Any >& aArguments )
-	throw(Exception, RuntimeException)
 {
 	const sal_Int32 nAnyCount = aArguments.getLength();
 	const Any* pAny = aArguments.getConstArray();
@@ -1332,7 +1320,7 @@ sal_Bool XMLTransformerBase::ConvertURIToOASIS( ::rtl::OUString& rURI,
 					switch( rURI[nPos] )
 					{
 					case '/':
-						// a relative path segement
+						// a relative path segment
 						nPos = nLen;	// leave loop
 						break;
 					case ':':
@@ -1398,7 +1386,7 @@ sal_Bool XMLTransformerBase::ConvertURIToOOo( ::rtl::OUString& rURI,
 					switch( rURI[nPos] )
 					{
 					case '/':
-						// a relative path segement within the package
+						// a relative path segment within the package
 						nPos = nLen;	// leave loop
 						break;
 					case ':':

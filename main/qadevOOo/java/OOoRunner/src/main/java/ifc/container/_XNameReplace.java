@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,7 +49,7 @@ import com.sun.star.uno.UnoRuntime;
 *  <li> <code>'XNameReplaceINDEX'</code> : For internal test
 *   usage. Contains current thread number. </li>
 *  <li> Test environment variable <code>'THRCNT'</code> : number
-*   of interface threads running concurently. </li>
+*   of interface threads running concurrently. </li>
 * <ul> <p>
 * XNameReplace needs n ObjectRelations "INSTANCEn" , where n = 1, ..., THRCNT.
 * <p>
@@ -66,7 +66,7 @@ import com.sun.star.uno.UnoRuntime;
 * Some Object-Container can't replace the first that comes belong. So in
 * NAMEREPLACE you can determine a containerobject, which is replaceable. <p>
 *
-* Test is <b> NOT </b> multithread compilant. <p>
+* Test is <b> NOT </b> multithread compliant. <p>
 * After test completion object environment has to be recreated.
 * @see com.sun.star.container.XNameReplace
 */
@@ -132,24 +132,24 @@ public class _XNameReplace extends MultiMethodTest {
             log.println("replace object '" + oNames[0] + "' with another instance");
             oObj.replaceByName(oNames[0],oInstance);
             Object newEl = oObj.getByName(oNames[0]) ;
-            
+
             if (tEnv.getTestCase().getObjectName().equals("ScCellRangesObj")) {
                 ok = compareRanges(old, newEl);
             } else {
-                ok = ! ValueComparer.equalValue(old, newEl);                        
+                ok = ! ValueComparer.equalValue(old, newEl);
             }
             result &= ok;
             log.println("result of replace: " + ok);
             log.println("replace back the old object");
-            oObj.replaceByName(oNames[0],old);            
+            oObj.replaceByName(oNames[0],old);
             Object origEl = oObj.getByName(oNames[0]) ;
-            
+
             if (tEnv.getTestCase().getObjectName().equals("ScCellRangesObj")) {
                 ok = ! compareRanges(old, origEl);
             } else {
                 ok = ValueComparer.equalValue(old, origEl);
             }
-            
+
             result &= ok;
             log.println("result of replace back: " + ok);
         } catch (com.sun.star.lang.IllegalArgumentException e ) {
@@ -173,50 +173,48 @@ public class _XNameReplace extends MultiMethodTest {
     public void after() {
         disposeEnvironment() ;
     }
-    
+
     // method returns false if the ranges are equal and true otherwise
-    
+
     private boolean compareRanges(Object old, Object newEl) {
-        XCellRangeAddressable xCRA = (XCellRangeAddressable) 
+        XCellRangeAddressable xCRA = (XCellRangeAddressable)
                 UnoRuntime.queryInterface(XCellRangeAddressable.class,old);
-        
-        XCellRangeAddressable xCRA2 = (XCellRangeAddressable) 
+
+        XCellRangeAddressable xCRA2 = (XCellRangeAddressable)
                 UnoRuntime.queryInterface(XCellRangeAddressable.class,newEl);
-                
+
         int orgStartCol = xCRA.getRangeAddress().StartColumn;
-        int orgEndCol = xCRA.getRangeAddress().EndColumn;        
+        int orgEndCol = xCRA.getRangeAddress().EndColumn;
         int orgStartRow = xCRA.getRangeAddress().StartRow;
-        int orgEndRow = xCRA.getRangeAddress().EndRow;                
-        
+        int orgEndRow = xCRA.getRangeAddress().EndRow;
+
         int newStartCol = xCRA2.getRangeAddress().StartColumn;
-        int newEndCol = xCRA2.getRangeAddress().EndColumn;        
+        int newEndCol = xCRA2.getRangeAddress().EndColumn;
         int newStartRow = xCRA2.getRangeAddress().StartRow;
         int newEndRow = xCRA2.getRangeAddress().EndRow;
-        
+
         boolean ret = true;
-        
+
         if (orgStartCol == newStartCol) {
             log.println("\t StartColumn is the same");
             ret = false;
         }
-        
+
         if (orgEndCol == newEndCol) {
             log.println("\t EndColumn is the same");
             ret = false;
-        }        
+        }
         if (orgStartRow == newStartRow) {
             log.println("\t StartRow is the same");
             ret = false;
         }
-        
+
         if (orgEndRow == newEndRow) {
             log.println("\t EndRow is the same");
             ret = false;
-        }                
-        
-        return ret;        
+        }
+
+        return ret;
     }
 
 }
-
-

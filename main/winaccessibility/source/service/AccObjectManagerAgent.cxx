@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #include "AccObjectManagerAgent.hxx"
@@ -29,7 +29,7 @@ using namespace com::sun::star::accessibility;
 
 /**
    * Construction/Destruction.
-   * @param 
+   * @param
    * @return
    */
 AccObjectManagerAgent::AccObjectManagerAgent():
@@ -142,10 +142,10 @@ void  AccObjectManagerAgent::UpdateDescription( XAccessible* pXAcc, Any newDesc 
    * @param pWnd The top window handle containing control.
    * @return If the method is correctly processed.
    */
-unsigned char AccObjectManagerAgent::InsertAccObj( XAccessible* pXAcc,XAccessible* pParentXAcc,long pWnd)
+unsigned char AccObjectManagerAgent::InsertAccObj( XAccessible* pXAcc,XAccessible* pParentXAcc,void *pWnd)
 {
     if( pWinManager )
-        return (unsigned char)pWinManager->InsertAccObj( pXAcc, pParentXAcc,HWND((void*)pWnd) );
+        return (unsigned char)pWinManager->InsertAccObj( pXAcc, pParentXAcc, (HWND)pWnd );
 
     return sal_False;
 }
@@ -156,10 +156,10 @@ unsigned char AccObjectManagerAgent::InsertAccObj( XAccessible* pXAcc,XAccessibl
    * @param pXAcc XAccessible interface for top window
    * @return void
    */
-void AccObjectManagerAgent::SaveTopWindowHandle(long hWnd, com::sun::star::accessibility::XAccessible* pXAcc)
+void AccObjectManagerAgent::SaveTopWindowHandle(void *hWnd, com::sun::star::accessibility::XAccessible* pXAcc)
 {
     if( pWinManager )
-        pWinManager->SaveTopWindowHandle( HWND((void*)hWnd), pXAcc );
+        pWinManager->SaveTopWindowHandle( (HWND)hWnd, pXAcc );
 }
 
 
@@ -171,10 +171,10 @@ void AccObjectManagerAgent::SaveTopWindowHandle(long hWnd, com::sun::star::acces
    * @return If the method is correctly processed.
    */
 unsigned char AccObjectManagerAgent::InsertChildrenAccObj( XAccessible* pXAcc,
-        long pWnd)
+        void *pWnd)
 {
     if( pWinManager )
-        return (unsigned char)pWinManager->InsertChildrenAccObj( pXAcc, HWND((void*)pWnd) );
+        return (unsigned char)pWinManager->InsertChildrenAccObj( pXAcc, (HWND)pWnd );
 
     return sal_False;
 }
@@ -183,7 +183,7 @@ unsigned char AccObjectManagerAgent::InsertChildrenAccObj( XAccessible* pXAcc,
    * When a new UNO XAccessible object is destroied,we'll delete its corresponding
    * com object and remove it from our manager list.
    * @param pXAcc Uno XAccessible interface of control.
-   * @return 
+   * @return
    */
 void AccObjectManagerAgent::DeleteAccObj( XAccessible* pXAcc )
 {
@@ -195,7 +195,7 @@ void AccObjectManagerAgent::DeleteAccObj( XAccessible* pXAcc )
    * When new UNO children XAccessible objects are destroyed,we'll delete their
    * corresponding com objects and remove them from our manager list.
    * @param pXAcc Uno XAccessible interface of control.
-   * @return 
+   * @return
    */
 void AccObjectManagerAgent::DeleteChildrenAccObj( XAccessible* pXAcc )
 {
@@ -278,7 +278,7 @@ IMAccessible* AccObjectManagerAgent::GetIMAccByXAcc(XAccessible* pXAcc)
 }
 
 /**
-   * Notify manger when a XAccessible object is destroying.
+   * Notify manager when a XAccessible object is destroying.
    * @param pXAcc Uno XAccessible interface of control.
    * @return.
    */

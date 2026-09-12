@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -169,6 +169,25 @@ bool LibDump::Dump()
                     pFound = strchr( pFound, 'E' );
                 }
             }
+        }
+
+        // A modern MSVC puts its SSE and AVX vector constants into the archive
+        // symbol table as __xmm@<hex>, and __ymm@/__zmm@ for the wider ones,
+        // exactly as every MSVC has done for __real@<hex>.  They are merged
+        // COMDAT constants, not exports, and a .def naming one fails to link:
+        //
+        //     icharttools.exp : error LNK2001: unresolved external symbol
+        //                       _xmm@41f00000000000000000000000000000
+        //
+        // The two modules that carry a symbol filter list _real for the same
+        // reason, but most export-all modules carry no filter at all -- ldump
+        // does no filtering when the file is absent -- so this has to be here
+        // rather than in a .flt.  VC9 emits none of these, so it is unaffected.
+        if ( !strncmp( aBuf, "__xmm@", 6 )
+             || !strncmp( aBuf, "__ymm@", 6 )
+             || !strncmp( aBuf, "__zmm@", 6 ) )
+        {
+            continue;
         }
 
 	    if ((aBuf[0] =='?') || !strncmp(aBuf, "__CT",4))
@@ -337,27 +356,27 @@ bool LibDump::IsFromAnonymousNamespace (char *pExportName) {
     char* pattern1 = "@?A0x";
 
     if (strstr(pExportName, pattern1)) {
-        return true; 
+        return true;
     };
-    return false; 
+    return false;
 };
 
 bool LibDump::Filter(char *pExportName)
 {
 	unsigned long i;
 	char pTest[256];
-    
+
     // filter out symbols from anonymous namespaces
     if (IsFromAnonymousNamespace (pExportName))
         return false;
-    
+
     // Kein Filter gesetzt
     if ( ::bFilter == 0 )
         return true;
 
 	for ( i=0; i<nFilterLines; i++ )
 	{
-		//Zum vergleichen muá das Plus abgeschnitteb werden
+		//Zum vergleichen muï¿½ das Plus abgeschnitteb werden
 		if(pFilterLines[i][0] != '+')
 		{
 			if ( strstr( pExportName, pFilterLines[i]))
@@ -453,7 +472,7 @@ private:
 
 bool LibDump::PrintDataBase()
 {
-    if (bExportName) 
+    if (bExportName)
         return true;
 	FILE *pFp;
 	pFp = fopen (cBName,"w+");

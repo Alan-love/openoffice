@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -144,7 +144,7 @@
 	}
 
 	//--------------------------------------------------------------------
-	Sequence< Type > SAL_CALL OGeometryControlModel_Base::getTypes(  ) throw (RuntimeException)
+	Sequence< Type > SAL_CALL OGeometryControlModel_Base::getTypes(  )
 	{
 		// our own types
 		Sequence< Type > aTypes = ::comphelper::concatSequences(
@@ -195,7 +195,7 @@
 	::com::sun::star::uno::Any OGeometryControlModel_Base::ImplGetDefaultValueByHandle(sal_Int32 nHandle) const
 	{
 		::com::sun::star::uno::Any aDefault;
-	
+
         switch ( nHandle )
         {
             case GCM_PROPERTY_ID_POS_X:			    aDefault <<= (sal_Int32) 0; break;
@@ -217,7 +217,7 @@
 	::com::sun::star::uno::Any OGeometryControlModel_Base::ImplGetPropertyValueByHandle(sal_Int32 nHandle) const
 	{
 		::com::sun::star::uno::Any aValue;
-	
+
         switch ( nHandle )
         {
             case GCM_PROPERTY_ID_POS_X:			aValue <<= m_nPosX; break;
@@ -237,7 +237,7 @@
 
 	//--------------------------------------------------------------------
 	void OGeometryControlModel_Base::ImplSetPropertyValueByHandle(sal_Int32 nHandle, const :: com::sun::star::uno::Any& aValue)
-	{		
+	{
         switch ( nHandle )
         {
             case GCM_PROPERTY_ID_POS_X:			aValue >>= m_nPosX; break;
@@ -254,7 +254,7 @@
 	}
 
 	//--------------------------------------------------------------------
-	Any SAL_CALL OGeometryControlModel_Base::queryAggregation( const Type& _rType ) throw(RuntimeException)
+	Any SAL_CALL OGeometryControlModel_Base::queryAggregation( const Type& _rType )
 	{
 		Any aReturn;
 		if (_rType.equals(::getCppuType(static_cast< Reference< XCloneable>* >(NULL))) && !m_bCloneable)
@@ -279,7 +279,7 @@
 	}
 
 	//--------------------------------------------------------------------
-	Any SAL_CALL OGeometryControlModel_Base::queryInterface( const Type& _rType ) throw(RuntimeException)
+	Any SAL_CALL OGeometryControlModel_Base::queryInterface( const Type& _rType )
 	{
 		return OGCM_Base::queryInterface(_rType);
 	}
@@ -306,20 +306,20 @@
 	}
 
 	//--------------------------------------------------------------------
-	OGeometryControlModel_Base::~OGeometryControlModel_Base()
+	OGeometryControlModel_Base::~OGeometryControlModel_Base() SAL_THROW( () )
 	{
 		releaseAggregation();
 	}
 
 	//--------------------------------------------------------------------
 	sal_Bool SAL_CALL OGeometryControlModel_Base::convertFastPropertyValue(Any& _rConvertedValue, Any& _rOldValue,
-			sal_Int32 _nHandle, const Any& _rValue) throw (IllegalArgumentException)
+			sal_Int32 _nHandle, const Any& _rValue)
 	{
 		return OPropertyContainer::convertFastPropertyValue(_rConvertedValue, _rOldValue, _nHandle, _rValue);
 	}
 
 	//--------------------------------------------------------------------
-	void SAL_CALL OGeometryControlModel_Base::setFastPropertyValue_NoBroadcast(sal_Int32 _nHandle, const Any& _rValue) throw (Exception)
+	void SAL_CALL OGeometryControlModel_Base::setFastPropertyValue_NoBroadcast(sal_Int32 _nHandle, const Any& _rValue)
 	{
 		OPropertyContainer::setFastPropertyValue_NoBroadcast(_nHandle, _rValue);
 	}
@@ -359,13 +359,13 @@
 	}
 
 	//--------------------------------------------------------------------
-	Reference< XPropertySetInfo> SAL_CALL OGeometryControlModel_Base::getPropertySetInfo() throw(RuntimeException)
+	Reference< XPropertySetInfo> SAL_CALL OGeometryControlModel_Base::getPropertySetInfo()
 	{
 		return OPropertySetAggregationHelper::createPropertySetInfo(getInfoHelper());
 	}
 
 	//--------------------------------------------------------------------
-	Reference< XCloneable > SAL_CALL OGeometryControlModel_Base::createClone(  ) throw(RuntimeException)
+	Reference< XCloneable > SAL_CALL OGeometryControlModel_Base::createClone(  )
 	{
 		OSL_ENSURE(m_bCloneable, "OGeometryControlModel_Base::createClone: invalid call!");
 		if (!m_bCloneable)
@@ -404,13 +404,13 @@
             static_cast< ::com::sun::star::script::XScriptEventsSupplier* >( this );
 		Reference< ::com::sun::star::script::XScriptEventsSupplier > xCloneEventsSupplier =
             static_cast< ::com::sun::star::script::XScriptEventsSupplier* >( pOwnClone );
-            
+
 		if( xEventsSupplier.is() && xCloneEventsSupplier.is() )
 		{
 			Reference< XNameContainer > xEventCont = xEventsSupplier->getEvents();
 			Reference< XNameContainer > xCloneEventCont = xCloneEventsSupplier->getEvents();
 
-			::com::sun::star::uno::Sequence< ::rtl::OUString > aNames = 
+			::com::sun::star::uno::Sequence< ::rtl::OUString > aNames =
                 xEventCont->getElementNames();
 			const ::rtl::OUString* pNames = aNames.getConstArray();
 			sal_Int32 i, nNameCount = aNames.getLength();
@@ -427,7 +427,7 @@
 	}
 
 	//--------------------------------------------------------------------
-	Reference< XNameContainer > SAL_CALL OGeometryControlModel_Base::getEvents() throw(RuntimeException)
+	Reference< XNameContainer > SAL_CALL OGeometryControlModel_Base::getEvents()
 	{
 		if( !mxEventContainer.is() )
 			mxEventContainer = (XNameContainer*)new toolkit::ScriptEventContainer();
@@ -591,7 +591,7 @@
 	}
 
 	//--------------------------------------------------------------------
-	Sequence< sal_Int8 > SAL_CALL OCommonGeometryControlModel::getImplementationId(  ) throw (RuntimeException)
+	Sequence< sal_Int8 > SAL_CALL OCommonGeometryControlModel::getImplementationId(  )
 	{
 		static ::cppu::OImplementationId * pId = NULL;
 		if ( !pId )
@@ -619,7 +619,7 @@
 	};
 
 	//--------------------------------------------------------------------
-	void SAL_CALL OCommonGeometryControlModel::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue ) throw ( Exception )
+	void SAL_CALL OCommonGeometryControlModel::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue )
 	{
 		OGeometryControlModel_Base::setFastPropertyValue_NoBroadcast( _nHandle, _rValue );
 

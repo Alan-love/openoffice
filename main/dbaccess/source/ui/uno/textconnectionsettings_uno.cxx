@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -85,8 +85,8 @@ namespace dbaui
         DECLARE_SERVICE_INFO_STATIC( );
         DECLARE_PROPERTYCONTAINER_DEFAULTS( );
 
-		virtual void SAL_CALL setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any& rValue ) throw(Exception);
-		virtual sal_Bool SAL_CALL convertFastPropertyValue( Any& rConvertedValue, Any& rOldValue, sal_Int32 nHandle, const Any& rValue) throw(IllegalArgumentException);
+		virtual void SAL_CALL setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any& rValue );
+		virtual sal_Bool SAL_CALL convertFastPropertyValue( Any& rConvertedValue, Any& rOldValue, sal_Int32 nHandle, const Any& rValue);
         virtual void SAL_CALL getFastPropertyValue( Any& rValue, sal_Int32 nHandle ) const;
 
     protected:
@@ -119,7 +119,7 @@ namespace dbaui
 	IMPLEMENT_SERVICE_INFO1_STATIC( OTextConnectionSettingsDialog, "com.sun.star.comp.dbaccess.OTextConnectionSettingsDialog", "com.sun.star.sdb.TextConnectionSettings" )
 
     //---------------------------------------------------------------------
-    Reference< XPropertySetInfo >  SAL_CALL OTextConnectionSettingsDialog::getPropertySetInfo() throw(RuntimeException)
+    Reference< XPropertySetInfo >  SAL_CALL OTextConnectionSettingsDialog::getPropertySetInfo()
     {
         return createPropertySetInfo( getInfoHelper() );
     }
@@ -200,7 +200,7 @@ namespace dbaui
 	}
 
     //--------------------------------------------------------------------
-    void SAL_CALL OTextConnectionSettingsDialog::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue ) throw(Exception)
+    void SAL_CALL OTextConnectionSettingsDialog::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue )
     {
         PropertyValues::const_iterator pos = m_aPropertyValues.find( _nHandle );
         if ( pos != m_aPropertyValues.end() )
@@ -212,9 +212,9 @@ namespace dbaui
             OTextConnectionSettingsDialog::setFastPropertyValue_NoBroadcast( _nHandle, _rValue );
         }
     }
-    
+
     //--------------------------------------------------------------------
-    sal_Bool SAL_CALL OTextConnectionSettingsDialog::convertFastPropertyValue( Any& _rConvertedValue, Any& _rOldValue, sal_Int32 _nHandle, const Any& _rValue) throw(IllegalArgumentException)
+    sal_Bool SAL_CALL OTextConnectionSettingsDialog::convertFastPropertyValue( Any& _rConvertedValue, Any& _rOldValue, sal_Int32 _nHandle, const Any& _rValue)
     {
         sal_Bool bModified = sal_False;
 
@@ -233,7 +233,7 @@ namespace dbaui
 
         return bModified;
     }
-    
+
     //--------------------------------------------------------------------
     void SAL_CALL OTextConnectionSettingsDialog::getFastPropertyValue( Any& _rValue, sal_Int32 _nHandle ) const
     {
@@ -256,4 +256,3 @@ extern "C" void SAL_CALL createRegistryInfo_OTextConnectionSettingsDialog()
 {
 	static ::dbaui::OMultiInstanceAutoRegistration< ::dbaui::OTextConnectionSettingsDialog > aAutoRegistration;
 }
-

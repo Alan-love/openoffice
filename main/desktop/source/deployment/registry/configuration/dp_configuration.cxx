@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -71,9 +71,9 @@ class BackendImpl : public ::dp_registry::backend::PackageRegistryBackend
     class PackageImpl : public ::dp_registry::backend::Package
     {
         BackendImpl * getMyBackend() const ;
-        
+
         const bool m_isSchema;
-        
+
         // Package
         virtual beans::Optional< beans::Ambiguous<sal_Bool> > isRegistered_(
             ::osl::ResettableMutexGuard & guard,
@@ -85,7 +85,7 @@ class BackendImpl : public ::dp_registry::backend::PackageRegistryBackend
             bool startup,
             ::rtl::Reference<AbortChannel> const & abortChannel,
             Reference<XCommandEnvironment> const & xCmdEnv );
-        
+
     public:
         inline PackageImpl(
             ::rtl::Reference<PackageRegistryBackend> const & myBackend,
@@ -98,32 +98,32 @@ class BackendImpl : public ::dp_registry::backend::PackageRegistryBackend
             {}
     };
     friend class PackageImpl;
-    
+
     t_stringlist m_xcs_files;
     t_stringlist m_xcu_files;
     t_stringlist & getFiles( bool xcs ) {
         return xcs ? m_xcs_files : m_xcu_files;
     }
-    
+
     bool m_configmgrini_inited;
     bool m_configmgrini_modified;
     std::auto_ptr<ConfigurationBackendDb> m_backendDb;
-    
+
     // PackageRegistryBackend
     virtual Reference<deployment::XPackage> bindPackage_(
         OUString const & url, OUString const & mediaType, sal_Bool bRemoved,
-        OUString const & identifier, 
+        OUString const & identifier,
         Reference<XCommandEnvironment> const & xCmdEnv );
-    
+
     ::std::auto_ptr<PersistentMap> m_registeredPackages;
         // for backwards compatibility
 
     virtual void SAL_CALL disposing();
-    
+
     const Reference<deployment::XPackageTypeInfo> m_xConfDataTypeInfo;
     const Reference<deployment::XPackageTypeInfo> m_xConfSchemaTypeInfo;
     Sequence< Reference<deployment::XPackageTypeInfo> > m_typeInfos;
-    
+
     void configmgrini_verify_init(
         Reference<XCommandEnvironment> const & xCmdEnv );
     void configmgrini_flush( Reference<XCommandEnvironment> const & xCmdEnv );
@@ -136,7 +136,7 @@ class BackendImpl : public ::dp_registry::backend::PackageRegistryBackend
                      Reference<XCommandEnvironment> const & xCmdEnv );
     bool removeFromConfigmgrIni( bool isSchema, OUString const & url,
                           Reference<XCommandEnvironment> const & xCmdEnv );
-    
+
     void addDataToDb(OUString const & url, ConfigurationBackendDb::Data const & data);
     ::boost::optional<ConfigurationBackendDb::Data> readDataFromDb(OUString const & url);
     void revokeEntryFromDb(OUString const & url);
@@ -147,13 +147,11 @@ class BackendImpl : public ::dp_registry::backend::PackageRegistryBackend
 public:
     BackendImpl( Sequence<Any> const & args,
                  Reference<XComponentContext> const & xComponentContext );
-    
+
     // XPackageRegistry
     virtual Sequence< Reference<deployment::XPackageTypeInfo> > SAL_CALL
-    getSupportedPackageTypes() throw (RuntimeException);
-    virtual void SAL_CALL packageRemoved(OUString const & url, OUString const & mediaType)
-        throw (deployment::DeploymentException,
-               uno::RuntimeException);
+    getSupportedPackageTypes();
+    virtual void SAL_CALL packageRemoved(OUString const & url, OUString const & mediaType);
 
     using PackageRegistryBackend::disposing;
 };
@@ -163,7 +161,7 @@ void BackendImpl::disposing()
 {
     try {
         configmgrini_flush( Reference<XCommandEnvironment>() );
-        
+
         PackageRegistryBackend::disposing();
     }
     catch (RuntimeException &) {
@@ -200,9 +198,9 @@ BackendImpl::BackendImpl(
 {
     m_typeInfos[ 0 ] = m_xConfDataTypeInfo;
     m_typeInfos[ 1 ] = m_xConfSchemaTypeInfo;
-    
+
     const Reference<XCommandEnvironment> xCmdEnv;
-    
+
     if (transientMode())
     {
         //TODO
@@ -225,7 +223,7 @@ BackendImpl::BackendImpl(
         m_registeredPackages.reset(
             new PersistentMap(
                 makeURL( getCachePath(), OUSTR("registered_packages.pmap") ),
-                false ) );       
+                false ) );
      }
 }
 
@@ -278,13 +276,11 @@ bool BackendImpl::activateEntry(OUString const & url)
 // XPackageRegistry
 //______________________________________________________________________________
 Sequence< Reference<deployment::XPackageTypeInfo> >
-BackendImpl::getSupportedPackageTypes() throw (RuntimeException)
+BackendImpl::getSupportedPackageTypes()
 {
     return m_typeInfos;
 }
 void BackendImpl::packageRemoved(OUString const & url, OUString const & /*mediaType*/)
-        throw (deployment::DeploymentException,
-               uno::RuntimeException)
 {
     if (m_backendDb.get())
         m_backendDb->removeEntry(url);
@@ -322,7 +318,7 @@ Reference<deployment::XPackage> BackendImpl::bindPackage_(
                 StrCannotDetectMediaType::get() + url,
                 static_cast<OWeakObject *>(this), static_cast<sal_Int16>(-1) );
     }
-    
+
     String type, subType;
     INetContentTypeParameterList params;
     if (INetContentTypes::parse( mediaType, type, subType, &params ))
@@ -426,7 +422,7 @@ void BackendImpl::configmgrini_flush(
         return;
     if (!m_configmgrini_inited || !m_configmgrini_modified)
         return;
-    
+
     ::rtl::OStringBuffer buf;
     if (! m_xcs_files.empty())
     {
@@ -460,7 +456,7 @@ void BackendImpl::configmgrini_flush(
         }
         buf.append(LF);
     }
-    
+
     // write configmgr.ini:
     const Reference<io::XInputStream> xData(
         ::xmlscript::createInputStream(
@@ -470,7 +466,7 @@ void BackendImpl::configmgrini_flush(
     ::ucbhelper::Content ucb_content(
         makeURL( getCachePath(), OUSTR("configmgr.ini") ), xCmdEnv );
     ucb_content.writeStream( xData, true /* replace existing */ );
-    
+
     m_configmgrini_modified = false;
 }
 
@@ -508,7 +504,7 @@ bool BackendImpl::removeFromConfigmgrIni(
         //in case the xcu contained %origin% then the configmr.ini contains the
         //url to the file in the user installation (e.g. $BUNDLED_EXTENSIONS_USER)
         //However, m_url (getURL()) contains the URL for the file in the actual
-        //extension installatation.
+        //extension installation.
         ::boost::optional<ConfigurationBackendDb::Data> data = readDataFromDb(url_);
         if (data)
             i = std::find(rSet.begin(), rSet.end(), data->iniEntry);
@@ -532,12 +528,12 @@ BackendImpl * BackendImpl::PackageImpl::getMyBackend() const
 {
     BackendImpl * pBackend = static_cast<BackendImpl *>(m_myBackend.get());
     if (NULL == pBackend)
-    {    
+    {
         //May throw a DisposedException
         check();
         //We should never get here...
         throw RuntimeException(
-            OUSTR("Failed to get the BackendImpl"), 
+            OUSTR("Failed to get the BackendImpl"),
             static_cast<OWeakObject*>(const_cast<PackageImpl *>(this)));
     }
     return pBackend;
@@ -559,7 +555,7 @@ BackendImpl::PackageImpl::isRegistered_(
         //fallback for user extension registered in berkeley DB
         bReg = that->m_registeredPackages->has(
             rtl::OUStringToOString( url, RTL_TEXTENCODING_UTF8 ));
-    
+
 	return beans::Optional< beans::Ambiguous<sal_Bool> >(
         true, beans::Ambiguous<sal_Bool>( bReg, false ) );
 }
@@ -620,7 +616,7 @@ OUString replaceOrigin(
                 break;
             index = nBytes;
         }
-        
+
         if ((write_pos + index) > filtered.getLength())
             filtered.realloc( (filtered.getLength() + index) * 2 );
         rtl_copyMemory( filtered.getArray() + write_pos, pBytes, index );
@@ -629,7 +625,7 @@ OUString replaceOrigin(
         nBytes -= index;
         if (nBytes == 0)
             break;
-        
+
         // consume %:
         ++pBytes;
         --nBytes;
@@ -693,7 +689,7 @@ void BackendImpl::PackageImpl::processPackage_(
 {
     BackendImpl * that = getMyBackend();
     OUString url( getURL() );
-    
+
     if (doRegisterPackage)
     {
         if (getMyBackend()->activateEntry(getURL()))
@@ -747,7 +743,7 @@ void BackendImpl::PackageImpl::processPackage_(
             for (t_string2string_map::iterator i(entries.begin());
                  i != entries.end(); ++i)
             {
-                //If the xcu file was installed before the configmgr was chaned
+                //If the xcu file was installed before the configmgr was changed
                 //to use the configmgr.ini, one needed to rebuild to whole directory
                 //structur containing the xcu, xcs files from all extensions. Now,
                 //we just add all other xcu/xcs files to the configmgr.ini instead of
@@ -788,7 +784,7 @@ void BackendImpl::PackageImpl::processPackage_(
                 OSL_ASSERT(0);
             }
         }
-        
+
         ::boost::optional<ConfigurationBackendDb::Data> data = that->readDataFromDb(url);
         //If an xcu file was life deployed then always a data entry is written.
         //If the xcu file was already in the configmr.ini then there is also
@@ -800,7 +796,7 @@ void BackendImpl::PackageImpl::processPackage_(
         }
         that->revokeEntryFromDb(url);
     }
-} 
+}
 
 } // anon namespace
 
@@ -814,4 +810,3 @@ extern sdecl::ServiceDecl const serviceDecl(
 } // namespace configuration
 } // namespace backend
 } // namespace dp_registry
-

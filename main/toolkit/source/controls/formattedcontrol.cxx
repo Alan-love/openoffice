@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -73,7 +73,7 @@ namespace toolkit
         const Reference< XNumberFormatsSupplier >& lcl_getDefaultFormats_throw()
         {
             ::osl::MutexGuard aGuard( getDefaultFormatsMutex() );
-            
+
             bool& rbTriedCreation = lcl_getTriedCreation();
             Reference< XNumberFormatsSupplier >& rDefaultFormats( lcl_getDefaultFormatsAccess_nothrow() );
             if ( !rDefaultFormats.is() && !rbTriedCreation )
@@ -172,13 +172,13 @@ namespace toolkit
     }
 
 	// -------------------------------------------------------------------
-	::rtl::OUString UnoControlFormattedFieldModel::getServiceName() throw(RuntimeException)
+	::rtl::OUString UnoControlFormattedFieldModel::getServiceName()
 	{
 		return ::rtl::OUString::createFromAscii( szServiceName_UnoControlFormattedFieldModel );
 	}
 
 	// -------------------------------------------------------------------
-    void SAL_CALL UnoControlFormattedFieldModel::setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any& rValue ) throw (Exception)
+    void SAL_CALL UnoControlFormattedFieldModel::setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any& rValue )
     {
         UnoControlModel::setFastPropertyValue_NoBroadcast( nHandle, rValue );
 
@@ -269,7 +269,7 @@ namespace toolkit
     }
 
 	// -------------------------------------------------------------------
-	void UnoControlFormattedFieldModel::dispose(  ) throw(RuntimeException)
+	void UnoControlFormattedFieldModel::dispose(  )
     {
         UnoControlModel::dispose();
 
@@ -311,7 +311,7 @@ namespace toolkit
     }
 
     // -------------------------------------------------------------------
-	void SAL_CALL UnoControlFormattedFieldModel::setPropertyValues( const Sequence< ::rtl::OUString >& _rPropertyNames, const Sequence< Any >& _rValues ) throw(PropertyVetoException, IllegalArgumentException, WrappedTargetException, RuntimeException)
+	void SAL_CALL UnoControlFormattedFieldModel::setPropertyValues( const Sequence< ::rtl::OUString >& _rPropertyNames, const Sequence< Any >& _rValues )
     {
         bool bSettingValue = false;
         bool bSettingText = false;
@@ -335,7 +335,7 @@ namespace toolkit
     // -------------------------------------------------------------------
 	sal_Bool UnoControlFormattedFieldModel::convertFastPropertyValue(
 				Any& rConvertedValue, Any& rOldValue, sal_Int32 nPropId,
-				const Any& rValue ) throw (IllegalArgumentException)
+				const Any& rValue )
 	{
 		if ( BASEPROPERTY_EFFECTIVE_DEFAULT == nPropId && rValue.hasValue() )
 		{
@@ -420,7 +420,7 @@ namespace toolkit
 
 	// beans::XMultiPropertySet
 	// -------------------------------------------------------------------
-	Reference< XPropertySetInfo > UnoControlFormattedFieldModel::getPropertySetInfo(  ) throw(RuntimeException)
+	Reference< XPropertySetInfo > UnoControlFormattedFieldModel::getPropertySetInfo(  )
 	{
 		static Reference< XPropertySetInfo > xInfo( createPropertySetInfo( getInfoHelper() ) );
 		return xInfo;
@@ -442,7 +442,7 @@ namespace toolkit
 	}
 
 	// -------------------------------------------------------------------
-	void UnoFormattedFieldControl::textChanged(const TextEvent& e) throw(RuntimeException)
+	void UnoFormattedFieldControl::textChanged(const TextEvent& e)
 	{
 		Reference< XVclWindowPeer >  xPeer(getPeer(), UNO_QUERY);
 		OSL_ENSURE(xPeer.is(), "UnoFormattedFieldControl::textChanged : what kind of peer do I have ?");
@@ -456,7 +456,7 @@ namespace toolkit
         aValues[1] = xPeer->getProperty( aNames[1] );
 
         ImplSetPropertyValues( aNames, aValues, sal_False );
-		
+
 		if ( GetTextListeners().getLength() )
 			GetTextListeners().textChanged( e );
 	}

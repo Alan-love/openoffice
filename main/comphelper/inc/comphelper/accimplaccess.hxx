@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -96,7 +96,7 @@ namespace comphelper
 		virtual ~OAccessibleImplementationAccess( );
 
 		// XUnoTunnel
-		virtual sal_Int64 SAL_CALL getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& _rIdentifier ) throw (::com::sun::star::uno::RuntimeException);
+		virtual sal_Int64 SAL_CALL getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& _rIdentifier );
 
 	public:
 		/** tries to access the implementation of an OAccessibleImplementationAccess derivee which is known as
@@ -109,7 +109,7 @@ namespace comphelper
 			is an invalid context (which means it is <NULL/>, or the implementation is not derived
 			from <type>OAccessibleImplementationAccess</type>, or retrieving the implementation failed).
 		*/
-		static OAccessibleImplementationAccess* getImplementation( 
+		static OAccessibleImplementationAccess* getImplementation(
 			const ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessibleContext >& _rxComponent
 		);
 
@@ -146,7 +146,7 @@ namespace comphelper
 			const sal_Int16 _nState,
 			const sal_Bool	_bSet
 		);
-			
+
 
 	private:
 		COMPHELPER_DLLPRIVATE static const ::com::sun::star::uno::Sequence< sal_Int8 >& getUnoTunnelImplementationId();
@@ -158,5 +158,3 @@ namespace comphelper
 
 
 #endif // COMPHELPER_ACCIMPLACCESS_HXX
-
-

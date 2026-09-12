@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -64,8 +64,8 @@ BasicIDEController::~BasicIDEController()
 // XInterface
 //----------------------------------------------------------------------------
 
-Any SAL_CALL BasicIDEController::queryInterface( const Type & rType ) throw(RuntimeException)
-{    
+Any SAL_CALL BasicIDEController::queryInterface( const Type & rType )
+{
     Any aReturn = SfxBaseController::queryInterface( rType );
     if ( !aReturn.hasValue() )
 		aReturn = OPropertyContainer::queryInterface( rType );
@@ -91,7 +91,7 @@ void SAL_CALL BasicIDEController::release() throw()
 // XTypeProvider ( ::SfxBaseController )
 //----------------------------------------------------------------------------
 
-Sequence< Type > SAL_CALL BasicIDEController::getTypes() throw(RuntimeException)
+Sequence< Type > SAL_CALL BasicIDEController::getTypes()
 {
     Sequence< Type > aTypes = ::comphelper::concatSequences(
 		SfxBaseController::getTypes(),
@@ -103,7 +103,7 @@ Sequence< Type > SAL_CALL BasicIDEController::getTypes() throw(RuntimeException)
 
 //----------------------------------------------------------------------------
 
-Sequence< sal_Int8 > SAL_CALL BasicIDEController::getImplementationId() throw(RuntimeException)
+Sequence< sal_Int8 > SAL_CALL BasicIDEController::getImplementationId()
 {
 	static ::cppu::OImplementationId * pId = 0;
 	if ( !pId )
@@ -121,7 +121,7 @@ Sequence< sal_Int8 > SAL_CALL BasicIDEController::getImplementationId() throw(Ru
 // XPropertySet
 //----------------------------------------------------------------------------
 
-Reference< beans::XPropertySetInfo > SAL_CALL BasicIDEController::getPropertySetInfo() throw(RuntimeException)
+Reference< beans::XPropertySetInfo > SAL_CALL BasicIDEController::getPropertySetInfo()
 {
 	Reference< beans::XPropertySetInfo > xInfo( createPropertySetInfo( getInfoHelper() ) );
 	return xInfo;

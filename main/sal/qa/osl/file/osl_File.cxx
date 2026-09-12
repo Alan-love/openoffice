@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -4206,7 +4206,7 @@ namespace osl_File
         nError1 = ::osl::FileBase::E_ACCES;  /// for Windows, c:/ is writtenable any way.
         deleteTestFile( aTmpName7);
 #endif
-        ASSERT_TRUE(::osl::FileBase::E_ACCES == nError1) << "test for copy function: copy to an illigal place";
+        ASSERT_TRUE(::osl::FileBase::E_ACCES == nError1) << "test for copy function: copy to an illegal place";
     }
 
     TEST_F(copy, copy_004 )
@@ -4324,7 +4324,7 @@ namespace osl_File
         deleteTestFile( aTmpName7);
 #endif
 
-        ASSERT_TRUE(::osl::FileBase::E_ACCES == nError1) << "test for move function: move to an illigal place";
+        ASSERT_TRUE(::osl::FileBase::E_ACCES == nError1) << "test for move function: move to an illegal place";
     }
 
     TEST_F(move, move_004 )

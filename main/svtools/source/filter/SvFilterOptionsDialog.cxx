@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -58,19 +58,16 @@ uno::Reference< uno::XInterface >
 }
 
 OUString SvFilterOptionsDialog_getImplementationName()
-	throw( uno::RuntimeException )
 {
 	return OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.comp.svtools.SvFilterOptionsDialog" ) );
 }
 #define SERVICE_NAME "com.sun.star.ui.dialog.FilterOptionsDialog"
 sal_Bool SAL_CALL SvFilterOptionsDialog_supportsService( const OUString& ServiceName )
-	throw( uno::RuntimeException )
 {
     return ServiceName.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM( SERVICE_NAME ) );
 }
 
 uno::Sequence< OUString > SAL_CALL SvFilterOptionsDialog_getSupportedServiceNames()
-	throw( uno::RuntimeException )
 {
 	uno::Sequence< OUString > aRet(1);
     OUString* pArray = aRet.getArray();
@@ -110,23 +107,19 @@ void SAL_CALL SvFilterOptionsDialog::release() throw()
 
 // XInitialization
 void SAL_CALL SvFilterOptionsDialog::initialize( const uno::Sequence< uno::Any > & )
-	throw ( uno::Exception, uno::RuntimeException )
 {
 }
 
 // XServiceInfo
 OUString SAL_CALL SvFilterOptionsDialog::getImplementationName()
-	throw( uno::RuntimeException )
 {
 	return SvFilterOptionsDialog_getImplementationName();
 }
 sal_Bool SAL_CALL SvFilterOptionsDialog::supportsService( const OUString& rServiceName )
-	throw( uno::RuntimeException )
 {
     return SvFilterOptionsDialog_supportsService( rServiceName );
 }
 uno::Sequence< OUString > SAL_CALL SvFilterOptionsDialog::getSupportedServiceNames()
-	throw ( uno::RuntimeException )
 {
     return SvFilterOptionsDialog_getSupportedServiceNames();
 }
@@ -134,12 +127,11 @@ uno::Sequence< OUString > SAL_CALL SvFilterOptionsDialog::getSupportedServiceNam
 
 // XPropertyAccess
 uno::Sequence< beans::PropertyValue > SvFilterOptionsDialog::getPropertyValues()
-        throw ( uno::RuntimeException )
 {
 	sal_Int32 i, nCount;
 	for ( i = 0, nCount = maMediaDescriptor.getLength(); i < nCount; i++ )
 	{
-		if ( maMediaDescriptor[ i ].Name.equalsAscii( "FilterData" ) ) 
+		if ( maMediaDescriptor[ i ].Name.equalsAscii( "FilterData" ) )
 			break;
 	}
 	if ( i == nCount )
@@ -152,16 +144,13 @@ uno::Sequence< beans::PropertyValue > SvFilterOptionsDialog::getPropertyValues()
 }
 
 void SvFilterOptionsDialog::setPropertyValues( const uno::Sequence< beans::PropertyValue > & aProps )
-        throw ( beans::UnknownPropertyException, beans::PropertyVetoException, 
-                lang::IllegalArgumentException, lang::WrappedTargetException,
-                uno::RuntimeException )
 {
     maMediaDescriptor = aProps;
 
 	sal_Int32 i, nCount;
 	for ( i = 0, nCount = maMediaDescriptor.getLength(); i < nCount; i++ )
 	{
-		if ( maMediaDescriptor[ i ].Name.equalsAscii( "FilterData" ) ) 
+		if ( maMediaDescriptor[ i ].Name.equalsAscii( "FilterData" ) )
 		{
 			maMediaDescriptor[ i ].Value >>= maFilterDataSequence;
 		}
@@ -174,13 +163,11 @@ void SvFilterOptionsDialog::setPropertyValues( const uno::Sequence< beans::Prope
 
 // XExecutableDialog
 void SvFilterOptionsDialog::setTitle( const OUString& aTitle )
-    throw ( uno::RuntimeException )
 {
     maDialogTitle = aTitle;
 }
 
 sal_Int16 SvFilterOptionsDialog::execute()
-	throw ( uno::RuntimeException )
 {
     sal_Int16 nRet = ui::dialogs::ExecutableDialogResults::CANCEL;
 
@@ -198,14 +185,14 @@ sal_Int16 SvFilterOptionsDialog::execute()
 			aInternalFilterName.SearchAndReplace( String( RTL_CONSTASCII_USTRINGPARAM( "impress_" ) ), String(), 0 );
             break;
        }
-    }   
+    }
     if ( aInternalFilterName.Len() )
     {
 	    GraphicFilter aGraphicFilter( sal_True );
 
         sal_uInt16 nFormat, nFilterCount = aGraphicFilter.pConfig->GetExportFormatCount();
         for ( nFormat = 0; nFormat < nFilterCount; nFormat++ )
-        {        
+        {
             if ( aGraphicFilter.pConfig->GetExportInternalFilterName( nFormat ) == aInternalFilterName )
                 break;
         }
@@ -236,7 +223,6 @@ sal_Int16 SvFilterOptionsDialog::execute()
 
 // XEmporter
 void SvFilterOptionsDialog::setSourceDocument( const uno::Reference< lang::XComponent >& xDoc )
-		throw ( lang::IllegalArgumentException, uno::RuntimeException )
 {
 	mxSourceDocument = xDoc;
 
@@ -263,4 +249,3 @@ void SvFilterOptionsDialog::setSourceDocument( const uno::Reference< lang::XComp
 		}
 	}
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,19 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
- 
+
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_sw.hxx"
@@ -80,7 +80,6 @@ SwFEShell* SwAccessibleSelectionHelper::GetFEShell()
 }
 
 void SwAccessibleSelectionHelper::throwIndexOutOfBoundsException()
-        throw ( lang::IndexOutOfBoundsException )
 {
 	Reference < XAccessibleContext > xThis( &rContext );
 	Reference < XAccessibleSelection >xSelThis( xThis, UNO_QUERY );
@@ -95,8 +94,6 @@ void SwAccessibleSelectionHelper::throwIndexOutOfBoundsException()
 
 void SwAccessibleSelectionHelper::selectAccessibleChild(
     sal_Int32 nChildIndex )
-    throw ( lang::IndexOutOfBoundsException,
-            RuntimeException )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -124,20 +121,20 @@ void SwAccessibleSelectionHelper::selectAccessibleChild(
 }
 
 //When the selected state of the SwFrmOrObj is setted, return true.
-static sal_Bool lcl_getSelectedState(const SwAccessibleChild& aChild, 
+static sal_Bool lcl_getSelectedState(const SwAccessibleChild& aChild,
 									 SwAccessibleContext* pContext,
 									 SwAccessibleMap* pMap)
 {
 	Reference< XAccessible > xAcc;
     if ( aChild.GetSwFrm() )
-    {        
+    {
 		xAcc = pMap->GetContext( aChild.GetSwFrm(), sal_False );
     }
     else if ( aChild.GetDrawObject() )
     {
         xAcc = pMap->GetContext( aChild.GetDrawObject(), pContext, sal_False );
     }
-	
+
 	if( xAcc.is() )
 	{
 		Reference< XAccessibleContext > pRContext = xAcc->getAccessibleContext();
@@ -160,8 +157,6 @@ static sal_Bool lcl_getSelectedState(const SwAccessibleChild& aChild,
 
 sal_Bool SwAccessibleSelectionHelper::isAccessibleChildSelected(
     sal_Int32 nChildIndex )
-    throw ( lang::IndexOutOfBoundsException,
-            RuntimeException )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -196,13 +191,11 @@ sal_Bool SwAccessibleSelectionHelper::isAccessibleChildSelected(
 }
 
 void SwAccessibleSelectionHelper::clearAccessibleSelection(  )
-    throw ( RuntimeException )
 {
     // return sal_False     // we can't deselect
 }
 
 void SwAccessibleSelectionHelper::selectAllAccessibleChildren(  )
-    throw ( RuntimeException )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -234,7 +227,6 @@ void SwAccessibleSelectionHelper::selectAllAccessibleChildren(  )
 }
 
 sal_Int32 SwAccessibleSelectionHelper::getSelectedAccessibleChildCount(  )
-    throw ( RuntimeException )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -277,7 +269,7 @@ sal_Int32 SwAccessibleSelectionHelper::getSelectedAccessibleChildCount(  )
 				}
 			}
 		}
-		//If the SwFrmOrObj is not selected directly in the UI, 
+		//If the SwFrmOrObj is not selected directly in the UI,
 		//we should check whether it is selected in the selection cursor.
 		if( nCount == 0 )
 		{
@@ -301,8 +293,6 @@ sal_Int32 SwAccessibleSelectionHelper::getSelectedAccessibleChildCount(  )
 
 Reference<XAccessible> SwAccessibleSelectionHelper::getSelectedAccessibleChild(
     sal_Int32 nSelectedChildIndex )
-    throw ( lang::IndexOutOfBoundsException,
-            RuntimeException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -397,8 +387,6 @@ Reference<XAccessible> SwAccessibleSelectionHelper::getSelectedAccessibleChild(
 // --> OD 2004-11-16 #111714# - index has to be treated as global child index.
 void SwAccessibleSelectionHelper::deselectAccessibleChild(
     sal_Int32 nChildIndex )
-    throw ( lang::IndexOutOfBoundsException,
-            RuntimeException )
 {
     // return sal_False     // we can't deselect
     if( nChildIndex < 0 ||

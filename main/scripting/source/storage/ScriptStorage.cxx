@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -56,9 +56,9 @@ namespace scripting_impl
 
 ScriptLanguages_hash* ScriptStorage::mh_scriptLangs = NULL;
 
-const sal_Char* const SERVICE_NAME = 
+const sal_Char* const SERVICE_NAME =
     "drafts.com.sun.star.script.framework.storage.ScriptStorage";
-const sal_Char* const IMPL_NAME = 
+const sal_Char* const IMPL_NAME =
     "drafts.com.sun.star.script.framework.storage.ScriptStorage";
 
 const sal_Char * const SCRIPT_DIR = "/Scripts";
@@ -67,7 +67,7 @@ const sal_Char * const SCRIPT_PARCEL_NAME_ONLY = "parcel-descriptor";
 
 static OUString ss_implName = OUString::createFromAscii( IMPL_NAME );
 static OUString ss_serviceName = OUString::createFromAscii( SERVICE_NAME );
-static Sequence< OUString > ss_serviceNames = 
+static Sequence< OUString > ss_serviceNames =
     Sequence< OUString >( &ss_serviceName, 1 );
 
 const sal_uInt16 NUMBER_STORAGE_INITIALIZE_ARGS = 3;
@@ -79,7 +79,6 @@ const sal_uInt16 NUMBER_STORAGE_INITIALIZE_ARGS = 3;
 //*************************************************************************
 ScriptStorage::ScriptStorage( const Reference <
                               XComponentContext > & xContext )
-throw ( RuntimeException )
         : m_xContext( xContext, UNO_SET_THROW ), m_bInitialised( false )
 {
     OSL_TRACE( "< ScriptStorage ctor called >\n" );
@@ -113,10 +112,10 @@ throw ( RuntimeException )
             Sequence< OUString > names = xNameAccess->getElementNames();
             for( int i = 0 ; i < names.getLength() ; i++ )
             {
-                OSL_TRACE(  "Getting propertyset for Lang=%s", 
+                OSL_TRACE(  "Getting propertyset for Lang=%s",
                     ::rtl::OUStringToOString( names[i], RTL_TEXTENCODING_ASCII_US ).pData->buffer );
                 Reference< beans::XPropertySet > xPropSet( xNameAccess->getByName( names[i] ), UNO_QUERY_THROW );
-                Any aProp = xPropSet->getPropertyValue( 
+                Any aProp = xPropSet->getPropertyValue(
                         OUString::createFromAscii( "SupportedFileExtensions") );
                 Sequence< OUString > extns;
                 if( sal_False == ( aProp >>= extns ) )
@@ -127,7 +126,7 @@ throw ( RuntimeException )
                 }
                 for( int j = 0 ; j < extns.getLength() ; j++ )
                 {
-                    OSL_TRACE(  "Adding Lang=%s, Extn=%s\n", 
+                    OSL_TRACE(  "Adding Lang=%s, Extn=%s\n",
                         ::rtl::OUStringToOString( names[i], RTL_TEXTENCODING_ASCII_US ).pData->buffer,
                         ::rtl::OUStringToOString( extns[j], RTL_TEXTENCODING_ASCII_US ).pData->buffer );
                     (*mh_scriptLangs)[ extns[j] ] =
@@ -149,14 +148,13 @@ ScriptStorage::~ScriptStorage() SAL_THROW( () )
 //*************************************************************************
 void
 ScriptStorage::initialize( const Sequence <Any> & args )
-throw ( RuntimeException, Exception )
 {
     OSL_TRACE( "Entering ScriptStorage::initialize\n" );
 
     // Should not be renitialized
     if ( m_bInitialised )
     {
-        throw RuntimeException( 
+        throw RuntimeException(
             OUSTR( "ScriptStorage::initialize already initialized" ),
             Reference<XInterface> () );
     }
@@ -185,7 +183,7 @@ throw ( RuntimeException, Exception )
             throw RuntimeException(
                 OUSTR( "Invalid ScriptStorage ID argument provided!" ),
                 Reference< XInterface >() );
-        
+
         }
         if ( sal_False == ( args[ 2 ] >>= m_stringUri ) )
         {
@@ -195,7 +193,7 @@ throw ( RuntimeException, Exception )
         }
     } // End - Protect member variable writes
 
-    OSL_TRACE(  "uri: %s\n", ::rtl::OUStringToOString( 
+    OSL_TRACE(  "uri: %s\n", ::rtl::OUStringToOString(
         m_stringUri, RTL_TEXTENCODING_ASCII_US ).pData->buffer );
 
     try
@@ -207,11 +205,11 @@ throw ( RuntimeException, Exception )
         OUString fileExtension = getFileExtension( m_stringUri );
         // and see if this is in our scripts map
         ScriptLanguages_hash::iterator h_it = mh_scriptLangs->find( fileExtension );
-        if ( h_it != mh_scriptLangs->end() ) 
+        if ( h_it != mh_scriptLangs->end() )
         {
             createForFilesystem( fileExtension );
         }
-        else 
+        else
         {
             create();
         }
@@ -247,12 +245,11 @@ throw ( RuntimeException, Exception )
 
 void
 ScriptStorage::create()
-throw ( RuntimeException, Exception )
 {
     ::osl::Guard< osl::Mutex > aGuard( m_mutex );
     try
     {
-        // clear existing hashmap - rebuilding from scratch to avoid having 
+        // clear existing hashmap - rebuilding from scratch to avoid having
         // to search for deleted elements on refresh
         mh_implementations.clear();
 
@@ -261,7 +258,7 @@ throw ( RuntimeException, Exception )
         ScriptMetadataImporter* SMI = new ScriptMetadataImporter( m_xContext );
         Reference< xml::sax::XExtendedDocumentHandler > xSMI( SMI, UNO_SET_THROW );
 
-        xStringUri = xStringUri.concat( ::rtl::OUString::createFromAscii( 
+        xStringUri = xStringUri.concat( ::rtl::OUString::createFromAscii(
             SCRIPT_DIR ) );
 
        // No Scripts directory - just return
@@ -270,7 +267,7 @@ throw ( RuntimeException, Exception )
             OSL_TRACE( "ScriptStorage::initialize: no Scripts dir for this storage - install problem\n" );
            return;
        }
-       
+
         // get the list of language folders under the Scripts directory
         Sequence< ::rtl::OUString > languageDirs =
             m_xSimpleFileAccess->getFolderContents( xStringUri, true );
@@ -279,7 +276,7 @@ throw ( RuntimeException, Exception )
         sal_Int32 languageDirsLength = languageDirs.getLength();
         for ( sal_Int32 i = 0; i < languageDirsLength ; ++i )
         {
-            OSL_TRACE(  "contains: %s\n", ::rtl::OUStringToOString( 
+            OSL_TRACE(  "contains: %s\n", ::rtl::OUStringToOString(
                 languageDirs[ i ], RTL_TEXTENCODING_ASCII_US ).pData->buffer );
 
             if ( ! m_xSimpleFileAccess->isFolder( languageDirs[ i ] ) )
@@ -309,7 +306,7 @@ throw ( RuntimeException, Exception )
                     continue;
                 }
                 OSL_TRACE(  "parcel file: %s\n",
-                    ::rtl::OUStringToOString( parcelFile, 
+                    ::rtl::OUStringToOString( parcelFile,
                     RTL_TEXTENCODING_ASCII_US ).pData->buffer );
 
                 xInput = m_xSimpleFileAccess->openFileRead( parcelFile );
@@ -344,7 +341,7 @@ throw ( RuntimeException, Exception )
                     {
                         xInput->closeInput();
                     }
-                    OSL_TRACE( 
+                    OSL_TRACE(
                         "caught com::sun::star::io::IOException in ScriptStorage::create" );
                     continue;
                 }
@@ -402,16 +399,15 @@ throw ( RuntimeException, Exception )
 
 //*************************************************************************
 // private method to create the usual data structures for scripts located
-// on the filesystem. 
+// on the filesystem.
 // parcelURI = the path to the script
 // functionName = the full filename with extension
 // logicalName = the filename without the extension
 void
 ScriptStorage::createForFilesystem( const OUString & fileExtension )
-throw ( RuntimeException, Exception )
 {
     // need to decode as file urls are encoded
-    OUString xStringUri = ::rtl::Uri::decode( m_stringUri, 
+    OUString xStringUri = ::rtl::Uri::decode( m_stringUri,
         rtl_UriDecodeWithCharset, RTL_TEXTENCODING_ASCII_US );
 
     // no x-platform issues here as we are dealing with URLs
@@ -423,44 +419,44 @@ throw ( RuntimeException, Exception )
     sal_Int32 searchStringLength = searchString.getLength();
     sal_Int32 startPath = xStringUri.indexOf( searchString );
     sal_Int32 uriLength = xStringUri.getLength();
-    OUString fileNameNoExt = xStringUri.copy( lastFileSep , 
+    OUString fileNameNoExt = xStringUri.copy( lastFileSep ,
         lastFileExt - lastFileSep  - 1 );
     OUString fileName = xStringUri.copy( lastFileSep, uriLength - lastFileSep );
-    OUString filePath = xStringUri.copy( startPath + searchStringLength, 
+    OUString filePath = xStringUri.copy( startPath + searchStringLength,
         lastFileSep - startPath - searchStringLength );
     OUString filePathWithName = xStringUri.copy( startPath + searchStringLength,
         uriLength - startPath - searchStringLength );
 
     ScriptData scriptData;
     scriptData.language = mh_scriptLangs->find( fileExtension )->second;
-    OSL_TRACE( "\t language = %s", ::rtl::OUStringToOString( 
+    OSL_TRACE( "\t language = %s", ::rtl::OUStringToOString(
         scriptData.language, RTL_TEXTENCODING_ASCII_US ).pData->buffer );
 
     // do we need to encode this?
     scriptData.functionname = fileName;
-    OSL_TRACE( "\t functionName = %s", ::rtl::OUStringToOString( 
+    OSL_TRACE( "\t functionName = %s", ::rtl::OUStringToOString(
         scriptData.functionname, RTL_TEXTENCODING_ASCII_US ).pData->buffer );
-    //scriptData.functionname = ::rtl::Uri::encode( fileName, 
+    //scriptData.functionname = ::rtl::Uri::encode( fileName,
         //rtl_UriCharClassUricNoSlash, rtl_UriEncodeCheckEscapes,
         //RTL_TEXTENCODING_ASCII_US );
-    
+
     scriptData.parcelURI = filePath;
-    OSL_TRACE( "\t parcelURI = %s", ::rtl::OUStringToOString( 
+    OSL_TRACE( "\t parcelURI = %s", ::rtl::OUStringToOString(
         scriptData.parcelURI, RTL_TEXTENCODING_ASCII_US ).pData->buffer );
     scriptData.logicalname = fileNameNoExt;
-    OSL_TRACE( "\t logicalName = %s", ::rtl::OUStringToOString( 
+    OSL_TRACE( "\t logicalName = %s", ::rtl::OUStringToOString(
         scriptData.logicalname, RTL_TEXTENCODING_ASCII_US ).pData->buffer );
-    
+
     // and now push onto the usual structures
     ScriptFunction_hash sfh;
     sfh[ scriptData.functionname ] = scriptData;
     mh_implementations[ scriptData.language ] = sfh;
-    m_bInitialised = true; 
+    m_bInitialised = true;
 }
 
 //*************************************************************************
 // private method to return the file extension, eg. bsh, js etc
-OUString 
+OUString
 ScriptStorage::getFileExtension( const OUString & stringUri )
 {
     OUString fileExtension;
@@ -468,8 +464,8 @@ ScriptStorage::getFileExtension( const OUString & stringUri )
     if( lastDot > 0 ) {
         sal_Int32 stringUriLength = stringUri.getLength();
         fileExtension = stringUri.copy( lastDot +1 , stringUriLength - lastDot - 1 );
-    } 
-    else 
+    }
+    else
     {
         fileExtension = OUString::createFromAscii("");
     }
@@ -492,10 +488,10 @@ ScriptStorage::updateMaps( const Datas_vec & vScriptDatas )
         if ( h_it == mh_implementations.end() )
         {
             //if it's null, need to create a new Datas_vec
-            OSL_TRACE( 
+            OSL_TRACE(
                      "updateMaps: new language: %s\n", rtl::OUStringToOString(
                          it->language, RTL_TEXTENCODING_ASCII_US ).pData->buffer );
-            OSL_TRACE( 
+            OSL_TRACE(
                      "updateMaps: adding functionname: %s\n", rtl::OUStringToOString(
                          it->functionname, RTL_TEXTENCODING_ASCII_US ).pData->buffer );
 
@@ -505,11 +501,11 @@ ScriptStorage::updateMaps( const Datas_vec & vScriptDatas )
         }
         else
         {
-            OSL_TRACE( 
+            OSL_TRACE(
                      "updateMaps: adding functionname: %s\n", rtl::OUStringToOString(
                          it->functionname, RTL_TEXTENCODING_ASCII_US ).pData->buffer );
-            OSL_TRACE(  "                    language name: %s\n", 
-                rtl::OUStringToOString( it->functionname, 
+            OSL_TRACE(  "                    language name: %s\n",
+                rtl::OUStringToOString( it->functionname,
                 RTL_TEXTENCODING_ASCII_US ).pData->buffer );
 
             h_it->second[ it->functionname ] = *it;
@@ -521,7 +517,6 @@ ScriptStorage::updateMaps( const Datas_vec & vScriptDatas )
 // XScriptStorageExport::save
 void
 ScriptStorage::save()
-throw ( RuntimeException )
 {
     ::osl::Guard< osl::Mutex > aGuard( m_mutex );
     Reference< io::XActiveDataSource > xSource;
@@ -531,7 +526,7 @@ throw ( RuntimeException )
     Reference< xml::sax::XExtendedDocumentHandler > xHandler;
 
     OUString parcel_suffix = OUString::createFromAscii( SCRIPT_PARCEL );
-    OUString ou_parcel = OUString( 
+    OUString ou_parcel = OUString(
         RTL_CONSTASCII_USTRINGPARAM( SCRIPT_PARCEL_NAME_ONLY ) );
 
     try
@@ -549,17 +544,17 @@ throw ( RuntimeException )
                 if ( it_parcels == mh_parcels.end() )
                 {
                     //create new outputstream
-                    OUString parcel_xml_path = it_sfh->second.parcelURI.concat( 
+                    OUString parcel_xml_path = it_sfh->second.parcelURI.concat(
                         parcel_suffix );
                     m_xSimpleFileAccess->kill( parcel_xml_path );
                     xOS = m_xSimpleFileAccess->openFileWrite( parcel_xml_path );
 
-                    OSL_TRACE(  "saving: %s\n", rtl::OUStringToOString( 
-                        it_sfh->second.parcelURI.concat( OUString::createFromAscii( 
-                        "/parcel.xml" ) ), 
+                    OSL_TRACE(  "saving: %s\n", rtl::OUStringToOString(
+                        it_sfh->second.parcelURI.concat( OUString::createFromAscii(
+                        "/parcel.xml" ) ),
                         RTL_TEXTENCODING_ASCII_US ).pData->buffer );
 
-                    xHandler.set( 
+                    xHandler.set(
                         m_xMgr->createInstanceWithContext(
                             OUString::createFromAscii( "com.sun.star.xml.sax.Writer" ),
                             m_xContext
@@ -597,7 +592,7 @@ throw ( RuntimeException )
             xOS->closeOutput();
 
         }
-        
+
         // clear the hash map, as all output streams have been closed.
         // need to re-create on next save
         mh_parcels.clear();
@@ -607,16 +602,15 @@ throw ( RuntimeException )
     {
         OSL_TRACE( "caught com::sun::star::uno::RuntimeException in ScriptStorage::save" );
         throw RuntimeException(
-            OUSTR( "ScriptStorage::save RuntimeException: " ).concat( 
+            OUSTR( "ScriptStorage::save RuntimeException: " ).concat(
             re.Message ),
             Reference< XInterface > () );
     }
 }
 
 //*************************************************************************
-void 
+void
 ScriptStorage::refresh()
-throw (RuntimeException)
 {
     OSL_TRACE("** => ScriptStorage: in refresh()\n");
 
@@ -646,7 +640,7 @@ throw (RuntimeException)
 
 //*************************************************************************
 void
-ScriptStorage::writeMetadataHeader( 
+ScriptStorage::writeMetadataHeader(
     Reference <xml::sax::XExtendedDocumentHandler> & xHandler )
 {
     xHandler->startDocument();
@@ -660,7 +654,6 @@ ScriptStorage::writeMetadataHeader(
 //*************************************************************************
 Sequence< ::rtl::OUString >
 ScriptStorage::getScriptLogicalNames()
-throw ( RuntimeException )
 {
     Sequence< ::rtl::OUString  > results;
     // comment out the rest, and ultimately remove method
@@ -682,8 +675,8 @@ throw ( RuntimeException )
         for ( sal_Int32 count = 0; h_it != h_itEnd ; ++h_it )
         {
             ::rtl::OUString logicalName = h_it->first;
-            OSL_TRACE( "Adding %s at index %d ", ::rtl::OUStringToOString( 
-                logicalName, RTL_TEXTENCODING_ASCII_US ).pData->buffer, count); 
+            OSL_TRACE( "Adding %s at index %d ", ::rtl::OUStringToOString(
+                logicalName, RTL_TEXTENCODING_ASCII_US ).pData->buffer, count);
             results[ count++ ] = logicalName;
         }
 
@@ -696,8 +689,8 @@ throw ( RuntimeException )
     }
     catch ( Exception & e )
     {
-        throw RuntimeException( OUSTR( 
-            "ScriptStorage::getScriptLogicalNames Exception: " ).concat( 
+        throw RuntimeException( OUSTR(
+            "ScriptStorage::getScriptLogicalNames Exception: " ).concat(
             e.Message ), Reference< XInterface > () );
     } */
     return results;
@@ -706,25 +699,23 @@ throw ( RuntimeException )
 //*************************************************************************
 Sequence< Reference< storage::XScriptInfo > >
 ScriptStorage::getImplementations( const ::rtl::OUString & queryURI )
-throw ( lang::IllegalArgumentException,
-        RuntimeException )
 {
     ::osl::Guard< osl::Mutex > aGuard( m_mutex );
-// format is script:://[function_name]?language=[languge]&location=[location]
+// format is script:://[function_name]?language=[language]&location=[location]
 // LogicalName is now not used anymore, further more the ScriptURI class
 // will be retired also and a new UNO service will be used. Additionally the
 // parcel-description will also need to be modified to remove logical name
-// ScriprtMetaDataImporter has been modified to ignore the Logical name
-// definined in the parcel-desc.xml. As an interim temp solution the  Datas_vec
-// structure that is returned from ScriptMetDataImporter sets the logicalname 
+// ScriptMetaDataImporter has been modified to ignore the Logical name
+// defined in the parcel-desc.xml. As an interim temp solution the  Datas_vec
+// structure that is returned from ScriptMetDataImporter sets the logicalname
 // to the function name. ScriptURI class has been changed in the same way.
-// 
+//
     Sequence< Reference< storage::XScriptInfo > > results;
     ScriptURI scriptURI( queryURI );
     OSL_TRACE( "getting impl for language %s, function name: %s",
-        ::rtl::OUStringToOString( scriptURI.getLanguage(), 
+        ::rtl::OUStringToOString( scriptURI.getLanguage(),
         RTL_TEXTENCODING_ASCII_US ).pData->buffer,
-        ::rtl::OUStringToOString( scriptURI.getFunctionName(), 
+        ::rtl::OUStringToOString( scriptURI.getFunctionName(),
         RTL_TEXTENCODING_ASCII_US ).pData->buffer );
     ScriptData_hash::iterator h_itEnd =  mh_implementations.end();
     ScriptData_hash::iterator h_it = mh_implementations.begin();
@@ -734,36 +725,36 @@ throw ( lang::IllegalArgumentException,
         return results;
     }
 
-    //find the implementations for the given language 
+    //find the implementations for the given language
     h_it = mh_implementations.find( scriptURI.getLanguage() );
- 
+
     if ( h_it == h_itEnd )
     {
         OSL_TRACE( "ScriptStorage::getImplementations: no impls found for %s",
-            ::rtl::OUStringToOString( scriptURI.getLanguage(), 
+            ::rtl::OUStringToOString( scriptURI.getLanguage(),
             RTL_TEXTENCODING_ASCII_US ).pData->buffer );
         return results;
     }
-     
-    //find the implementations for the given language 
-    ScriptFunction_hash::const_iterator it_datas = h_it->second.find( 
+
+    //find the implementations for the given language
+    ScriptFunction_hash::const_iterator it_datas = h_it->second.find(
         scriptURI.getLogicalName() );
     ScriptFunction_hash::const_iterator it_datas_end = h_it->second.end();
 
     if ( it_datas == it_datas_end )
     {
         OSL_TRACE( "ScriptStorage::getImplementations: no impls found for %s",
-            ::rtl::OUStringToOString( scriptURI.getFunctionName(), 
+            ::rtl::OUStringToOString( scriptURI.getFunctionName(),
             RTL_TEXTENCODING_ASCII_US ).pData->buffer );
         return results;
     }
-    
+
     results.realloc( 1 );
     ScriptData scriptData = it_datas->second;
     OSL_TRACE( "ScriptStorage::getImplementations: impls found for %s",
-        ::rtl::OUStringToOString( scriptData.functionname, 
+        ::rtl::OUStringToOString( scriptData.functionname,
         RTL_TEXTENCODING_ASCII_US ).pData->buffer );
-    Reference< storage::XScriptInfo > xScriptInfo = 
+    Reference< storage::XScriptInfo > xScriptInfo =
         new ScriptInfo ( scriptData, m_scriptStorageID );
     results[ 0 ] = xScriptInfo;
 
@@ -772,7 +763,7 @@ throw ( lang::IllegalArgumentException,
 
 //*************************************************************************
 Sequence< Reference< storage::XScriptInfo > > SAL_CALL
-ScriptStorage::getAllImplementations() throw ( RuntimeException )
+ScriptStorage::getAllImplementations()
 {
     ::osl::Guard< osl::Mutex > aGuard( m_mutex );
     Sequence< Reference< storage::XScriptInfo > > results;
@@ -784,7 +775,7 @@ ScriptStorage::getAllImplementations() throw ( RuntimeException )
         return results;
     }
 
-    
+
     //iterate through each logical name and gather each implementation
     //for that name
     for ( sal_Int32 count = 0; h_it !=  h_itEnd; ++h_it )
@@ -800,24 +791,22 @@ ScriptStorage::getAllImplementations() throw ( RuntimeException )
         {
             Reference< storage::XScriptInfo > xScriptInfo = new ScriptInfo (
             it_sfh->second, m_scriptStorageID );
- 
+
             results[ count++ ] = xScriptInfo;
         }
     }
     return results;
- 
+
 }
 
 //*************************************************************************
 OUString SAL_CALL ScriptStorage::getImplementationName( )
-throw( RuntimeException )
 {
     return ss_implName;
 }
 
 //*************************************************************************
 sal_Bool SAL_CALL ScriptStorage::supportsService( const OUString& serviceName )
-throw( RuntimeException )
 {
     OUString const * pNames = ss_serviceNames.getConstArray();
     for ( sal_Int32 nPos = ss_serviceNames.getLength(); nPos--; )
@@ -832,7 +821,6 @@ throw( RuntimeException )
 
 //*************************************************************************
 Sequence<OUString> SAL_CALL ScriptStorage::getSupportedServiceNames( )
-throw( RuntimeException )
 {
     return ss_serviceNames;
 }

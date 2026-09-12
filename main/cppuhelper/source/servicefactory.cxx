@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -67,8 +67,7 @@ void addFactories(
     char const * const * ppNames /* lib, implname, ..., 0 */,
     OUString const & bootstrapPath,
     Reference< lang::XMultiComponentFactory > const & xMgr,
-    Reference< registry::XRegistryKey > const & xKey )
-    SAL_THROW( (Exception) );
+    Reference< registry::XRegistryKey > const & xKey );
 
 Reference< security::XAccessController >
 createDefaultAccessController() SAL_THROW( () );
@@ -186,7 +185,6 @@ Reference< registry::XSimpleRegistry > SAL_CALL createNestedRegistry(
 static void add_access_control_entries(
     ::std::vector< ContextEntry_Init > * values,
     Bootstrap const & bootstrap )
-    SAL_THROW( (Exception) )
 {
     ContextEntry_Init entry;
     ::std::vector< ContextEntry_Init > & context_values = *values;
@@ -302,7 +300,7 @@ static void add_access_control_entries(
             context_values.push_back( entry );
         }
     }
-    
+
     // - ac prop: mode
     // { "off", "on", "dynamic-only", "single-user", "single-default-user" }
     entry.bLateInitService = false;
@@ -319,7 +317,6 @@ static void add_access_control_entries(
 SAL_DLLPUBLIC_EXPORT
 Reference< lang::XMultiComponentFactory > bootstrapInitialSF(
     OUString const & rBootstrapPath )
-    SAL_THROW( (Exception) )
 {
     OUString const & bootstrap_path =
         0 == rBootstrapPath.getLength() ? get_this_libpath() : rBootstrapPath;
@@ -332,7 +329,7 @@ Reference< lang::XMultiComponentFactory > bootstrapInitialSF(
                 Reference< lang::XMultiServiceFactory >(),
                 Reference< registry::XRegistryKey >() ) ),
         UNO_QUERY );
-    
+
     // add initial bootstrap services
     static char const * ar[] = {
         "bootstrap.uno" SAL_DLLEXTENSION,
@@ -366,7 +363,6 @@ Reference< XComponentContext > bootstrapInitialContext(
     Reference< registry::XSimpleRegistry > const & types_xRegistry,
     Reference< registry::XSimpleRegistry > const & services_xRegistry,
     OUString const & rBootstrapPath, Bootstrap const & bootstrap )
-    SAL_THROW( (Exception) )
 {
     Reference< lang::XInitialization > xSFInit( xSF, UNO_QUERY );
     if (! xSFInit.is())
@@ -405,7 +401,7 @@ Reference< XComponentContext > bootstrapInitialContext(
             if (xKey.is())
             {
                 entry.bLateInitService = true;
-                
+
                 Sequence< Reference< registry::XRegistryKey > > keys(
                     xKey->openKeys() );
                 Reference< registry::XRegistryKey > const * pKeys =
@@ -525,7 +521,6 @@ static Reference< lang::XMultiComponentFactory > createImplServiceFactory(
     const OUString & rReadRegistry,
     sal_Bool bReadOnly,
     const OUString & rBootstrapPath )
-    SAL_THROW( (Exception) )
 {
     Reference< lang::XMultiComponentFactory > xSF(
         bootstrapInitialSF( rBootstrapPath ) );
@@ -609,7 +604,7 @@ static Reference< lang::XMultiComponentFactory > createImplServiceFactory(
     Reference< XComponentContext > xContext(
         bootstrapInitialContext(
             xSF, xRegistry, xRegistry, rBootstrapPath, bootstrap ) );
-    
+
     // initialize sf
     Reference< lang::XInitialization > xInit( xSF, UNO_QUERY );
     OSL_ASSERT( xInit.is() );
@@ -625,7 +620,6 @@ Reference< lang::XMultiServiceFactory > SAL_CALL createRegistryServiceFactory(
     const OUString & rReadRegistry,
     sal_Bool bReadOnly,
     const OUString & rBootstrapPath )
-    SAL_THROW( (Exception) )
 {
     return Reference< lang::XMultiServiceFactory >( createImplServiceFactory(
         rWriteRegistry, rReadRegistry, bReadOnly, rBootstrapPath ), UNO_QUERY );
@@ -634,7 +628,6 @@ Reference< lang::XMultiServiceFactory > SAL_CALL createRegistryServiceFactory(
 Reference< XComponentContext > SAL_CALL bootstrap_InitialComponentContext(
     Reference< registry::XSimpleRegistry > const & xRegistry,
     OUString const & rBootstrapPath )
-    SAL_THROW( (Exception) )
 {
     Bootstrap bootstrap;
 
@@ -643,7 +636,7 @@ Reference< XComponentContext > SAL_CALL bootstrap_InitialComponentContext(
     Reference< XComponentContext > xContext(
         bootstrapInitialContext(
             xSF, xRegistry, xRegistry, rBootstrapPath, bootstrap ) );
-    
+
     // initialize sf
     Reference< lang::XInitialization > xInit( xSF, UNO_QUERY );
     OSL_ASSERT( xInit.is() );

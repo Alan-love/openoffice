@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -46,8 +46,8 @@ Transliteration_caseignore::Transliteration_caseignore()
 }
 
 #if 0
-/* NOTE: We had this, derived from Transliteration_caseignore, but it was 
- * unused code. Deactivated with #i89580# but left for reference in case 
+/* NOTE: We had this, derived from Transliteration_caseignore, but it was
+ * unused code. Deactivated with #i89580# but left for reference in case
  * MappingTypeSimpleFolding would be needed at some time.
  */
 Transliteration_simplecaseignore::Transliteration_simplecaseignore()
@@ -59,15 +59,14 @@ Transliteration_simplecaseignore::Transliteration_simplecaseignore()
 }
 #endif
 
-void SAL_CALL 
+void SAL_CALL
 Transliteration_caseignore::loadModule( TransliterationModules modName, const Locale& rLocale )
-	throw(RuntimeException)
 {
 	moduleLoaded = (TransliterationModules) (moduleLoaded|modName);
 	aLocale = rLocale;
 }
 
-sal_Int16 SAL_CALL Transliteration_caseignore::getType() throw(RuntimeException)
+sal_Int16 SAL_CALL Transliteration_caseignore::getType()
 {
 	// It's NOT TransliterationType::ONE_TO_ONE because it's using casefolding
 	return TransliterationType::IGNORE;
@@ -75,8 +74,7 @@ sal_Int16 SAL_CALL Transliteration_caseignore::getType() throw(RuntimeException)
 
 
 Sequence< OUString > SAL_CALL
-Transliteration_caseignore::transliterateRange( const OUString& str1, const OUString& str2 ) 
-	throw( RuntimeException)
+Transliteration_caseignore::transliterateRange( const OUString& str1, const OUString& str2 )
 {
 	if (str1.getLength() != 1 || str2.getLength() != 1)
 	    throw RuntimeException();
@@ -111,7 +109,6 @@ sal_Bool SAL_CALL
 Transliteration_caseignore::equals(
 	const ::rtl::OUString& str1, sal_Int32 pos1, sal_Int32 nCount1, sal_Int32& nMatch1,
 	const ::rtl::OUString& str2, sal_Int32 pos2, sal_Int32 nCount2, sal_Int32& nMatch2)
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return (compare(str1, pos1, nCount1, nMatch1, str2, pos2, nCount2, nMatch2) == 0);
 }
@@ -120,7 +117,6 @@ sal_Int32 SAL_CALL
 Transliteration_caseignore::compareSubstring(
 	const ::rtl::OUString& str1, sal_Int32 off1, sal_Int32 len1,
 	const ::rtl::OUString& str2, sal_Int32 off2, sal_Int32 len2)
-	throw(RuntimeException)
 {
 	sal_Int32 nMatch1, nMatch2;
 	return compare(str1, off1, len1, nMatch1, str2, off2, len2, nMatch2);
@@ -131,7 +127,6 @@ sal_Int32 SAL_CALL
 Transliteration_caseignore::compareString(
 	const ::rtl::OUString& str1,
 	const ::rtl::OUString& str2)
-	throw(RuntimeException)
 {
 	sal_Int32 nMatch1, nMatch2;
 	return compare(str1, 0, str1.getLength(), nMatch1, str2, 0, str2.getLength(), nMatch2);
@@ -141,7 +136,6 @@ sal_Int32 SAL_CALL
 Transliteration_caseignore::compare(
 	const ::rtl::OUString& str1, sal_Int32 pos1, sal_Int32 nCount1, sal_Int32& nMatch1,
 	const ::rtl::OUString& str2, sal_Int32 pos2, sal_Int32 nCount2, sal_Int32& nMatch2)
-	throw(RuntimeException)
 {
 	const sal_Unicode *unistr1 = (sal_Unicode*) str1.getStr() + pos1;
 	const sal_Unicode *unistr2 = (sal_Unicode*) str2.getStr() + pos2;

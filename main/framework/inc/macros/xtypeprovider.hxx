@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -73,7 +73,7 @@ ________________________________________________________________________________
 //	implementation of XTypeProvider::getImplementationId()
 //*****************************************************************************************************************
 #define PRIVATE_DEFINE_XTYPEPROVIDER_GETIMPLEMENTATIONID( CLASS )																				\
-	::com::sun::star::uno::Sequence< sal_Int8 > SAL_CALL CLASS::getImplementationId() throw( ::com::sun::star::uno::RuntimeException )			\
+	::com::sun::star::uno::Sequence< sal_Int8 > SAL_CALL CLASS::getImplementationId()			\
 	{																																			\
 		/* Create one Id for all instances of this class.												*/										\
 		/* Use ethernet address to do this! (sal_True)													*/										\
@@ -102,7 +102,7 @@ ________________________________________________________________________________
 //	implementation of XTypeProvider::getTypes() with max. 12 interfaces!
 //*****************************************************************************************************************
 #define PRIVATE_DEFINE_XTYPEPROVIDER_GETTYPES( CLASS, TYPES )																					\
-	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL CLASS::getTypes() throw( ::com::sun::star::uno::RuntimeException )	\
+	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL CLASS::getTypes()	\
 	{																																			\
 		/* Optimize this method !										*/																		\
 		/* We initialize a static variable only one time.				*/																		\
@@ -132,7 +132,7 @@ ________________________________________________________________________________
 //	implementation of XTypeProvider::getTypes() with more then 12 interfaces!
 //*****************************************************************************************************************
 #define PRIVATE_DEFINE_XTYPEPROVIDER_GETTYPES_LARGE( CLASS, TYPES_FIRST, TYPES_SECOND )															\
-	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL CLASS::getTypes() throw( ::com::sun::star::uno::RuntimeException )	\
+	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL CLASS::getTypes()	\
 	{																																			\
 		/* Optimize this method !										*/																		\
 		/* We initialize a static variable only one time.				*/																		\
@@ -184,7 +184,7 @@ ________________________________________________________________________________
 //	implementation of XTypeProvider::getTypes() with using max. 12 interfaces + baseclass!
 //*****************************************************************************************************************
 #define PRIVATE_DEFINE_XTYPEPROVIDER_GETTYPES_BASECLASS( CLASS, BASECLASS, TYPES )																\
-	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL CLASS::getTypes() throw( ::com::sun::star::uno::RuntimeException )	\
+	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL CLASS::getTypes()	\
 	{																																			\
 		/* Optimize this method !										*/																		\
 		/* We initialize a static variable only one time.				*/																		\
@@ -306,8 +306,8 @@ ________________________________________________________________________________
 //	declaration of XTypeProvider
 //*****************************************************************************************************************
 #define FWK_DECLARE_XTYPEPROVIDER																																\
-	virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type >  SAL_CALL getTypes           () throw( ::com::sun::star::uno::RuntimeException );\
-	virtual ::com::sun::star::uno::Sequence< sal_Int8 >						SAL_CALL getImplementationId() throw( ::com::sun::star::uno::RuntimeException );
+	virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type >  SAL_CALL getTypes           ();\
+	virtual ::com::sun::star::uno::Sequence< sal_Int8 >						SAL_CALL getImplementationId();
 
 //*****************************************************************************************************************
 //	public

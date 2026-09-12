@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_vcl.hxx"
@@ -62,15 +60,15 @@ using namespace rtl;
 using namespace vcl_sal;
 
 /***************************************************************************
- * class GtkDisplay                                                        *
+ * class GtkDisplay
  ***************************************************************************/
 
 GtkSalDisplay::GtkSalDisplay( GdkDisplay* pDisplay )
-            : SalDisplay( gdk_x11_display_get_xdisplay( pDisplay ) ),
-              m_pGdkDisplay( pDisplay ),
-              m_bStartupCompleted( false )
+			: SalDisplay( gdk_x11_display_get_xdisplay( pDisplay ) ),
+			  m_pGdkDisplay( pDisplay ),
+			  m_bStartupCompleted( false )
 {
-    m_bUseRandRWrapper = false; // use gdk signal instead
+	m_bUseRandRWrapper = false; // use gdk signal instead
 	for(int i = 0; i < POINTER_COUNT; i++)
 		m_aCursors[ i ] = NULL;
 	Init ();
@@ -78,15 +76,15 @@ GtkSalDisplay::GtkSalDisplay( GdkDisplay* pDisplay )
 
 GtkSalDisplay::~GtkSalDisplay()
 {
-    if( !m_bStartupCompleted )
-        gdk_notify_startup_complete();
-    doDestruct();
+	if( !m_bStartupCompleted )
+		gdk_notify_startup_complete();
+	doDestruct();
 
 	for(int i = 0; i < POINTER_COUNT; i++)
 		if( m_aCursors[ i ] )
 			gdk_cursor_unref( m_aCursors[ i ] );
 
-    pDisp_ = NULL;
+	pDisp_ = NULL;
 }
 
 void GtkSalDisplay::deregisterFrame( SalFrame* pFrame )
@@ -96,7 +94,67 @@ void GtkSalDisplay::deregisterFrame( SalFrame* pFrame )
 		static_cast<GtkSalFrame*>(m_pCapture)->grabPointer( FALSE );
 		m_pCapture = NULL;
 	}
-    SalDisplay::deregisterFrame( pFrame );
+	for( std::map< XLIB_Window, GtkSalFrame* >::iterator it = m_aWindowFrameMap.begin();
+	     it != m_aWindowFrameMap.end(); )
+	{
+		if( it->second == static_cast<GtkSalFrame*>(pFrame) )
+		{
+			std::map< XLIB_Window, GtkSalFrame* >::iterator itNext = it;
+			++itNext;
+			m_aWindowFrameMap.erase( it );
+			it = itNext;
+		}
+		else
+			++it;
+	}
+	SalDisplay::deregisterFrame( pFrame );
+}
+
+/*
+ * Each live X11 window ID may be associated with at most one frame.
+ * Window IDs must be deregistered before destruction or reassignment.
+ * Duplicate registration is a lifecycle error and is not overwritten.
+ */
+void GtkSalDisplay::registerFrameWindow( XLIB_Window aWindow, GtkSalFrame* pFrame )
+{
+	if( aWindow != None && pFrame != NULL )
+	{
+		std::map< XLIB_Window, GtkSalFrame* >::iterator it =
+			m_aWindowFrameMap.find( aWindow );
+
+		if( it != m_aWindowFrameMap.end() && it->second != pFrame )
+		{
+			OSL_TRACE(
+				"GtkSalDisplay::registerFrameWindow: refusing duplicate "
+				"mapping for X window %lu",
+				static_cast<unsigned long>(aWindow) );
+			return;
+		}
+
+		m_aWindowFrameMap[ aWindow ] = pFrame;
+	}
+}
+
+void GtkSalDisplay::deregisterFrameWindow( XLIB_Window aWindow, GtkSalFrame* pFrame )
+{
+	if( aWindow == None )
+		return;
+	std::map< XLIB_Window, GtkSalFrame* >::iterator it = m_aWindowFrameMap.find( aWindow );
+	if( it != m_aWindowFrameMap.end() )
+	{
+		if( pFrame == NULL || it->second == pFrame )
+			m_aWindowFrameMap.erase( it );
+	}
+}
+
+GtkSalFrame* GtkSalDisplay::findFrameByXWindow( XLIB_Window aWindow ) const
+{
+	if( aWindow == None )
+		return NULL;
+	std::map< XLIB_Window, GtkSalFrame* >::const_iterator it = m_aWindowFrameMap.find( aWindow );
+	if( it != m_aWindowFrameMap.end() )
+		return it->second;
+	return NULL;
 }
 
 extern "C" {
@@ -104,25 +162,25 @@ GdkFilterReturn call_filterGdkEvent( GdkXEvent* sys_event,
                                      GdkEvent* event,
                                      gpointer data )
 {
-    return GtkSalDisplay::filterGdkEvent( sys_event, event, data );
+	return GtkSalDisplay::filterGdkEvent( sys_event, event, data );
 }
 
 void signalKeysChanged( GdkKeymap*, gpointer data )
 {
-    GtkSalDisplay* pDisp = (GtkSalDisplay*)data;
-    pDisp->GetKeyboardName(TRUE);
+	GtkSalDisplay* pDisp = (GtkSalDisplay*)data;
+	pDisp->GetKeyboardName(TRUE);
 }
 
 void signalScreenSizeChanged( GdkScreen* pScreen, gpointer data )
 {
-    GtkSalDisplay* pDisp = (GtkSalDisplay*)data;
-    pDisp->screenSizeChanged( pScreen );
+	GtkSalDisplay* pDisp = (GtkSalDisplay*)data;
+	pDisp->screenSizeChanged( pScreen );
 }
 
 void signalMonitorsChanged( GdkScreen* pScreen, gpointer data )
 {
-    GtkSalDisplay* pDisp = (GtkSalDisplay*)data;
-    pDisp->monitorsChanged( pScreen );
+	GtkSalDisplay* pDisp = (GtkSalDisplay*)data;
+	pDisp->monitorsChanged( pScreen );
 }
 
 }
@@ -131,20 +189,20 @@ GdkFilterReturn GtkSalDisplay::filterGdkEvent( GdkXEvent* sys_event,
                                                GdkEvent*,
                                                gpointer data )
 {
-    GdkFilterReturn aFilterReturn = GDK_FILTER_CONTINUE;
+	GdkFilterReturn aFilterReturn = GDK_FILTER_CONTINUE;
 
 	XEvent *pEvent = (XEvent *)sys_event;
 	GtkSalDisplay *pDisplay = (GtkSalDisplay *)data;
 
-    // dispatch all XEvents to event callback
-    if( GetSalData()->m_pInstance->
-        CallEventCallback( pEvent, sizeof( XEvent ) ) )
-        aFilterReturn = GDK_FILTER_REMOVE;
+	// dispatch all XEvents to event callback
+	if( GetSalData()->m_pInstance->
+		CallEventCallback( pEvent, sizeof( XEvent ) ) )
+		aFilterReturn = GDK_FILTER_REMOVE;
 
-    GTK_YIELD_GRAB();
+	GTK_YIELD_GRAB();
 
-    if (pDisplay->GetDisplay() == pEvent->xany.display )
-    {
+	if (pDisplay->GetDisplay() == pEvent->xany.display )
+	{
         // #i53471# gtk has no callback mechanism that lets us be notified
         // when settings (as in XSETTING and opposed to styles) are changed.
         // so we need to listen for corresponding property notifications here
@@ -159,19 +217,11 @@ GdkFilterReturn GtkSalDisplay::filterGdkEvent( GdkXEvent* sys_event,
         }
         // let's see if one of our frames wants to swallow these events
         // get the frame
-        for( std::list< SalFrame* >::const_iterator it = pDisplay->m_aFrames.begin();
-                 it != pDisplay->m_aFrames.end(); ++it )
+        GtkSalFrame* pFrame = pDisplay->findFrameByXWindow( pEvent->xany.window );
+        if( pFrame )
         {
-            GtkSalFrame* pFrame = static_cast<GtkSalFrame*>(*it);
-            if( (GdkNativeWindow)pFrame->GetSystemData()->aWindow == pEvent->xany.window ||
-                ( pFrame->getForeignParent() && pFrame->getForeignParentWindow() == pEvent->xany.window ) ||
-                ( pFrame->getForeignTopLevel() && pFrame->getForeignTopLevelWindow() == pEvent->xany.window )
-                )
-            {
-                if( ! pFrame->Dispatch( pEvent ) )
-                    aFilterReturn = GDK_FILTER_REMOVE;
-                break;
-            }
+            if( pFrame->dispatchXEvent( pEvent ) )
+                aFilterReturn = GDK_FILTER_REMOVE;
         }
         X11SalObject::Dispatch( pEvent );
     }
@@ -204,78 +254,16 @@ void GtkSalDisplay::screenSizeChanged( GdkScreen* pScreen )
 
 void GtkSalDisplay::monitorsChanged( GdkScreen* pScreen )
 {
-    /* Caution: since we support the _NET_WM_FULLSCREEN_MONITORS property now and
-       the EWMH spec says, the index used for that needs to be that of the
-       Xinerama extension, we need to ensure that the order of m_aXineramaScreens is actually intact.
-       
-       gdk_screen_get_monitor_geometry however has a different sort order that has a default monitor number
-       Xinerama returns the default monitor as 0.
-       That means if we fill in the multiple montors vector from gdk, we'll get the wrong order unless
-       the default monitor is incidentally the same (number 0).
-       
-       Given that XRandR (which is what gdk_screen_get_monitor_geometry is based on) is
-       supposed to replace Xinerama, this is bound to get a problem at some time again,
-       unfortunately there does not currently seem to be a way to map the returns of xinerama to
-       that of randr. Currently getting Xinerama values again works with updated values, given
-       a new enough Xserver.
-    */
+
     InitXinerama();
     (void)pScreen;
-    
-    #if 0
-    if( pScreen )
-    {
-        if( gdk_display_get_n_screens(m_pGdkDisplay) == 1 )
-        {
-            int nScreen = gdk_screen_get_number( pScreen );
-            if( nScreen == m_nDefaultScreen ) //To-Do, make m_aXineramaScreens a per-screen thing ?
-            {
-                gint nMonitors = gdk_screen_get_n_monitors(pScreen);
-                m_aXineramaScreens = std::vector<Rectangle>();
-                m_aXineramaScreenIndexMap = std::vector<int>(nMonitors);
-                for (gint i = 0; i < nMonitors; ++i)
-                {
-                    GdkRectangle dest;
-                    gdk_screen_get_monitor_geometry(pScreen, i, &dest);
-                    m_aXineramaScreenIndexMap[i] = addXineramaScreenUnique( dest.x, dest.y, dest.width, dest.height );
-                }
-                m_bXinerama = m_aXineramaScreens.size() > 1;
-                if( ! m_aFrames.empty() )
-                    m_aFrames.front()->CallCallback( SALEVENT_DISPLAYCHANGED, 0 );
-            }
-            else
-            {
-                DBG_ERROR( "monitors for non-default screen changed, extend-me" );
-            }
-        }
-    }
-    #endif
-}
-
-extern "C"
-{
-    typedef gint(* screen_get_primary_monitor)(GdkScreen *screen);
 }
 
 int GtkSalDisplay::GetDefaultMonitorNumber() const
 {
-    int n = 0;
-    
-    // currently disabled, see remarks in monitorsChanged
-#if 0
-    GdkScreen* pScreen = gdk_display_get_screen( m_pGdkDisplay, m_nDefaultScreen );
-#if GTK_CHECK_VERSION(2,20,0)
-    n = gdk_screen_get_primary_monitor(pScreen);
-#else
-    static screen_get_primary_monitor sym_gdk_screen_get_primary_monitor =
-        (screen_get_primary_monitor)osl_getAsciiFunctionSymbol( GetSalData()->m_pPlugin, "gdk_screen_get_primary_monitor" );
-    if (sym_gdk_screen_get_primary_monitor)
-        n = sym_gdk_screen_get_primary_monitor( pScreen );
-#endif
-    if( n >= 0 && size_t(n) < m_aXineramaScreenIndexMap.size() )
-        n = m_aXineramaScreenIndexMap[n];
-#endif
-    return n;
+    // GTK's primary-monitor implementation is disabled; use the
+    // Xinerama default monitor.
+    return 0;
 }
 
 void GtkSalDisplay::initScreen( int nScreen ) const
@@ -285,7 +273,7 @@ void GtkSalDisplay::initScreen( int nScreen ) const
     ScreenData& rSD = const_cast<ScreenData&>(m_aScreens[nScreen]);
     if( rSD.m_bInit )
         return;
-    
+
     // choose visual for screen
     SalDisplay::initScreen( nScreen );
     // now set a gdk default colormap matching the chosen visual to the screen
@@ -314,13 +302,15 @@ long GtkSalDisplay::Dispatch( XEvent* pEvent )
 {
     if( GetDisplay() == pEvent->xany.display )
     {
-        // let's see if one of our frames wants to swallow these events
-        // get the child frame
-        for( std::list< SalFrame* >::const_iterator it = m_aFrames.begin();
-             it != m_aFrames.end(); ++it )
+        GtkSalFrame* pFrame = findFrameByXWindow( pEvent->xany.window );
+        if( pFrame )
         {
-            if( (GdkNativeWindow)(*it)->GetSystemData()->aWindow == pEvent->xany.window )
-                return static_cast<GtkSalFrame*>(*it)->Dispatch( pEvent );
+            /*
+             * dispatchXEvent() returns true when the frame handled the event.
+             * This method returns a GdkFilterReturn, not the legacy Dispatch()
+             * continuation boolean.
+             */
+            return pFrame->dispatchXEvent( pEvent ) ? GDK_FILTER_REMOVE : GDK_FILTER_CONTINUE;
         }
     }
 
@@ -364,20 +354,20 @@ GdkCursor* GtkSalDisplay::getFromXPM( const char *pBitmap,
 
 GdkCursor *GtkSalDisplay::getCursor( PointerStyle ePointerStyle )
 {
-    if (ePointerStyle >= POINTER_COUNT)
-        return NULL;
+	if (ePointerStyle >= POINTER_COUNT)
+		return NULL;
 
 	if ( !m_aCursors[ ePointerStyle ] )
 	{
 		GdkCursor *pCursor = NULL;
 
-	    switch( ePointerStyle )
-	    {
+		switch( ePointerStyle )
+		{
 			MAP_BUILTIN( POINTER_ARROW, GDK_LEFT_PTR );
 			MAP_BUILTIN( POINTER_TEXT, GDK_XTERM );
 			MAP_BUILTIN( POINTER_HELP, GDK_QUESTION_ARROW );
 			MAP_BUILTIN( POINTER_CROSS, GDK_CROSSHAIR );
-            MAP_BUILTIN( POINTER_WAIT, GDK_WATCH );
+			MAP_BUILTIN( POINTER_WAIT, GDK_WATCH );
 
 			MAP_BUILTIN( POINTER_NSIZE, GDK_SB_V_DOUBLE_ARROW );
 			MAP_BUILTIN( POINTER_SSIZE, GDK_SB_V_DOUBLE_ARROW );
@@ -420,7 +410,7 @@ GdkCursor *GtkSalDisplay::getCursor( PointerStyle ePointerStyle )
 			MAKE_CURSOR( POINTER_COPYFILE, copyfile_ );
 			MAKE_CURSOR( POINTER_MOVEFILES, movefiles_ );
 			MAKE_CURSOR( POINTER_COPYFILES, copyfiles_ );
-			MAKE_CURSOR( POINTER_NOTALLOWED, nodrop_ );
+			MAKE_CURSOR( POINTER_NOTALLOWED, notallow_ );
 			MAKE_CURSOR( POINTER_ROTATE, rotate_ );
 			MAKE_CURSOR( POINTER_HSHEAR, hshear_ );
 			MAKE_CURSOR( POINTER_VSHEAR, vshear_ );
@@ -455,8 +445,6 @@ GdkCursor *GtkSalDisplay::getCursor( PointerStyle ePointerStyle )
 			MAKE_CURSOR( POINTER_PIVOT_DELETE, pivotdel_ );
 			MAKE_CURSOR( POINTER_CHAIN, chain_ );
 			MAKE_CURSOR( POINTER_CHAIN_NOTALLOWED, chainnot_ );
-			MAKE_CURSOR( POINTER_TIMEEVENT_MOVE, timemove_ );
-			MAKE_CURSOR( POINTER_TIMEEVENT_SIZE, timesize_ );
 			MAKE_CURSOR( POINTER_AUTOSCROLL_N, asn_ );
 			MAKE_CURSOR( POINTER_AUTOSCROLL_S, ass_ );
 			MAKE_CURSOR( POINTER_AUTOSCROLL_W, asw_ );
@@ -471,17 +459,17 @@ GdkCursor *GtkSalDisplay::getCursor( PointerStyle ePointerStyle )
 			MAKE_CURSOR( POINTER_AIRBRUSH, airbrush_ );
 			MAKE_CURSOR( POINTER_TEXT_VERTICAL, vertcurs_ );
 
-            // --> FME 2004-07-30 #i32329# Enhanced table selection
-            MAKE_CURSOR( POINTER_TAB_SELECT_S, tblsels_ );
-            MAKE_CURSOR( POINTER_TAB_SELECT_E, tblsele_ );
-            MAKE_CURSOR( POINTER_TAB_SELECT_SE, tblselse_ );
-            MAKE_CURSOR( POINTER_TAB_SELECT_W, tblselw_ );
-            MAKE_CURSOR( POINTER_TAB_SELECT_SW, tblselsw_ );
-            // <--
+			// --> FME 2004-07-30 #i32329# Enhanced table selection
+			MAKE_CURSOR( POINTER_TAB_SELECT_S, tblsels_ );
+			MAKE_CURSOR( POINTER_TAB_SELECT_E, tblsele_ );
+			MAKE_CURSOR( POINTER_TAB_SELECT_SE, tblselse_ );
+			MAKE_CURSOR( POINTER_TAB_SELECT_W, tblselw_ );
+			MAKE_CURSOR( POINTER_TAB_SELECT_SW, tblselsw_ );
+			// <--
 
-            // --> FME 2004-08-16 #i20119# Paintbrush tool
-            MAKE_CURSOR( POINTER_PAINTBRUSH, paintbrush_ );
-            // <--
+			// --> FME 2004-08-16 #i20119# Paintbrush tool
+			MAKE_CURSOR( POINTER_PAINTBRUSH, paintbrush_ );
+			// <--
 
 		default:
 			fprintf( stderr, "pointer %d not implemented", ePointerStyle );
@@ -498,7 +486,7 @@ GdkCursor *GtkSalDisplay::getCursor( PointerStyle ePointerStyle )
 
 int GtkSalDisplay::CaptureMouse( SalFrame* pSFrame )
 {
-    GtkSalFrame* pFrame = static_cast<GtkSalFrame*>(pSFrame);
+	GtkSalFrame* pFrame = static_cast<GtkSalFrame*>(pSFrame);
 
 	if( !pFrame )
 	{
@@ -517,22 +505,22 @@ int GtkSalDisplay::CaptureMouse( SalFrame* pSFrame )
 
 	m_pCapture = pFrame;
 	static_cast<GtkSalFrame*>(pFrame)->grabPointer( TRUE );
-    return 1;
+	return 1;
 }
 
 /***************************************************************************
- * class GtkXLib                                                           *
+ * class GtkXLib
  ***************************************************************************/
 
 class GtkXLib : public SalXLib
 {
-    GtkSalDisplay       *m_pGtkSalDisplay;
-    std::list<GSource *> m_aSources;
-    GSource             *m_pTimeout;
+	GtkSalDisplay       *m_pGtkSalDisplay;
+	std::list<GSource *> m_aSources;
+	GSource             *m_pTimeout;
 	GSource				*m_pUserEvent;
-    oslMutex             m_aDispatchMutex;
-    oslCondition         m_aDispatchCondition;
-    XIOErrorHandler      m_aOrigGTKXIOErrorHandler;
+	oslMutex             m_aDispatchMutex;
+	oslCondition         m_aDispatchCondition;
+	XIOErrorHandler      m_aOrigGTKXIOErrorHandler;
 
 public:
 	static gboolean      timeoutFn(gpointer data);
@@ -551,28 +539,28 @@ public:
 
 	virtual void    StartTimer( sal_uLong nMS );
 	virtual void    StopTimer();
-    virtual void    Wakeup();
-    virtual void    PostUserEvent();
+	virtual void    Wakeup();
+	virtual void    PostUserEvent();
 };
 
 GtkXLib::GtkXLib()
 {
 #if OSL_DEBUG_LEVEL > 1
-    fprintf( stderr, "GtkXLib::GtkXLib()\n" );
+	fprintf( stderr, "GtkXLib::GtkXLib()\n" );
 #endif
-    m_pGtkSalDisplay = NULL;
+	m_pGtkSalDisplay = NULL;
 	m_pTimeout = NULL;
 	m_nTimeoutMS = 0;
-    m_pUserEvent = NULL;
-    m_aDispatchCondition = osl_createCondition();
-    m_aDispatchMutex = osl_createMutex();
-    m_aOrigGTKXIOErrorHandler = NULL;
+	m_pUserEvent = NULL;
+	m_aDispatchCondition = osl_createCondition();
+	m_aDispatchMutex = osl_createMutex();
+	m_aOrigGTKXIOErrorHandler = NULL;
 }
 
 GtkXLib::~GtkXLib()
 {
 #if OSL_DEBUG_LEVEL > 1
-    fprintf( stderr, "GtkXLib::~GtkXLib()\n" );
+	fprintf( stderr, "GtkXLib::~GtkXLib()\n" );
 #endif
 	StopTimer();
      // sanity check: at this point nobody should be yielding, but wake them
@@ -581,19 +569,19 @@ GtkXLib::~GtkXLib()
     osl_destroyCondition( m_aDispatchCondition );
     osl_destroyMutex( m_aDispatchMutex );
 
-    PopXErrorLevel();
-    XSetIOErrorHandler (m_aOrigGTKXIOErrorHandler);
+	PopXErrorLevel();
+	XSetIOErrorHandler (m_aOrigGTKXIOErrorHandler);
 }
 
 void GtkXLib::Init()
 {
-    int i;
+	int i;
 #if OSL_DEBUG_LEVEL > 1
-    fprintf( stderr, "GtkXLib::Init()\n" );
+	fprintf( stderr, "GtkXLib::Init()\n" );
 #endif
 	XrmInitialize();
 
-    gtk_set_locale();
+	gtk_set_locale();
 
 	/*
 	 * open connection to X11 Display
@@ -603,21 +591,21 @@ void GtkXLib::Init()
 	 *  o  default display
 	 */
 
-    GdkDisplay *pGdkDisp = NULL;
+	GdkDisplay *pGdkDisp = NULL;
 
 	// is there a -display command line parameter?
-    rtl_TextEncoding aEnc = osl_getThreadTextEncoding();
+	rtl_TextEncoding aEnc = osl_getThreadTextEncoding();
 	int nParams = osl_getCommandArgCount();
 	rtl::OString aDisplay;
 	rtl::OUString aParam, aBin;
-    char** pCmdLineAry = new char*[ nParams+1 ];
-    osl_getExecutableFile( &aParam.pData );
-    osl_getSystemPathFromFileURL( aParam.pData, &aBin.pData );
-    pCmdLineAry[0] = g_strdup( OUStringToOString( aBin, aEnc ).getStr() );
+	char** pCmdLineAry = new char*[ nParams+1 ];
+	osl_getExecutableFile( &aParam.pData );
+	osl_getSystemPathFromFileURL( aParam.pData, &aBin.pData );
+	pCmdLineAry[0] = g_strdup( OUStringToOString( aBin, aEnc ).getStr() );
 	for (i=0; i<nParams; i++)
 	{
 		osl_getCommandArg(i, &aParam.pData );
-        OString aBParam( OUStringToOString( aParam, aEnc ) );
+		OString aBParam( OUStringToOString( aParam, aEnc ) );
 
 		if( aParam.equalsAscii( "-display" ) || aParam.equalsAscii( "--display" ) )
 		{
@@ -626,27 +614,27 @@ void GtkXLib::Init()
 			aDisplay = rtl::OUStringToOString( aParam, aEnc );
 		}
 		else
-	        pCmdLineAry[i+1] = g_strdup( aBParam.getStr() );
+			pCmdLineAry[i+1] = g_strdup( aBParam.getStr() );
 	}
-    // add executable
-    nParams++;
+	// add executable
+	nParams++;
 
-    g_set_application_name(X11SalData::getFrameClassName());
+	g_set_application_name(X11SalData::getFrameClassName());
 
-    // Set consistent name of the root accessible
-    rtl::OUString aAppName = Application::GetAppName();
-    if( aAppName.getLength() > 0 )
-    {
-        rtl::OString aPrgName = rtl::OUStringToOString(aAppName, aEnc);
-        g_set_prgname( aPrgName.getStr());
-    }
-    
-    // init gtk/gdk
-    gtk_init_check( &nParams, &pCmdLineAry );
+	// Set consistent name of the root accessible
+	rtl::OUString aAppName = Application::GetAppName();
+	if( aAppName.getLength() > 0 )
+	{
+		rtl::OString aPrgName = rtl::OUStringToOString(aAppName, aEnc);
+		g_set_prgname( aPrgName.getStr());
+	}
 
-    //gtk_init_check sets XError/XIOError handlers, we want our own one
-    m_aOrigGTKXIOErrorHandler = XSetIOErrorHandler ( (XIOErrorHandler)X11SalData::XIOErrorHdl );
-    PushXErrorLevel( !!getenv( "SAL_IGNOREXERRORS" ) );
+	// init gtk/gdk
+	gtk_init_check( &nParams, &pCmdLineAry );
+
+	// gtk_init_check sets XError/XIOError handlers, we want our own one
+	m_aOrigGTKXIOErrorHandler = XSetIOErrorHandler ( (XIOErrorHandler)X11SalData::XIOErrorHdl );
+	PushXErrorLevel( !!getenv( "SAL_IGNOREXERRORS" ) );
 
 	for (i = 0; i < nParams; i++ )
 		g_free( pCmdLineAry[i] );
@@ -657,14 +645,14 @@ void GtkXLib::Init()
 		gdk_window_set_debug_updates (TRUE);
 #endif
 
-    pGdkDisp = gdk_display_get_default();
+	pGdkDisp = gdk_display_get_default();
 	if ( !pGdkDisp )
 	{
-	    rtl::OUString aProgramFileURL;
-        osl_getExecutableFile( &aProgramFileURL.pData );
-	    rtl::OUString aProgramSystemPath;
-        osl_getSystemPathFromFileURL (aProgramFileURL.pData, &aProgramSystemPath.pData);
-        rtl::OString  aProgramName = rtl::OUStringToOString(
+		rtl::OUString aProgramFileURL;
+		osl_getExecutableFile( &aProgramFileURL.pData );
+		rtl::OUString aProgramSystemPath;
+		osl_getSystemPathFromFileURL (aProgramFileURL.pData, &aProgramSystemPath.pData);
+		rtl::OString  aProgramName = rtl::OUStringToOString(
                                             aProgramSystemPath,
                                             osl_getThreadTextEncoding() );
 		fprintf( stderr, "%s X11 error: Can't open display: %s\n",
@@ -678,7 +666,7 @@ void GtkXLib::Init()
 
 	/*
 	 * if a -display switch was used, we need
-	 * to set the environment accoringly since
+	 * to set the environment accordingly since
 	 * the clipboard build another connection
 	 * to the xserver using $DISPLAY
 	 */
@@ -691,19 +679,19 @@ void GtkXLib::Init()
 
 	m_pGtkSalDisplay = new GtkSalDisplay( pGdkDisp );
 
-    gdk_window_add_filter( NULL, call_filterGdkEvent, m_pGtkSalDisplay );
+	gdk_window_add_filter( NULL, call_filterGdkEvent, m_pGtkSalDisplay );
 
-    PushXErrorLevel( true );
+	PushXErrorLevel( true );
 	SalI18N_KeyboardExtension *pKbdExtension = new SalI18N_KeyboardExtension( pDisp );
 	XSync( pDisp, False );
 
 	pKbdExtension->UseExtension( ! HasXErrorOccured() );
-    PopXErrorLevel();
+	PopXErrorLevel();
 
 	m_pGtkSalDisplay->SetKbdExtension( pKbdExtension );
 
-    g_signal_connect( G_OBJECT(gdk_keymap_get_default()), "keys_changed", G_CALLBACK(signalKeysChanged), m_pGtkSalDisplay );
-    
+	g_signal_connect( G_OBJECT(gdk_keymap_get_default()), "keys_changed", G_CALLBACK(signalKeysChanged), m_pGtkSalDisplay );
+
     // add signal handler to notify screen size changes
     int nScreens = gdk_display_get_n_screens( pGdkDisp );
     for( int n = 0; n < nScreens; n++ )
@@ -720,10 +708,10 @@ void GtkXLib::Init()
 
 extern "C"
 {
-    gboolean call_timeoutFn(gpointer data)
-    {
-        return GtkXLib::timeoutFn(data);
-    }
+	gboolean call_timeoutFn(gpointer data)
+	{
+		return GtkXLib::timeoutFn(data);
+	}
 }
 
 gboolean GtkXLib::timeoutFn(gpointer data)
@@ -760,20 +748,20 @@ void GtkXLib::StartTimer( sal_uLong nMS )
 	}
 
 	m_pTimeout = g_timeout_source_new (m_nTimeoutMS);
-    // #i36226# timers should be executed with lower priority
-    // than XEvents like in generic plugin
-    g_source_set_priority( m_pTimeout, G_PRIORITY_LOW );
+	// #i36226# timers should be executed with lower priority
+	// than XEvents like in generic plugin
+	g_source_set_priority( m_pTimeout, G_PRIORITY_LOW );
 	g_source_set_can_recurse (m_pTimeout, TRUE);
 	g_source_set_callback (m_pTimeout, call_timeoutFn,
 						   (gpointer) this, NULL);
 	g_source_attach (m_pTimeout, g_main_context_default ());
-    
-    SalXLib::StartTimer( nMS );
+
+	SalXLib::StartTimer( nMS );
 }
 
 void GtkXLib::StopTimer()
 {
-    SalXLib::StopTimer();
+	SalXLib::StopTimer();
 
 	if (m_pTimeout)
 	{
@@ -785,10 +773,10 @@ void GtkXLib::StopTimer()
 
 extern "C"
 {
-    gboolean call_userEventFn( gpointer data )
-    {
-        return GtkXLib::userEventFn( data );
-    }
+	gboolean call_userEventFn( gpointer data )
+	{
+		return GtkXLib::userEventFn( data );
+	}
 }
 
 gboolean GtkXLib::userEventFn(gpointer data)
@@ -833,7 +821,7 @@ void GtkXLib::PostUserEvent()
 							   (gpointer) this, NULL);
 		g_source_attach (m_pUserEvent, g_main_context_default ());
 	}
-    Wakeup();
+	Wakeup();
 }
 
 void GtkXLib::Wakeup()
@@ -845,10 +833,10 @@ void GtkXLib::Yield( bool bWait, bool bHandleAllCurrentEvents )
 {
     /* #i33212# only enter g_main_context_iteration in one thread at any one
      * time, else one of them potentially will never end as long as there is
-     * another thread in in there. Having only one yieldin thread actually dispatch
+     * another thread in in there. Having only one yielding thread actually dispatch
      * fits the vcl event model (see e.g. the generic plugin).
      */
-    
+
     bool bDispatchThread = false;
     gboolean wasEvent = FALSE;
     {
@@ -859,7 +847,7 @@ void GtkXLib::Yield( bool bWait, bool bHandleAllCurrentEvents )
         else if( ! bWait )
             return; // someone else is waiting already, return
 
-        
+
         if( bDispatchThread )
         {
             int nMaxEvents = bHandleAllCurrentEvents ? 100 : 1;
@@ -916,7 +904,7 @@ sal_source_prepare (GSource *source,
 	*timeout = -1;
 
 	if (watch->pending &&
-	    watch->pending (watch->pollfd.fd, watch->user_data)) {
+		watch->pending (watch->pollfd.fd, watch->user_data)) {
 		watch->pollfd.revents |= watch->condition;
 		return TRUE;
 	}
@@ -959,8 +947,8 @@ static GSourceFuncs sal_source_watch_funcs = {
 	sal_source_check,
 	sal_source_dispatch,
 	sal_source_finalize,
-    NULL,
-    NULL
+	NULL,
+	NULL
 };
 
 static GSource *
@@ -1009,7 +997,7 @@ void GtkXLib::Insert( int       nFD,
 
 void GtkXLib::Remove( int nFD )
 {
-    ::std::list< GSource * >::iterator it;
+	::std::list< GSource * >::iterator it;
 
 	for (it = m_aSources.begin(); it != m_aSources.end(); ++it)
 	{
@@ -1017,7 +1005,7 @@ void GtkXLib::Remove( int nFD )
 
 		if (watch->pollfd.fd == nFD)
 		{
-            m_aSources.erase( it );
+			m_aSources.erase( it );
 
 			g_source_destroy ((GSource *)watch);
 			g_source_unref   ((GSource *)watch);
@@ -1027,7 +1015,7 @@ void GtkXLib::Remove( int nFD )
 }
 
 /**********************************************************************
- * class GtkData                                                      *
+ * class GtkData
  **********************************************************************/
 
 GtkData::~GtkData()
@@ -1036,6 +1024,8 @@ GtkData::~GtkData()
 
 void GtkData::Init()
 {
-    pXLib_ = new GtkXLib();
-    pXLib_->Init();
+	pXLib_ = new GtkXLib();
+	pXLib_->Init();
 }
+
+/* vim: set noet sw=4 ts=4: */

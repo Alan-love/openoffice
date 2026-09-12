@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -144,7 +144,7 @@ public:
     VosMutexFacade( ::osl::Mutex& _rMutex );
 
     // IMutex
-    virtual void SAL_CALL acquire();	
+    virtual void SAL_CALL acquire();
     virtual sal_Bool SAL_CALL tryToAcquire();
     virtual void SAL_CALL release();
 
@@ -279,8 +279,7 @@ public:
 	bool        commitEmbeddedStorage( bool _bPreventRootCommits = false );
 
     /// commits all sub storages
-    void commitStorages()
-            SAL_THROW(( ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException ));
+    void commitStorages();
 
 	ODatabaseModelImpl(
 		const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory >& _rxFactory,
@@ -295,7 +294,7 @@ public:
 		);
 
 	// XEventListener
-	void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source ) throw(::com::sun::star::uno::RuntimeException);
+	void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source );
 
     void setModified( sal_Bool bModified );
 
@@ -475,7 +474,7 @@ public:
             if any of the invoked operations does so
     */
     ::com::sun::star::uno::Reference< ::com::sun::star::embed::XStorage >
-            switchToStorage( 
+            switchToStorage(
                 const ::com::sun::star::uno::Reference< ::com::sun::star::embed::XStorage >& _rxNewRootStorage
             );
 
@@ -515,7 +514,7 @@ private:
     ::com::sun::star::uno::Reference< ::com::sun::star::embed::XStorage >
             impl_switchToStorage_throw( const ::com::sun::star::uno::Reference< ::com::sun::star::embed::XStorage >& _rxNewRootStorage );
 
-    /** switches to the given document URL, which denotes the logical URL of the document, not necessariy the
+    /** switches to the given document URL, which denotes the logical URL of the document, not necessary the
         URL where the doc was loaded/recovered from
     */
     void    impl_switchToLogicalURL(
@@ -634,4 +633,3 @@ public:
 //........................................................................
 
 #endif // _DBA_COREDATAACCESS_DATALINK_HXX_
-

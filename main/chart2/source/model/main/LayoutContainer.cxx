@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 #include "LayoutContainer.hxx"
 #include "macros.hxx"
 #include "ContainerHelper.hxx"
@@ -51,17 +51,12 @@ LayoutContainer::~LayoutContainer()
 void SAL_CALL LayoutContainer::addConstrainedElementByIdentifier(
     const ::rtl::OUString& aIdentifier,
     const layout::Constraint& Constraint )
-    throw (layout::IllegalConstraintException,
-           lang::IllegalArgumentException,
-           uno::RuntimeException)
 {
     addElementByIdentifier( aIdentifier );
     m_aConstraints[ aIdentifier ] = Constraint;
 }
 
 void SAL_CALL LayoutContainer::addElementByIdentifier( const ::rtl::OUString& aIdentifier )
-    throw (lang::IllegalArgumentException,
-           uno::RuntimeException)
 {
     if( ::std::find( m_aLayoutElements.begin(),
                      m_aLayoutElements.end(),
@@ -72,8 +67,6 @@ void SAL_CALL LayoutContainer::addElementByIdentifier( const ::rtl::OUString& aI
 }
 
 void SAL_CALL LayoutContainer::removeElementByIdentifier( const ::rtl::OUString& aIdentifier )
-    throw (container::NoSuchElementException,
-           uno::RuntimeException)
 {
     tLayoutElements::iterator aIt(
         ::std::find( m_aLayoutElements.begin(),
@@ -90,8 +83,6 @@ void SAL_CALL LayoutContainer::removeElementByIdentifier( const ::rtl::OUString&
 void SAL_CALL LayoutContainer::setConstraintByIdentifier(
     const ::rtl::OUString& aIdentifier,
     const layout::Constraint& Constraint )
-    throw (container::NoSuchElementException,
-           uno::RuntimeException)
 {
     if( ::std::find( m_aLayoutElements.begin(),
                      m_aLayoutElements.end(),
@@ -102,8 +93,6 @@ void SAL_CALL LayoutContainer::setConstraintByIdentifier(
 }
 
 layout::Constraint SAL_CALL LayoutContainer::getConstraintByIdentifier( const ::rtl::OUString& aIdentifier )
-    throw (container::NoSuchElementException,
-           uno::RuntimeException)
 {
     tConstraintsMap::const_iterator aIt( m_aConstraints.find( aIdentifier ));
     if( aIt == m_aConstraints.end())
@@ -113,7 +102,6 @@ layout::Constraint SAL_CALL LayoutContainer::getConstraintByIdentifier( const ::
 }
 
 uno::Sequence< ::rtl::OUString > SAL_CALL LayoutContainer::getElementIdentifiers()
-    throw (uno::RuntimeException)
 {
     return ContainerHelper::ContainerToSequence( m_aLayoutElements );
 }

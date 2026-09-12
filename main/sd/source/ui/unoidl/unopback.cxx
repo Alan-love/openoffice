@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -55,17 +55,17 @@ const SvxItemPropertySet* ImplGetPageBackgroundPropertySet()
 		{0,0,0,0,0,0}
 	};
 
-    static SvxItemPropertySet aPageBackgroundPropertySet_Impl( aPageBackgroundPropertyMap_Impl, SdrObject::GetGlobalDrawObjectItemPool() ); 
+    static SvxItemPropertySet aPageBackgroundPropertySet_Impl( aPageBackgroundPropertyMap_Impl, SdrObject::GetGlobalDrawObjectItemPool() );
 	return &aPageBackgroundPropertySet_Impl;
 }
 
 UNO3_GETIMPLEMENTATION_IMPL( SdUnoPageBackground );
 
-SdUnoPageBackground::SdUnoPageBackground( 
-    SdDrawDocument* pDoc /* = NULL */, 
+SdUnoPageBackground::SdUnoPageBackground(
+    SdDrawDocument* pDoc /* = NULL */,
     const SfxItemSet* pSet /* = NULL */) throw()
-:   mpPropSet(ImplGetPageBackgroundPropertySet()), 
-    mpSet(NULL), 
+:   mpPropSet(ImplGetPageBackgroundPropertySet()),
+    mpSet(NULL),
     mpDoc(pDoc)
 {
 	if( pDoc )
@@ -115,7 +115,7 @@ void SdUnoPageBackground::fillItemSet( SdDrawDocument* pDoc, SfxItemSet& rSet ) 
 		mpDoc = pDoc;
 
 		mpSet = new SfxItemSet( *rSet.GetPool(), XATTR_FILL_FIRST, XATTR_FILL_LAST );
-		
+
 		if( mpPropSet->AreThereOwnUsrAnys() )
 		{
 			uno::Any* pAny;
@@ -189,19 +189,16 @@ void SdUnoPageBackground::fillItemSet( SdDrawDocument* pDoc, SfxItemSet& rSet ) 
 
 // XServiceInfo
 OUString SAL_CALL SdUnoPageBackground::getImplementationName()
-	throw(uno::RuntimeException)
 {
 	return OUString::createFromAscii( sUNO_SdUnoPageBackground );
 }
 
 sal_Bool SAL_CALL SdUnoPageBackground::supportsService( const OUString& ServiceName )
-	throw(uno::RuntimeException)
 {
 	return comphelper::ServiceInfoHelper::supportsService( ServiceName, getSupportedServiceNames() );
 }
 
 uno::Sequence< OUString > SAL_CALL SdUnoPageBackground::getSupportedServiceNames()
-	throw(uno::RuntimeException)
 {
 	uno::Sequence< OUString > aNameSequence( 2 );
 	OUString* pStrings = aNameSequence.getArray();
@@ -214,13 +211,11 @@ uno::Sequence< OUString > SAL_CALL SdUnoPageBackground::getSupportedServiceNames
 
 // XPropertySet
 uno::Reference< beans::XPropertySetInfo > SAL_CALL SdUnoPageBackground::getPropertySetInfo()
-	throw(uno::RuntimeException)
 {
 	return mpPropSet->getPropertySetInfo();
 }
 
 void SAL_CALL SdUnoPageBackground::setPropertyValue( const OUString& aPropertyName, const uno::Any& aValue )
-	throw(beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -277,7 +272,6 @@ void SAL_CALL SdUnoPageBackground::setPropertyValue( const OUString& aPropertyNa
 }
 
 uno::Any SAL_CALL SdUnoPageBackground::getPropertyValue( const OUString& PropertyName )
-	throw(beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -317,7 +311,7 @@ uno::Any SAL_CALL SdUnoPageBackground::getPropertyValue( const OUString& Propert
 					aSet.Put( rPool.GetDefaultItem( pEntry->nWID ) );
 
 				// Hole Wert aus ItemSet
-				aAny = SvxItemPropertySet_getPropertyValue( *mpPropSet, pEntry, aSet );	
+				aAny = SvxItemPropertySet_getPropertyValue( *mpPropSet, pEntry, aSet );
 			}
 		}
 		else
@@ -329,14 +323,13 @@ uno::Any SAL_CALL SdUnoPageBackground::getPropertyValue( const OUString& Propert
 	return aAny;
 }
 
-void SAL_CALL SdUnoPageBackground::addPropertyChangeListener( const OUString& , const uno::Reference< beans::XPropertyChangeListener >&  ) throw(beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException) {}
-void SAL_CALL SdUnoPageBackground::removePropertyChangeListener( const OUString& , const uno::Reference< beans::XPropertyChangeListener >&  ) throw(beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException) {}
-void SAL_CALL SdUnoPageBackground::addVetoableChangeListener( const OUString& , const uno::Reference< beans::XVetoableChangeListener >&  ) throw(beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException) {}
-void SAL_CALL SdUnoPageBackground::removeVetoableChangeListener( const OUString& , const uno::Reference< beans::XVetoableChangeListener >&  ) throw(beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException) {}
+void SAL_CALL SdUnoPageBackground::addPropertyChangeListener( const OUString& , const uno::Reference< beans::XPropertyChangeListener >&  ) {}
+void SAL_CALL SdUnoPageBackground::removePropertyChangeListener( const OUString& , const uno::Reference< beans::XPropertyChangeListener >&  ) {}
+void SAL_CALL SdUnoPageBackground::addVetoableChangeListener( const OUString& , const uno::Reference< beans::XVetoableChangeListener >&  ) {}
+void SAL_CALL SdUnoPageBackground::removeVetoableChangeListener( const OUString& , const uno::Reference< beans::XVetoableChangeListener >&  ) {}
 
 // XPropertyState
 beans::PropertyState SAL_CALL SdUnoPageBackground::getPropertyState( const OUString& PropertyName )
-	throw(beans::UnknownPropertyException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -383,7 +376,6 @@ beans::PropertyState SAL_CALL SdUnoPageBackground::getPropertyState( const OUStr
 }
 
 uno::Sequence< beans::PropertyState > SAL_CALL SdUnoPageBackground::getPropertyStates( const uno::Sequence< OUString >& aPropertyName )
-	throw(beans::UnknownPropertyException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -400,7 +392,6 @@ uno::Sequence< beans::PropertyState > SAL_CALL SdUnoPageBackground::getPropertyS
 }
 
 void SAL_CALL SdUnoPageBackground::setPropertyToDefault( const OUString& PropertyName )
-	throw(beans::UnknownPropertyException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -424,7 +415,6 @@ void SAL_CALL SdUnoPageBackground::setPropertyToDefault( const OUString& Propert
 }
 
 uno::Any SAL_CALL SdUnoPageBackground::getPropertyDefault( const OUString& aPropertyName )
-	throw(beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -444,8 +434,8 @@ uno::Any SAL_CALL SdUnoPageBackground::getPropertyDefault( const OUString& aProp
 			SfxItemPool& rPool = *mpSet->GetPool();
 			SfxItemSet aSet( rPool,	pEntry->nWID, pEntry->nWID);
 			aSet.Put( rPool.GetDefaultItem( pEntry->nWID ) );
-	
-			aAny = SvxItemPropertySet_getPropertyValue( *mpPropSet, pEntry, aSet );	
+
+			aAny = SvxItemPropertySet_getPropertyValue( *mpPropSet, pEntry, aSet );
 		}
 	}
 	return aAny;
@@ -456,4 +446,3 @@ const SfxItemPropertySimpleEntry* SdUnoPageBackground::getPropertyMapEntry( cons
 {
 	return mpPropSet->getPropertyMap()->getByName(rPropertyName);
 }
-

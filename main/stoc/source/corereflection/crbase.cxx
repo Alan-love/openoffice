@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -68,7 +68,7 @@ IdlClassImpl::IdlClassImpl( IdlReflectionServiceImpl * pReflection,
 		if (! _pTypeDescr->bComplete)
 			typelib_typedescription_complete( &_pTypeDescr );
 	}
-	
+
 #ifdef TEST_LIST_CLASSES
 	ClassNameList::const_iterator iFind( find( g_aClassNames.begin(), g_aClassNames.end(), _aName ) );
 	OSL_ENSURE( iFind == g_aClassNames.end(), "### idl class already exists!" );
@@ -82,7 +82,7 @@ IdlClassImpl::~IdlClassImpl()
 		typelib_typedescription_release( _pTypeDescr );
 	if (_pReflection)
 		_pReflection->release();
-	
+
 #ifdef TEST_LIST_CLASSES
 	ClassNameList::iterator iFind( find( g_aClassNames.begin(), g_aClassNames.end(), _aName ) );
 	OSL_ENSURE( iFind != g_aClassNames.end(), "### idl class does not exist!" );
@@ -93,19 +93,16 @@ IdlClassImpl::~IdlClassImpl()
 // XIdlClassImpl default implementation
 //__________________________________________________________________________________________________
 TypeClass IdlClassImpl::getTypeClass()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return _eTypeClass;
 }
 //__________________________________________________________________________________________________
 OUString IdlClassImpl::getName()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return _aName;
 }
 //__________________________________________________________________________________________________
 sal_Bool IdlClassImpl::equals( const Reference< XIdlClass >& xType )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return (xType.is() &&
 			(xType->getTypeClass() == _eTypeClass) && (xType->getName() == _aName));
@@ -128,7 +125,6 @@ static sal_Bool s_aAssignableFromTab[11][11] =
 };
 //__________________________________________________________________________________________________
 sal_Bool IdlClassImpl::isAssignableFrom( const Reference< XIdlClass > & xType )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	TypeClass eAssign = getTypeClass();
 	if (equals( xType ) || eAssign == TypeClass_ANY) // default shot
@@ -148,7 +144,6 @@ sal_Bool IdlClassImpl::isAssignableFrom( const Reference< XIdlClass > & xType )
 }
 //__________________________________________________________________________________________________
 void IdlClassImpl::createObject( Any & rObj )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	rObj.clear();
 	uno_any_destruct( &rObj, reinterpret_cast< uno_ReleaseFunc >(cpp_release) );
@@ -158,21 +153,18 @@ void IdlClassImpl::createObject( Any & rObj )
 // what TODO ????
 //__________________________________________________________________________________________________
 Sequence< Reference< XIdlClass > > IdlClassImpl::getClasses()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	OSL_ENSURE( sal_False, "### unexpected use!" );
 	return Sequence< Reference< XIdlClass > >();
 }
 //__________________________________________________________________________________________________
 Reference< XIdlClass > IdlClassImpl::getClass( const OUString & )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	OSL_ENSURE( sal_False, "### unexpected use!" );
 	return Reference< XIdlClass >();
 }
 //__________________________________________________________________________________________________
 Sequence< Reference< XIdlClass > > IdlClassImpl::getInterfaces()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 //  	OSL_ENSURE( sal_False, "### unexpected use!" );
 	return Sequence< Reference< XIdlClass > >();
@@ -180,52 +172,45 @@ Sequence< Reference< XIdlClass > > IdlClassImpl::getInterfaces()
 
 // structs, interfaces
 //__________________________________________________________________________________________________
-Sequence< Reference< XIdlClass > > IdlClassImpl::getSuperclasses() throw(::com::sun::star::uno::RuntimeException)
+Sequence< Reference< XIdlClass > > IdlClassImpl::getSuperclasses()
 {
 	return Sequence< Reference< XIdlClass > >();
 }
 // structs
 //__________________________________________________________________________________________________
 Reference< XIdlField > IdlClassImpl::getField( const OUString & )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return Reference< XIdlField >();
 }
 //__________________________________________________________________________________________________
 Sequence< Reference< XIdlField > > IdlClassImpl::getFields()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return Sequence< Reference< XIdlField > >();
 }
 // interfaces
 //__________________________________________________________________________________________________
 Uik IdlClassImpl::getUik()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return Uik();
 }
 //__________________________________________________________________________________________________
 Reference< XIdlMethod > IdlClassImpl::getMethod( const OUString & )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return Reference< XIdlMethod >();
 }
 //__________________________________________________________________________________________________
 Sequence< Reference< XIdlMethod > > IdlClassImpl::getMethods()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return Sequence< Reference< XIdlMethod > >();
 }
 // array
 //__________________________________________________________________________________________________
 Reference< XIdlClass > IdlClassImpl::getComponentType()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return Reference< XIdlClass >();
 }
 //__________________________________________________________________________________________________
 Reference< XIdlArray > IdlClassImpl::getArray()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return Reference< XIdlArray >();
 }
@@ -264,7 +249,6 @@ IdlMemberImpl::~IdlMemberImpl()
 // XIdlMember
 //__________________________________________________________________________________________________
 Reference< XIdlClass > IdlMemberImpl::getDeclaringClass()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	if (! _xDeclClass.is())
     {
@@ -277,11 +261,8 @@ Reference< XIdlClass > IdlMemberImpl::getDeclaringClass()
 }
 //__________________________________________________________________________________________________
 OUString IdlMemberImpl::getName()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return _aName;
 }
 
 }
-
-

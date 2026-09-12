@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -57,7 +57,7 @@ namespace abp
 	}
 
 	//--------------------------------------------------------------------------
-	Any SAL_CALL OABSPilotUno::queryInterface( const Type& aType ) throw (RuntimeException)
+	Any SAL_CALL OABSPilotUno::queryInterface( const Type& aType )
 	{
 		Any aReturn = OABSPilotUno_DBase::queryInterface( aType );
 		return aReturn.hasValue() ? aReturn : OABSPilotUno_JBase::queryInterface( aType );
@@ -76,7 +76,7 @@ namespace abp
 	}
 
 	//---------------------------------------------------------------------
-	Sequence< Type > SAL_CALL OABSPilotUno::getTypes(  ) throw (RuntimeException)
+	Sequence< Type > SAL_CALL OABSPilotUno::getTypes(  )
 	{
 		return ::comphelper::concatSequences(
 			OABSPilotUno_DBase::getTypes(),
@@ -85,7 +85,7 @@ namespace abp
 	}
 
 	//---------------------------------------------------------------------
-	Sequence<sal_Int8> SAL_CALL OABSPilotUno::getImplementationId(  ) throw(RuntimeException)
+	Sequence<sal_Int8> SAL_CALL OABSPilotUno::getImplementationId(  )
 	{
 		static ::cppu::OImplementationId* s_pId;
 		if ( !s_pId )
@@ -107,25 +107,25 @@ namespace abp
 	}
 
 	//---------------------------------------------------------------------
-	::rtl::OUString SAL_CALL OABSPilotUno::getImplementationName() throw(RuntimeException)
+	::rtl::OUString SAL_CALL OABSPilotUno::getImplementationName()
 	{
 		return getImplementationName_Static();
 	}
 
 	//---------------------------------------------------------------------
-	::rtl::OUString OABSPilotUno::getImplementationName_Static() throw(RuntimeException)
+	::rtl::OUString OABSPilotUno::getImplementationName_Static()
 	{
 		return ::rtl::OUString::createFromAscii("org.openoffice.comp.abp.OAddressBookSourcePilot");
 	}
 
 	//---------------------------------------------------------------------
-	::comphelper::StringSequence SAL_CALL OABSPilotUno::getSupportedServiceNames() throw(RuntimeException)
+	::comphelper::StringSequence SAL_CALL OABSPilotUno::getSupportedServiceNames()
 	{
 		return getSupportedServiceNames_Static();
 	}
 
 	//---------------------------------------------------------------------
-	::comphelper::StringSequence OABSPilotUno::getSupportedServiceNames_Static() throw(RuntimeException)
+	::comphelper::StringSequence OABSPilotUno::getSupportedServiceNames_Static()
 	{
 		::comphelper::StringSequence aSupported(1);
 		aSupported.getArray()[0] = ::rtl::OUString::createFromAscii("com.sun.star.ui.dialogs.AddressBookSourcePilot");
@@ -133,7 +133,7 @@ namespace abp
 	}
 
 	//---------------------------------------------------------------------
-	Reference<XPropertySetInfo>  SAL_CALL OABSPilotUno::getPropertySetInfo() throw(RuntimeException)
+	Reference<XPropertySetInfo>  SAL_CALL OABSPilotUno::getPropertySetInfo()
 	{
 		Reference<XPropertySetInfo>  xInfo( createPropertySetInfo( getInfoHelper() ) );
 		return xInfo;
@@ -160,7 +160,7 @@ namespace abp
 	}
 
 	//--------------------------------------------------------------------------
-    Any SAL_CALL OABSPilotUno::execute( const Sequence< NamedValue >& /*lArgs*/ ) throw (IllegalArgumentException, Exception, RuntimeException)
+    Any SAL_CALL OABSPilotUno::execute( const Sequence< NamedValue >& /*lArgs*/ )
 	{
 		// not interested in the context, not interested in the args
 		// -> call the execute method of the XExecutableDialog
@@ -189,4 +189,3 @@ namespace abp
 //.........................................................................
 }	// namespace abp
 //.........................................................................
-

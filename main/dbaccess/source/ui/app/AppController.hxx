@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -118,7 +118,7 @@ namespace dbaui
 		TContainerVector		m_aCurrentContainers;	    // the containers where we are listener on
         ::rtl::Reference< SubComponentManager >
                                 m_pSubComponentManager;
-        ::dbaccess::ODsnTypeCollection		
+        ::dbaccess::ODsnTypeCollection
                                 m_aTypeCollection;
         OTableCopyHelper        m_aTableCopyHelper;
 		TransferableClipboardListener*
@@ -149,13 +149,13 @@ namespace dbaui
 
 		/** returns the stripped database name.
 			@return
-				The stripped database name either the registered naem or if it is a file url the last segment.
+				The stripped database name either the registered name or if it is a file url the last segment.
 		*/
 		::rtl::OUString getStrippedDatabaseName() const;
 
 		/** return the element type for given container
 			@param	_xContainer	The container where the element type has to be found
-			@return	the element type coressponding to the given container
+			@return	the element type corresponding to the given container
 		*/
 		ElementType getElementType(const ::com::sun::star::uno::Reference< ::com::sun::star::container::XContainer >& _xContainer) const;
 
@@ -280,7 +280,7 @@ namespace dbaui
 			@param	_bMove
 				if <TRUE/> the name of the content must be inserted without any change, otherwise not.
 			@return
-				<TRUE/> if the paste opertions was successful, otherwise <FALSE/>.
+				<TRUE/> if the paste operations was successful, otherwise <FALSE/>.
 		*/
 		sal_Bool paste( ElementType _eType,const ::svx::ODataAccessDescriptor& _rPasteData ,const String& _sParentFolder = String(),sal_Bool _bMove = sal_False);
 
@@ -304,9 +304,9 @@ namespace dbaui
 		*/
 		void addContainerListener(const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess>& _xCollection);
 
-		/** opens a uno dialog withthe currently selected data source as initialize argument
+		/** opens a uno dialog with the currently selected data source as initialize argument
 			@param	_sServiceName
-				The serivce name of the dialog to be executed.
+				The service name of the dialog to be executed.
 		*/
 		void openDialog(const ::rtl::OUString& _sServiceName);
 
@@ -348,14 +348,14 @@ namespace dbaui
 			@param	_bMove
 				if <TRUE/> the name of the content must be inserted without any change, otherwise not.
 			@return
-				<TRUE/> if the insert opertions was successful, otherwise <FALSE/>.
+				<TRUE/> if the insert operations was successful, otherwise <FALSE/>.
 		*/
 		sal_Bool insertHierachyElement(	 ElementType _eType
 									,const String& _sParentFolder
 									,sal_Bool _bCollection = sal_True
 									,const ::com::sun::star::uno::Reference< ::com::sun::star::ucb::XContent>& _xContent = ::com::sun::star::uno::Reference< ::com::sun::star::ucb::XContent>()
 									,sal_Bool _bMove = sal_False);
-		/** checks if delete command or rename comamnd is allowed
+		/** checks if delete command or rename command is allowed
 			@param	_eType
 				The element type.
 			@param	_bDelete
@@ -432,51 +432,51 @@ namespace dbaui
 		DECLARE_XTYPEPROVIDER( )
 
 		// XServiceInfo
-		virtual ::rtl::OUString SAL_CALL getImplementationName() throw(::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::uno::Sequence< ::rtl::OUString> SAL_CALL getSupportedServiceNames() throw(::com::sun::star::uno::RuntimeException);
+		virtual ::rtl::OUString SAL_CALL getImplementationName();
+		virtual ::com::sun::star::uno::Sequence< ::rtl::OUString> SAL_CALL getSupportedServiceNames();
 		// need by registration
-		static ::rtl::OUString getImplementationName_Static() throw( ::com::sun::star::uno::RuntimeException );
-		static ::com::sun::star::uno::Sequence< ::rtl::OUString > getSupportedServiceNames_Static(void) throw( ::com::sun::star::uno::RuntimeException );
+		static ::rtl::OUString getImplementationName_Static();
+		static ::com::sun::star::uno::Sequence< ::rtl::OUString > getSupportedServiceNames_Static(void);
 		static ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >
 				SAL_CALL Create(const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory >&);
 
 		// ::com::sun::star::frame::XController
-		virtual void SAL_CALL attachFrame(const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame > & xFrame) throw( ::com::sun::star::uno::RuntimeException );
-		virtual sal_Bool SAL_CALL suspend(sal_Bool bSuspend) throw( ::com::sun::star::uno::RuntimeException );
-		virtual sal_Bool SAL_CALL attachModel(const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XModel > & xModel) throw( ::com::sun::star::uno::RuntimeException );
-		virtual ::com::sun::star::uno::Reference< ::com::sun::star::frame::XModel >  SAL_CALL getModel(void) throw( ::com::sun::star::uno::RuntimeException );
+		virtual void SAL_CALL attachFrame(const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame > & xFrame);
+		virtual sal_Bool SAL_CALL suspend(sal_Bool bSuspend);
+		virtual sal_Bool SAL_CALL attachModel(const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XModel > & xModel);
+		virtual ::com::sun::star::uno::Reference< ::com::sun::star::frame::XModel >  SAL_CALL getModel(void);
 
 		// ::com::sun::star::container::XContainerListener
-		virtual void SAL_CALL elementInserted(const ::com::sun::star::container::ContainerEvent& Event) throw( ::com::sun::star::uno::RuntimeException );
-		virtual void SAL_CALL elementRemoved(const ::com::sun::star::container::ContainerEvent& Event) throw( ::com::sun::star::uno::RuntimeException );
-		virtual void SAL_CALL elementReplaced(const ::com::sun::star::container::ContainerEvent& Event) throw( ::com::sun::star::uno::RuntimeException );
+		virtual void SAL_CALL elementInserted(const ::com::sun::star::container::ContainerEvent& Event);
+		virtual void SAL_CALL elementRemoved(const ::com::sun::star::container::ContainerEvent& Event);
+		virtual void SAL_CALL elementReplaced(const ::com::sun::star::container::ContainerEvent& Event);
 
 		// XPropertyChangeListener
-		virtual void SAL_CALL propertyChange( const ::com::sun::star::beans::PropertyChangeEvent& evt ) throw (::com::sun::star::uno::RuntimeException);
+		virtual void SAL_CALL propertyChange( const ::com::sun::star::beans::PropertyChangeEvent& evt );
 
         // XDatabaseDocumentUI
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XDataSource > SAL_CALL getDataSource() throw (::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow > SAL_CALL getApplicationMainWindow() throw (::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XConnection > SAL_CALL getActiveConnection() throw (::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent > > SAL_CALL getSubComponents() throw (::com::sun::star::uno::RuntimeException);
-        virtual ::sal_Bool SAL_CALL isConnected(  ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL connect(  ) throw (::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::beans::Pair< ::sal_Int32, ::rtl::OUString > SAL_CALL identifySubComponent( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent >& SubComponent ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-        virtual ::sal_Bool SAL_CALL closeSubComponents(  ) throw (::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent > SAL_CALL loadComponent( ::sal_Int32 ObjectType, const ::rtl::OUString& ObjectName, ::sal_Bool ForEditing ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::container::NoSuchElementException, ::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent > SAL_CALL loadComponentWithArguments( ::sal_Int32 ObjectType, const ::rtl::OUString& ObjectName, ::sal_Bool ForEditing, const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& Arguments ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::container::NoSuchElementException, ::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent > SAL_CALL createComponent( ::sal_Int32 ObjectType, ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent >& o_DocumentDefinition ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent > SAL_CALL createComponentWithArguments( ::sal_Int32 ObjectType, const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& Arguments, ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent >& o_DocumentDefinition ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XDataSource > SAL_CALL getDataSource();
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow > SAL_CALL getApplicationMainWindow();
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XConnection > SAL_CALL getActiveConnection();
+        virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent > > SAL_CALL getSubComponents();
+        virtual ::sal_Bool SAL_CALL isConnected(  );
+        virtual void SAL_CALL connect(  );
+        virtual ::com::sun::star::beans::Pair< ::sal_Int32, ::rtl::OUString > SAL_CALL identifySubComponent( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent >& SubComponent );
+        virtual ::sal_Bool SAL_CALL closeSubComponents(  );
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent > SAL_CALL loadComponent( ::sal_Int32 ObjectType, const ::rtl::OUString& ObjectName, ::sal_Bool ForEditing );
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent > SAL_CALL loadComponentWithArguments( ::sal_Int32 ObjectType, const ::rtl::OUString& ObjectName, ::sal_Bool ForEditing, const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& Arguments );
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent > SAL_CALL createComponent( ::sal_Int32 ObjectType, ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent >& o_DocumentDefinition );
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent > SAL_CALL createComponentWithArguments( ::sal_Int32 ObjectType, const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& Arguments, ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent >& o_DocumentDefinition );
 
         // XContextMenuInterception
-        virtual void SAL_CALL registerContextMenuInterceptor( const ::com::sun::star::uno::Reference< ::com::sun::star::ui::XContextMenuInterceptor >& Interceptor ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL releaseContextMenuInterceptor( const ::com::sun::star::uno::Reference< ::com::sun::star::ui::XContextMenuInterceptor >& Interceptor ) throw (::com::sun::star::uno::RuntimeException);
+        virtual void SAL_CALL registerContextMenuInterceptor( const ::com::sun::star::uno::Reference< ::com::sun::star::ui::XContextMenuInterceptor >& Interceptor );
+        virtual void SAL_CALL releaseContextMenuInterceptor( const ::com::sun::star::uno::Reference< ::com::sun::star::ui::XContextMenuInterceptor >& Interceptor );
 
         // XSelectionSupplier
-        virtual ::sal_Bool SAL_CALL select( const ::com::sun::star::uno::Any& xSelection ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Any SAL_CALL getSelection(  ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL addSelectionChangeListener( const ::com::sun::star::uno::Reference< ::com::sun::star::view::XSelectionChangeListener >& xListener ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL removeSelectionChangeListener( const ::com::sun::star::uno::Reference< ::com::sun::star::view::XSelectionChangeListener >& xListener ) throw (::com::sun::star::uno::RuntimeException);
+        virtual ::sal_Bool SAL_CALL select( const ::com::sun::star::uno::Any& xSelection );
+        virtual ::com::sun::star::uno::Any SAL_CALL getSelection(  );
+        virtual void SAL_CALL addSelectionChangeListener( const ::com::sun::star::uno::Reference< ::com::sun::star::view::XSelectionChangeListener >& xListener );
+        virtual void SAL_CALL removeSelectionChangeListener( const ::com::sun::star::uno::Reference< ::com::sun::star::view::XSelectionChangeListener >& xListener );
 
 		/** retrieves the current connection, creates it if necessary
 
@@ -521,7 +521,7 @@ namespace dbaui
 		virtual void        notifyHiContrastChanged();
 		virtual sal_Bool    isDataSourceReadOnly() const;
 		virtual ::com::sun::star::uno::Reference< ::com::sun::star::frame::XController >
-                            getXController(void) throw( ::com::sun::star::uno::RuntimeException );
+                            getXController(void);
         virtual bool        interceptUserInput( const NotifyEvent& _rEvent );
 
 		// IControlActionListener overridables
@@ -558,7 +558,7 @@ namespace dbaui
 
 	protected:
 		// XEventListener
-		virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& Source) throw( ::com::sun::star::uno::RuntimeException );
+		virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& Source);
 
 		// OComponentHelper
 		virtual void SAL_CALL disposing();
@@ -569,4 +569,3 @@ namespace dbaui
 //........................................................................
 
 #endif // DBAUI_APPCONTROLLER_HXX
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -104,7 +104,7 @@ struct KeyEventEqualsFunc
 
 /**
     Basic string list based on a std::vector()
-    It implements some additional funtionality which can be useful but
+    It implements some additional functionality which can be useful but
     is missing at the normal vector implementation.
 */
 class OUStringList : public ::comphelper::SequenceAsVector< ::rtl::OUString >
@@ -122,7 +122,7 @@ class OUStringList : public ::comphelper::SequenceAsVector< ::rtl::OUString >
         {
             return ::std::find(begin(), end(), sElement);
         }
-        
+
         const_iterator findConst( const ::rtl::OUString& sElement ) const
         {
             return ::std::find(begin(), end(), sElement);
@@ -139,7 +139,7 @@ class OUStringList : public ::comphelper::SequenceAsVector< ::rtl::OUString >
 
 /**
     Basic string queue based on a std::queue()
-    It implements some additional funtionality which can be useful but
+    It implements some additional functionality which can be useful but
     is missing at the normal std implementation.
 */
 typedef ::std::queue< ::rtl::OUString > OUStringQueue;
@@ -148,7 +148,7 @@ typedef ::std::queue< ::rtl::OUString > OUStringQueue;
 
 /**
     Basic hash based on a std::hash_map() which provides key=[OUString] and value=[template type] pairs
-    It implements some additional funtionality which can be useful but
+    It implements some additional functionality which can be useful but
     is missing at the normal hash implementation.
 */
 template< class TType >

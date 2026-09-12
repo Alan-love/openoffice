@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -481,7 +481,7 @@ void ScHTMLLayoutParser::Adjust()
             pE->nColOverlap = (nPos > pE->nCol ? nPos - pE->nCol : 1);
         else
         {
-//2do: das muss nicht korrekt sein, ist aber..
+// TODO: das muss nicht korrekt sein, ist aber..
             pE->nColOverlap = 1;
         }
         xLockedList->Join( ScRange( pE->nCol, pE->nRow, 0,
@@ -1212,7 +1212,7 @@ void ScHTMLLayoutParser::TableOff( ImportInfo* pInfo )
                                 pTab1->Insert( nRowKey, (void*) nRowsPerRow1 );
                             else if ( nRowsPerRow1 > nR )
                                 pTab1->Replace( nRowKey, (void*) nRowsPerRow1 );
-                                //2do: wie geht das noch besser?
+                                // TODO: wie geht das noch besser?
                             else if ( nRowsPerRow1 < nR && nRowSpan == 1
                               && nTable == nMaxTable )
                             {   // Platz uebrig, evtl. besser mergen
@@ -1438,7 +1438,7 @@ sal_uInt16 ScHTMLLayoutParser::GetWidthPixel( const HTMLOption* pOption )
     {
         if ( rOptVal.Search('*') != STRING_NOTFOUND )
         {   // relativ zu was?!?
-//2do: ColArray aller relativen Werte sammeln und dann MakeCol
+// TODO: ColArray aller relativen Werte sammeln und dann MakeCol
             return 0;
         }
         else
@@ -1632,7 +1632,7 @@ void ScHTMLLayoutParser::ProcToken( ImportInfo* pInfo )
         break;
         case HTML_BIGPRINT_ON :
         {
-//2do: aktuelle Fontgroesse merken und einen groesser
+// TODO: aktuelle Fontgroesse merken und einen groesser
             if ( IsAtBeginningOfText( pInfo ) )
                 pActEntry->aItemSet.Put( SvxFontHeightItem(
                     maFontHeights[3], 100, ATTR_FONT_HEIGHT ) );
@@ -1640,7 +1640,7 @@ void ScHTMLLayoutParser::ProcToken( ImportInfo* pInfo )
         break;
         case HTML_SMALLPRINT_ON :
         {
-//2do: aktuelle Fontgroesse merken und einen kleiner
+// TODO: aktuelle Fontgroesse merken und einen kleiner
             if ( IsAtBeginningOfText( pInfo ) )
                 pActEntry->aItemSet.Put( SvxFontHeightItem(
                     maFontHeights[0], 100, ATTR_FONT_HEIGHT ) );
@@ -3049,4 +3049,3 @@ IMPL_LINK( ScHTMLQueryParser, HTMLImportHdl, const ImportInfo*, pInfo )
 }
 
 // ============================================================================
-

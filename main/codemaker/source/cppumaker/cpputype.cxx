@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -69,7 +69,7 @@ rtl::OString translateSimpleUnoType(rtl::OString const & unoType, bool cppuUnoTy
         else
             return "::cppu::UnoUnsignedShortType";
     }
-    
+
     return trans[sort];
 }
 
@@ -204,7 +204,6 @@ void CppuType::dumpGetCppuTypePostamble(FileStream & out) {
 }
 
 sal_Bool CppuType::dump(CppuOptions* pOptions)
-	throw( CannotDumpException )
 {
     if (!m_dependencies.isValid()) {
         return false;
@@ -231,7 +230,6 @@ sal_Bool CppuType::dumpFile(CppuOptions* pOptions,
                             const OString& sExtension,
                             const OString& sName,
                             const OString& sOutPath )
-	throw( CannotDumpException )
 {
 	sal_Bool ret = sal_False;
 
@@ -241,7 +239,7 @@ sal_Bool CppuType::dumpFile(CppuOptions* pOptions,
         sTmpExt = ".tmp";
         bHdl = sal_False;
     }
-    
+
     OString sFileName = createFileNameFromType(sOutPath, sName, sExtension);
     if ( sFileName.isEmpty() )
         return sal_False;
@@ -259,7 +257,7 @@ sal_Bool CppuType::dumpFile(CppuOptions* pOptions,
     FileStream oFile;
     oFile.createTempFile(sTmpDir);
     OString sTmpFileName;
-    
+
     if(!oFile.isValid())
 	{
         OString message("cannot open ");
@@ -269,13 +267,13 @@ sal_Bool CppuType::dumpFile(CppuOptions* pOptions,
         sTmpFileName = oFile.getName();
 
     codemaker::cppumaker::Includes includes(m_typeMgr, m_dependencies, !bHdl);
-    if (bHdl) 
+    if (bHdl)
 		ret = dumpHFile(oFile, includes);
     else {
         addGetCppuTypeIncludes(includes);
 		ret = dumpHxxFile(oFile, includes);
     }
-        
+
     oFile.close();
 
     if (ret) {
@@ -284,7 +282,7 @@ sal_Bool CppuType::dumpFile(CppuOptions* pOptions,
         // remove existing type file if something goes wrong to ensure consistency
         if (fileExists(sFileName))
             removeTypeFile(sFileName);
-            
+
         // remove tmp file if something goes wrong
         removeTypeFile(sTmpFileName);
     }
@@ -504,12 +502,12 @@ void CppuType::dumpNormalGetCppuType(FileStream& o)
             o << " >::get();\n\n";
         }
     }
-    
+
     sal_uInt32 count = getMemberCount();
     if (count)
     {
         o << indent() << "typelib_TypeDescriptionReference * aMemberRefs[" << count << "];\n";
-        
+
         sal_uInt16      fieldCount = m_reader.getFieldCount();
         RTFieldAccess   access = RT_ACCESS_INVALID;
         OString         fieldType, fieldName;
@@ -521,10 +519,10 @@ void CppuType::dumpNormalGetCppuType(FileStream& o)
         for (sal_uInt16 i=0; i < fieldCount; i++)
         {
             access = m_reader.getFieldFlags(i);
-            
+
             if (access == RT_ACCESS_CONST || access == RT_ACCESS_INVALID)
                 continue;
-            
+
             fieldName = rtl::OUStringToOString(
                 m_reader.getFieldName(i), RTL_TEXTENCODING_UTF8);
             fieldType = checkRealBaseType(
@@ -566,7 +564,7 @@ void CppuType::dumpNormalGetCppuType(FileStream& o)
     {
         o << "0, " << count << ", ";
     }
-    
+
     if (count)
     {
         o << " aMemberRefs );\n";
@@ -874,7 +872,7 @@ OString	CppuType::getTypeClass(const OString& type, sal_Bool bCStyle)
 
 void CppuType::dumpType(FileStream& o, const OString& type,
 						bool bConst, bool bRef, bool bNative, bool cppuUnoType)
-	const throw( CannotDumpException )
+	const
 {
     sal_Int32 seqNum;
     std::vector< rtl::OString > args;
@@ -1243,7 +1241,6 @@ InterfaceType::~InterfaceType()
 
 sal_Bool InterfaceType::dumpHFile(
     FileStream& o, codemaker::cppumaker::Includes & includes)
-	throw( CannotDumpException )
 {
 	OString headerDefine(dumpHeaderDefine(o, "HDL"));
 	o << "\n";
@@ -1273,11 +1270,10 @@ sal_Bool InterfaceType::dumpHFile(
 }
 
 sal_Bool InterfaceType::dumpDeclaration(FileStream& o)
-	throw( CannotDumpException )
 {
 //     rtl::OString cppName(translateUnoToCppIdentifier(
 //                              m_name, "interface", ITM_KEYWORDSONLY, &m_name));
-    
+
 // 	o << "\nclass SAL_NO_VTABLE " << cppName;
 	o << "\nclass SAL_NO_VTABLE " << m_name;
 
@@ -1306,7 +1302,6 @@ sal_Bool InterfaceType::dumpDeclaration(FileStream& o)
 
 sal_Bool InterfaceType::dumpHxxFile(
     FileStream& o, codemaker::cppumaker::Includes & includes)
-	throw( CannotDumpException )
 {
 	OString headerDefine(dumpHeaderDefine(o, "HPP"));
 	o << "\n";
@@ -1319,7 +1314,7 @@ sal_Bool InterfaceType::dumpHxxFile(
 
 //     rtl::OString cppName(translateUnoToCppIdentifier(
 //                              m_name, "interface", ITM_KEYWORDSONLY, &m_name));
-    
+
     o << "\n::com::sun::star::uno::Type const & "
       << scopedCppName(m_typeName)
       << "::static_type(void *) {\n";
@@ -1464,7 +1459,7 @@ void InterfaceType::dumpNormalGetCppuType(FileStream& o)
 
     o << indent()
       << "static typelib_TypeDescriptionReference * the_type = 0;\n";
-    
+
     o << indent() << "if ( !the_type )\n" << indent() << "{\n";
     inc();
     sal_Int16 nBases = m_reader.getSuperTypeCount();
@@ -1491,7 +1486,7 @@ void InterfaceType::dumpNormalGetCppuType(FileStream& o)
 
     o << indent() << "typelib_static_mi_interface_type_init( &the_type, \""
       << m_typeName.replace('/', '.') << "\", " << nBases << ", ";
-    
+
     if ( nBases > 0 )
     {
         o << "aSuperTypes );\n";
@@ -1788,23 +1783,23 @@ sal_uInt32 InterfaceType::getInheritedMemberCount()
 {
 	if (m_inheritedMemberCount == 0)
 	{
-		m_inheritedMemberCount = checkInheritedMemberCount(0);	
+		m_inheritedMemberCount = checkInheritedMemberCount(0);
 	}
-	
+
 	return m_inheritedMemberCount;
-}	
+}
 
 void InterfaceType::dumpCppuAttributes(FileStream& o, sal_uInt32& index)
 {
 	sal_uInt16 fieldCount = m_reader.getFieldCount();
-		
+
 	RTFieldAccess access = RT_ACCESS_INVALID;
 	OString fieldName;
-	OString fieldType;	
+	OString fieldType;
 	OString	scope = m_typeName.replace('/', '.');
 
 	sal_uInt32 absoluteIndex = index;
-	
+
 	if (m_hasAttributes)
 	{
 		o << "\n" << indent() << "typelib_InterfaceAttributeTypeDescription * pAttribute = 0;\n";
@@ -1812,7 +1807,7 @@ void InterfaceType::dumpCppuAttributes(FileStream& o, sal_uInt32& index)
 		for (sal_uInt16 i=0; i < fieldCount; i++)
 		{
 			access = m_reader.getFieldFlags(i);
-			
+
 			if (access == RT_ACCESS_CONST || access == RT_ACCESS_INVALID)
 				continue;
 
@@ -1825,7 +1820,7 @@ void InterfaceType::dumpCppuAttributes(FileStream& o, sal_uInt32& index)
 
             o << indent() << "{\n";
             inc();
-			o << indent() << "::rtl::OUString sAttributeType" << i << "( RTL_CONSTASCII_USTRINGPARAM(\"" 
+			o << indent() << "::rtl::OUString sAttributeType" << i << "( RTL_CONSTASCII_USTRINGPARAM(\""
 			  << fieldType.replace('/', '.') << "\") );\n";
             sal_Int32 getExceptions = dumpAttributeExceptionTypeNames(
                 o, "get", name, RT_MODE_ATTRIBUTE_GET);
@@ -1836,7 +1831,7 @@ void InterfaceType::dumpCppuAttributes(FileStream& o, sal_uInt32& index)
                   " &pAttribute,\n");
 			inc();
 			o << indent() << absoluteIndex++ << ", sAttributeName" << i << ".pData,\n";
-			o << indent() << "(typelib_TypeClass)" << getTypeClass(fieldType) 
+			o << indent() << "(typelib_TypeClass)" << getTypeClass(fieldType)
 			  << ", sAttributeType" << i << ".pData,\n";
             o << indent() << "sal_"
               << ((access & RT_ACCESS_READONLY) == 0 ? "False" : "True") << ", "
@@ -1848,17 +1843,17 @@ void InterfaceType::dumpCppuAttributes(FileStream& o, sal_uInt32& index)
 			o << indent() << "typelib_typedescription_register( (typelib_TypeDescription**)&pAttribute );\n";
             dec();
             o << indent() << "}\n";
-		}		
+		}
  		o << indent() << "typelib_typedescription_release( (typelib_TypeDescription*)pAttribute );\n";
 
 		index = absoluteIndex;
 	}
-}	
+}
 
 void InterfaceType::dumpCppuMethods(FileStream& o, sal_uInt32& index)
 {
 	sal_uInt16 		methodCount = m_reader.getMethodCount();
-	OString 		methodName, returnType, paramType, paramName;	
+	OString 		methodName, returnType, paramType, paramName;
 	sal_uInt16 		paramCount = 0;
 	RTMethodMode 	methodMode = RT_MODE_INVALID;
 	RTParamMode	 	paramMode = RT_PARAM_INVALID;
@@ -1889,15 +1884,15 @@ void InterfaceType::dumpCppuMethods(FileStream& o, sal_uInt32& index)
 
 			if ( methodName.equals("acquire") || methodName.equals("release") )
 			{
-				bWithRuntimeException = sal_False;	
+				bWithRuntimeException = sal_False;
 			}
 
 			o << indent() << "{\n";
 			inc();
-			
+
 			if (paramCount)
 			{
-				o << indent() << "typelib_Parameter_Init aParameters[" << paramCount << "];\n";				
+				o << indent() << "typelib_Parameter_Init aParameters[" << paramCount << "];\n";
 			}
 
 			sal_uInt16 j;
@@ -1912,13 +1907,13 @@ void InterfaceType::dumpCppuMethods(FileStream& o, sal_uInt32& index)
                         RTL_TEXTENCODING_UTF8),
                     sal_True);
 				paramMode = m_reader.getMethodParameterFlags(i, j);
-				
-				o << indent() << "::rtl::OUString sParamName" << j << "( RTL_CONSTASCII_USTRINGPARAM(\"" 
+
+				o << indent() << "::rtl::OUString sParamName" << j << "( RTL_CONSTASCII_USTRINGPARAM(\""
 				  << paramName << "\") );\n";
-				o << indent() << "::rtl::OUString sParamType" << j << "( RTL_CONSTASCII_USTRINGPARAM(\"" 
+				o << indent() << "::rtl::OUString sParamType" << j << "( RTL_CONSTASCII_USTRINGPARAM(\""
 				  << paramType.replace('/', '.') << "\") );\n";
 				o << indent() << "aParameters[" << j << "].pParamName = sParamName" << j << ".pData;\n";
-				o << indent() << "aParameters[" << j << "].eTypeClass = (typelib_TypeClass)" 
+				o << indent() << "aParameters[" << j << "].eTypeClass = (typelib_TypeClass)"
 				  << getTypeClass(paramType) << ";\n";
 				o << indent() << "aParameters[" << j << "].pTypeName = sParamType" << j << ".pData;\n";
 
@@ -1935,49 +1930,49 @@ void InterfaceType::dumpCppuMethods(FileStream& o, sal_uInt32& index)
 
             sal_Int32 excCount = dumpExceptionTypeNames(
                 o, "", i, bWithRuntimeException);
-			
-			o << indent() << "::rtl::OUString sReturnType" << i << "( RTL_CONSTASCII_USTRINGPARAM(\"" 
+
+			o << indent() << "::rtl::OUString sReturnType" << i << "( RTL_CONSTASCII_USTRINGPARAM(\""
 			  << returnType.replace('/', '.') << "\") );\n";
 			o << indent() << "typelib_typedescription_newInterfaceMethod( &pMethod,\n";
 			inc();
 			o << indent() << absoluteIndex++ << ", ";
 			if (methodMode == RT_MODE_ONEWAY || methodMode == RT_MODE_ONEWAY_CONST)
 				o << "sal_True,\n";
-			else				
+			else
 				o << "sal_False,\n";
 			o << indent() << "sMethodName" << i << ".pData,\n";
-			o << indent() << "(typelib_TypeClass)" << getTypeClass(returnType) 
+			o << indent() << "(typelib_TypeClass)" << getTypeClass(returnType)
 			  << ", sReturnType" << i << ".pData,\n";
 			if (paramCount)
-				o << indent() << paramCount << ", aParameters,\n"; 
-			else								
-				o << indent() << "0, 0,\n"; 
+				o << indent() << paramCount << ", aParameters,\n";
+			else
+				o << indent() << "0, 0,\n";
             o << indent() << excCount << ", "
-              << (excCount == 0 ? "0" : "the_Exceptions") << " );\n"; 
+              << (excCount == 0 ? "0" : "the_Exceptions") << " );\n";
 
 			dec();
 			o << indent() << "typelib_typedescription_register( (typelib_TypeDescription**)&pMethod );\n";
 
-			dec();			
+			dec();
 			o << indent() << "}\n";
-		}		
+		}
 		o << indent() << "typelib_typedescription_release( (typelib_TypeDescription*)pMethod );\n";
 
-		index = absoluteIndex;	
+		index = absoluteIndex;
 	}
-}	
+}
 
 void InterfaceType::dumpAttributesCppuDecl(FileStream& o, StringSet* pFinishedTypes, CppuTypeDecl eDeclFlag)
 {
 	sal_uInt16 fieldCount = m_reader.getFieldCount();
-		
+
 	RTFieldAccess access = RT_ACCESS_INVALID;
 	OString fieldName;
-	OString fieldType;	
+	OString fieldType;
 	for (sal_uInt16 i=0; i < fieldCount; i++)
 	{
 		access = m_reader.getFieldFlags(i);
-		
+
 		if (access == RT_ACCESS_CONST || access == RT_ACCESS_INVALID)
 			continue;
 
@@ -1985,19 +1980,19 @@ void InterfaceType::dumpAttributesCppuDecl(FileStream& o, StringSet* pFinishedTy
             m_reader.getFieldName(i), RTL_TEXTENCODING_UTF8);
 		fieldType = rtl::OUStringToOString(
             m_reader.getFieldTypeName(i), RTL_TEXTENCODING_UTF8);
-	
-		if (pFinishedTypes->count(fieldType) == 0) 
+
+		if (pFinishedTypes->count(fieldType) == 0)
 		{
 			pFinishedTypes->insert(fieldType);
-			dumpCppuGetType(o, fieldType, sal_True, eDeclFlag);	
+			dumpCppuGetType(o, fieldType, sal_True, eDeclFlag);
 		}
-	}		
-}	
+	}
+}
 
 void InterfaceType::dumpMethodsCppuDecl(FileStream& o, StringSet* pFinishedTypes, CppuTypeDecl eDeclFlag)
 {
 	sal_uInt16 		methodCount = m_reader.getMethodCount();
-	OString 		returnType, paramType, excType;	
+	OString 		returnType, paramType, excType;
 	sal_uInt16 		paramCount = 0;
 	sal_uInt16 		excCount = 0;
 
@@ -2007,11 +2002,11 @@ void InterfaceType::dumpMethodsCppuDecl(FileStream& o, StringSet* pFinishedTypes
             m_reader.getMethodReturnTypeName(i), RTL_TEXTENCODING_UTF8);
 		paramCount = m_reader.getMethodParameterCount(i);
 		excCount = m_reader.getMethodExceptionCount(i);
-	
-		if (pFinishedTypes->count(returnType) == 0) 
+
+		if (pFinishedTypes->count(returnType) == 0)
 		{
 			pFinishedTypes->insert(returnType);
-			dumpCppuGetType(o, returnType, sal_True, eDeclFlag);	
+			dumpCppuGetType(o, returnType, sal_True, eDeclFlag);
 		}
 		sal_uInt16 j;
 		for (j=0; j < paramCount; j++)
@@ -2020,7 +2015,7 @@ void InterfaceType::dumpMethodsCppuDecl(FileStream& o, StringSet* pFinishedTypes
                 m_reader.getMethodParameterTypeName(i, j),
                 RTL_TEXTENCODING_UTF8);
 
-			if (pFinishedTypes->count(paramType) == 0) 
+			if (pFinishedTypes->count(paramType) == 0)
 			{
 				pFinishedTypes->insert(paramType);
 				dumpCppuGetType(o, paramType, sal_True, eDeclFlag);
@@ -2032,47 +2027,42 @@ void InterfaceType::dumpMethodsCppuDecl(FileStream& o, StringSet* pFinishedTypes
 			excType = rtl::OUStringToOString(
                 m_reader.getMethodExceptionTypeName(i, j),
                 RTL_TEXTENCODING_UTF8);
-			if (pFinishedTypes->count(excType) == 0) 
+			if (pFinishedTypes->count(excType) == 0)
 			{
 				pFinishedTypes->insert(excType);
 				dumpCppuGetType(o, excType, sal_True, eDeclFlag);
 			}
 		}
-	}		
-}	
+	}
+}
 
 void InterfaceType::dumpExceptionSpecification(
     FileStream & out, sal_uInt32 methodIndex, bool runtimeException)
 {
-    out << " throw (";
-    bool first = true;
-    if (methodIndex <= SAL_MAX_UINT16) {
+    // A specification naming types is not written at all: C++17 removes dynamic
+    // exception specifications from the language, and MSVC has never enforced
+    // one, so nothing is lost by dropping them.  They cannot be dropped from
+    // hand-written overrides alone either -- an override with no specification
+    // is LESS restrictive than a base that has one, which is ill-formed -- so
+    // the generator and the sources have to move together.
+    //
+    // The EMPTY specification stays: it is what acquire() and release() carry,
+    // MSVC implements it as __declspec(nothrow), and C++17 keeps it as a
+    // deprecated spelling of noexcept.  Migrating it is a separate change.
+    bool any = runtimeException;
+    if (!any && methodIndex <= SAL_MAX_UINT16) {
         sal_uInt16 count = m_reader.getMethodExceptionCount(
             static_cast< sal_uInt16 >(methodIndex));
-        for (sal_uInt16 i = 0; i < count; ++i) {
-            rtl::OUString name(
-                m_reader.getMethodExceptionTypeName(
-                    static_cast< sal_uInt16 >(methodIndex), i));
-            if (!name.equalsAsciiL(
+        for (sal_uInt16 i = 0; !any && i < count; ++i) {
+            any = !m_reader.getMethodExceptionTypeName(
+                static_cast< sal_uInt16 >(methodIndex), i).equalsAsciiL(
                     RTL_CONSTASCII_STRINGPARAM(
-                        "com/sun/star/uno/RuntimeException")))
-            {
-                if (!first) {
-                    out << ", ";
-                }
-                first = false;
-                out << scopedCppName(
-                    rtl::OUStringToOString(name, RTL_TEXTENCODING_UTF8));
-            }
+                        "com/sun/star/uno/RuntimeException"));
         }
     }
-    if (runtimeException) {
-        if (!first) {
-            out << ", ";
-        }
-        out << "::com::sun::star::uno::RuntimeException";
+    if (!any) {
+        out << " throw ()";
     }
-    out << ")";
 }
 
 void InterfaceType::dumpAttributeExceptionSpecification(
@@ -2159,11 +2149,10 @@ ConstantsType::ConstantsType(typereg::Reader& typeReader,
 
 ConstantsType::~ConstantsType()
 {
-	
-}	
+
+}
 
 sal_Bool ConstantsType::dump(CppuOptions* pOptions)
-	throw( CannotDumpException )
 {
     if (!m_dependencies.isValid()) {
         return false;
@@ -2172,17 +2161,16 @@ sal_Bool ConstantsType::dump(CppuOptions* pOptions)
 
 	if (pOptions->isValid("-U"))
 		m_cppuTypeDynamic = sal_True;
-	
+
 	OString outPath;
 	if (pOptions->isValid("-O"))
 		outPath = pOptions->getOption("-O");
-	
+
     return dumpFiles(pOptions, outPath);
 }
 
 sal_Bool ConstantsType::dumpHFile(
     FileStream& o, codemaker::cppumaker::Includes & includes)
-	throw( CannotDumpException )
 {
 	sal_Bool bSpecialDefine = sal_True;
 
@@ -2215,24 +2203,23 @@ sal_Bool ConstantsType::dumpHFile(
 }
 
 sal_Bool ConstantsType::dumpDeclaration(FileStream& o)
-	throw( CannotDumpException )
 {
 	sal_uInt16 		fieldCount = m_reader.getFieldCount();
 	OString 		fieldName;
-	OString 		fieldType;	
+	OString 		fieldType;
 	for (sal_uInt16 i=0; i < fieldCount; i++)
 	{
         fieldName = rtl::OUStringToOString(
             m_reader.getFieldName(i), RTL_TEXTENCODING_UTF8);
         fieldType = rtl::OUStringToOString(
             m_reader.getFieldTypeName(i), RTL_TEXTENCODING_UTF8);
-				
+
         o << "static const ";
-        dumpType(o, fieldType);	
+        dumpType(o, fieldType);
         o << " " << fieldName << " = ";
         dumpConstantValue(o, i);
         o << ";\n";
-	}		
+	}
 
 	return sal_True;
 }
@@ -2240,11 +2227,10 @@ sal_Bool ConstantsType::dumpDeclaration(FileStream& o)
 sal_Bool ConstantsType::hasConstants()
 {
 	return m_reader.getFieldCount() > 0;
-}	
+}
 
 sal_Bool ConstantsType::dumpHxxFile(
     FileStream& o, codemaker::cppumaker::Includes &)
-	throw( CannotDumpException )
 {
 	sal_Bool bSpecialDefine = sal_True;
 
@@ -2255,7 +2241,7 @@ sal_Bool ConstantsType::dumpHxxFile(
 
 	OString headerDefine(dumpHeaderDefine(o, "HPP", bSpecialDefine));
 	o << "\n";
-	
+
     rtl::OString suffix;
     if (bSpecialDefine) {
         suffix = m_name;
@@ -2279,8 +2265,8 @@ ModuleType::ModuleType(typereg::Reader& typeReader,
 
 ModuleType::~ModuleType()
 {
-	
-}	
+
+}
 
 bool ModuleType::dumpFiles(
     CppuOptions * options, rtl::OString const & outPath)
@@ -2319,12 +2305,11 @@ StructureType::StructureType(typereg::Reader& typeReader,
 
 StructureType::~StructureType()
 {
-	
-}	
+
+}
 
 sal_Bool StructureType::dumpHFile(
     FileStream& o, codemaker::cppumaker::Includes & includes)
-	throw( CannotDumpException )
 {
 	OString headerDefine(dumpHeaderDefine(o, "HDL"));
 	o << "\n";
@@ -2348,7 +2333,7 @@ sal_Bool StructureType::dumpHFile(
 
     dumpTemplateHead(o);
 	o << "inline const ::com::sun::star::uno::Type& SAL_CALL getCppuType( ";
-	dumpType(o, m_typeName, sal_True, sal_False); 
+	dumpType(o, m_typeName, sal_True, sal_False);
     dumpTemplateParameters(o);
 	o << "* );\n\n";
 
@@ -2358,10 +2343,9 @@ sal_Bool StructureType::dumpHFile(
 }
 
 sal_Bool StructureType::dumpDeclaration(FileStream& o)
-	throw( CannotDumpException )
 {
 	o << "\n#ifdef SAL_W32\n"
-	  << "#   pragma pack(push, 8)\n"					   
+	  << "#   pragma pack(push, 8)\n"
 	  << "#elif defined(SAL_OS2)\n"
 	  << "#   pragma pack(8)\n"
 	  << "#endif\n\n";
@@ -2449,11 +2433,10 @@ sal_Bool StructureType::dumpDeclaration(FileStream& o)
 
 sal_Bool StructureType::dumpHxxFile(
     FileStream& o, codemaker::cppumaker::Includes & includes)
-	throw( CannotDumpException )
 {
 	OString headerDefine(dumpHeaderDefine(o, "HPP"));
 	o << "\n";
-	
+
     includes.dump(o, &m_typeName);
     o << "\n";
 
@@ -2478,16 +2461,16 @@ sal_Bool StructureType::dumpHxxFile(
 		o << indent() << ": " << scopedCppName(superType) << "()\n";
 		first = sal_False;
 	}
-	
+
 	sal_uInt16 		fieldCount = m_reader.getFieldCount();
 	RTFieldAccess 	access = RT_ACCESS_INVALID;
 	OString 		fieldName;
-	OString 		fieldType;	
+	OString 		fieldType;
 
 	for (sal_uInt16 i=0; i < fieldCount; i++)
 	{
 		access = m_reader.getFieldFlags(i);
-		
+
 		if (access == RT_ACCESS_CONST || access == RT_ACCESS_INVALID)
 			continue;
 
@@ -2522,7 +2505,7 @@ sal_Bool StructureType::dumpHxxFile(
 		for (sal_uInt16 i=0; i < fieldCount; i++)
 		{
 			access = m_reader.getFieldFlags(i);
-			
+
 			if (access == RT_ACCESS_CONST || access == RT_ACCESS_INVALID)
 				continue;
 
@@ -2530,12 +2513,12 @@ sal_Bool StructureType::dumpHxxFile(
                 m_reader.getFieldName(i), RTL_TEXTENCODING_UTF8);
 			fieldType = rtl::OUStringToOString(
                 m_reader.getFieldTypeName(i), RTL_TEXTENCODING_UTF8);
-		
+
 			if (superHasMember)
 				o << ", ";
 			else
 				superHasMember = sal_True;
-				
+
             if ((access & RT_ACCESS_PARAMETERIZED_TYPE) != 0) {
                 dumpTypeParameterName(o, fieldType);
                 o << " const &";
@@ -2544,7 +2527,7 @@ sal_Bool StructureType::dumpHxxFile(
             }
 //			o << " __" << fieldName;
 			o << " " << fieldName << "_";
-		}		
+		}
 		o << ") SAL_THROW( () )\n";
 
 		inc();
@@ -2560,23 +2543,23 @@ sal_Bool StructureType::dumpHxxFile(
 		for (sal_uInt16 i=0; i < fieldCount; i++)
 		{
 			access = m_reader.getFieldFlags(i);
-			
+
 			if (access == RT_ACCESS_CONST || access == RT_ACCESS_INVALID)
 				continue;
 
 			fieldName = rtl::OUStringToOString(
                 m_reader.getFieldName(i), RTL_TEXTENCODING_UTF8);
-		
+
 			if (first)
 			{
 				first = sal_False;
 				o << indent() << ": ";
 			} else
 				o << indent() << ", ";
-				
+
 //			o << fieldName << "(__" << fieldName << ")\n";
 			o << fieldName << "(" << fieldName << "_)\n";
-		}		
+		}
 
 		dec();
 		o << "{\n}\n\n";
@@ -2930,7 +2913,7 @@ sal_Bool StructureType::dumpSuperMember(FileStream& o, const OString& superType,
 	if ( !superType.isEmpty() )
 	{
 		typereg::Reader aSuperReader(m_typeMgr.getTypeReader(superType));
-		
+
 		if (aSuperReader.isValid())
 		{
             rtl::OString superSuper;
@@ -2943,11 +2926,11 @@ sal_Bool StructureType::dumpSuperMember(FileStream& o, const OString& superType,
 			sal_uInt16 		fieldCount = aSuperReader.getFieldCount();
 			RTFieldAccess 	access = RT_ACCESS_INVALID;
 			OString 		fieldName;
-			OString 		fieldType;	
+			OString 		fieldType;
 			for (sal_uInt16 i=0; i < fieldCount; i++)
 			{
 				access = aSuperReader.getFieldFlags(i);
-				
+
 				if (access == RT_ACCESS_CONST || access == RT_ACCESS_INVALID)
 					continue;
 
@@ -2955,8 +2938,8 @@ sal_Bool StructureType::dumpSuperMember(FileStream& o, const OString& superType,
                     aSuperReader.getFieldName(i), RTL_TEXTENCODING_UTF8);
 				fieldType = rtl::OUStringToOString(
                     aSuperReader.getFieldTypeName(i), RTL_TEXTENCODING_UTF8);
-			
-				if (hasMember) 
+
+				if (hasMember)
 				{
 					o << ", ";
 				} else
@@ -2966,17 +2949,17 @@ sal_Bool StructureType::dumpSuperMember(FileStream& o, const OString& superType,
 
 				if (bWithType)
 				{
-					dumpType(o, fieldType, sal_True, sal_True);	
+					dumpType(o, fieldType, sal_True, sal_True);
 					o << " ";
-				}					
+				}
 //				o << "__" << fieldName;
 				o << fieldName << "_";
 			}
 		}
 	}
-	
+
 	return hasMember;
-}	
+}
 
 void StructureType::addLightGetCppuTypeIncludes(
     codemaker::cppumaker::Includes & includes) const
@@ -3081,12 +3064,11 @@ ExceptionType::ExceptionType(typereg::Reader& typeReader,
 
 ExceptionType::~ExceptionType()
 {
-	
-}	
+
+}
 
 sal_Bool ExceptionType::dumpHFile(
     FileStream& o, codemaker::cppumaker::Includes & includes)
-	throw( CannotDumpException )
 {
 	OString headerDefine(dumpHeaderDefine(o, "HDL"));
 	o << "\n";
@@ -3100,7 +3082,7 @@ sal_Bool ExceptionType::dumpHFile(
     }
 
 	dumpDeclaration(o);
-	
+
     if (codemaker::cppumaker::dumpNamespaceClose(o, m_typeName, false)) {
         o << "\n";
     }
@@ -3109,7 +3091,7 @@ sal_Bool ExceptionType::dumpHFile(
 	  << "class Type;\n} } } }\n\n";
 
 	o << "inline const ::com::sun::star::uno::Type& SAL_CALL getCppuType( ";
-	dumpType(o, m_typeName, sal_True, sal_False); 
+	dumpType(o, m_typeName, sal_True, sal_False);
 	o << "* ) SAL_THROW( () );\n\n";
 
 	o << "#endif // "<< headerDefine << "\n";
@@ -3118,7 +3100,6 @@ sal_Bool ExceptionType::dumpHFile(
 }
 
 sal_Bool ExceptionType::dumpDeclaration(FileStream& o)
-	throw( CannotDumpException )
 {
 	o << "\nclass CPPU_GCC_DLLPUBLIC_EXPORT " << m_name;
 
@@ -3129,31 +3110,31 @@ sal_Bool ExceptionType::dumpDeclaration(FileStream& o)
     }
 	if ( !superType.isEmpty() )
 					o << " : public " << scopedCppName(superType);
-		
+
 	o << "\n{\npublic:\n";
 	inc();
 	o << indent() << "inline CPPU_GCC_DLLPRIVATE " << m_name
       << "() SAL_THROW( () );\n\n";
-		
+
 	sal_uInt16 		fieldCount = m_reader.getFieldCount();
 	RTFieldAccess 	access = RT_ACCESS_INVALID;
 	OString 		fieldName;
-	OString 		fieldType;	
+	OString 		fieldType;
 	sal_uInt16 		i = 0;
-		
+
 	if (fieldCount > 0 || getInheritedMemberCount() > 0)
 	{
 		o << indent() << "inline CPPU_GCC_DLLPRIVATE " << m_name << "(";
-			
+
 		sal_Bool superHasMember = dumpSuperMember(o, superType, sal_True);
-			
+
 		for (i=0; i < fieldCount; i++)
 		{
 			access = m_reader.getFieldFlags(i);
-				
+
 			if (access == RT_ACCESS_CONST || access == RT_ACCESS_INVALID)
 							continue;
-				
+
 			fieldName = rtl::OUStringToOString(
                 m_reader.getFieldName(i), RTL_TEXTENCODING_UTF8);
 			fieldType = rtl::OUStringToOString(
@@ -3164,10 +3145,10 @@ sal_Bool ExceptionType::dumpDeclaration(FileStream& o)
 			else
 				superHasMember = sal_True;
 
-			dumpType(o, fieldType, sal_True, sal_True);	
+			dumpType(o, fieldType, sal_True, sal_True);
 //			o << " __" << fieldName;
 			o << " " << fieldName << "_";
-		}		
+		}
 		o << ") SAL_THROW( () );\n\n";
 	}
     o << indent() << "inline CPPU_GCC_DLLPRIVATE " << m_name << "(" << m_name
@@ -3189,7 +3170,7 @@ sal_Bool ExceptionType::dumpDeclaration(FileStream& o)
             m_reader.getFieldTypeName(i), RTL_TEXTENCODING_UTF8);
 
 		o << indent();
-		dumpType(o, fieldType);	
+		dumpType(o, fieldType);
 		o << " " << fieldName;
         if (i == 0 && !superType.isEmpty() &&
             !fieldType.equals("double") && !fieldType.equals("hyper") && !fieldType.equals("unsigned hyper"))
@@ -3199,7 +3180,7 @@ sal_Bool ExceptionType::dumpDeclaration(FileStream& o)
         o << ";\n";
 	}
 
-	
+
 	dec();
 	o << "};\n\n";
 
@@ -3208,15 +3189,14 @@ sal_Bool ExceptionType::dumpDeclaration(FileStream& o)
 
 sal_Bool ExceptionType::dumpHxxFile(
     FileStream& o, codemaker::cppumaker::Includes & includes)
-	throw( CannotDumpException )
 {
 	OString headerDefine(dumpHeaderDefine(o, "HPP"));
 	o << "\n";
-	
+
 	addDefaultHxxIncludes(includes);
 	includes.dump(o, &m_typeName);
 	o << "\n";
-	
+
     if (codemaker::cppumaker::dumpNamespaceOpen(o, m_typeName, false)) {
         o << "\n";
     }
@@ -3235,16 +3215,16 @@ sal_Bool ExceptionType::dumpHxxFile(
 		o << indent() << ": " << scopedCppName(superType) << "()\n";
 		first = sal_False;
 	}
-	
+
 	sal_uInt16 		fieldCount = m_reader.getFieldCount();
 	RTFieldAccess 	access = RT_ACCESS_INVALID;
 	OString 		fieldName;
-	OString 		fieldType;	
+	OString 		fieldType;
 
 	for (sal_uInt16 i=0; i < fieldCount; i++)
 	{
 		access = m_reader.getFieldFlags(i);
-		
+
 		if (access == RT_ACCESS_CONST || access == RT_ACCESS_INVALID)
 			continue;
 
@@ -3284,7 +3264,7 @@ sal_Bool ExceptionType::dumpHxxFile(
 		for (sal_uInt16 i=0; i < fieldCount; i++)
 		{
 			access = m_reader.getFieldFlags(i);
-			
+
 			if (access == RT_ACCESS_CONST || access == RT_ACCESS_INVALID)
 				continue;
 
@@ -3292,16 +3272,16 @@ sal_Bool ExceptionType::dumpHxxFile(
                 m_reader.getFieldName(i), RTL_TEXTENCODING_UTF8);
 			fieldType = rtl::OUStringToOString(
                 m_reader.getFieldTypeName(i), RTL_TEXTENCODING_UTF8);
-		
+
 			if (superHasMember)
 				o << ", ";
 			else
 				superHasMember = sal_True;
-				
-			dumpType(o, fieldType, sal_True, sal_True);	
+
+			dumpType(o, fieldType, sal_True, sal_True);
 //			o << " __" << fieldName;
 			o << " " << fieldName << "_";
-		}		
+		}
 		o << ") SAL_THROW( () )\n";
 
 		inc();
@@ -3317,23 +3297,23 @@ sal_Bool ExceptionType::dumpHxxFile(
 		for (sal_uInt16 i=0; i < fieldCount; i++)
 		{
 			access = m_reader.getFieldFlags(i);
-			
+
 			if (access == RT_ACCESS_CONST || access == RT_ACCESS_INVALID)
 				continue;
 
 			fieldName = rtl::OUStringToOString(
                 m_reader.getFieldName(i), RTL_TEXTENCODING_UTF8);
-		
+
 			if (first)
 			{
 				first = sal_False;
 				o << indent() << ": ";
 			} else
 				o << indent() << ", ";
-				
+
 //			o << fieldName << "(__" << fieldName << ")\n";
 			o << fieldName << "(" << fieldName << "_)\n";
-		}		
+		}
 
 		dec();
 		if ( !m_cppuTypeDynamic )
@@ -3402,7 +3382,7 @@ sal_Bool ExceptionType::dumpSuperMember(FileStream& o, const OString& superType,
 	if ( !superType.isEmpty() )
 	{
 		typereg::Reader aSuperReader(m_typeMgr.getTypeReader(superType));
-		
+
 		if (aSuperReader.isValid())
 		{
             rtl::OString superSuper;
@@ -3415,11 +3395,11 @@ sal_Bool ExceptionType::dumpSuperMember(FileStream& o, const OString& superType,
 			sal_uInt16 		fieldCount = aSuperReader.getFieldCount();
 			RTFieldAccess 	access = RT_ACCESS_INVALID;
 			OString 		fieldName;
-			OString 		fieldType;	
+			OString 		fieldType;
 			for (sal_uInt16 i=0; i < fieldCount; i++)
 			{
 				access = aSuperReader.getFieldFlags(i);
-				
+
 				if (access == RT_ACCESS_CONST || access == RT_ACCESS_INVALID)
 					continue;
 
@@ -3427,8 +3407,8 @@ sal_Bool ExceptionType::dumpSuperMember(FileStream& o, const OString& superType,
                     aSuperReader.getFieldName(i), RTL_TEXTENCODING_UTF8);
 				fieldType = rtl::OUStringToOString(
                     aSuperReader.getFieldTypeName(i), RTL_TEXTENCODING_UTF8);
-			
-				if (hasMember) 
+
+				if (hasMember)
 				{
 					o << ", ";
 				} else
@@ -3438,17 +3418,17 @@ sal_Bool ExceptionType::dumpSuperMember(FileStream& o, const OString& superType,
 
 				if (bWithType)
 				{
-					dumpType(o, fieldType, sal_True, sal_True);	
+					dumpType(o, fieldType, sal_True, sal_True);
 					o << " ";
-				}					
+				}
 //				o << "__" << fieldName;
 				o << fieldName << "_";
 			}
 		}
 	}
-	
+
 	return hasMember;
-}	
+}
 
 //*************************************************************************
 // EnumType
@@ -3462,12 +3442,11 @@ EnumType::EnumType(typereg::Reader& typeReader,
 
 EnumType::~EnumType()
 {
-	
-}	
+
+}
 
 sal_Bool EnumType::dumpHFile(
     FileStream& o, codemaker::cppumaker::Includes & includes)
-	throw( CannotDumpException )
 {
 	OString headerDefine(dumpHeaderDefine(o, "HDL"));
 	o << "\n";
@@ -3490,7 +3469,7 @@ sal_Bool EnumType::dumpHFile(
 	  << "class Type;\n} } } }\n\n";
 
 	o << "inline const ::com::sun::star::uno::Type& SAL_CALL getCppuType( ";
-	dumpType(o, m_typeName, sal_True, sal_False); 
+	dumpType(o, m_typeName, sal_True, sal_False);
 	o << "* ) SAL_THROW( () );\n\n";
 
 	o << "#endif // "<< headerDefine << "\n";
@@ -3499,7 +3478,6 @@ sal_Bool EnumType::dumpHFile(
 }
 
 sal_Bool EnumType::dumpDeclaration(FileStream& o)
-	throw( CannotDumpException )
 {
 	o << "\nenum " << m_name << "\n{\n";
 	inc();
@@ -3519,17 +3497,17 @@ sal_Bool EnumType::dumpDeclaration(FileStream& o)
 		fieldName = rtl::OUStringToOString(
             m_reader.getFieldName(i), RTL_TEXTENCODING_UTF8);
 		constValue = m_reader.getFieldValue(i);
-		
+
 		if (constValue.m_type == RT_TYPE_INT32)
 			value = constValue.m_value.aLong;
 		else
 			value++;
-		
+
 		o << indent() << m_name << "_" << fieldName << " = " << value << ",\n";
-	}		
-	
+	}
+
 	o << indent() << m_name << "_MAKE_FIXED_SIZE = SAL_MAX_ENUM\n";
-	
+
 	dec();
 	o << "};\n\n";
 
@@ -3538,11 +3516,10 @@ sal_Bool EnumType::dumpDeclaration(FileStream& o)
 
 sal_Bool EnumType::dumpHxxFile(
     FileStream& o, codemaker::cppumaker::Includes & includes)
-	throw( CannotDumpException )
 {
 	OString headerDefine(dumpHeaderDefine(o, "HPP"));
 	o << "\n";
-	
+
 	addDefaultHxxIncludes(includes);
     includes.dump(o, &m_typeName);
 	o << "\n";
@@ -3568,7 +3545,7 @@ void EnumType::dumpNormalGetCppuType(FileStream& o)
 	o << indent() << "\"" << m_typeName.replace('/', '.') << "\",\n"
 	  << indent() << scopedCppName(m_typeName) << "_"
       << rtl::OUStringToOString(m_reader.getFieldName(0), RTL_TEXTENCODING_UTF8)
-      << " );\n"; 
+      << " );\n";
 	dec(31);
 	dec();
 	o << indent() << "}\n";
@@ -3590,7 +3567,7 @@ void EnumType::dumpComprehensiveGetCppuType(FileStream& o)
 
 	o << indent() << "if (the_pType == 0)\n" << indent() << "{\n";
 	inc();
-	o << indent() << "::rtl::OUString sTypeName( RTL_CONSTASCII_USTRINGPARAM(\"" 
+	o << indent() << "::rtl::OUString sTypeName( RTL_CONSTASCII_USTRINGPARAM(\""
 	  << m_typeName.replace('/', '.') << "\") );\n\n";
 
     o << indent() << "// Start inline typedescription generation\n"
@@ -3602,7 +3579,7 @@ void EnumType::dumpComprehensiveGetCppuType(FileStream& o)
     for (i = 0; i < count; i++)
     {
         o << indent() << "::rtl::OUString sEnumValue" << i
-          << "( RTL_CONSTASCII_USTRINGPARAM(\"" 
+          << "( RTL_CONSTASCII_USTRINGPARAM(\""
           << rtl::OUStringToOString(
               m_reader.getFieldName(i), RTL_TEXTENCODING_UTF8)
           << "\") );\n";
@@ -3643,7 +3620,7 @@ void EnumType::dumpComprehensiveGetCppuType(FileStream& o)
     o << indent() << "static ::com::sun::star::uno::Type the_staticType( "
       << getTypeClass(m_typeName) << ", sTypeName );\n";
     o << indent() << "the_pType = &the_staticType;\n";
- 
+
 	dec();
 	o << indent() << "}\n";
 	dec();
@@ -3665,12 +3642,11 @@ TypeDefType::TypeDefType(typereg::Reader& typeReader,
 
 TypeDefType::~TypeDefType()
 {
-	
-}	
+
+}
 
 sal_Bool TypeDefType::dumpHFile(
     FileStream& o, codemaker::cppumaker::Includes & includes)
-	throw( CannotDumpException )
 {
 	OString headerDefine(dumpHeaderDefine(o, "HDL"));
 	o << "\n";
@@ -3700,7 +3676,6 @@ sal_Bool TypeDefType::dumpHFile(
 }
 
 sal_Bool TypeDefType::dumpDeclaration(FileStream& o)
-	throw( CannotDumpException )
 {
 	o << "\ntypedef ";
 	dumpType(
@@ -3714,15 +3689,14 @@ sal_Bool TypeDefType::dumpDeclaration(FileStream& o)
 
 sal_Bool TypeDefType::dumpHxxFile(
     FileStream& o, codemaker::cppumaker::Includes & includes)
-	throw( CannotDumpException )
 {
 	OString headerDefine(dumpHeaderDefine(o, "HPP"));
 	o << "\n";
-	
+
 	addDefaultHxxIncludes(includes);
 	includes.dump(o, &m_typeName);
 	o << "\n";
-	
+
 	o << "\n#endif // "<< headerDefine << "\n";
 	return sal_True;
 }
@@ -3732,7 +3706,7 @@ sal_Bool TypeDefType::dumpHxxFile(
 //*************************************************************************
 
 sal_Bool ConstructiveType::dumpHFile(
-    FileStream &, codemaker::cppumaker::Includes &) throw (CannotDumpException)
+    FileStream &, codemaker::cppumaker::Includes &)
 {
     OSL_ASSERT(false);
     return false;
@@ -3774,7 +3748,6 @@ bool ServiceType::isSingleInterfaceBased() {
 
 sal_Bool ServiceType::dumpHxxFile(
     FileStream & o, codemaker::cppumaker::Includes & includes)
-    throw (CannotDumpException)
 {
     sal_uInt16 ctors = m_reader.getMethodCount();
     if (ctors > 0) {
@@ -4136,7 +4109,6 @@ bool SingletonType::isInterfaceBased() {
 
 sal_Bool SingletonType::dumpHxxFile(
     FileStream & o, codemaker::cppumaker::Includes & includes)
-    throw (CannotDumpException)
 {
     rtl::OString cppName(translateUnoToCppIdentifier(
                              m_name, "singleton", isGlobal()));
@@ -4202,17 +4174,16 @@ sal_Bool SingletonType::dumpHxxFile(
 // produceType
 //*************************************************************************
 bool produceType(const OString& typeName,
-                 TypeManager const & typeMgr, 
+                 TypeManager const & typeMgr,
                  codemaker::GeneratedTypeSet & generated,
                  CppuOptions* pOptions)
-	throw( CannotDumpException )
 {
 	if (typeName.equals("/") || typeName.equals(typeMgr.getBase()) ||
         TypeManager::isBaseType(typeName) || generated.contains(typeName))
     {
 		return true;
     }
-    
+
     sal_Bool bIsExtraType = sal_False;
 	typereg::Reader reader(typeMgr.getTypeReader(typeName, &bIsExtraType));
     if (bIsExtraType) {
@@ -4331,15 +4302,14 @@ bool produceType(const OString& typeName,
             OSL_ASSERT(false);
             break;
 	}
-	
+
 	return ret;
 }
 
 bool produceType(RegistryKey& rTypeKey, bool bIsExtraType,
-					 TypeManager const & typeMgr, 
+					 TypeManager const & typeMgr,
                      codemaker::GeneratedTypeSet & generated,
 					 CppuOptions* pOptions)
-	throw( CannotDumpException )
 {
     OString typeName = typeMgr.getTypeName(rTypeKey);
 
@@ -4348,7 +4318,7 @@ bool produceType(RegistryKey& rTypeKey, bool bIsExtraType,
     {
 		return true;
     }
-    
+
     if (bIsExtraType) {
         generated.add(typeName);
         return true;
@@ -4466,7 +4436,7 @@ bool produceType(RegistryKey& rTypeKey, bool bIsExtraType,
             OSL_ASSERT(false);
             break;
 	}
-	
+
 	return ret;
 }
 
@@ -4492,9 +4462,9 @@ OString scopedName(const OString& scope, const OString& type,
                               token, "module", ITM_KEYWORDSONLY));
         else
             tmpBuf.append(translateUnoToCppIndentifier(
-                              token, "interface", ITM_KEYWORDSONLY));            
+                              token, "interface", ITM_KEYWORDSONLY));
 	} while( nPos != -1 );
-	
+
 	return tmpBuf.makeStringAndClear();
-}	
+}
 */

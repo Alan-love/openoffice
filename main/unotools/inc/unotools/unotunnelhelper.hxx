@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -42,7 +42,6 @@ namespace starlang = ::com::sun::star::lang;
 
 template <class Classname>
 sal_Bool getImplementation(Classname*& pImpl, staruno::Reference<starlang::XUnoTunnel> const& xTunnel)
-	throw(staruno::RuntimeException)
 {
 	if (xTunnel.is())
 		return getTunneledImplementation(pImpl, xTunnel);
@@ -53,7 +52,6 @@ sal_Bool getImplementation(Classname*& pImpl, staruno::Reference<starlang::XUnoT
 
 template <class Classname>
 sal_Bool getImplementation(Classname*& pImpl, staruno::Reference<staruno::XInterface> const& xObj)
-	throw(staruno::RuntimeException)
 {
 	staruno::Reference<starlang::XUnoTunnel> xTunnel(xObj,staruno::UNO_QUERY);
 	if (xTunnel.is())
@@ -65,7 +63,6 @@ sal_Bool getImplementation(Classname*& pImpl, staruno::Reference<staruno::XInter
 
 template <class Classname>
 sal_Bool getImplementation(Classname*& pImpl, staruno::Any const& aObj)
-	throw(staruno::RuntimeException)
 {
 	staruno::Reference<starlang::XUnoTunnel> xTunnel;
 	if (cppu::extractInterface(xTunnel, aObj))
@@ -77,7 +74,6 @@ sal_Bool getImplementation(Classname*& pImpl, staruno::Any const& aObj)
 
 template <class Classname>
 sal_Bool getImplementation(Classname*& pImpl, starlang::XUnoTunnel* pObj)
-	throw(staruno::RuntimeException)
 {
 	if (pObj)
 	{
@@ -100,7 +96,7 @@ public:
 		rtl_createUuid(reinterpret_cast<sal_uInt8*>(tunnelId),0,bUseMAC);
 	}
 
-	staruno::Sequence<sal_Int8> getId() const throw(staruno::RuntimeException)
+	staruno::Sequence<sal_Int8> getId() const
 	{
 		return staruno::Sequence<sal_Int8>(tunnelId, sizeof(tunnelId));
 	}
@@ -141,7 +137,6 @@ public:
 			staruno::Reference<starlang::XUnoTunnel> const& xObj,
 			staruno::Sequence<sal_Int8> const& rMyTunnelId
 		)
-		throw(staruno::RuntimeException)
 	{
 		return xObj.is() ? extractUnoSomething(xObj->getSomething(rMyTunnelId)) : NULL;
 	}
@@ -164,13 +159,11 @@ protected:
 	}
 public:
 	static staruno::Sequence<sal_Int8> getImplementationTunnelId()
-		throw(staruno::RuntimeException)
 	{
 		return s_aTunnelId.getId();
 	}
 #ifndef LINUX
 	friend sal_Bool getTunneledImplementation(Classname*& pImpl, staruno::Reference<starlang::XUnoTunnel> const& xObj)
-		throw(staruno::RuntimeException)
 	{
 		pImpl = UnoTunnelHelper<Classname>::UnoTunnelHelper<Classname>::extractUnoSomething( xObj, UnoTunnelHelper<Classname>::getImplementationTunnelId() );
 
@@ -186,4 +179,3 @@ UnoTunnelId UnoTunnelHelper<Classname>::s_aTunnelId;
 } // namespace utl
 
 #endif // _UNOTOOLS_UNOTUNNELHLP_HXX
-

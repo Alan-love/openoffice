@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -94,13 +94,11 @@ public:
 
 	// XEventListener
 	virtual void SAL_CALL
-		disposing( const EventObject& rSource )
-			throw(RuntimeException);
+		disposing( const EventObject& rSource );
 
 	// XDictionaryEventListener
     virtual void SAL_CALL
-		processDictionaryEvent( const DictionaryEvent& rDicEvent )
-			throw(RuntimeException);
+		processDictionaryEvent( const DictionaryEvent& rDicEvent );
 
 	// non-UNO functions
 	void 	DisposeAndClear( const EventObject &rEvtObj );
@@ -141,7 +139,6 @@ void DicEvtListenerHelper::DisposeAndClear( const EventObject &rEvtObj )
 
 
 void SAL_CALL DicEvtListenerHelper::disposing( const EventObject& rSource )
-		throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 
@@ -164,7 +161,6 @@ void SAL_CALL DicEvtListenerHelper::disposing( const EventObject& rSource )
 
 void SAL_CALL DicEvtListenerHelper::processDictionaryEvent(
 			const DictionaryEvent& rDicEvent )
-		throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 
@@ -410,13 +406,12 @@ sal_Int32 DicList::GetDicPos(const uno::Reference< XDictionary > &xDic)
 
 uno::Reference< XInterface > SAL_CALL
     DicList_CreateInstance( const uno::Reference< XMultiServiceFactory > & /*rSMgr*/ )
-			throw(Exception)
 {
 	uno::Reference< XInterface > xService = (cppu::OWeakObject *) new DicList;
 	return xService;
 }
 
-sal_Int16 SAL_CALL DicList::getCount() throw(RuntimeException)
+sal_Int16 SAL_CALL DicList::getCount()
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
     return static_cast< sal_Int16 >(GetOrCreateDicList().size());
@@ -424,7 +419,6 @@ sal_Int16 SAL_CALL DicList::getCount() throw(RuntimeException)
 
 uno::Sequence< uno::Reference< XDictionary > > SAL_CALL
 		DicList::getDictionaries()
-			throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 
@@ -442,7 +436,6 @@ uno::Sequence< uno::Reference< XDictionary > > SAL_CALL
 
 uno::Reference< XDictionary > SAL_CALL
         DicList::getDictionaryByName( const rtl::OUString& aDictionaryName )
-			throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 
@@ -464,7 +457,6 @@ uno::Reference< XDictionary > SAL_CALL
 
 sal_Bool SAL_CALL DicList::addDictionary(
 			const uno::Reference< XDictionary >& xDictionary )
-		throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 
@@ -486,7 +478,6 @@ sal_Bool SAL_CALL DicList::addDictionary(
 
 sal_Bool SAL_CALL
 	DicList::removeDictionary( const uno::Reference< XDictionary >& xDictionary )
-		throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 
@@ -519,7 +510,6 @@ sal_Bool SAL_CALL
 sal_Bool SAL_CALL DicList::addDictionaryListEventListener(
 			const uno::Reference< XDictionaryListEventListener >& xListener,
 			sal_Bool bReceiveVerbose )
-		throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 
@@ -539,7 +529,6 @@ sal_Bool SAL_CALL DicList::addDictionaryListEventListener(
 
 sal_Bool SAL_CALL DicList::removeDictionaryListEventListener(
 			const uno::Reference< XDictionaryListEventListener >& xListener )
-		throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 
@@ -554,19 +543,19 @@ sal_Bool SAL_CALL DicList::removeDictionaryListEventListener(
 	return bRes;
 }
 
-sal_Int16 SAL_CALL DicList::beginCollectEvents() throw(RuntimeException)
+sal_Int16 SAL_CALL DicList::beginCollectEvents()
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 	return pDicEvtLstnrHelper->BeginCollectEvents();
 }
 
-sal_Int16 SAL_CALL DicList::endCollectEvents() throw(RuntimeException)
+sal_Int16 SAL_CALL DicList::endCollectEvents()
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 	return pDicEvtLstnrHelper->EndCollectEvents();
 }
 
-sal_Int16 SAL_CALL DicList::flushEvents() throw(RuntimeException)
+sal_Int16 SAL_CALL DicList::flushEvents()
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 	return pDicEvtLstnrHelper->FlushEvents();
@@ -575,7 +564,6 @@ sal_Int16 SAL_CALL DicList::flushEvents() throw(RuntimeException)
 uno::Reference< XDictionary > SAL_CALL
     DicList::createDictionary( const rtl::OUString& rName, const Locale& rLocale,
             DictionaryType eDicType, const rtl::OUString& rURL )
-		throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 
@@ -588,7 +576,6 @@ uno::Reference< XDictionary > SAL_CALL
 uno::Reference< XDictionaryEntry > SAL_CALL
     DicList::queryDictionaryEntry( const rtl::OUString& rWord, const Locale& rLocale,
 			sal_Bool bSearchPosDics, sal_Bool bSearchSpellEntry )
-		throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 	return SearchDicList( this, rWord, LocaleToLanguage( rLocale ),
@@ -598,7 +585,6 @@ uno::Reference< XDictionaryEntry > SAL_CALL
 
 void SAL_CALL
 	DicList::dispose()
-		throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 
@@ -645,7 +631,6 @@ void SAL_CALL
 
 void SAL_CALL
 	DicList::addEventListener( const uno::Reference< XEventListener >& rxListener )
-		throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 
@@ -655,7 +640,6 @@ void SAL_CALL
 
 void SAL_CALL
 	DicList::removeEventListener( const uno::Reference< XEventListener >& rxListener )
-		throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 
@@ -729,7 +713,7 @@ void DicList::SaveDics()
     {
         // save (modified) dictionaries
         DictionaryVec_t& rDicList = GetOrCreateDicList();
-        size_t nCount = rDicList.size();;
+        size_t nCount = rDicList.size();
         for (size_t i = 0;  i < nCount;  i++)
         {
             // save (modified) dictionaries
@@ -754,7 +738,7 @@ void DicList::SaveDics()
 // Service specific part
 //
 
-rtl::OUString SAL_CALL DicList::getImplementationName(  ) throw(RuntimeException)
+rtl::OUString SAL_CALL DicList::getImplementationName(  )
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 	return getImplementationName_Static();
@@ -762,7 +746,6 @@ rtl::OUString SAL_CALL DicList::getImplementationName(  ) throw(RuntimeException
 
 
 sal_Bool SAL_CALL DicList::supportsService( const rtl::OUString& ServiceName )
-		throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 
@@ -776,7 +759,6 @@ sal_Bool SAL_CALL DicList::supportsService( const rtl::OUString& ServiceName )
 
 
 uno::Sequence< rtl::OUString > SAL_CALL DicList::getSupportedServiceNames(  )
-		throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLinguMutex() );
 	return getSupportedServiceNames_Static();
@@ -914,7 +896,7 @@ static sal_Bool IsVers2OrNewer( const String& rFileURL, sal_uInt16& nLng, sal_Bo
     uno::Reference< io::XInputStream > xStream;
     try
     {
-        uno::Reference< ucb::XSimpleFileAccess > xAccess( xServiceFactory->createInstance( 
+        uno::Reference< ucb::XSimpleFileAccess > xAccess( xServiceFactory->createInstance(
                 A2OU( "com.sun.star.ucb.SimpleFileAccess" ) ), uno::UNO_QUERY_THROW );
         xStream = xAccess->openFileRead( rFileURL );
     }
@@ -928,7 +910,7 @@ static sal_Bool IsVers2OrNewer( const String& rFileURL, sal_uInt16& nLng, sal_Bo
         return sal_False;
 
     SvStreamPtr pStream = SvStreamPtr( utl::UcbStreamHelper::CreateStream( xStream ) );
-    
+
     int nDicVersion = ReadDicVersion(pStream, nLng, bNeg);
     if (2 == nDicVersion || nDicVersion >= 5)
         return sal_True;
@@ -937,4 +919,3 @@ static sal_Bool IsVers2OrNewer( const String& rFileURL, sal_uInt16& nLng, sal_Bo
 }
 
 ///////////////////////////////////////////////////////////////////////////
-

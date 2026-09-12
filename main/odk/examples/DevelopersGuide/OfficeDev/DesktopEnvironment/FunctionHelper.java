@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -178,7 +178,7 @@ public class FunctionHelper
      *     future prove this old one should be tried too.
      *   - it's possible to pass the native window handle directly to the toolkit.
      *     A special interface method was enabled to accept that.
-     *     
+     *
      *   The right way to create an office window should be then:
      *   - try to use second creation mode (directly using of the window handle)
      *   - if it failed ... use the old way by packing the handle inside an object
@@ -299,7 +299,7 @@ public class FunctionHelper
                 // This exception is thrown by the native JNI code if it try to get
                 // the systemw window handle. A possible reason can be an invisible
                 // java window. In this case it should be enough to set return
-                // values to null. All other ressources (which was created before)
+                // values to null. All other resources (which was created before)
                 // will be freed automatically if scope wil be leaved.
                 System.out.println("May be the NativeView object wasn't really visible at calling time of getNativeWindow()?");
                 xPeer   = null;
@@ -382,7 +382,7 @@ public class FunctionHelper
             if(xFrame!=null)
             {
                 // Try to dispose the frame. He should deregister himself at the desktop object
-                // and free all internal used ressources (e.g. the container window) automatically.
+                // and free all internal used resources (e.g. the container window) automatically.
                 // It's possible to do that here - because frame has no component inside yet.
                 // So nobody can disagree with that.
                 // After the dispose() call forget all references to this frame and let him die.
@@ -400,7 +400,7 @@ public class FunctionHelper
         {
             // "createInstance()" method of used service manager can throw it.
             // If it occurred during creation of desktop service the frame already was created.
-            // Free it by decresing his refcount. Changes on the desktop tree couldn't exist.
+            // Free it by decreasing his refcount. Changes on the desktop tree couldn't exist.
             // Without the desktop service that wasn't possible. So no further rollbacks must follow.
             if(xFrame!=null)
             {

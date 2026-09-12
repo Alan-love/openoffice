@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
@@ -407,7 +407,7 @@ XMLPropertyMapEntry aXMLParaPropMap[] =
 };
 
 
-XMLPropertyMapEntry aXMLAdditionalTextDefaultsMap[] = 
+XMLPropertyMapEntry aXMLAdditionalTextDefaultsMap[] =
 {
     // RES_FOLLOW_TEXT_FLOW - DVO, OD 01.10.2003 #i18732#
     MG_ED( "IsFollowingTextFlow", STYLE, FLOW_WITH_TEXT,      XML_TYPE_BOOL, 0 ),
@@ -708,7 +708,7 @@ XMLPropertyMapEntry aXMLFramePropMap[] =
 	// RES_KEEP
 	// not required
 	// RES_URL
-	// not required (exprted as draw:a element)
+	// not required (exported as draw:a element)
 	// RES_EDIT_IN_READONLY
 	MG_ED( "EditInReadonly",		STYLE,	EDITABLE,					XML_TYPE_BOOL, 0 ),
 	// RES_LAYOUT_SPLIT
@@ -873,7 +873,7 @@ XMLPropertyMapEntry aXMLRubyPropMap[] =
 };
 
 
-XMLPropertyMapEntry aXMLTableDefaultsMap[] = 
+XMLPropertyMapEntry aXMLTableDefaultsMap[] =
 {
     // RES_COLLAPSING_BORDERS: only occurs in tables, but we need to
     // read/write the default for this item
@@ -882,7 +882,7 @@ XMLPropertyMapEntry aXMLTableDefaultsMap[] =
     M_END()
 };
 
-XMLPropertyMapEntry aXMLTableRowDefaultsMap[] = 
+XMLPropertyMapEntry aXMLTableRowDefaultsMap[] =
 {
     // RES_ROW_SPLIT: only occurs in table rows, but we need to
     // read/write the default for this item
@@ -900,7 +900,7 @@ XMLPropertyMapEntry *lcl_txtprmap_getMap( sal_uInt16 nType )
 		pMap = aXMLTextPropMap;
 		break;
 	case TEXT_PROP_MAP_SHAPE_PARA:
-        // #125045# use [21] instead of [1] for text props for Shapes, idices
+        // #125045# use [21] instead of [1] for text props for Shapes, indices
         // [1..20] contain the DrawingLayer FillStyle attributes corresponding to
         // [XATTR_FILL_FIRST .. XATTR_FILL_LAST] and would be double since Shapes
         // already contain these (usually in aXMLSDProperties)

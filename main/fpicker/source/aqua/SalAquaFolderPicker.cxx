@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -100,7 +100,7 @@ SalAquaFolderPicker::SalAquaFolderPicker( const uno::Reference<lang::XMultiServi
 // XExecutableDialog functions
 //-----------------------------------------------------------------------------------------
 
-void SAL_CALL SalAquaFolderPicker::setTitle( const rtl::OUString& aTitle ) throw( uno::RuntimeException )
+void SAL_CALL SalAquaFolderPicker::setTitle( const rtl::OUString& aTitle )
 {
     DBG_PRINT_ENTRY(CLASS_NAME, __func__, "title", aTitle);
 
@@ -111,7 +111,7 @@ void SAL_CALL SalAquaFolderPicker::setTitle( const rtl::OUString& aTitle ) throw
     DBG_PRINT_EXIT(CLASS_NAME, __func__);
 }
 
-sal_Int16 SAL_CALL SalAquaFolderPicker::execute() throw( uno::RuntimeException )
+sal_Int16 SAL_CALL SalAquaFolderPicker::execute()
 {
     DBG_PRINT_ENTRY(CLASS_NAME, __func__);
 
@@ -147,7 +147,6 @@ sal_Int16 SAL_CALL SalAquaFolderPicker::execute() throw( uno::RuntimeException )
 //------------------------------------------------------------------------------------
 
 void SAL_CALL SalAquaFolderPicker::setDisplayDirectory( const rtl::OUString& aDirectory )
-    throw( lang::IllegalArgumentException, uno::RuntimeException )
 {
     DBG_PRINT_ENTRY(CLASS_NAME, __func__, "directory", aDirectory);
 
@@ -158,7 +157,7 @@ void SAL_CALL SalAquaFolderPicker::setDisplayDirectory( const rtl::OUString& aDi
     DBG_PRINT_EXIT(CLASS_NAME, __func__);
 }
 
-rtl::OUString SAL_CALL SalAquaFolderPicker::getDisplayDirectory() throw( uno::RuntimeException )
+rtl::OUString SAL_CALL SalAquaFolderPicker::getDisplayDirectory()
 {
     DBG_PRINT_ENTRY(CLASS_NAME, __func__);
 
@@ -171,7 +170,7 @@ rtl::OUString SAL_CALL SalAquaFolderPicker::getDisplayDirectory() throw( uno::Ru
     return aDirectory;
 }
 
-rtl::OUString SAL_CALL SalAquaFolderPicker::getDirectory() throw( uno::RuntimeException )
+rtl::OUString SAL_CALL SalAquaFolderPicker::getDirectory()
 {
     DBG_PRINT_ENTRY(CLASS_NAME, __func__);
 
@@ -181,16 +180,16 @@ rtl::OUString SAL_CALL SalAquaFolderPicker::getDirectory() throw( uno::RuntimeEx
     if (m_nDialogType == NAVIGATIONSERVICES_DIRECTORY) {
         files = [(NSOpenPanel*)m_pDialog URLs];
     }
-    
+
     long nFiles = [files count];
     OSL_TRACE("# of items: %d", nFiles);
-    
+
     if (nFiles < 1) {
         throw uno::RuntimeException(rtl::OUString::createFromAscii("no directory selected"), static_cast< XFolderPicker* >( this ));
     }
-    
+
     rtl::OUString aDirectory;
-    
+
     NSURL *url = [files objectAtIndex:0];
     OSL_TRACE("handling %s", [[url description] UTF8String]);
 
@@ -205,10 +204,9 @@ rtl::OUString SAL_CALL SalAquaFolderPicker::getDirectory() throw( uno::RuntimeEx
 }
 
 void SAL_CALL SalAquaFolderPicker::setDescription( const rtl::OUString& rDescription )
-    throw( uno::RuntimeException )
 {
     DBG_PRINT_ENTRY(CLASS_NAME, __func__, "description", rDescription);
-    
+
     [m_pDialog setMessage:[NSString stringWithOUString:rDescription]];
 
     DBG_PRINT_EXIT(CLASS_NAME, __func__);
@@ -219,7 +217,6 @@ void SAL_CALL SalAquaFolderPicker::setDescription( const rtl::OUString& rDescrip
 // -------------------------------------------------
 
 rtl::OUString SAL_CALL SalAquaFolderPicker::getImplementationName()
-    throw( uno::RuntimeException )
 {
     DBG_PRINT_ENTRY(CLASS_NAME, __func__);
 
@@ -231,7 +228,6 @@ rtl::OUString SAL_CALL SalAquaFolderPicker::getImplementationName()
 }
 
 sal_Bool SAL_CALL SalAquaFolderPicker::supportsService( const rtl::OUString& sServiceName )
-    throw( uno::RuntimeException )
 {
     DBG_PRINT_ENTRY(CLASS_NAME, __func__, "serviceName", sServiceName);
 
@@ -250,7 +246,6 @@ sal_Bool SAL_CALL SalAquaFolderPicker::supportsService( const rtl::OUString& sSe
 }
 
 uno::Sequence<rtl::OUString> SAL_CALL SalAquaFolderPicker::getSupportedServiceNames()
-    throw( uno::RuntimeException )
 {
     DBG_PRINT_ENTRY(CLASS_NAME, __func__);
     DBG_PRINT_EXIT(CLASS_NAME, __func__);
@@ -262,7 +257,7 @@ uno::Sequence<rtl::OUString> SAL_CALL SalAquaFolderPicker::getSupportedServiceNa
 // XCancellable
 //------------------------------------------------------------------------------------
 
-void SAL_CALL SalAquaFolderPicker::cancel() throw( uno::RuntimeException )
+void SAL_CALL SalAquaFolderPicker::cancel()
 {
     DBG_PRINT_ENTRY(CLASS_NAME, __func__);
 
@@ -278,7 +273,6 @@ void SAL_CALL SalAquaFolderPicker::cancel() throw( uno::RuntimeException )
 // -------------------------------------------------
 
 void SAL_CALL SalAquaFolderPicker::disposing( const lang::EventObject& )
-    throw( uno::RuntimeException )
 {
     DBG_PRINT_ENTRY(CLASS_NAME, __func__);
     DBG_PRINT_EXIT(CLASS_NAME, __func__);

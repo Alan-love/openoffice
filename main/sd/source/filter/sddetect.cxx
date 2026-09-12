@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -89,14 +89,14 @@ public:
 	SdFilterDetect( const Reference < XMultiServiceFactory >& xFactory );
 	virtual ~SdFilterDetect();
 
-    virtual OUString SAL_CALL getImplementationName(  ) throw (RuntimeException);
-    virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName ) throw (RuntimeException);
-    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames(  ) throw (RuntimeException);
+    virtual OUString SAL_CALL getImplementationName(  );
+    virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName );
+    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames(  );
 
 	static Sequence< OUString > impl_getStaticSupportedServiceNames();
 	static OUString impl_getStaticImplementationName();
-	static Reference< XInterface > SAL_CALL impl_createInstance( const Reference< XMultiServiceFactory >& xServiceManager ) throw( Exception );
-	virtual OUString SAL_CALL detect( Sequence< PropertyValue >& lDescriptor ) throw( RuntimeException );
+	static Reference< XInterface > SAL_CALL impl_createInstance( const Reference< XMultiServiceFactory >& xServiceManager );
+	virtual OUString SAL_CALL detect( Sequence< PropertyValue >& lDescriptor );
 };
 
 SdFilterDetect::SdFilterDetect( const Reference < XMultiServiceFactory >&  )
@@ -107,7 +107,7 @@ SdFilterDetect::~SdFilterDetect()
 {
 }
 
-OUString SAL_CALL SdFilterDetect::detect( Sequence< PropertyValue >& lDescriptor ) throw( RuntimeException )
+OUString SAL_CALL SdFilterDetect::detect( Sequence< PropertyValue >& lDescriptor )
 {
 	Reference< XInputStream > xStream;
 	Reference< XContent > xContent;
@@ -502,13 +502,13 @@ OUString SAL_CALL SdFilterDetect::detect( Sequence< PropertyValue >& lDescriptor
 }
 
 /* XServiceInfo */
-OUString SAL_CALL SdFilterDetect::getImplementationName() throw( RuntimeException )
+OUString SAL_CALL SdFilterDetect::getImplementationName()
 {
 	return impl_getStaticImplementationName();
 }
 
 /* XServiceInfo */
-sal_Bool SAL_CALL SdFilterDetect::supportsService( const OUString& sServiceName ) throw( RuntimeException )
+sal_Bool SAL_CALL SdFilterDetect::supportsService( const OUString& sServiceName )
 {
 	Sequence< OUString >  seqServiceNames =   getSupportedServiceNames();
 	const OUString*          pArray          =   seqServiceNames.getConstArray();
@@ -523,7 +523,7 @@ sal_Bool SAL_CALL SdFilterDetect::supportsService( const OUString& sServiceName 
 }
 
 /* XServiceInfo */
-Sequence< OUString > SAL_CALL SdFilterDetect::getSupportedServiceNames() throw( RuntimeException )
+Sequence< OUString > SAL_CALL SdFilterDetect::getSupportedServiceNames()
 {
 	return impl_getStaticSupportedServiceNames();
 }
@@ -544,7 +544,7 @@ OUString SdFilterDetect::impl_getStaticImplementationName()
 }
 
 /* Helper for registry */
-Reference< XInterface > SAL_CALL SdFilterDetect::impl_createInstance( const Reference< XMultiServiceFactory >& xServiceManager ) throw( Exception )
+Reference< XInterface > SAL_CALL SdFilterDetect::impl_createInstance( const Reference< XMultiServiceFactory >& xServiceManager )
 {
 	return Reference< XInterface >( *new SdFilterDetect( xServiceManager ) );
 }
@@ -594,5 +594,4 @@ extern "C" {
 		// Return with result of this operation.
 		return pReturn ;
 	}
-} // extern "C" 
-
+} // extern "C"

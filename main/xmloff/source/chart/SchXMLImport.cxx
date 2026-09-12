@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -452,7 +452,7 @@ void SchXMLImportHelper::DeleteDataSeries(
             xDoc->getFirstDiagram(), uno::UNO_QUERY_THROW );
         Sequence< Reference< chart2::XCoordinateSystem > > aCooSysSeq(
             xCooSysCnt->getCoordinateSystems());
-        
+
         sal_Int32 nCooSysIndex = 0;
         for( nCooSysIndex=0; nCooSysIndex<aCooSysSeq.getLength(); nCooSysIndex++ )
         {
@@ -713,7 +713,6 @@ SvXMLImportContext* SchXMLImport::CreateStylesContext(
 }
 
 void SAL_CALL SchXMLImport::setTargetDocument( const uno::Reference< lang::XComponent >& xDoc )
-	throw(lang::IllegalArgumentException, uno::RuntimeException)
 {
     uno::Reference< chart2::XChartDocument > xOldDoc( GetModel(), uno::UNO_QUERY );
     if( xOldDoc.is() && xOldDoc->hasControllersLocked() )
@@ -729,7 +728,7 @@ void SAL_CALL SchXMLImport::setTargetDocument( const uno::Reference< lang::XComp
     if( xChartDoc.is() )
     try
     {
-        //prevent rebuild of view during load ( necesarry especially if loaded not via load api, which is the case for example if binary files are loaded )
+        //prevent rebuild of view during load ( necessary especially if loaded not via load api, which is the case for example if binary files are loaded )
         xChartDoc->lockControllers();
 
         uno::Reference< container::XChild > xChild( xChartDoc, uno::UNO_QUERY );
@@ -798,7 +797,7 @@ OUString SAL_CALL SchXMLImport_getImplementationName() throw()
 	return OUString( RTL_CONSTASCII_USTRINGPARAM( "SchXMLImport" ) );
 }
 
-Reference< uno::XInterface > SAL_CALL SchXMLImport_createInstance(const Reference< lang::XMultiServiceFactory > & rSMgr) throw( uno::Exception )
+Reference< uno::XInterface > SAL_CALL SchXMLImport_createInstance(const Reference< lang::XMultiServiceFactory > & rSMgr)
 {
 	// #110680#
 	// return (cppu::OWeakObject*)new SchXMLImport();
@@ -821,7 +820,7 @@ OUString SAL_CALL SchXMLImport_Styles_getImplementationName() throw()
 	return OUString( RTL_CONSTASCII_USTRINGPARAM( "SchXMLImport.Styles" ) );
 }
 
-Reference< uno::XInterface > SAL_CALL SchXMLImport_Styles_createInstance(const Reference< lang::XMultiServiceFactory > & rSMgr) throw( uno::Exception )
+Reference< uno::XInterface > SAL_CALL SchXMLImport_Styles_createInstance(const Reference< lang::XMultiServiceFactory > & rSMgr)
 {
 	// #110680#
 	// return (cppu::OWeakObject*)new SchXMLImport( IMPORT_STYLES );
@@ -842,7 +841,7 @@ OUString SAL_CALL SchXMLImport_Content_getImplementationName() throw()
 	return OUString( RTL_CONSTASCII_USTRINGPARAM( "SchXMLImport.Content" ) );
 }
 
-Reference< uno::XInterface > SAL_CALL SchXMLImport_Content_createInstance(const Reference< lang::XMultiServiceFactory > & rSMgr) throw( uno::Exception )
+Reference< uno::XInterface > SAL_CALL SchXMLImport_Content_createInstance(const Reference< lang::XMultiServiceFactory > & rSMgr)
 {
 	// #110680#
 	// return (cppu::OWeakObject*)new SchXMLImport( IMPORT_CONTENT | IMPORT_AUTOSTYLES | IMPORT_FONTDECLS );
@@ -863,7 +862,7 @@ OUString SAL_CALL SchXMLImport_Meta_getImplementationName() throw()
 	return OUString( RTL_CONSTASCII_USTRINGPARAM( "SchXMLImport.Meta" ) );
 }
 
-Reference< uno::XInterface > SAL_CALL SchXMLImport_Meta_createInstance(const Reference< lang::XMultiServiceFactory > & rSMgr) throw( uno::Exception )
+Reference< uno::XInterface > SAL_CALL SchXMLImport_Meta_createInstance(const Reference< lang::XMultiServiceFactory > & rSMgr)
 {
 	// #110680#
 	// return (cppu::OWeakObject*)new SchXMLImport( IMPORT_META );
@@ -871,7 +870,7 @@ Reference< uno::XInterface > SAL_CALL SchXMLImport_Meta_createInstance(const Ref
 }
 
 // XServiceInfo
-OUString SAL_CALL SchXMLImport::getImplementationName() throw( uno::RuntimeException )
+OUString SAL_CALL SchXMLImport::getImplementationName()
 {
     switch( getImportFlags())
     {

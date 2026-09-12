@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -66,7 +66,7 @@ namespace framework{
 /**
     @short  it represent a job; execute it and control it's lifetime
 
-    @descr  This implemetation can be used to wrapp jobs, execute it
+    @descr  This implementation can be used to wrap jobs, execute it
             synchronously or asynchronous, control it's lifetime
             and differe between jobs with and without configuration.
  */
@@ -123,7 +123,7 @@ class Job : public  css::lang::XTypeProvider
         /**
             For some special cases we must know the environment, in which
             this job runs. Means the frame inside which we may was triggered.
-            We use it too, to listen for closing events of this ressource.
+            We use it too, to listen for closing events of this resource.
 
             Please note: If m_xFrame is set - m_xModel should be NULL.
             Only one environment can be supported really.
@@ -133,7 +133,7 @@ class Job : public  css::lang::XTypeProvider
         /**
             For some special cases we must know the environment, in which
             this job runs. Means the document inside which we may was triggered.
-            We use it too, to listen for closing events of this ressource.
+            We use it too, to listen for closing events of this resource.
 
             Please note: If m_xModel is set - m_xFrame should be NULL.
             Only one environment can be supported really.
@@ -221,21 +221,19 @@ class Job : public  css::lang::XTypeProvider
 
         // XJobListener
         virtual void SAL_CALL jobFinished( const css::uno::Reference< css::task::XAsyncJob >& xJob,
-                                           const css::uno::Any&                               aResult ) throw(css::uno::RuntimeException);
+                                           const css::uno::Any&                               aResult );
 
         // XTerminateListener
-        virtual void SAL_CALL queryTermination ( const css::lang::EventObject& aEvent ) throw(css::frame::TerminationVetoException,
-                                                                                              css::uno::RuntimeException          );
-        virtual void SAL_CALL notifyTermination( const css::lang::EventObject& aEvent ) throw(css::uno::RuntimeException          );
+        virtual void SAL_CALL queryTermination ( const css::lang::EventObject& aEvent );
+        virtual void SAL_CALL notifyTermination( const css::lang::EventObject& aEvent );
 
         // XCloseListener
         virtual void SAL_CALL queryClosing ( const css::lang::EventObject& aEvent         ,
-                                                   sal_Bool                bGetsOwnership ) throw(css::util::CloseVetoException,
-                                                                                                  css::uno::RuntimeException   );
-        virtual void SAL_CALL notifyClosing( const css::lang::EventObject& aEvent         ) throw(css::uno::RuntimeException   );
+                                                   sal_Bool                bGetsOwnership );
+        virtual void SAL_CALL notifyClosing( const css::lang::EventObject& aEvent         );
 
         // XEventListener
-        virtual void SAL_CALL disposing( const css::lang::EventObject& aEvent ) throw(css::uno::RuntimeException);
+        virtual void SAL_CALL disposing( const css::lang::EventObject& aEvent );
 };
 
 } // namespace framework

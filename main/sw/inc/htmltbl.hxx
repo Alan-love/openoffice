@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -87,7 +87,7 @@ public:
 	sal_Bool HasNoBreakTag() const { return bNoBreakTag; }
 };
 
-/*  */
+/* */
 
 class SwHTMLTableLayoutCell
 {
@@ -126,7 +126,7 @@ public:
 	sal_Bool HasNoWrapOption() const { return bNoWrapOption; }
 };
 
-/*  */
+/* */
 
 class SwHTMLTableLayoutColumn
 {
@@ -180,7 +180,7 @@ public:
 	sal_Bool HasLeftBorder() const { return bLeftBorder; }
 };
 
-/*  */
+/* */
 
 class SwHTMLTableLayout
 {
@@ -373,7 +373,7 @@ public:
 	sal_Bool MayBeInFlyFrame() const { return bMayBeInFlyFrame; }
 };
 
-/*  */
+/* */
 
 inline void SwHTMLTableLayoutCell::SetProtected()
 {
@@ -383,7 +383,7 @@ inline void SwHTMLTableLayoutCell::SetProtected()
 	pContents = 0;
 }
 
-/*  */
+/* */
 
 inline void SwHTMLTableLayoutColumn::MergeMinMaxNoAlign( sal_uLong nCMin,
     sal_uLong nCMax,    sal_uLong nAbsMin )
@@ -424,7 +424,7 @@ inline void SwHTMLTableLayoutColumn::SetMinMax( sal_uLong nMn, sal_uLong nMx )
 	nMax = nMx;
 }
 
-/*  */
+/* */
 
 inline sal_uInt16 SwHTMLTableLayout::GetInhCellSpace( sal_uInt16 nCol,
 												  sal_uInt16 nColSpan ) const

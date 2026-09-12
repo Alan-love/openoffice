@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #ifndef _DESKTOP_CFGFILTER_HXX_
@@ -53,7 +53,7 @@ struct element
     rtl::OUString name;
     rtl::OUString path;
     sal_Bool use;
- 
+
 };
 
 typedef std::stack< element > element_stack;
@@ -63,13 +63,13 @@ typedef std::stack< element > element_stack;
 // XLayer
 // XLayerHandler
 class CConfigFilter : public cppu::WeakImplHelper3<
-    NS_CSS::configuration::backend::XLayer, 
+    NS_CSS::configuration::backend::XLayer,
     NS_CSS::configuration::backend::XLayerHandler,
     NS_CSS::lang::XInitialization>
 {
 
 private:
-    NS_UNO::Reference< NS_CSS::configuration::backend::XLayerHandler > m_xLayerHandler;    
+    NS_UNO::Reference< NS_CSS::configuration::backend::XLayerHandler > m_xLayerHandler;
     NS_UNO::Reference< NS_CSS::configuration::backend::XLayer > m_xSourceLayer;
 
     rtl::OUString m_aCurrentComponent;
@@ -88,100 +88,60 @@ public:
     CConfigFilter(const strings_v* include,  const strings_v* exclude);
 
     // XInitialization
-    virtual void SAL_CALL initialize(const NS_UNO::Sequence< NS_UNO::Any >& seqArgs)
-        throw (NS_UNO::Exception);
+    virtual void SAL_CALL initialize(const NS_UNO::Sequence< NS_UNO::Any >& seqArgs);
 
     // XLayer
-    virtual void SAL_CALL readData( 	 
-        const NS_UNO::Reference< NS_CSS::configuration::backend::XLayerHandler >& layerHandler)
-        throw (NS_CSS::lang::NullPointerException, NS_CSS::lang::WrappedTargetException,
-               NS_CSS::configuration::backend::MalformedDataException);
+    virtual void SAL_CALL readData(
+        const NS_UNO::Reference< NS_CSS::configuration::backend::XLayerHandler >& layerHandler);
 
     // XLayerHandler
-    virtual void SAL_CALL startLayer() 	 
-        throw(::com::sun::star::lang::WrappedTargetException);
+    virtual void SAL_CALL startLayer();
 
-    virtual void SAL_CALL endLayer() 	 
-        throw(	 
-            ::com::sun::star::configuration::backend::MalformedDataException,
-            ::com::sun::star::lang::WrappedTargetException );
+    virtual void SAL_CALL endLayer();
 
-    virtual void SAL_CALL overrideNode( 
-            const rtl::OUString& aName, 
-            sal_Int16 aAttributes, 
-            sal_Bool bClear)
-        throw(
-            ::com::sun::star::configuration::backend::MalformedDataException,
-            ::com::sun::star::lang::WrappedTargetException );
+    virtual void SAL_CALL overrideNode(
+            const rtl::OUString& aName,
+            sal_Int16 aAttributes,
+            sal_Bool bClear);
 
     virtual void SAL_CALL addOrReplaceNode(
-            const rtl::OUString& aName, 
-            sal_Int16 aAttributes) 
-        throw(	
-            ::com::sun::star::configuration::backend::MalformedDataException,
-            ::com::sun::star::lang::WrappedTargetException );
+            const rtl::OUString& aName,
+            sal_Int16 aAttributes);
 
-    virtual void SAL_CALL  addOrReplaceNodeFromTemplate( 	 
+    virtual void SAL_CALL  addOrReplaceNodeFromTemplate(
             const rtl::OUString& aName,
             const NS_CSS::configuration::backend::TemplateIdentifier& aTemplate,
-            sal_Int16 aAttributes ) 
-        throw(
-            ::com::sun::star::configuration::backend::MalformedDataException,
-            ::com::sun::star::lang::WrappedTargetException );
+            sal_Int16 aAttributes );
 
-    virtual void SAL_CALL  endNode() 	 
-        throw(	 
-            ::com::sun::star::configuration::backend::MalformedDataException,
-            ::com::sun::star::lang::WrappedTargetException );
+    virtual void SAL_CALL  endNode();
 
-    virtual void SAL_CALL  dropNode( 	 
-            const rtl::OUString& aName ) 
-        throw( 
-            ::com::sun::star::configuration::backend::MalformedDataException,
-            ::com::sun::star::lang::WrappedTargetException );
+    virtual void SAL_CALL  dropNode(
+            const rtl::OUString& aName );
 
-    virtual void SAL_CALL  overrideProperty( 	 
+    virtual void SAL_CALL  overrideProperty(
             const rtl::OUString& aName,
             sal_Int16 aAttributes,
             const NS_UNO::Type& aType,
-            sal_Bool bClear ) 
-        throw(	 
-            ::com::sun::star::configuration::backend::MalformedDataException,
-            ::com::sun::star::lang::WrappedTargetException );
+            sal_Bool bClear );
 
-    virtual void SAL_CALL  setPropertyValue( 	 
-            const NS_UNO::Any& aValue ) 
-        throw( 
-            ::com::sun::star::configuration::backend::MalformedDataException,
-            ::com::sun::star::lang::WrappedTargetException );
+    virtual void SAL_CALL  setPropertyValue(
+            const NS_UNO::Any& aValue );
 
-    virtual void SAL_CALL setPropertyValueForLocale( 	 
+    virtual void SAL_CALL setPropertyValueForLocale(
             const NS_UNO::Any& aValue,
-            const rtl::OUString& aLocale ) 
-        throw(	 
-            ::com::sun::star::configuration::backend::MalformedDataException,
-            ::com::sun::star::lang::WrappedTargetException );
+            const rtl::OUString& aLocale );
 
-    virtual void SAL_CALL  endProperty() 	 
-        throw(	 
-            ::com::sun::star::configuration::backend::MalformedDataException,
-            ::com::sun::star::lang::WrappedTargetException );
+    virtual void SAL_CALL  endProperty();
 
-    virtual void SAL_CALL  addProperty( 	 
+    virtual void SAL_CALL  addProperty(
             const rtl::OUString& aName,
             sal_Int16 aAttributes,
-            const NS_UNO::Type& aType )
-        throw(	 
-            ::com::sun::star::configuration::backend::MalformedDataException,
-            ::com::sun::star::lang::WrappedTargetException );
+            const NS_UNO::Type& aType );
 
-    virtual void SAL_CALL  addPropertyWithValue( 	 
+    virtual void SAL_CALL  addPropertyWithValue(
             const rtl::OUString& aName,
             sal_Int16 aAttributes,
-            const NS_UNO::Any& aValue ) 
-        throw(	 
-            ::com::sun::star::configuration::backend::MalformedDataException,
-            ::com::sun::star::lang::WrappedTargetException );
+            const NS_UNO::Any& aValue );
 
 };
 
@@ -190,5 +150,3 @@ public:
 #undef NS_UNO
 
 #endif
-
-

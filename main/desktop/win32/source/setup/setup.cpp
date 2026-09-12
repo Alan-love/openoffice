@@ -19,7 +19,11 @@
  *
  *************************************************************/
 
+// MARKER(update_precomp.py): autogen include statement, do not remove
+#include "precompiled_desktop.hxx"
 
+#define  UNICODE    1
+#define _UNICODE    1
 
 #define WIN // scope W32 API
 
@@ -42,6 +46,7 @@
 #include "strsafe.h"
 
 #include "setup.hxx"
+#include "aoo_msi.hxx"
 
 #include "resource.h"
 
@@ -59,6 +64,13 @@
 #define ERROR_SHOW_USAGE      -2
 #define ERROR_SETUP_TO_OLD    -3
 #define ERROR_SETUP_NOT_FOUND -4
+#define ERROR_OS_TO_OLD       -5
+#define ERROR_RUNTIME_FAILED  -6
+
+// Lowest Windows this office can run on.  Not an arbitrary policy: the VC v14
+// redistributable that supplies the runtime the binaries need installs only on
+// Windows 10/11 and Server 2016 and later, so the floor comes with the toolset.
+#define REQUIRED_WINDOWS_MAJOR  10
 
 #define PARAM_SETUP_USED    TEXT( " SETUP_USED=1 " )
 #define PARAM_PACKAGE       TEXT( "/I " )
@@ -69,27 +81,37 @@
 #define PARAM_PATCH         TEXT( " /update " )
 #define PARAM_REG_ALL_MSO_TYPES TEXT( "REGISTER_ALL_MSO_TYPES=1 " )
 #define PARAM_REG_NO_MSO_TYPES  TEXT( "REGISTER_NO_MSO_TYPES=1 " )
-#define PARAM_SILENTINSTALL     TEXT( " /Q" )
+// The VC v14 redistributable is a Burn bundle, not the old MSI-style installer the
+// VC++ 2008 package was.  It does not understand /Q; its silent switches are these.
+// /norestart matters -- without it the bundle may reboot the machine mid-install.
+#define PARAM_SILENTINSTALL     TEXT( " /install /quiet /norestart" )
+
+// Burn exit codes that mean "the runtime is now present".  1638 is
+// ERROR_PRODUCT_VERSION: a NEWER runtime is already installed, which is success for
+// our purposes -- it is also the common case on any developer machine.
+#define RUNTIME_INSTALL_OK          0L
+#define RUNTIME_INSTALL_NEWER       1638L
+#define RUNTIME_INSTALL_REBOOT_REQ  3010L
 
 #define PARAM_RUNNING           TEXT( "ignore_running" )
 #define CMDLN_REG_ALL_MSO_TYPES TEXT( "msoreg=1" )
 #define CMDLN_REG_NO_MSO_TYPES  TEXT( "msoreg=0" )
 
-#define MSI_DLL             TEXT( "msi.dll" )
 #define ADVAPI32_DLL        TEXT( "advapi32.dll" )
 #define PROFILE_NAME        TEXT( "setup.ini" )
 
 #define RUNTIME_X64_NAME    TEXT( "redist\\vcredist_x64.exe" )
 #define RUNTIME_X86_NAME    TEXT( "redist\\vcredist_x86.exe" )
-// Microsoft Visual C++ 2008 Redistributable - x86 9.0.30729.6161
-#define PRODUCTCODE_X86     TEXT( "{9BE518E6-ECC6-35A9-88E4-87755C07200F}" )
-// Microsoft Visual C++ 2008 Redistributable - x64 9.0.30729.6161
-#define PRODUCTCODE_X64     TEXT( "{5FCE6D76-F5DC-37AB-B2B8-22AB8CEDB1D4}" )
 
-#define MSIAPI_DllGetVersion     "DllGetVersion"
+// There is deliberately no ProductCode here any more.  The old code gated on
+// MsiQueryProductState() against a hardcoded VC++ 2008 GUID, which cannot work for the
+// v14 runtime: Microsoft reissues that redistributable with a NEW ProductCode on every
+// servicing revision, so an exact-GUID test misreports every machine that has anything
+// other than the one pinned build.  We test for the runtime functionally instead --
+// see RuntimeAlreadyPresent().
+
 #define ADVAPI32API_CheckTokenMembership "CheckTokenMembership"
 
-typedef HRESULT (CALLBACK* PFnDllGetVersion)( DLLVERSIONINFO *pdvi);
 typedef BOOL (WINAPI* PFnCheckTokenMembership)(HANDLE TokenHandle, PSID SidToCheck, PBOOL IsMember);
 
 #ifdef DEBUG
@@ -110,17 +132,30 @@ static inline void OutputDebugStringFormat( LPCTSTR, ... )
 
 //--------------------------------------------------------------------------
 
-const TCHAR sInstKey[]       = TEXT( "Software\\Microsoft\\Windows\\CurrentVersion\\Installer" );
-const TCHAR sInstLocValue[]  = TEXT( "InstallerLocation" );
-const TCHAR sMsiDll[]        = TEXT( "\\msi.dll" );
 const TCHAR sMsiExe[]        = TEXT( "\\msiexec.exe" );
 const TCHAR sDelayReboot[]   = TEXT( " /c:\"msiinst /delayreboot\"" );
 const TCHAR sMsiQuiet[]      = TEXT( " /q" );
 const TCHAR sMemMapName[]    = TEXT( "Global\\MsiErrorObject" );
 
 //--------------------------------------------------------------------------
-SetupAppX::SetupAppX()
+SetupApp::SetupApp()
 {
+    m_uiRet         = ERROR_SUCCESS;
+
+    // Get OS version
+    OSVERSIONINFO sInfoOS;
+
+    ZeroMemory( &sInfoOS, sizeof(OSVERSIONINFO) );
+    sInfoOS.dwOSVersionInfoSize = sizeof( OSVERSIONINFO );
+
+    GetVersionEx( &sInfoOS );
+
+    m_nOSVersion    = sInfoOS.dwMajorVersion;
+    m_nMinorVersion = sInfoOS.dwMinorVersion;
+    m_bIsWin9x      = ( VER_PLATFORM_WIN32_NT != sInfoOS.dwPlatformId );
+    m_bNeedReboot   = false;
+    m_bAdministrative = false;
+
     m_hInst     = NULL;
     m_hMapFile  = NULL;
     m_pAppTitle = NULL;
@@ -155,7 +190,7 @@ SetupAppX::SetupAppX()
 }
 
 //--------------------------------------------------------------------------
-SetupAppX::~SetupAppX()
+SetupApp::~SetupApp()
 {
     if ( m_ppLanguageList )
     {
@@ -196,7 +231,7 @@ SetupAppX::~SetupAppX()
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::Initialize( HINSTANCE hInst )
+boolean SetupApp::Initialize( HINSTANCE hInst )
 {
     m_pCmdLine  = WIN::GetCommandLine();
     m_hInst     = hInst;
@@ -256,7 +291,7 @@ boolean SetupAppX::Initialize( HINSTANCE hInst )
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::GetProfileSection( LPCTSTR pFileName, LPCTSTR pSection,
+boolean SetupApp::GetProfileSection( LPCTSTR pFileName, LPCTSTR pSection,
                                       DWORD& rSize, LPTSTR *pRetBuf )
 {
     if ( !rSize || !*pRetBuf )
@@ -301,7 +336,7 @@ boolean SetupAppX::GetProfileSection( LPCTSTR pFileName, LPCTSTR pSection,
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::ReadProfile()
+boolean SetupApp::ReadProfile()
 {
     boolean bRet = false;
     TCHAR *sProfilePath = 0;
@@ -406,7 +441,7 @@ boolean SetupAppX::ReadProfile()
                 delete [] pValue;
             }
 
-            m_ppLanguageList = new LanguageDataX*[ m_nLanguageCount ];
+            m_ppLanguageList = new LanguageData*[ m_nLanguageCount ];
 
             for ( int i=0; i < m_nLanguageCount; i++ )
             {
@@ -417,7 +452,7 @@ boolean SetupAppX::ReadProfile()
                 }
 
                 pCurLine += GetNameValue( pCurLine, &pName, &pValue );
-                m_ppLanguageList[ i ] = new LanguageDataX( pValue );
+                m_ppLanguageList[ i ] = new LanguageData( pValue );
                 Log( TEXT( "    Language = %s\r\n" ), pValue );
 
                 if ( m_ppLanguageList[ i ]->m_pTransform )
@@ -438,7 +473,7 @@ boolean SetupAppX::ReadProfile()
 }
 
 //--------------------------------------------------------------------------
-void SetupAppX::AddFileToPatchList( TCHAR* pPath, TCHAR* pFile )
+void SetupApp::AddFileToPatchList( TCHAR* pPath, TCHAR* pFile )
 {
     if ( m_pPatchFiles == NULL )
     {
@@ -453,7 +488,7 @@ void SetupAppX::AddFileToPatchList( TCHAR* pPath, TCHAR* pFile )
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::GetPatches()
+boolean SetupApp::GetPatches()
 {
     boolean bRet = true;
 
@@ -504,7 +539,7 @@ boolean SetupAppX::GetPatches()
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::GetPathToFile( TCHAR* pFileName, TCHAR** pPath )
+boolean SetupApp::GetPathToFile( TCHAR* pFileName, TCHAR** pPath )
 {
     // generate the path to the file = szModuleFile + FileName
     // note: FileName is a relative path
@@ -569,7 +604,7 @@ boolean SetupAppX::GetPathToFile( TCHAR* pFileName, TCHAR** pPath )
 }
 
 //--------------------------------------------------------------------------
-int SetupAppX::GetNameValue( TCHAR* pLine, TCHAR** pName, TCHAR** pValue )
+int SetupApp::GetNameValue( TCHAR* pLine, TCHAR** pName, TCHAR** pValue )
 {
     int nRet = lstrlen( pLine ) + 1;
     *pValue = 0;
@@ -613,7 +648,7 @@ int SetupAppX::GetNameValue( TCHAR* pLine, TCHAR** pName, TCHAR** pValue )
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::ChooseLanguage( long& rLanguage )
+boolean SetupApp::ChooseLanguage( long& rLanguage )
 {
     rLanguage = 0;
 
@@ -698,83 +733,14 @@ boolean SetupAppX::ChooseLanguage( long& rLanguage )
     return true;
 }
 
-//--------------------------------------------------------------------------
-HMODULE SetupAppX::LoadMsiLibrary()
-{
-    HMODULE hMsi = NULL;
-    HKEY    hInstKey = NULL;
-
-    // find registered location of Msi.dll
-    if ( ERROR_SUCCESS == RegOpenKeyEx( HKEY_LOCAL_MACHINE, sInstKey, 0, KEY_READ, &hInstKey ) )
-    {
-        long    nRet = ERROR_SUCCESS;
-        TCHAR  *sMsiFolder = new TCHAR[ MAX_PATH + 1 ];
-        DWORD   dwMsiFolderSize = MAX_PATH + 1;
-        DWORD   dwType = 0;
-
-        if ( ERROR_MORE_DATA == ( nRet = RegQueryValueEx( hInstKey, sInstLocValue, NULL,
-                                                          &dwType, (BYTE*)sMsiFolder, &dwMsiFolderSize ) ) )
-        {
-            // try again with larger buffer
-            delete [] sMsiFolder;
-            sMsiFolder = new TCHAR[ dwMsiFolderSize ];
-
-            nRet = RegQueryValueEx( hInstKey, sInstLocValue, NULL, &dwType,
-                                    (BYTE*)sMsiFolder, &dwMsiFolderSize );
-        }
-
-        if ( ERROR_SUCCESS == nRet && dwType == REG_SZ && dwMsiFolderSize > 0 )
-        {
-            // load Msi.dll from registered location
-            int nLength = lstrlen( sMsiDll ) + dwMsiFolderSize + 1; // use StringCchLength ?
-            TCHAR *pMsiLocation = new TCHAR[ nLength ];
-
-            if ( SUCCEEDED( StringCchCopy( pMsiLocation, nLength, sMsiFolder ) ) &&
-                 SUCCEEDED( StringCchCat( pMsiLocation, nLength, sMsiDll ) ) )
-            {
-                hMsi = LoadLibrary( pMsiLocation );
-            }
-        }
-    }
-
-    if ( !hMsi ) // use the default location
-    {
-        hMsi = LoadLibrary( sMsiDll );
-    }
-
-    return hMsi;
-}
 
 //--------------------------------------------------------------------------
-LPCTSTR SetupAppX::GetPathToMSI()
+LPCTSTR SetupApp::GetPathToMSI()
 {
     LPTSTR  sMsiPath = NULL;
     HKEY    hInstKey = NULL;
-    TCHAR  *sMsiFolder = new TCHAR[ MAX_PATH + 1 ];
+    TCHAR  *sMsiFolder = getInstallerLocation();
     DWORD   nMsiFolderSize = MAX_PATH + 1;
-
-    sMsiFolder[0] = '\0';
-
-    // find registered location of Msi.dll
-    if ( ERROR_SUCCESS == RegOpenKeyEx( HKEY_LOCAL_MACHINE, sInstKey, 0, KEY_READ, &hInstKey ) )
-    {
-        LONG    nRet = ERROR_SUCCESS;
-        DWORD   dwType = 0;
-
-        if ( ERROR_MORE_DATA == ( nRet = RegQueryValueEx( hInstKey, sInstLocValue, NULL,
-                                                          &dwType, (BYTE*)sMsiFolder, &nMsiFolderSize ) ) )
-        {
-            // try again with larger buffer
-            delete [] sMsiFolder;
-            sMsiFolder = new TCHAR[ nMsiFolderSize ];
-
-            nRet = RegQueryValueEx( hInstKey, sInstLocValue, NULL, &dwType,
-                                    (BYTE*)sMsiFolder, &nMsiFolderSize );
-        }
-
-        if ( ERROR_SUCCESS != nRet || dwType != REG_SZ || nMsiFolderSize == 0 )
-            sMsiFolder[0] = '\0';
-    }
 
     if ( sMsiFolder[0] == '\0' ) // use the default location
     {
@@ -817,7 +783,7 @@ LPCTSTR SetupAppX::GetPathToMSI()
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::LaunchInstaller( LPCTSTR pParam )
+boolean SetupApp::LaunchInstaller( LPCTSTR pParam )
 {
     LPCTSTR sMsiPath = GetPathToMSI();
 
@@ -898,7 +864,7 @@ boolean SetupAppX::LaunchInstaller( LPCTSTR pParam )
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::Install( long nLanguage )
+boolean SetupApp::Install( long nLanguage )
 {
     LPTSTR pTransform = NULL;
 
@@ -1015,7 +981,7 @@ boolean SetupAppX::Install( long nLanguage )
 }
 
 //--------------------------------------------------------------------------
-UINT SetupAppX::GetError() const
+UINT SetupApp::GetError() const
 {
     UINT nErr = 0;
 
@@ -1031,7 +997,7 @@ UINT SetupAppX::GetError() const
 }
 
 //--------------------------------------------------------------------------
-void SetupAppX::DisplayError( UINT nErr ) const
+void SetupApp::DisplayError( UINT nErr ) const
 {
     TCHAR sError[ MAX_TEXT_LENGTH ] = {0};
     TCHAR sTmp[ MAX_TEXT_LENGTH ] = {0};
@@ -1052,7 +1018,7 @@ void SetupAppX::DisplayError( UINT nErr ) const
         case ERROR_OUTOFMEMORY: WIN::LoadString( m_hInst, IDS_OUTOFMEM, sError, MAX_TEXT_LENGTH );
                                 break;
         case ERROR_INSTALL_USEREXIT:
-                                WIN::LoadString( m_hInst, IDS_USER_CANCELLED, sError, MAX_TEXT_LENGTH );
+                                WIN::LoadString( m_hInst, IDS_USER_CANCELED, sError, MAX_TEXT_LENGTH );
                                 break;
         case ERROR_INSTALL_ALREADY_RUNNING: // 1618
                                 WIN::LoadString( m_hInst, IDS_ALREADY_RUNNING, sError, MAX_TEXT_LENGTH );
@@ -1082,6 +1048,12 @@ void SetupAppX::DisplayError( UINT nErr ) const
                                 nMsgType = MB_OK | MB_ICONINFORMATION;
                                 WIN::LoadString( m_hInst, IDS_USAGE, sError, MAX_TEXT_LENGTH );
                                 break;
+        case ERROR_OS_TO_OLD:       // - 5
+                                WIN::LoadString( m_hInst, IDS_OS_TO_OLD, sError, MAX_TEXT_LENGTH );
+                                break;
+        case ERROR_RUNTIME_FAILED:  // - 6
+                                WIN::LoadString( m_hInst, IDS_RUNTIME_FAILED, sError, MAX_TEXT_LENGTH );
+                                break;
 
         default:                WIN::LoadString( m_hInst, IDS_UNKNOWN_ERROR, sError, MAX_TEXT_LENGTH );
                                 break;
@@ -1100,7 +1072,7 @@ void SetupAppX::DisplayError( UINT nErr ) const
 }
 
 //--------------------------------------------------------------------------
-long SetupAppX::GetLanguageID( long nIndex ) const
+long SetupApp::GetLanguageID( long nIndex ) const
 {
     if ( nIndex >=0 && nIndex < m_nLanguageCount )
         return m_ppLanguageList[ nIndex ]->m_nLanguageID;
@@ -1109,7 +1081,7 @@ long SetupAppX::GetLanguageID( long nIndex ) const
 }
 
 //--------------------------------------------------------------------------
-void SetupAppX::GetLanguageName( long nLanguage, LPTSTR sName ) const
+void SetupApp::GetLanguageName( long nLanguage, LPTSTR sName ) const
 {
     switch ( nLanguage )
     {
@@ -1151,60 +1123,44 @@ void SetupAppX::GetLanguageName( long nLanguage, LPTSTR sName ) const
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::CheckVersion()
+boolean SetupApp::CheckVersion()
 {
     boolean bRet = false;
-    HMODULE hMsi = LoadMsiLibrary();
 
     Log( TEXT( " Looking for installed MSI with version >= %s\r\n" ), m_pReqVersion );
 
-    if ( !hMsi )
-    {
-        Log( TEXT( "Error: No MSI found!\r\n" ) );
-        SetError( (UINT) ERROR_SETUP_NOT_FOUND );
-    }
-    else
-    {
-        PFnDllGetVersion pDllGetVersion = (PFnDllGetVersion) GetProcAddress( hMsi, MSIAPI_DllGetVersion );
+    DLLVERSIONINFO aInfo;
 
-        if ( pDllGetVersion )
+    aInfo.cbSize = sizeof( DLLVERSIONINFO );
+    if ( NOERROR == aoo_MsiDllGetVersion( &aInfo ) )
+    {
+	TCHAR pMsiVersion[ VERSION_SIZE ];
+	StringCchPrintf( pMsiVersion, VERSION_SIZE, TEXT("%d.%d.%4d"),
+			 aInfo.dwMajorVersion,
+			 aInfo.dwMinorVersion,
+			 aInfo.dwBuildNumber );
+	if ( _tcsncmp( pMsiVersion, m_pReqVersion, _tcslen( pMsiVersion ) ) < 0 )
         {
-            DLLVERSIONINFO aInfo;
-
-            aInfo.cbSize = sizeof( DLLVERSIONINFO );
-            if ( NOERROR == pDllGetVersion( &aInfo ) )
-            {
-                TCHAR pMsiVersion[ VERSION_SIZE ];
-                StringCchPrintf( pMsiVersion, VERSION_SIZE, TEXT("%d.%d.%4d"),
-                                 aInfo.dwMajorVersion,
-                                 aInfo.dwMinorVersion,
-                                 aInfo.dwBuildNumber );
-                if ( _tcsncmp( pMsiVersion, m_pReqVersion, _tcslen( pMsiVersion ) ) < 0 )
-                {
-                    StringCchCopy( m_pErrorText, MAX_TEXT_LENGTH, pMsiVersion );
-                    SetError( (UINT) ERROR_SETUP_TO_OLD );
-                    Log( TEXT( "Warning: Old MSI version found <%s>, update needed!\r\n" ), pMsiVersion );
-                }
-                else
-                {
-                    Log( TEXT( " Found MSI version <%s>, no update needed\r\n" ), pMsiVersion );
-                    bRet = true;
-                }
-                if ( aInfo.dwMajorVersion >= 3 )
-                    m_bSupportsPatch = true;
-                else
-                    Log( TEXT("Warning: Patching not supported! MSI-Version <%s>\r\n"), pMsiVersion );
-            }
-        }
-
-        FreeLibrary( hMsi );
+	    StringCchCopy( m_pErrorText, MAX_TEXT_LENGTH, pMsiVersion );
+	    SetError( (UINT) ERROR_SETUP_TO_OLD );
+	    Log( TEXT( "Warning: Old MSI version found <%s>, update needed!\r\n" ), pMsiVersion );
+	}
+	else
+	{
+	    Log( TEXT( " Found MSI version <%s>, no update needed\r\n" ), pMsiVersion );
+	    bRet = true;
+	}
+	if ( aInfo.dwMajorVersion >= 3 )
+	    m_bSupportsPatch = true;
+	else
+	    Log( TEXT("Warning: Patching not supported! MSI-Version <%s>\r\n"), pMsiVersion );
     }
 
     return bRet;
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::CheckForUpgrade()
+boolean SetupApp::CheckForUpgrade()
 {
     // When we have patch files we will never try an Minor upgrade
     if ( m_pPatchFiles ) return true;
@@ -1257,7 +1213,7 @@ boolean SetupAppX::CheckForUpgrade()
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::IsTerminalServerInstalled() const
+boolean SetupApp::IsTerminalServerInstalled() const
 {
     boolean bIsTerminalServer = false;
 
@@ -1306,7 +1262,7 @@ boolean SetupAppX::IsTerminalServerInstalled() const
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::AlreadyRunning() const
+boolean SetupApp::AlreadyRunning() const
 {
     if ( m_bIgnoreAlreadyRunning )
     {
@@ -1344,7 +1300,7 @@ boolean SetupAppX::AlreadyRunning() const
 }
 
 //--------------------------------------------------------------------------
-DWORD SetupAppX::WaitForProcess( HANDLE hHandle )
+DWORD SetupApp::WaitForProcess( HANDLE hHandle )
 {
     DWORD nResult = NOERROR;
     boolean bLoop = true;
@@ -1382,7 +1338,7 @@ DWORD SetupAppX::WaitForProcess( HANDLE hHandle )
 }
 
 //--------------------------------------------------------------------------
-void SetupAppX::Log( LPCTSTR pMessage, LPCTSTR pText ) const
+void SetupApp::Log( LPCTSTR pMessage, LPCTSTR pText ) const
 {
     if ( m_pLogFile )
     {
@@ -1414,7 +1370,7 @@ void SetupAppX::Log( LPCTSTR pMessage, LPCTSTR pText ) const
 }
 
 //--------------------------------------------------------------------------
-DWORD SetupAppX::GetNextArgument( LPCTSTR pStr, LPTSTR *pArg, LPTSTR *pNext,
+DWORD SetupApp::GetNextArgument( LPCTSTR pStr, LPTSTR *pArg, LPTSTR *pNext,
                                   boolean bStripQuotes )
 {
     boolean bInQuotes = false;
@@ -1473,7 +1429,7 @@ DWORD SetupAppX::GetNextArgument( LPCTSTR pStr, LPTSTR *pArg, LPTSTR *pNext,
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::GetCmdLineParameters( LPTSTR *pCmdLine )
+boolean SetupApp::GetCmdLineParameters( LPTSTR *pCmdLine )
 {
     int    nRet   = ERROR_SUCCESS;
     LPTSTR pStart = NULL;
@@ -1644,11 +1600,11 @@ boolean SetupAppX::GetCmdLineParameters( LPTSTR *pCmdLine )
         return false;
     }
     else
-        return true;;
+        return true;
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::IsAdmin()
+boolean SetupApp::IsAdmin()
 {
     if ( IsWin9x() )
         return true;
@@ -1728,7 +1684,7 @@ boolean SetupAppX::IsAdmin()
 }
 
 //--------------------------------------------------------------------------
-LPTSTR SetupAppX::CopyIniFile( LPCTSTR pIniFile )
+LPTSTR SetupApp::CopyIniFile( LPCTSTR pIniFile )
 {
     m_pTmpName = _ttempnam( TEXT( "C:\\" ), TEXT( "Setup" ) );
 
@@ -1766,7 +1722,7 @@ LPTSTR SetupAppX::CopyIniFile( LPCTSTR pIniFile )
 }
 
 //--------------------------------------------------------------------------
-void SetupAppX::ConvertNewline( LPTSTR pText ) const
+void SetupApp::ConvertNewline( LPTSTR pText ) const
 {
     int i=0;
 
@@ -1784,7 +1740,7 @@ void SetupAppX::ConvertNewline( LPTSTR pText ) const
 }
 
 //--------------------------------------------------------------------------
-LPTSTR SetupAppX::SetProdToAppTitle( LPCTSTR pProdName )
+LPTSTR SetupApp::SetProdToAppTitle( LPCTSTR pProdName )
 {
     if ( !pProdName ) return m_pAppTitle;
 
@@ -1839,7 +1795,7 @@ LPTSTR SetupAppX::SetProdToAppTitle( LPCTSTR pProdName )
 
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::IsPatchInstalled( TCHAR* pBaseDir, TCHAR* pFileName )
+boolean SetupApp::IsPatchInstalled( TCHAR* pBaseDir, TCHAR* pFileName )
 {
     if ( !m_bSupportsPatch )
         return false;
@@ -1852,7 +1808,7 @@ boolean SetupAppX::IsPatchInstalled( TCHAR* pBaseDir, TCHAR* pFileName )
     StringCchCopy( szDatabasePath, nLen, pBaseDir );
     StringCchCat( szDatabasePath, nLen, pFileName );
 
-    UINT nRet = MsiGetSummaryInformation( NULL, szDatabasePath, 0, &hSummaryInfo );
+    UINT nRet = aoo_MsiGetSummaryInformation( NULL, szDatabasePath, 0, &hSummaryInfo );
 
     if ( nRet != ERROR_SUCCESS )
     {
@@ -1864,7 +1820,7 @@ boolean SetupAppX::IsPatchInstalled( TCHAR* pBaseDir, TCHAR* pFileName )
     UINT    uiDataType;
     LPTSTR  szPatchID = new TCHAR[ 64 ];
     DWORD   cchValueBuf = 64;
-    nRet = MsiSummaryInfoGetProperty( hSummaryInfo, PID_REVNUMBER, &uiDataType, NULL, NULL, szPatchID, &cchValueBuf );
+    nRet = aoo_MsiSummaryInfoGetProperty( hSummaryInfo, PID_REVNUMBER, &uiDataType, NULL, NULL, szPatchID, &cchValueBuf );
 
     if ( nRet != ERROR_SUCCESS )
     {
@@ -1873,7 +1829,7 @@ boolean SetupAppX::IsPatchInstalled( TCHAR* pBaseDir, TCHAR* pFileName )
         return false;
     }
 
-	nRet = MsiGetPatchInfo( szPatchID, INSTALLPROPERTY_LOCALPACKAGE, NULL, NULL );
+	nRet = aoo_MsiGetPatchInfo( szPatchID, INSTALLPROPERTY_LOCALPACKAGE, NULL, NULL );
 
     StringCchPrintf( sBuf, 80, TEXT("  GetPatchInfo for (%s) returned (%u)\r\n"), szPatchID, nRet );
     Log( sBuf );
@@ -1893,17 +1849,122 @@ boolean SetupAppX::IsPatchInstalled( TCHAR* pBaseDir, TCHAR* pFileName )
     else if ( nRet == ERROR_UNKNOWN_PROPERTY )
         return false;
     else return false;
-
-	return false;
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::InstallRuntimes( TCHAR *sProductCode, TCHAR *sRuntimePath )
+// The real Windows version, not the shimmed one.
+//
+// GetVersionEx() and the Windows Installer VersionNT / WindowsBuild properties all
+// report Windows 8.1 (6.3 / 9600) on Windows 10 and 11 unless the caller carries a
+// supportedOS manifest entry.  Measured on Windows 11 build 26200, msiexec reports
+// VersionNT=603 and WindowsBuild=9600 -- which is why this check cannot be expressed
+// as an MSI LaunchCondition, and lives here instead.
+//
+// RtlGetVersion is not subject to that shim.
+static bool GetRealWindowsVersion( DWORD *pMajor, DWORD *pBuild )
 {
-    INSTALLSTATE  nRet = MsiQueryProductState( sProductCode );
-    OutputDebugStringFormat( TEXT( "MsiQueryProductState returned <%d>\r\n" ), nRet );
-    if ( nRet == INSTALLSTATE_DEFAULT )
+    typedef LONG ( WINAPI *pfnRtlGetVersion_t )( OSVERSIONINFOW * );
+
+    HMODULE hNtdll = ::GetModuleHandle( TEXT( "ntdll.dll" ) );
+    if ( hNtdll == NULL )
+        return false;
+
+    pfnRtlGetVersion_t pRtlGetVersion =
+        (pfnRtlGetVersion_t)::GetProcAddress( hNtdll, "RtlGetVersion" );
+    if ( pRtlGetVersion == NULL )
+        return false;
+
+    OSVERSIONINFOW aInfo;
+    ZeroMemory( &aInfo, sizeof( aInfo ) );
+    aInfo.dwOSVersionInfoSize = sizeof( aInfo );
+
+    if ( pRtlGetVersion( &aInfo ) != 0 )
+        return false;
+
+    *pMajor = aInfo.dwMajorVersion;
+    *pBuild = aInfo.dwBuildNumber;
+    return true;
+}
+
+//--------------------------------------------------------------------------
+boolean SetupApp::CheckOSVersion()
+{
+    DWORD nMajor = 0;
+    DWORD nBuild = 0;
+
+    if ( !GetRealWindowsVersion( &nMajor, &nBuild ) )
+    {
+        // Could not determine the version.  Let the install proceed rather than
+        // refuse on a machine we simply failed to identify -- if the OS really is too
+        // old the runtime install will fail next, and say so.
+        Log( TEXT( "Warning: could not determine the Windows version.\r\n" ) );
         return true;
+    }
+
+    TCHAR sBuf[ 128 ];
+
+    StringCchPrintf( sBuf, 128, TEXT( " Windows major version %u, build %u\r\n" ),
+                     nMajor, nBuild );
+    Log( sBuf );
+
+    if ( nMajor < REQUIRED_WINDOWS_MAJOR )
+    {
+        StringCchPrintf( sBuf, 128,
+                         TEXT( "ERROR: Windows %u is older than the required Windows %u.\r\n" ),
+                         nMajor, (DWORD)REQUIRED_WINDOWS_MAJOR );
+        Log( sBuf );
+        SetError( ERROR_OS_TO_OLD );
+        return false;
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------
+// Is the VC v14 runtime already usable in THIS process?
+//
+// Deliberately functional rather than a registry or ProductCode lookup: it needs no
+// GUID that goes stale with every servicing update, no registry view juggling, and it
+// tests the thing that actually matters -- whether our DLLs will be able to bind.
+//
+// LOAD_LIBRARY_SEARCH_SYSTEM32 so we probe the machine-wide runtime and cannot be
+// fooled by a stray copy sitting next to setup.exe.
+//
+// This can only answer for setup.exe's own bitness -- a 64 bit process cannot load a
+// 32 bit DLL and vice versa.  That is fine: the caller only uses it to skip the
+// matching redistributable.  For the other architecture we just run the bundle, which
+// is idempotent and returns 1638 quickly when a newer runtime is already there.
+static bool RuntimeAlreadyPresent()
+{
+    const TCHAR *pModules[] = {
+        TEXT( "vcruntime140.dll" ),
+        TEXT( "msvcp140.dll" ),
+#if defined( _WIN64 )
+        // x64 only -- the separate EH runtime introduced with VS2017.
+        TEXT( "vcruntime140_1.dll" ),
+#endif
+    };
+
+    for ( size_t i = 0; i < sizeof( pModules ) / sizeof( pModules[0] ); ++i )
+    {
+        HMODULE hMod = ::LoadLibraryEx( pModules[i], NULL,
+                                        LOAD_LIBRARY_SEARCH_SYSTEM32 );
+        if ( hMod == NULL )
+            return false;
+        ::FreeLibrary( hMod );
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------
+boolean SetupApp::InstallRuntimes( TCHAR *sRuntimePath, bool bMatchesOwnArchitecture )
+{
+    if ( bMatchesOwnArchitecture && RuntimeAlreadyPresent() )
+    {
+        Log( TEXT( " Runtime already present, skipping <%s>\r\n" ), sRuntimePath );
+        return true;
+    }
 
     Log( TEXT( " Will install runtime <%s>\r\n" ), sRuntimePath );
     OutputDebugStringFormat( TEXT( " Will install runtime <%s>\r\n" ), sRuntimePath );
@@ -1951,16 +2012,30 @@ boolean SetupAppX::InstallRuntimes( TCHAR *sProductCode, TCHAR *sRuntimePath )
     else
     {
         GetExitCodeProcess( aPI.hProcess, &nResult );
-        SetError( nResult );
 
-        if ( nResult != ERROR_SUCCESS )
+        // Burn reports more than one flavour of success.  Treating anything non-zero as
+        // a failure would flag every machine that already carries a newer runtime.
+        if ( nResult == RUNTIME_INSTALL_OK )
         {
-            TCHAR sBuf[80];
-            StringCchPrintf( sBuf, 80, TEXT("Warning: install runtime returned %u.\r\n"), nResult );
-            Log( sBuf );
+            Log( TEXT( " Installation of runtime completed successfully.\r\n" ) );
+        }
+        else if ( nResult == RUNTIME_INSTALL_NEWER )
+        {
+            Log( TEXT( " A newer runtime is already installed, nothing to do.\r\n" ) );
+        }
+        else if ( nResult == RUNTIME_INSTALL_REBOOT_REQ )
+        {
+            Log( TEXT( " Installation of runtime completed, a reboot is required.\r\n" ) );
         }
         else
-            Log( TEXT( " Installation of runtime completed successfully.\r\n" ) );
+        {
+            TCHAR sBuf[80];
+            StringCchPrintf( sBuf, 80,
+                             TEXT("ERROR: install runtime returned %u.\r\n"), nResult );
+            Log( sBuf );
+            SetError( nResult );
+            bRet = false;
+        }
     }
 
     CloseHandle( aPI.hProcess );
@@ -1971,7 +2046,7 @@ boolean SetupAppX::InstallRuntimes( TCHAR *sProductCode, TCHAR *sRuntimePath )
 }
 
 //--------------------------------------------------------------------------
-boolean SetupAppX::InstallRuntimes()
+boolean SetupApp::InstallRuntimes()
 {
     TCHAR *sRuntimePath = 0;
     SYSTEM_INFO siSysInfo;
@@ -2003,12 +2078,43 @@ boolean SetupAppX::InstallRuntimes()
 
     OutputDebugStringFormat( TEXT( "found architecture<%d>\r\n" ), siSysInfo.wProcessorArchitecture );
 
+    bool bOk = true;
+
+#if defined( _WIN64 )
+
+    // A 64 bit office ships no 32 bit binaries at all, so it needs only the x64
+    // runtime.  (The 32 bit office is the other way round: it cross-builds 64 bit
+    // shell extensions, which is why the branch below installs both.)
+    (void)siSysInfo;
+
+    if ( GetPathToFile( RUNTIME_X64_NAME, &sRuntimePath ) )
+        bOk = InstallRuntimes( sRuntimePath, true ) ? true : false;
+    else
+    {
+        Log( TEXT( "ERROR: no installer for x64 runtime libraries found!\r\n" ) );
+        bOk = false;
+    }
+
+    if ( sRuntimePath )
+        delete [] sRuntimePath;
+
+#else
+
+    // 32 bit office.  On 64 bit Windows it additionally needs the x64 runtime, because
+    // its shell extensions (shlxthdl_x64, ooofilt_x64, propertyhdl_x64, so_activex_x64)
+    // are 64 bit and get loaded by 64 bit Explorer and friends.
     if ( siSysInfo.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64 )
     {
         if ( GetPathToFile( RUNTIME_X64_NAME, &sRuntimePath ) )
-            InstallRuntimes( PRODUCTCODE_X64, sRuntimePath );
+        {
+            if ( !InstallRuntimes( sRuntimePath, false ) )  // cannot probe x64 from a 32 bit process
+                bOk = false;
+        }
         else
-            Log( TEXT( "ERROR: no installer for x64 runtime libraries found!" ) );
+        {
+            Log( TEXT( "ERROR: no installer for x64 runtime libraries found!\r\n" ) );
+            bOk = false;
+        }
 
         if ( sRuntimePath )
         {
@@ -2018,19 +2124,37 @@ boolean SetupAppX::InstallRuntimes()
     }
 
     if ( GetPathToFile( RUNTIME_X86_NAME, &sRuntimePath ) )
-        InstallRuntimes( PRODUCTCODE_X86, sRuntimePath );
+    {
+        if ( !InstallRuntimes( sRuntimePath, true ) )
+            bOk = false;
+    }
     else
-        Log( TEXT( "ERROR: no installer for x86 runtime libraries found!" ) );
+    {
+        Log( TEXT( "ERROR: no installer for x86 runtime libraries found!\r\n" ) );
+        bOk = false;
+    }
 
     if ( sRuntimePath )
         delete [] sRuntimePath;
+
+#endif
+
+    // A failed runtime install used to be swallowed here -- the per-runtime result was
+    // discarded and this returned true regardless.  The office then installed and could
+    // not start, with nothing to point at.  Fail loudly instead.
+    if ( !bOk )
+    {
+        Log( TEXT( "ERROR: the Visual C++ runtime could not be installed.\r\n" ) );
+        SetError( ERROR_RUNTIME_FAILED );
+        return false;
+    }
 
     return true;
 }
 
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
-LanguageDataX::LanguageDataX( LPTSTR pData )
+LanguageData::LanguageData( LPTSTR pData )
 {
     m_nLanguageID = 0;
     m_pTransform = NULL;
@@ -2049,16 +2173,9 @@ LanguageDataX::LanguageDataX( LPTSTR pData )
 }
 
 //--------------------------------------------------------------------------
-LanguageDataX::~LanguageDataX()
+LanguageData::~LanguageData()
 {
     if ( m_pTransform ) delete [] m_pTransform;
-}
-
-//--------------------------------------------------------------------------
-//--------------------------------------------------------------------------
-SetupApp* Create_SetupAppX()
-{
-    return new SetupAppX;
 }
 
 //--------------------------------------------------------------------------

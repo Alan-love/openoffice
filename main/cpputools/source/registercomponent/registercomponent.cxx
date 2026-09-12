@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -193,7 +193,6 @@ struct Options
 };
 
 sal_Bool parseOptions(int ac, char* av[], Options& rOptions, sal_Bool bCmdFile)
-	throw( IllegalArgument )
 {
 	sal_Bool 	ret = sal_True;
 	sal_uInt16	i=0;
@@ -568,7 +567,7 @@ void DoIt::operator() (const OUString & url) throw()
             } else {
                 _xImplRegistration->registerImplementation(_sLoaderName, url, _xReg);
             }
-                    
+
             if ( ! _bSilent )
             {
                 fprintf(stderr, "register component '%s' in registry '%s' successful!\n", sUrl.getStr(), _sRegName.getStr());
@@ -644,7 +643,7 @@ static bool hasService(
 static void bootstrap(
     Options & opt ,
     Reference< XMultiServiceFactory > &xSMgr,
-    Reference< XSimpleRegistry > & reg ) throw ( Exception )
+    Reference< XSimpleRegistry > & reg )
 {
     if( opt.sRegName.equals( opt.sBootRegName2 ) )
     {
@@ -807,7 +806,7 @@ SAL_IMPLEMENT_MAIN_WITH_ARGS(argc, argv)
             urls.push_back(aToken);
         } while ( index >= 0 );
 
-        
+
         OString sRegName = OUStringToOString( aOptions.sRegName, osl_getThreadTextEncoding() );
 		if(aOptions.bRegister || aOptions.bRevoke)
         {
@@ -838,5 +837,3 @@ SAL_IMPLEMENT_MAIN_WITH_ARGS(argc, argv)
 
 	return exitCode;
 }
-
-

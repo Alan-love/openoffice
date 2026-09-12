@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -52,7 +52,7 @@ namespace frm
 	//= helper
 	//====================================================================
     //--------------------------------------------------------------------
-    Any translateExternalDoubleToControlIntValue( 
+    Any translateExternalDoubleToControlIntValue(
         const Any& _rExternalValue, const Reference< XPropertySet >& _rxProperties,
         const ::rtl::OUString& _rMinValueName, const ::rtl::OUString& _rMaxValueName )
     {
@@ -171,7 +171,7 @@ namespace frm
     }
 
     //------------------------------------------------------------------------------
-    void OScrollBarModel::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue ) throw ( Exception )
+    void OScrollBarModel::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue )
     {
 	    switch ( _nHandle )
 	    {
@@ -188,7 +188,6 @@ namespace frm
     //------------------------------------------------------------------------------
     sal_Bool OScrollBarModel::convertFastPropertyValue(
 			    Any& _rConvertedValue, Any& _rOldValue, sal_Int32 _nHandle, const Any& _rValue )
-			    throw ( IllegalArgumentException )
     {
 	    sal_Bool bModified( sal_False );
 	    switch ( _nHandle )
@@ -244,14 +243,13 @@ namespace frm
     }
 
     //--------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL OScrollBarModel::getServiceName() throw( RuntimeException )
+    ::rtl::OUString SAL_CALL OScrollBarModel::getServiceName()
     {
 	    return FRM_SUN_COMPONENT_SCROLLBAR;
     }
 
     //--------------------------------------------------------------------
     void SAL_CALL OScrollBarModel::write( const Reference< XObjectOutputStream >& _rxOutStream )
-	    throw( IOException, RuntimeException )
     {
 	    OBoundControlModel::write( _rxOutStream );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -267,7 +265,7 @@ namespace frm
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL OScrollBarModel::read( const Reference< XObjectInputStream>& _rxInStream ) throw( IOException, RuntimeException )
+    void SAL_CALL OScrollBarModel::read( const Reference< XObjectInputStream>& _rxInStream )
     {
 	    OBoundControlModel::read( _rxInStream );
 	    ::osl::MutexGuard aGuard( m_aMutex );
@@ -292,7 +290,7 @@ namespace frm
     //--------------------------------------------------------------------
     Any OScrollBarModel::translateExternalValueToControlValue( const Any& _rExternalValue ) const
     {
-        return translateExternalDoubleToControlIntValue( _rExternalValue, m_xAggregateSet, 
+        return translateExternalDoubleToControlIntValue( _rExternalValue, m_xAggregateSet,
             ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "ScrollValueMin" ) ),
             ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "ScrollValueMax" ) ) );
     }

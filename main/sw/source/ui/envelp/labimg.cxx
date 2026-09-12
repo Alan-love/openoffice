@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -54,7 +54,7 @@ SwLabItem::SwLabItem() :
     nRows (1),
     nCol  (1),
     nRow  (1),
-    lPaperWidth(0), 
+    lPaperWidth(0),
     lPaperHeight(0)
 {
 	bAddr = bCont = bSynchron = sal_False;
@@ -303,7 +303,7 @@ SwLabCfgItem::SwLabCfgItem(sal_Bool bLabel) :
 
 			if(pValues[nProp].hasValue())
 			{
-				//to have a contiuous switch an offset is added
+				//to have a continuous switch an offset is added
 				if(nProp == 17 && !bIsLabel)
 					nProperty += 3;
                 if(nProperty >= 20)
@@ -430,7 +430,7 @@ void	SwLabCfgItem::Commit()
 	const Type& rType = ::getBooleanCppuType();
 	for(int nProp = 0, nProperty = 0; nProp < aNames.getLength(); nProp++, nProperty++)
 	{
-		//to have a contiuous switch an offset is added
+		//to have a continuous switch an offset is added
 		if(nProp == 17 && !bIsLabel)
 			nProperty += 3;
 		switch(nProperty)
@@ -493,4 +493,3 @@ void	SwLabCfgItem::Commit()
 	}
 	PutProperties(aNames, aValues);
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -102,9 +102,9 @@ Thesaurus::Thesaurus() :
 Thesaurus::~Thesaurus()
 {
 
-    if (aThes) 
+    if (aThes)
     {
-        for (int i = 0; i < numthes; i++) 
+        for (int i = 0; i < numthes; i++)
         {
             if (aThes[i]) delete aThes[i];
             aThes[i] = NULL;
@@ -112,9 +112,9 @@ Thesaurus::~Thesaurus()
         delete[] aThes;
     }
     aThes = NULL;
-    if (aCharSetInfo) 
+    if (aCharSetInfo)
     {
-        for (int i = 0; i < numthes; i++) 
+        for (int i = 0; i < numthes; i++)
         {
             if (aCharSetInfo[i]) delete aCharSetInfo[i];
             aCharSetInfo[i] = NULL;
@@ -150,7 +150,6 @@ PropertyHelper_Thesaurus& Thesaurus::GetPropHelper_Impl()
 
 
 Sequence< Locale > SAL_CALL Thesaurus::getLocales()
-        throw(RuntimeException)
 {
     MutexGuard  aGuard( GetLinguMutex() );
 
@@ -280,7 +279,6 @@ Sequence< Locale > SAL_CALL Thesaurus::getLocales()
 
 
 sal_Bool SAL_CALL Thesaurus::hasLocale(const Locale& rLocale)
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -301,10 +299,9 @@ sal_Bool SAL_CALL Thesaurus::hasLocale(const Locale& rLocale)
 }
 
 
-Sequence < Reference < ::com::sun::star::linguistic2::XMeaning > > SAL_CALL Thesaurus::queryMeanings( 
+Sequence < Reference < ::com::sun::star::linguistic2::XMeaning > > SAL_CALL Thesaurus::queryMeanings(
     const OUString& qTerm, const Locale& rLocale,
     const PropertyValues& rProperties)
-    throw(IllegalArgumentException, RuntimeException)
 {
     MutexGuard      aGuard( GetLinguMutex() );
 
@@ -362,8 +359,8 @@ Sequence < Reference < ::com::sun::star::linguistic2::XMeaning > > SAL_CALL Thes
                 OString aTmpdat(OU2ENC(ndat,osl_getThreadTextEncoding()));
 
 #if defined(WNT)
-                // workaround for Windows specifc problem that the
-                // path length in calls to 'fopen' is limted to somewhat
+                // workaround for Windows specific problem that the
+                // path length in calls to 'fopen' is limited to somewhat
                 // about 120+ characters which will usually be exceed when
                 // using dictionaries as extensions.
                 aTmpidx = Win_GetShortPathName( nidx );
@@ -390,7 +387,7 @@ Sequence < Reference < ::com::sun::star::linguistic2::XMeaning > > SAL_CALL Thes
     DBG_ASSERT( eEnc != RTL_TEXTENCODING_DONTKNOW, "failed to get text encoding! (maybe incorrect encoding string in file)" );
     if (eEnc == RTL_TEXTENCODING_DONTKNOW)
         return noMeanings;
-    
+
     while (pTH)
     {
         // convert word to all lower case for searching
@@ -463,7 +460,7 @@ Sequence < Reference < ::com::sun::star::linguistic2::XMeaning > > SAL_CALL Thes
                     }
                     if (catpos2)
                         sTerm = catst2 + sTerm;
- 
+
                     sal_uInt16 ct1 = capitalType(sTerm, pCC);
                     if (CAPTYPE_MIXED == ct1)
                         ct = ct1;
@@ -564,7 +561,6 @@ Sequence < Reference < ::com::sun::star::linguistic2::XMeaning > > SAL_CALL Thes
 
 Reference< XInterface > SAL_CALL Thesaurus_CreateInstance(
             const Reference< XMultiServiceFactory > & /*rSMgr*/ )
-		throw(Exception)
 {
 	Reference< XInterface > xService = (cppu::OWeakObject*) new Thesaurus;
 	return xService;
@@ -572,7 +568,6 @@ Reference< XInterface > SAL_CALL Thesaurus_CreateInstance(
 
 
 OUString SAL_CALL Thesaurus::getServiceDisplayName( const Locale& /*rLocale*/ )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return A2OU( "New Thesaurus" );
@@ -580,7 +575,6 @@ OUString SAL_CALL Thesaurus::getServiceDisplayName( const Locale& /*rLocale*/ )
 
 
 void SAL_CALL Thesaurus::initialize( const Sequence< Any >& rArguments )
-		throw(Exception, RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -609,19 +603,19 @@ void SAL_CALL Thesaurus::initialize( const Sequence< Any >& rArguments )
 sal_uInt16 SAL_CALL Thesaurus::capitalType(const OUString& aTerm, CharClass * pCC)
 {
         sal_Int32 tlen = aTerm.getLength();
-        if ((pCC) && (tlen)) 
+        if ((pCC) && (tlen))
         {
             String aStr(aTerm);
             sal_Int32 nc = 0;
-            for (sal_uInt16 tindex = 0; tindex < tlen;  tindex++) 
+            for (sal_uInt16 tindex = 0; tindex < tlen;  tindex++)
             {
                 if (pCC->getCharacterType(aStr,tindex) &
                    ::com::sun::star::i18n::KCharacterType::UPPER) nc++;
             }
 
-            if (nc == 0) 
+            if (nc == 0)
                 return (sal_uInt16) CAPTYPE_NOCAP;
-            if (nc == tlen) 
+            if (nc == tlen)
                 return (sal_uInt16) CAPTYPE_ALLCAP;
             if ((nc == 1) && (pCC->getCharacterType(aStr,0) &
                   ::com::sun::star::i18n::KCharacterType::UPPER))
@@ -670,7 +664,6 @@ OUString SAL_CALL Thesaurus::makeInitCap(const OUString& aTerm, CharClass * pCC)
 
 
 void SAL_CALL Thesaurus::dispose()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -684,7 +677,6 @@ void SAL_CALL Thesaurus::dispose()
 
 
 void SAL_CALL Thesaurus::addEventListener( const Reference< XEventListener >& rxListener )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -694,7 +686,6 @@ void SAL_CALL Thesaurus::addEventListener( const Reference< XEventListener >& rx
 
 
 void SAL_CALL Thesaurus::removeEventListener( const Reference< XEventListener >& rxListener )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -708,7 +699,6 @@ void SAL_CALL Thesaurus::removeEventListener( const Reference< XEventListener >&
 //
 
 OUString SAL_CALL Thesaurus::getImplementationName()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return getImplementationName_Static();
@@ -716,7 +706,6 @@ OUString SAL_CALL Thesaurus::getImplementationName()
 
 
 sal_Bool SAL_CALL Thesaurus::supportsService( const OUString& ServiceName )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -730,7 +719,6 @@ sal_Bool SAL_CALL Thesaurus::supportsService( const OUString& ServiceName )
 
 
 Sequence< OUString > SAL_CALL Thesaurus::getSupportedServiceNames()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return getSupportedServiceNames_Static();

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -148,8 +148,6 @@ Reference< XDispatch > SAL_CALL HelpInterceptor_Impl::queryDispatch(
 
 	const URL& aURL, const ::rtl::OUString& aTargetFrameName, sal_Int32 nSearchFlags )
 
-	throw( RuntimeException )
-
 {
 	Reference< XDispatch > xResult;
 	if ( m_xSlaveDispatcher.is() )
@@ -175,8 +173,6 @@ Sequence < Reference < XDispatch > > SAL_CALL HelpInterceptor_Impl::queryDispatc
 
 	const Sequence< DispatchDescriptor >& aDescripts )
 
-	throw( RuntimeException )
-
 {
 	Sequence< Reference< XDispatch > > aReturn( aDescripts.getLength() );
 	Reference< XDispatch >* pReturn = aReturn.getArray();
@@ -193,8 +189,6 @@ Sequence < Reference < XDispatch > > SAL_CALL HelpInterceptor_Impl::queryDispatc
 
 Reference< XDispatchProvider > SAL_CALL HelpInterceptor_Impl::getSlaveDispatchProvider()
 
-	throw( RuntimeException )
-
 {
 	return m_xSlaveDispatcher;
 }
@@ -202,8 +196,6 @@ Reference< XDispatchProvider > SAL_CALL HelpInterceptor_Impl::getSlaveDispatchPr
 // -----------------------------------------------------------------------
 
 void SAL_CALL HelpInterceptor_Impl::setSlaveDispatchProvider( const Reference< XDispatchProvider >& xNewSlave )
-
-	throw( RuntimeException )
 
 {
 	m_xSlaveDispatcher = xNewSlave;
@@ -213,8 +205,6 @@ void SAL_CALL HelpInterceptor_Impl::setSlaveDispatchProvider( const Reference< X
 
 Reference< XDispatchProvider > SAL_CALL HelpInterceptor_Impl::getMasterDispatchProvider()
 
-	throw( RuntimeException )
-
 {
 	return m_xMasterDispatcher;
 }
@@ -222,8 +212,6 @@ Reference< XDispatchProvider > SAL_CALL HelpInterceptor_Impl::getMasterDispatchP
 // -----------------------------------------------------------------------
 
 void SAL_CALL HelpInterceptor_Impl::setMasterDispatchProvider( const Reference< XDispatchProvider >& xNewMaster )
-
-	throw( RuntimeException )
 
 {
 	m_xMasterDispatcher = xNewMaster;
@@ -234,19 +222,17 @@ void SAL_CALL HelpInterceptor_Impl::setMasterDispatchProvider( const Reference< 
 
 Sequence< ::rtl::OUString > SAL_CALL HelpInterceptor_Impl::getInterceptedURLs()
 
-	throw( RuntimeException )
-
 {
 	Sequence< ::rtl::OUString > aURLList( 1 );
 	aURLList[0] = DEFINE_CONST_UNICODE("vnd.sun.star.help://*");
-	return aURLList;;
+	return aURLList;
 }
 
 // -----------------------------------------------------------------------
 // XDispatch
 
 void SAL_CALL HelpInterceptor_Impl::dispatch(
-	const URL& aURL, const Sequence< ::com::sun::star::beans::PropertyValue >& ) throw( RuntimeException )
+	const URL& aURL, const Sequence< ::com::sun::star::beans::PropertyValue >& )
 {
 	sal_Bool bBack = ( String( DEFINE_CONST_UNICODE(".uno:Backward") ) == String( aURL.Complete ) );
 	if ( bBack || String( DEFINE_CONST_UNICODE(".uno:Forward") ) == String( aURL.Complete ) )
@@ -264,7 +250,7 @@ void SAL_CALL HelpInterceptor_Impl::dispatch(
 					m_pHistory->GetObject(m_nCurPos)->aViewData = xController->getViewData();
 				}
 			}
-			
+
 			sal_uIntPtr nPos = ( bBack && m_nCurPos > 0 ) ? --m_nCurPos
 													: ( !bBack && m_nCurPos < m_pHistory->Count() - 1 )
 													? ++m_nCurPos
@@ -285,7 +271,7 @@ void SAL_CALL HelpInterceptor_Impl::dispatch(
 // -----------------------------------------------------------------------
 
 void SAL_CALL HelpInterceptor_Impl::addStatusListener(
-	const Reference< XStatusListener >& xControl, const URL& ) throw( RuntimeException )
+	const Reference< XStatusListener >& xControl, const URL& )
 {
 	DBG_ASSERT( !m_xListener.is(), "listener already exists" );
 	m_xListener = xControl;
@@ -294,7 +280,7 @@ void SAL_CALL HelpInterceptor_Impl::addStatusListener(
 // -----------------------------------------------------------------------
 
 void SAL_CALL HelpInterceptor_Impl::removeStatusListener(
-	const Reference< XStatusListener >&, const URL&) throw( RuntimeException )
+	const Reference< XStatusListener >&, const URL&)
 {
 	m_xListener = 0;
 }
@@ -311,8 +297,6 @@ HelpListener_Impl::HelpListener_Impl( HelpInterceptor_Impl* pInter )
 
 void SAL_CALL HelpListener_Impl::statusChanged( const ::com::sun::star::frame::FeatureStateEvent& Event )
 
-	throw( ::com::sun::star::uno::RuntimeException )
-
 {
 	INetURLObject aObj( Event.FeatureURL.Complete );
 	aFactory = aObj.GetHost();
@@ -322,8 +306,6 @@ void SAL_CALL HelpListener_Impl::statusChanged( const ::com::sun::star::frame::F
 // -----------------------------------------------------------------------
 
 void SAL_CALL HelpListener_Impl::disposing( const ::com::sun::star::lang::EventObject& )
-
-	throw( ::com::sun::star::uno::RuntimeException )
 
 {
     pInterceptor->removeStatusListener( this, ::com::sun::star::util::URL() );
@@ -349,14 +331,14 @@ HelpStatusListener_Impl::~HelpStatusListener_Impl()
 
   -----------------------------------------------------------------------*/
 void HelpStatusListener_Impl::statusChanged(
-    const FeatureStateEvent& rEvent ) throw( RuntimeException )
+    const FeatureStateEvent& rEvent )
 {
     aStateEvent = rEvent;
 }
 /*-- 05.09.2002 12:18:00---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-void HelpStatusListener_Impl::disposing( const EventObject& ) throw( RuntimeException )
+void HelpStatusListener_Impl::disposing( const EventObject& )
 {
     xDispatch->removeStatusListener(this, com::sun::star::util::URL());
     xDispatch = 0;

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -184,7 +184,7 @@ namespace pcr
     IMPLEMENT_FORWARD_XTYPEPROVIDER2( ImplInspectorModel, ImplInspectorModel_Base, ImplInspectorModel_PBase )
 
     //--------------------------------------------------------------------
-    Reference< XPropertySetInfo > SAL_CALL ImplInspectorModel::getPropertySetInfo(  ) throw (RuntimeException)
+    Reference< XPropertySetInfo > SAL_CALL ImplInspectorModel::getPropertySetInfo(  )
     {
         return m_pProperties->getPropertySetInfo();
     }
@@ -196,17 +196,17 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    sal_Bool SAL_CALL ImplInspectorModel::convertFastPropertyValue( Any & rConvertedValue, Any & rOldValue, sal_Int32 nHandle, const Any& rValue ) throw (IllegalArgumentException)
+    sal_Bool SAL_CALL ImplInspectorModel::convertFastPropertyValue( Any & rConvertedValue, Any & rOldValue, sal_Int32 nHandle, const Any& rValue )
     {
         return m_pProperties->convertFastPropertyValue( rConvertedValue, rOldValue, nHandle, rValue );
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL ImplInspectorModel::setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any& rValue ) throw (Exception)
+    void SAL_CALL ImplInspectorModel::setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any& rValue )
     {
         m_pProperties->setFastPropertyValue( nHandle, rValue );
     }
-    
+
     //--------------------------------------------------------------------
     void SAL_CALL ImplInspectorModel::getFastPropertyValue( Any& rValue, sal_Int32 nHandle ) const
     {
@@ -214,37 +214,37 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    ::sal_Bool SAL_CALL ImplInspectorModel::getHasHelpSection() throw (RuntimeException)
+    ::sal_Bool SAL_CALL ImplInspectorModel::getHasHelpSection()
     {
         return m_pProperties->hasHelpSection();
     }
-    
+
     //--------------------------------------------------------------------
-    ::sal_Int32 SAL_CALL ImplInspectorModel::getMinHelpTextLines() throw (RuntimeException)
+    ::sal_Int32 SAL_CALL ImplInspectorModel::getMinHelpTextLines()
     {
         return m_pProperties->getMinHelpTextLines();
     }
-    
+
     //--------------------------------------------------------------------
-    ::sal_Int32 SAL_CALL ImplInspectorModel::getMaxHelpTextLines() throw (RuntimeException)
+    ::sal_Int32 SAL_CALL ImplInspectorModel::getMaxHelpTextLines()
     {
         return m_pProperties->getMaxHelpTextLines();
     }
 
     //--------------------------------------------------------------------
-    ::sal_Bool SAL_CALL ImplInspectorModel::getIsReadOnly() throw (::com::sun::star::uno::RuntimeException)
+    ::sal_Bool SAL_CALL ImplInspectorModel::getIsReadOnly()
     {
         return m_pProperties->isReadOnly();
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL ImplInspectorModel::setIsReadOnly( ::sal_Bool _IsReadOnly ) throw (::com::sun::star::uno::RuntimeException)
+    void SAL_CALL ImplInspectorModel::setIsReadOnly( ::sal_Bool _IsReadOnly )
     {
         setFastPropertyValue( MODEL_PROPERTY_ID_IS_READ_ONLY, makeAny( _IsReadOnly ) );
     }
 
     //--------------------------------------------------------------------
-    ::sal_Bool SAL_CALL ImplInspectorModel::supportsService( const ::rtl::OUString& ServiceName ) throw (RuntimeException)
+    ::sal_Bool SAL_CALL ImplInspectorModel::supportsService( const ::rtl::OUString& ServiceName )
     {
 		StlSyntaxSequence< ::rtl::OUString > aSupported( getSupportedServiceNames() );
         for (   StlSyntaxSequence< ::rtl::OUString >::const_iterator check = aSupported.begin();

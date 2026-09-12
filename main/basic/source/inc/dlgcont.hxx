@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -44,22 +44,21 @@ class SfxDialogLibraryContainer : public SfxLibraryContainer
 	// Methods to distinguish between different library types
 	virtual SfxLibrary* SAL_CALL implCreateLibrary( const ::rtl::OUString& aName );
     virtual SfxLibrary* SAL_CALL implCreateLibraryLink
-		( const ::rtl::OUString& aName, const ::rtl::OUString& aLibInfoFileURL, 
+		( const ::rtl::OUString& aName, const ::rtl::OUString& aLibInfoFileURL,
           const ::rtl::OUString& StorageURL, sal_Bool ReadOnly );
 	virtual ::com::sun::star::uno::Any SAL_CALL createEmptyLibraryElement( void );
 	virtual bool SAL_CALL isLibraryElementValid( ::com::sun::star::uno::Any aElement ) const;
 	virtual void SAL_CALL writeLibraryElement
-	( 
+	(
 		const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameContainer>& xLibrary,
-		const ::rtl::OUString& aElementName, 
-		const ::com::sun::star::uno::Reference< ::com::sun::star::io::XOutputStream >& xOutput 
-	)
-		throw(::com::sun::star::uno::Exception);
+		const ::rtl::OUString& aElementName,
+		const ::com::sun::star::uno::Reference< ::com::sun::star::io::XOutputStream >& xOutput
+	);
 
 	virtual ::com::sun::star::uno::Any SAL_CALL importLibraryElement
-	( 
+	(
 		const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameContainer>& xLibrary,
-		const ::rtl::OUString& aElementName, 
+		const ::rtl::OUString& aElementName,
 		const ::rtl::OUString& aFile,
 		const ::com::sun::star::uno::Reference< ::com::sun::star::io::XInputStream >& xElementStream );
 
@@ -80,25 +79,21 @@ public:
 
     // Methods XStorageBasedLibraryContainer
     virtual void SAL_CALL storeLibrariesToStorage(
-        const ::com::sun::star::uno::Reference< ::com::sun::star::embed::XStorage >& RootStorage )
-            throw (::com::sun::star::uno::RuntimeException);
+        const ::com::sun::star::uno::Reference< ::com::sun::star::embed::XStorage >& RootStorage );
 
 	// Resource handling
-    ::com::sun::star::uno::Reference< ::com::sun::star::resource::XStringResourcePersistence > 
+    ::com::sun::star::uno::Reference< ::com::sun::star::resource::XStringResourcePersistence >
 		implCreateStringResource( class SfxDialogLibrary* pDialog );
 
     // Methods XServiceInfo
-    virtual ::rtl::OUString SAL_CALL getImplementationName( )
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames( )
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getImplementationName( );
+    virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames( );
 
     // Service
 	static ::com::sun::star::uno::Sequence< ::rtl::OUString > getSupportedServiceNames_static();
 	static ::rtl::OUString getImplementationName_static();
 	static ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface > SAL_CALL Create
-        ( const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext >& xServiceManager ) 
-            throw( ::com::sun::star::uno::Exception );
+        ( const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext >& xServiceManager );
 };
 
 //============================================================================
@@ -147,13 +142,13 @@ public:
     DECLARE_XTYPEPROVIDER()
 
 	// XStringResourceSupplier
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::resource::XStringResourceResolver > 
-		SAL_CALL getStringResource(  ) throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::resource::XStringResourceResolver >
+		SAL_CALL getStringResource(  );
 
 	::rtl::OUString getName( void )
 		{ return m_aName; }
 
-	::com::sun::star::uno::Reference< ::com::sun::star::resource::XStringResourcePersistence > 
+	::com::sun::star::uno::Reference< ::com::sun::star::resource::XStringResourcePersistence >
 		getStringResourcePersistence( void )
 	{
 		return m_xStringResourcePersistence;
@@ -168,4 +163,3 @@ protected:
 }   // namespace basic
 
 #endif
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -25,7 +25,7 @@
 #include "precompiled_xmlsecurity.hxx"
 #include <sal/config.h>
 #include <rtl/uuid.h>
-#include <rtl/ustring.hxx> 
+#include <rtl/ustring.hxx>
 #include <com/sun/star/security/ExtAltNameType.hpp>
 #include <com/sun/star/security/CertAltNameEntry.hpp>
 #include <com/sun/star/beans/NamedValue.hpp>
@@ -55,23 +55,23 @@ SanExtensionImpl :: ~SanExtensionImpl() {
 
 
 //Methods from XCertificateExtension
-sal_Bool SAL_CALL SanExtensionImpl :: isCritical() throw( ::com::sun::star::uno::RuntimeException ) {
+sal_Bool SAL_CALL SanExtensionImpl :: isCritical() {
 	return m_critical ;
 }
 
-::com::sun::star::uno::Sequence< sal_Int8 > SAL_CALL SanExtensionImpl :: getExtensionId() throw( ::com::sun::star::uno::RuntimeException ) {
+::com::sun::star::uno::Sequence< sal_Int8 > SAL_CALL SanExtensionImpl :: getExtensionId() {
 	return m_xExtnId ;
 }
 
-::com::sun::star::uno::Sequence< sal_Int8 > SAL_CALL SanExtensionImpl :: getExtensionValue() throw( ::com::sun::star::uno::RuntimeException ) {
+::com::sun::star::uno::Sequence< sal_Int8 > SAL_CALL SanExtensionImpl :: getExtensionValue() {
 	return m_xExtnValue ;
 }
 
 //Methods from XSanExtension
-::com::sun::star::uno::Sequence< com::sun::star::security::CertAltNameEntry > SAL_CALL SanExtensionImpl :: getAlternativeNames() throw( ::com::sun::star::uno::RuntimeException ){
-    
+::com::sun::star::uno::Sequence< com::sun::star::security::CertAltNameEntry > SAL_CALL SanExtensionImpl :: getAlternativeNames(){
+
     if (!m_Entries.hasElements())
-    {   
+    {
         CERT_ALT_NAME_INFO *subjectName;
         DWORD size;
         CryptDecodeObjectEx(X509_ASN_ENCODING, X509_ALTERNATE_NAME, (unsigned char*) m_xExtnValue.getArray(), m_xExtnValue.getLength(), CRYPT_DECODE_ALLOC_FLAG | CRYPT_DECODE_NOCOPY_FLAG, NULL,&subjectName, &size);
@@ -82,7 +82,7 @@ sal_Bool SAL_CALL SanExtensionImpl :: isCritical() throw( ::com::sun::star::uno:
           PCERT_ALT_NAME_ENTRY pEntry = &subjectName->rgAltEntry[i];
 
           switch(pEntry->dwAltNameChoice) {
-            case CERT_ALT_NAME_OTHER_NAME : 
+            case CERT_ALT_NAME_OTHER_NAME :
                 {
                     arrCertAltNameEntry[i].Type = ExtAltNameType_OTHER_NAME;
                     PCERT_OTHER_NAME pOtherName = pEntry->pOtherName;
@@ -93,7 +93,7 @@ sal_Bool SAL_CALL SanExtensionImpl :: isCritical() throw( ::com::sun::star::uno:
                     Sequence< sal_Int8 > otherName( pOtherName->Value.cbData ) ;
 		            for( unsigned int n = 0; n < (unsigned int) pOtherName->Value.cbData ; n ++ )
 			            otherName[n] = *( pOtherName->Value.pbData + n ) ;
-                    
+
                     otherNameProp.Value <<= otherName;
 
                     arrCertAltNameEntry[i].Value <<= otherNameProp;
@@ -119,7 +119,7 @@ sal_Bool SAL_CALL SanExtensionImpl :: isCritical() throw( ::com::sun::star::uno:
             case CERT_ALT_NAME_IP_ADDRESS :
                 {
                     arrCertAltNameEntry[i].Type = ExtAltNameType_IP_ADDRESS;
-                    
+
                     Sequence< sal_Int8 > ipAddress( pEntry->IPAddress.cbData ) ;
 		            for( unsigned int n = 0; n < pEntry->IPAddress.cbData ; n ++ )
 			            ipAddress[n] = *( pEntry->IPAddress.pbData + n ) ;
@@ -133,7 +133,7 @@ sal_Bool SAL_CALL SanExtensionImpl :: isCritical() throw( ::com::sun::star::uno:
                 break;
           }
         }
-        m_Entries = ::comphelper::arrayToSequence< com::sun::star::security::CertAltNameEntry >(arrCertAltNameEntry, subjectName->cAltEntry);        
+        m_Entries = ::comphelper::arrayToSequence< com::sun::star::security::CertAltNameEntry >(arrCertAltNameEntry, subjectName->cAltEntry);
 
         delete [] arrCertAltNameEntry;
     }
@@ -175,4 +175,3 @@ void SanExtensionImpl :: setCertExtn( unsigned char* value, unsigned int vlen, u
 
 void SanExtensionImpl :: extractCertExt () {
 }
-

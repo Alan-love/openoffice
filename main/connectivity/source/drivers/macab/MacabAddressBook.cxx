@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_macabdrv1.hxx"
 
 #include "MacabAddressBook.hxx"
 #include "MacabRecords.hxx"
@@ -46,7 +46,7 @@ MacabAddressBook::MacabAddressBook( )
 	m_xMacabRecords = NULL;
 	m_bRetrievedGroups = sal_False;
 }
-		
+
 // -----------------------------------------------------------------------------
 MacabAddressBook::~MacabAddressBook()
 {
@@ -67,7 +67,7 @@ MacabAddressBook::~MacabAddressBook()
 
 	m_bRetrievedGroups = sal_False;
 }
-		
+
 // -----------------------------------------------------------------------------
 /* Get the address book's default table name. This is the table name that
  * refers to the table containing _all_ records in the address book.
@@ -249,4 +249,3 @@ void MacabAddressBook::manageDuplicateGroups(::std::vector<MacabGroup *> _xGroup
 		}
 	}
 }
-

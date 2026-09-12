@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_dbtools.hxx"
 #include "connectivity/TIndexes.hxx"
 #include "connectivity/TIndex.hxx"
 #include <com/sun/star/sdbc/XRow.hpp>
@@ -48,7 +48,7 @@ typedef connectivity::sdbcx::OCollection OCollection_TYPE;
 OIndexesHelper::OIndexesHelper(OTableHelper* _pTable,
 				 ::osl::Mutex& _rMutex,
 			 const ::std::vector< ::rtl::OUString> &_rVector
-			 ) 
+			 )
 	: OCollection(*_pTable,sal_True,_rMutex,_rVector)
 	,m_pTable(_pTable)
 {
@@ -71,7 +71,7 @@ sdbcx::ObjectType OIndexesHelper::createObject(const ::rtl::OUString& _rName)
 	}
 	else
 		aName		= _rName;
-	
+
 	::dbtools::OPropertyMap& rPropMap = OMetaConnection::getPropMap();
 	::rtl::OUString aSchema,aTable;
 	m_pTable->getPropertyValue(rPropMap.getNameByIndex(PROPERTY_ID_SCHEMANAME))	>>= aSchema;
@@ -117,7 +117,7 @@ sdbcx::ObjectType OIndexesHelper::createObject(const ::rtl::OUString& _rName)
 	return xRet;
 }
 // -------------------------------------------------------------------------
-void OIndexesHelper::impl_refresh() throw(RuntimeException)
+void OIndexesHelper::impl_refresh()
 {
 	m_pTable->refreshIndexes();
 }
@@ -151,11 +151,11 @@ sdbcx::ObjectType OIndexesHelper::appendObject( const ::rtl::OUString& _rForName
 		    aSql.appendAscii("UNIQUE ");
 	    aSql.appendAscii("INDEX ");
 
-    	
+
 	    ::rtl::OUString aCatalog,aSchema,aTable;
 	    dbtools::qualifiedNameComponents(m_pTable->getMetaData(),m_pTable->getName(),aCatalog,aSchema,aTable,::dbtools::eInDataManipulation);
 	    ::rtl::OUString aComposedName;
-    	
+
 	    aComposedName = dbtools::composeTableName(m_pTable->getMetaData(),aCatalog,aSchema,aTable,sal_True,::dbtools::eInIndexDefinitions);
 	    if ( _rForName.getLength() )
 	    {
@@ -173,12 +173,12 @@ sdbcx::ObjectType OIndexesHelper::appendObject( const ::rtl::OUString& _rForName
 		    {
                 xColProp.set(xColumns->getByIndex(i),UNO_QUERY);
 			    aSql.append(::dbtools::quoteName( aQuote,comphelper::getString(xColProp->getPropertyValue(rPropMap.getNameByIndex(PROPERTY_ID_NAME)))));
-    			
-			    if ( bAddIndexAppendix )
-			    {				
 
-				    aSql.appendAscii(any2bool(xColProp->getPropertyValue(rPropMap.getNameByIndex(PROPERTY_ID_ISASCENDING))) 
-											    ? 
+			    if ( bAddIndexAppendix )
+			    {
+
+				    aSql.appendAscii(any2bool(xColProp->getPropertyValue(rPropMap.getNameByIndex(PROPERTY_ID_ISASCENDING)))
+											    ?
 								    " ASC"
 											    :
 								    " DESC");
@@ -253,6 +253,3 @@ void OIndexesHelper::dropObject(sal_Int32 /*_nPos*/,const ::rtl::OUString _sElem
 	}
 }
 // -----------------------------------------------------------------------------
-
-
-

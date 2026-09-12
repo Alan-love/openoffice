@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -51,7 +51,7 @@ using namespace ::com::sun::star;
 static const sal_Int32 DEFAULT_BODY_DISTANCE = 500;
 
 SwVbaView::SwVbaView( const uno::Reference< ooo::vba::XHelperInterface >& rParent, const uno::Reference< uno::XComponentContext >& rContext,
-    const uno::Reference< frame::XModel >& rModel ) throw ( uno::RuntimeException ) :
+    const uno::Reference< frame::XModel >& rModel ) :
     SwVbaView_BASE( rParent, rContext ), mxModel( rModel )
 {
     uno::Reference< frame::XController > xController = mxModel->getCurrentController();
@@ -67,8 +67,8 @@ SwVbaView::~SwVbaView()
 {
 }
 
-::sal_Int32 SAL_CALL 
-SwVbaView::getSeekView() throw (css::uno::RuntimeException)
+::sal_Int32 SAL_CALL
+SwVbaView::getSeekView()
 {
     // FIXME: if the view cursor is in table, field, section and frame
     // handle if the cursor is in table
@@ -118,8 +118,8 @@ SwVbaView::getSeekView() throw (css::uno::RuntimeException)
     return word::WdSeekView::wdSeekMainDocument;
 }
 
-void SAL_CALL 
-SwVbaView::setSeekView( ::sal_Int32 _seekview ) throw (css::uno::RuntimeException)
+void SAL_CALL
+SwVbaView::setSeekView( ::sal_Int32 _seekview )
 {
     // FIXME: save the current cursor position, if the cursor is in the main
     // document, so we can jump back to this position, if the macro sets
@@ -183,34 +183,34 @@ SwVbaView::setSeekView( ::sal_Int32 _seekview ) throw (css::uno::RuntimeExceptio
     }
 }
 
-::sal_Int32 SAL_CALL 
-SwVbaView::getSplitSpecial() throw (css::uno::RuntimeException)
+::sal_Int32 SAL_CALL
+SwVbaView::getSplitSpecial()
 {
     return word::WdSpecialPane::wdPaneNone;
 }
 
-void SAL_CALL 
-SwVbaView::setSplitSpecial( ::sal_Int32/* _splitspecial */) throw (css::uno::RuntimeException)
+void SAL_CALL
+SwVbaView::setSplitSpecial( ::sal_Int32/* _splitspecial */)
 {
     // not support in Writer
 }
 
-::sal_Bool SAL_CALL 
-SwVbaView::getTableGridLines() throw (css::uno::RuntimeException)
+::sal_Bool SAL_CALL
+SwVbaView::getTableGridLines()
 {
     sal_Bool bShowTableGridLine = sal_False;
     mxViewSettings->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ShowTableBoundaries"))) >>= bShowTableGridLine;
     return bShowTableGridLine;
 }
 
-void SAL_CALL 
-SwVbaView::setTableGridLines( ::sal_Bool _tablegridlines ) throw (css::uno::RuntimeException)
+void SAL_CALL
+SwVbaView::setTableGridLines( ::sal_Bool _tablegridlines )
 {
     mxViewSettings->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ShowTableBoundaries")), uno::makeAny( _tablegridlines ) );
 }
 
-::sal_Int32 SAL_CALL 
-SwVbaView::getType() throw (css::uno::RuntimeException)
+::sal_Int32 SAL_CALL
+SwVbaView::getType()
 {
     // FIXME: handle wdPrintPreview type
     sal_Bool bOnlineLayout = sal_False;
@@ -218,8 +218,8 @@ SwVbaView::getType() throw (css::uno::RuntimeException)
     return bOnlineLayout ? word::WdViewType::wdWebView : word::WdViewType::wdPrintView;
 }
 
-void SAL_CALL 
-SwVbaView::setType( ::sal_Int32 _type ) throw (css::uno::RuntimeException)
+void SAL_CALL
+SwVbaView::setType( ::sal_Int32 _type )
 {
     // FIXME: handle wdPrintPreview type
     switch( _type )
@@ -237,16 +237,16 @@ SwVbaView::setType( ::sal_Int32 _type ) throw (css::uno::RuntimeException)
         }
         case word::WdViewType::wdPrintPreview:
         {
-            PrintPreviewHelper( uno::Any(),word::getView( mxModel ) ); 
+            PrintPreviewHelper( uno::Any(),word::getView( mxModel ) );
             break;
         }
         default:
             DebugHelper::exception( SbERR_NOT_IMPLEMENTED, rtl::OUString() );
-            
+
     }
 }
 
-uno::Reference< text::XTextRange > SwVbaView::getHFTextRange( sal_Int32 nType ) throw (uno::RuntimeException)
+uno::Reference< text::XTextRange > SwVbaView::getHFTextRange( sal_Int32 nType )
 {
     mxModel->lockControllers();
 
@@ -254,7 +254,7 @@ uno::Reference< text::XTextRange > SwVbaView::getHFTextRange( sal_Int32 nType ) 
     rtl::OUString aPropIsShared;
     rtl::OUString aPropBodyDistance;
     rtl::OUString aPropText;
-    
+
     switch( nType )
     {
         case word::WdSeekView::wdSeekCurrentPageFooter:
@@ -282,7 +282,7 @@ uno::Reference< text::XTextRange > SwVbaView::getHFTextRange( sal_Int32 nType ) 
     }
 
     uno::Reference< text::XPageCursor > xPageCursor( mxViewCursor, uno::UNO_QUERY_THROW );
-    
+
     if( nType == word::WdSeekView::wdSeekFirstPageFooter
         || nType == word::WdSeekView::wdSeekFirstPageHeader )
     {
@@ -325,12 +325,12 @@ uno::Reference< text::XTextRange > SwVbaView::getHFTextRange( sal_Int32 nType ) 
                     DebugHelper::exception( SbERR_BAD_ACTION, rtl::OUString() );
             }
             break;
-        }    
+        }
         default:
         {
             break;
         }
-    }    
+    }
 
     xStyle = word::getCurrentPageStyle( mxModel );
     uno::Reference< beans::XPropertySet > xPageProps( xStyle, uno::UNO_QUERY_THROW );
@@ -376,9 +376,9 @@ uno::Reference< text::XTextRange > SwVbaView::getHFTextRange( sal_Int32 nType ) 
     return xTextRange;
 }
 
-uno::Reference< text::XTextRange > SwVbaView::getFirstObjectPosition( const uno::Reference< text::XText >& xText ) throw (uno::RuntimeException)
+uno::Reference< text::XTextRange > SwVbaView::getFirstObjectPosition( const uno::Reference< text::XText >& xText )
 {
-    // if the first object is table, get the position of first cell 
+    // if the first object is table, get the position of first cell
     uno::Reference< text::XTextRange > xTextRange;
     uno::Reference< container::XEnumerationAccess > xParaAccess( xText, uno::UNO_QUERY_THROW );
     uno::Reference< container::XEnumeration> xParaEnum = xParaAccess->createEnumeration();
@@ -397,14 +397,14 @@ uno::Reference< text::XTextRange > SwVbaView::getFirstObjectPosition( const uno:
     return xTextRange;
 }
 
-rtl::OUString& 
+rtl::OUString&
 SwVbaView::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("SwVbaView") );
 	return sImplName;
 }
 
-uno::Sequence< rtl::OUString > 
+uno::Sequence< rtl::OUString >
 SwVbaView::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > aServiceNames;
@@ -415,4 +415,3 @@ SwVbaView::getServiceNames()
 	}
 	return aServiceNames;
 }
-

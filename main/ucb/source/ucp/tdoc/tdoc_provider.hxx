@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -84,17 +84,13 @@ public:
 	virtual com::sun::star::uno::Reference<
 				com::sun::star::ucb::XContent > SAL_CALL
 	queryContent( const com::sun::star::uno::Reference<
-					com::sun::star::ucb::XContentIdentifier >& Identifier )
-		throw( com::sun::star::ucb::IllegalIdentifierException,
-			   com::sun::star::uno::RuntimeException );
+					com::sun::star::ucb::XContentIdentifier >& Identifier );
 
     // XTransientDocumentsDocumentContentFactory
     virtual com::sun::star::uno::Reference<
         com::sun::star::ucb::XContent > SAL_CALL
     createDocumentContent( const ::com::sun::star::uno::Reference<
-                                com::sun::star::frame::XModel >& Model )
-        throw ( com::sun::star::lang::IllegalArgumentException,
-                com::sun::star::uno::RuntimeException );
+                                com::sun::star::frame::XModel >& Model );
 
     // Non-UNO interfaces
     com::sun::star::uno::Reference< com::sun::star::embed::XStorage >
@@ -105,20 +101,17 @@ public:
 
     com::sun::star::uno::Reference< com::sun::star::io::XInputStream >
     queryInputStream( const rtl::OUString & rUri,
-                      const rtl::OUString & rPassword ) const
-        throw ( com::sun::star::packages::WrongPasswordException );
+                      const rtl::OUString & rPassword ) const;
 
     com::sun::star::uno::Reference< com::sun::star::io::XOutputStream >
     queryOutputStream( const rtl::OUString & rUri,
                        const rtl::OUString & rPassword,
-                       bool bTruncate ) const
-        throw ( com::sun::star::packages::WrongPasswordException );
+                       bool bTruncate ) const;
 
     com::sun::star::uno::Reference< com::sun::star::io::XStream >
     queryStream( const rtl::OUString & rUri,
                  const rtl::OUString & rPassword,
-                 bool bTruncate ) const
-        throw ( com::sun::star::packages::WrongPasswordException );
+                 bool bTruncate ) const;
 
     bool queryNamesOfChildren(
         const rtl::OUString & rUri,

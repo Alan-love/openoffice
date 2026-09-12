@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -62,20 +62,9 @@ PyRef ustring2PyUnicode( const OUString & str )
 {
     PyRef ret;
 
-#if Py_UNICODE_SIZE == 2
-    // YD force conversion since python/2 uses wchar_t
-    ret = PyRef( PyUnicode_FromUnicode( (const Py_UNICODE*)str.getStr(), str.getLength() ), SAL_NO_ACQUIRE );
-#else
     OString sUtf8(OUStringToOString(str, RTL_TEXTENCODING_UTF8));
     ret = PyRef( PyUnicode_DecodeUTF8( sUtf8.getStr(), sUtf8.getLength(), NULL) , SAL_NO_ACQUIRE );
-#endif
     return ret;
-}
-
-PyRef ustring2PyString( const OUString &str )
-{
-    OString o = OUStringToOString( str, osl_getThreadTextEncoding() );
-    return PyRef( PyBytes_FromString( o.getStr() ), SAL_NO_ACQUIRE );
 }
 
 OUString pyString2ustring( PyObject *pystr )
@@ -83,19 +72,9 @@ OUString pyString2ustring( PyObject *pystr )
     OUString ret;
     if( PyUnicode_Check( pystr ) )
     {
-#if Py_UNICODE_SIZE == 2
-	ret = OUString( (sal_Unicode * ) PyUnicode_AS_UNICODE( pystr ) );
-#else
-#if PY_VERSION_HEX >= 0x03030000 && PY_VERSION_HEX < 0x03060000
-    Py_ssize_t size;
-    char *pUtf8 = PyUnicode_AsUTF8AndSize(pystr, &size);
-    ret = OUString(pUtf8, size, RTL_TEXTENCODING_UTF8);
-#else
-	PyObject* pUtf8 = PyUnicode_AsUTF8String(pystr);
-	ret = OUString(PyBytes_AsString(pUtf8), PyBytes_Size(pUtf8), RTL_TEXTENCODING_UTF8);
-	Py_DECREF(pUtf8);
-#endif
-#endif
+        Py_ssize_t size;
+        const char *pUtf8 = PyUnicode_AsUTF8AndSize(pystr, &size);
+        ret = OUString(pUtf8, size, RTL_TEXTENCODING_UTF8);
     }
     else
     {
@@ -106,7 +85,6 @@ OUString pyString2ustring( PyObject *pystr )
 }
 
 PyRef getObjectFromUnoModule( const Runtime &runtime, const char * func )
-    throw ( RuntimeException )
 {
     PyRef object(PyDict_GetItemString( runtime.getImpl()->cargo->getUnoModule().get(), (char*)func ) );
     if( !object.is() )
@@ -200,7 +178,7 @@ void logReply(
     const char *intro,
     void * ptr,
     const rtl::OUString & aFunctionName,
-    const Any &returnValue, 
+    const Any &returnValue,
     const Sequence< Any > & aParams )
 {
     rtl::OUStringBuffer buf( 128 );
@@ -221,7 +199,7 @@ void logReply(
         }
     }
     log( cargo,LogLevel::CALL, buf.makeStringAndClear() );
-    
+
 }
 
 void logCall( RuntimeCargo *cargo, const char *intro,

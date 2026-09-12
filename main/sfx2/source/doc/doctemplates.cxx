@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -167,10 +167,10 @@ public:
                                 : m_xInteractionHandler( rxInteractionHandler )
                             {}
 
-	virtual uno::Reference<task::XInteractionHandler> SAL_CALL getInteractionHandler() throw (uno::RuntimeException)
+	virtual uno::Reference<task::XInteractionHandler> SAL_CALL getInteractionHandler()
 	{ return m_xInteractionHandler; }
 
-	virtual uno::Reference<ucb::XProgressHandler> SAL_CALL    getProgressHandler() throw (uno::RuntimeException)
+	virtual uno::Reference<ucb::XProgressHandler> SAL_CALL    getProgressHandler()
 	{ return m_xProgressHandler; }
 };
 
@@ -1017,8 +1017,8 @@ sal_Bool SfxDocTplService_Impl::setProperty( Content& rContent,
             }
         }
 
-        // To ensure a reloctable office installation, the path to the
-        // office installtion directory must never be stored directly.
+        // To ensure a relocatable office installation, the path to the
+        // office installation directory must never be stored directly.
         if ( SfxURLRelocator_Impl::propertyCanContainOfficeDir( rPropName ) )
         {
             OUString aValue;
@@ -1078,8 +1078,8 @@ sal_Bool SfxDocTplService_Impl::getProperty( Content& rContent,
 
         rPropValue = rContent.getPropertyValue( rPropName );
 
-        // To ensure a reloctable office installation, the path to the
-        // office installtion directory must never be stored directly.
+        // To ensure a relocatable office installation, the path to the
+        // office installation directory must never be stored directly.
         if ( SfxURLRelocator_Impl::propertyCanContainOfficeDir( rPropName ) )
         {
             OUString aValue;
@@ -2241,7 +2241,6 @@ SfxDocTplService::~SfxDocTplService()
 //-----------------------------------------------------------------------------
 
 Locale SAL_CALL SfxDocTplService::getLocale()
-    throw( RUNTIMEEXCEPTION )
 {
     return pImp->getLocale();
 }
@@ -2249,7 +2248,6 @@ Locale SAL_CALL SfxDocTplService::getLocale()
 //-----------------------------------------------------------------------------
 
 void SAL_CALL SfxDocTplService::setLocale( const Locale & rLocale )
-    throw( RUNTIMEEXCEPTION )
 {
     pImp->setLocale( rLocale );
 }
@@ -2258,7 +2256,6 @@ void SAL_CALL SfxDocTplService::setLocale( const Locale & rLocale )
 //--- XDocumentTemplates ---
 //-----------------------------------------------------------------------------
 uno::Reference< XCONTENT > SAL_CALL SfxDocTplService::getContent()
-    throw( RUNTIMEEXCEPTION )
 {
     if ( pImp->init() )
         return pImp->getContent().get();
@@ -2270,7 +2267,6 @@ uno::Reference< XCONTENT > SAL_CALL SfxDocTplService::getContent()
 sal_Bool SAL_CALL SfxDocTplService::storeTemplate( const OUString& GroupName,
                                                    const OUString& TemplateName,
                                                    const uno::Reference< XSTORABLE >& Storable )
-    throw( RUNTIMEEXCEPTION )
 {
 	if ( pImp->init() )
 		return pImp->storeTemplate( GroupName, TemplateName, Storable );
@@ -2282,7 +2278,6 @@ sal_Bool SAL_CALL SfxDocTplService::storeTemplate( const OUString& GroupName,
 sal_Bool SAL_CALL SfxDocTplService::addTemplate( const OUString& rGroupName,
                                                  const OUString& rTemplateName,
                                                  const OUString& rSourceURL )
-    throw( RUNTIMEEXCEPTION )
 {
     if ( pImp->init() )
         return pImp->addTemplate( rGroupName, rTemplateName, rSourceURL );
@@ -2293,7 +2288,6 @@ sal_Bool SAL_CALL SfxDocTplService::addTemplate( const OUString& rGroupName,
 //-----------------------------------------------------------------------------
 sal_Bool SAL_CALL SfxDocTplService::removeTemplate( const OUString& rGroupName,
                                                     const OUString& rTemplateName )
-    throw( RUNTIMEEXCEPTION )
 {
     if ( pImp->init() )
         return pImp->removeTemplate( rGroupName, rTemplateName );
@@ -2305,7 +2299,6 @@ sal_Bool SAL_CALL SfxDocTplService::removeTemplate( const OUString& rGroupName,
 sal_Bool SAL_CALL SfxDocTplService::renameTemplate( const OUString& rGroupName,
                                                     const OUString& rOldName,
                                                     const OUString& rNewName )
-    throw( RUNTIMEEXCEPTION )
 {
     if ( rOldName == rNewName )
         return sal_True;
@@ -2318,7 +2311,6 @@ sal_Bool SAL_CALL SfxDocTplService::renameTemplate( const OUString& rGroupName,
 
 //-----------------------------------------------------------------------------
 sal_Bool SAL_CALL SfxDocTplService::addGroup( const OUString& rGroupName )
-    throw( RUNTIMEEXCEPTION )
 {
     if ( pImp->init() )
         return pImp->addGroup( rGroupName );
@@ -2328,7 +2320,6 @@ sal_Bool SAL_CALL SfxDocTplService::addGroup( const OUString& rGroupName )
 
 //-----------------------------------------------------------------------------
 sal_Bool SAL_CALL SfxDocTplService::removeGroup( const OUString& rGroupName )
-    throw( RUNTIMEEXCEPTION )
 {
     if ( pImp->init() )
         return pImp->removeGroup( rGroupName );
@@ -2339,7 +2330,6 @@ sal_Bool SAL_CALL SfxDocTplService::removeGroup( const OUString& rGroupName )
 //-----------------------------------------------------------------------------
 sal_Bool SAL_CALL SfxDocTplService::renameGroup( const OUString& rOldName,
                                                  const OUString& rNewName )
-    throw( RUNTIMEEXCEPTION )
 {
     if ( rOldName == rNewName )
         return sal_True;
@@ -2352,7 +2342,6 @@ sal_Bool SAL_CALL SfxDocTplService::renameGroup( const OUString& rOldName,
 
 //-----------------------------------------------------------------------------
 void SAL_CALL SfxDocTplService::update()
-    throw( RUNTIMEEXCEPTION )
 {
     if ( pImp->init() )
         pImp->update( sal_True );
@@ -2916,5 +2905,3 @@ void SfxURLRelocator_Impl::makeAbsoluteURL( rtl::OUString & rURL )
         rURL = mxOfficeInstDirs->makeAbsoluteURL( rURL );
     }
 }
-
-

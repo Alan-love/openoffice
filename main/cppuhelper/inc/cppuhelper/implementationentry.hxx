@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,21 +7,21 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
-#ifndef _CPPUHELPER_IMPLEMENATIONENTRY_HXX_
-#define _CPPUHELPER_IMPLEMENATIONENTRY_HXX_
+#ifndef _CPPUHELPER_IMPLEMENTATIONENTRY_HXX_
+#define _CPPUHELPER_IMPLEMENTATIONENTRY_HXX_
 
 #include <cppuhelper/factory.hxx>
 #include "cppuhelper/cppuhelperdllapi.h"
@@ -29,20 +29,20 @@
 namespace cppu
 {
 /** One struct instance represents all data necessary for registering one service implementation.
-   
+
  */
 struct ImplementationEntry
 {
-	/** Function, that creates an instance of the implemenation
+	/** Function, that creates an instance of the implementation
 	 */
    	ComponentFactoryFunc create;
 
-	/** Function, that returns the implemenation-name of the implemenation
+	/** Function, that returns the implementation-name of the implementation
 	   (same as XServiceInfo.getImplementationName() ).
 	 */
  	rtl::OUString ( SAL_CALL * getImplementationName )();
 
-	/** Function, that returns all supported servicenames of the implemenation
+	/** Function, that returns all supported servicenames of the implementation
 	   ( same as XServiceInfo.getSupportedServiceNames() ).
 	*/
  	com::sun::star::uno::Sequence< rtl::OUString > ( SAL_CALL * getSupportedServiceNames ) ();
@@ -56,7 +56,7 @@ struct ImplementationEntry
  		::com::sun::star::uno::Sequence< ::rtl::OUString > const & rServiceNames,
  		rtl_ModuleCount * pModCount );
 
-	/** The shared-library module-counter of the implemenation. Maybe 0. The module-counter
+	/** The shared-library module-counter of the implementation. Maybe 0. The module-counter
 		is used during by the createFactory()-function.
 	*/
  	rtl_ModuleCount * moduleCounter;
@@ -77,7 +77,7 @@ struct ImplementationEntry
 	                       This is a reference to the registry key, into which the implementation
 						   data shall be written to.
 	@param entries         Each element of the entries-array must contains a function pointer
-	                       table for registering an implemenation. The end of the array 
+	                       table for registering an implementation. The end of the array
 	                       must be marked with a 0 entry in the create-function.
 	@return sal_True, if all implementations could be registered, otherwise sal_False.
  */
@@ -95,7 +95,7 @@ CPPUHELPER_DLLPUBLIC sal_Bool component_writeInfoHelper(
 	                       This is a reference to the registry key, where the implementation
 						   data has been written to.
 	@param entries         Each element of the entries-array must contains a function pointer
-	                       table for creating a factor of the implementation. The end of the array 
+	                       table for creating a factor of the implementation. The end of the array
 	                       must be marked with a 0 entry in the create-function.
     @return 0 if the helper failed to instantiate a factory, otherwise an acquired pointer
 	        to a factory.

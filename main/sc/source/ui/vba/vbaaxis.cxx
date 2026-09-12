@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -37,8 +37,8 @@ const rtl::OUString ORIGIN( RTL_CONSTASCII_USTRINGPARAM("Origin") );
 const rtl::OUString AUTOORIGIN( RTL_CONSTASCII_USTRINGPARAM("AutoOrigin") );
 const rtl::OUString VBA_MIN( RTL_CONSTASCII_USTRINGPARAM("Max") );
 const rtl::OUString VBA_MAX( RTL_CONSTASCII_USTRINGPARAM("Min") );
-ScVbaChart* 
-ScVbaAxis::getChartPtr() throw( uno::RuntimeException )
+ScVbaChart*
+ScVbaAxis::getChartPtr()
 {
 	ScVbaChart* pChart = static_cast< ScVbaChart* >( moChartParent.get() );
 	if ( !pChart )
@@ -46,8 +46,8 @@ ScVbaAxis::getChartPtr() throw( uno::RuntimeException )
 	return pChart;
 }
 
-sal_Bool 
-ScVbaAxis::isValueAxis() throw( script::BasicErrorException )
+sal_Bool
+ScVbaAxis::isValueAxis()
 {
 	if ( getType() == xlCategory )
 	{
@@ -56,29 +56,29 @@ ScVbaAxis::isValueAxis() throw( script::BasicErrorException )
 	return sal_True;
 }
 
-ScVbaAxis::ScVbaAxis( const uno::Reference< XHelperInterface >& xParent,const uno::Reference< uno::XComponentContext > & xContext, const uno::Reference< beans::XPropertySet >& _xPropertySet, sal_Int32 _nType, sal_Int32 _nGroup  ) : ScVbaAxis_BASE( xParent, xContext ), mxPropertySet( _xPropertySet ), mnType( _nType ), mnGroup( _nGroup ), bCrossesAreCustomized( sal_False ) 
+ScVbaAxis::ScVbaAxis( const uno::Reference< XHelperInterface >& xParent,const uno::Reference< uno::XComponentContext > & xContext, const uno::Reference< beans::XPropertySet >& _xPropertySet, sal_Int32 _nType, sal_Int32 _nGroup  ) : ScVbaAxis_BASE( xParent, xContext ), mxPropertySet( _xPropertySet ), mnType( _nType ), mnGroup( _nGroup ), bCrossesAreCustomized( sal_False )
 {
 	oShapeHelper.reset( new ShapeHelper( uno::Reference< drawing::XShape >( mxPropertySet, uno::UNO_QUERY ) ) );
 	moChartParent.set( xParent, uno::UNO_QUERY_THROW  );
 	setType(_nType);
-	setCrosses(xlAxisCrossesAutomatic);	
+	setCrosses(xlAxisCrossesAutomatic);
 }
 
-void SAL_CALL 
-ScVbaAxis::Delete(  ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::Delete(  )
 {
 	uno::Reference< lang::XComponent > xComponent( mxPropertySet, uno::UNO_QUERY_THROW );
 	xComponent->dispose();
 }
 
- uno::Reference< ::ooo::vba::excel::XAxisTitle > SAL_CALL 
-ScVbaAxis::getAxisTitle(  ) throw (script::BasicErrorException, uno::RuntimeException)
+ uno::Reference< ::ooo::vba::excel::XAxisTitle > SAL_CALL
+ScVbaAxis::getAxisTitle(  )
 {
 	uno::Reference< excel::XAxisTitle > xAxisTitle;
 	try
 	{
 		ScVbaChart* pChart = getChartPtr();
-	
+
 		if (getHasTitle() )
 		{
 			int nType = getType();
@@ -93,7 +93,7 @@ ScVbaAxis::getAxisTitle(  ) throw (script::BasicErrorException, uno::RuntimeExce
 				default: // xlValue:
 					xAxisTitle = new ScVbaAxisTitle(this, mxContext, pChart->xAxisYSupplier->getYAxisTitle());
 					break;
-			}                   
+			}
 		}
 	}
 	catch (uno::Exception& e)
@@ -104,37 +104,37 @@ ScVbaAxis::getAxisTitle(  ) throw (script::BasicErrorException, uno::RuntimeExce
 
 }
 
-void SAL_CALL 
-ScVbaAxis::setDisplayUnit( ::sal_Int32 /*DisplayUnit*/ ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setDisplayUnit( ::sal_Int32 /*DisplayUnit*/ )
 {
 	DebugHelper::exception(SbERR_NOT_IMPLEMENTED, rtl::OUString());
 }
 
-::sal_Int32 SAL_CALL 
-ScVbaAxis::getDisplayUnit(  ) throw (script::BasicErrorException, uno::RuntimeException)
+::sal_Int32 SAL_CALL
+ScVbaAxis::getDisplayUnit(  )
 {
 	DebugHelper::exception(SbERR_NOT_IMPLEMENTED, rtl::OUString());
 	return -1;
 }
 
-void SAL_CALL 
-ScVbaAxis::setCrosses( ::sal_Int32 _nCrosses ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setCrosses( ::sal_Int32 _nCrosses )
 {
 	try
 	{
 		double fNum = 0.0;
 		switch (_nCrosses)
 		{
-			case  xlAxisCrossesAutomatic:       //Microsoft Excel sets the axis crossing point. 
+			case  xlAxisCrossesAutomatic:       //Microsoft Excel sets the axis crossing point.
 				mxPropertySet->setPropertyValue(AUTOORIGIN, uno::makeAny( sal_True ) );
 				bCrossesAreCustomized = sal_False;
 				return;
-			case xlAxisCrossesMinimum:                     // The axis crosses at the minimum value. 
+			case xlAxisCrossesMinimum:                     // The axis crosses at the minimum value.
 				mxPropertySet->getPropertyValue(VBA_MIN) >>= fNum;
 				setCrossesAt( fNum );
 				bCrossesAreCustomized = sal_False;
 				break;
-			case xlAxisCrossesMaximum:                     // The axis crosses at the maximum value. 
+			case xlAxisCrossesMaximum:                     // The axis crosses at the maximum value.
 				mxPropertySet->getPropertyValue(VBA_MAX) >>= fNum;
 				setCrossesAt(fNum);
 				bCrossesAreCustomized = sal_False;
@@ -143,15 +143,15 @@ ScVbaAxis::setCrosses( ::sal_Int32 _nCrosses ) throw (script::BasicErrorExceptio
 				bCrossesAreCustomized = sal_True;
 				break;
 		}
-		mxPropertySet->setPropertyValue(AUTOORIGIN, uno::makeAny(sal_False) );        
+		mxPropertySet->setPropertyValue(AUTOORIGIN, uno::makeAny(sal_False) );
 	}
 	catch (uno::Exception& )
 	{
 		DebugHelper::exception(SbERR_METHOD_FAILED, rtl::OUString());
 	}
 }
-::sal_Int32 SAL_CALL 
-ScVbaAxis::getCrosses(  ) throw (script::BasicErrorException, uno::RuntimeException)
+::sal_Int32 SAL_CALL
+ScVbaAxis::getCrosses(  )
 {
 	sal_Int32 nCrosses = xlAxisCrossesCustom;
 	try
@@ -163,7 +163,7 @@ ScVbaAxis::getCrosses(  ) throw (script::BasicErrorException, uno::RuntimeExcept
 		else
 		{
 			if (bCrossesAreCustomized)
-				nCrosses = xlAxisCrossesCustom;                
+				nCrosses = xlAxisCrossesCustom;
 			else
 			{
 				double forigin = 0.0;
@@ -185,8 +185,8 @@ ScVbaAxis::getCrosses(  ) throw (script::BasicErrorException, uno::RuntimeExcept
 	return nCrosses;
 }
 
- void SAL_CALL 
-ScVbaAxis::setCrossesAt( double _fCrossesAt ) throw (script::BasicErrorException, uno::RuntimeException)
+ void SAL_CALL
+ScVbaAxis::setCrossesAt( double _fCrossesAt )
 {
 	try
 	{
@@ -202,8 +202,8 @@ ScVbaAxis::setCrossesAt( double _fCrossesAt ) throw (script::BasicErrorException
 	}
 }
 
- double SAL_CALL 
-ScVbaAxis::getCrossesAt(  ) throw (script::BasicErrorException, uno::RuntimeException)
+ double SAL_CALL
+ScVbaAxis::getCrossesAt(  )
 {
 	double fCrosses = 0.0;
 	try
@@ -217,20 +217,20 @@ ScVbaAxis::getCrossesAt(  ) throw (script::BasicErrorException, uno::RuntimeExce
 	return fCrosses;
 }
 
-void SAL_CALL 
-ScVbaAxis::setType( ::sal_Int32 _nType ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setType( ::sal_Int32 _nType )
 {
 	mnType = _nType;
 }
 
-::sal_Int32 SAL_CALL 
-ScVbaAxis::getType(  ) throw (script::BasicErrorException, uno::RuntimeException)
+::sal_Int32 SAL_CALL
+ScVbaAxis::getType(  )
 {
 	return mnType;
 }
 
-void SAL_CALL 
-ScVbaAxis::setHasTitle( ::sal_Bool _bHasTitle ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setHasTitle( ::sal_Bool _bHasTitle )
 {
 	try
 	{
@@ -246,17 +246,17 @@ ScVbaAxis::setHasTitle( ::sal_Bool _bHasTitle ) throw (script::BasicErrorExcepti
 				break;
 			default: // xlValue:
 				pChart->mxDiagramPropertySet->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("HasYAxisTitle")), uno::makeAny(_bHasTitle));
-		}        
+		}
 
 	}
 	catch (uno::Exception& e)
 	{
 		DebugHelper::exception(e);
-	}	
+	}
 }
 
- ::sal_Bool SAL_CALL 
-ScVbaAxis::getHasTitle(  ) throw (script::BasicErrorException, uno::RuntimeException)
+ ::sal_Bool SAL_CALL
+ScVbaAxis::getHasTitle(  )
 {
 	sal_Bool bHasTitle = sal_False;
 	try
@@ -273,7 +273,7 @@ ScVbaAxis::getHasTitle(  ) throw (script::BasicErrorException, uno::RuntimeExcep
 				break;
 			default: // xlValue:
 				pChart->mxDiagramPropertySet->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("HasYAxisTitle")) ) >>= bHasTitle;
-		}        
+		}
 	}
 	catch (uno::Exception& e)
 	{
@@ -282,13 +282,13 @@ ScVbaAxis::getHasTitle(  ) throw (script::BasicErrorException, uno::RuntimeExcep
 	return bHasTitle;
 }
 
-void SAL_CALL 
-ScVbaAxis::setMinorUnit( double _fMinorUnit ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setMinorUnit( double _fMinorUnit )
 {
 	try
 	{
 		if (isValueAxis())
-			mxPropertySet->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("StepHelp") ), uno::makeAny(_fMinorUnit));                
+			mxPropertySet->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("StepHelp") ), uno::makeAny(_fMinorUnit));
 	}
 	catch (uno::Exception& )
 	{
@@ -296,8 +296,8 @@ ScVbaAxis::setMinorUnit( double _fMinorUnit ) throw (script::BasicErrorException
 	}
 }
 
-double SAL_CALL 
-ScVbaAxis::getMinorUnit(  ) throw (script::BasicErrorException, uno::RuntimeException)
+double SAL_CALL
+ScVbaAxis::getMinorUnit(  )
 {
 	double fMinor = 1.0;
 	try
@@ -312,8 +312,8 @@ ScVbaAxis::getMinorUnit(  ) throw (script::BasicErrorException, uno::RuntimeExce
 	return fMinor;
 }
 
-void SAL_CALL 
-ScVbaAxis::setMinorUnitIsAuto( ::sal_Bool _bMinorUnitIsAuto ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setMinorUnitIsAuto( ::sal_Bool _bMinorUnitIsAuto )
 {
 	try
 	{
@@ -326,8 +326,8 @@ ScVbaAxis::setMinorUnitIsAuto( ::sal_Bool _bMinorUnitIsAuto ) throw (script::Bas
 	}
 }
 
- ::sal_Bool SAL_CALL 
-ScVbaAxis::getMinorUnitIsAuto(  ) throw (script::BasicErrorException, uno::RuntimeException)
+ ::sal_Bool SAL_CALL
+ScVbaAxis::getMinorUnitIsAuto(  )
 {
 	sal_Bool bIsAuto = sal_False;
 	try
@@ -344,27 +344,27 @@ ScVbaAxis::getMinorUnitIsAuto(  ) throw (script::BasicErrorException, uno::Runti
 	return bIsAuto;
 }
 
-void SAL_CALL 
-ScVbaAxis::setReversePlotOrder( ::sal_Bool /*ReversePlotOrder*/ ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setReversePlotOrder( ::sal_Bool /*ReversePlotOrder*/ )
 {
 	DebugHelper::exception(SbERR_NOT_IMPLEMENTED, rtl::OUString());
 }
 
-::sal_Bool SAL_CALL 
-ScVbaAxis::getReversePlotOrder(  ) throw (script::BasicErrorException, uno::RuntimeException)
+::sal_Bool SAL_CALL
+ScVbaAxis::getReversePlotOrder(  )
 {
 	DebugHelper::exception(SbERR_NOT_IMPLEMENTED, rtl::OUString());
 	return sal_False;
 }
 
-void SAL_CALL 
-ScVbaAxis::setMajorUnit( double _fMajorUnit ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setMajorUnit( double _fMajorUnit )
 {
 	try
 	{
 		if (isValueAxis())
 		{
-			mxPropertySet->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("StepMain")), uno::makeAny(_fMajorUnit));                
+			mxPropertySet->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("StepMain")), uno::makeAny(_fMajorUnit));
 		}
 	}
 	catch (uno::Exception& )
@@ -373,8 +373,8 @@ ScVbaAxis::setMajorUnit( double _fMajorUnit ) throw (script::BasicErrorException
 	}
 }
 
-double SAL_CALL 
-ScVbaAxis::getMajorUnit(  ) throw (script::BasicErrorException, uno::RuntimeException)
+double SAL_CALL
+ScVbaAxis::getMajorUnit(  )
 {
 	double fMax = 1.0;
 	try
@@ -389,8 +389,8 @@ ScVbaAxis::getMajorUnit(  ) throw (script::BasicErrorException, uno::RuntimeExce
 	return fMax;
 }
 
-void SAL_CALL 
-ScVbaAxis::setMajorUnitIsAuto( ::sal_Bool _bMajorUnitIsAuto ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setMajorUnitIsAuto( ::sal_Bool _bMajorUnitIsAuto )
 {
 	try
 	{
@@ -405,8 +405,8 @@ ScVbaAxis::setMajorUnitIsAuto( ::sal_Bool _bMajorUnitIsAuto ) throw (script::Bas
 	}
 }
 
-::sal_Bool SAL_CALL 
-ScVbaAxis::getMajorUnitIsAuto(  ) throw (script::BasicErrorException, uno::RuntimeException)
+::sal_Bool SAL_CALL
+ScVbaAxis::getMajorUnitIsAuto(  )
 {
 	sal_Bool bIsAuto = sal_False;
 	try
@@ -423,14 +423,14 @@ ScVbaAxis::getMajorUnitIsAuto(  ) throw (script::BasicErrorException, uno::Runti
 	return bIsAuto;
 }
 
-void SAL_CALL 
-ScVbaAxis::setMaximumScale( double _fMaximumScale ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setMaximumScale( double _fMaximumScale )
 {
 	try
 	{
 		if ( isValueAxis() )
 		{
-			mxPropertySet->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Max" ) ), uno::makeAny(_fMaximumScale));        
+			mxPropertySet->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Max" ) ), uno::makeAny(_fMaximumScale));
 		}
 	}
 	catch ( uno::Exception& )
@@ -439,15 +439,15 @@ ScVbaAxis::setMaximumScale( double _fMaximumScale ) throw (script::BasicErrorExc
 	}
 }
 
-double SAL_CALL 
-ScVbaAxis::getMaximumScale(  ) throw (script::BasicErrorException, uno::RuntimeException)
+double SAL_CALL
+ScVbaAxis::getMaximumScale(  )
 {
 	double fMax = 1.0;
 	try
 	{
 		if (isValueAxis())
 		{
-			mxPropertySet->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Max" ))) >>= fMax;        
+			mxPropertySet->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Max" ))) >>= fMax;
 		}
 	}
 	catch (uno::Exception& )
@@ -458,24 +458,24 @@ ScVbaAxis::getMaximumScale(  ) throw (script::BasicErrorException, uno::RuntimeE
 
 }
 
-void SAL_CALL 
-ScVbaAxis::setMaximumScaleIsAuto( ::sal_Bool _bMaximumScaleIsAuto ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setMaximumScaleIsAuto( ::sal_Bool _bMaximumScaleIsAuto )
 {
 	try
 	{
 		if ( isValueAxis() )
 			mxPropertySet->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "AutoMax" ) ), uno::makeAny( _bMaximumScaleIsAuto ));
-	
+
 	}
 	catch ( uno::Exception& )
 	{
 		DebugHelper::exception(SbERR_METHOD_FAILED, rtl::OUString());
-	}	
+	}
 }
 
 
-::sal_Bool SAL_CALL 
-ScVbaAxis::getMaximumScaleIsAuto(  ) throw (script::BasicErrorException, uno::RuntimeException)
+::sal_Bool SAL_CALL
+ScVbaAxis::getMaximumScaleIsAuto(  )
 {
 	sal_Bool bIsAuto = sal_False;
 	try
@@ -490,8 +490,8 @@ ScVbaAxis::getMaximumScaleIsAuto(  ) throw (script::BasicErrorException, uno::Ru
 	return bIsAuto;
 }
 
-void SAL_CALL 
-ScVbaAxis::setMinimumScale( double _fMinimumScale ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setMinimumScale( double _fMinimumScale )
 {
 	try
 	{
@@ -504,8 +504,8 @@ ScVbaAxis::setMinimumScale( double _fMinimumScale ) throw (script::BasicErrorExc
 	}
 }
 
-double SAL_CALL 
-ScVbaAxis::getMinimumScale(  ) throw (script::BasicErrorException, uno::RuntimeException)
+double SAL_CALL
+ScVbaAxis::getMinimumScale(  )
 {
 	double fMin = 0.0;
 	try
@@ -520,8 +520,8 @@ ScVbaAxis::getMinimumScale(  ) throw (script::BasicErrorException, uno::RuntimeE
 	return fMin;
 }
 
-void SAL_CALL 
-ScVbaAxis::setMinimumScaleIsAuto( ::sal_Bool _bMinimumScaleIsAuto ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setMinimumScaleIsAuto( ::sal_Bool _bMinimumScaleIsAuto )
 {
 	try
 	{
@@ -536,15 +536,15 @@ ScVbaAxis::setMinimumScaleIsAuto( ::sal_Bool _bMinimumScaleIsAuto ) throw (scrip
 	}
 }
 
-::sal_Bool SAL_CALL 
-ScVbaAxis::getMinimumScaleIsAuto(  ) throw (script::BasicErrorException, uno::RuntimeException)
+::sal_Bool SAL_CALL
+ScVbaAxis::getMinimumScaleIsAuto(  )
 {
 	sal_Bool bIsAuto = sal_False;
 	try
 	{
 		if (isValueAxis())
 		{
-			mxPropertySet->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("AutoMin")) ) >>= bIsAuto;        
+			mxPropertySet->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("AutoMin")) ) >>= bIsAuto;
 		}
 	}
 	catch (uno::Exception& )
@@ -554,14 +554,14 @@ ScVbaAxis::getMinimumScaleIsAuto(  ) throw (script::BasicErrorException, uno::Ru
 	return bIsAuto;
 }
 
-::sal_Int32 SAL_CALL 
-ScVbaAxis::getAxisGroup(  ) throw (uno::RuntimeException)
+::sal_Int32 SAL_CALL
+ScVbaAxis::getAxisGroup(  )
 {
 	return mnGroup;
 }
 
-void SAL_CALL 
-ScVbaAxis::setScaleType( ::sal_Int32 _nScaleType ) throw (script::BasicErrorException, uno::RuntimeException)
+void SAL_CALL
+ScVbaAxis::setScaleType( ::sal_Int32 _nScaleType )
 {
 	try
 	{
@@ -576,7 +576,7 @@ ScVbaAxis::setScaleType( ::sal_Int32 _nScaleType ) throw (script::BasicErrorExce
 					mxPropertySet->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Logarithmic" ) ), uno::makeAny( sal_True ) );
 					break;
 				default:
-					// According to MS the paramenter is ignored and no Error is thrown
+					// According to MS the parameter is ignored and no Error is thrown
 					break;
 			}
 		}
@@ -587,10 +587,10 @@ ScVbaAxis::setScaleType( ::sal_Int32 _nScaleType ) throw (script::BasicErrorExce
 	}
 }
 
-::sal_Int32 SAL_CALL 
-ScVbaAxis::getScaleType(  ) throw (script::BasicErrorException, uno::RuntimeException)
+::sal_Int32 SAL_CALL
+ScVbaAxis::getScaleType(  )
 {
-	sal_Int32 nScaleType = xlScaleLinear;	
+	sal_Int32 nScaleType = xlScaleLinear;
 	try
 	{
 		if (isValueAxis())
@@ -600,7 +600,7 @@ ScVbaAxis::getScaleType(  ) throw (script::BasicErrorException, uno::RuntimeExce
 			if (bisLogarithmic)
 				nScaleType = xlScaleLogarithmic;
 			else
-				nScaleType = xlScaleLinear;            
+				nScaleType = xlScaleLinear;
 		}
 	}
 	catch (uno::Exception& )
@@ -610,49 +610,49 @@ ScVbaAxis::getScaleType(  ) throw (script::BasicErrorException, uno::RuntimeExce
 	return nScaleType;
 }
 
-double SAL_CALL 
-ScVbaAxis::getHeight(  ) throw (css::script::BasicErrorException, css::uno::RuntimeException)
+double SAL_CALL
+ScVbaAxis::getHeight(  )
 {
 	return oShapeHelper->getHeight();
 }
 
-void SAL_CALL ScVbaAxis::setHeight( double height ) throw (css::script::BasicErrorException, css::uno::RuntimeException)
+void SAL_CALL ScVbaAxis::setHeight( double height )
 {
 	oShapeHelper->setHeight( height );
 }
-double SAL_CALL ScVbaAxis::getWidth(  ) throw (css::script::BasicErrorException, css::uno::RuntimeException)
+double SAL_CALL ScVbaAxis::getWidth(  )
 {
 	return oShapeHelper->getWidth( );
 }
-void SAL_CALL ScVbaAxis::setWidth( double width ) throw (css::script::BasicErrorException, css::uno::RuntimeException)
+void SAL_CALL ScVbaAxis::setWidth( double width )
 {
 	oShapeHelper->setWidth( width );
 }
-double SAL_CALL ScVbaAxis::getTop(  ) throw (css::script::BasicErrorException, css::uno::RuntimeException)
+double SAL_CALL ScVbaAxis::getTop(  )
 {
 	return oShapeHelper->getTop( );
 }
-void SAL_CALL ScVbaAxis::setTop( double top ) throw (css::script::BasicErrorException, css::uno::RuntimeException)
+void SAL_CALL ScVbaAxis::setTop( double top )
 {
 	oShapeHelper->setTop( top );
 }
-double SAL_CALL ScVbaAxis::getLeft(  ) throw (css::script::BasicErrorException, css::uno::RuntimeException)
+double SAL_CALL ScVbaAxis::getLeft(  )
 {
 	return oShapeHelper->getLeft( );
 }
-void SAL_CALL ScVbaAxis::setLeft( double left ) throw (css::script::BasicErrorException, css::uno::RuntimeException)
+void SAL_CALL ScVbaAxis::setLeft( double left )
 {
 	oShapeHelper->setLeft( left );
 }
 
-rtl::OUString& 
+rtl::OUString&
 ScVbaAxis::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("ScVbaAxis") );
 	return sImplName;
 }
 
-uno::Sequence< rtl::OUString > 
+uno::Sequence< rtl::OUString >
 ScVbaAxis::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > aServiceNames;
@@ -663,4 +663,3 @@ ScVbaAxis::getServiceNames()
 	}
 	return aServiceNames;
 }
-

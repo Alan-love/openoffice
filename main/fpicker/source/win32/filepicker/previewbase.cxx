@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -55,7 +55,7 @@ PreviewBase::~PreviewBase()
 //
 //-------------------------------
 
-sal_Int32 SAL_CALL PreviewBase::getTargetColorDepth() throw (RuntimeException)
+sal_Int32 SAL_CALL PreviewBase::getTargetColorDepth()
 {
 	return 0;
 }
@@ -64,7 +64,7 @@ sal_Int32 SAL_CALL PreviewBase::getTargetColorDepth() throw (RuntimeException)
 //
 //-------------------------------
 
-sal_Int32 SAL_CALL PreviewBase::getAvailableWidth() throw (RuntimeException)
+sal_Int32 SAL_CALL PreviewBase::getAvailableWidth()
 {
 	return 0;
 }
@@ -73,7 +73,7 @@ sal_Int32 SAL_CALL PreviewBase::getAvailableWidth() throw (RuntimeException)
 //
 //-------------------------------
 
-sal_Int32 SAL_CALL PreviewBase::getAvailableHeight() throw (RuntimeException)
+sal_Int32 SAL_CALL PreviewBase::getAvailableHeight()
 {
 	return 0;
 }
@@ -82,8 +82,7 @@ sal_Int32 SAL_CALL PreviewBase::getAvailableHeight() throw (RuntimeException)
 //
 //-------------------------------
 
-void SAL_CALL PreviewBase::setImage( sal_Int16 aImageFormat, const ::com::sun::star::uno::Any& aImage ) 
-	throw (IllegalArgumentException, RuntimeException)
+void SAL_CALL PreviewBase::setImage( sal_Int16 aImageFormat, const ::com::sun::star::uno::Any& aImage )
 {
 	if (aImageFormat != ::com::sun::star::ui::dialogs::FilePreviewImageFormats::BITMAP)
 		throw IllegalArgumentException(
@@ -112,7 +111,7 @@ void SAL_CALL PreviewBase::getImage(sal_Int16& aImageFormat,com::sun::star::uno:
 //
 //-------------------------------
 
-sal_Bool SAL_CALL PreviewBase::setShowState( sal_Bool bShowState ) throw (RuntimeException)
+sal_Bool SAL_CALL PreviewBase::setShowState( sal_Bool bShowState )
 {
 	m_bShowState = bShowState;
 	return sal_True;
@@ -122,7 +121,7 @@ sal_Bool SAL_CALL PreviewBase::setShowState( sal_Bool bShowState ) throw (Runtim
 //
 //-------------------------------
 
-sal_Bool SAL_CALL PreviewBase::getShowState() throw (RuntimeException)
+sal_Bool SAL_CALL PreviewBase::getShowState()
 {
 	return sal_False;
 }

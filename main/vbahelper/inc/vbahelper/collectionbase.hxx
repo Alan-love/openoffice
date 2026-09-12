@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -69,20 +69,20 @@ public:
     };
 
     // ------------------------------------------------------------------------
-    
+
     CollectionBase( const css::uno::Type& rElementType );
 
     // ------------------------------------------------------------------------
 
     // attributes
-    virtual sal_Int32 SAL_CALL getCount() throw (css::uno::RuntimeException);
+    virtual sal_Int32 SAL_CALL getCount();
     // XEnumerationAccess
-    virtual css::uno::Reference< css::container::XEnumeration > SAL_CALL createEnumeration() throw (css::uno::RuntimeException);
+    virtual css::uno::Reference< css::container::XEnumeration > SAL_CALL createEnumeration();
     // XElementAccess
-    virtual css::uno::Type SAL_CALL getElementType() throw (css::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL hasElements() throw (css::uno::RuntimeException);
+    virtual css::uno::Type SAL_CALL getElementType();
+    virtual sal_Bool SAL_CALL hasElements();
     // XDefaultMethod
-    virtual ::rtl::OUString SAL_CALL getDefaultMethodName() throw (css::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getDefaultMethodName();
 
     // ------------------------------------------------------------------------
 
@@ -106,7 +106,7 @@ public:
      */
     void initContainer(
         const css::uno::Reference< css::container::XElementAccess >& rxElementAccess,
-        ContainerType eContainerType ) throw (css::uno::RuntimeException);
+        ContainerType eContainerType );
 
     /** Initializes this collection with copies of all elements in the passed
         temporary STL vector.
@@ -118,7 +118,7 @@ public:
      */
     void initElements(
         const ::std::vector< css::uno::Reference< css::container::XNamed > >& rElements,
-        ContainerType eContainerType ) throw (css::uno::RuntimeException);
+        ContainerType eContainerType );
 
     /** Initializes this collection with copies of all elements in the passed
         temporary STL vector.
@@ -130,38 +130,38 @@ public:
      */
     void initElements(
         const ::std::vector< css::beans::NamedValue >& rElements,
-        ContainerType eContainerType ) throw (css::uno::RuntimeException);
+        ContainerType eContainerType );
 
     /** Returns a VBA implementation object from the passed element.
 
         If the container type is CONTAINER_NATIVE_VBA, returns the passed
         object unmodified. If the container type is CONTAINER_CONVERT_ON_DEMAND,
         calls the virtual function implCreateCollectionItem() that implements
-        creation of the VBA implmentation object.
+        creation of the VBA implementation object.
 
         @param rElement
             The container element the VBA implementation object is based on.
-            
+
         @param rIndex
             The index or name that has been used to access the item.
      */
     css::uno::Any createCollectionItem(
         const css::uno::Any& rElement,
-        const css::uno::Any& rIndex ) throw (css::uno::RuntimeException);
+        const css::uno::Any& rIndex );
 
     /** Returns a collection item specified by its one-based item index.
 
         @param nIndex
             The one-based index of the collection item.
     */
-    css::uno::Any getItemByIndex( sal_Int32 nIndex ) throw (css::uno::RuntimeException);
+    css::uno::Any getItemByIndex( sal_Int32 nIndex );
 
     /** Returns a collection item specified by its name.
 
         @param rName
             The name of the collection item.
     */
-    css::uno::Any getItemByName( const ::rtl::OUString& rName ) throw (css::uno::RuntimeException);
+    css::uno::Any getItemByName( const ::rtl::OUString& rName );
 
     /** Returns a collection item specified by its index or name.
 
@@ -169,7 +169,7 @@ public:
             The index or name of the collection item. May be empty, in that
             case the entire collection is returned.
     */
-    css::uno::Any getAnyItemOrThis( const css::uno::Any& rIndex ) throw (css::uno::RuntimeException);
+    css::uno::Any getAnyItemOrThis( const css::uno::Any& rIndex );
 
     /** Returns a collection item of a specific type specified by its index or
         name.
@@ -178,7 +178,7 @@ public:
             The index or name of the collection item.
     */
     template< typename XType >
-    inline css::uno::Reference< XType > getAnyItem( const css::uno::Any& rIndex ) throw (css::uno::RuntimeException)
+    inline css::uno::Reference< XType > getAnyItem( const css::uno::Any& rIndex )
         { css::uno::Any aRet; if( rIndex.hasValue() ) aRet = getAnyItemOrThis( rIndex ); return css::uno::Reference< XType >( aRet, css::uno::UNO_QUERY_THROW ); }
 
 protected:
@@ -194,7 +194,7 @@ protected:
             The index or name used to access the item. Can be used by
             implementations as a hint how to find or convert the VBA object.
      */
-    virtual css::uno::Any implCreateCollectionItem( const css::uno::Any& rElement, const css::uno::Any& rIndex ) throw (css::uno::RuntimeException);
+    virtual css::uno::Any implCreateCollectionItem( const css::uno::Any& rElement, const css::uno::Any& rIndex );
 
 private:
     css::uno::Reference< css::container::XIndexAccess > mxIndexAccess;

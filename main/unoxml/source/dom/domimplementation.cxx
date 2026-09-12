@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -52,7 +52,6 @@ namespace DOM
            OUString const& /*rNamespaceURI*/,
            OUString const& /*rQualifiedName*/,
            Reference< XDocumentType > const& /*xDoctype*/)
-        throw (RuntimeException)
     {
         OSL_ENSURE(false,
             "CDOMImplementation::createDocument: not implemented (#i113683#)");
@@ -65,7 +64,6 @@ namespace DOM
     Reference< XDocumentType > SAL_CALL CDOMImplementation::createDocumentType(
             OUString const& /*rQualifiedName*/,
             OUString const& /*rPublicId*/, OUString const& /*rSystemId*/)
-        throw (RuntimeException)
     {
         OSL_ENSURE(false, "CDOMImplementation::createDocumentType: "
                 "not implemented (#i113683#)");
@@ -77,7 +75,6 @@ namespace DOM
     */
     sal_Bool SAL_CALL
     CDOMImplementation::hasFeature(OUString const& /*feature*/, OUString const& /*ver*/)
-        throw (RuntimeException)
     {
         OSL_ENSURE(false,
             "CDOMImplementation::hasFeature: not implemented (#i113683#)");

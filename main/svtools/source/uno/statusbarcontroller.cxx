@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -127,7 +127,6 @@ Reference< XURLTransformer > StatusbarController::getURLTransformer() const
 
 // XInterface
 Any SAL_CALL StatusbarController::queryInterface( const Type& rType )
-throw ( RuntimeException )
 {
 	Any a = ::cppu::queryInterface(
 				rType ,
@@ -155,7 +154,6 @@ void SAL_CALL StatusbarController::release() throw ()
 }
 
 void SAL_CALL StatusbarController::initialize( const Sequence< Any >& aArguments )
-throw ( Exception, RuntimeException )
 {
     bool bInitialized( true );
 
@@ -199,7 +197,6 @@ throw ( Exception, RuntimeException )
 }
 
 void SAL_CALL StatusbarController::update()
-throw ( RuntimeException )
 {
     {
         vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
@@ -213,7 +210,6 @@ throw ( RuntimeException )
 
 // XComponent
 void SAL_CALL StatusbarController::dispose()
-throw (::com::sun::star::uno::RuntimeException)
 {
     Reference< XComponent > xThis( static_cast< OWeakObject* >(this), UNO_QUERY );
 
@@ -263,20 +259,17 @@ throw (::com::sun::star::uno::RuntimeException)
 }
 
 void SAL_CALL StatusbarController::addEventListener( const Reference< XEventListener >& xListener )
-throw ( RuntimeException )
 {
     m_aListenerContainer.addInterface( ::getCppuType( ( const Reference< XEventListener >* ) NULL ), xListener );
 }
 
 void SAL_CALL StatusbarController::removeEventListener( const Reference< XEventListener >& aListener )
-throw ( RuntimeException )
 {
     m_aListenerContainer.removeInterface( ::getCppuType( ( const Reference< XEventListener >* ) NULL ), aListener );
 }
 
 // XEventListener
 void SAL_CALL StatusbarController::disposing( const EventObject& Source )
-throw ( RuntimeException )
 {
     vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
 
@@ -307,7 +300,6 @@ throw ( RuntimeException )
 
 // XStatusListener
 void SAL_CALL StatusbarController::statusChanged( const FeatureStateEvent& Event )
-throw ( RuntimeException )
 {
     vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
 
@@ -330,21 +322,18 @@ throw ( RuntimeException )
 // XStatusbarController
 ::sal_Bool SAL_CALL StatusbarController::mouseButtonDown(
     const ::com::sun::star::awt::MouseEvent& )
-throw (::com::sun::star::uno::RuntimeException)
 {
     return sal_False;
 }
 
 ::sal_Bool SAL_CALL StatusbarController::mouseMove(
     const ::com::sun::star::awt::MouseEvent& )
-throw (::com::sun::star::uno::RuntimeException)
 {
     return sal_False;
 }
 
 ::sal_Bool SAL_CALL StatusbarController::mouseButtonUp(
     const ::com::sun::star::awt::MouseEvent& )
-throw (::com::sun::star::uno::RuntimeException)
 {
     return sal_False;
 }
@@ -354,7 +343,6 @@ void SAL_CALL StatusbarController::command(
     ::sal_Int32,
     ::sal_Bool,
     const ::com::sun::star::uno::Any& )
-throw (::com::sun::star::uno::RuntimeException)
 {
 }
 
@@ -362,16 +350,14 @@ void SAL_CALL StatusbarController::paint(
     const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XGraphics >&,
     const ::com::sun::star::awt::Rectangle&,
     ::sal_Int32 )
-throw (::com::sun::star::uno::RuntimeException)
 {
 }
 
 void SAL_CALL StatusbarController::click( const ::com::sun::star::awt::Point& )
-throw (::com::sun::star::uno::RuntimeException)
 {
 }
 
-void SAL_CALL StatusbarController::doubleClick( const ::com::sun::star::awt::Point& ) throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL StatusbarController::doubleClick( const ::com::sun::star::awt::Point& )
 {
     vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
 
@@ -657,10 +643,10 @@ void StatusbarController::updateStatus( const rtl::OUString aCommandURL )
 ::Rectangle StatusbarController::getControlRect() const
 {
     ::Rectangle aRect;
-    
+
     {
         vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
-        
+
         if ( m_bDisposed )
             throw DisposedException();
 

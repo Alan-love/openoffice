@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -26,10 +26,10 @@
 #ifndef _CONNECTIVITY_CONNECTIONWRAPPER_HXX_
 #include "connectivity/ConnectionWrapper.hxx"
 #endif
-#ifndef _CPPUHELPER_COMPONENT_HXX_ 
+#ifndef _CPPUHELPER_COMPONENT_HXX_
 #include <cppuhelper/component.hxx>
 #endif
-#ifndef _CONNECTIVITY_COMMONTOOLS_HXX_ 
+#ifndef _CONNECTIVITY_COMMONTOOLS_HXX_
 #include <connectivity/CommonTools.hxx>
 #endif
 #ifndef _CPPUHELPER_COMPBASE1_HXX_
@@ -62,7 +62,7 @@
 #ifndef _COM_SUN_STAR_SDB_XQUERIESSUPPLIER_HPP_
 #include <com/sun/star/sdb/XQueriesSupplier.hpp>
 #endif
-#ifndef _COMPHELPER_SEQUENCE_HXX_ 
+#ifndef _COMPHELPER_SEQUENCE_HXX_
 #include <comphelper/sequence.hxx>
 #endif
 
@@ -89,19 +89,19 @@ namespace dbaccess
 	public:
 		OSharedConnection(::com::sun::star::uno::Reference< ::com::sun::star::uno::XAggregation >& _rxProxyConnection);
 
-		virtual ::com::sun::star::uno::Sequence< sal_Int8 > SAL_CALL getImplementationId(  ) throw (::com::sun::star::uno::RuntimeException);
+		virtual ::com::sun::star::uno::Sequence< sal_Int8 > SAL_CALL getImplementationId(  );
 
 		virtual void SAL_CALL acquire() throw() { OSharedConnection_BASE::acquire(); }
 		virtual void SAL_CALL release() throw() { OSharedConnection_BASE::release(); }
-		virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL getTypes(  ) throw (::com::sun::star::uno::RuntimeException)
+		virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL getTypes(  )
 		{
-			return ::comphelper::concatSequences( 
-				OSharedConnection_BASE::getTypes(), 
+			return ::comphelper::concatSequences(
+				OSharedConnection_BASE::getTypes(),
 				OSharedConnection_BASE2::getTypes()
-			); 
+			);
 		}
 
-		virtual ::com::sun::star::uno::Any SAL_CALL queryInterface( const ::com::sun::star::uno::Type& _rType ) throw (::com::sun::star::uno::RuntimeException)
+		virtual ::com::sun::star::uno::Any SAL_CALL queryInterface( const ::com::sun::star::uno::Type& _rType )
 		{
 			::com::sun::star::uno::Any aReturn = OSharedConnection_BASE::queryInterface(_rType);
 			if ( !aReturn.hasValue() )
@@ -110,56 +110,54 @@ namespace dbaccess
 		}
 		// --------------------------------------------------------------------------------
 		// XCloseable
-		virtual void SAL_CALL close(  ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException)
+		virtual void SAL_CALL close(  )
 		{
 			{
 				::osl::MutexGuard aGuard( m_aMutex );
 				::connectivity::checkDisposed(rBHelper.bDisposed);
-					
+
 			}
 			dispose();
 		}
 
 		// XConnection
-		virtual void SAL_CALL setAutoCommit( sal_Bool /*autoCommit*/ ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException)
-		{				
-			throw ::com::sun::star::sdbc::SQLException(::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("This call is not allowed when sharing connections.")),*this,::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("S10000")),0,::com::sun::star::uno::Any());
-		}
-		virtual void SAL_CALL setReadOnly( sal_Bool /*readOnly*/ ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException)
+		virtual void SAL_CALL setAutoCommit( sal_Bool /*autoCommit*/ )
 		{
 			throw ::com::sun::star::sdbc::SQLException(::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("This call is not allowed when sharing connections.")),*this,::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("S10000")),0,::com::sun::star::uno::Any());
 		}
-		virtual void SAL_CALL setCatalog( const ::rtl::OUString& /*catalog*/ ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException)
+		virtual void SAL_CALL setReadOnly( sal_Bool /*readOnly*/ )
 		{
 			throw ::com::sun::star::sdbc::SQLException(::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("This call is not allowed when sharing connections.")),*this,::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("S10000")),0,::com::sun::star::uno::Any());
 		}
-		virtual void SAL_CALL setTransactionIsolation( sal_Int32 /*level*/ ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException)
+		virtual void SAL_CALL setCatalog( const ::rtl::OUString& /*catalog*/ )
 		{
 			throw ::com::sun::star::sdbc::SQLException(::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("This call is not allowed when sharing connections.")),*this,::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("S10000")),0,::com::sun::star::uno::Any());
 		}
-		virtual void SAL_CALL setTypeMap( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess >& /*typeMap*/ ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException)
+		virtual void SAL_CALL setTransactionIsolation( sal_Int32 /*level*/ )
+		{
+			throw ::com::sun::star::sdbc::SQLException(::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("This call is not allowed when sharing connections.")),*this,::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("S10000")),0,::com::sun::star::uno::Any());
+		}
+		virtual void SAL_CALL setTypeMap( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess >& /*typeMap*/ )
 		{
 			throw ::com::sun::star::sdbc::SQLException(::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("This call is not allowed when sharing connections.")),*this,::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("S10000")),0,::com::sun::star::uno::Any());
 		}
 		// XConnection
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XStatement > SAL_CALL createStatement(  ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XPreparedStatement > SAL_CALL prepareStatement( const ::rtl::OUString& sql ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XPreparedStatement > SAL_CALL prepareCall( const ::rtl::OUString& sql ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual ::rtl::OUString SAL_CALL nativeSQL( const ::rtl::OUString& sql ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual sal_Bool SAL_CALL getAutoCommit(  ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL commit(  ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL rollback(  ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual sal_Bool SAL_CALL isClosed(  ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XDatabaseMetaData > SAL_CALL getMetaData(  ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual sal_Bool SAL_CALL isReadOnly(  ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual ::rtl::OUString SAL_CALL getCatalog(  ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual sal_Int32 SAL_CALL getTransactionIsolation(  ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess > SAL_CALL getTypeMap(  ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XStatement > SAL_CALL createStatement(  );
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XPreparedStatement > SAL_CALL prepareStatement( const ::rtl::OUString& sql );
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XPreparedStatement > SAL_CALL prepareCall( const ::rtl::OUString& sql );
+        virtual ::rtl::OUString SAL_CALL nativeSQL( const ::rtl::OUString& sql );
+        virtual sal_Bool SAL_CALL getAutoCommit(  );
+        virtual void SAL_CALL commit(  );
+        virtual void SAL_CALL rollback(  );
+        virtual sal_Bool SAL_CALL isClosed(  );
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XDatabaseMetaData > SAL_CALL getMetaData(  );
+        virtual sal_Bool SAL_CALL isReadOnly(  );
+        virtual ::rtl::OUString SAL_CALL getCatalog(  );
+        virtual sal_Int32 SAL_CALL getTransactionIsolation(  );
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess > SAL_CALL getTypeMap(  );
 	};
-	
+
 //........................................................................
 }	// namespace dbaccess
 //........................................................................
 #endif // DBA_CORE_SHARED_CONNECTION_HXX
-
-

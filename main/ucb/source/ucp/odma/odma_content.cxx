@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -114,7 +114,6 @@ void SAL_CALL Content::release() throw()
 //=========================================================================
 // virtual
 uno::Any SAL_CALL Content::queryInterface( const uno::Type & rType )
-    throw ( uno::RuntimeException )
 {
     uno::Any aRet;
 
@@ -138,7 +137,6 @@ XTYPEPROVIDER_COMMON_IMPL( Content );
 //=========================================================================
 // virtual
 uno::Sequence< uno::Type > SAL_CALL Content::getTypes()
-    throw( uno::RuntimeException )
 {
 	// @@@ Add own interfaces.
 
@@ -175,7 +173,6 @@ uno::Sequence< uno::Type > SAL_CALL Content::getTypes()
 
 // virtual
 rtl::OUString SAL_CALL Content::getImplementationName()
-    throw( uno::RuntimeException )
 {
     // @@@ Adjust implementation name. Keep the prefix "com.sun.star.comp."!
     return rtl::OUString::createFromAscii( "com.sun.star.comp.odma.Content" );
@@ -184,7 +181,6 @@ rtl::OUString SAL_CALL Content::getImplementationName()
 //=========================================================================
 // virtual
 uno::Sequence< rtl::OUString > SAL_CALL Content::getSupportedServiceNames()
-    throw( uno::RuntimeException )
 {
 	// @@@ Adjust macro name.
     uno::Sequence< rtl::OUString > aSNS( 1 );
@@ -201,7 +197,6 @@ uno::Sequence< rtl::OUString > SAL_CALL Content::getSupportedServiceNames()
 
 // virtual
 rtl::OUString SAL_CALL Content::getContentType()
-    throw( uno::RuntimeException )
 {
 	// @@@ Adjust macro name ( def in odma_provider.hxx ).
     return rtl::OUString::createFromAscii( ODMA_CONTENT_TYPE );
@@ -218,9 +213,6 @@ uno::Any SAL_CALL Content::execute(
         const ucb::Command& aCommand,
         sal_Int32 /*CommandId*/,
         const uno::Reference< ucb::XCommandEnvironment >& Environment )
-    throw( uno::Exception,
-           ucb::CommandAbortedException,
-           uno::RuntimeException )
 {
     uno::Any aRet;
 
@@ -500,7 +492,7 @@ uno::Any SAL_CALL Content::execute(
 						pExtension = ODM_FORMAT_RTF;
 					else if(sExt.equalsIgnoreAsciiCase("ps"))
 						pExtension = ODM_FORMAT_PS;
-					else  
+					else
 						pExtension = const_cast<sal_Char*>(sExt.getStr());
 				}
 				else
@@ -518,8 +510,8 @@ uno::Any SAL_CALL Content::execute(
 											 &dwFlags);
 
 				// check if we have to call the DMS dialog
-				if(odm == ODM_E_USERINT) 
-				{ 
+				if(odm == ODM_E_USERINT)
+				{
 					dwFlags = 0;
 					odm = NODMSaveAsEx(ContentProvider::getHandle(),
 											 NULL, // means it is saved the first time
@@ -599,7 +591,6 @@ uno::Any SAL_CALL Content::execute(
 //=========================================================================
 // virtual
 void SAL_CALL Content::abort( sal_Int32 /*CommandId*/ )
-    throw( uno::RuntimeException )
 {
 	// @@@ Implement logic to abort running commands, if this makes
 	//     sense for your content.
@@ -992,7 +983,7 @@ void Content::queryChildren( ContentRefList& rChildren )
 {
 	// @@@ Adapt method to your URL scheme...
 
-	// Obtain a list with a snapshot of all currently instanciated contents
+	// Obtain a list with a snapshot of all currently instantiated contents
 	// from provider and extract the contents which are direct children
 	// of this content.
 
@@ -1043,7 +1034,6 @@ void Content::insert(
         const uno::Reference< io::XInputStream > & xInputStream,
         sal_Bool bReplaceExisting,
         const uno::Reference< ucb::XCommandEnvironment >& Environment )
-    throw( uno::Exception )
 {
 	osl::ClearableGuard< osl::Mutex > aGuard( m_aMutex );
 
@@ -1106,7 +1096,6 @@ void Content::insert(
 #if 0
 //=========================================================================
 void Content::destroy( sal_Bool bDeletePhysical )
-    throw( uno::Exception )
 {
 	// @@@ take care about bDeletePhysical -> trashcan support
 
@@ -1116,7 +1105,7 @@ void Content::destroy( sal_Bool bDeletePhysical )
 
 	osl::Guard< osl::Mutex > aGuard( m_aMutex );
 
-	// Process instanciated children...
+	// Process instantiated children...
 
 	ContentRefList aChildren;
 	queryChildren( aChildren );
@@ -1144,7 +1133,7 @@ void Content::changePropertyValue(const beans::PropertyValue& _rValue,
 								  ::rtl::OUString& _rsMemberValue,
 								  sal_Int32& _rnChanged,
 								  uno::Sequence< uno::Any >& _rRet,
-								  uno::Sequence< beans::PropertyChangeEvent >& _rChanges) throw (beans::IllegalTypeException)
+								  uno::Sequence< beans::PropertyChangeEvent >& _rChanges)
 {
     rtl::OUString sNewValue;
 	sal_Bool bError = sal_False;
@@ -1208,4 +1197,3 @@ void Content::changePropertyValue(const beans::PropertyValue& _rValue,
     }
 }
 // -----------------------------------------------------------------------------
-

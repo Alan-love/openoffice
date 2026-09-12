@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_macabdrv1.hxx"
 
 #include "MacabRecord.hxx"
 #include "macabutilities.hxx"
@@ -168,9 +168,9 @@ void MacabRecord::releaseFields()
 }
 
 // -------------------------------------------------------------------------
-sal_Int32 MacabRecord::compareFields(const macabfield *_field1, const macabfield *_field2) 
+sal_Int32 MacabRecord::compareFields(const macabfield *_field1, const macabfield *_field2)
 {
-	
+
 	/* When comparing records, if either field is NULL (and the other is
 	 * not), that field is considered "greater than" the other, so that it
 	 * shows up later in the list when fields are ordered.
@@ -242,7 +242,7 @@ macabfield *MacabRecord::createMacabField(const ::rtl::OUString _newFieldString,
 		case kABDateProperty:
 			{
 				DateTime aDateTime = DBTypeConversion::toDateTime(_newFieldString);
-				
+
 				// bad format...
 				if(aDateTime.Year == 0 && aDateTime.Month == 0 && aDateTime.Day == 0)
 				{

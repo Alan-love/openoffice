@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #include <cppuhelper/implbase3.hxx>
@@ -38,14 +38,14 @@ using namespace ::com::sun::star::accessibility;
 
 using namespace ::com::sun::star::awt;
 
-typedef sal_Int32 HWND;
+typedef void* HWND;
 
 #include "AccTopWindowListener.hxx"
 #include "g_msacc.hxx"
 
 extern void FreeTopWindowListener();
-extern long GetMSComPtr(long hWnd, long lParam, long wParam);
-extern void handleWindowOpened_impl( long pAcc);
+extern sal_IntPtr GetMSComPtr( sal_IntPtr hWnd, sal_IntPtr lParam, sal_IntPtr wParam);
+extern void handleWindowOpened_impl( sal_Int64 pAcc);
 
 
 namespace my_sc_impl
@@ -107,33 +107,27 @@ public:
     MSAAServiceImpl ();
     virtual ~MSAAServiceImpl( void );
     // XInitialization will be called upon createInstanceWithArguments[AndContext]()
-    virtual void SAL_CALL initialize( Sequence< Any > const & args )
-    throw (Exception);
+    virtual void SAL_CALL initialize( Sequence< Any > const & args );
     // XMSAAService
-    virtual sal_Int32 SAL_CALL getAccObjectPtr (long hWnd, long lParam, long wParam)
-    throw (RuntimeException);
-    virtual void SAL_CALL handleWindowOpened(sal_Int32)
-    throw (RuntimeException);
+    virtual sal_Int64 SAL_CALL getAccObjectPtr (sal_Int64 hWnd, sal_Int64 lParam, sal_Int64 wParam);
+    virtual void SAL_CALL handleWindowOpened(sal_Int64);
     // XServiceInfo
-    virtual OUString SAL_CALL getImplementationName()
-    throw (RuntimeException);
-    virtual sal_Bool SAL_CALL supportsService( OUString const & serviceName )
-    throw (RuntimeException);
-    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames()
-    throw (RuntimeException);
+    virtual OUString SAL_CALL getImplementationName();
+    virtual sal_Bool SAL_CALL supportsService( OUString const & serviceName );
+    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames();
 };
 
 /**
-   * Implemention of XInitialization.
+   * Implementation of XInitialization.
    * @param
    * @return.
    */
-void MSAAServiceImpl::initialize( Sequence< Any > const & args ) throw (Exception)
+void MSAAServiceImpl::initialize( Sequence< Any > const & args )
 {
     if (1 != args.getLength())
     {
         throw lang::IllegalArgumentException(
-            OUString( RTL_CONSTASCII_USTRINGPARAM("give a string instanciating this component!") ),
+            OUString( RTL_CONSTASCII_USTRINGPARAM("give a string instantiating this component!") ),
             (::cppu::OWeakObject *)this, // resolve to XInterface reference
             0 ); // argument pos
     }
@@ -147,54 +141,54 @@ void MSAAServiceImpl::initialize( Sequence< Any > const & args ) throw (Exceptio
 }
 
 /**
-   * Implemention of getAccObjectPtr.
+   * Implementation of getAccObjectPtr.
    * @param
    * @return Com interface.
    */
-sal_Int32 MSAAServiceImpl::getAccObjectPtr ( long hWnd, long lParam, long wParam) throw (RuntimeException)
+sal_Int64 MSAAServiceImpl::getAccObjectPtr ( sal_Int64 hWnd, sal_Int64 lParam, sal_Int64 wParam)
 {
-    return GetMSComPtr(hWnd, lParam, wParam);
+    return (sal_Int64)GetMSComPtr((sal_IntPtr)hWnd, (sal_IntPtr)lParam, (sal_IntPtr)wParam);
 }
 
 /**
-   * Implemention of handleWindowOpened,the method will be invoked when a top window
+   * Implementation of handleWindowOpened,the method will be invoked when a top window
    * opened and AT starts up.
    * @param
    * @return
    */
-void MSAAServiceImpl::handleWindowOpened( sal_Int32 pAcc)
+void MSAAServiceImpl::handleWindowOpened( sal_Int64 pAcc)
 {
     handleWindowOpened_impl(pAcc);
 }
 
 /**
-   * Implemention of XServiceInfo.
+   * Implementation of XServiceInfo.
    * @param
-   * @return Implementataion name.
+   * @return Implementation name.
    */
-OUString MSAAServiceImpl::getImplementationName() throw (RuntimeException)
+OUString MSAAServiceImpl::getImplementationName()
 {
     // unique implementation name
     return OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.accessibility.my_sc_impl.MSAAService") );
 }
 
 /**
-   * Implemention of XServiceInfo,return support service name.
+   * Implementation of XServiceInfo,return support service name.
    * @param Service name.
    * @return If the service name is supported.
    */
-sal_Bool MSAAServiceImpl::supportsService( OUString const & serviceName ) throw (RuntimeException)
+sal_Bool MSAAServiceImpl::supportsService( OUString const & serviceName )
 {
     // this object only supports one service, so the test is simple
     return serviceName.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM("com.sun.star.accessibility.MSAAService") );
 }
 
 /**
-   * Implemention of XServiceInfo,return all service names.
+   * Implementation of XServiceInfo,return all service names.
    * @param.
    * @return service name sequence.
    */
-Sequence< OUString > MSAAServiceImpl::getSupportedServiceNames() throw (RuntimeException)
+Sequence< OUString > MSAAServiceImpl::getSupportedServiceNames()
 {
     return getSupportedServiceNames_MSAAServiceImpl();
 }
@@ -214,7 +208,7 @@ Reference< XInterface > SAL_CALL create_MSAAServiceImpl( Reference< XComponentCo
 
 /**
    * Constructor.
-   * @param 
+   * @param
    * @return
    */
 MSAAServiceImpl::MSAAServiceImpl()

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -44,7 +44,7 @@ VCLXTabPageModel::~VCLXTabPageModel()
 #endif
 }
 
-void SAL_CALL VCLXTabPageModel::draw( sal_Int32 nX, sal_Int32 nY ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL VCLXTabPageModel::draw( sal_Int32 nX, sal_Int32 nY )
 {
 	::osl::MutexGuard aGuard( GetMutex() );
 	Window* pWindow = GetWindow();
@@ -62,7 +62,7 @@ void SAL_CALL VCLXTabPageModel::draw( sal_Int32 nX, sal_Int32 nY ) throw(::com::
     }
 }
 
-::com::sun::star::awt::DeviceInfo VCLXTabPageModel::getInfo() throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::awt::DeviceInfo VCLXTabPageModel::getInfo()
 {
 	::com::sun::star::awt::DeviceInfo aInfo;// = VCLXDevice::getInfo();
 	return aInfo;
@@ -72,7 +72,6 @@ void SAL_CALL VCLXTabPageModel::draw( sal_Int32 nX, sal_Int32 nY ) throw(::com::
 void SAL_CALL VCLXTabPageModel::setProperty(
     const ::rtl::OUString& /*PropertyName*/,
     const ::com::sun::star::uno::Any& /*Value*/ )
-throw(::com::sun::star::uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard( GetMutex() );
 
@@ -83,21 +82,21 @@ throw(::com::sun::star::uno::RuntimeException)
     }*/
 }
 //XTabPageModel
-::sal_Int16 SAL_CALL VCLXTabPageModel::getTabPageID() throw (::com::sun::star::uno::RuntimeException)
+::sal_Int16 SAL_CALL VCLXTabPageModel::getTabPageID()
 {
 	return 0;
 }
-::sal_Bool SAL_CALL VCLXTabPageModel::getEnabled() throw (::com::sun::star::uno::RuntimeException)
+::sal_Bool SAL_CALL VCLXTabPageModel::getEnabled()
 {
 	return false;
 }
-void SAL_CALL VCLXTabPageModel::setEnabled( ::sal_Bool _enabled ) throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL VCLXTabPageModel::setEnabled( ::sal_Bool _enabled )
 {
 	//TabControl* pTabControl = (TabControl*)GetWindow();
 	//if ( pTabControl )
 	//	pTabControl->EnablePage(0, true);
 }
-::rtl::OUString SAL_CALL VCLXTabPageModel::getTitle() throw (::com::sun::star::uno::RuntimeException)
+::rtl::OUString SAL_CALL VCLXTabPageModel::getTitle()
 {
 	//TabControl* pTabControl = (TabControl*)GetWindow();
 	//if ( pTabControl )
@@ -105,27 +104,27 @@ void SAL_CALL VCLXTabPageModel::setEnabled( ::sal_Bool _enabled ) throw (::com::
 	//else
 		return ::rtl::OUString::createFromAscii("");
 }
-void SAL_CALL VCLXTabPageModel::setTitle( const ::rtl::OUString& _title ) throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL VCLXTabPageModel::setTitle( const ::rtl::OUString& _title )
 {
 	//TabControl* pTabControl = (TabControl*)GetWindow();
 	//if ( pTabControl )
 	//	pTabControl->SetPageText(0, _title);
 
 }
-::rtl::OUString SAL_CALL VCLXTabPageModel::getImageURL() throw (::com::sun::star::uno::RuntimeException)
+::rtl::OUString SAL_CALL VCLXTabPageModel::getImageURL()
 {
 	return ::rtl::OUString::createFromAscii("");
 }
-void SAL_CALL VCLXTabPageModel::setImageURL( const ::rtl::OUString& /*_imageurl*/ ) throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL VCLXTabPageModel::setImageURL( const ::rtl::OUString& /*_imageurl*/ )
 {
 	//m_sImageURL = _imageurl;
 }
-::rtl::OUString SAL_CALL VCLXTabPageModel::getToolTip() throw (::com::sun::star::uno::RuntimeException)
+::rtl::OUString SAL_CALL VCLXTabPageModel::getToolTip()
 {
 	//return m_sTooltip;
 	return ::rtl::OUString::createFromAscii("");
 }
-void SAL_CALL VCLXTabPageModel::setToolTip( const ::rtl::OUString& _tooltip ) throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL VCLXTabPageModel::setToolTip( const ::rtl::OUString& _tooltip )
 {
 	(void)_tooltip;
 }
@@ -139,7 +138,7 @@ void SAL_CALL VCLXTabPageModel::setToolTip( const ::rtl::OUString& _tooltip ) th
 	}
  	return *pHelper;
 }
-::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > VCLXTabPageModel::getPropertySetInfo(  ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > VCLXTabPageModel::getPropertySetInfo(  )
 {
 	static ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > xInfo( createPropertySetInfo( getInfoHelper() ) );
 	return xInfo;

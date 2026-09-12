@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -105,12 +105,12 @@ VCLXAccessibleComponent::~VCLXAccessibleComponent()
 IMPLEMENT_FORWARD_XINTERFACE3( VCLXAccessibleComponent, AccessibleExtendedComponentHelper_BASE, OAccessibleImplementationAccess, VCLXAccessibleComponent_BASE )
 IMPLEMENT_FORWARD_XTYPEPROVIDER3( VCLXAccessibleComponent, AccessibleExtendedComponentHelper_BASE, OAccessibleImplementationAccess, VCLXAccessibleComponent_BASE )
 
-::rtl::OUString VCLXAccessibleComponent::getImplementationName() throw (uno::RuntimeException)
+::rtl::OUString VCLXAccessibleComponent::getImplementationName()
 {
 	return ::rtl::OUString::createFromAscii( "com.sun.star.comp.toolkit.AccessibleWindow" );
 }
 
-sal_Bool VCLXAccessibleComponent::supportsService( const ::rtl::OUString& rServiceName ) throw (uno::RuntimeException)
+sal_Bool VCLXAccessibleComponent::supportsService( const ::rtl::OUString& rServiceName )
 {
 	uno::Sequence< ::rtl::OUString > aNames( getSupportedServiceNames() );
 	const ::rtl::OUString* pNames = aNames.getConstArray();
@@ -121,7 +121,7 @@ sal_Bool VCLXAccessibleComponent::supportsService( const ::rtl::OUString& rServi
 	return pNames != pEnd;
 }
 
-uno::Sequence< ::rtl::OUString > VCLXAccessibleComponent::getSupportedServiceNames() throw (uno::RuntimeException)
+uno::Sequence< ::rtl::OUString > VCLXAccessibleComponent::getSupportedServiceNames()
 {
 	uno::Sequence< ::rtl::OUString > aNames(1);
 	aNames[0] = ::rtl::OUString::createFromAscii( "com.sun.star.awt.AccessibleWindow" );
@@ -290,9 +290,9 @@ void VCLXAccessibleComponent::ProcessWindowEvent( const VclWindowEvent& rVclWind
 		{
             // avoid notification if a child frame is already active
             // only one frame may be active at a given time
-            if ( !pAccWindow->HasActiveChildFrame() && 
-                 ( getAccessibleRole() == accessibility::AccessibleRole::FRAME || 
-                   getAccessibleRole() == accessibility::AccessibleRole::ALERT || 
+            if ( !pAccWindow->HasActiveChildFrame() &&
+                 ( getAccessibleRole() == accessibility::AccessibleRole::FRAME ||
+                   getAccessibleRole() == accessibility::AccessibleRole::ALERT ||
                    getAccessibleRole() == accessibility::AccessibleRole::DIALOG ) )  // #i18891#
             {
 			    aNewValue <<= accessibility::AccessibleStateType::ACTIVE;
@@ -302,8 +302,8 @@ void VCLXAccessibleComponent::ProcessWindowEvent( const VclWindowEvent& rVclWind
 		break;
 		case VCLEVENT_WINDOW_DEACTIVATE:
 		{
-            if ( getAccessibleRole() == accessibility::AccessibleRole::FRAME || 
-                 getAccessibleRole() == accessibility::AccessibleRole::ALERT || 
+            if ( getAccessibleRole() == accessibility::AccessibleRole::FRAME ||
+                 getAccessibleRole() == accessibility::AccessibleRole::ALERT ||
                  getAccessibleRole() == accessibility::AccessibleRole::DIALOG )  // #i18891#
             {
                 aOldValue <<= accessibility::AccessibleStateType::ACTIVE;
@@ -458,7 +458,7 @@ void VCLXAccessibleComponent::FillAccessibleRelationSet( utl::AccessibleRelation
 			aSequence[0] = pLabelFor->GetAccessible();
 			rRelationSet.AddRelation( accessibility::AccessibleRelation( accessibility::AccessibleRelationType::LABEL_FOR, aSequence ) );
 		}
-		Window* pMemberOf = pWindow->GetAccessibleRelationMemberOf();	
+		Window* pMemberOf = pWindow->GetAccessibleRelationMemberOf();
 		if ( pMemberOf && pMemberOf != pWindow )
 		{
 			uno::Sequence< uno::Reference< uno::XInterface > > aSequence(1);
@@ -468,7 +468,7 @@ void VCLXAccessibleComponent::FillAccessibleRelationSet( utl::AccessibleRelation
 		uno::Sequence< uno::Reference< uno::XInterface > > aFlowToSequence = pWindow->GetAccFlowToSequence();
 		if( aFlowToSequence.getLength() > 0 )
 		{
-			rRelationSet.AddRelation( accessibility::AccessibleRelation( accessibility::AccessibleRelationType::CONTENT_FLOWS_TO, aFlowToSequence ) );		
+			rRelationSet.AddRelation( accessibility::AccessibleRelation( accessibility::AccessibleRelationType::CONTENT_FLOWS_TO, aFlowToSequence ) );
 		}
 	}
 }
@@ -495,13 +495,13 @@ void VCLXAccessibleComponent::FillAccessibleStateSet( utl::AccessibleStateSetHel
         }
 
         if ( pWindow->HasChildPathFocus() &&
-             ( getAccessibleRole() == accessibility::AccessibleRole::FRAME || 
-               getAccessibleRole() == accessibility::AccessibleRole::ALERT || 
+             ( getAccessibleRole() == accessibility::AccessibleRole::FRAME ||
+               getAccessibleRole() == accessibility::AccessibleRole::ALERT ||
                getAccessibleRole() == accessibility::AccessibleRole::DIALOG ) )  // #i18891#
 			rStateSet.AddState( accessibility::AccessibleStateType::ACTIVE );
 
         // #104290# MT: This way, a ComboBox doesn't get state FOCUSED.
-        // I also don't understand 
+        // I also don't understand
         // a) why WINDOW_FIRSTCHILD is used here (which btw is a border window in the case of a combo box)
         // b) why HasFocus() is nout "enough" for a compound control
         /*
@@ -519,7 +519,7 @@ void VCLXAccessibleComponent::FillAccessibleStateSet( utl::AccessibleStateSetHel
 		if ( pWindow->GetStyle() & WB_SIZEABLE )
 			rStateSet.AddState( accessibility::AccessibleStateType::RESIZABLE );
 		// 6. frame doesn't have MOVABLE state
-		// 10. for password text, where is the sensitive state? 
+		// 10. for password text, where is the sensitive state?
 		if( ( getAccessibleRole() == accessibility::AccessibleRole::FRAME ||getAccessibleRole() == accessibility::AccessibleRole::DIALOG )&& pWindow->GetStyle() & WB_MOVEABLE )
 			rStateSet.AddState( accessibility::AccessibleStateType::MOVEABLE );
         if( pWindow->IsDialog() )
@@ -532,29 +532,29 @@ void VCLXAccessibleComponent::FillAccessibleStateSet( utl::AccessibleStateSetHel
         //         should be set.
 		if( pWindow && pWindow->GetType() == WINDOW_COMBOBOX )
 		{
-			if( !( pWindow->GetStyle() & WB_READONLY) ||  
+			if( !( pWindow->GetStyle() & WB_READONLY) ||
 			    !((Edit*)pWindow)->IsReadOnly() )
-					rStateSet.AddState( accessibility::AccessibleStateType::EDITABLE );	
+					rStateSet.AddState( accessibility::AccessibleStateType::EDITABLE );
 		}
-		
+
 		Window* pChild = pWindow->GetWindow( WINDOW_FIRSTCHILD );
-		
+
 		while( pWindow && pChild )
 		{
 			Window* pWinTemp = pChild->GetWindow( WINDOW_FIRSTCHILD );
 			if( pWinTemp && pWinTemp->GetType() == WINDOW_EDIT )
 			{
-				if( !( pWinTemp->GetStyle() & WB_READONLY) || 
+				if( !( pWinTemp->GetStyle() & WB_READONLY) ||
 					!((Edit*)pWinTemp)->IsReadOnly() )
 					rStateSet.AddState( accessibility::AccessibleStateType::EDITABLE );
-				break;	
+				break;
 			}
 			if( pChild->GetType() == WINDOW_EDIT )
 			{
-				if( !( pChild->GetStyle() & WB_READONLY) || 
+				if( !( pChild->GetStyle() & WB_READONLY) ||
 					!((Edit*)pChild)->IsReadOnly())
 					rStateSet.AddState( accessibility::AccessibleStateType::EDITABLE );
-				break;	
+				break;
 			}
 			pChild = pChild->GetWindow( WINDOW_NEXT );
 		}
@@ -590,7 +590,7 @@ TRANSIENT
 
 
 // accessibility::XAccessibleContext
-sal_Int32 VCLXAccessibleComponent::getAccessibleChildCount() throw (uno::RuntimeException)
+sal_Int32 VCLXAccessibleComponent::getAccessibleChildCount()
 {
 	OExternalLockGuard aGuard( this );
 
@@ -601,7 +601,7 @@ sal_Int32 VCLXAccessibleComponent::getAccessibleChildCount() throw (uno::Runtime
 	return nChildren;
 }
 
-uno::Reference< accessibility::XAccessible > VCLXAccessibleComponent::getAccessibleChild( sal_Int32 i ) throw (lang::IndexOutOfBoundsException, uno::RuntimeException)
+uno::Reference< accessibility::XAccessible > VCLXAccessibleComponent::getAccessibleChild( sal_Int32 i )
 {
 	OExternalLockGuard aGuard( this );
 
@@ -631,7 +631,7 @@ uno::Reference< accessibility::XAccessible > VCLXAccessibleComponent::getVclPare
 	return xAcc;
 }
 
-uno::Reference< accessibility::XAccessible > VCLXAccessibleComponent::getAccessibleParent(	) throw (uno::RuntimeException)
+uno::Reference< accessibility::XAccessible > VCLXAccessibleComponent::getAccessibleParent(	)
 {
 	OExternalLockGuard aGuard( this );
 
@@ -643,7 +643,7 @@ uno::Reference< accessibility::XAccessible > VCLXAccessibleComponent::getAccessi
 	return xAcc;
 }
 
-sal_Int32 VCLXAccessibleComponent::getAccessibleIndexInParent(	) throw (uno::RuntimeException)
+sal_Int32 VCLXAccessibleComponent::getAccessibleIndexInParent(	)
 {
 	OExternalLockGuard aGuard( this );
 
@@ -703,7 +703,7 @@ sal_Int32 VCLXAccessibleComponent::getAccessibleIndexInParent(	) throw (uno::Run
 	return nIndex;
 }
 
-sal_Int16 VCLXAccessibleComponent::getAccessibleRole(  ) throw (uno::RuntimeException)
+sal_Int16 VCLXAccessibleComponent::getAccessibleRole(  )
 {
 	OExternalLockGuard aGuard( this );
 
@@ -715,7 +715,7 @@ sal_Int16 VCLXAccessibleComponent::getAccessibleRole(  ) throw (uno::RuntimeExce
 	return nRole;
 }
 
-::rtl::OUString VCLXAccessibleComponent::getAccessibleDescription(	) throw (uno::RuntimeException)
+::rtl::OUString VCLXAccessibleComponent::getAccessibleDescription(	)
 {
 	OExternalLockGuard aGuard( this );
 
@@ -727,7 +727,7 @@ sal_Int16 VCLXAccessibleComponent::getAccessibleRole(  ) throw (uno::RuntimeExce
 	return aDescription;
 }
 
-::rtl::OUString VCLXAccessibleComponent::getAccessibleName(  ) throw (uno::RuntimeException)
+::rtl::OUString VCLXAccessibleComponent::getAccessibleName(  )
 {
 	OExternalLockGuard aGuard( this );
 
@@ -744,7 +744,7 @@ sal_Int16 VCLXAccessibleComponent::getAccessibleRole(  ) throw (uno::RuntimeExce
 	return aName;
 }
 
-uno::Reference< accessibility::XAccessibleRelationSet > VCLXAccessibleComponent::getAccessibleRelationSet(	) throw (uno::RuntimeException)
+uno::Reference< accessibility::XAccessibleRelationSet > VCLXAccessibleComponent::getAccessibleRelationSet(	)
 {
 	OExternalLockGuard aGuard( this );
 
@@ -754,7 +754,7 @@ uno::Reference< accessibility::XAccessibleRelationSet > VCLXAccessibleComponent:
     return xSet;
 }
 
-uno::Reference< accessibility::XAccessibleStateSet > VCLXAccessibleComponent::getAccessibleStateSet(  ) throw (uno::RuntimeException)
+uno::Reference< accessibility::XAccessibleStateSet > VCLXAccessibleComponent::getAccessibleStateSet(  )
 {
 	OExternalLockGuard aGuard( this );
 
@@ -764,14 +764,14 @@ uno::Reference< accessibility::XAccessibleStateSet > VCLXAccessibleComponent::ge
 	return xSet;
 }
 
-lang::Locale VCLXAccessibleComponent::getLocale() throw (accessibility::IllegalAccessibleComponentStateException, uno::RuntimeException)
+lang::Locale VCLXAccessibleComponent::getLocale()
 {
 	OExternalLockGuard aGuard( this );
 
 	return Application::GetSettings().GetLocale();
 }
 
-uno::Reference< accessibility::XAccessible > VCLXAccessibleComponent::getAccessibleAtPoint( const awt::Point& rPoint ) throw (uno::RuntimeException)
+uno::Reference< accessibility::XAccessible > VCLXAccessibleComponent::getAccessibleAtPoint( const awt::Point& rPoint )
 {
 	OExternalLockGuard aGuard( this );
 
@@ -780,8 +780,8 @@ uno::Reference< accessibility::XAccessible > VCLXAccessibleComponent::getAccessi
 	{
 		uno::Reference< accessibility::XAccessible > xAcc = getAccessibleChild( i );
 		if ( xAcc.is() )
-		{			
-			uno::Reference< accessibility::XAccessibleComponent > xComp( xAcc->getAccessibleContext(), uno::UNO_QUERY );				
+		{
+			uno::Reference< accessibility::XAccessibleComponent > xComp( xAcc->getAccessibleContext(), uno::UNO_QUERY );
 			if ( xComp.is() )
 			{
 				Rectangle aRect = VCLRectangle( xComp->getBounds() );
@@ -799,7 +799,7 @@ uno::Reference< accessibility::XAccessible > VCLXAccessibleComponent::getAccessi
 }
 
 // accessibility::XAccessibleComponent
-awt::Rectangle VCLXAccessibleComponent::implGetBounds() throw (uno::RuntimeException)
+awt::Rectangle VCLXAccessibleComponent::implGetBounds()
 {
 	awt::Rectangle aBounds ( 0, 0, 0, 0 );
 
@@ -851,7 +851,7 @@ awt::Rectangle VCLXAccessibleComponent::implGetBounds() throw (uno::RuntimeExcep
 	return aBounds;
 }
 
-awt::Point VCLXAccessibleComponent::getLocationOnScreen(  ) throw (uno::RuntimeException)
+awt::Point VCLXAccessibleComponent::getLocationOnScreen(  )
 {
 	OExternalLockGuard aGuard( this );
 
@@ -866,7 +866,7 @@ awt::Point VCLXAccessibleComponent::getLocationOnScreen(  ) throw (uno::RuntimeE
 	return aPos;
 }
 
-void VCLXAccessibleComponent::grabFocus(  ) throw (uno::RuntimeException)
+void VCLXAccessibleComponent::grabFocus(  )
 {
 	OExternalLockGuard aGuard( this );
 
@@ -875,7 +875,7 @@ void VCLXAccessibleComponent::grabFocus(  ) throw (uno::RuntimeException)
 		mxWindow->setFocus();
 }
 
-sal_Int32 SAL_CALL VCLXAccessibleComponent::getForeground(	) throw (uno::RuntimeException)
+sal_Int32 SAL_CALL VCLXAccessibleComponent::getForeground(	)
 {
 	OExternalLockGuard aGuard( this );
 
@@ -902,7 +902,7 @@ sal_Int32 SAL_CALL VCLXAccessibleComponent::getForeground(	) throw (uno::Runtime
 	return nColor;
 }
 
-sal_Int32 SAL_CALL VCLXAccessibleComponent::getBackground(	) throw (uno::RuntimeException)
+sal_Int32 SAL_CALL VCLXAccessibleComponent::getBackground(	)
 {
 	OExternalLockGuard aGuard( this );
 
@@ -921,7 +921,7 @@ sal_Int32 SAL_CALL VCLXAccessibleComponent::getBackground(	) throw (uno::Runtime
 
 // XAccessibleExtendedComponent
 
-uno::Reference< awt::XFont > SAL_CALL VCLXAccessibleComponent::getFont(  ) throw (uno::RuntimeException)
+uno::Reference< awt::XFont > SAL_CALL VCLXAccessibleComponent::getFont(  )
 {
 	OExternalLockGuard aGuard( this );
 
@@ -946,7 +946,7 @@ uno::Reference< awt::XFont > SAL_CALL VCLXAccessibleComponent::getFont(  ) throw
 	return xFont;
 }
 
-::rtl::OUString SAL_CALL VCLXAccessibleComponent::getTitledBorderText(	) throw (uno::RuntimeException)
+::rtl::OUString SAL_CALL VCLXAccessibleComponent::getTitledBorderText(	)
 {
 	OExternalLockGuard aGuard( this );
 
@@ -957,7 +957,7 @@ uno::Reference< awt::XFont > SAL_CALL VCLXAccessibleComponent::getFont(  ) throw
 	return sRet;
 }
 
-::rtl::OUString SAL_CALL VCLXAccessibleComponent::getToolTipText(  ) throw (uno::RuntimeException)
+::rtl::OUString SAL_CALL VCLXAccessibleComponent::getToolTipText(  )
 {
 	OExternalLockGuard aGuard( this );
 
@@ -967,4 +967,3 @@ uno::Reference< awt::XFont > SAL_CALL VCLXAccessibleComponent::getFont(  ) throw
 
 	return sRet;
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -81,9 +81,8 @@ const sal_Int32 MYSCHEME_LEN = 20;
 
 rtl_StandardModuleCount g_moduleCount = MODULE_COUNT_INIT;
 
-void SAL_CALL ScriptProtocolHandler::initialize( 
+void SAL_CALL ScriptProtocolHandler::initialize(
     const css::uno::Sequence < css::uno::Any >& aArguments )
-    throw ( css::uno::Exception )
 {
     if ( m_bInitialised )
     {
@@ -105,7 +104,6 @@ void SAL_CALL ScriptProtocolHandler::initialize(
 
 Reference< XDispatch > SAL_CALL ScriptProtocolHandler::queryDispatch(
     const URL& aURL, const ::rtl::OUString& sTargetFrameName, sal_Int32 nSearchFlags )
-    throw( ::com::sun::star::uno::RuntimeException )
 {
 	(void)sTargetFrameName;
 	(void)nSearchFlags;
@@ -133,7 +131,6 @@ Reference< XDispatch > SAL_CALL ScriptProtocolHandler::queryDispatch(
 Sequence< Reference< XDispatch > > SAL_CALL
 ScriptProtocolHandler::queryDispatches(
 const Sequence < DispatchDescriptor >& seqDescriptor )
-throw( RuntimeException )
 {
     sal_Int32 nCount = seqDescriptor.getLength();
     Sequence< Reference< XDispatch > > lDispatcher( nCount );
@@ -149,7 +146,6 @@ throw( RuntimeException )
 void SAL_CALL ScriptProtocolHandler::dispatchWithNotification(
     const URL& aURL, const Sequence < PropertyValue >& lArgs,
     const Reference< XDispatchResultListener >& xListener )
-    throw ( RuntimeException )
 {
 
     sal_Bool bSuccess = sal_False;
@@ -196,8 +192,8 @@ void SAL_CALL ScriptProtocolHandler::dispatchWithNotification(
                     if ( xListener.is() )
                     {
                         ::com::sun::star::frame::DispatchResultEvent aEvent(
-                                static_cast< ::cppu::OWeakObject* >( this ), 
-                                ::com::sun::star::frame::DispatchResultState::FAILURE, 
+                                static_cast< ::cppu::OWeakObject* >( this ),
+                                ::com::sun::star::frame::DispatchResultState::FAILURE,
                                 invokeResult );
                         try
                         {
@@ -205,7 +201,7 @@ void SAL_CALL ScriptProtocolHandler::dispatchWithNotification(
                         }
                         catch(RuntimeException & e)
                         {
-                            OSL_TRACE( 
+                            OSL_TRACE(
                                 "ScriptProtocolHandler::dispatchWithNotification: caught RuntimeException"
                                 "while dispatchFinished with failture of the execution %s",
                                 ::rtl::OUStringToOString( e.Message,
@@ -216,7 +212,7 @@ void SAL_CALL ScriptProtocolHandler::dispatchWithNotification(
                 }
             }
 
-            // Creates a ScriptProvider ( if one is not created already ) 
+            // Creates a ScriptProvider ( if one is not created already )
             createScriptProvider();
 
             Reference< provider::XScript > xFunc =
@@ -224,7 +220,7 @@ void SAL_CALL ScriptProtocolHandler::dispatchWithNotification(
             ENSURE_OR_THROW( xFunc.is(),
                 "ScriptProtocolHandler::dispatchWithNotification: validate xFunc - unable to obtain XScript interface" );
 
-           
+
             Sequence< Any > outArgs( 0 );
             Sequence< sal_Int16 > outIndex;
 
@@ -323,7 +319,7 @@ void SAL_CALL ScriptProtocolHandler::dispatchWithNotification(
         }
         catch(RuntimeException & e)
         {
-            OSL_TRACE( 
+            OSL_TRACE(
             "ScriptProtocolHandler::dispatchWithNotification: caught RuntimeException"
             "while dispatchFinished %s",
             ::rtl::OUStringToOString( e.Message,
@@ -334,14 +330,12 @@ void SAL_CALL ScriptProtocolHandler::dispatchWithNotification(
 
 void SAL_CALL ScriptProtocolHandler::dispatch(
 const URL& aURL, const Sequence< PropertyValue >& lArgs )
-throw ( RuntimeException )
 {
     dispatchWithNotification( aURL, lArgs, Reference< XDispatchResultListener >() );
 }
 
 void SAL_CALL ScriptProtocolHandler::addStatusListener(
 const Reference< XStatusListener >& xControl, const URL& aURL )
-throw ( RuntimeException )
 {
 	(void)xControl;
 	(void)aURL;
@@ -351,7 +345,6 @@ throw ( RuntimeException )
 
 void SAL_CALL ScriptProtocolHandler::removeStatusListener(
 const Reference< XStatusListener >& xControl, const URL& aURL )
-throw ( RuntimeException )
 {
 	(void)xControl;
 	(void)aURL;
@@ -393,10 +386,10 @@ ScriptProtocolHandler::getScriptInvocation()
     return m_xScriptInvocation.is();
 }
 
-void ScriptProtocolHandler::createScriptProvider() 
+void ScriptProtocolHandler::createScriptProvider()
 {
     if ( m_xScriptProvider.is() )
-        return;	
+        return;
 
     try
     {
@@ -438,7 +431,7 @@ void ScriptProtocolHandler::createScriptProvider()
 
             Reference< provider::XScriptProviderFactory > xFac(
                 m_xCtx->getValueByName( tmspf ), UNO_QUERY_THROW );
-                                                                                
+
             Any aContext;
             if ( getScriptInvocation() )
                 aContext = makeAny( m_xScriptInvocation );
@@ -470,7 +463,6 @@ ScriptProtocolHandler::~ScriptProtocolHandler()
 
 /* XServiceInfo */
 ::rtl::OUString SAL_CALL ScriptProtocolHandler::getImplementationName( )
-throw( RuntimeException )
 {
     return impl_getStaticImplementationName();
 }
@@ -478,7 +470,6 @@ throw( RuntimeException )
 /* XServiceInfo */
 sal_Bool SAL_CALL ScriptProtocolHandler::supportsService(
 const ::rtl::OUString& sServiceName )
-throw( RuntimeException )
 {
     Sequence< ::rtl::OUString > seqServiceNames = getSupportedServiceNames();
     const ::rtl::OUString* pArray = seqServiceNames.getConstArray();
@@ -495,7 +486,6 @@ throw( RuntimeException )
 
 /* XServiceInfo */
 Sequence< ::rtl::OUString > SAL_CALL ScriptProtocolHandler::getSupportedServiceNames()
-throw( RuntimeException )
 {
     return impl_getStaticSupportedServiceNames();
 }
@@ -519,7 +509,6 @@ Sequence< ::rtl::OUString > ScriptProtocolHandler::impl_getStaticSupportedServic
 /* Helper for registry */
 Reference< XInterface > SAL_CALL ScriptProtocolHandler::impl_createInstance(
 const Reference< css::uno::XComponentContext > & xCtx)
-throw( RuntimeException )
 {
     return Reference < XInterface >( *new ScriptProtocolHandler( xCtx ) );
 }
@@ -545,8 +534,8 @@ extern "C"
 
 #undef css
 #define css ::com::sun::star
-    
-    void SAL_CALL component_getImplementationEnvironment( 
+
+    void SAL_CALL component_getImplementationEnvironment(
         const sal_Char** ppEnvironmentTypeName, uno_Environment** ppEnvironment )
     {
 		(void)ppEnvironment;
@@ -561,5 +550,3 @@ extern "C"
         return component_getFactoryHelper( pImplementationName, pServiceManager, pRegistryKey, scripting_protocolhandler::g_entries );
     }
 } // extern "C"
-
-

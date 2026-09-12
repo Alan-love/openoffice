@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
@@ -166,8 +166,8 @@ public:
 	//Begin Bug 119922:Graphic in header and footer can not be displayed correctly.
 	//Set default value for "Follow text flow" to false if a previous version didn't support "Follow text flow".
 	sal_Bool                        FillBaseProperties(SfxItemSet& rToSet,
-														const SfxItemSet &rFromSet, 
-														sal_Bool& rSizeFound, 
+														const SfxItemSet &rFromSet,
+														sal_Bool& rSizeFound,
 														const sal_Bool bOasis = sal_False );
 	//End Bug 119922
 
@@ -191,7 +191,7 @@ sal_Bool BaseFrameProperties_Impl::GetProperty(sal_uInt16 nWID, sal_uInt8 nMembe
 //Begin Bug 119922:Graphic in header and footer can not be displayed correctly.
 //Set default value for "Follow text flow" to false if a previous version didn't support "Follow text flow".
 sal_Bool BaseFrameProperties_Impl::FillBaseProperties(SfxItemSet& rToSet,
-													  const SfxItemSet& rFromSet, 
+													  const SfxItemSet& rFromSet,
 													  sal_Bool& rSizeFound,
 													  const sal_Bool bOasis /*sal_False*/ )
 //End Bug 119922
@@ -227,13 +227,13 @@ sal_Bool BaseFrameProperties_Impl::FillBaseProperties(SfxItemSet& rToSet,
     const ::uno::Any* pGrFilter = 0; GetProperty(RES_BACKGROUND, MID_GRAPHIC_FILTER, pGrFilter     );
     const ::uno::Any* pGrTranparency = 0; GetProperty(RES_BACKGROUND, MID_GRAPHIC_TRANSPARENCY, pGrTranparency     );
     const bool bSvxBrushItemPropertiesUsed(
-        pCol || 
-        pTrans || 
-        pGrURL || 
-        pGrFilter || 
-        pGrLoc || 
-        pGrTranparency || 
-        pColTrans || 
+        pCol ||
+        pTrans ||
+        pGrURL ||
+        pGrFilter ||
+        pGrLoc ||
+        pGrTranparency ||
+        pColTrans ||
         pRGBCol);
 
     //UUUU check for FillStyle properties in the range XATTR_FILL_FIRST, XATTR_FILL_LAST
@@ -273,23 +273,23 @@ sal_Bool BaseFrameProperties_Impl::FillBaseProperties(SfxItemSet& rToSet,
     const uno::Any* pOwnAttrFillBmpItem = 0; GetProperty(OWN_ATTR_FILLBMP_MODE, 0, pOwnAttrFillBmpItem);
 
     const bool bXFillStyleItemUsed(
-        pXFillStyleItem || 
-        pXFillColorItem || 
-        pXFillGradientItem || pXFillGradientNameItem || 
+        pXFillStyleItem ||
+        pXFillColorItem ||
+        pXFillGradientItem || pXFillGradientNameItem ||
         pXFillHatchItem || pXFillHatchNameItem ||
         pXFillBitmapItem || pXFillBitmapNameItem || pXFillBitmapURLItem ||
-        pXFillTransparenceItem || 
-        pXGradientStepCountItem || 
-        pXFillBmpPosItem || 
-        pXFillBmpSizeXItem || 
-        pXFillBmpSizeYItem || 
+        pXFillTransparenceItem ||
+        pXGradientStepCountItem ||
+        pXFillBmpPosItem ||
+        pXFillBmpSizeXItem ||
+        pXFillBmpSizeYItem ||
         pXFillFloatTransparenceItem || pXFillFloatTransparenceNameItem ||
-        pXSecondaryFillColorItem || 
-        pXFillBmpSizeLogItem || 
-        pXFillBmpTileOffsetXItem || 
-        pXFillBmpTileOffsetYItem || 
-        pXFillBmpPosOffsetXItem || 
-        pXFillBmpPosOffsetYItem || 
+        pXSecondaryFillColorItem ||
+        pXFillBmpSizeLogItem ||
+        pXFillBmpTileOffsetXItem ||
+        pXFillBmpTileOffsetYItem ||
+        pXFillBmpPosOffsetXItem ||
+        pXFillBmpPosOffsetYItem ||
         pXFillBackgroundItem ||
         pOwnAttrFillBmpItem);
 
@@ -354,33 +354,33 @@ sal_Bool BaseFrameProperties_Impl::FillBaseProperties(SfxItemSet& rToSet,
 
     if(bXFillStyleItemUsed)
     {
-        if(pXFillStyleItem) 
-        { 
-            XFillStyleItem aXFillStyleItem; 
+        if(pXFillStyleItem)
+        {
+            XFillStyleItem aXFillStyleItem;
 
-            aXFillStyleItem.PutValue(*pXFillStyleItem); 
-            rToSet.Put(aXFillStyleItem); 
+            aXFillStyleItem.PutValue(*pXFillStyleItem);
+            rToSet.Put(aXFillStyleItem);
         }
 
-        if(pXFillColorItem) 
-        { 
+        if(pXFillColorItem)
+        {
             const XubString aNullStr;
             const Color aNullCol(COL_DEFAULT_SHAPE_FILLING);
-            XFillColorItem aXFillColorItem(aNullStr, aNullCol); 
+            XFillColorItem aXFillColorItem(aNullStr, aNullCol);
 
-            aXFillColorItem.PutValue(*pXFillColorItem); 
-            rToSet.Put(aXFillColorItem); 
+            aXFillColorItem.PutValue(*pXFillColorItem);
+            rToSet.Put(aXFillColorItem);
         }
 
-        if(pXFillGradientItem || pXFillGradientNameItem) 
-        { 
+        if(pXFillGradientItem || pXFillGradientNameItem)
+        {
             if(pXFillGradientItem)
             {
                 const XGradient aNullGrad(RGB_Color(COL_BLACK), RGB_Color(COL_WHITE));
-                XFillGradientItem aXFillGradientItem(rToSet.GetPool(), aNullGrad); 
+                XFillGradientItem aXFillGradientItem(rToSet.GetPool(), aNullGrad);
 
-                aXFillGradientItem.PutValue(*pXFillGradientItem, MID_FILLGRADIENT); 
-                rToSet.Put(aXFillGradientItem); 
+                aXFillGradientItem.PutValue(*pXFillGradientItem, MID_FILLGRADIENT);
+                rToSet.Put(aXFillGradientItem);
             }
 
             if(pXFillGradientNameItem)
@@ -396,16 +396,16 @@ sal_Bool BaseFrameProperties_Impl::FillBaseProperties(SfxItemSet& rToSet,
             }
         }
 
-        if(pXFillHatchItem || pXFillHatchNameItem) 
-        { 
+        if(pXFillHatchItem || pXFillHatchNameItem)
+        {
             if(pXFillHatchItem)
             {
                 const Color aNullCol(COL_DEFAULT_SHAPE_STROKE);
                 const XHatch aNullHatch(aNullCol);
-                XFillHatchItem aXFillHatchItem(rToSet.GetPool(), aNullHatch); 
+                XFillHatchItem aXFillHatchItem(rToSet.GetPool(), aNullHatch);
 
-                aXFillHatchItem.PutValue(*pXFillHatchItem, MID_FILLHATCH); 
-                rToSet.Put(aXFillHatchItem); 
+                aXFillHatchItem.PutValue(*pXFillHatchItem, MID_FILLHATCH);
+                rToSet.Put(aXFillHatchItem);
             }
 
             if(pXFillHatchNameItem)
@@ -421,15 +421,15 @@ sal_Bool BaseFrameProperties_Impl::FillBaseProperties(SfxItemSet& rToSet,
             }
         }
 
-        if(pXFillBitmapItem || pXFillBitmapNameItem || pXFillBitmapURLItem) 
-        { 
+        if(pXFillBitmapItem || pXFillBitmapNameItem || pXFillBitmapURLItem)
+        {
             if(pXFillBitmapItem)
             {
                 const Graphic aNullGraphic;
-                XFillBitmapItem aXFillBitmapItem(rToSet.GetPool(), aNullGraphic); 
+                XFillBitmapItem aXFillBitmapItem(rToSet.GetPool(), aNullGraphic);
 
-                aXFillBitmapItem.PutValue(*pXFillBitmapItem, MID_BITMAP); 
-                rToSet.Put(aXFillBitmapItem); 
+                aXFillBitmapItem.PutValue(*pXFillBitmapItem, MID_BITMAP);
+                rToSet.Put(aXFillBitmapItem);
             }
 
             if(pXFillBitmapNameItem)
@@ -447,63 +447,63 @@ sal_Bool BaseFrameProperties_Impl::FillBaseProperties(SfxItemSet& rToSet,
             if(pXFillBitmapURLItem)
             {
                 const Graphic aNullGraphic;
-                XFillBitmapItem aXFillBitmapItem(rToSet.GetPool(), aNullGraphic); 
+                XFillBitmapItem aXFillBitmapItem(rToSet.GetPool(), aNullGraphic);
 
-                aXFillBitmapItem.PutValue(*pXFillBitmapURLItem, MID_GRAFURL); 
-                rToSet.Put(aXFillBitmapItem); 
+                aXFillBitmapItem.PutValue(*pXFillBitmapURLItem, MID_GRAFURL);
+                rToSet.Put(aXFillBitmapItem);
             }
         }
 
-        if(pXFillTransparenceItem) 
-        { 
+        if(pXFillTransparenceItem)
+        {
             const XGradient aNullGrad(RGB_Color(COL_BLACK), RGB_Color(COL_WHITE));
-            XFillTransparenceItem aXFillTransparenceItem; 
+            XFillTransparenceItem aXFillTransparenceItem;
 
-            aXFillTransparenceItem.PutValue(*pXFillTransparenceItem); 
-            rToSet.Put(aXFillTransparenceItem); 
+            aXFillTransparenceItem.PutValue(*pXFillTransparenceItem);
+            rToSet.Put(aXFillTransparenceItem);
         }
 
-        if(pXGradientStepCountItem) 
-        { 
-            XGradientStepCountItem aXGradientStepCountItem; 
+        if(pXGradientStepCountItem)
+        {
+            XGradientStepCountItem aXGradientStepCountItem;
 
-            aXGradientStepCountItem.PutValue(*pXGradientStepCountItem); 
-            rToSet.Put(aXGradientStepCountItem); 
+            aXGradientStepCountItem.PutValue(*pXGradientStepCountItem);
+            rToSet.Put(aXGradientStepCountItem);
         }
 
-        if(pXFillBmpPosItem) 
-        { 
-            XFillBmpPosItem aXFillBmpPosItem; 
+        if(pXFillBmpPosItem)
+        {
+            XFillBmpPosItem aXFillBmpPosItem;
 
-            aXFillBmpPosItem.PutValue(*pXFillBmpPosItem); 
-            rToSet.Put(aXFillBmpPosItem); 
+            aXFillBmpPosItem.PutValue(*pXFillBmpPosItem);
+            rToSet.Put(aXFillBmpPosItem);
         }
 
-        if(pXFillBmpSizeXItem) 
-        { 
-            XFillBmpSizeXItem aXFillBmpSizeXItem; 
+        if(pXFillBmpSizeXItem)
+        {
+            XFillBmpSizeXItem aXFillBmpSizeXItem;
 
-            aXFillBmpSizeXItem.PutValue(*pXFillBmpSizeXItem); 
-            rToSet.Put(aXFillBmpSizeXItem); 
+            aXFillBmpSizeXItem.PutValue(*pXFillBmpSizeXItem);
+            rToSet.Put(aXFillBmpSizeXItem);
         }
 
-        if(pXFillBmpSizeYItem) 
-        { 
-            XFillBmpSizeYItem aXFillBmpSizeYItem; 
+        if(pXFillBmpSizeYItem)
+        {
+            XFillBmpSizeYItem aXFillBmpSizeYItem;
 
-            aXFillBmpSizeYItem.PutValue(*pXFillBmpSizeYItem); 
-            rToSet.Put(aXFillBmpSizeYItem); 
+            aXFillBmpSizeYItem.PutValue(*pXFillBmpSizeYItem);
+            rToSet.Put(aXFillBmpSizeYItem);
         }
 
-        if(pXFillFloatTransparenceItem || pXFillFloatTransparenceNameItem) 
-        { 
+        if(pXFillFloatTransparenceItem || pXFillFloatTransparenceNameItem)
+        {
             if(pXFillFloatTransparenceItem)
             {
                 const XGradient aNullGrad(RGB_Color(COL_BLACK), RGB_Color(COL_WHITE));
-                XFillFloatTransparenceItem aXFillFloatTransparenceItem(rToSet.GetPool(), aNullGrad, false); 
+                XFillFloatTransparenceItem aXFillFloatTransparenceItem(rToSet.GetPool(), aNullGrad, false);
 
-                aXFillFloatTransparenceItem.PutValue(*pXFillFloatTransparenceItem, MID_FILLGRADIENT); 
-                rToSet.Put(aXFillFloatTransparenceItem); 
+                aXFillFloatTransparenceItem.PutValue(*pXFillFloatTransparenceItem, MID_FILLGRADIENT);
+                rToSet.Put(aXFillFloatTransparenceItem);
             }
 
             if(pXFillFloatTransparenceNameItem)
@@ -519,62 +519,62 @@ sal_Bool BaseFrameProperties_Impl::FillBaseProperties(SfxItemSet& rToSet,
             }
         }
 
-        if(pXSecondaryFillColorItem) 
-        { 
+        if(pXSecondaryFillColorItem)
+        {
             const XubString aNullStr;
             const Color aNullCol(COL_DEFAULT_SHAPE_FILLING);
-            XSecondaryFillColorItem aXSecondaryFillColorItem(aNullStr, aNullCol); 
+            XSecondaryFillColorItem aXSecondaryFillColorItem(aNullStr, aNullCol);
 
-            aXSecondaryFillColorItem.PutValue(*pXSecondaryFillColorItem); 
-            rToSet.Put(aXSecondaryFillColorItem); 
+            aXSecondaryFillColorItem.PutValue(*pXSecondaryFillColorItem);
+            rToSet.Put(aXSecondaryFillColorItem);
         }
 
-        if(pXFillBmpSizeLogItem) 
-        { 
-            XFillBmpSizeLogItem aXFillBmpSizeLogItem; 
+        if(pXFillBmpSizeLogItem)
+        {
+            XFillBmpSizeLogItem aXFillBmpSizeLogItem;
 
-            aXFillBmpSizeLogItem.PutValue(*pXFillBmpSizeLogItem); 
-            rToSet.Put(aXFillBmpSizeLogItem); 
+            aXFillBmpSizeLogItem.PutValue(*pXFillBmpSizeLogItem);
+            rToSet.Put(aXFillBmpSizeLogItem);
         }
 
-        if(pXFillBmpTileOffsetXItem) 
-        { 
-            XFillBmpTileOffsetXItem aXFillBmpTileOffsetXItem; 
+        if(pXFillBmpTileOffsetXItem)
+        {
+            XFillBmpTileOffsetXItem aXFillBmpTileOffsetXItem;
 
-            aXFillBmpTileOffsetXItem.PutValue(*pXFillBmpTileOffsetXItem); 
-            rToSet.Put(aXFillBmpTileOffsetXItem); 
+            aXFillBmpTileOffsetXItem.PutValue(*pXFillBmpTileOffsetXItem);
+            rToSet.Put(aXFillBmpTileOffsetXItem);
         }
 
-        if(pXFillBmpTileOffsetYItem) 
-        { 
-            XFillBmpTileOffsetYItem aXFillBmpTileOffsetYItem; 
+        if(pXFillBmpTileOffsetYItem)
+        {
+            XFillBmpTileOffsetYItem aXFillBmpTileOffsetYItem;
 
-            aXFillBmpTileOffsetYItem.PutValue(*pXFillBmpTileOffsetYItem); 
-            rToSet.Put(aXFillBmpTileOffsetYItem); 
+            aXFillBmpTileOffsetYItem.PutValue(*pXFillBmpTileOffsetYItem);
+            rToSet.Put(aXFillBmpTileOffsetYItem);
         }
 
-        if(pXFillBmpPosOffsetXItem) 
-        { 
-            XFillBmpPosOffsetXItem aXFillBmpPosOffsetXItem; 
+        if(pXFillBmpPosOffsetXItem)
+        {
+            XFillBmpPosOffsetXItem aXFillBmpPosOffsetXItem;
 
-            aXFillBmpPosOffsetXItem.PutValue(*pXFillBmpPosOffsetXItem); 
-            rToSet.Put(aXFillBmpPosOffsetXItem); 
+            aXFillBmpPosOffsetXItem.PutValue(*pXFillBmpPosOffsetXItem);
+            rToSet.Put(aXFillBmpPosOffsetXItem);
         }
 
-        if(pXFillBmpPosOffsetYItem) 
-        { 
-            XFillBmpPosOffsetYItem aXFillBmpPosOffsetYItem; 
+        if(pXFillBmpPosOffsetYItem)
+        {
+            XFillBmpPosOffsetYItem aXFillBmpPosOffsetYItem;
 
-            aXFillBmpPosOffsetYItem.PutValue(*pXFillBmpPosOffsetYItem); 
-            rToSet.Put(aXFillBmpPosOffsetYItem); 
+            aXFillBmpPosOffsetYItem.PutValue(*pXFillBmpPosOffsetYItem);
+            rToSet.Put(aXFillBmpPosOffsetYItem);
         }
 
-        if(pXFillBackgroundItem) 
-        { 
-            XFillBackgroundItem aXFillBackgroundItem; 
+        if(pXFillBackgroundItem)
+        {
+            XFillBackgroundItem aXFillBackgroundItem;
 
-            aXFillBackgroundItem.PutValue(*pXFillBackgroundItem); 
-            rToSet.Put(aXFillBackgroundItem); 
+            aXFillBackgroundItem.PutValue(*pXFillBackgroundItem);
+            rToSet.Put(aXFillBackgroundItem);
         }
 
         if(pOwnAttrFillBmpItem)
@@ -1112,7 +1112,6 @@ const :: uno::Sequence< sal_Int8 > & SwXFrame::getUnoTunnelId()
 }
 
 sal_Int64 SAL_CALL SwXFrame::getSomething( const :: uno::Sequence< sal_Int8 >& rId )
-	throw(uno::RuntimeException)
 {
     if( rId.getLength() == 16
         && 0 == rtl_compareMemory( getUnoTunnelId().getConstArray(),
@@ -1125,19 +1124,19 @@ sal_Int64 SAL_CALL SwXFrame::getSomething( const :: uno::Sequence< sal_Int8 >& r
 
 TYPEINIT1(SwXFrame, SwClient);
 
-OUString SwXFrame::getImplementationName(void) throw( uno::RuntimeException )
+OUString SwXFrame::getImplementationName(void)
 {
 	return C2U("SwXFrame");
 }
 
-sal_Bool SwXFrame::supportsService(const :: OUString& rServiceName) throw( uno::RuntimeException )
+sal_Bool SwXFrame::supportsService(const :: OUString& rServiceName)
 {
 	return !rServiceName.compareToAscii("com.sun.star.text.BaseFrame")||
 				!rServiceName.compareToAscii("com.sun.star.text.TextContent") ||
 					!rServiceName.compareToAscii("com.sun.star.document.LinkTarget");
 }
 
-uno::Sequence< OUString > SwXFrame::getSupportedServiceNames(void) throw( uno::RuntimeException )
+uno::Sequence< OUString > SwXFrame::getSupportedServiceNames(void)
 {
 	uno::Sequence< OUString > aRet(3);
 	OUString* pArray = aRet.getArray();
@@ -1219,7 +1218,7 @@ SwXFrame::~SwXFrame()
     delete pProps;
 }
 
-OUString SwXFrame::getName(void) throw( uno::RuntimeException )
+OUString SwXFrame::getName(void)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	String sRet;
@@ -1233,7 +1232,7 @@ OUString SwXFrame::getName(void) throw( uno::RuntimeException )
 	return sRet;
 }
 
-void SwXFrame::setName(const :: OUString& rName) throw( uno::RuntimeException )
+void SwXFrame::setName(const :: OUString& rName)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	SwFrmFmt* pFmt = GetFrmFmt();
@@ -1252,7 +1251,7 @@ void SwXFrame::setName(const :: OUString& rName) throw( uno::RuntimeException )
 		throw uno::RuntimeException();
 }
 
-uno::Reference< beans::XPropertySetInfo >  SwXFrame::getPropertySetInfo(void) throw( uno::RuntimeException )
+uno::Reference< beans::XPropertySetInfo >  SwXFrame::getPropertySetInfo(void)
 {
 	uno::Reference< beans::XPropertySetInfo >  xRef;
 	static uno::Reference< beans::XPropertySetInfo >  xFrmRef;
@@ -1336,7 +1335,6 @@ SwFrmFmt *lcl_GetFrmFmt( const :: uno::Any& rValue, SwDoc *pDoc )
 }
 
 void SwXFrame::setPropertyValue(const :: OUString& rPropertyName, const :: uno::Any& _rValue)
-	throw( beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException, uno::RuntimeException )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	SwFrmFmt* pFmt = GetFrmFmt();
@@ -1817,10 +1815,10 @@ void SwXFrame::setPropertyValue(const :: OUString& rPropertyName, const :: uno::
                         case XATTR_FILLBITMAP:
                         {
                             const Graphic aNullGraphic;
-                            XFillBitmapItem aXFillBitmapItem(aSet.GetPool(), aNullGraphic); 
+                            XFillBitmapItem aXFillBitmapItem(aSet.GetPool(), aNullGraphic);
 
-                            aXFillBitmapItem.PutValue(aValue, nMemberId); 
-                            aSet.Put(aXFillBitmapItem); 
+                            aXFillBitmapItem.PutValue(aValue, nMemberId);
+                            aSet.Put(aXFillBitmapItem);
                             bDone = true;
                             break;
                         }
@@ -1937,7 +1935,6 @@ void SwXFrame::setPropertyValue(const :: OUString& rPropertyName, const :: uno::
 }
 
 uno::Any SwXFrame::getPropertyValue(const OUString& rPropertyName)
-	throw( beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	uno::Any aAny;
@@ -2041,7 +2038,7 @@ uno::Any SwXFrame::getPropertyValue(const OUString& rPropertyName)
         {
             String sGrfName;
             const SwNodeIndex* pIdx = pFmt->GetCntnt().GetCntntIdx();
-            
+
             if(pIdx)
             {
                 SwNodeIndex aIdx(*pIdx, 1);
@@ -2185,7 +2182,7 @@ uno::Any SwXFrame::getPropertyValue(const OUString& rPropertyName)
                         uno::Reference < frame::XModel > xModel( xComp, uno::UNO_QUERY );
                         if ( FN_EMBEDDED_OBJECT == pEntry->nWID )
                         {
-                            // ensure the 
+                            // ensure the
                             ASSERT( pDoc->GetDocShell(), "no doc shell => no client site" );
                             if ( pDoc->GetDocShell() )
                                 pDoc->GetDocShell()->GetIPClient( svt::EmbeddedObjectRef( xIP, embed::Aspects::MSOLE_CONTENT ) );
@@ -2329,34 +2326,29 @@ uno::Any SwXFrame::getPropertyValue(const OUString& rPropertyName)
 
 void SwXFrame::addPropertyChangeListener(const OUString& /*PropertyName*/,
     const uno::Reference< beans::XPropertyChangeListener > & /*aListener*/)
-	throw( beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException )
 {
 	DBG_WARNING("not implemented");
 }
 
 void SwXFrame::removePropertyChangeListener(const OUString& /*PropertyName*/,
     const uno::Reference< beans::XPropertyChangeListener > & /*aListener*/)
-	throw( beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException )
 {
 	DBG_WARNING("not implemented");
 }
 
 void SwXFrame::addVetoableChangeListener(const OUString& /*PropertyName*/,
                                 const uno::Reference< beans::XVetoableChangeListener > & /*aListener*/)
-	throw( beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException )
 {
 	DBG_WARNING("not implemented");
 }
 
 void SwXFrame::removeVetoableChangeListener(
     const OUString& /*PropertyName*/, const uno::Reference< beans::XVetoableChangeListener > & /*aListener*/)
-		throw( beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException )
 {
 	DBG_WARNING("not implemented");
 }
 
 beans::PropertyState SwXFrame::getPropertyState( const OUString& rPropertyName )
-	throw(beans::UnknownPropertyException, uno::RuntimeException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	uno::Sequence< OUString > aPropertyNames(1);
@@ -2368,7 +2360,6 @@ beans::PropertyState SwXFrame::getPropertyState( const OUString& rPropertyName )
 
 uno::Sequence< beans::PropertyState > SwXFrame::getPropertyStates(
     const uno::Sequence< OUString >& aPropertyNames )
-		throw(beans::UnknownPropertyException, uno::RuntimeException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	uno::Sequence< beans::PropertyState > aStates(aPropertyNames.getLength());
@@ -2452,7 +2443,6 @@ uno::Sequence< beans::PropertyState > SwXFrame::getPropertyStates(
 }
 
 void SwXFrame::setPropertyToDefault( const OUString& rPropertyName )
-	throw(beans::UnknownPropertyException, uno::RuntimeException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	SwFrmFmt* pFmt = GetFrmFmt();
@@ -2562,7 +2552,6 @@ void SwXFrame::setPropertyToDefault( const OUString& rPropertyName )
 }
 
 uno::Any SwXFrame::getPropertyDefault( const OUString& rPropertyName )
-	throw(beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	uno::Any aRet;
@@ -2590,14 +2579,14 @@ uno::Any SwXFrame::getPropertyDefault( const OUString& rPropertyName )
 	return aRet;
 }
 
-void SwXFrame::addEventListener(const uno::Reference< lang::XEventListener > & aListener) throw( uno::RuntimeException )
+void SwXFrame::addEventListener(const uno::Reference< lang::XEventListener > & aListener)
 {
 	if(!GetRegisteredIn())
 		throw uno::RuntimeException();
 	aLstnrCntnr.AddListener(aListener);
 }
 
-void SwXFrame::removeEventListener(const uno::Reference< lang::XEventListener > & aListener) throw( uno::RuntimeException )
+void SwXFrame::removeEventListener(const uno::Reference< lang::XEventListener > & aListener)
 {
 	if(!GetRegisteredIn() || !aLstnrCntnr.RemoveListener(aListener))
 		throw uno::RuntimeException();
@@ -2616,7 +2605,7 @@ void 	SwXFrame::Modify( const SfxPoolItem* pOld, const SfxPoolItem *pNew)
 }
 
 
-void SwXFrame::dispose(void) throw( uno::RuntimeException )
+void SwXFrame::dispose(void)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	SwFrmFmt* pFmt = GetFrmFmt();
@@ -2645,7 +2634,7 @@ void SwXFrame::dispose(void) throw( uno::RuntimeException )
 
 }
 
-uno::Reference< text::XTextRange >  SwXFrame::getAnchor(void) throw( uno::RuntimeException )
+uno::Reference< text::XTextRange >  SwXFrame::getAnchor(void)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	uno::Reference< text::XTextRange >  aRef;
@@ -2676,7 +2665,6 @@ void SwXFrame::ResetDescriptor()
 }
 
 void SwXFrame::attachToRange(const uno::Reference< text::XTextRange > & xTextRange)
-			throw( lang::IllegalArgumentException, uno::RuntimeException )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	if(!IsDescriptor())
@@ -3018,7 +3006,6 @@ void SwXFrame::attachToRange(const uno::Reference< text::XTextRange > & xTextRan
 }
 
 void SwXFrame::attach(const uno::Reference< text::XTextRange > & xTextRange)
-	throw( lang::IllegalArgumentException, uno::RuntimeException )
 {
     SwFrmFmt* pFmt;
     if(IsDescriptor())
@@ -3052,7 +3039,7 @@ void SwXFrame::attach(const uno::Reference< text::XTextRange > & xTextRange)
     }
 }
 
-awt::Point SwXFrame::getPosition(void) throw( uno::RuntimeException )
+awt::Point SwXFrame::getPosition(void)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	uno::RuntimeException aRuntime;
@@ -3060,7 +3047,7 @@ awt::Point SwXFrame::getPosition(void) throw( uno::RuntimeException )
 	throw aRuntime;
 }
 
-void SwXFrame::setPosition(const awt::Point& /*aPosition*/) throw( uno::RuntimeException )
+void SwXFrame::setPosition(const awt::Point& /*aPosition*/)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	uno::RuntimeException aRuntime;
@@ -3068,7 +3055,7 @@ void SwXFrame::setPosition(const awt::Point& /*aPosition*/) throw( uno::RuntimeE
 	throw aRuntime;
 }
 
-awt::Size SwXFrame::getSize(void) throw( uno::RuntimeException )
+awt::Size SwXFrame::getSize(void)
 {
     const ::uno::Any aVal = getPropertyValue(C2U("Size"));
 	awt::Size* pRet =  (awt::Size*)aVal.getValue();
@@ -3076,13 +3063,12 @@ awt::Size SwXFrame::getSize(void) throw( uno::RuntimeException )
 }
 
 void SwXFrame::setSize(const awt::Size& aSize)
-	throw( beans::PropertyVetoException, uno::RuntimeException )
 {
     const ::uno::Any aVal(&aSize, ::getCppuType(static_cast<const awt::Size*>(0)));
 	setPropertyValue(C2U("Size"), aVal);
 }
 
-OUString SwXFrame::getShapeType(void) throw( uno::RuntimeException )
+OUString SwXFrame::getShapeType(void)
 {
 	return C2U("FrameShape");
 }
@@ -3120,7 +3106,6 @@ void SAL_CALL SwXTextFrame::release(  )throw()
 }
 
 ::uno::Any SAL_CALL SwXTextFrame::queryInterface( const uno::Type& aType )
-	throw (uno::RuntimeException)
 {
     ::uno::Any aRet = SwXFrame::queryInterface(aType);
 	if(aRet.getValueType() == ::getCppuVoidType())
@@ -3130,7 +3115,7 @@ void SAL_CALL SwXTextFrame::release(  )throw()
 	return aRet;
 }
 
-uno::Sequence< uno::Type > SAL_CALL SwXTextFrame::getTypes(  ) throw(uno::RuntimeException)
+uno::Sequence< uno::Type > SAL_CALL SwXTextFrame::getTypes(  )
 {
 	uno::Sequence< uno::Type > aTextFrameTypes = SwXTextFrameBaseClass::getTypes();
 	uno::Sequence< uno::Type > aFrameTypes = SwXFrame::getTypes();
@@ -3155,7 +3140,7 @@ uno::Sequence< uno::Type > SAL_CALL SwXTextFrame::getTypes(  ) throw(uno::Runtim
 	return aTextFrameTypes;
 }
 
-uno::Sequence< sal_Int8 > SAL_CALL SwXTextFrame::getImplementationId(  ) throw(uno::RuntimeException)
+uno::Sequence< sal_Int8 > SAL_CALL SwXTextFrame::getImplementationId(  )
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
     static uno::Sequence< sal_Int8 > aId( 16 );
@@ -3168,7 +3153,7 @@ uno::Sequence< sal_Int8 > SAL_CALL SwXTextFrame::getImplementationId(  ) throw(u
     return aId;
 }
 
-uno::Reference< text::XText >  SwXTextFrame::getText(void) throw( uno::RuntimeException )
+uno::Reference< text::XText >  SwXTextFrame::getText(void)
 {
 	return this;
 }
@@ -3189,12 +3174,12 @@ const SwStartNode *SwXTextFrame::GetStartNode() const
 }
 
 uno::Reference< text::XTextCursor >
-SwXTextFrame::CreateCursor() throw (uno::RuntimeException)
+SwXTextFrame::CreateCursor()
 {
 	return createTextCursor();
 }
 
-uno::Reference< text::XTextCursor >  SwXTextFrame::createTextCursor(void) throw( uno::RuntimeException )
+uno::Reference< text::XTextCursor >  SwXTextFrame::createTextCursor(void)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	uno::Reference< text::XTextCursor >  aRef;
@@ -3241,7 +3226,7 @@ uno::Reference< text::XTextCursor >  SwXTextFrame::createTextCursor(void) throw(
 	return aRef;
 }
 
-uno::Reference< text::XTextCursor >  SwXTextFrame::createTextCursorByRange(const uno::Reference< text::XTextRange > & aTextPosition) throw( uno::RuntimeException )
+uno::Reference< text::XTextCursor >  SwXTextFrame::createTextCursorByRange(const uno::Reference< text::XTextRange > & aTextPosition)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	uno::Reference< text::XTextCursor >  aRef;
@@ -3268,7 +3253,7 @@ uno::Reference< text::XTextCursor >  SwXTextFrame::createTextCursorByRange(const
 	return aRef;
 }
 
-uno::Reference< container::XEnumeration >  SwXTextFrame::createEnumeration(void) throw( uno::RuntimeException )
+uno::Reference< container::XEnumeration >  SwXTextFrame::createEnumeration(void)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	uno::Reference< container::XEnumeration >  aRef;
@@ -3289,57 +3274,56 @@ uno::Reference< container::XEnumeration >  SwXTextFrame::createEnumeration(void)
 	return aRef;
 }
 
-uno::Type  SwXTextFrame::getElementType(void) throw( uno::RuntimeException )
+uno::Type  SwXTextFrame::getElementType(void)
 {
 	return ::getCppuType(static_cast<uno::Reference<text::XTextRange>*>(0));
 }
 
-sal_Bool SwXTextFrame::hasElements(void) throw( uno::RuntimeException )
+sal_Bool SwXTextFrame::hasElements(void)
 {
 	return sal_True;
 }
 
 void SwXTextFrame::attach(const uno::Reference< text::XTextRange > & xTextRange)
-	throw( lang::IllegalArgumentException, uno::RuntimeException )
 {
     SwXFrame::attach(xTextRange);
 }
 
-uno::Reference< text::XTextRange >  SwXTextFrame::getAnchor(void) throw( uno::RuntimeException )
+uno::Reference< text::XTextRange >  SwXTextFrame::getAnchor(void)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	return SwXFrame::getAnchor();
 }
 
-void SwXTextFrame::dispose(void) throw( uno::RuntimeException )
+void SwXTextFrame::dispose(void)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	SwXFrame::dispose();
 }
 
-void SwXTextFrame::addEventListener(const uno::Reference< lang::XEventListener > & aListener) throw( uno::RuntimeException )
+void SwXTextFrame::addEventListener(const uno::Reference< lang::XEventListener > & aListener)
 {
 	SwXFrame::addEventListener(aListener);
 }
 
-void SwXTextFrame::removeEventListener(const uno::Reference< lang::XEventListener > & aListener) throw( uno::RuntimeException )
+void SwXTextFrame::removeEventListener(const uno::Reference< lang::XEventListener > & aListener)
 {
 	SwXFrame::removeEventListener(aListener);
 }
 
-OUString SwXTextFrame::getImplementationName(void) throw( uno::RuntimeException )
+OUString SwXTextFrame::getImplementationName(void)
 {
 	return C2U("SwXTextFrame");
 }
 
-sal_Bool SwXTextFrame::supportsService(const OUString& rServiceName) throw( uno::RuntimeException )
+sal_Bool SwXTextFrame::supportsService(const OUString& rServiceName)
 {
 	return COMPARE_EQUAL == rServiceName.compareToAscii("com.sun.star.text.Text")||
 			COMPARE_EQUAL == rServiceName.compareToAscii("com.sun.star.text.TextFrame")||
 					SwXFrame::supportsService(rServiceName);
 }
 
-uno::Sequence< OUString > SwXTextFrame::getSupportedServiceNames(void) throw( uno::RuntimeException )
+uno::Sequence< OUString > SwXTextFrame::getSupportedServiceNames(void)
 {
 	uno::Sequence < OUString > aRet = SwXFrame::getSupportedServiceNames();
 	aRet.realloc(aRet.getLength() + 2);
@@ -3360,13 +3344,11 @@ void SAL_CALL SwXTextFrame::operator delete( void * p) throw()
 }
 
 uno::Reference<container::XNameReplace > SAL_CALL SwXTextFrame::getEvents()
-	throw(uno::RuntimeException)
 {
 	return new SwFrameEventDescriptor( *this );
 }
 
 sal_Int64 SAL_CALL SwXTextFrame::getSomething( const uno::Sequence< sal_Int8 >& rId )
-	throw(uno::RuntimeException)
 {
 	sal_Int64 nRet = SwXFrame::getSomething( rId );
 	if( !nRet )
@@ -3376,7 +3358,6 @@ sal_Int64 SAL_CALL SwXTextFrame::getSomething( const uno::Sequence< sal_Int8 >& 
 }
 
 ::uno::Any SwXTextFrame::getPropertyValue(const OUString& rPropertyName)
-	throw( beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException )
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
     ::uno::Any aRet;
@@ -3422,7 +3403,6 @@ void SAL_CALL SwXTextGraphicObject::release(  )throw()
 }
 
 ::uno::Any SAL_CALL SwXTextGraphicObject::queryInterface( const uno::Type& aType )
-	throw(uno::RuntimeException)
 {
     ::uno::Any aRet = SwXFrame::queryInterface(aType);
 	if(aRet.getValueType() == ::getCppuVoidType())
@@ -3431,7 +3411,7 @@ void SAL_CALL SwXTextGraphicObject::release(  )throw()
 }
 
 uno::Sequence< uno::Type > SAL_CALL
-	SwXTextGraphicObject::getTypes(  ) throw(uno::RuntimeException)
+	SwXTextGraphicObject::getTypes(  )
 {
 	uno::Sequence< uno::Type > aGraphicTypes = SwXTextGraphicObjectBaseClass::getTypes();
 	uno::Sequence< uno::Type > aFrameTypes = SwXFrame::getTypes();
@@ -3450,7 +3430,7 @@ uno::Sequence< uno::Type > SAL_CALL
 	return aGraphicTypes;
 }
 
-uno::Sequence< sal_Int8 > SAL_CALL SwXTextGraphicObject::getImplementationId(  ) throw(uno::RuntimeException)
+uno::Sequence< sal_Int8 > SAL_CALL SwXTextGraphicObject::getImplementationId(  )
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
     static uno::Sequence< sal_Int8 > aId( 16 );
@@ -3463,48 +3443,45 @@ uno::Sequence< sal_Int8 > SAL_CALL SwXTextGraphicObject::getImplementationId(  )
     return aId;
 }
 
-void SwXTextGraphicObject::attach(const uno::Reference< text::XTextRange > & xTextRange) throw( lang::IllegalArgumentException, uno::RuntimeException )
+void SwXTextGraphicObject::attach(const uno::Reference< text::XTextRange > & xTextRange)
 {
     SwXFrame::attach(xTextRange);
 }
 
-uno::Reference< text::XTextRange >  SwXTextGraphicObject::getAnchor(void) throw( uno::RuntimeException )
+uno::Reference< text::XTextRange >  SwXTextGraphicObject::getAnchor(void)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	return SwXFrame::getAnchor();
 }
 
-void SwXTextGraphicObject::dispose(void) throw( uno::RuntimeException )
+void SwXTextGraphicObject::dispose(void)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	SwXFrame::dispose();
 }
 
 void SwXTextGraphicObject::addEventListener(const uno::Reference< lang::XEventListener > & aListener)
-													throw( uno::RuntimeException )
 {
 	SwXFrame::addEventListener(aListener);
 }
 
 void SwXTextGraphicObject::removeEventListener(const uno::Reference< lang::XEventListener > & aListener)
-													throw( uno::RuntimeException )
 {
 	SwXFrame::removeEventListener(aListener);
 }
 
-OUString SwXTextGraphicObject::getImplementationName(void) throw( uno::RuntimeException )
+OUString SwXTextGraphicObject::getImplementationName(void)
 {
 	return C2U("SwXTextGraphicObject");
 }
 
-sal_Bool SwXTextGraphicObject::supportsService(const OUString& rServiceName) throw( uno::RuntimeException )
+sal_Bool SwXTextGraphicObject::supportsService(const OUString& rServiceName)
 {
 	return COMPARE_EQUAL == rServiceName.compareToAscii("com.sun.star.text.TextGraphicObject") ||
 					SwXFrame::supportsService(rServiceName);
 }
 
 uno::Sequence< OUString > SwXTextGraphicObject::getSupportedServiceNames(void)
-		throw( uno::RuntimeException )
 {
 	uno::Sequence < OUString > aRet = SwXFrame::getSupportedServiceNames();
 	aRet.realloc(aRet.getLength() + 1);
@@ -3525,7 +3502,6 @@ void SAL_CALL SwXTextGraphicObject::operator delete( void * p) throw()
 
 uno::Reference<container::XNameReplace> SAL_CALL
 	SwXTextGraphicObject::getEvents()
-		throw(uno::RuntimeException)
 {
 	return new SwFrameEventDescriptor( *this );
 }
@@ -3561,15 +3537,14 @@ void SAL_CALL SwXTextEmbeddedObject::release()throw()
 }
 
 ::uno::Any SAL_CALL SwXTextEmbeddedObject::queryInterface( const uno::Type& aType )
-	throw( uno::RuntimeException)
 {
-    ::uno::Any aRet = SwXFrame::queryInterface(aType);;
+    ::uno::Any aRet = SwXFrame::queryInterface(aType);
 	if(aRet.getValueType() == ::getCppuVoidType())
 		aRet = SwXTextEmbeddedObjectBaseClass::queryInterface(aType);
 	return aRet;
 }
 
-uno::Sequence< uno::Type > SAL_CALL SwXTextEmbeddedObject::getTypes(  ) throw(uno::RuntimeException)
+uno::Sequence< uno::Type > SAL_CALL SwXTextEmbeddedObject::getTypes(  )
 {
 	uno::Sequence< uno::Type > aTextEmbeddedTypes = SwXTextEmbeddedObjectBaseClass::getTypes();
 	uno::Sequence< uno::Type > aFrameTypes = SwXFrame::getTypes();
@@ -3589,7 +3564,7 @@ uno::Sequence< uno::Type > SAL_CALL SwXTextEmbeddedObject::getTypes(  ) throw(un
 	return aTextEmbeddedTypes;
 }
 
-uno::Sequence< sal_Int8 > SAL_CALL SwXTextEmbeddedObject::getImplementationId(  ) throw(uno::RuntimeException)
+uno::Sequence< sal_Int8 > SAL_CALL SwXTextEmbeddedObject::getImplementationId(  )
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
     static uno::Sequence< sal_Int8 > aId( 16 );
@@ -3602,34 +3577,34 @@ uno::Sequence< sal_Int8 > SAL_CALL SwXTextEmbeddedObject::getImplementationId(  
     return aId;
 }
 
-void SwXTextEmbeddedObject::attach(const uno::Reference< text::XTextRange > & xTextRange) throw( lang::IllegalArgumentException, uno::RuntimeException )
+void SwXTextEmbeddedObject::attach(const uno::Reference< text::XTextRange > & xTextRange)
 {
     SwXFrame::attach(xTextRange);
 }
 
-uno::Reference< text::XTextRange >  SwXTextEmbeddedObject::getAnchor(void) throw( uno::RuntimeException )
+uno::Reference< text::XTextRange >  SwXTextEmbeddedObject::getAnchor(void)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	return SwXFrame::getAnchor();
 }
 
-void SwXTextEmbeddedObject::dispose(void) throw( uno::RuntimeException )
+void SwXTextEmbeddedObject::dispose(void)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 	SwXFrame::dispose();
 }
 
-void SwXTextEmbeddedObject::addEventListener(const uno::Reference< lang::XEventListener > & aListener) throw( uno::RuntimeException )
+void SwXTextEmbeddedObject::addEventListener(const uno::Reference< lang::XEventListener > & aListener)
 {
 	SwXFrame::addEventListener(aListener);
 }
 
-void SwXTextEmbeddedObject::removeEventListener(const uno::Reference< lang::XEventListener > & aListener) throw( uno::RuntimeException )
+void SwXTextEmbeddedObject::removeEventListener(const uno::Reference< lang::XEventListener > & aListener)
 {
 	SwXFrame::removeEventListener(aListener);
 }
 
-uno::Reference< lang::XComponent >  SwXTextEmbeddedObject::getEmbeddedObject(void) throw( uno::RuntimeException )
+uno::Reference< lang::XComponent >  SwXTextEmbeddedObject::getEmbeddedObject(void)
 {
 	uno::Reference< lang::XComponent >  xRet;
 	SwFrmFmt* 	pFmt = GetFrmFmt();
@@ -3669,7 +3644,6 @@ uno::Reference< lang::XComponent >  SwXTextEmbeddedObject::getEmbeddedObject(voi
 }
 
 uno::Reference< embed::XEmbeddedObject > SAL_CALL SwXTextEmbeddedObject::getExtendedControlOverEmbeddedObject()
-		throw( uno::RuntimeException )
 {
 	uno::Reference< embed::XEmbeddedObject > xResult;
 	SwFrmFmt* 	pFmt = GetFrmFmt();
@@ -3708,7 +3682,7 @@ uno::Reference< embed::XEmbeddedObject > SAL_CALL SwXTextEmbeddedObject::getExte
 	return xResult;
 }
 
-sal_Int64 SAL_CALL SwXTextEmbeddedObject::getAspect() throw (uno::RuntimeException)
+sal_Int64 SAL_CALL SwXTextEmbeddedObject::getAspect()
 {
 	SwFrmFmt* 	pFmt = GetFrmFmt();
 	if(pFmt)
@@ -3725,7 +3699,7 @@ sal_Int64 SAL_CALL SwXTextEmbeddedObject::getAspect() throw (uno::RuntimeExcepti
 	return embed::Aspects::MSOLE_CONTENT; // return the default value
 }
 
-void SAL_CALL SwXTextEmbeddedObject::setAspect( sal_Int64 nAspect ) throw (uno::RuntimeException)
+void SAL_CALL SwXTextEmbeddedObject::setAspect( sal_Int64 nAspect )
 {
 	SwFrmFmt* 	pFmt = GetFrmFmt();
 	if(pFmt)
@@ -3740,7 +3714,7 @@ void SAL_CALL SwXTextEmbeddedObject::setAspect( sal_Int64 nAspect ) throw (uno::
 	}
 }
 
-uno::Reference< graphic::XGraphic > SAL_CALL SwXTextEmbeddedObject::getReplacementGraphic() throw (uno::RuntimeException)
+uno::Reference< graphic::XGraphic > SAL_CALL SwXTextEmbeddedObject::getReplacementGraphic()
 {
 	SwFrmFmt* 	pFmt = GetFrmFmt();
 	if(pFmt)
@@ -3760,20 +3734,19 @@ uno::Reference< graphic::XGraphic > SAL_CALL SwXTextEmbeddedObject::getReplaceme
 }
 
 
-OUString SwXTextEmbeddedObject::getImplementationName(void) throw( uno::RuntimeException )
+OUString SwXTextEmbeddedObject::getImplementationName(void)
 
 {
 	return C2U("SwXTextEmbeddedObject");
 }
 
-sal_Bool SwXTextEmbeddedObject::supportsService(const OUString& rServiceName) throw( uno::RuntimeException )
+sal_Bool SwXTextEmbeddedObject::supportsService(const OUString& rServiceName)
 {
 	return  COMPARE_EQUAL == rServiceName.compareToAscii("com.sun.star.text.TextEmbeddedObject")||
 					SwXFrame::supportsService(rServiceName);
 }
 
 uno::Sequence< OUString > SwXTextEmbeddedObject::getSupportedServiceNames(void)
-		throw( uno::RuntimeException )
 {
 	uno::Sequence < OUString > aRet = SwXFrame::getSupportedServiceNames();
 	aRet.realloc(aRet.getLength() + 1);
@@ -3794,7 +3767,6 @@ void SAL_CALL SwXTextEmbeddedObject::operator delete( void * p) throw()
 
 uno::Reference<container::XNameReplace> SAL_CALL
 	SwXTextEmbeddedObject::getEvents()
-		throw(uno::RuntimeException)
 {
 	return new SwFrameEventDescriptor( *this );
 }
@@ -3815,7 +3787,6 @@ SwXOLEListener::~SwXOLEListener()
 {}
 
 void SwXOLEListener::modified( const lang::EventObject& /*rEvent*/ )
-										throw( uno::RuntimeException )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -3850,7 +3821,6 @@ void SwXOLEListener::modified( const lang::EventObject& /*rEvent*/ )
 
  ---------------------------------------------------------------------------*/
 void SwXOLEListener::disposing( const lang::EventObject& rEvent )
-						throw( uno::RuntimeException )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -3879,4 +3849,3 @@ void SwXOLEListener::Modify( const SfxPoolItem* pOld, const SfxPoolItem* pNew )
 	if(!GetRegisteredIn())
         xOLEModel = 0;
 }
-

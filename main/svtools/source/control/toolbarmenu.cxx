@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -93,7 +93,7 @@ ToolbarMenuEntry::ToolbarMenuEntry( ToolbarMenu& rMenu, int nEntryId, const Stri
 : mrMenu( rMenu )
 {
 	init( nEntryId, nBits );
-	
+
 	maText = rText;
 	mbHasText = true;
 }
@@ -172,7 +172,7 @@ const Reference< XAccessibleContext >& ToolbarMenuEntry::GetAccessible( bool bCr
 
 // --------------------------------------------------------------------
 
-sal_Int32 ToolbarMenuEntry::getAccessibleChildCount() throw (RuntimeException)
+sal_Int32 ToolbarMenuEntry::getAccessibleChildCount()
 {
 	if( mpControl )
 	{
@@ -187,7 +187,7 @@ sal_Int32 ToolbarMenuEntry::getAccessibleChildCount() throw (RuntimeException)
 
 // --------------------------------------------------------------------
 
-Reference< XAccessible > ToolbarMenuEntry::getAccessibleChild( sal_Int32 index ) throw (IndexOutOfBoundsException, RuntimeException)
+Reference< XAccessible > ToolbarMenuEntry::getAccessibleChild( sal_Int32 index )
 {
 	const Reference< XAccessibleContext >& xContext = GetAccessible( true );
 	if( mpControl )
@@ -259,7 +259,7 @@ bool ToolbarMenu_Impl::hasAccessibleListeners()
 
 // --------------------------------------------------------------------
 
-sal_Int32 ToolbarMenu_Impl::getAccessibleChildCount() throw (RuntimeException)
+sal_Int32 ToolbarMenu_Impl::getAccessibleChildCount()
 {
 	sal_Int32 nCount = 0;
 	const int nEntryCount = maEntryVector.size();
@@ -283,8 +283,8 @@ sal_Int32 ToolbarMenu_Impl::getAccessibleChildCount() throw (RuntimeException)
 }
 
 // --------------------------------------------------------------------
-	
-Reference< XAccessible > ToolbarMenu_Impl::getAccessibleChild( sal_Int32 index ) throw (IndexOutOfBoundsException, RuntimeException)
+
+Reference< XAccessible > ToolbarMenu_Impl::getAccessibleChild( sal_Int32 index )
 {
 	const int nEntryCount = maEntryVector.size();
 	for( int nEntry = 0; nEntry < nEntryCount; nEntry++ )
@@ -305,8 +305,8 @@ Reference< XAccessible > ToolbarMenu_Impl::getAccessibleChild( sal_Int32 index )
 }
 
 // --------------------------------------------------------------------
-	
-Reference< XAccessible > ToolbarMenu_Impl::getAccessibleChild( Control* pControl, sal_Int32 childIndex ) throw (IndexOutOfBoundsException, RuntimeException)
+
+Reference< XAccessible > ToolbarMenu_Impl::getAccessibleChild( Control* pControl, sal_Int32 childIndex )
 {
 	const int nEntryCount = maEntryVector.size();
 	for( int nEntry = 0; nEntry < nEntryCount; nEntry++ )
@@ -323,7 +323,7 @@ Reference< XAccessible > ToolbarMenu_Impl::getAccessibleChild( Control* pControl
 
 // --------------------------------------------------------------------
 
-void ToolbarMenu_Impl::selectAccessibleChild( sal_Int32 nChildIndex ) throw (IndexOutOfBoundsException, RuntimeException)
+void ToolbarMenu_Impl::selectAccessibleChild( sal_Int32 nChildIndex )
 {
 	const int nEntryCount = maEntryVector.size();
 	for( int nEntry = 0; nEntry < nEntryCount; nEntry++ )
@@ -354,7 +354,7 @@ void ToolbarMenu_Impl::selectAccessibleChild( sal_Int32 nChildIndex ) throw (Ind
 
 // --------------------------------------------------------------------
 
-sal_Bool ToolbarMenu_Impl::isAccessibleChildSelected( sal_Int32 nChildIndex ) throw (IndexOutOfBoundsException, RuntimeException)
+sal_Bool ToolbarMenu_Impl::isAccessibleChildSelected( sal_Int32 nChildIndex )
 {
 	const int nEntryCount = maEntryVector.size();
 	for( int nEntry = 0; nEntry < nEntryCount; nEntry++ )
@@ -721,7 +721,7 @@ Size ToolbarMenu::implCalcSize()
 
 		}
 	}
-	
+
 	aSz.Width() = nMaxTextWidth + (BORDER_X<<1);
 
 	// positionate controls
@@ -876,7 +876,7 @@ void ToolbarMenu::implHighlightEntry( int nHighlightEntry, bool bHighlight )
 {
     Size    aSz( GetOutputSizePixel() );
     long    nX = 0, nY = 0;
-    
+
 	const int nEntryCount = mpImpl->maEntryVector.size();
 	int nEntry;
 	for( nEntry = 0; nEntry < nEntryCount; nEntry++ )
@@ -908,7 +908,7 @@ void ToolbarMenu::implHighlightEntry( int nHighlightEntry, bool bHighlight )
                 long nFontHeight = GetTextHeight();
                 aItemRect.Right() -= nFontHeight + nFontHeight/4;
             }
-            
+
             if( IsNativeControlSupported( CTRL_MENU_POPUP, PART_ENTIRE_CONTROL ) )
             {
                 Size aPxSize( GetOutputSizePixel() );
@@ -1014,7 +1014,7 @@ void ToolbarMenu::implHighlightEntry( const MouseEvent& rMEvt, bool bMBDown )
     if ( ( nMouseY >= 0 ) && ( nMouseY < aOutSz.Height() ) )
     {
         bool bHighlighted = sal_False;
-        
+
 		const int nEntryCount = mpImpl->maEntryVector.size();
 		int nEntry;
 		for( nEntry = 0; nEntry < nEntryCount; nEntry++ )
@@ -1095,7 +1095,7 @@ static bool implCheckSubControlCursorMove( Control* pControl, bool bUp, int& nLa
 			const sal_uInt16 nLine = nItemPos / nColCount;
 
 			nLastColumn = nItemPos - (nLine * nColCount);
-	
+
 			if( bUp )
 			{
 				return nLine > 0;
@@ -1126,7 +1126,7 @@ ToolbarMenuEntry* ToolbarMenu::implCursorUpDown( bool bUp, bool bHomeEnd )
 			else
 				n = mpImpl->maEntryVector.size()-1;
 		}
-		else 
+		else
 		{
 			// if we have a currently selected entry and
 			// cursor keys are used than check if this entry
@@ -1309,10 +1309,10 @@ static void ImplPaintCheckBackground( Window* i_pWindow, const Rectangle& i_rRec
     {
         ImplControlValue    aControlValue;
         ControlState        nState = CTRL_STATE_PRESSED | CTRL_STATE_ENABLED;
-        
+
         aControlValue.setTristateVal( BUTTONVALUE_ON );
-        
-        bNativeOk = i_pWindow->DrawNativeControl( CTRL_TOOLBAR, PART_BUTTON, 
+
+        bNativeOk = i_pWindow->DrawNativeControl( CTRL_TOOLBAR, PART_BUTTON,
                                                   i_rRect, nState, aControlValue,
                                                   rtl::OUString() );
     }
@@ -1328,7 +1328,7 @@ static void ImplPaintCheckBackground( Window* i_pWindow, const Rectangle& i_rRec
 static long ImplGetNativeCheckAndRadioSize( Window* pWin, long& rCheckHeight, long& rRadioHeight, long &rMaxWidth )
 {
     rMaxWidth = rCheckHeight = rRadioHeight = 0;
-    
+
     ImplControlValue aVal;
     Rectangle aNativeBounds;
     Rectangle aNativeContent;
@@ -1448,7 +1448,7 @@ void ToolbarMenu::implPaint( ToolbarMenuEntry* pThisOnly, bool bHighlighted )
 					SetLineColor( rSettings.GetLightColor() );
 					DrawLine( aRect.TopLeft(), aRect.TopRight() );
 					SetLineColor( rSettings.GetShadowColor() );
-					DrawLine( aRect.BottomLeft(), aRect.BottomRight() );					
+					DrawLine( aRect.BottomLeft(), aRect.BottomRight() );
 				}
 
 				// CheckMark
@@ -1470,29 +1470,29 @@ void ToolbarMenu::implPaint( ToolbarMenuEntry* pThisOnly, bool bHighlighted )
 							ControlPart nPart = ((pEntry->mnBits & MIB_RADIOCHECK)
 												 ? PART_MENU_ITEM_RADIO_MARK
 												 : PART_MENU_ITEM_CHECK_MARK);
-    
+
 							ControlState nState = 0;
-    
+
 							if ( pEntry->mbChecked )
 								nState |= CTRL_STATE_PRESSED;
-    
+
 							if ( pEntry->mbEnabled )
 								nState |= CTRL_STATE_ENABLED;
-    
+
 							if ( bHighlighted )
 								nState |= CTRL_STATE_SELECTED;
-    
+
 							long nCtrlHeight = (pEntry->mnBits & MIB_RADIOCHECK) ? nCheckHeight : nRadioHeight;
 							aTmpPos.X() = aOuterCheckRect.Left() + (aOuterCheckRect.GetWidth() - nCtrlHeight)/2;
 							aTmpPos.Y() = aOuterCheckRect.Top() + (aOuterCheckRect.GetHeight() - nCtrlHeight)/2;
-                            
-							Rectangle aCheckRect( aTmpPos, Size( nCtrlHeight, nCtrlHeight ) );                            
+
+							Rectangle aCheckRect( aTmpPos, Size( nCtrlHeight, nCtrlHeight ) );
 							DrawNativeControl( CTRL_MENU_POPUP, nPart, aCheckRect, nState, ImplControlValue(), OUString() );
 						}
 						else if ( pEntry->mbChecked ) // by default do nothing for unchecked items
 						{
 							ImplPaintCheckBackground( this, aOuterCheckRect, pThisOnly && bHighlighted );
-                            
+
 							SymbolType eSymbol;
 							Size aSymbolSize;
 							if ( pEntry->mnBits & MIB_RADIOCHECK )
@@ -1695,7 +1695,7 @@ void ToolbarMenu::UpdateStatus( const rtl::OUString& rCommandURL )
 // --------------------------------------------------------------------
 
 // XStatusListener (subclasses must override this one to get the status updates
-void SAL_CALL ToolbarMenu::statusChanged( const ::com::sun::star::frame::FeatureStateEvent& /*Event*/ ) throw ( ::com::sun::star::uno::RuntimeException )
+void SAL_CALL ToolbarMenu::statusChanged( const ::com::sun::star::frame::FeatureStateEvent& /*Event*/ )
 {
 }
 
@@ -1703,20 +1703,20 @@ void SAL_CALL ToolbarMenu::statusChanged( const ::com::sun::star::frame::Feature
 
 class ToolbarMenuStatusListener : public svt::FrameStatusListener
 {
-public: 
+public:
 	ToolbarMenuStatusListener( const com::sun::star::uno::Reference< com::sun::star::lang::XMultiServiceFactory >& xServiceManager,
 							   const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame >& xFrame,
 							   ToolbarMenu& rToolbarMenu );
 
-	virtual void SAL_CALL dispose() throw (::com::sun::star::uno::RuntimeException);
-	virtual void SAL_CALL statusChanged( const ::com::sun::star::frame::FeatureStateEvent& Event ) throw ( ::com::sun::star::uno::RuntimeException );
+	virtual void SAL_CALL dispose();
+	virtual void SAL_CALL statusChanged( const ::com::sun::star::frame::FeatureStateEvent& Event );
 
 	ToolbarMenu* mpMenu;
 };
 
 // --------------------------------------------------------------------
 
-ToolbarMenuStatusListener::ToolbarMenuStatusListener( 
+ToolbarMenuStatusListener::ToolbarMenuStatusListener(
 	const com::sun::star::uno::Reference< com::sun::star::lang::XMultiServiceFactory >& xServiceManager,
 	const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame >& xFrame,
 	ToolbarMenu& rToolbarMenu )
@@ -1727,7 +1727,7 @@ ToolbarMenuStatusListener::ToolbarMenuStatusListener(
 
 // --------------------------------------------------------------------
 
-void SAL_CALL ToolbarMenuStatusListener::dispose() throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL ToolbarMenuStatusListener::dispose()
 {
 	mpMenu = 0;
 	svt::FrameStatusListener::dispose();
@@ -1735,7 +1735,7 @@ void SAL_CALL ToolbarMenuStatusListener::dispose() throw (::com::sun::star::uno:
 
 // --------------------------------------------------------------------
 
-void SAL_CALL ToolbarMenuStatusListener::statusChanged( const ::com::sun::star::frame::FeatureStateEvent& Event ) throw ( ::com::sun::star::uno::RuntimeException )
+void SAL_CALL ToolbarMenuStatusListener::statusChanged( const ::com::sun::star::frame::FeatureStateEvent& Event )
 {
 	if( mpMenu )
 		mpMenu->statusChanged( Event );
@@ -1797,5 +1797,3 @@ Reference< XFrame >	ToolbarMenu::GetFrame() const
 // --------------------------------------------------------------------
 
 }
-
-

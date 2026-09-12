@@ -110,7 +110,7 @@ struct SfxProgress_Impl
 #define aTypeLibInfo aProgressTypeLibImpl
 
 //========================================================================
-extern sal_uIntPtr Get10ThSec();
+extern clock_t Get10ThSec();
 
 // -----------------------------------------------------------------------
 
@@ -175,7 +175,7 @@ SfxProgress::SfxProgress
 	bSuspended(sal_True)
 {
 	pImp->bRunning = sal_True;
-	pImp->bAllowRescheduling = Application::IsInExecute();;
+	pImp->bAllowRescheduling = Application::IsInExecute();
 
 	pImp->xObjSh = pObjSh;
 	pImp->aText = rText;

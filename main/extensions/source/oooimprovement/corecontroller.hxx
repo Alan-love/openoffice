@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -59,19 +59,14 @@ namespace oooimprovement
             CoreController(const css::uno::Reference< css::lang::XMultiServiceFactory>& sm);
             virtual ~CoreController();
 
-            // css::oooimprovement::XCoreController            
-            virtual sal_Bool SAL_CALL enablingUiEventsLoggerAllowed(sal_Int16 version)
-                throw(css::uno::RuntimeException);
-            virtual sal_Bool SAL_CALL showBuiltinOptionsPage(sal_Int16 version)
-                throw(css::uno::RuntimeException);
+            // css::oooimprovement::XCoreController
+            virtual sal_Bool SAL_CALL enablingUiEventsLoggerAllowed(sal_Int16 version);
+            virtual sal_Bool SAL_CALL showBuiltinOptionsPage(sal_Int16 version);
 
             // css::lang::XServiceInfo
-            virtual ::rtl::OUString SAL_CALL getImplementationName()
-                throw(css::uno::RuntimeException);
-            virtual ::sal_Bool SAL_CALL supportsService(const ::rtl::OUString& service_name)
-                throw(css::uno::RuntimeException);
-            virtual css::uno::Sequence< ::rtl::OUString> SAL_CALL getSupportedServiceNames()
-                throw(css::uno::RuntimeException);
+            virtual ::rtl::OUString SAL_CALL getImplementationName();
+            virtual ::sal_Bool SAL_CALL supportsService(const ::rtl::OUString& service_name);
+            virtual css::uno::Sequence< ::rtl::OUString> SAL_CALL getSupportedServiceNames();
 
         private:
             css::uno::Reference< css::lang::XMultiServiceFactory> m_ServiceFactory;

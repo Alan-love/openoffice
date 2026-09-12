@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -381,7 +381,7 @@ void LayoutManager::implts_reset( sal_Bool bAttached )
 
         Reference< XUIConfigurationManager > xModCfgMgr( xModuleCfgMgr, UNO_QUERY );
         Reference< XUIConfigurationManager > xDokCfgMgr( xDocCfgMgr, UNO_QUERY );
-        
+
         /* SAFE AREA ----------------------------------------------------------------------------------------------- */
         WriteGuard aWriteLock( m_aLock );
         m_xModel = xModel;
@@ -463,7 +463,7 @@ uno::Reference< ui::XUIElement > LayoutManager::implts_findElement( const rtl::O
 {
     ::rtl::OUString aElementType;
     ::rtl::OUString aElementName;
-    
+
     parseResourceURL( aName, aElementType, aElementName );
     if ( aElementType.equalsIgnoreAsciiCaseAscii( "menubar" ) && aElementName.equalsIgnoreAsciiCaseAscii( "menubar" ))
         return m_xMenuBar;
@@ -481,7 +481,7 @@ UIElement& LayoutManager::impl_findElement( const rtl::OUString& aName )
 
     ::rtl::OUString aElementType;
     ::rtl::OUString aElementName;
-    
+
     parseResourceURL( aName, aElementType, aElementName );
     if (( aElementType.equalsIgnoreAsciiCaseAscii( "statusbar" ) && aElementName.equalsIgnoreAsciiCaseAscii( "statusbar" )) || ( m_aStatusBarElement.m_aName == aName ))
         return m_aStatusBarElement;
@@ -723,7 +723,7 @@ void LayoutManager::implts_writeWindowStateData( const rtl::OUString& aName, con
     pContainerWindow  = VCLUnoHelper::GetWindow( m_xContainerWindow );
     if ( pContainerWindow )
         aContainerWinSize = pContainerWindow->GetOutputSizePixel();
-    
+
     return aContainerWinSize;
 }
 
@@ -815,7 +815,7 @@ void LayoutManager::implts_updateUIElementsVisibleState( sal_Bool bSetVisible )
         pToolbarManager->setVisible( bSetVisible );
         bMustDoLayout = pToolbarManager->isLayoutDirty();
     }
-    
+
     if ( bMustDoLayout )
         implts_doLayout_notify( sal_False );
 }
@@ -1152,7 +1152,7 @@ void LayoutManager::implts_setOffset( const sal_Int32 nBottomOffset )
     ::Rectangle aOffsetRect;
     setZeroRectangle( aOffsetRect );
     aOffsetRect.setHeight( nBottomOffset );
-    
+
     // make sure that the toolbar manager refernence/pointer is valid
     uno::Reference< ui::XUIConfigurationListener > xThis( m_xToolbarManager );
     if ( xThis.is() )
@@ -1160,7 +1160,6 @@ void LayoutManager::implts_setOffset( const sal_Int32 nBottomOffset )
 }
 
 void LayoutManager::implts_setInplaceMenuBar( const Reference< XIndexAccess >& xMergedMenuBar )
-throw (uno::RuntimeException)
 {
     /* SAFE AREA ----------------------------------------------------------------------------------------------- */
     WriteGuard aWriteLock( m_aLock );
@@ -1201,7 +1200,6 @@ throw (uno::RuntimeException)
 }
 
 void LayoutManager::implts_resetInplaceMenuBar()
-throw (uno::RuntimeException)
 {
     /* SAFE AREA ----------------------------------------------------------------------------------------------- */
     WriteGuard aWriteLock( m_aLock );
@@ -1231,14 +1229,12 @@ throw (uno::RuntimeException)
 }
 
 void SAL_CALL LayoutManager::attachFrame( const Reference< XFrame >& xFrame )
-throw (uno::RuntimeException)
 {
     WriteGuard aWriteLock( m_aLock );
     m_xFrame = xFrame;
 }
 
 void SAL_CALL LayoutManager::reset()
-throw (RuntimeException)
 {
     sal_Bool bComponentAttached( sal_False );
 
@@ -1250,13 +1246,11 @@ throw (RuntimeException)
 }
 
 void SAL_CALL LayoutManager::setInplaceMenuBar( sal_Int64 )
-throw (uno::RuntimeException)
 {
     OSL_ENSURE( sal_False, "This method is obsolete and should not be used!\n" );
 }
 
 void SAL_CALL LayoutManager::resetInplaceMenuBar()
-throw (uno::RuntimeException)
 {
     OSL_ENSURE( sal_False, "This method is obsolete and should not be used!\n" );
 }
@@ -1266,7 +1260,6 @@ throw (uno::RuntimeException)
 //---------------------------------------------------------------------------------------------------------
 sal_Bool SAL_CALL LayoutManager::setMergedMenuBar(
     const Reference< XIndexAccess >& xMergedMenuBar )
-throw (uno::RuntimeException)
 {
     implts_setInplaceMenuBar( xMergedMenuBar );
 
@@ -1276,27 +1269,23 @@ throw (uno::RuntimeException)
 }
 
 void SAL_CALL LayoutManager::removeMergedMenuBar()
-throw (uno::RuntimeException)
 {
     implts_resetInplaceMenuBar();
 }
 
 awt::Rectangle SAL_CALL LayoutManager::getCurrentDockingArea()
-throw ( RuntimeException )
 {
     ReadGuard aReadLock( m_aLock );
     return m_aDockingArea;
 }
 
 Reference< XDockingAreaAcceptor > SAL_CALL LayoutManager::getDockingAreaAcceptor()
-throw (uno::RuntimeException)
 {
     ReadGuard aReadLock( m_aLock );
     return m_xDockingAreaAcceptor;
 }
 
 void SAL_CALL LayoutManager::setDockingAreaAcceptor( const Reference< ui::XDockingAreaAcceptor >& xDockingAreaAcceptor )
-throw ( RuntimeException )
 {
     /* SAFE AREA ----------------------------------------------------------------------------------------------- */
     WriteGuard aWriteLock( m_aLock );
@@ -1412,7 +1401,7 @@ void LayoutManager::implts_reparentChildWindows()
         catch ( RuntimeException& ) { throw; }
         catch ( Exception& ) {}
     }
-    
+
     if ( xStatusBarWindow.is() )
     {
         vos::OGuard     aGuard( Application::GetSolarMutex() );
@@ -1423,7 +1412,7 @@ void LayoutManager::implts_reparentChildWindows()
     }
 
     implts_resetMenuBar();
-    
+
     aWriteLock.lock();
     uno::Reference< ui::XUIConfigurationListener > xToolbarManager( m_xToolbarManager );
     ToolbarLayoutManager* pToolbarManager = m_pToolbarManager;
@@ -1461,7 +1450,6 @@ IMPL_LINK( LayoutManager, WindowEventListener, VclSimpleEvent*, pEvent )
 }
 
 void SAL_CALL LayoutManager::createElement( const ::rtl::OUString& aName )
-throw (RuntimeException)
 {
     RTL_LOGFILE_CONTEXT( aLog, "framework (cd100003) ::LayoutManager::createElement" );
 
@@ -1481,7 +1469,7 @@ throw (RuntimeException)
 
     bool bMustBeLayouted( false );
     bool bNotify( false );
-    
+
     if ( m_xContainerWindow.is() && !implts_isPreviewModel( xModel ) ) // no UI elements on preview frames
     {
         ::rtl::OUString aElementType;
@@ -1503,7 +1491,7 @@ throw (RuntimeException)
                 if ( m_xMenuBar.is() )
                 {
                     vos::OGuard aGuard( Application::GetSolarMutex() );
-                
+
                     SystemWindow* pSysWindow = getTopSystemWindow( m_xContainerWindow );
                     if ( pSysWindow )
                     {
@@ -1556,13 +1544,13 @@ throw (RuntimeException)
             // Add layout manager as listener for docking and other window events
             uno::Reference< uno::XInterface > xThis( static_cast< OWeakObject* >(this), uno::UNO_QUERY );
             uno::Reference< ui::XUIElement > xUIElement( implts_createDockingWindow( aName ));
-            
+
             if ( xUIElement.is() )
             {
                 impl_addWindowListeners( xThis, xUIElement );
                 m_pPanelManager->addDockingWindow( aName, xUIElement );
             }
-            
+
             // The docking window is created by a factory method located in the sfx2 library.
 //            CreateDockingWindow( xFrame, aElementName );
         }
@@ -1579,7 +1567,6 @@ throw (RuntimeException)
 }
 
 void SAL_CALL LayoutManager::destroyElement( const ::rtl::OUString& aName )
-throw (RuntimeException)
 {
     RTL_LOGFILE_CONTEXT( aLog, "framework (cd100003) ::LayoutManager::destroyElement" );
 
@@ -1594,7 +1581,7 @@ throw (RuntimeException)
 
     Reference< XComponent > xComponent;
     parseResourceURL( aName, aElementType, aElementName );
-    
+
     if ( aElementType.equalsIgnoreAsciiCaseAscii( "menubar" ) && aElementName.equalsIgnoreAsciiCaseAscii( "menubar" ))
     {
         if ( !m_bInplaceMenuSet )
@@ -1653,7 +1640,6 @@ throw (RuntimeException)
 }
 
 ::sal_Bool SAL_CALL LayoutManager::requestElement( const ::rtl::OUString& rResourceURL )
-throw (uno::RuntimeException)
 {
     bool            bResult( false );
     bool            bNotify( false );
@@ -1664,7 +1650,7 @@ throw (uno::RuntimeException)
     parseResourceURL( rResourceURL, aElementType, aElementName );
 
     WriteGuard aWriteLock( m_aLock );
-    
+
     ::rtl::OString aResName = rtl::OUStringToOString( aElementName, RTL_TEXTENCODING_ASCII_US );
     RTL_LOGFILE_CONTEXT_TRACE1( aLog, "framework (cd100003) Element %s requested.", aResName.getStr() );
 
@@ -1732,7 +1718,6 @@ throw (uno::RuntimeException)
 }
 
 Reference< XUIElement > SAL_CALL LayoutManager::getElement( const ::rtl::OUString& aName )
-throw (RuntimeException)
 {
     Reference< XUIElement > xUIElement = implts_findElement( aName );
     if ( !xUIElement.is() )
@@ -1750,7 +1735,6 @@ throw (RuntimeException)
 }
 
 Sequence< Reference< ui::XUIElement > > SAL_CALL LayoutManager::getElements()
-throw (uno::RuntimeException)
 {
     ReadGuard aReadLock( m_aLock );
     uno::Reference< ui::XUIElement >  xMenuBar( m_xMenuBar );
@@ -1787,7 +1771,6 @@ throw (uno::RuntimeException)
 }
 
 sal_Bool SAL_CALL LayoutManager::showElement( const ::rtl::OUString& aName )
-throw (RuntimeException)
 {
     RTL_LOGFILE_CONTEXT( aLog, "framework (cd100003) ::LayoutManager::showElement" );
 
@@ -1798,7 +1781,7 @@ throw (RuntimeException)
     ::rtl::OUString aElementName;
 
     parseResourceURL( aName, aElementType, aElementName );
-    
+
     ::rtl::OString aResName = rtl::OUStringToOString( aElementName, RTL_TEXTENCODING_ASCII_US );
     RTL_LOGFILE_CONTEXT_TRACE1( aLog, "framework (cd100003) Element %s", aResName.getStr() );
 
@@ -1835,7 +1818,7 @@ throw (RuntimeException)
         uno::Reference< awt::XWindowListener > xToolbarManager( m_xToolbarManager, uno::UNO_QUERY );
         ToolbarLayoutManager* pToolbarManager = m_pToolbarManager;
         aReadLock.unlock();
-            
+
         if ( pToolbarManager )
         {
             bNotify     = pToolbarManager->showToolbar( aName );
@@ -1869,7 +1852,6 @@ throw (RuntimeException)
 }
 
 sal_Bool SAL_CALL LayoutManager::hideElement( const ::rtl::OUString& aName )
-throw (RuntimeException)
 {
     RTL_LOGFILE_CONTEXT( aLog, "framework (cd100003) ::LayoutManager::hideElement" );
 
@@ -1890,7 +1872,7 @@ throw (RuntimeException)
         if ( m_xContainerWindow.is() )
         {
             m_bMenuVisible = sal_False;
-                
+
             vos::OGuard aGuard( Application::GetSolarMutex() );
             SystemWindow* pSysWindow = getTopSystemWindow( m_xContainerWindow );
             if ( pSysWindow )
@@ -1927,7 +1909,7 @@ throw (RuntimeException)
         uno::Reference< uno::XInterface > xToolbarManager( m_xToolbarManager, uno::UNO_QUERY );
         ToolbarLayoutManager* pToolbarManager = m_pToolbarManager;
         aReadLock.unlock();
-            
+
         bNotify     = pToolbarManager->hideToolbar( aName );
         bMustLayout = pToolbarManager->isLayoutDirty();
     }
@@ -1951,11 +1933,10 @@ throw (RuntimeException)
 }
 
 sal_Bool SAL_CALL LayoutManager::dockWindow( const ::rtl::OUString& aName, DockingArea DockingArea, const awt::Point& Pos )
-throw (RuntimeException)
 {
     ::rtl::OUString aElementType;
     ::rtl::OUString aElementName;
-    
+
     parseResourceURL( aName, aElementType, aElementName );
     if ( aElementType.equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
     {
@@ -1963,9 +1944,9 @@ throw (RuntimeException)
         uno::Reference< uno::XInterface > xThis( m_xToolbarManager );
         ToolbarLayoutManager*             pToolbarManager = m_pToolbarManager;
         aReadLock.unlock();
-        
+
         if ( pToolbarManager )
-        {        
+        {
             pToolbarManager->dockToolbar( aName, DockingArea, Pos );
             if ( pToolbarManager->isLayoutDirty() )
                 doLayout();
@@ -1974,7 +1955,7 @@ throw (RuntimeException)
     return sal_False;
 }
 
-::sal_Bool SAL_CALL LayoutManager::dockAllWindows( ::sal_Int16 /*nElementType*/ ) throw (uno::RuntimeException)
+::sal_Bool SAL_CALL LayoutManager::dockAllWindows( ::sal_Int16 /*nElementType*/ )
 {
     ReadGuard aReadLock( m_aLock );
     bool bResult( false );
@@ -1982,7 +1963,7 @@ throw (RuntimeException)
     ToolbarLayoutManager*             pToolbarManager = m_pToolbarManager;
     aReadLock.unlock();
 
-    if ( pToolbarManager ) 
+    if ( pToolbarManager )
     {
         bResult = pToolbarManager->dockAllToolbars();
         if ( pToolbarManager->isLayoutDirty() )
@@ -1992,7 +1973,6 @@ throw (RuntimeException)
 }
 
 sal_Bool SAL_CALL LayoutManager::floatWindow( const ::rtl::OUString& aName )
-throw (RuntimeException)
 {
     bool bResult( false );
     if ( getElementTypeFromResourceURL( aName ).equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
@@ -2002,7 +1982,7 @@ throw (RuntimeException)
         ToolbarLayoutManager*             pToolbarManager = m_pToolbarManager;
         aReadLock.unlock();
 
-        if ( pToolbarManager ) 
+        if ( pToolbarManager )
         {
             bResult = pToolbarManager->floatToolbar( aName );
             if ( pToolbarManager->isLayoutDirty() )
@@ -2013,7 +1993,6 @@ throw (RuntimeException)
 }
 
 ::sal_Bool SAL_CALL LayoutManager::lockWindow( const ::rtl::OUString& aName )
-throw (uno::RuntimeException)
 {
     bool bResult( false );
     if ( getElementTypeFromResourceURL( aName ).equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
@@ -2023,8 +2002,8 @@ throw (uno::RuntimeException)
         ToolbarLayoutManager*             pToolbarManager = m_pToolbarManager;
         aReadLock.unlock();
 
-        if ( pToolbarManager ) 
-        {    
+        if ( pToolbarManager )
+        {
             bResult = pToolbarManager->lockToolbar( aName );
             if ( pToolbarManager->isLayoutDirty() )
                 doLayout();
@@ -2034,7 +2013,6 @@ throw (uno::RuntimeException)
 }
 
 ::sal_Bool SAL_CALL LayoutManager::unlockWindow( const ::rtl::OUString& aName )
-throw (uno::RuntimeException)
 {
     bool bResult( false );
     if ( getElementTypeFromResourceURL( aName ).equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
@@ -2044,8 +2022,8 @@ throw (uno::RuntimeException)
         ToolbarLayoutManager*             pToolbarManager = m_pToolbarManager;
         aReadLock.unlock();
 
-        if ( pToolbarManager ) 
-        {    
+        if ( pToolbarManager )
+        {
             bResult = pToolbarManager->unlockToolbar( aName );
             if ( pToolbarManager->isLayoutDirty() )
                 doLayout();
@@ -2055,7 +2033,6 @@ throw (uno::RuntimeException)
 }
 
 void SAL_CALL LayoutManager::setElementSize( const ::rtl::OUString& aName, const awt::Size& aSize )
-throw (RuntimeException)
 {
     if ( getElementTypeFromResourceURL( aName ).equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
     {
@@ -2064,8 +2041,8 @@ throw (RuntimeException)
         ToolbarLayoutManager*             pToolbarManager = m_pToolbarManager;
         aReadLock.unlock();
 
-        if ( pToolbarManager ) 
-        {    
+        if ( pToolbarManager )
+        {
             pToolbarManager->setToolbarSize( aName, aSize );
             if ( pToolbarManager->isLayoutDirty() )
                 doLayout();
@@ -2074,7 +2051,6 @@ throw (RuntimeException)
 }
 
 void SAL_CALL LayoutManager::setElementPos( const ::rtl::OUString& aName, const awt::Point& aPos )
-throw (RuntimeException)
 {
     if ( getElementTypeFromResourceURL( aName ).equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
     {
@@ -2093,7 +2069,6 @@ throw (RuntimeException)
 }
 
 void SAL_CALL LayoutManager::setElementPosSize( const ::rtl::OUString& aName, const awt::Point& aPos, const awt::Size& aSize )
-throw (RuntimeException)
 {
     if ( getElementTypeFromResourceURL( aName ).equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
     {
@@ -2112,7 +2087,6 @@ throw (RuntimeException)
 }
 
 sal_Bool SAL_CALL LayoutManager::isElementVisible( const ::rtl::OUString& aName )
-throw (RuntimeException)
 {
     ::rtl::OUString aElementType;
     ::rtl::OUString aElementName;
@@ -2183,7 +2157,6 @@ throw (RuntimeException)
 }
 
 sal_Bool SAL_CALL LayoutManager::isElementFloating( const ::rtl::OUString& aName )
-throw (RuntimeException)
 {
     if ( getElementTypeFromResourceURL( aName ).equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
     {
@@ -2200,7 +2173,6 @@ throw (RuntimeException)
 }
 
 sal_Bool SAL_CALL LayoutManager::isElementDocked( const ::rtl::OUString& aName )
-throw (RuntimeException)
 {
     if ( getElementTypeFromResourceURL( aName ).equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
     {
@@ -2212,12 +2184,11 @@ throw (RuntimeException)
         if ( pToolbarManager )
             return pToolbarManager->isToolbarDocked( aName );
     }
-    
+
     return sal_False;
 }
 
 ::sal_Bool SAL_CALL LayoutManager::isElementLocked( const ::rtl::OUString& aName )
-throw (uno::RuntimeException)
 {
     if ( getElementTypeFromResourceURL( aName ).equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
     {
@@ -2229,12 +2200,11 @@ throw (uno::RuntimeException)
         if ( pToolbarManager )
             return pToolbarManager->isToolbarLocked( aName );
     }
-    
+
     return sal_False;
 }
 
 awt::Size SAL_CALL LayoutManager::getElementSize( const ::rtl::OUString& aName )
-throw (RuntimeException)
 {
     if ( getElementTypeFromResourceURL( aName ).equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
     {
@@ -2246,12 +2216,11 @@ throw (RuntimeException)
         if ( pToolbarManager )
             return pToolbarManager->getToolbarSize( aName );
     }
-    
+
     return awt::Size();
 }
 
 awt::Point SAL_CALL LayoutManager::getElementPos( const ::rtl::OUString& aName )
-throw (RuntimeException)
 {
     if ( getElementTypeFromResourceURL( aName ).equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
     {
@@ -2263,12 +2232,11 @@ throw (RuntimeException)
         if ( pToolbarManager )
             return pToolbarManager->getToolbarPos( aName );
     }
-    
+
     return awt::Point();
 }
 
 void SAL_CALL LayoutManager::lock()
-throw (RuntimeException)
 {
     implts_lock();
 
@@ -2290,7 +2258,6 @@ throw (RuntimeException)
 }
 
 void SAL_CALL LayoutManager::unlock()
-throw (RuntimeException)
 {
     sal_Bool bDoLayout( implts_unlock() );
 
@@ -2321,7 +2288,6 @@ throw (RuntimeException)
 }
 
 void SAL_CALL LayoutManager::doLayout()
-throw (RuntimeException)
 {
     implts_doLayout_notify( sal_True );
 }
@@ -2376,10 +2342,10 @@ sal_Bool LayoutManager::implts_doLayout( sal_Bool bForceRequestBorderSpace, sal_
         awt::Rectangle aDockSpace( implts_calcDockingAreaSizes() );
         awt::Rectangle aBorderSpace( aDockSpace );
         sal_Bool       bGotRequestedBorderSpace( sal_True );
-        
+
         // We have to add the height of a possible status bar
         aBorderSpace.Height += implts_getStatusBarSize().Height();
-        
+
         if ( !equalRectangles( aBorderSpace, aCurrBorderSpace ) || bForceRequestBorderSpace || bMustDoLayout )
         {
             // we always resize the content window (instead of the complete container window) if we're not set up
@@ -2427,7 +2393,7 @@ sal_Bool LayoutManager::implts_doLayout( sal_Bool bForceRequestBorderSpace, sal_
         {
             ::Size      aContainerSize;
             ::Size      aStatusBarSize;
-            
+
             // Interim solution to let the layout method within the
             // toolbar layout manager.
             implts_setOffset( implts_getStatusBarSize().Height() );
@@ -2502,7 +2468,6 @@ sal_Bool LayoutManager::implts_resizeContainerWindow( const awt::Size& rContaine
 }
 
 void SAL_CALL LayoutManager::setVisible( sal_Bool bVisible )
-throw (uno::RuntimeException)
 {
     WriteGuard aWriteLock( m_aLock );
     sal_Bool bWasVisible( m_bVisible );
@@ -2514,7 +2479,6 @@ throw (uno::RuntimeException)
 }
 
 sal_Bool SAL_CALL LayoutManager::isVisible()
-throw (uno::RuntimeException)
 {
     ReadGuard aReadLock( m_aLock );
     return m_bVisible;
@@ -2559,7 +2523,7 @@ awt::Rectangle LayoutManager::implts_calcDockingAreaSizes()
     awt::Rectangle aBorderSpace;
     if ( xDockingAreaAcceptor.is() && xContainerWindow.is() )
         aBorderSpace = m_pToolbarManager->getDockingArea();
-    
+
     return aBorderSpace;
 }
 
@@ -2685,13 +2649,11 @@ IMPL_LINK( LayoutManager, SettingsChanged, void*, EMPTYARG )
 //  XLayoutManagerEventBroadcaster
 //---------------------------------------------------------------------------------------------------------
 void SAL_CALL LayoutManager::addLayoutManagerEventListener( const uno::Reference< frame::XLayoutManagerListener >& xListener )
-throw (uno::RuntimeException)
 {
     m_aListenerContainer.addInterface( ::getCppuType( (const uno::Reference< frame::XLayoutManagerListener >*)NULL ), xListener );
 }
 
 void SAL_CALL LayoutManager::removeLayoutManagerEventListener( const uno::Reference< frame::XLayoutManagerListener >& xListener )
-throw (uno::RuntimeException)
 {
     m_aListenerContainer.removeInterface( ::getCppuType( (const uno::Reference< frame::XLayoutManagerListener >*)NULL ), xListener );
 }
@@ -2721,7 +2683,6 @@ void LayoutManager::implts_notifyListeners( short nEvent, uno::Any aInfoParam )
 //      XWindowListener
 //---------------------------------------------------------------------------------------------------------
 void SAL_CALL LayoutManager::windowResized( const awt::WindowEvent& aEvent )
-throw( uno::RuntimeException )
 {
     /* SAFE AREA ----------------------------------------------------------------------------------------------- */
     WriteGuard aWriteLock( m_aLock );
@@ -2771,11 +2732,11 @@ throw( uno::RuntimeException )
     }
 }
 
-void SAL_CALL LayoutManager::windowMoved( const awt::WindowEvent& ) throw( uno::RuntimeException )
+void SAL_CALL LayoutManager::windowMoved( const awt::WindowEvent& )
 {
 }
 
-void SAL_CALL LayoutManager::windowShown( const lang::EventObject& aEvent ) throw( uno::RuntimeException )
+void SAL_CALL LayoutManager::windowShown( const lang::EventObject& aEvent )
 {
     ReadGuard aReadLock( m_aLock );
     Reference< awt::XWindow >  xContainerWindow( m_xContainerWindow );
@@ -2797,7 +2758,7 @@ void SAL_CALL LayoutManager::windowShown( const lang::EventObject& aEvent ) thro
     }
 }
 
-void SAL_CALL LayoutManager::windowHidden( const lang::EventObject& aEvent ) throw( uno::RuntimeException )
+void SAL_CALL LayoutManager::windowHidden( const lang::EventObject& aEvent )
 {
     ReadGuard aReadLock( m_aLock );
     Reference< awt::XWindow > xContainerWindow( m_xContainerWindow );
@@ -2844,7 +2805,6 @@ IMPL_LINK( LayoutManager, AsyncLayoutHdl, Timer *, EMPTYARG )
 //      XFrameActionListener
 //---------------------------------------------------------------------------------------------------------
 void SAL_CALL LayoutManager::frameAction( const FrameActionEvent& aEvent )
-throw ( RuntimeException )
 {
     if (( aEvent.Action == FrameAction_COMPONENT_ATTACHED ) || ( aEvent.Action == FrameAction_COMPONENT_REATTACHED ))
     {
@@ -2884,7 +2844,6 @@ throw ( RuntimeException )
 // ______________________________________________
 
 void SAL_CALL LayoutManager::disposing( const lang::EventObject& rEvent )
-throw( RuntimeException )
 {
     sal_Bool bDisposeAndClear( sal_False );
 
@@ -2910,7 +2869,7 @@ throw( RuntimeException )
         m_xInplaceMenuBar.clear();
         m_xContainerWindow.clear();
         m_xContainerTopWindow.clear();
-        
+
         // forward disposing call to toolbar manager
         if ( m_pToolbarManager != NULL )
             m_pToolbarManager->disposing(rEvent);
@@ -2984,7 +2943,7 @@ throw( RuntimeException )
     }
 }
 
-void SAL_CALL LayoutManager::elementInserted( const ui::ConfigurationEvent& Event ) throw (uno::RuntimeException)
+void SAL_CALL LayoutManager::elementInserted( const ui::ConfigurationEvent& Event )
 {
     ReadGuard aReadLock( m_aLock );
     Reference< XFrame > xFrame( m_xFrame );
@@ -2997,7 +2956,7 @@ void SAL_CALL LayoutManager::elementInserted( const ui::ConfigurationEvent& Even
         ::rtl::OUString aElementType;
         ::rtl::OUString aElementName;
         bool            bRefreshLayout(false);
-    
+
         parseResourceURL( Event.ResourceURL, aElementType, aElementName );
         if ( aElementType.equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
         {
@@ -3026,10 +2985,10 @@ void SAL_CALL LayoutManager::elementInserted( const ui::ConfigurationEvent& Even
 
         if ( bRefreshLayout )
             doLayout();
-    }    
+    }
 }
 
-void SAL_CALL LayoutManager::elementRemoved( const ui::ConfigurationEvent& Event ) throw (uno::RuntimeException)
+void SAL_CALL LayoutManager::elementRemoved( const ui::ConfigurationEvent& Event )
 {
     ReadGuard aReadLock( m_aLock );
     Reference< frame::XFrame >                xFrame( m_xFrame );
@@ -3046,7 +3005,7 @@ void SAL_CALL LayoutManager::elementRemoved( const ui::ConfigurationEvent& Event
        ::rtl::OUString aElementType;
        ::rtl::OUString aElementName;
        bool            bRefreshLayout(false);
-        
+
        parseResourceURL( Event.ResourceURL, aElementType, aElementName );
         if ( aElementType.equalsIgnoreAsciiCaseAscii( UIRESOURCETYPE_TOOLBAR ))
         {
@@ -3090,7 +3049,7 @@ void SAL_CALL LayoutManager::elementRemoved( const ui::ConfigurationEvent& Event
 
                     bNoSettings = true;
                 }
-                
+
                 // No settings anymore, element must be destroyed
                     if ( xContainerWindow.is() && bNoSettings )
                 {
@@ -3099,24 +3058,24 @@ void SAL_CALL LayoutManager::elementRemoved( const ui::ConfigurationEvent& Event
                         SystemWindow* pSysWindow = getTopSystemWindow( xContainerWindow );
                         if ( pSysWindow && !m_bInplaceMenuSet )
                             pSysWindow->SetMenuBar( 0 );
-                          
+
                         Reference< XComponent > xComp( xMenuBar, UNO_QUERY );
                         if ( xComp.is() )
                             xComp->dispose();
-                            
-                        WriteGuard aWriteLock( m_aLock );                       
+
+                        WriteGuard aWriteLock( m_aLock );
                         m_xMenuBar.clear();
                     }
                 }
             }
         }
-        
+
         if ( bRefreshLayout )
             doLayout();
     }
 }
 
-void SAL_CALL LayoutManager::elementReplaced( const ui::ConfigurationEvent& Event ) throw (uno::RuntimeException)
+void SAL_CALL LayoutManager::elementReplaced( const ui::ConfigurationEvent& Event )
 {
     ReadGuard aReadLock( m_aLock );
     Reference< XFrame >                       xFrame( m_xFrame );
@@ -3160,7 +3119,7 @@ void SAL_CALL LayoutManager::elementReplaced( const ui::ConfigurationEvent& Even
                     xElementSettings->updateSettings();
             }
         }
-        
+
         if ( bRefreshLayout )
             doLayout();
     }
@@ -3172,13 +3131,13 @@ void SAL_CALL LayoutManager::elementReplaced( const ui::ConfigurationEvent& Even
 sal_Bool SAL_CALL LayoutManager::convertFastPropertyValue( Any&       aConvertedValue,
                                                            Any&       aOldValue,
                                                            sal_Int32  nHandle,
-                                                           const Any& aValue ) throw( lang::IllegalArgumentException )
+                                                           const Any& aValue )
 {
     return LayoutManager_PBase::convertFastPropertyValue( aConvertedValue, aOldValue, nHandle, aValue );
 }
 
 void SAL_CALL LayoutManager::setFastPropertyValue_NoBroadcast( sal_Int32       nHandle,
-                                                               const uno::Any& aValue  ) throw( uno::Exception )
+                                                               const uno::Any& aValue  )
 {
     if ( nHandle != LAYOUTMANAGER_PROPHANDLE_REFRESHVISIBILITY )
         LayoutManager_PBase::setFastPropertyValue_NoBroadcast( nHandle, aValue );
@@ -3199,7 +3158,7 @@ void SAL_CALL LayoutManager::setFastPropertyValue_NoBroadcast( sal_Int32       n
                 ToolbarLayoutManager* pToolbarManager = m_pToolbarManager;
                 bool bAutomaticToolbars( m_bAutomaticToolbars );
                 aReadLock.unlock();
-                
+
                 if ( pToolbarManager )
                     pToolbarManager->refreshToolbarsVisibility( bAutomaticToolbars );
             }
@@ -3238,14 +3197,14 @@ void SAL_CALL LayoutManager::getFastPropertyValue( uno::Any& aValue, sal_Int32 n
     return(*pInfoHelper);
 }
 
-uno::Reference< beans::XPropertySetInfo > SAL_CALL LayoutManager::getPropertySetInfo() throw (uno::RuntimeException)
+uno::Reference< beans::XPropertySetInfo > SAL_CALL LayoutManager::getPropertySetInfo()
 {
     static uno::Reference< beans::XPropertySetInfo >* pInfo = NULL;
 
     if( pInfo == NULL )
     {
         osl::MutexGuard aGuard( osl::Mutex::getGlobalMutex() ) ;
-        
+
         if( pInfo == NULL )
         {
             static uno::Reference< beans::XPropertySetInfo > xInfo( createPropertySetInfo( getInfoHelper() ) );

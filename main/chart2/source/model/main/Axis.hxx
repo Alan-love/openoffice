@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -63,7 +63,7 @@ public:
           ::com::sun::star::uno::XComponentContext > const & xContext );
 	virtual ~Axis();
 
-    /// establish methods for factory instatiation
+    /// establish methods for factory instantiation
     APPHELPER_SERVICE_FACTORY_HELPER( Axis )
     /// XServiceInfo declarations
     APPHELPER_XSERVICEINFO_DECL()
@@ -80,16 +80,14 @@ protected:
     void Init( const Axis & rOther );
 
     // ____ OPropertySet ____
-    virtual ::com::sun::star::uno::Any GetDefaultValue( sal_Int32 nHandle ) const
-        throw(::com::sun::star::beans::UnknownPropertyException);
+    virtual ::com::sun::star::uno::Any GetDefaultValue( sal_Int32 nHandle ) const;
 
     // ____ OPropertySet ____
 	virtual ::cppu::IPropertyArrayHelper & SAL_CALL getInfoHelper();
 
     // ____ XPropertySet ____
     virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL
-        getPropertySetInfo()
-        throw (::com::sun::star::uno::RuntimeException);
+        getPropertySetInfo();
 
 // 	virtual sal_Bool SAL_CALL convertFastPropertyValue
 //         ( ::com::sun::star::uno::Any & rConvertedValue,
@@ -99,53 +97,41 @@ protected:
 // 		throw (::com::sun::star::lang::IllegalArgumentException);
 
     // ____ XAxis ____
-    virtual void SAL_CALL setScaleData( const ::com::sun::star::chart2::ScaleData& rScaleData )
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::chart2::ScaleData SAL_CALL getScaleData()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL setScaleData( const ::com::sun::star::chart2::ScaleData& rScaleData );
+    virtual ::com::sun::star::chart2::ScaleData SAL_CALL getScaleData();
     virtual ::com::sun::star::uno::Reference<
-                ::com::sun::star::beans::XPropertySet > SAL_CALL getGridProperties()
-                    throw (::com::sun::star::uno::RuntimeException);
+                ::com::sun::star::beans::XPropertySet > SAL_CALL getGridProperties();
     virtual ::com::sun::star::uno::Sequence<
                 ::com::sun::star::uno::Reference<
-                        ::com::sun::star::beans::XPropertySet > > SAL_CALL getSubGridProperties()
-                    throw (::com::sun::star::uno::RuntimeException);
+                        ::com::sun::star::beans::XPropertySet > > SAL_CALL getSubGridProperties();
     virtual ::com::sun::star::uno::Sequence<
                 ::com::sun::star::uno::Reference<
-                    ::com::sun::star::beans::XPropertySet > > SAL_CALL getSubTickProperties()
-                    throw (::com::sun::star::uno::RuntimeException);
+                    ::com::sun::star::beans::XPropertySet > > SAL_CALL getSubTickProperties();
 
     // ____ XTitled ____
     virtual ::com::sun::star::uno::Reference<
-                ::com::sun::star::chart2::XTitle > SAL_CALL getTitleObject()
-        throw (::com::sun::star::uno::RuntimeException);
+                ::com::sun::star::chart2::XTitle > SAL_CALL getTitleObject();
     virtual void SAL_CALL setTitleObject(
         const ::com::sun::star::uno::Reference<
-            ::com::sun::star::chart2::XTitle >& Title )
-        throw (::com::sun::star::uno::RuntimeException);
+            ::com::sun::star::chart2::XTitle >& Title );
 
     // ____ XCloneable ____
     // Note: the coordinate systems are not cloned!
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::util::XCloneable > SAL_CALL createClone()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::util::XCloneable > SAL_CALL createClone();
 
     // ____ XModifyBroadcaster ____
     virtual void SAL_CALL addModifyListener(
-        const ::com::sun::star::uno::Reference< ::com::sun::star::util::XModifyListener >& aListener )
-        throw (::com::sun::star::uno::RuntimeException);
+        const ::com::sun::star::uno::Reference< ::com::sun::star::util::XModifyListener >& aListener );
     virtual void SAL_CALL removeModifyListener(
-        const ::com::sun::star::uno::Reference< ::com::sun::star::util::XModifyListener >& aListener )
-        throw (::com::sun::star::uno::RuntimeException);
+        const ::com::sun::star::uno::Reference< ::com::sun::star::util::XModifyListener >& aListener );
 
     // ____ XModifyListener ____
     virtual void SAL_CALL modified(
-        const ::com::sun::star::lang::EventObject& aEvent )
-        throw (::com::sun::star::uno::RuntimeException);
+        const ::com::sun::star::lang::EventObject& aEvent );
 
     // ____ XEventListener (base of XModifyListener) ____
     virtual void SAL_CALL disposing(
-        const ::com::sun::star::lang::EventObject& Source )
-        throw (::com::sun::star::uno::RuntimeException);
+        const ::com::sun::star::lang::EventObject& Source );
 
     // ____ OPropertySet ____
     virtual void firePropertyChangeEvent();

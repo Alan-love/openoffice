@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,25 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_desktop.hxx"
+
+#define  UNICODE    1
+#define _UNICODE    1
 
 #if defined _MSC_VER
 #pragma warning(push, 1)
@@ -33,7 +36,7 @@
 #endif
 #include <new>
 
-#include "setup_main.hxx"
+#include "setup.hxx"
 
 //--------------------------------------------------------------------------
 
@@ -44,54 +47,12 @@ void __cdecl newhandler()
 }
 
 //--------------------------------------------------------------------------
-
-SetupApp::SetupApp()
-{
-    m_uiRet         = ERROR_SUCCESS;
-
-    // Get OS version
-    OSVERSIONINFO sInfoOS;
-
-    ZeroMemory( &sInfoOS, sizeof(OSVERSIONINFO) );
-    sInfoOS.dwOSVersionInfoSize = sizeof( OSVERSIONINFO );
-
-    GetVersionEx( &sInfoOS );
-
-    m_nOSVersion    = sInfoOS.dwMajorVersion;
-    m_nMinorVersion = sInfoOS.dwMinorVersion;
-    m_bIsWin9x      = ( VER_PLATFORM_WIN32_NT != sInfoOS.dwPlatformId );
-    m_bNeedReboot   = false;
-    m_bAdministrative = false;
-}
-
-//--------------------------------------------------------------------------
-
-SetupApp::~SetupApp()
-{
-}
-
-//--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 
 extern "C" int __stdcall WinMain( HINSTANCE hInst, HINSTANCE, LPSTR, int )
 {
-    // Get OS version
-    OSVERSIONINFO sInfoOS;
-
-    ZeroMemory( &sInfoOS, sizeof(OSVERSIONINFO) );
-    sInfoOS.dwOSVersionInfoSize = sizeof( OSVERSIONINFO );
-
-    GetVersionEx( &sInfoOS );
-
-    boolean bIsWin9x = ( VER_PLATFORM_WIN32_NT != sInfoOS.dwPlatformId );
-
-    SetupApp *pSetup;
-
-    if ( bIsWin9x )
-        pSetup = Create_SetupAppA();
-    else
-        pSetup = Create_SetupAppW();
+    SetupApp *pSetup = new SetupApp();
 
     try
     {
@@ -105,6 +66,11 @@ extern "C" int __stdcall WinMain( HINSTANCE hInst, HINSTANCE, LPSTR, int )
             throw pSetup->GetError();
 
         if ( ! pSetup->CheckVersion() )
+            throw pSetup->GetError();
+
+        // Refuse early and clearly on an unsupported Windows, rather than letting the
+        // runtime install fail later with a message that does not name the real cause.
+        if ( ! pSetup->CheckOSVersion() )
             throw pSetup->GetError();
 
         if ( ! pSetup->IsAdminInstall() )

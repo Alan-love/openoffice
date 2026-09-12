@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 package ifc.connection;
 
@@ -127,7 +125,7 @@ public class _XAcceptor extends MultiMethodTest {
         XAcceptor dupAcceptor = null ;
         XConnector xConnector = null ;
 
-        // creating services requierd
+        // creating services required
         try {
             Object oConnector = ((XMultiServiceFactory)tParam.getMSF()).
                 createInstance("com.sun.star.connection.Connector") ;
@@ -250,7 +248,7 @@ public class _XAcceptor extends MultiMethodTest {
                             acception.ex instanceof
                             com.sun.star.connection.ConnectionSetupException) {
 
-                            log.println("Rigth exception was thrown when trying"+
+                            log.println("Right exception was thrown when trying"+
                             " to listen on the same port") ;
                         } else {
                             result = false ;
@@ -316,4 +314,3 @@ public class _XAcceptor extends MultiMethodTest {
         tRes.tested("stopAccepting()", result) ;
     }
 }
-

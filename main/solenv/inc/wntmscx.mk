@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,21 +7,21 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
 
-# mk file for $(OS)$(COM)$(CPU) == WNTMSCX
+# mk file for $(OS)$(COM)$(CPU) == WNTMSCX, every $(COMEX)
 
 SOLAR_JAVA*=TRUE
 FULL_DESK=TRUE
@@ -223,7 +223,7 @@ CFLAGSWERRCC=-WX
 # Once all modules on this platform compile without warnings, set
 # COMPILER_WARN_ERRORS=TRUE here instead of setting MODULES_WITH_WARNINGS (see
 # settings.mk):
-MODULES_WITH_WARNINGS := 
+MODULES_WITH_WARNINGS :=
 
 CDEFS+=-D_MT -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500
 .IF "$(COMEX)" == "11"
@@ -240,7 +240,7 @@ LINK=link /MACHINE:X64 /IGNORE:4102 /IGNORE:4197
 LINKFLAGS=/MAP /OPT:NOREF
 .ENDIF
 
-# excetion handling protection isn't used on Win64
+# exception handling protection isn't used on Win64
 
 # enable DEP
 LINKFLAGS+=-nxcompat
@@ -402,4 +402,10 @@ WININETLIB=wininet.lib
 OLDNAMESLIB=oldnames.lib
 MSIMG32LIB=msimg32.lib
 PROPSYSLIB=propsys.lib
+PSAPILIB=psapi.lib
 
+# The UCRT compiler generation reuses everything above and then overrides
+# what a modern toolset does differently.  See wntmsc14.mk.
+.IF "$(COMEX)" == "14"
+.INCLUDE : wntmsc14.mk
+.ENDIF # "$(COMEX)" == "14"

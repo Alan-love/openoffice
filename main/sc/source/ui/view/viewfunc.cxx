@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -462,7 +462,7 @@ void ScViewFunc::EnterData( SCCOL nCol, SCROW nRow, SCTAB nTab, const String& rS
 			ScAddress aPos( nCol, nRow, i );
 			ScCompiler aComp( pDoc, aPos);
             aComp.SetGrammar(pDoc->GetGrammar());
-//2do: AutoCorrection via CalcOptions abschaltbar machen
+// TODO: AutoCorrection via CalcOptions abschaltbar machen
 			aComp.SetAutoCorrection( sal_True );
             if ( rString.GetChar(0) == '+' || rString.GetChar(0) == '-' )
             {
@@ -757,7 +757,7 @@ void ScViewFunc::EnterData( SCCOL nCol, SCROW nRow, SCTAB nTab, const EditTextOb
 			bCommon = aAttrTester.NeedsCellAttr();
 
 			// formulas have to be recognized even if they're formatted
-			// (but commmon attributes are still collected)
+			// (but common attributes are still collected)
 
 			if ( !bSimple && aEngine.GetParagraphCount() == 1 )
 			{
@@ -1189,7 +1189,7 @@ void ScViewFunc::ApplyPatternLines( const ScPatternAttr& rAttr, const SvxBoxItem
 	else
 	{
 		aMarkRange = ScRange( GetViewData()->GetCurX(),
-							GetViewData()->GetCurY(), GetViewData()->GetTabNo() );       
+							GetViewData()->GetCurY(), GetViewData()->GetTabNo() );
 		DoneBlockMode();
 		InitOwnBlockMode();
 		aFuncMark.SetMarkArea(aMarkRange);
@@ -3013,7 +3013,3 @@ void ScViewFunc::InsertNameList()
 	if ( pDocSh->GetDocFunc().InsertNameList( aPos, sal_False ) )
 		pDocSh->UpdateOle(GetViewData());
 }
-
-
-
-

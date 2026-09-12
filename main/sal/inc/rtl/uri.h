@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -303,7 +303,7 @@ void SAL_CALL rtl_uriDecode(rtl_uString * pText,
     the following clarifications:  (1) Backwards-compatible relative URIs
     starting with a scheme component (see RFC 2396, section 5.2, step 3) are not
     supported.  (2) Segments "." and ".." within the path of the base URI are
-    not considered special, RFC 2396 seems a bit unlcear about that point.
+    not considered special, RFC 2396 seems a bit unclear about that point.
     (3) Erroneous excess segments ".." within the path of the relative URI (if
     it is indeed relative) are left intact, as the examples in RFC 2396,
     section C.2, suggest.  (4) If the relative URI is a reference to the

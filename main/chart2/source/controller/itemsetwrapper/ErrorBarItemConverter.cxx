@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartcontroller.hxx"
 #include "ErrorBarItemConverter.hxx"
 #include "SchWhichPairs.hxx"
 #include "macros.hxx"
@@ -144,7 +144,6 @@ bool ErrorBarItemConverter::GetItemProperty(
 
 bool ErrorBarItemConverter::ApplySpecialItem(
     sal_uInt16 nWhichId, const SfxItemSet & rItemSet )
-    throw( uno::Exception )
 {
     bool bChanged = false;
     uno::Any aValue;
@@ -200,7 +199,7 @@ bool ErrorBarItemConverter::ApplySpecialItem(
         case SCHATTR_STAT_PERCENT:
         case SCHATTR_STAT_BIGERROR:
         {
-            OSL_ENSURE( false, "Deprectaed item" );
+            OSL_ENSURE( false, "Deprecated item" );
             uno::Reference< beans::XPropertySet > xErrorBarProp( GetPropertySet());
 
             double fValue =
@@ -339,7 +338,6 @@ bool ErrorBarItemConverter::ApplySpecialItem(
 
 void ErrorBarItemConverter::FillSpecialItem(
     sal_uInt16 nWhichId, SfxItemSet & rOutItemSet ) const
-    throw( uno::Exception )
 {
     switch( nWhichId )
     {

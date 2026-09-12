@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #include "mysqlc_connection.hxx"
@@ -66,7 +66,7 @@ using ::rtl::OUString;
 
 
 /* {{{ OConnection::OConnection() -I- */
-OConnection::OConnection(MysqlCDriver& _rDriver, sql::Driver * _cppDriver) 
+OConnection::OConnection(MysqlCDriver& _rDriver, sql::Driver * _cppDriver)
 	:OMetaConnection_BASE(m_aMutex)
 	,OSubComponent<OConnection, OConnection_BASE>((::cppu::OWeakObject*)&_rDriver, this)
 	,m_xMetaData(NULL)
@@ -108,8 +108,7 @@ void SAL_CALL OConnection::release()
 #endif
 
 /* {{{ OConnection::construct() -I- */
-void OConnection::construct(const OUString& url, const Sequence< PropertyValue >& info) 
-	throw(SQLException)
+void OConnection::construct(const OUString& url, const Sequence< PropertyValue >& info)
 {
 	OSL_TRACE("OConnection::construct");
 	MutexGuard aGuard(m_aMutex);
@@ -266,7 +265,6 @@ IMPLEMENT_SERVICE_INFO(OConnection, "com.sun.star.sdbc.drivers.mysqlc.OConnectio
 
 /* {{{ OConnection::createStatement() -I- */
 Reference< XStatement > SAL_CALL OConnection::createStatement()
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::createStatement");
 	MutexGuard aGuard(m_aMutex);
@@ -289,7 +287,6 @@ Reference< XStatement > SAL_CALL OConnection::createStatement()
 
 /* {{{ OConnection::createStatement() -I- */
 Reference< XPreparedStatement > SAL_CALL OConnection::prepareStatement(const OUString& _sSql)
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::prepareStatement");
 	MutexGuard aGuard(m_aMutex);
@@ -313,7 +310,6 @@ Reference< XPreparedStatement > SAL_CALL OConnection::prepareStatement(const OUS
 
 /* {{{ OConnection::prepareCall() -U- */
 Reference< XPreparedStatement > SAL_CALL OConnection::prepareCall(const OUString& /*_sSql*/ )
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::prepareCall");
 	MutexGuard aGuard(m_aMutex);
@@ -327,7 +323,6 @@ Reference< XPreparedStatement > SAL_CALL OConnection::prepareCall(const OUString
 
 /* {{{ OConnection::nativeSQL() -I- */
 OUString SAL_CALL OConnection::nativeSQL(const OUString& _sSql)
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::nativeSQL");
 	MutexGuard aGuard(m_aMutex);
@@ -347,7 +342,6 @@ OUString SAL_CALL OConnection::nativeSQL(const OUString& _sSql)
 
 /* {{{ OConnection::setAutoCommit() -I- */
 void SAL_CALL OConnection::setAutoCommit(sal_Bool autoCommit)
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::setAutoCommit");
 	MutexGuard aGuard(m_aMutex);
@@ -363,7 +357,6 @@ void SAL_CALL OConnection::setAutoCommit(sal_Bool autoCommit)
 
 /* {{{ OConnection::getAutoCommit() -I- */
 sal_Bool SAL_CALL OConnection::getAutoCommit()
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::getAutoCommit");
 	// you have to distinguish which if you are in autocommit mode or not
@@ -385,7 +378,6 @@ sal_Bool SAL_CALL OConnection::getAutoCommit()
 
 /* {{{ OConnection::commit() -I- */
 void SAL_CALL OConnection::commit()
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::commit");
 	MutexGuard aGuard(m_aMutex);
@@ -394,14 +386,13 @@ void SAL_CALL OConnection::commit()
 		m_settings.cppConnection->commit();
 	} catch (sql::SQLException & e) {
 		mysqlc_sdbc_driver::translateAndThrow(e, *this, getConnectionEncoding());
-	}	
+	}
 }
 /* }}} */
 
 
 /* {{{ OConnection::rollback() -I- */
 void SAL_CALL OConnection::rollback()
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::rollback");
 	MutexGuard aGuard(m_aMutex);
@@ -417,7 +408,6 @@ void SAL_CALL OConnection::rollback()
 
 /* {{{ OConnection::isClosed() -I- */
 sal_Bool SAL_CALL OConnection::isClosed()
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::isClosed");
 	MutexGuard aGuard(m_aMutex);
@@ -430,7 +420,6 @@ sal_Bool SAL_CALL OConnection::isClosed()
 
 /* {{{ OConnection::createStatement() -I- */
 Reference< XDatabaseMetaData > SAL_CALL OConnection::getMetaData()
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::getMetaData");
 	MutexGuard aGuard(m_aMutex);
@@ -453,7 +442,6 @@ Reference< XDatabaseMetaData > SAL_CALL OConnection::getMetaData()
 
 /* {{{ OConnection::createStatement() -I- */
 void SAL_CALL OConnection::setReadOnly(sal_Bool readOnly)
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::setReadOnly");
 	MutexGuard aGuard(m_aMutex);
@@ -466,8 +454,7 @@ void SAL_CALL OConnection::setReadOnly(sal_Bool readOnly)
 
 /* {{{ OConnection::createStatement() -I- */
 sal_Bool SAL_CALL OConnection::isReadOnly()
-	throw(SQLException, RuntimeException)
-{	
+{
 	OSL_TRACE("OConnection::isReadOnly");
 	MutexGuard aGuard(m_aMutex);
 	checkDisposed(OConnection_BASE::rBHelper.bDisposed);
@@ -480,7 +467,6 @@ sal_Bool SAL_CALL OConnection::isReadOnly()
 
 /* {{{ OConnection::createStatement() -I- */
 void SAL_CALL OConnection::setCatalog(const OUString& catalog)
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::setCatalog");
 	MutexGuard aGuard(m_aMutex);
@@ -491,14 +477,13 @@ void SAL_CALL OConnection::setCatalog(const OUString& catalog)
 		m_settings.cppConnection->setSchema(OUStringToOString(catalog, getConnectionEncoding()).getStr());
 	} catch (sql::SQLException & e) {
 		mysqlc_sdbc_driver::translateAndThrow(e, *this, getConnectionEncoding());
-	}	
+	}
 }
 /* }}} */
 
 
 /* {{{ OConnection::createStatement() -I- */
 OUString SAL_CALL OConnection::getCatalog()
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::getCatalog");
 	MutexGuard aGuard(m_aMutex);
@@ -517,7 +502,6 @@ OUString SAL_CALL OConnection::getCatalog()
 
 /* {{{ OConnection::createStatement() -I- */
 void SAL_CALL OConnection::setTransactionIsolation(sal_Int32 level)
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::setTransactionIsolation");
 	MutexGuard aGuard(m_aMutex);
@@ -540,7 +524,7 @@ void SAL_CALL OConnection::setTransactionIsolation(sal_Int32 level)
 			break;
 		case TransactionIsolation::NONE:
 			cpplevel = sql::TRANSACTION_SERIALIZABLE;
-			break;			
+			break;
 		default:;
 			/* XXX: Exception ?? */
 	}
@@ -555,7 +539,6 @@ void SAL_CALL OConnection::setTransactionIsolation(sal_Int32 level)
 
 /* {{{ OConnection::createStatement() -I- */
 sal_Int32 SAL_CALL OConnection::getTransactionIsolation()
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::getTransactionIsolation");
 	MutexGuard aGuard(m_aMutex);
@@ -572,7 +555,7 @@ sal_Int32 SAL_CALL OConnection::getTransactionIsolation()
 		}
 	} catch (sql::SQLException & e) {
 		mysqlc_sdbc_driver::translateAndThrow(e, *this, getConnectionEncoding());
-	}	
+	}
 	return TransactionIsolation::NONE;
 }
 /* }}} */
@@ -580,7 +563,6 @@ sal_Int32 SAL_CALL OConnection::getTransactionIsolation()
 
 /* {{{ OConnection::getTypeMap() -I- */
 Reference<XNameAccess> SAL_CALL OConnection::getTypeMap()
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::getTypeMap");
 	MutexGuard aGuard(m_aMutex);
@@ -597,7 +579,6 @@ Reference<XNameAccess> SAL_CALL OConnection::getTypeMap()
 
 /* {{{ OConnection::setTypeMap() -I- */
 void SAL_CALL OConnection::setTypeMap(const Reference<XNameAccess >& typeMap)
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::setTypeMap");
 	MutexGuard aGuard(m_aMutex);
@@ -611,7 +592,6 @@ void SAL_CALL OConnection::setTypeMap(const Reference<XNameAccess >& typeMap)
 // XCloseable
 /* {{{ OConnection::close() -I- */
 void SAL_CALL OConnection::close()
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::close");
 	/*
@@ -631,7 +611,6 @@ void SAL_CALL OConnection::close()
 // XWarningsSupplier
 /* {{{ OConnection::getWarnings() -I- */
 Any SAL_CALL OConnection::getWarnings()
-	throw(SQLException, RuntimeException)
 {
 	Any x = Any();
 	OSL_TRACE("OConnection::getWarnings");
@@ -643,7 +622,6 @@ Any SAL_CALL OConnection::getWarnings()
 
 /* {{{ OConnection::clearWarnings() -I- */
 void SAL_CALL OConnection::clearWarnings()
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::clearWarnings");
 	// you should clear your collected warnings here#
@@ -653,7 +631,6 @@ void SAL_CALL OConnection::clearWarnings()
 
 /* {{{ OConnection::buildTypeInfo() -I- */
 void OConnection::buildTypeInfo()
-	throw(SQLException)
 {
 	OSL_TRACE("OConnection::buildTypeInfo");
 }
@@ -688,7 +665,6 @@ void OConnection::disposing()
 
 /* {{{ OConnection::getMysqlVariable() -I- */
 OUString OConnection::getMysqlVariable(const char *varname)
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::getMysqlVariable");
 	MutexGuard aGuard(m_aMutex);
@@ -702,14 +678,14 @@ OUString OConnection::getMysqlVariable(const char *varname)
 
 	try {
 		XStatement * stmt = new OStatement(this, m_settings.cppConnection->createStatement());
-		Reference< XResultSet > rs = stmt->executeQuery( aStatement.makeStringAndClear() );	
+		Reference< XResultSet > rs = stmt->executeQuery( aStatement.makeStringAndClear() );
 		if (rs.is() && rs->next()) {
 			Reference< XRow > xRow(rs, UNO_QUERY);
 			ret = xRow->getString(2);
 		}
 	} catch (sql::SQLException & e) {
 		mysqlc_sdbc_driver::translateAndThrow(e, *this, getConnectionEncoding());
-	}								
+	}
 
 	return ret;
 }
@@ -718,7 +694,6 @@ OUString OConnection::getMysqlVariable(const char *varname)
 
 /* {{{ OConnection::getMysqlVersion() -I- */
 sal_Int32 OConnection::getMysqlVersion()
-	throw(SQLException, RuntimeException)
 {
 	OSL_TRACE("OConnection::getMysqlVersion");
 	MutexGuard aGuard(m_aMutex);

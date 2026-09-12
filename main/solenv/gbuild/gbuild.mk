@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -55,7 +55,7 @@ define NEWLINE
 endef
 
 define WHITESPACE
- 
+
 endef
 
 COMMA :=,
@@ -233,7 +233,7 @@ include $(SOLARENV)/inc/minor.mk
 
 # It is important to include them in the right order as that is
 # -- at least in part -- defining precedence. This is not an issue in the
-# WORKDIR as there are no nameing collisions there, but OUTDIR is a mess
+# WORKDIR as there are no naming collisions there, but OUTDIR is a mess
 # and precedence is important there. This is also platform dependent.
 # For example:
 # $(OUTDIR)/bin/% for executables collides
@@ -243,7 +243,7 @@ include $(SOLARENV)/inc/minor.mk
 # $(OUTDIR)/xml/% for packageparts collides
 #	with $(OUTDIR)/xml/component/%.component for components
 # This is less of an issue with GNU Make versions > 3.82 which matches for
-# shortest stem instead of first match. However, upon intoduction this version
+# shortest stem instead of first match. However, upon introduction this version
 # is not available everywhere by default.
 
 include $(foreach class, \
@@ -266,6 +266,7 @@ include $(foreach class, \
 	Module \
 	UnoApiTarget \
 	Zip \
+	Configuration \
 ,$(GBUILDDIR)/$(class).mk)
 
 # optional extensions that should never be essential

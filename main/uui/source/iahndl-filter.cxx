@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -54,7 +54,6 @@ executeFilterDialog(
     rtl::OUString       const & rURL    ,
     uui::FilterNameList const & rFilters,
     rtl::OUString             & rFilter )
-       SAL_THROW((uno::RuntimeException))
 {
     try
     {
@@ -90,13 +89,12 @@ handleNoSuchFilterRequest_(
     document::NoSuchFilterRequest const & rRequest,
     uno::Sequence< uno::Reference< task::XInteractionContinuation > > const &
             rContinuations )
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Reference< task::XInteractionAbort > xAbort;
     uno::Reference< document::XInteractionFilterSelect > xFilterTransport;
     getContinuations(rContinuations, &xAbort, &xFilterTransport);
 
-    // check necessary ressources - if they don't exist - abort or
+    // check necessary resources - if they don't exist - abort or
     // break this operation
     if (!xAbort.is())
         return;
@@ -207,7 +205,6 @@ handleAmbigousFilterRequest_(
     uno::Sequence<
         uno::Reference<
             task::XInteractionContinuation > > const & rContinuations)
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Reference< task::XInteractionAbort > xAbort;
     uno::Reference< document::XInteractionFilterSelect > xFilterTransport;
@@ -310,7 +307,6 @@ handleFilterOptionsRequest_(
     document::FilterOptionsRequest const & rRequest,
     uno::Sequence< uno::Reference< task::XInteractionContinuation > > const &
         rContinuations)
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Reference< task::XInteractionAbort > xAbort;
     uno::Reference< document::XInteractionFilterOptions > xFilterOptions;
@@ -411,7 +407,6 @@ handleFilterOptionsRequest_(
 bool
 UUIInteractionHelper::handleNoSuchFilterRequest(
     uno::Reference< task::XInteractionRequest > const & rRequest)
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Any aAnyRequest(rRequest->getRequest());
 
@@ -430,7 +425,6 @@ UUIInteractionHelper::handleNoSuchFilterRequest(
 bool
 UUIInteractionHelper::handleAmbigousFilterRequest(
     uno::Reference< task::XInteractionRequest > const & rRequest)
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Any aAnyRequest(rRequest->getRequest());
 
@@ -449,7 +443,6 @@ UUIInteractionHelper::handleAmbigousFilterRequest(
 bool
 UUIInteractionHelper::handleFilterOptionsRequest(
     uno::Reference< task::XInteractionRequest > const & rRequest)
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Any aAnyRequest(rRequest->getRequest());
 
@@ -463,5 +456,3 @@ UUIInteractionHelper::handleFilterOptionsRequest(
     }
     return false;
 }
-
-

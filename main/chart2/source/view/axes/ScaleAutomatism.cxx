@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartview.hxx"
 #include "ScaleAutomatism.hxx"
 #include "macros.hxx"
 #include "Tickmarks_Equidistant.hxx"
@@ -252,7 +252,7 @@ Date ScaleAutomatism::getNullDate() const
 {
     return m_aNullDate;
 }
- 
+
 // private --------------------------------------------------------------------
 
 void ScaleAutomatism::calculateExplicitIncrementAndScaleForCategory(
@@ -281,7 +281,7 @@ void ScaleAutomatism::calculateExplicitIncrementAndScaleForCategory(
     if( bAutoMaximum && m_bExpandBorderToIncrementRhythm )
         rExplicitScale.Maximum = EquidistantTickFactory::getMaximumAtIncrement( rExplicitScale.Maximum, rExplicitIncrement );
 
-    //prevent performace killover
+    //prevent performance killover
     double fDistanceCount = ::rtl::math::approxFloor( (rExplicitScale.Maximum-rExplicitScale.Minimum) / rExplicitIncrement.Distance );
     if( static_cast< sal_Int32 >( fDistanceCount ) > MAXIMUM_MANUAL_INCREMENT_COUNT )
     {
@@ -634,7 +634,7 @@ void ScaleAutomatism::calculateExplicitIncrementAndScaleForDateTimeAxis(
         }
         break;
     }
-    
+
     // set the resulting limits (swap back to negative range if needed)
     rExplicitScale.Minimum = aMinDate - m_aNullDate;
     rExplicitScale.Maximum = aMaxDate - m_aNullDate;
@@ -647,7 +647,7 @@ void ScaleAutomatism::calculateExplicitIncrementAndScaleForDateTimeAxis(
     if( nMaxMainIncrementCount > 1 )
         nMaxMainIncrementCount--;
 
-        
+
     //choose major time interval:
     long nDayCount = (aMaxDate-aMinDate);
     long nMainIncrementCount = 1;
@@ -734,7 +734,7 @@ void ScaleAutomatism::calculateExplicitIncrementAndScaleForDateTimeAxis(
     }
     if( bAutoMinor )
     {
-        rExplicitIncrement.MinorTimeInterval.TimeUnit = rExplicitIncrement.MajorTimeInterval.TimeUnit; 
+        rExplicitIncrement.MinorTimeInterval.TimeUnit = rExplicitIncrement.MajorTimeInterval.TimeUnit;
         rExplicitIncrement.MinorTimeInterval.Number = 1;
         if( nMainIncrementCount > 100 )
             rExplicitIncrement.MinorTimeInterval.Number = rExplicitIncrement.MajorTimeInterval.Number;
@@ -769,7 +769,7 @@ void ScaleAutomatism::calculateExplicitIncrementAndScaleForDateTimeAxis(
             }
         }
     }
-    
+
 }
 
 //-----------------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -47,7 +47,7 @@ module com {  module sun {  module star {  module sdb { module tools {
     <p>For instance, it can validate names against
     the characters allowed in the object names of a connection. Also, it
     relieves you from caring whether a database supports queries in a <code>SELECT</code>
-    statment's <code>FROM</code> part (known as "queries in queries"). In such
+    statement's <code>FROM</code> part (known as "queries in queries"). In such
     databases, query and table names share a common namespace, thus they must be
     unique. Using this interface, you can easily ensure this uniqueness.</p>
 
@@ -55,7 +55,7 @@ module com {  module sun {  module star {  module sdb { module tools {
     thus it entry point for obtaining it is a <type scope="com::sun::star::sdb">Connection</type>
     service.</p>
 
-    <p>The component itself does not have life-time control mechanimns, i.e. you
+    <p>The component itself does not have life-time control mechanisms, i.e. you
     cannot explicitly dispose it (<member scope="com::sun::star::lang">XComponent::dispose</member>),
     and you cannot be notified when it dies.<br/>
     However, if your try to access any of its methods or attributes, after the
@@ -172,4 +172,3 @@ published interface XObjectNames
 //=============================================================================
 
 #endif
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -69,7 +69,7 @@ private:
             msNames[ nIndex ] = getControlName( xCtrl );
             mControls.push_back( xCtrl );
             mIndices[ msNames[ nIndex ] ] = nIndex;
-        } 
+        }
     }
 
 public:
@@ -79,7 +79,7 @@ public:
         {
             mxDialog.set( xDialog, uno::UNO_QUERY_THROW );
             uno::Sequence< uno::Reference< awt::XControl > > sXControls = mxDialog->getControls();
-        
+
             msNames.realloc( sXControls.getLength() );
             for ( sal_Int32 i = 0; i < sXControls.getLength(); ++i )
                 SetArrayElementTo( sXControls[ i ], i );
@@ -90,7 +90,7 @@ public:
             // in this case the wrapper should work in dummy mode
         }
     }
- 
+
     static rtl::OUString getControlName( const uno::Reference< awt::XControl >& xCtrl )
     {
         if ( !xCtrl.is() )
@@ -104,42 +104,42 @@ public:
 
 
     // XElementAccess
-    virtual uno::Type SAL_CALL getElementType(  ) throw (uno::RuntimeException)
+    virtual uno::Type SAL_CALL getElementType(  )
     {
         return awt::XControl::static_type(0);
     }
-    
-    virtual ::sal_Bool SAL_CALL hasElements(  ) throw (uno::RuntimeException) 
+
+    virtual ::sal_Bool SAL_CALL hasElements(  )
     {
         return ( mControls.size() > 0 );
     }
-    
-    // XNameAcess 
-    virtual uno::Any SAL_CALL getByName( const ::rtl::OUString& aName ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
+
+    // XNameAcess
+    virtual uno::Any SAL_CALL getByName( const ::rtl::OUString& aName )
     {
         if ( !hasByName( aName ) )
             throw container::NoSuchElementException();
         return getByIndex( mIndices[ aName ] );
     }
-    
-    virtual uno::Sequence< ::rtl::OUString > SAL_CALL getElementNames(  ) throw (uno::RuntimeException)
+
+    virtual uno::Sequence< ::rtl::OUString > SAL_CALL getElementNames(  )
     {
         return msNames;
     }
-    
-    virtual ::sal_Bool SAL_CALL hasByName( const ::rtl::OUString& aName ) throw (css::uno::RuntimeException)
+
+    virtual ::sal_Bool SAL_CALL hasByName( const ::rtl::OUString& aName )
     {
         ControlIndexMap::iterator it = mIndices.find( aName );
         return it != mIndices.end();
     }
-    
+
     // XElementAccess
-    virtual ::sal_Int32 SAL_CALL getCount(  ) throw (css::uno::RuntimeException)
+    virtual ::sal_Int32 SAL_CALL getCount(  )
     {
         return mControls.size();
     }
-    
-    virtual uno::Any SAL_CALL getByIndex( ::sal_Int32 Index ) throw (lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException )
+
+    virtual uno::Any SAL_CALL getByIndex( ::sal_Int32 Index )
     {
         if ( Index < 0 || Index >= static_cast< sal_Int32 >( mControls.size() ) )
             throw lang::IndexOutOfBoundsException();
@@ -177,12 +177,12 @@ public:
     mfOffsetY( fOffsetY ),
     nIndex( 0 ) {}
 
-    virtual ::sal_Bool SAL_CALL hasMoreElements(  ) throw (uno::RuntimeException)
+    virtual ::sal_Bool SAL_CALL hasMoreElements(  )
     {
         return ( nIndex < m_xIndexAccess->getCount() );
     }
 
-    virtual uno::Any SAL_CALL nextElement(  ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
+    virtual uno::Any SAL_CALL nextElement(  )
     {
         if ( nIndex < m_xIndexAccess->getCount() )
         {
@@ -221,7 +221,7 @@ ScVbaControls::ScVbaControls(
 }
 
 uno::Reference< container::XEnumeration >
-ScVbaControls::createEnumeration() throw (uno::RuntimeException)
+ScVbaControls::createEnumeration()
 {
     uno::Reference< container::XEnumeration > xEnum( new ControlsEnumWrapper( mxParent, mxContext, m_xIndexAccess, mxDialog, mxModel, mfOffsetX, mfOffsetY ) );
     if ( !xEnum.is() )
@@ -238,20 +238,19 @@ ScVbaControls::createCollectionObject( const css::uno::Any& aSource )
     return uno::Any( xVBAControl );
 }
 
-void SAL_CALL 
-ScVbaControls::Move( double cx, double cy ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaControls::Move( double cx, double cy )
 {
     uno::Reference< container::XEnumeration > xEnum( createEnumeration() );
     while ( xEnum->hasMoreElements() )
     {
         uno::Reference< msforms::XControl > xControl( xEnum->nextElement(), uno::UNO_QUERY_THROW );
         xControl->setLeft( xControl->getLeft() + cx );
-        xControl->setTop( xControl->getTop() + cy ); 
+        xControl->setTop( xControl->getTop() + cy );
     }
 }
 
 uno::Any SAL_CALL ScVbaControls::Add( const uno::Any& Object, const uno::Any& StringKey, const uno::Any& /*Before*/, const uno::Any& /*After*/ )
-    throw (uno::RuntimeException)
 {
     uno::Any aResult;
     ::rtl::OUString aComServiceName;
@@ -427,14 +426,13 @@ uno::Any SAL_CALL ScVbaControls::Add( const uno::Any& Object, const uno::Any& St
     {
         throw lang::WrappedTargetException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Can not create AXControl!" ) ),
                 uno::Reference< uno::XInterface >(),
-                uno::makeAny( e ) ); 
+                uno::makeAny( e ) );
     }
 
     return aResult;
 }
 
 void SAL_CALL ScVbaControls::Remove( const uno::Any& StringKeyOrIndex )
-    throw (uno::RuntimeException)
 {
     ::rtl::OUString aControlName;
     sal_Int32 nIndex = -1;
@@ -482,13 +480,13 @@ void SAL_CALL ScVbaControls::Remove( const uno::Any& StringKeyOrIndex )
     {
         // throw lang::WrappedTargetException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Can not create AXControl!" ) ),
         //         uno::Reference< uno::XInterface >(),
-        //         uno::makeAny( e ) ); 
+        //         uno::makeAny( e ) );
     }
 }
 
 
 uno::Type
-ScVbaControls::getElementType() throw (uno::RuntimeException)
+ScVbaControls::getElementType()
 {
     return ooo::vba::msforms::XControl::static_type(0);
 }

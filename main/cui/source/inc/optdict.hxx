@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,18 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
 
 #ifndef _SVX_OPTDICT_HXX
 #define _SVX_OPTDICT_HXX
@@ -40,7 +39,6 @@
 #include <com/sun/star/uno/Reference.hxx>
 #include <com/sun/star/uno/Sequence.hxx>
 
-
 #include <svx/simptabl.hxx>
 #include <svx/langbox.hxx>
 
@@ -59,7 +57,7 @@ namespace linguistic2{
 class SvxNewDictionaryDialog : public ModalDialog
 {
 private:
-	FixedLine            aNewDictBox;
+	FixedLine			aNewDictBox;
 	FixedText			aNameText;
 	Edit				aNameEdit;
 	FixedText			aLanguageText;
@@ -71,7 +69,7 @@ private:
 	::com::sun::star::uno::Reference<
 		::com::sun::star::linguistic2::XSpellChecker1 > 	xSpell;
 	::com::sun::star::uno::Reference<
-        ::com::sun::star::linguistic2::XDictionary >    xNewDic;
+		::com::sun::star::linguistic2::XDictionary >    xNewDic;
 
 #ifdef _SVX_OPTDICT_CXX
 	DECL_LINK( OKHdl_Impl, Button * );
@@ -84,7 +82,7 @@ public:
 				::com::sun::star::linguistic2::XSpellChecker1 >  &xSpl );
 
 	::com::sun::star::uno::Reference<
-        ::com::sun::star::linguistic2::XDictionary >
+		::com::sun::star::linguistic2::XDictionary >
 				GetNewDictionary() { return xNewDic; }
 };
 
@@ -126,7 +124,7 @@ private:
 	SvTabListBox 			aWordsLB;
 	PushButton 				aNewReplacePB;
 	PushButton 				aDeletePB;
-    FixedLine                aEditDictsBox;
+	GroupBox				aEditDictsBox;
 
 	HelpButton				aHelpBtn;
 	CancelButton			aCloseBtn;
@@ -136,7 +134,7 @@ private:
 
 	::com::sun::star::uno::Sequence<
 		::com::sun::star::uno::Reference<
-			::com::sun::star::linguistic2::XDictionary >  >	aDics;	//! snapshot copy to work on
+			::com::sun::star::linguistic2::XDictionary >  >	aDics; //! snapshot copy to work on
 	::com::sun::star::uno::Reference<
 		::com::sun::star::linguistic2::XSpellChecker1 >		xSpell;
 
@@ -158,7 +156,7 @@ private:
 	void			SetLanguage_Impl( ::com::sun::star::util::Language nLanguage );
 	sal_Bool			IsDicReadonly_Impl() const { return bDicIsReadonly; }
 	void			SetDicReadonly_Impl( ::com::sun::star::uno::Reference<
-                            ::com::sun::star::linguistic2::XDictionary >  &xDic );
+							::com::sun::star::linguistic2::XDictionary >  &xDic );
 
 	void			RemoveDictEntry(SvLBoxEntry* pEntry);
 	sal_uInt16			GetLBInsertPos(const String &rDicWord);
@@ -179,6 +177,6 @@ public:
 	sal_uInt16 GetSelectedDict() {return aAllDictsLB.GetSelectEntryPos();}
 };
 
-
 #endif
 
+/* vim: set noet sw=4 ts=4: */

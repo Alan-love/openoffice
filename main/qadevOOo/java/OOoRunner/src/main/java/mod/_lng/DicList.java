@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,7 +49,7 @@ import com.sun.star.uno.XInterface;
  * </ul> <p>
  *
  * This object test <b> is NOT </b> designed to be run in several
- * threads concurently.
+ * threads concurrently.
  *
  * @see com.sun.star.linguistic2.XSearchableDictionaryList
  * @see com.sun.star.lang.XComponent
@@ -68,7 +68,7 @@ public class DicList extends TestCase {
      * <code>com.sun.star.lingu2.DicList</code>. Then two dictionaries
      * are created (positive and negative) and added to the list, one
      * entry is added to each of dictionaries and they both are activated.
-     * The distionary list is retruned as a component for testing.
+     * The dictionary list is returned as a component for testing.
      */
     public synchronized TestEnvironment createTestEnvironment( TestParameters Param, PrintWriter log )
            throws StatusException {
@@ -106,4 +106,3 @@ public class DicList extends TestCase {
     }
 
 }    // finish class DicList
-

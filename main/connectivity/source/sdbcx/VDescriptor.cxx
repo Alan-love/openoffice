@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_dbtools.hxx"
 #include <connectivity/sdbcx/VDescriptor.hxx>
 #include <cppuhelper/queryinterface.hxx>
 
@@ -50,7 +50,7 @@ namespace connectivity
 
 		// -------------------------------------------------------------------------
 		// com::sun::star::lang::XUnoTunnel
-		sal_Int64 SAL_CALL ODescriptor::getSomething( const Sequence< sal_Int8 >& rId ) throw(RuntimeException)
+		sal_Int64 SAL_CALL ODescriptor::getSomething( const Sequence< sal_Int8 >& rId )
 		{
 			return (rId.getLength() == 16 && 0 == rtl_compareMemory(getUnoTunnelImplementationId().getConstArray(),  rId.getConstArray(), 16 ) )
 				? reinterpret_cast< sal_Int64 >( this )
@@ -123,7 +123,7 @@ namespace connectivity
 		}
 
 		// -----------------------------------------------------------------------------
-		Any SAL_CALL ODescriptor::queryInterface( const Type & rType ) throw(RuntimeException)
+		Any SAL_CALL ODescriptor::queryInterface( const Type & rType )
 		{
 			Any aRet = ::cppu::queryInterface(rType,static_cast< XUnoTunnel*> (this));
 			return aRet.hasValue() ? aRet : ODescriptor_PBASE::queryInterface(rType);
@@ -136,7 +136,7 @@ namespace connectivity
 		}
 
 		// -----------------------------------------------------------------------------
-		Sequence< Type > SAL_CALL ODescriptor::getTypes(  ) throw(RuntimeException)
+		Sequence< Type > SAL_CALL ODescriptor::getTypes(  )
 		{
 			::cppu::OTypeCollection aTypes(	::getCppuType( (const Reference< XMultiPropertySet > *)0 ),
 											::getCppuType( (const Reference< XFastPropertySet > *)0 ),
@@ -147,5 +147,3 @@ namespace connectivity
 
 	}
 }
-
-

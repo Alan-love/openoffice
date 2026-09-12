@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -56,25 +56,25 @@ namespace rptui
                             , public ::cppu::BaseMutex
                             , public ::comphelper::OPropertyChangeListener
 	{
-		Ruler					m_aHRuler;		
+		Ruler					m_aHRuler;
 		ODesignView*		    m_pView;
 		OScrollWindowHelper*	m_pParent;
 		OViewsWindow			m_aViewsWindow;
         ::rtl::Reference< comphelper::OPropertyChangeMultiplexer>	m_pReportListener;
-        ::std::auto_ptr<DlgEdFactory>			
+        ::std::auto_ptr<DlgEdFactory>
                                 m_pObjFac;
-		
+
 		void ImplInitSettings();
-		
+
 		sal_Int32 GetTotalHeight() const;
         sal_Int32 impl_getRealPixelWidth() const;
-        
+
         OReportWindow(OReportWindow&);
         void operator =(OReportWindow&);
 	protected:
 		virtual void DataChanged( const DataChangedEvent& rDCEvt );
         // OPropertyChangeListener
-		virtual void	_propertyChanged(const ::com::sun::star::beans::PropertyChangeEvent& _rEvent) throw( ::com::sun::star::uno::RuntimeException);
+		virtual void	_propertyChanged(const ::com::sun::star::beans::PropertyChangeEvent& _rEvent);
 	public:
 		OReportWindow(OScrollWindowHelper* _pParent,ODesignView* _pView);
 		virtual ~OReportWindow();
@@ -209,12 +209,12 @@ namespace rptui
         * \param _aCollpasedSections The position of the sections which should be collapsed.
         */
         void collapseSections(const com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue>& _aCollpasedSections);
-        
+
         /** align all marked objects in all sections
         *
-        * \param eHor 
-        * \param eVert 
-        * \param bBoundRects 
+        * \param eHor
+        * \param eVert
+        * \param bBoundRects
         */
         void alignMarkedObjects(sal_Int32 _nControlModification, bool _bAlignAtSection, bool bBoundRects = false);
 
@@ -238,4 +238,3 @@ namespace rptui
 }	//rptui
 //==================================================================
 #endif // RPTUI_REPORT_WINDOW_HXX
-

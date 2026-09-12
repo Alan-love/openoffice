@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -52,7 +52,7 @@ namespace css = ::com::sun::star;
 /** @short  specify an exception, which can be used inside the
             load environment only.
 
-    @descr  Of course outside code must wrapp it, to transport
+    @descr  Of course outside code must wrap it, to transport
             the occurred information to its caller.
 
     @author as96863
@@ -74,7 +74,7 @@ class LoadEnvException
             ID_UNSUPPORTED_CONTENT,
 
             /** @short  It was not possible to get access to global filter configuration.
-                @descr  Might som neccsessary services could not be created. */
+                @descr  Might som necessary services could not be created. */
             ID_NO_CONFIG_ACCESS,
 
             /** @short  Some data obtained from the filter configuration seems to incorrect.
@@ -105,12 +105,12 @@ class LoadEnvException
             /** @short  TODO */
             ID_COULD_NOT_REACTIVATE_CONTROLLER,
 
-            /** @short  inidcates an already running load operation. Of yourse the same
+            /** @short  indicates an already running load operation. Of course the same
                         instance can't be used for multiple load requests at the same time.
              */
             ID_STILL_RUNNING,
 
-            /** @short  sometiems we can't specify the reason for an error, because we
+            /** @short  sometimes we can't specify the reason for an error, because we
                         was interrupted by an called code in an unexpected way ...
              */
             ID_GENERAL_ERROR

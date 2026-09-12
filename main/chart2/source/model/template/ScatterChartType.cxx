@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 #include "ScatterChartType.hxx"
 #include "PropertyHelper.hxx"
 #include "macros.hxx"
@@ -95,7 +95,7 @@ private:
         // todo: check whether order 3 means polygons of order 3 or 2. (see
         // http://www.people.nnov.ru/fractal/Splines/Basis.htm )
         ::chart::PropertyHelper::setPropertyValueDefault< sal_Int32 >( rOutMap, PROP_SCATTERCHARTTYPE_SPLINE_ORDER, 3 );
-    }    
+    }
 };
 
 struct StaticScatterChartTypeDefaults : public rtl::StaticAggregate< ::chart::tPropertyValueMap, StaticScatterChartTypeDefaults_Initializer >
@@ -175,7 +175,6 @@ ScatterChartType::~ScatterChartType()
 
 // ____ XCloneable ____
 uno::Reference< util::XCloneable > SAL_CALL ScatterChartType::createClone()
-    throw (uno::RuntimeException)
 {
     return uno::Reference< util::XCloneable >( new ScatterChartType( *this ));
 }
@@ -184,8 +183,6 @@ uno::Reference< util::XCloneable > SAL_CALL ScatterChartType::createClone()
 // ____ XChartType ____
 Reference< chart2::XCoordinateSystem > SAL_CALL
     ScatterChartType::createCoordinateSystem( ::sal_Int32 DimensionCount )
-    throw (lang::IllegalArgumentException,
-           uno::RuntimeException)
 {
     Reference< chart2::XCoordinateSystem > xResult(
         new CartesianCoordinateSystem(
@@ -208,7 +205,7 @@ Reference< chart2::XCoordinateSystem > SAL_CALL
             aScaleData.AxisType = chart2::AxisType::SERIES;
         else
             aScaleData.AxisType = chart2::AxisType::REALNUMBER;
-           
+
         xAxis->setScaleData( aScaleData );
     }
 
@@ -216,13 +213,11 @@ Reference< chart2::XCoordinateSystem > SAL_CALL
 }
 
 ::rtl::OUString SAL_CALL ScatterChartType::getChartType()
-    throw (uno::RuntimeException)
 {
     return CHART2_SERVICE_NAME_CHARTTYPE_SCATTER;
 }
 
 uno::Sequence< ::rtl::OUString > SAL_CALL ScatterChartType::getSupportedMandatoryRoles()
-    throw (uno::RuntimeException)
 {
     static uno::Sequence< ::rtl::OUString > aMandRolesSeq;
 
@@ -238,7 +233,6 @@ uno::Sequence< ::rtl::OUString > SAL_CALL ScatterChartType::getSupportedMandator
 }
 
 uno::Sequence< ::rtl::OUString > SAL_CALL ScatterChartType::getSupportedOptionalRoles()
-    throw (uno::RuntimeException)
 {
     static uno::Sequence< ::rtl::OUString > aOptRolesSeq;
 
@@ -255,7 +249,6 @@ uno::Sequence< ::rtl::OUString > SAL_CALL ScatterChartType::getSupportedOptional
 
 // ____ OPropertySet ____
 uno::Any ScatterChartType::GetDefaultValue( sal_Int32 nHandle ) const
-    throw(beans::UnknownPropertyException)
 {
     const tPropertyValueMap& rStaticDefaults = *StaticScatterChartTypeDefaults::get();
     tPropertyValueMap::const_iterator aFound( rStaticDefaults.find( nHandle ) );
@@ -272,7 +265,6 @@ uno::Any ScatterChartType::GetDefaultValue( sal_Int32 nHandle ) const
 
 // ____ XPropertySet ____
 uno::Reference< beans::XPropertySetInfo > SAL_CALL ScatterChartType::getPropertySetInfo()
-    throw (uno::RuntimeException)
 {
     return *StaticScatterChartTypeInfo::get();
 }

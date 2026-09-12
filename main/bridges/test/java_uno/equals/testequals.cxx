@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -61,22 +61,20 @@ class Service: public cppu::WeakImplHelper2<
 {
 public:
     virtual inline rtl::OUString SAL_CALL getImplementationName()
-        throw (css::uno::RuntimeException)
     { return rtl::OUString::createFromAscii(getImplementationName_static()); }
 
     virtual sal_Bool SAL_CALL supportsService(
-        rtl::OUString const & rServiceName) throw (css::uno::RuntimeException);
+        rtl::OUString const & rServiceName);
 
     virtual inline css::uno::Sequence< rtl::OUString > SAL_CALL
-    getSupportedServiceNames()  throw (css::uno::RuntimeException)
+    getSupportedServiceNames()
     { return getSupportedServiceNames_static(); }
 
     virtual void SAL_CALL connect(rtl::OUString const & rConnection,
-                                  rtl::OUString const & rProtocol)
-        throw (css::uno::Exception);
+                                  rtl::OUString const & rProtocol);
 
     virtual css::uno::Reference< css::uno::XInterface > SAL_CALL get(
-        rtl::OUString const & rName) throw (css::uno::RuntimeException);
+        rtl::OUString const & rName);
 
     static inline sal_Char const * getImplementationName_static()
     { return "com.sun.star.test.bridges.testequals.impl"; }
@@ -85,8 +83,7 @@ public:
     getSupportedServiceNames_static();
 
     static css::uno::Reference< css::uno::XInterface > SAL_CALL createInstance(
-        css::uno::Reference< css::uno::XComponentContext > const & rContext)
-        throw (css::uno::Exception);
+        css::uno::Reference< css::uno::XComponentContext > const & rContext);
 
 private:
     explicit inline Service(
@@ -100,7 +97,6 @@ private:
 }
 
 sal_Bool Service::supportsService(rtl::OUString const & rServiceName)
-    throw (css::uno::RuntimeException)
 {
     css::uno::Sequence< rtl::OUString > aNames(
         getSupportedServiceNames_static());
@@ -112,7 +108,6 @@ sal_Bool Service::supportsService(rtl::OUString const & rServiceName)
 
 void Service::connect(rtl::OUString const & rConnection,
                       rtl::OUString const & rProtocol)
-    throw (css::uno::Exception)
 {
     css::uno::Reference< css::connection::XConnection > xConnection(
         css::connection::Connector::create(m_xContext)->connect(rConnection));
@@ -126,7 +121,7 @@ void Service::connect(rtl::OUString const & rConnection,
 }
 
 css::uno::Reference< css::uno::XInterface >
-Service::get(rtl::OUString const & rName) throw (css::uno::RuntimeException)
+Service::get(rtl::OUString const & rName)
 {
     return m_xBridge->getInstance(rName);
 }
@@ -141,7 +136,6 @@ css::uno::Sequence< rtl::OUString > Service::getSupportedServiceNames_static()
 
 css::uno::Reference< css::uno::XInterface > Service::createInstance(
     css::uno::Reference< css::uno::XComponentContext > const & rContext)
-    throw (css::uno::Exception)
 {
     // Make types known:
     getCppuType(

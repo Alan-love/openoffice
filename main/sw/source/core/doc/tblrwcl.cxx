@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -1945,7 +1945,7 @@ void lcl_CalcNewWidths( const _FndLines& rFndLines, _CpyPara& rPara )
                         else
                             break;
                     }
-                    // nPos is now the left border of the first selceted box
+                    // nPos is now the left border of the first selected box
                     if( rPara.nMinLeft > nPos )
                         rPara.nMinLeft = nPos;
                     nBoxCount = pFndLine->GetBoxes().Count();
@@ -2512,7 +2512,7 @@ sal_Bool lcl_LineSetHeadCondColl( const SwTableLine*& rpLine, void* )
 	return sal_True;
 }
 
-/*  */
+/* */
 
 SwTwips lcl_GetDistance( SwTableBox* pBox, sal_Bool bLeft )
 {
@@ -2732,7 +2732,7 @@ sal_Bool lcl_SetOtherBoxWidth( SwTableLine* pLine, CR_SetBoxWidth& rParam,
 	return sal_True;
 }
 
-/**/
+/* */
 
 sal_Bool lcl_InsSelBox( SwTableLine* pLine, CR_SetBoxWidth& rParam,
 							SwTwips nDist, sal_Bool bCheck )
@@ -3473,7 +3473,7 @@ sal_Bool lcl_DelOtherBox( SwTableLine* , CR_SetBoxWidth& , SwTwips , sal_Bool )
 	return sal_True;
 }
 
-/**/
+/* */
 
 void lcl_AjustLines( SwTableLine* pLine, CR_SetBoxWidth& rParam )
 {
@@ -4061,7 +4061,7 @@ sal_Bool SwTable::SetColWidth( SwTableBox& rAktBox, sal_uInt16 eType,
 
 	return bRet;
 }
-/*  */
+/* */
 
 _FndBox* lcl_SaveInsDelData( CR_SetLineHeight& rParam, SwUndo** ppUndo,
 								SwTableSortBoxes& rTmpLst )
@@ -4558,7 +4558,7 @@ sal_Bool SwTable::SetRowHeight( SwTableBox& rAktBox, sal_uInt16 eType,
 	return bRet;
 }
 
-/*  */
+/* */
 
 SwFrmFmt* SwShareBoxFmt::GetFormat( long nWidth ) const
 {
@@ -4755,5 +4755,3 @@ sal_Bool SwShareBoxFmts::Seek_Entry( const SwFrmFmt& rFmt, sal_uInt16* pPos ) co
 		*pPos = nU;
 	return sal_False;
 }
-
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,20 +7,20 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
- 
+
 #ifndef VBAHELPER_VBAEVENTSHELPERBASE_HXX
 #define VBAHELPER_VBAEVENTSHELPERBASE_HXX
 
@@ -54,17 +54,17 @@ public:
     virtual ~VbaEventsHelperBase();
 
     // script::vba::XVBAEventProcessor
-    virtual sal_Bool SAL_CALL hasVbaEventHandler( sal_Int32 nEventId, const css::uno::Sequence< css::uno::Any >& rArgs ) throw (css::lang::IllegalArgumentException, css::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL processVbaEvent( sal_Int32 nEventId, const css::uno::Sequence< css::uno::Any >& rArgs ) throw (css::lang::IllegalArgumentException, css::util::VetoException, css::uno::RuntimeException);
+    virtual sal_Bool SAL_CALL hasVbaEventHandler( sal_Int32 nEventId, const css::uno::Sequence< css::uno::Any >& rArgs );
+    virtual sal_Bool SAL_CALL processVbaEvent( sal_Int32 nEventId, const css::uno::Sequence< css::uno::Any >& rArgs );
 
     // document::XEventListener
-    virtual void SAL_CALL notifyEvent( const css::document::EventObject& rEvent ) throw (css::uno::RuntimeException);
+    virtual void SAL_CALL notifyEvent( const css::document::EventObject& rEvent );
 
     // util::XChangesListener
-    virtual void SAL_CALL changesOccurred( const css::util::ChangesEvent& rEvent ) throw (css::uno::RuntimeException);
+    virtual void SAL_CALL changesOccurred( const css::util::ChangesEvent& rEvent );
 
     // lang::XEventListener
-    virtual void SAL_CALL disposing( const css::lang::EventObject& rEvent ) throw (css::uno::RuntimeException);
+    virtual void SAL_CALL disposing( const css::lang::EventObject& rEvent );
 
     // little helpers ---------------------------------------------------------
 
@@ -72,17 +72,17 @@ public:
     void processVbaEventNoThrow( sal_Int32 nEventId, const css::uno::Sequence< css::uno::Any >& rArgs );
 
     /** Throws, if the passed sequence does not contain a value at the specified index. */
-    static inline void checkArgument( const css::uno::Sequence< css::uno::Any >& rArgs, sal_Int32 nIndex ) throw (css::lang::IllegalArgumentException)
+    static inline void checkArgument( const css::uno::Sequence< css::uno::Any >& rArgs, sal_Int32 nIndex )
         { if( (nIndex < 0) || (nIndex >= rArgs.getLength()) ) throw css::lang::IllegalArgumentException(); }
 
     /** Throws, if the passed sequence does not contain a value of a specific at the specified index. */
     template< typename Type >
-    static inline void checkArgumentType( const css::uno::Sequence< css::uno::Any >& rArgs, sal_Int32 nIndex ) throw (css::lang::IllegalArgumentException)
+    static inline void checkArgumentType( const css::uno::Sequence< css::uno::Any >& rArgs, sal_Int32 nIndex )
         { checkArgument( rArgs, nIndex ); if( !rArgs[ nIndex ].has< Type >() ) throw css::lang::IllegalArgumentException(); }
 
 protected:
     // ------------------------------------------------------------------------
-    
+
     struct EventHandlerInfo
     {
         sal_Int32 mnEventId;
@@ -116,30 +116,30 @@ protected:
         inline EventQueueEntry( sal_Int32 nEventId, const css::uno::Sequence< css::uno::Any >& rArgs ) : mnEventId( nEventId ), maArgs( rArgs ) {}
     };
     typedef ::std::deque< EventQueueEntry > EventQueue;
-    
-    /** Derived classes do additional prpeparations and return whether the
+
+    /** Derived classes do additional preparations and return whether the
         event handler has to be called. */
     virtual bool implPrepareEvent(
         EventQueue& rEventQueue,
         const EventHandlerInfo& rInfo,
-        const css::uno::Sequence< css::uno::Any >& rArgs ) throw (css::uno::RuntimeException) = 0;
+        const css::uno::Sequence< css::uno::Any >& rArgs ) = 0;
 
     /** Derived classes have to return the argument list for the specified VBA event handler. */
     virtual css::uno::Sequence< css::uno::Any > implBuildArgumentList(
         const EventHandlerInfo& rInfo,
-        const css::uno::Sequence< css::uno::Any >& rArgs ) throw (css::lang::IllegalArgumentException) = 0;
+        const css::uno::Sequence< css::uno::Any >& rArgs ) = 0;
 
     /** Derived classes may do additional postprocessing. Called even if the
         event handler does not exist, or if an error occurred during execution. */
     virtual void implPostProcessEvent(
         EventQueue& rEventQueue,
         const EventHandlerInfo& rInfo,
-        bool bCancel ) throw (css::uno::RuntimeException) = 0;
+        bool bCancel ) = 0;
 
     /** Derived classes have to return the name of the Basic document module. */
     virtual ::rtl::OUString implGetDocumentModuleName(
         const EventHandlerInfo& rInfo,
-        const css::uno::Sequence< css::uno::Any >& rArgs ) const throw (css::lang::IllegalArgumentException) = 0;
+        const css::uno::Sequence< css::uno::Any >& rArgs ) const = 0;
 
 private:
     typedef ::std::map< sal_Int32, ::rtl::OUString > ModulePathMap;
@@ -150,22 +150,22 @@ private:
     void stopListening();
 
     /** Returns the event handler info struct for the specified event, or throws. */
-    const EventHandlerInfo& getEventHandlerInfo( sal_Int32 nEventId ) const throw (css::lang::IllegalArgumentException);
+    const EventHandlerInfo& getEventHandlerInfo( sal_Int32 nEventId ) const;
 
     /** Searches the event handler in the document and returns its full script path. */
     ::rtl::OUString getEventHandlerPath(
         const EventHandlerInfo& rInfo,
-        const css::uno::Sequence< css::uno::Any >& rArgs ) throw (css::lang::IllegalArgumentException, css::uno::RuntimeException);
+        const css::uno::Sequence< css::uno::Any >& rArgs );
 
     /** On first call, accesses the Basic library containing the VBA source code. */
-    void ensureVBALibrary() throw (css::uno::RuntimeException);
+    void ensureVBALibrary();
 
     /** Returns the type of the Basic module with the specified name. */
-    sal_Int32 getModuleType( const ::rtl::OUString& rModuleName ) throw (css::uno::RuntimeException);
+    sal_Int32 getModuleType( const ::rtl::OUString& rModuleName );
 
     /** Updates the map containing paths to event handlers for a Basic module. */
-    ModulePathMap& updateModulePathMap( const ::rtl::OUString& rModuleName ) throw (css::uno::RuntimeException);
-    
+    ModulePathMap& updateModulePathMap( const ::rtl::OUString& rModuleName );
+
 protected:
     css::uno::Reference< css::frame::XModel > mxModel;
     SfxObjectShell* mpShell;

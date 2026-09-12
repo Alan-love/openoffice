@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -80,7 +80,7 @@ Polygon2D convexHull( const Polygon2D& rPoly );
 // TODO: find proper epsilon here (try ::std::numeric_limits<NumType>::epsilon()?)!
 #define DBL_EPSILON 1.0e-100
 
-/* little approximate comparions */
+/* little approximate comparisons */
 template <typename NumType> bool tolZero( NumType n ) { return fabs(n) < DBL_EPSILON; }
 template <typename NumType> bool tolEqual( NumType n1, NumType n2 ) { return tolZero(n1-n2); }
 template <typename NumType> bool tolLessEqual( NumType n1, NumType n2 ) { return tolEqual(n1,n2) || n1<n2; }

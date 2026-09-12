@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -2476,7 +2476,7 @@ void SwSectionFrm::Modify( const SfxPoolItem* pOld, const SfxPoolItem * pNew )
 void SwSectionFrm::SwClientNotify( const SwModify& rMod, const SfxHint& rHint )
 {
     // --> OD #i117863#
-    const SwSectionFrmMoveAndDeleteHint* pHint = 
+    const SwSectionFrmMoveAndDeleteHint* pHint =
                     dynamic_cast<const SwSectionFrmMoveAndDeleteHint*>(&rHint);
     if ( pHint && pHint->GetId() == SFX_HINT_DYING && &rMod == GetRegisteredIn() )
     {
@@ -2644,7 +2644,7 @@ SwFtnContFrm* SwSectionFrm::ContainsFtnCont( const SwFtnContFrm* pCont ) const
 	if( pCont )
 	{
 		pLay = pCont->FindFtnBossFrm( 0 );
-		ASSERT( IsAnLower( pLay ), "ConatainsFtnCont: Wrong FtnContainer" );
+		ASSERT( IsAnLower( pLay ), "ContainsFtnCont: Wrong FtnContainer" );
 		pLay = (SwLayoutFrm*)pLay->GetNext();
 	}
 	else if( Lower() && Lower()->IsColumnFrm() )
@@ -2656,11 +2656,11 @@ SwFtnContFrm* SwSectionFrm::ContainsFtnCont( const SwFtnContFrm* pCont ) const
 		if( pLay->Lower() && pLay->Lower()->GetNext() )
 		{
 			ASSERT( pLay->Lower()->GetNext()->IsFtnContFrm(),
-					"ToMaximize: Unexspected Frame" );
+					"ToMaximize: Unexpected Frame" );
 			pRet = (SwFtnContFrm*)pLay->Lower()->GetNext();
 		}
 		ASSERT( !pLay->GetNext() || pLay->GetNext()->IsLayoutFrm(),
-				"ToMaximize: ColFrm exspected" );
+				"ToMaximize: ColFrm expected" );
 		pLay = (SwLayoutFrm*)pLay->GetNext();
 	}
 	return pRet;
@@ -2812,4 +2812,3 @@ bool SwSectionFrm::IsBalancedSection() const
     }
     return bRet;
 }
-

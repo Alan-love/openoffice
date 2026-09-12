@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_flat.hxx"
 #include "flat/EConnection.hxx"
 #include "flat/EDatabaseMetaData.hxx"
 #include "flat/ECatalog.hxx"
@@ -70,7 +70,7 @@ OFlatConnection::~OFlatConnection()
 IMPLEMENT_SERVICE_INFO(OFlatConnection, "com.sun.star.sdbc.drivers.flat.Connection", "com.sun.star.sdbc.Connection")
 
 //-----------------------------------------------------------------------------
-void OFlatConnection::construct(const ::rtl::OUString& url,const Sequence< PropertyValue >& info)  throw(SQLException)
+void OFlatConnection::construct(const ::rtl::OUString& url,const Sequence< PropertyValue >& info)
 {
 	osl_incrementInterlockedCount( &m_refCount );
 
@@ -113,10 +113,10 @@ void OFlatConnection::construct(const ::rtl::OUString& url,const Sequence< Prope
 
 	osl_decrementInterlockedCount( &m_refCount );
 	OConnection::construct(url,info);
-    m_bShowDeleted = sal_True; // we do not supported rows for this type 
+    m_bShowDeleted = sal_True; // we do not supported rows for this type
 }
 // --------------------------------------------------------------------------------
-Reference< XDatabaseMetaData > SAL_CALL OFlatConnection::getMetaData(  ) throw(SQLException, RuntimeException)
+Reference< XDatabaseMetaData > SAL_CALL OFlatConnection::getMetaData(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(OConnection_B::rBHelper.bDisposed);
@@ -145,7 +145,7 @@ Reference< XDatabaseMetaData > SAL_CALL OFlatConnection::getMetaData(  ) throw(S
 	return xTab;
 }
 // --------------------------------------------------------------------------------
-Reference< XStatement > SAL_CALL OFlatConnection::createStatement(  ) throw(SQLException, RuntimeException)
+Reference< XStatement > SAL_CALL OFlatConnection::createStatement(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(OConnection_B::rBHelper.bDisposed);
@@ -157,7 +157,7 @@ Reference< XStatement > SAL_CALL OFlatConnection::createStatement(  ) throw(SQLE
 	return xStmt;
 }
 // --------------------------------------------------------------------------------
-Reference< XPreparedStatement > SAL_CALL OFlatConnection::prepareStatement( const ::rtl::OUString& sql ) throw(SQLException, RuntimeException)
+Reference< XPreparedStatement > SAL_CALL OFlatConnection::prepareStatement( const ::rtl::OUString& sql )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(OConnection_B::rBHelper.bDisposed);
@@ -171,7 +171,7 @@ Reference< XPreparedStatement > SAL_CALL OFlatConnection::prepareStatement( cons
 	return xStmt;
 }
 // --------------------------------------------------------------------------------
-Reference< XPreparedStatement > SAL_CALL OFlatConnection::prepareCall( const ::rtl::OUString& /*sql*/ ) throw(SQLException, RuntimeException)
+Reference< XPreparedStatement > SAL_CALL OFlatConnection::prepareCall( const ::rtl::OUString& /*sql*/ )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(OConnection_B::rBHelper.bDisposed);
@@ -179,5 +179,3 @@ Reference< XPreparedStatement > SAL_CALL OFlatConnection::prepareCall( const ::r
     ::dbtools::throwFeatureNotImplementedException( "XConnection::prepareCall", *this );
 	return NULL;
 }
-
-

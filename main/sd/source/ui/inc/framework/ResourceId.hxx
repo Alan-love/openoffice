@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -120,62 +120,51 @@ public:
         URLs.
     */
     const ::std::vector<rtl::OUString>& GetResourceURLs (void) const;
-    
+
     //===== XResourceId =======================================================
 
     virtual ::rtl::OUString SAL_CALL
-        getResourceURL (void)
-        throw(css::uno::RuntimeException);
+        getResourceURL (void);
 
     virtual css::util::URL SAL_CALL
-        getFullResourceURL (void)
-        throw(css::uno::RuntimeException);
+        getFullResourceURL (void);
 
     virtual sal_Bool SAL_CALL
-        hasAnchor (void)
-        throw (css::uno::RuntimeException);
+        hasAnchor (void);
 
     virtual css::uno::Reference<
         css::drawing::framework::XResourceId> SAL_CALL
-        getAnchor (void)
-        throw (css::uno::RuntimeException);
+        getAnchor (void);
 
     virtual css::uno::Sequence<rtl::OUString> SAL_CALL
-        getAnchorURLs (void)
-        throw (css::uno::RuntimeException);
+        getAnchorURLs (void);
 
     virtual ::rtl::OUString SAL_CALL
-        getResourceTypePrefix (void)
-        throw (css::uno::RuntimeException);
+        getResourceTypePrefix (void);
 
     virtual sal_Int16 SAL_CALL
         compareTo (const css::uno::Reference<
-            css::drawing::framework::XResourceId>& rxResourceId)
-        throw (css::uno::RuntimeException);
+            css::drawing::framework::XResourceId>& rxResourceId);
 
     virtual sal_Bool SAL_CALL
         isBoundTo (
             const css::uno::Reference<
                 css::drawing::framework::XResourceId>& rxResourceId,
-            css::drawing::framework::AnchorBindingMode eMode)
-        throw(css::uno::RuntimeException);
-    
+            css::drawing::framework::AnchorBindingMode eMode);
+
     virtual sal_Bool SAL_CALL
         isBoundToURL (
             const ::rtl::OUString& rsAnchorURL,
-            css::drawing::framework::AnchorBindingMode eMode)
-        throw (css::uno::RuntimeException);
+            css::drawing::framework::AnchorBindingMode eMode);
 
     virtual css::uno::Reference<
         css::drawing::framework::XResourceId> SAL_CALL
-        clone (void)
-        throw(css::uno::RuntimeException);
+        clone (void);
 
     //===== XInitialization ===================================================
 
     void SAL_CALL initialize (
-        const css::uno::Sequence<css::uno::Any>& aArguments)
-        throw (css::uno::RuntimeException);
+        const css::uno::Sequence<css::uno::Any>& aArguments);
 
 private:
     /** The set of URLs that consist of the resource URL at index 0 and the

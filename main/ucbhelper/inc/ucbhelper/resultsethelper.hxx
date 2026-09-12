@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -159,43 +159,31 @@ public:
 
 	// XComponent ( base class of XDynamicResultSet )
     virtual void SAL_CALL
-	dispose()
-		throw( com::sun::star::uno::RuntimeException );
+	dispose();
     virtual void SAL_CALL
 	addEventListener( const com::sun::star::uno::Reference<
-							com::sun::star::lang::XEventListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+							com::sun::star::lang::XEventListener >& Listener );
     virtual void SAL_CALL
 	removeEventListener( const com::sun::star::uno::Reference<
-							com::sun::star::lang::XEventListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+							com::sun::star::lang::XEventListener >& Listener );
 
 	// XDynamicResultSet
     virtual com::sun::star::uno::Reference<
 				com::sun::star::sdbc::XResultSet > SAL_CALL
-	getStaticResultSet()
-		throw( com::sun::star::ucb::ListenerAlreadySetException,
-		com::sun::star::uno::RuntimeException );
+	getStaticResultSet();
     virtual void SAL_CALL
 	setListener( const com::sun::star::uno::Reference<
-					com::sun::star::ucb::XDynamicResultSetListener >& Listener )
-		throw( com::sun::star::ucb::ListenerAlreadySetException,
-			   com::sun::star::uno::RuntimeException );
+					com::sun::star::ucb::XDynamicResultSetListener >& Listener );
 	virtual void SAL_CALL
 	connectToCache( const com::sun::star::uno::Reference<
-						com::sun::star::ucb::XDynamicResultSet > & xCache )
-		throw( com::sun::star::ucb::ListenerAlreadySetException,
-			   com::sun::star::ucb::AlreadyInitializedException,
-			   com::sun::star::ucb::ServiceNotFoundException,
-			   com::sun::star::uno::RuntimeException );
+						com::sun::star::ucb::XDynamicResultSet > & xCache );
 
 	/**
-	  * The implemetation of this method always returns 0. Override this
-	  * method, if necassary.
+	  * The implementation of this method always returns 0. Override this
+	  * method, if necessary.
 	  */
     virtual sal_Int16 SAL_CALL
-	getCapabilities()
-		throw( com::sun::star::uno::RuntimeException );
+	getCapabilities();
 
 	//////////////////////////////////////////////////////////////////////
 	// Non-interface methods.

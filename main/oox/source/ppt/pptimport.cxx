@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,12 +49,12 @@ uno::Sequence< OUString > SAL_CALL PowerPointImport_getSupportedServiceNames() t
     return aSeq;
 }
 
-uno::Reference< uno::XInterface > SAL_CALL PowerPointImport_createInstance( const Reference< XComponentContext >& rxContext ) throw( Exception )
+uno::Reference< uno::XInterface > SAL_CALL PowerPointImport_createInstance( const Reference< XComponentContext >& rxContext )
 {
     return static_cast< ::cppu::OWeakObject* >( new PowerPointImport( rxContext ) );
 }
 
-PowerPointImport::PowerPointImport( const Reference< XComponentContext >& rxContext ) throw( RuntimeException ) :
+PowerPointImport::PowerPointImport( const Reference< XComponentContext >& rxContext ) :
     XmlFilterBase( rxContext ),
     mxChartConv( new ::oox::drawingml::chart::ChartConverter )
 {
@@ -141,7 +141,7 @@ const oox::drawingml::table::TableStyleListPtr PowerPointImport::getTableStyles(
 		importFragment( new oox::drawingml::table::TableStyleListFragmentHandler(
 			*this, maTableStyleListPath, *mpTableStyleList ) );
 	}
-	return mpTableStyleList;;
+	return mpTableStyleList;
 }
 
 ::oox::drawingml::chart::ChartConverter& PowerPointImport::getChartConverter()

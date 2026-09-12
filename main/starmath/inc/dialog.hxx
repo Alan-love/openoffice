@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,18 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
 
 #ifndef DIALOG_HXX
 #define DIALOG_HXX
@@ -356,7 +355,7 @@ class SmSymbolDialog : public ModalDialog
 
     SmViewShell        &rViewSh;
     SmSymbolManager    &rSymbolMgr;
-    
+
     String              aSymbolSetName;
     SymbolPtrVec_t      aSymbolSet;
 
@@ -433,8 +432,8 @@ class SmSymDefineDialog : public ModalDialog
     PushButton      aChangeBtn;
     PushButton      aDeleteBtn;
     FixedImage      aRightArrow;
-    Image           aRigthArrow_Im;
-    Image           aRigthArrow_Im_HC;     // hi-contrast version
+    Image           aRightArrow_Im;
+    Image           aRightArrow_Im_HC;     // hi-contrast version
 
     SmSymbolManager     aSymbolMgrCopy,
                        &rSymbolMgr;
@@ -494,28 +493,27 @@ public:
     {
         return SelectSymbolSet(aOldSymbolSets, rSymbolSetName, sal_False);
     }
-    
+
     sal_Bool SelectOldSymbol(const XubString &rSymbolName)
     {
         return SelectSymbol(aOldSymbols, rSymbolName, sal_False);
     }
-    
+
     sal_Bool SelectSymbolSet(const XubString &rSymbolSetName)
     {
         return SelectSymbolSet(aSymbolSets, rSymbolSetName, sal_False);
     }
-    
+
     sal_Bool SelectSymbol(const XubString &rSymbolName)
     {
         return SelectSymbol(aSymbols, rSymbolName, sal_False);
     }
-    
+
     sal_Bool        SelectFont(const XubString &rFontName)   { return SelectFont(rFontName, sal_True); }
 	sal_Bool		SelectStyle(const XubString &rStyleName) { return SelectStyle(rStyleName, sal_True); };
 	void		SelectChar(xub_Unicode cChar);
 };
 
-
-
 #endif
 
+/* vim: set noet sw=4 ts=4: */

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -45,7 +45,7 @@ namespace connectivity
 										 starlang::XServiceInfo> OCollectionBase;
 
 		//************************************************************
-		//  OCollection	
+		//  OCollection
 		//************************************************************
 		template <class T,class SimT,class OCl> class OCollection : public OCollectionBase
 		{
@@ -53,12 +53,12 @@ namespace connectivity
 			OCollection( const OCollection& );				// never implemented
 			OCollection& operator=( const OCollection& );	// never implemented
 
-		protected:	
+		protected:
 			vector<OCl*>							m_aElements;
 			::cppu::OWeakObject&					m_rParent;
 			::osl::Mutex&							m_rMutex;		// mutex of the parent
 			T*										m_pCollection;
-			
+
 
 		public:
 			OCollection(::cppu::OWeakObject& _rParent, ::osl::Mutex& _rMutex,T* _pCollection)
@@ -74,21 +74,21 @@ namespace connectivity
 				m_pCollection->Release();
 			}
 
-			virtual ::rtl::OUString SAL_CALL getImplementationName(  ) throw (staruno::RuntimeException)
+			virtual ::rtl::OUString SAL_CALL getImplementationName(  )
 			{
 				return ::rtl::OUString::createFromAscii("com.sun.star.sdbcx.ACollection");
 			}
-			virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& _rServiceName ) throw(staruno::RuntimeException)
+			virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& _rServiceName )
 			{
 				staruno::Sequence< ::rtl::OUString > aSupported(getSupportedServiceNames());
 				const ::rtl::OUString* pSupported = aSupported.getConstArray();
 				for (sal_Int32 i=0; i<aSupported.getLength(); ++i, ++pSupported)
 					if (pSupported->equals(_rServiceName))
 						return sal_True;
-			
+
 				return sal_False;
 			}
-			virtual staruno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  ) throw(staruno::RuntimeException)
+			virtual staruno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  )
 			{
 				staruno::Sequence< ::rtl::OUString > aSupported(1);
 				aSupported[0] = ::rtl::OUString::createFromAscii("com.sun.star.sdbcx.Container");
@@ -106,19 +106,19 @@ namespace connectivity
 			}
 
 		// ::com::sun::star::container::XElementAccess
-			virtual staruno::Type SAL_CALL getElementType(  ) throw(staruno::RuntimeException)
+			virtual staruno::Type SAL_CALL getElementType(  )
 			{
 				return::getCppuType(static_cast< staruno::Reference< starbeans::XPropertySet>*>(NULL));
 			}
-			
-			virtual sal_Bool SAL_CALL hasElements(  ) throw(staruno::RuntimeException)
+
+			virtual sal_Bool SAL_CALL hasElements(  )
 			{
 				::osl::MutexGuard aGuard(m_rMutex);
 				return getCount() > 0;
 			}
-			
+
 		// starcontainer::XIndexAccess
-			virtual sal_Int32 SAL_CALL getCount(  ) throw(staruno::RuntimeException)
+			virtual sal_Int32 SAL_CALL getCount(  )
 			{
 				::osl::MutexGuard aGuard(m_rMutex);
 				sal_Int32 nCnt = 0;
@@ -126,7 +126,7 @@ namespace connectivity
 				return nCnt;
 			}
 
-			virtual staruno::Any SAL_CALL getByIndex( sal_Int32 Index ) throw(starlang::IndexOutOfBoundsException, starlang::WrappedTargetException, staruno::RuntimeException)
+			virtual staruno::Any SAL_CALL getByIndex( sal_Int32 Index )
 			{
 				::osl::MutexGuard aGuard(m_rMutex);
 				if (Index < 0 || Index >= getCount())
@@ -145,10 +145,10 @@ namespace connectivity
 
 
 		// starcontainer::XNameAccess
-			virtual staruno::Any SAL_CALL getByName( const ::rtl::OUString& aName ) throw(starcontainer::NoSuchElementException, starlang::WrappedTargetException, staruno::RuntimeException)
+			virtual staruno::Any SAL_CALL getByName( const ::rtl::OUString& aName )
 			{
 				::osl::MutexGuard aGuard(m_rMutex);
-				
+
 				SimT* pCol = NULL;
 				m_pCollection->get_Item(OLEVariant(aName),&pCol);
 				if(!pCol)
@@ -160,7 +160,7 @@ namespace connectivity
 
 				return staruno::makeAny( staruno::Reference< starbeans::XPropertySet >(pIndex));
 			}
-			virtual staruno::Sequence< ::rtl::OUString > SAL_CALL getElementNames(  ) throw(staruno::RuntimeException)
+			virtual staruno::Sequence< ::rtl::OUString > SAL_CALL getElementNames(  )
 			{
 				::osl::MutexGuard aGuard(m_rMutex);
 				sal_Int32 nLen = getCount();
@@ -174,7 +174,7 @@ namespace connectivity
 					SimT* pIdx = NULL;
 					m_pCollection->get_Item(aVar,&pIdx);
 					pIdx->AddRef();
-					_bstr_t sBSTR; 
+					_bstr_t sBSTR;
 					pIdx->get_Name(&sBSTR);
 					(*pStringArray) = (sal_Unicode*)sBSTR;
 					pIdx->Release();
@@ -182,7 +182,7 @@ namespace connectivity
 				}
 				return aNameList;
 			}
-			virtual sal_Bool SAL_CALL hasByName( const ::rtl::OUString& aName ) throw(staruno::RuntimeException)
+			virtual sal_Bool SAL_CALL hasByName( const ::rtl::OUString& aName )
 			{
 				::osl::MutexGuard aGuard(m_rMutex);
 				SimT* pCol = NULL;
@@ -215,13 +215,10 @@ namespace connectivity
 		typedef OCollection< ADOKeys,ADOKey,OKey>			OKeys;
 		typedef OCollection< ADOColumns,ADOColumn,OColumn>	OColumns;
 		typedef OCollection< ADOTables,ADOTable,OTable>		OTables;
-		typedef OCollection< ADOViews,ADOView,OView>		OViews; 
+		typedef OCollection< ADOViews,ADOView,OView>		OViews;
 		typedef OCollection< ADOGroups,ADOGroup,OGroup>		OGroups;
-		typedef OCollection< ADOUsers,ADOUser,OUser>		OUsers; 
+		typedef OCollection< ADOUsers,ADOUser,OUser>		OUsers;
 
 	}
 }
 #endif // _CONNECTIVITY_ADO_COLLECTION_HXX_
-
-
-

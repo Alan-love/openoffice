@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -101,18 +101,18 @@ public:
 		//const SdrPageViewWinRec*, FmXFormView* pView);
 
     // XElementAccess
-    virtual ::com::sun::star::uno::Type SAL_CALL getElementType() throw(::com::sun::star::uno::RuntimeException);
-	virtual sal_Bool SAL_CALL hasElements() throw(::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Type SAL_CALL getElementType();
+	virtual sal_Bool SAL_CALL hasElements();
 
     // XEnumerationAccess
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::container::XEnumeration >  SAL_CALL createEnumeration() throw(::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::container::XEnumeration >  SAL_CALL createEnumeration();
 
     // XIndexAccess
-	virtual sal_Int32 SAL_CALL getCount() throw(::com::sun::star::uno::RuntimeException);
-	virtual ::com::sun::star::uno::Any SAL_CALL getByIndex(sal_Int32 _Index) throw(::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
+	virtual sal_Int32 SAL_CALL getCount();
+	virtual ::com::sun::star::uno::Any SAL_CALL getByIndex(sal_Int32 _Index);
 
     // XFormControllerContext
-    virtual void SAL_CALL makeVisible( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XControl >& _Control ) throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL makeVisible( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XControl >& _Control );
 
 	const ::std::vector< ::com::sun::star::uno::Reference< ::com::sun::star::form::runtime::XFormController > >& GetList() {return m_aControllerList;}
 
@@ -198,20 +198,20 @@ public:
 	// UNO Anbindung
 
 // ::com::sun::star::lang::XEventListener
-	virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& Source) throw(::com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& Source);
 
 // ::com::sun::star::container::XContainerListener
-	virtual void SAL_CALL elementInserted(const  ::com::sun::star::container::ContainerEvent& rEvent) throw(::com::sun::star::uno::RuntimeException);
-	virtual void SAL_CALL elementReplaced(const  ::com::sun::star::container::ContainerEvent& rEvent) throw(::com::sun::star::uno::RuntimeException);
-	virtual void SAL_CALL elementRemoved(const  ::com::sun::star::container::ContainerEvent& rEvent) throw(::com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL elementInserted(const  ::com::sun::star::container::ContainerEvent& rEvent);
+	virtual void SAL_CALL elementReplaced(const  ::com::sun::star::container::ContainerEvent& rEvent);
+	virtual void SAL_CALL elementRemoved(const  ::com::sun::star::container::ContainerEvent& rEvent);
 
 // ::com::sun::star::form::XFormControllerListener
-	virtual void SAL_CALL formActivated(const ::com::sun::star::lang::EventObject& rEvent) throw(::com::sun::star::uno::RuntimeException);
-	virtual void SAL_CALL formDeactivated(const ::com::sun::star::lang::EventObject& rEvent) throw(::com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL formActivated(const ::com::sun::star::lang::EventObject& rEvent);
+	virtual void SAL_CALL formDeactivated(const ::com::sun::star::lang::EventObject& rEvent);
 
 	// XFocusListener
-	virtual void SAL_CALL focusGained( const ::com::sun::star::awt::FocusEvent& e ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL focusLost( const ::com::sun::star::awt::FocusEvent& e ) throw (::com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL focusGained( const ::com::sun::star::awt::FocusEvent& e );
+    virtual void SAL_CALL focusLost( const ::com::sun::star::awt::FocusEvent& e );
 
 	FmFormView* getView() const {return m_pView;}
     PFormViewPageWindowAdapter  findWindow( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XControlContainer >& _rxCC ) const;
@@ -309,4 +309,3 @@ private:
 
 
 #endif // _SVX_FMVWIMP_HXX
-

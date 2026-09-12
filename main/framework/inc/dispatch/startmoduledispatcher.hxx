@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -82,11 +82,11 @@ class StartModuleDispatcher : public css::lang::XTypeProvider
         //---------------------------------------
         /** @short  our "context" frame. */
         css::uno::WeakReference< css::frame::XFrame > m_xOwner;
-    
+
         //---------------------------------------
         /** @short  the original queryDispatch() target. */
         ::rtl::OUString m_sDispatchTarget;
-    
+
         //---------------------------------------
         /** @short  list of registered status listener */
         ListenerHash m_lStatusListener;
@@ -98,7 +98,7 @@ class StartModuleDispatcher : public css::lang::XTypeProvider
 
         //---------------------------------------
         /** @short  connect a new StartModuleDispatcher instance to its "owner frame".
-    
+
             @descr  Such "owner frame" is used as context for all related operations.
 
             @param  xSMGR
@@ -107,7 +107,7 @@ class StartModuleDispatcher : public css::lang::XTypeProvider
 
             @param  xFrame
                     the frame where the corresponding dispatch was started.
-    
+
             @param  sTarget
                     the original target information used for the related queryDispatch() call.
          */
@@ -132,21 +132,21 @@ class StartModuleDispatcher : public css::lang::XTypeProvider
         // XNotifyingDispatch
         virtual void SAL_CALL dispatchWithNotification( const css::util::URL&                                             aURL      ,
                                                         const css::uno::Sequence< css::beans::PropertyValue >&            lArguments,
-                                                        const css::uno::Reference< css::frame::XDispatchResultListener >& xListener ) throw(css::uno::RuntimeException);
+                                                        const css::uno::Reference< css::frame::XDispatchResultListener >& xListener );
 
         //---------------------------------------
         // XDispatch
         virtual void SAL_CALL dispatch            ( const css::util::URL&                                     aURL      ,
-                                                    const css::uno::Sequence< css::beans::PropertyValue >&    lArguments) throw(css::uno::RuntimeException);
+                                                    const css::uno::Sequence< css::beans::PropertyValue >&    lArguments);
         virtual void SAL_CALL addStatusListener   ( const css::uno::Reference< css::frame::XStatusListener >& xListener ,
-                                                    const css::util::URL&                                     aURL      ) throw(css::uno::RuntimeException);
+                                                    const css::util::URL&                                     aURL      );
         virtual void SAL_CALL removeStatusListener( const css::uno::Reference< css::frame::XStatusListener >& xListener ,
-                                                    const css::util::URL&                                     aURL      ) throw(css::uno::RuntimeException);
+                                                    const css::util::URL&                                     aURL      );
 
         //---------------------------------------
         // XDispatchInformationProvider
-        virtual css::uno::Sequence< sal_Int16 >                       SAL_CALL getSupportedCommandGroups         (                         ) throw (css::uno::RuntimeException);
-        virtual css::uno::Sequence< css::frame::DispatchInformation > SAL_CALL getConfigurableDispatchInformation( sal_Int16 nCommandGroup ) throw (css::uno::RuntimeException);
+        virtual css::uno::Sequence< sal_Int16 >                       SAL_CALL getSupportedCommandGroups         (                         );
+        virtual css::uno::Sequence< css::frame::DispatchInformation > SAL_CALL getConfigurableDispatchInformation( sal_Int16 nCommandGroup );
 
     //-------------------------------------------
     // internal helper
@@ -157,7 +157,7 @@ class StartModuleDispatcher : public css::lang::XTypeProvider
         /** @short  check if StartModule can be shown.
          */
         ::sal_Bool implts_isBackingModePossible();
-    
+
         //---------------------------------------
         /** @short  open the special BackingComponent (now StartModule)
 

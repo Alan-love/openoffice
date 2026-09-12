@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -86,23 +86,18 @@ public:
 
 	// XComponent
     virtual void SAL_CALL
-	dispose()
-		throw( com::sun::star::uno::RuntimeException );
+	dispose();
     virtual void SAL_CALL
 	addEventListener( const com::sun::star::uno::Reference<
-						com::sun::star::lang::XEventListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+						com::sun::star::lang::XEventListener >& Listener );
     virtual void SAL_CALL
 	removeEventListener( const com::sun::star::uno::Reference<
-							com::sun::star::lang::XEventListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+							com::sun::star::lang::XEventListener >& Listener );
 
 	// XInitialization
     virtual void SAL_CALL
 	initialize( const com::sun::star::uno::Sequence<
-						com::sun::star::uno::Any >& aArguments )
-		throw( com::sun::star::uno::Exception,
-			   com::sun::star::uno::RuntimeException );
+						com::sun::star::uno::Any >& aArguments );
 
 	// XContentProviderManager
     virtual com::sun::star::uno::Reference<
@@ -111,67 +106,51 @@ public:
 								com::sun::star::ucb::XContentProvider >&
 									Provider,
 							 const rtl::OUString& Scheme,
-							 sal_Bool ReplaceExisting )
-		throw( com::sun::star::ucb::DuplicateProviderException,
-			   com::sun::star::uno::RuntimeException );
+							 sal_Bool ReplaceExisting );
     virtual void SAL_CALL
 	deregisterContentProvider( const com::sun::star::uno::Reference<
 									com::sun::star::ucb::XContentProvider >&
 										Provider,
-							   const rtl::OUString& Scheme )
-		throw( com::sun::star::uno::RuntimeException );
+							   const rtl::OUString& Scheme );
     virtual com::sun::star::uno::Sequence<
 		com::sun::star::ucb::ContentProviderInfo > SAL_CALL
-	queryContentProviders()
-		throw( com::sun::star::uno::RuntimeException );
+	queryContentProviders();
     virtual com::sun::star::uno::Reference<
 		com::sun::star::ucb::XContentProvider >	SAL_CALL
-	queryContentProvider( const rtl::OUString& Identifier )
-		throw( com::sun::star::uno::RuntimeException );
+	queryContentProvider( const rtl::OUString& Identifier );
 
 	// XContentProvider
 	virtual com::sun::star::uno::Reference<
 		com::sun::star::ucb::XContent > SAL_CALL
 	queryContent( const com::sun::star::uno::Reference<
-					com::sun::star::ucb::XContentIdentifier >& Identifier )
-		throw( com::sun::star::ucb::IllegalIdentifierException,
-			   com::sun::star::uno::RuntimeException );
+					com::sun::star::ucb::XContentIdentifier >& Identifier );
     virtual sal_Int32 SAL_CALL
 	compareContentIds( const com::sun::star::uno::Reference<
 						com::sun::star::ucb::XContentIdentifier >& Id1,
 					   const com::sun::star::uno::Reference<
-					   	com::sun::star::ucb::XContentIdentifier >& Id2 )
-		throw( com::sun::star::uno::RuntimeException );
+					   	com::sun::star::ucb::XContentIdentifier >& Id2 );
 
 	// XContentIdentifierFactory
     virtual com::sun::star::uno::Reference<
 		com::sun::star::ucb::XContentIdentifier > SAL_CALL
-	createContentIdentifier( const rtl::OUString& ContentId )
-		throw( com::sun::star::uno::RuntimeException );
+	createContentIdentifier( const rtl::OUString& ContentId );
 
 	// XCommandProcessor
     virtual sal_Int32 SAL_CALL
-	createCommandIdentifier()
-		throw( com::sun::star::uno::RuntimeException );
+	createCommandIdentifier();
     virtual com::sun::star::uno::Any SAL_CALL
 	execute( const com::sun::star::ucb::Command& aCommand,
 	         sal_Int32 CommandId,
 			 const com::sun::star::uno::Reference<
-			 	com::sun::star::ucb::XCommandEnvironment >& Environment )
-		throw( com::sun::star::uno::Exception,
-			   com::sun::star::ucb::CommandAbortedException,
-			   com::sun::star::uno::RuntimeException );
+			 	com::sun::star::ucb::XCommandEnvironment >& Environment );
     virtual void SAL_CALL
-	abort( sal_Int32 CommandId )
-		throw( com::sun::star::uno::RuntimeException );
+	abort( sal_Int32 CommandId );
 
 	// XChangesListener
-    virtual void SAL_CALL changesOccurred( const com::sun::star::util::ChangesEvent& Event )
-		throw( com::sun::star::uno::RuntimeException );
+    virtual void SAL_CALL changesOccurred( const com::sun::star::util::ChangesEvent& Event );
 
 	 // XEventListener ( base of XChangesLisetenr )
-    virtual void SAL_CALL disposing( const com::sun::star::lang::EventObject& Source )
-        throw( com::sun::star::uno::RuntimeException );
+    virtual void SAL_CALL disposing( const com::sun::star::lang::EventObject& Source );
 
 private:
 	com::sun::star::uno::Reference< com::sun::star::ucb::XContentProvider >
@@ -185,15 +164,13 @@ private:
 	globalTransfer(
 			const com::sun::star::ucb::GlobalTransferCommandArgument & rArg,
 			const com::sun::star::uno::Reference<
-			 	com::sun::star::ucb::XCommandEnvironment >& xEnv )
-		throw( com::sun::star::uno::Exception );
+			 	com::sun::star::ucb::XCommandEnvironment >& xEnv );
 
 
-	bool configureUcb()
-		throw ( com::sun::star::uno::RuntimeException);
+	bool configureUcb();
 
-	bool getContentProviderData( 
-			const rtl::OUString & rKey1, 
+	bool getContentProviderData(
+			const rtl::OUString & rKey1,
 			const rtl::OUString & rKey2,
             ucbhelper::ContentProviderDataList & rListToFill);
 
@@ -202,7 +179,7 @@ private:
 	com::sun::star::uno::Reference<
 		com::sun::star::lang::XMultiServiceFactory > m_xSMgr;
 
-	com::sun::star::uno::Reference< 
+	com::sun::star::uno::Reference<
 		com::sun::star::util::XChangesNotifier > m_xNotifier;
 
 	com::sun::star::uno::Sequence< com::sun::star::uno::Any > m_aArguments;

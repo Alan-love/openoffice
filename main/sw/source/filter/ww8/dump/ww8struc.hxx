@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -583,7 +583,7 @@ struct WW8_DPHEAD
 	SVBT16 dpk;			// 	0	Drawn Primitive Kind  REVIEW davebu
   //		0=start of grouping, 1=line, 2=textbox, 3=rectangle,
   //		4=arc, 5=elipse, 6=polyline, 7=callout textbox,
-  //		8=end of grouping, 9=sample primitve holding default values
+  //		8=end of grouping, 9=sample primitive holding default values
 	SVBT16 cb;			// 2	size (count of bytes) of this DP
 	SVBT16 xa;			// 4	These 2 points describe the rectangle
 	SVBT16 ya;			// 6 	enclosing this DP relative to the origin of

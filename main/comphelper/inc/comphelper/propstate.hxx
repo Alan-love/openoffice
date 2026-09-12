@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -57,17 +57,17 @@ namespace comphelper
 	    OPropertyStateHelper(::cppu::OBroadcastHelper& rBHlp,
                              ::cppu::IEventNotificationHook *i_pFireEvents);
 
-        virtual ::com::sun::star::uno::Any SAL_CALL queryInterface(const ::com::sun::star::uno::Type& aType) throw(::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Any SAL_CALL queryInterface(const ::com::sun::star::uno::Type& aType);
 
     // XPropertyState
         virtual ::com::sun::star::beans::PropertyState SAL_CALL
-            getPropertyState(const ::rtl::OUString& PropertyName) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::uno::RuntimeException);
+            getPropertyState(const ::rtl::OUString& PropertyName);
         virtual ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyState> SAL_CALL
-            getPropertyStates(const ::com::sun::star::uno::Sequence< ::rtl::OUString >& aPropertyName) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::uno::RuntimeException);
+            getPropertyStates(const ::com::sun::star::uno::Sequence< ::rtl::OUString >& aPropertyName);
         virtual void SAL_CALL
-            setPropertyToDefault(const ::rtl::OUString& PropertyName) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::uno::RuntimeException);
+            setPropertyToDefault(const ::rtl::OUString& PropertyName);
         virtual ::com::sun::star::uno::Any SAL_CALL
-            getPropertyDefault(const ::rtl::OUString& aPropertyName) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
+            getPropertyDefault(const ::rtl::OUString& aPropertyName);
 
     // access via handle
 	    virtual ::com::sun::star::beans::PropertyState	getPropertyStateByHandle(sal_Int32 nHandle);
@@ -80,7 +80,7 @@ namespace comphelper
 	    void firePropertyChange(sal_Int32 nHandle, const ::com::sun::star::uno::Any& aNewValue, const ::com::sun::star::uno::Any& aOldValue);
 
     protected:
-        virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type> SAL_CALL getTypes() throw(::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type> SAL_CALL getTypes();
     };
 
     //==================================================================
@@ -105,4 +105,3 @@ namespace comphelper
 //.........................................................................
 
 #endif // _COMPHELPER_PROPERTY_STATE_HXX_
-

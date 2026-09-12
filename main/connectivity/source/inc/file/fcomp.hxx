@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -75,13 +75,13 @@ namespace connectivity
 			void	 setOrigColumns(const OFileColumns& rCols) { m_orgColumns = rCols; }
 			const OFileColumns getOrigColumns() const { return m_orgColumns; }
 		protected:
-			OOperand* execute_COMPARE(connectivity::OSQLParseNode* pPredicateNode) throw( ::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-			OOperand* execute_LIKE(connectivity::OSQLParseNode* pPredicateNode) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-			OOperand* execute_BETWEEN(connectivity::OSQLParseNode* pPredicateNode) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-			OOperand* execute_ISNULL(connectivity::OSQLParseNode* pPredicateNode) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-			OOperand* execute_Operand(connectivity::OSQLParseNode* pPredicateNode) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-			OOperand* execute_Fold(OSQLParseNode* pPredicateNode) throw( ::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
-			OOperand* executeFunction(OSQLParseNode* pPredicateNode) throw( ::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
+			OOperand* execute_COMPARE(connectivity::OSQLParseNode* pPredicateNode);
+			OOperand* execute_LIKE(connectivity::OSQLParseNode* pPredicateNode);
+			OOperand* execute_BETWEEN(connectivity::OSQLParseNode* pPredicateNode);
+			OOperand* execute_ISNULL(connectivity::OSQLParseNode* pPredicateNode);
+			OOperand* execute_Operand(connectivity::OSQLParseNode* pPredicateNode);
+			OOperand* execute_Fold(OSQLParseNode* pPredicateNode);
+			OOperand* executeFunction(OSQLParseNode* pPredicateNode);
 		};
 
 
@@ -98,19 +98,18 @@ namespace connectivity
 			sal_Bool	evaluate(OCodeList& rCodeList);
 			void		evaluateSelection(OCodeList& rCodeList,ORowSetValueDecoratorRef& _rVal);
 
-			inline sal_Bool start() 
-			{ 
+			inline sal_Bool start()
+			{
 				return evaluate(m_rCompiler->m_aCodeList);
 			}
 
-			inline void startSelection(ORowSetValueDecoratorRef& _rVal) 
-			{ 
+			inline void startSelection(ORowSetValueDecoratorRef& _rVal)
+			{
 				evaluateSelection(m_rCompiler->m_aCodeList,_rVal);
 			}
 
-			
+
 		};
 	}
 }
 #endif // _CONNECTIVITY_FILE_FCOMP_HXX_
-

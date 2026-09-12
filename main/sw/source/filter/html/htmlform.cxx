@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -179,7 +179,7 @@ const sal_Char * __FAR_DATA aEventOptionTable[] =
 	0
 };
 
-/*  */
+/* */
 
 class SwHTMLForm_Impl
 {
@@ -396,30 +396,25 @@ public:
 	// UNO Anbindung
 
 	// XImageConsumer
-	virtual void SAL_CALL init( sal_Int32 Width, sal_Int32 Height)
-		throw( uno::RuntimeException );
+	virtual void SAL_CALL init( sal_Int32 Width, sal_Int32 Height);
 	virtual void SAL_CALL setColorModel(
 			sal_Int16 BitCount, const uno::Sequence< sal_Int32 >& RGBAPal,
 			sal_Int32 RedMask, sal_Int32 GreenMask, sal_Int32 BlueMask,
-			sal_Int32 AlphaMask)
-		throw( uno::RuntimeException );
+			sal_Int32 AlphaMask);
 	virtual void SAL_CALL setPixelsByBytes(
 			sal_Int32 X, sal_Int32 Y, sal_Int32 Width, sal_Int32 Height,
 			const uno::Sequence< sal_Int8 >& ProducerData,
-			sal_Int32 Offset, sal_Int32 Scansize)
-		throw( uno::RuntimeException );
+			sal_Int32 Offset, sal_Int32 Scansize);
 	virtual void SAL_CALL setPixelsByLongs(
 			sal_Int32 X, sal_Int32 Y, sal_Int32 Width, sal_Int32 Height,
 			const uno::Sequence< sal_Int32 >& ProducerData,
-			sal_Int32 Offset, sal_Int32 Scansize)
-		throw( uno::RuntimeException );
+			sal_Int32 Offset, sal_Int32 Scansize);
 	virtual void SAL_CALL complete(
 			sal_Int32 Status,
-			const uno::Reference< awt::XImageProducer > & Producer)
-		throw( uno::RuntimeException );
+			const uno::Reference< awt::XImageProducer > & Producer);
 
 	// XEventListener
-    virtual void SAL_CALL disposing( const EventObject& Source ) throw ( uno::RuntimeException);
+    virtual void SAL_CALL disposing( const EventObject& Source );
 };
 
 SwHTMLImageWatcher::SwHTMLImageWatcher(
@@ -436,7 +431,7 @@ SwHTMLImageWatcher::SwHTMLImageWatcher(
 	ASSERT( xSrc.is(), "Kein XImageProducerSupplier" );
 
 	// Als Event-Listener am Shape anmelden, damit wir es beim dispose
-    // loslassen koînnen ...
+    // loslassen k√∂nnen ...
 	uno::Reference< XEventListener > xEvtLstnr = (XEventListener *)this;
 	uno::Reference< XComponent > xComp( xShape, UNO_QUERY );
 	xComp->addEventListener( xEvtLstnr );
@@ -470,7 +465,6 @@ void SwHTMLImageWatcher::clear()
 //------------------------------------------------------------------------------
 
 void SwHTMLImageWatcher::init( sal_Int32 Width, sal_Int32 Height )
-	throw( uno::RuntimeException )
 {
 	ASSERT( bSetWidth || bSetHeight,
 			"Breite oder Hoehe muss angepasst werden" );
@@ -552,7 +546,7 @@ void SwHTMLImageWatcher::init( sal_Int32 Width, sal_Int32 Height )
 						pLayout->GetBrowseWidthByTable( *pDoc );
 
                     if ( nBrowseWidth )
-                    {        
+                    {
 						pLayout->Resize( nBrowseWidth, sal_True, sal_True,
 										 bLastGrf ? HTMLTABLE_RESIZE_NOW
 												  : 500 );
@@ -571,14 +565,12 @@ void SwHTMLImageWatcher::init( sal_Int32 Width, sal_Int32 Height )
 void SwHTMLImageWatcher::setColorModel(
 		sal_Int16, const Sequence< sal_Int32 >&, sal_Int32, sal_Int32,
 		sal_Int32, sal_Int32 )
-	throw( uno::RuntimeException )
 {
 }
 
 void SwHTMLImageWatcher::setPixelsByBytes(
 		sal_Int32, sal_Int32, sal_Int32, sal_Int32,
 		const Sequence< sal_Int8 >&, sal_Int32, sal_Int32 )
-	throw( uno::RuntimeException )
 {
 }
 
@@ -586,14 +578,12 @@ void SwHTMLImageWatcher::setPixelsByBytes(
 void SwHTMLImageWatcher::setPixelsByLongs(
 		sal_Int32, sal_Int32, sal_Int32, sal_Int32,
 		const Sequence< sal_Int32 >&, sal_Int32, sal_Int32 )
-	throw( uno::RuntimeException )
 {
 }
 
 
 void SwHTMLImageWatcher::complete( sal_Int32 Status,
 		const uno::Reference< awt::XImageProducer >& )
-	throw( uno::RuntimeException )
 {
     if( awt::ImageStatus::IMAGESTATUS_ERROR == Status || awt::ImageStatus::IMAGESTATUS_ABORTED == Status )
 	{
@@ -604,7 +594,7 @@ void SwHTMLImageWatcher::complete( sal_Int32 Status,
 	}
 }
 
-void SwHTMLImageWatcher::disposing(const lang::EventObject& evt) throw ( uno::RuntimeException)
+void SwHTMLImageWatcher::disposing(const lang::EventObject& evt)
 {
 	uno::Reference< awt::XImageConsumer > xTmp;
 
@@ -724,7 +714,7 @@ void SwHTMLParser::SetControlSize( const uno::Reference< drawing::XShape >& rSha
                 SFX_ITEMSET_ARG( pDocSh->GetMedium()->GetItemSet(), pHiddenItem, SfxBoolItem, SID_HIDDEN, sal_False );
                 bRemoveHidden = ( pHiddenItem == NULL || !pHiddenItem->GetValue() );
             }
-                
+
 		    pTempViewFrame = SfxViewFrame::LoadHiddenDocument( *pDocSh, 0 );
 			CallStartAction();
 			pDoc->GetEditShell( &pVSh );
@@ -2654,4 +2644,3 @@ void SwHTMLParser::InsertSelectText()
 			rText += aToken;
 	}
 }
-

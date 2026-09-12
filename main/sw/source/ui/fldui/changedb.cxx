@@ -130,7 +130,7 @@ SwChangeDBDlg::SwChangeDBDlg(SwView& rVw) :
 }
 
 /*--------------------------------------------------------------------
-	Description: initialize database listboxes 
+	Description: initialize database listboxes
  --------------------------------------------------------------------*/
 
 
@@ -299,7 +299,7 @@ IMPL_LINK( SwChangeDBDlg, ButtonHdl, Button *, EMPTYARG )
 	sal_Bool bIsTable = sal_False;
 	aData.sDataSource = aAvailDBTLB.GetDBName(sTableName, sColumnName, &bIsTable);
 	aData.sCommand = sTableName;
-	aData.nCommandType = bIsTable ? 0 : 1;;
+	aData.nCommandType = bIsTable ? 0 : 1;
 	pSh->ChgDBData(aData);
 	ShowDBName(pSh->GetDBData());
 	EndDialog(RET_OK);

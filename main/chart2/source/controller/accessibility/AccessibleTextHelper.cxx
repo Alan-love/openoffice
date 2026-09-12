@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartcontroller.hxx"
 
 #include "AccessibleTextHelper.hxx"
 #include "DrawViewWrapper.hxx"
@@ -62,8 +62,6 @@ AccessibleTextHelper::~AccessibleTextHelper()
 
 // ____ XInitialization ____
 void SAL_CALL AccessibleTextHelper::initialize( const Sequence< uno::Any >& aArguments )
-    throw (uno::Exception,
-           uno::RuntimeException)
 {
     OUString aCID;
     Reference< XAccessible > xEventSource;
@@ -111,7 +109,6 @@ void SAL_CALL AccessibleTextHelper::initialize( const Sequence< uno::Any >& aArg
 
 // ____ XAccessibleContext ____
 ::sal_Int32 SAL_CALL AccessibleTextHelper::getAccessibleChildCount()
-    throw (uno::RuntimeException)
 {
     if( m_pTextHelper )
     {
@@ -124,8 +121,6 @@ void SAL_CALL AccessibleTextHelper::initialize( const Sequence< uno::Any >& aArg
 }
 
 Reference< XAccessible > SAL_CALL AccessibleTextHelper::getAccessibleChild( ::sal_Int32 i )
-    throw (lang::IndexOutOfBoundsException,
-           uno::RuntimeException)
 {
     if( m_pTextHelper )
     {
@@ -138,57 +133,48 @@ Reference< XAccessible > SAL_CALL AccessibleTextHelper::getAccessibleChild( ::sa
 }
 
 Reference< XAccessible > SAL_CALL AccessibleTextHelper::getAccessibleParent()
-    throw (uno::RuntimeException)
 {
     OSL_ENSURE( false, "Not implemented in this helper" );
     return Reference< XAccessible >();
 }
 
 ::sal_Int32 SAL_CALL AccessibleTextHelper::getAccessibleIndexInParent()
-    throw (uno::RuntimeException)
 {
     OSL_ENSURE( false, "Not implemented in this helper" );
     return -1;
 }
 
 ::sal_Int16 SAL_CALL AccessibleTextHelper::getAccessibleRole()
-    throw (uno::RuntimeException)
 {
     OSL_ENSURE( false, "Not implemented in this helper" );
     return AccessibleRole::UNKNOWN;
 }
 
 OUString SAL_CALL AccessibleTextHelper::getAccessibleDescription()
-    throw (uno::RuntimeException)
 {
     OSL_ENSURE( false, "Not implemented in this helper" );
     return OUString();
 }
 
 OUString SAL_CALL AccessibleTextHelper::getAccessibleName()
-    throw (uno::RuntimeException)
 {
     OSL_ENSURE( false, "Not implemented in this helper" );
     return OUString();
 }
 
 Reference< XAccessibleRelationSet > SAL_CALL AccessibleTextHelper::getAccessibleRelationSet()
-    throw (uno::RuntimeException)
 {
     OSL_ENSURE( false, "Not implemented in this helper" );
     return Reference< XAccessibleRelationSet >();
 }
 
 Reference< XAccessibleStateSet > SAL_CALL AccessibleTextHelper::getAccessibleStateSet()
-    throw (uno::RuntimeException)
 {
     OSL_ENSURE( false, "Not implemented in this helper" );
     return Reference< XAccessibleStateSet >();
 }
 
 lang::Locale SAL_CALL AccessibleTextHelper::getLocale()
-    throw (IllegalAccessibleComponentStateException,
-           uno::RuntimeException)
 {
     OSL_ENSURE( false, "Not implemented in this helper" );
     return lang::Locale();

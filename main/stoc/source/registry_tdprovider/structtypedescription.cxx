@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -62,37 +62,33 @@ StructTypeDescription::~StructTypeDescription()
 {}
 
 css::uno::TypeClass StructTypeDescription::getTypeClass()
-    throw (css::uno::RuntimeException)
 {
     return m_base->getTypeClass();
 }
 
 rtl::OUString StructTypeDescription::getName()
-    throw (css::uno::RuntimeException)
 {
     return m_base->getName();
 }
 
 css::uno::Reference< css::reflection::XTypeDescription >
-StructTypeDescription::getBaseType() throw (css::uno::RuntimeException)
+StructTypeDescription::getBaseType()
 {
     return m_base->getBaseType();
 }
 
 css::uno::Sequence< css::uno::Reference< css::reflection::XTypeDescription > >
-StructTypeDescription::getMemberTypes() throw (css::uno::RuntimeException)
+StructTypeDescription::getMemberTypes()
 {
     return m_base->getMemberTypes();
 }
 
 css::uno::Sequence< rtl::OUString > StructTypeDescription::getMemberNames()
-    throw (css::uno::RuntimeException)
 {
     return m_base->getMemberNames();
 }
 
 css::uno::Sequence< rtl::OUString > StructTypeDescription::getTypeParameters()
-    throw (css::uno::RuntimeException)
 {
     try {
         typereg::Reader reader(
@@ -123,13 +119,13 @@ css::uno::Sequence< rtl::OUString > StructTypeDescription::getTypeParameters()
 }
 
 css::uno::Sequence< css::uno::Reference< css::reflection::XTypeDescription > >
-StructTypeDescription::getTypeArguments() throw (css::uno::RuntimeException)
+StructTypeDescription::getTypeArguments()
 {
     return css::uno::Sequence<
         css::uno::Reference< css::reflection::XTypeDescription > >();
 }
 
-sal_Bool StructTypeDescription::isPublished() throw (css::uno::RuntimeException)
+sal_Bool StructTypeDescription::isPublished()
 {
     return m_base->isPublished();
 }

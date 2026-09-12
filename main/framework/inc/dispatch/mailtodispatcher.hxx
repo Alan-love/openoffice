@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -110,27 +110,27 @@ class MailToDispatcher : // interfaces
         // XDispatchProvider
         virtual css::uno::Reference< css::frame::XDispatch > SAL_CALL                       queryDispatch  ( const css::util::URL&                                       aURL        ,
                                                                                                              const ::rtl::OUString&                                      sTarget     ,
-                                                                                                                   sal_Int32                                             nFlags      ) throw( css::uno::RuntimeException );
-        virtual css::uno::Sequence< css::uno::Reference< css::frame::XDispatch > > SAL_CALL queryDispatches( const css::uno::Sequence< css::frame::DispatchDescriptor >& lDescriptor ) throw( css::uno::RuntimeException );
+                                                                                                                   sal_Int32                                             nFlags      );
+        virtual css::uno::Sequence< css::uno::Reference< css::frame::XDispatch > > SAL_CALL queryDispatches( const css::uno::Sequence< css::frame::DispatchDescriptor >& lDescriptor );
 
         // XNotifyingDispatch
         virtual void SAL_CALL dispatchWithNotification( const css::util::URL&                                             aURL      ,
                                                         const css::uno::Sequence< css::beans::PropertyValue >&            lArguments,
-                                                        const css::uno::Reference< css::frame::XDispatchResultListener >& xListener ) throw( css::uno::RuntimeException );
+                                                        const css::uno::Reference< css::frame::XDispatchResultListener >& xListener );
 
         // XDispatch
         virtual void SAL_CALL dispatch            ( const css::util::URL&                                     aURL       ,
-                                                    const css::uno::Sequence< css::beans::PropertyValue >&    lArguments ) throw( css::uno::RuntimeException );
+                                                    const css::uno::Sequence< css::beans::PropertyValue >&    lArguments );
         virtual void SAL_CALL addStatusListener   ( const css::uno::Reference< css::frame::XStatusListener >& xListener  ,
-                                                    const css::util::URL&                                     aURL       ) throw( css::uno::RuntimeException );
+                                                    const css::util::URL&                                     aURL       );
         virtual void SAL_CALL removeStatusListener( const css::uno::Reference< css::frame::XStatusListener >& xListener  ,
-                                                    const css::util::URL&                                     aURL       ) throw( css::uno::RuntimeException );
+                                                    const css::util::URL&                                     aURL       );
 
     /* internal */
     private:
 
         sal_Bool implts_dispatch( const css::util::URL&                                  aURL       ,
-                                  const css::uno::Sequence< css::beans::PropertyValue >& lArguments ) throw( css::uno::RuntimeException );
+                                  const css::uno::Sequence< css::beans::PropertyValue >& lArguments );
 
 };      //  class MailToDispatcher
 

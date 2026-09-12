@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
@@ -59,18 +59,18 @@ namespace drawinglayer
             virtual ~XPrimitive2DRenderer();
 
             // XPrimitive2DRenderer
-            virtual uno::Reference< rendering::XBitmap > SAL_CALL rasterize( 
-                const uno::Sequence< uno::Reference< graphic::XPrimitive2D > >& Primitive2DSequence, 
-                const uno::Sequence< beans::PropertyValue >& aViewInformationSequence, 
-                ::sal_uInt32 DPI_X, 
-                ::sal_uInt32 DPI_Y, 
+            virtual uno::Reference< rendering::XBitmap > SAL_CALL rasterize(
+                const uno::Sequence< uno::Reference< graphic::XPrimitive2D > >& Primitive2DSequence,
+                const uno::Sequence< beans::PropertyValue >& aViewInformationSequence,
+                ::sal_uInt32 DPI_X,
+                ::sal_uInt32 DPI_Y,
                 const ::com::sun::star::geometry::RealRectangle2D& Range,
-                ::sal_uInt32 MaximumQuadraticPixels) throw (uno::RuntimeException);
+                ::sal_uInt32 MaximumQuadraticPixels);
 
             // XServiceInfo
-            virtual rtl::OUString SAL_CALL getImplementationName() throw(uno::RuntimeException);
-            virtual ::sal_Bool SAL_CALL supportsService(const rtl::OUString&) throw(uno::RuntimeException);
-            virtual uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames() throw(uno::RuntimeException);
+            virtual rtl::OUString SAL_CALL getImplementationName();
+            virtual ::sal_Bool SAL_CALL supportsService(const rtl::OUString&);
+            virtual uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames();
         };
 	} // end of namespace unorenderer
 } // end of namespace drawinglayer
@@ -108,7 +108,7 @@ namespace drawinglayer
 {
     namespace unorenderer
     {
-        XPrimitive2DRenderer::XPrimitive2DRenderer() 
+        XPrimitive2DRenderer::XPrimitive2DRenderer()
         {
         }
 
@@ -116,16 +116,16 @@ namespace drawinglayer
         {
         }
 
-        uno::Reference< rendering::XBitmap > XPrimitive2DRenderer::rasterize( 
-            const uno::Sequence< uno::Reference< graphic::XPrimitive2D > >& Primitive2DSequence, 
-            const uno::Sequence< beans::PropertyValue >& aViewInformationSequence, 
-            ::sal_uInt32 DPI_X, 
-            ::sal_uInt32 DPI_Y, 
+        uno::Reference< rendering::XBitmap > XPrimitive2DRenderer::rasterize(
+            const uno::Sequence< uno::Reference< graphic::XPrimitive2D > >& Primitive2DSequence,
+            const uno::Sequence< beans::PropertyValue >& aViewInformationSequence,
+            ::sal_uInt32 DPI_X,
+            ::sal_uInt32 DPI_Y,
             const ::com::sun::star::geometry::RealRectangle2D& Range,
-            ::sal_uInt32 MaximumQuadraticPixels) throw (uno::RuntimeException)
+            ::sal_uInt32 MaximumQuadraticPixels)
         {
             uno::Reference< rendering::XBitmap > XBitmap;
-            
+
             if(Primitive2DSequence.hasElements())
             {
                 const basegfx::B2DRange aRange(Range.X1, Range.Y1, Range.X2, Range.Y2);
@@ -158,7 +158,7 @@ namespace drawinglayer
                         basegfx::tools::createTranslateB2DHomMatrix(
                             -aRange.getMinX(),
                             -aRange.getMinY()));
-                    
+
                     aEmbedding.scale(
                         nDiscreteWidth / fWidth,
                         nDiscreteHeight / fHeight);
@@ -171,7 +171,7 @@ namespace drawinglayer
 
                     BitmapEx aBitmapEx(
                         tools::convertToBitmapEx(
-                            xEmbedSeq, 
+                            xEmbedSeq,
                             aViewInformation2D,
                             nDiscreteWidth,
                             nDiscreteHeight,
@@ -180,7 +180,7 @@ namespace drawinglayer
                     if(!aBitmapEx.IsEmpty())
                     {
                         const uno::Reference< rendering::XGraphicDevice > xGraphicDevice;
-                    
+
                         aBitmapEx.SetPrefMapMode(MapMode(MAP_100TH_MM));
                         aBitmapEx.SetPrefSize(Size(basegfx::fround(fWidth), basegfx::fround(fHeight)));
                         XBitmap = vcl::unotools::xBitmapFromBitmapEx(xGraphicDevice, aBitmapEx);
@@ -191,12 +191,12 @@ namespace drawinglayer
             return XBitmap;
         }
 
-        rtl::OUString SAL_CALL XPrimitive2DRenderer::getImplementationName() throw(uno::RuntimeException)
+        rtl::OUString SAL_CALL XPrimitive2DRenderer::getImplementationName()
         {
 	        return(XPrimitive2DRenderer_getImplementationName());
         }
 
-        sal_Bool SAL_CALL XPrimitive2DRenderer::supportsService(const rtl::OUString& rServiceName) throw(uno::RuntimeException)
+        sal_Bool SAL_CALL XPrimitive2DRenderer::supportsService(const rtl::OUString& rServiceName)
         {
 	        const uno::Sequence< rtl::OUString > aServices(XPrimitive2DRenderer_getSupportedServiceNames());
 
@@ -211,7 +211,7 @@ namespace drawinglayer
             return sal_False;
         }
 
-        uno::Sequence< rtl::OUString > SAL_CALL XPrimitive2DRenderer::getSupportedServiceNames() throw(uno::RuntimeException)
+        uno::Sequence< rtl::OUString > SAL_CALL XPrimitive2DRenderer::getSupportedServiceNames()
         {
 	        return XPrimitive2DRenderer_getSupportedServiceNames();
         }

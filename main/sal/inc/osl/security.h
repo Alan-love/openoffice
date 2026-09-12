@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -31,8 +31,8 @@ extern "C" {
 #endif
 
 typedef enum {
-	osl_Security_E_None,				
-	osl_Security_E_UserUnknown,			
+	osl_Security_E_None,
+	osl_Security_E_UserUnknown,
     osl_Security_E_WrongPassword,
     osl_Security_E_Unknown,
 	osl_Security_E_FORCE_EQUAL_SIZE = SAL_MAX_ENUM
@@ -70,8 +70,8 @@ oslSecurityError SAL_CALL osl_loginUser(
 	);
 
 /** Create a security handle for the denoted user.
-	Try to log in the user on the denoted file server. On success the homedir will be 
-	the maped drive on this server.
+	Try to log in the user on the denoted file server. On success the homedir will be
+	the mapped drive on this server.
 	@param strUserName [in] denotes the name of the user to logg in.
 	@param strPasswd [in] the password for this user.
 	@param strFileServer [in] denotes the file server on which the user is logged in.
@@ -88,9 +88,9 @@ oslSecurityError SAL_CALL osl_loginUserOnFileServer(
 	oslSecurity *pSecurity
 	);
 
-/** Query if the user who is denotes by this security has administrator rigths.
+/** Query if the user who is denotes by this security has administrator rights.
 	@param Security [in] the security handle for th user.
-	@return True, if the user has adminsitrator rights, otherwise false.
+	@return True, if the user has administrator rights, otherwise false.
 */
 sal_Bool SAL_CALL osl_isAdministrator(oslSecurity Security);
 
@@ -151,4 +151,3 @@ void SAL_CALL osl_unloadUserProfile(oslSecurity Security);
 #endif
 
 #endif	/* _OSL_SECURITY_H_ */
-

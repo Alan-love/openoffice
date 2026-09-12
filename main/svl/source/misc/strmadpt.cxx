@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -264,7 +264,6 @@ void SvOutputStreamOpenLockBytes::Terminate()
 // virtual
 uno::Any SAL_CALL SvLockBytesInputStream::queryInterface(uno::Type const &
 														     rType)
-	throw (uno::RuntimeException)
 {
 	uno::Any
 		aReturn(cppu::queryInterface(rType,
@@ -292,7 +291,6 @@ void SAL_CALL SvLockBytesInputStream::release() throw ()
 sal_Int32 SAL_CALL
 SvLockBytesInputStream::readBytes(uno::Sequence< sal_Int8 > & rData,
 								  sal_Int32 nBytesToRead)
-	throw (io::IOException, uno::RuntimeException)
 {
     OSL_ASSERT(m_nPosition >= 0);
 	if (!m_xLockBytes.Is())
@@ -332,7 +330,6 @@ SvLockBytesInputStream::readBytes(uno::Sequence< sal_Int8 > & rData,
 sal_Int32 SAL_CALL
 SvLockBytesInputStream::readSomeBytes(uno::Sequence< sal_Int8 > & rData,
 									  sal_Int32 nMaxBytesToRead)
-	throw (io::IOException, uno::RuntimeException)
 {
     OSL_ASSERT(m_nPosition >= 0);
 	if (!m_xLockBytes.Is())
@@ -365,7 +362,6 @@ SvLockBytesInputStream::readSomeBytes(uno::Sequence< sal_Int8 > & rData,
 //============================================================================
 // virtual
 void SAL_CALL SvLockBytesInputStream::skipBytes(sal_Int32 nBytesToSkip)
-	throw (io::IOException, uno::RuntimeException)
 {
 	if (!m_xLockBytes.Is())
 		throw io::NotConnectedException();
@@ -379,7 +375,6 @@ void SAL_CALL SvLockBytesInputStream::skipBytes(sal_Int32 nBytesToSkip)
 //============================================================================
 // virtual
 sal_Int32 SAL_CALL SvLockBytesInputStream::available()
-	throw (io::IOException, uno::RuntimeException)
 {
     OSL_ASSERT(m_nPosition >= 0);
 	if (!m_xLockBytes.Is())
@@ -398,7 +393,6 @@ sal_Int32 SAL_CALL SvLockBytesInputStream::available()
 //============================================================================
 // virtual
 void SAL_CALL SvLockBytesInputStream::closeInput()
-	throw (io::IOException, uno::RuntimeException)
 {
 	if (!m_xLockBytes.Is())
 		throw io::NotConnectedException();
@@ -408,8 +402,6 @@ void SAL_CALL SvLockBytesInputStream::closeInput()
 //============================================================================
 // virtual
 void SAL_CALL SvLockBytesInputStream::seek(sal_Int64 nLocation)
-	throw (lang::IllegalArgumentException, io::IOException,
-		   uno::RuntimeException)
 {
 	if (nLocation < 0)
 		throw lang::IllegalArgumentException();
@@ -421,7 +413,6 @@ void SAL_CALL SvLockBytesInputStream::seek(sal_Int64 nLocation)
 //============================================================================
 // virtual
 sal_Int64 SAL_CALL SvLockBytesInputStream::getPosition()
-	throw (io::IOException, uno::RuntimeException)
 {
 	if (!m_xLockBytes.Is())
 		throw io::NotConnectedException();
@@ -431,7 +422,6 @@ sal_Int64 SAL_CALL SvLockBytesInputStream::getPosition()
 //============================================================================
 // virtual
 sal_Int64 SAL_CALL SvLockBytesInputStream::getLength()
-	throw (io::IOException, uno::RuntimeException)
 {
 	if (!m_xLockBytes.Is())
 		throw io::NotConnectedException();
@@ -800,10 +790,10 @@ sal_uInt16 SvOutputStream::IsA() const
 bool SvDataPipe_Impl::remove(Page * pPage)
 {
 	if (
-        pPage != m_pFirstPage || 
+        pPage != m_pFirstPage ||
         m_pReadPage == m_pFirstPage ||
         (
-         !m_aMarks.empty() && 
+         !m_aMarks.empty() &&
          *m_aMarks.begin() < m_pFirstPage->m_nOffset + m_nPageSize
         )
        )
@@ -1038,4 +1028,3 @@ SvDataPipe_Impl::SeekResult SvDataPipe_Impl::setReadPosition(sal_uInt32
 		                       + (nPosition - m_pReadPage->m_nOffset);
 	return SEEK_OK;
 }
-

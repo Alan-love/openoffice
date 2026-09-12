@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_jdbc.hxx"
 
 #include "java/sql/JStatement.hxx"
 #include "java/sql/ResultSet.hxx"
@@ -124,7 +124,7 @@ void SAL_CALL OStatement_BASE2::release() throw()
 }
 
 // -------------------------------------------------------------------------
-Any SAL_CALL java_sql_Statement_Base::queryInterface( const Type & rType ) throw(RuntimeException)
+Any SAL_CALL java_sql_Statement_Base::queryInterface( const Type & rType )
 {
 	if ( m_pConnection && !m_pConnection->isAutoRetrievingEnabled() && rType == ::getCppuType( (const Reference< XGeneratedResultSet > *)0 ) )
 		return Any();
@@ -132,7 +132,7 @@ Any SAL_CALL java_sql_Statement_Base::queryInterface( const Type & rType ) throw
 	return aRet.hasValue() ? aRet : OPropertySetHelper::queryInterface(rType);
 }
 // -------------------------------------------------------------------------
-Sequence< Type > SAL_CALL java_sql_Statement_Base::getTypes(  ) throw(RuntimeException)
+Sequence< Type > SAL_CALL java_sql_Statement_Base::getTypes(  )
 {
 	::cppu::OTypeCollection aTypes(	::getCppuType( (const Reference< ::com::sun::star::beans::XMultiPropertySet > *)0 ),
 												::getCppuType( (const Reference< ::com::sun::star::beans::XFastPropertySet > *)0 ),
@@ -149,14 +149,14 @@ Sequence< Type > SAL_CALL java_sql_Statement_Base::getTypes(  ) throw(RuntimeExc
 	return ::comphelper::concatSequences(aTypes.getTypes(),aOldTypes);
 }
 // -----------------------------------------------------------------------------
-Reference< XResultSet > SAL_CALL java_sql_Statement_Base::getGeneratedValues(  ) throw (SQLException, RuntimeException)
+Reference< XResultSet > SAL_CALL java_sql_Statement_Base::getGeneratedValues(  )
 {
     m_aLogger.log( LogLevel::FINE, STR_LOG_GENERATED_VALUES );
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
 
 	jobject out(0);
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
 	createStatement(t.pEnv);
 	// temporaere Variable initialisieren
 	try
@@ -168,7 +168,7 @@ Reference< XResultSet > SAL_CALL java_sql_Statement_Base::getGeneratedValues(  )
     {
         // ignore
     }
-            
+
 	Reference< XResultSet > xRes;
 	if ( !out )
 	{
@@ -192,16 +192,16 @@ Reference< XResultSet > SAL_CALL java_sql_Statement_Base::getGeneratedValues(  )
 
 // -------------------------------------------------------------------------
 
-void SAL_CALL java_sql_Statement_Base::cancel(  ) throw(RuntimeException)
+void SAL_CALL java_sql_Statement_Base::cancel(  )
 {
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
 	createStatement(t.pEnv);
     static jmethodID mID(NULL);
     callVoidMethod("cancel",mID);
 }
 // -------------------------------------------------------------------------
 
-void SAL_CALL java_sql_Statement_Base::close(  ) throw(::com::sun::star::sdbc::SQLException, RuntimeException)
+void SAL_CALL java_sql_Statement_Base::close(  )
 {
 	{
 		::osl::MutexGuard aGuard( m_aMutex );
@@ -212,9 +212,9 @@ void SAL_CALL java_sql_Statement_Base::close(  ) throw(::com::sun::star::sdbc::S
 }
 // -------------------------------------------------------------------------
 
-void SAL_CALL java_sql_Statement::clearBatch(  ) throw(::com::sun::star::sdbc::SQLException, RuntimeException)
+void SAL_CALL java_sql_Statement::clearBatch(  )
 {
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
 	{
 
 		createStatement(t.pEnv);
@@ -224,14 +224,14 @@ void SAL_CALL java_sql_Statement::clearBatch(  ) throw(::com::sun::star::sdbc::S
 }
 // -------------------------------------------------------------------------
 
-sal_Bool SAL_CALL java_sql_Statement_Base::execute( const ::rtl::OUString& sql ) throw(SQLException, RuntimeException)
+sal_Bool SAL_CALL java_sql_Statement_Base::execute( const ::rtl::OUString& sql )
 {
     m_aLogger.log( LogLevel::FINE, STR_LOG_EXECUTE_STATEMENT, sql );
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
 
 	jboolean out(sal_False);
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
 	{
 		createStatement(t.pEnv);
 		m_sSqlStatement = sql;
@@ -258,15 +258,15 @@ sal_Bool SAL_CALL java_sql_Statement_Base::execute( const ::rtl::OUString& sql )
 }
 // -------------------------------------------------------------------------
 
-Reference< XResultSet > SAL_CALL java_sql_Statement_Base::executeQuery( const ::rtl::OUString& sql ) throw(SQLException, RuntimeException)
+Reference< XResultSet > SAL_CALL java_sql_Statement_Base::executeQuery( const ::rtl::OUString& sql )
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
     m_aLogger.log( LogLevel::FINE, STR_LOG_EXECUTE_QUERY, sql );
 
     jobject out(0);
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
-	
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
+
 	{
 		createStatement(t.pEnv);
 		m_sSqlStatement = sql;
@@ -293,7 +293,7 @@ Reference< XResultSet > SAL_CALL java_sql_Statement_Base::executeQuery( const ::
     return out==0 ? 0 : new java_sql_ResultSet( t.pEnv, out, m_aLogger, *m_pConnection,this );
 }
 // -------------------------------------------------------------------------
-Reference< XConnection > SAL_CALL java_sql_Statement_Base::getConnection(  ) throw(SQLException, RuntimeException)
+Reference< XConnection > SAL_CALL java_sql_Statement_Base::getConnection(  )
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
@@ -301,18 +301,18 @@ Reference< XConnection > SAL_CALL java_sql_Statement_Base::getConnection(  ) thr
 }
 // -------------------------------------------------------------------------
 
-Any SAL_CALL java_sql_Statement::queryInterface( const Type & rType ) throw(RuntimeException)
+Any SAL_CALL java_sql_Statement::queryInterface( const Type & rType )
 {
 	Any aRet = ::cppu::queryInterface(rType,static_cast< XBatchExecution*> (this));
 	return aRet.hasValue() ? aRet : java_sql_Statement_Base::queryInterface(rType);
 }
 // -------------------------------------------------------------------------
 
-void SAL_CALL java_sql_Statement::addBatch( const ::rtl::OUString& sql ) throw(::com::sun::star::sdbc::SQLException, RuntimeException)
+void SAL_CALL java_sql_Statement::addBatch( const ::rtl::OUString& sql )
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
 	{
 		createStatement(t.pEnv);
         static jmethodID mID(NULL);
@@ -321,12 +321,12 @@ void SAL_CALL java_sql_Statement::addBatch( const ::rtl::OUString& sql ) throw(:
 }
 // -------------------------------------------------------------------------
 
-Sequence< sal_Int32 > SAL_CALL java_sql_Statement::executeBatch(  ) throw(::com::sun::star::sdbc::SQLException, RuntimeException)
+Sequence< sal_Int32 > SAL_CALL java_sql_Statement::executeBatch(  )
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
 	Sequence< sal_Int32 > aSeq;
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
     createStatement(t.pEnv);
     static jmethodID mID(NULL);
     jintArray out = (jintArray)callObjectMethod(t.pEnv,"executeBatch","()[I", mID);
@@ -342,13 +342,13 @@ Sequence< sal_Int32 > SAL_CALL java_sql_Statement::executeBatch(  ) throw(::com:
 // -------------------------------------------------------------------------
 
 
-sal_Int32 SAL_CALL java_sql_Statement_Base::executeUpdate( const ::rtl::OUString& sql ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL java_sql_Statement_Base::executeUpdate( const ::rtl::OUString& sql )
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
     m_aLogger.log( LogLevel::FINE, STR_LOG_EXECUTE_UPDATE, sql );
 
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
 	createStatement(t.pEnv);
 	m_sSqlStatement = sql;
     static jmethodID mID(NULL);
@@ -356,21 +356,21 @@ sal_Int32 SAL_CALL java_sql_Statement_Base::executeUpdate( const ::rtl::OUString
 }
 // -------------------------------------------------------------------------
 
-Reference< ::com::sun::star::sdbc::XResultSet > SAL_CALL java_sql_Statement_Base::getResultSet(  ) throw(::com::sun::star::sdbc::SQLException, RuntimeException)
+Reference< ::com::sun::star::sdbc::XResultSet > SAL_CALL java_sql_Statement_Base::getResultSet(  )
 {
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
 	createStatement(t.pEnv);
     static jmethodID mID(NULL);
     jobject out = callResultSetMethod(t.env(),"getResultSet",mID);
-	
+
 	// ACHTUNG: der Aufrufer wird Eigentuemer des zurueckgelieferten Zeigers !!!
 	return out==0 ? 0 : new java_sql_ResultSet( t.pEnv, out, m_aLogger, *m_pConnection,this );
 }
 // -------------------------------------------------------------------------
 
-sal_Int32 SAL_CALL java_sql_Statement_Base::getUpdateCount(  ) throw(::com::sun::star::sdbc::SQLException, RuntimeException)
+sal_Int32 SAL_CALL java_sql_Statement_Base::getUpdateCount(  )
 {
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
 	createStatement(t.pEnv);
     static jmethodID mID(NULL);
 	sal_Int32 out = callIntMethod("getUpdateCount",mID);
@@ -379,7 +379,7 @@ sal_Int32 SAL_CALL java_sql_Statement_Base::getUpdateCount(  ) throw(::com::sun:
 }
 // -------------------------------------------------------------------------
 
-sal_Bool SAL_CALL java_sql_Statement_Base::getMoreResults(  ) throw(::com::sun::star::sdbc::SQLException, RuntimeException)
+sal_Bool SAL_CALL java_sql_Statement_Base::getMoreResults(  )
 {
     static jmethodID mID(NULL);
     return callBooleanMethod( "getMoreResults", mID );
@@ -387,7 +387,7 @@ sal_Bool SAL_CALL java_sql_Statement_Base::getMoreResults(  ) throw(::com::sun::
 // -------------------------------------------------------------------------
 
 // -------------------------------------------------------------------------
-Any SAL_CALL java_sql_Statement_Base::getWarnings(  ) throw(::com::sun::star::sdbc::SQLException, RuntimeException)
+Any SAL_CALL java_sql_Statement_Base::getWarnings(  )
 {
 	SDBThreadAttach t;
     createStatement(t.pEnv);
@@ -405,12 +405,12 @@ Any SAL_CALL java_sql_Statement_Base::getWarnings(  ) throw(::com::sun::star::sd
 	return Any();
 }
 // -------------------------------------------------------------------------
-void SAL_CALL java_sql_Statement_Base::clearWarnings(  ) throw(::com::sun::star::sdbc::SQLException, RuntimeException)
+void SAL_CALL java_sql_Statement_Base::clearWarnings(  )
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
 	SDBThreadAttach t;
-	
+
 	{
 		createStatement(t.pEnv);
         static jmethodID mID(NULL);
@@ -418,26 +418,26 @@ void SAL_CALL java_sql_Statement_Base::clearWarnings(  ) throw(::com::sun::star:
 	}
 }
 //------------------------------------------------------------------------------
-sal_Int32 java_sql_Statement_Base::getQueryTimeOut()  throw(SQLException, RuntimeException)
+sal_Int32 java_sql_Statement_Base::getQueryTimeOut()
 {
     static jmethodID mID(NULL);
     return impl_getProperty("getQueryTimeOut",mID);
 }
 //------------------------------------------------------------------------------
-sal_Int32 java_sql_Statement_Base::getMaxRows() throw(SQLException, RuntimeException)
+sal_Int32 java_sql_Statement_Base::getMaxRows()
 {
     static jmethodID mID(NULL);
     return impl_getProperty("getMaxRows",mID);
 }
 //------------------------------------------------------------------------------
-sal_Int32 java_sql_Statement_Base::getResultSetConcurrency() throw(SQLException, RuntimeException)
+sal_Int32 java_sql_Statement_Base::getResultSetConcurrency()
 {
     static jmethodID mID(NULL);
     return impl_getProperty("getResultSetConcurrency",mID,m_nResultSetConcurrency);
 }
 
 //------------------------------------------------------------------------------
-sal_Int32 java_sql_Statement_Base::getResultSetType() throw(SQLException, RuntimeException)
+sal_Int32 java_sql_Statement_Base::getResultSetType()
 {
     static jmethodID mID(NULL);
     return impl_getProperty("getResultSetType",mID,m_nResultSetType);
@@ -454,35 +454,35 @@ sal_Int32 java_sql_Statement_Base::impl_getProperty(const char* _pMethodName, jm
 //------------------------------------------------------------------------------
 sal_Int32 java_sql_Statement_Base::impl_getProperty(const char* _pMethodName, jmethodID& _inout_MethodID)
 {
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
 	createStatement(t.pEnv);
     return callIntMethod(_pMethodName,_inout_MethodID,true);
 }
 
 //------------------------------------------------------------------------------
-sal_Int32 java_sql_Statement_Base::getFetchDirection() throw(SQLException, RuntimeException)
+sal_Int32 java_sql_Statement_Base::getFetchDirection()
 {
     static jmethodID mID(NULL);
     return impl_getProperty("getFetchDirection",mID);
 }
 //------------------------------------------------------------------------------
-sal_Int32 java_sql_Statement_Base::getFetchSize() throw(SQLException, RuntimeException)
+sal_Int32 java_sql_Statement_Base::getFetchSize()
 {
     static jmethodID mID(NULL);
     return impl_getProperty("getFetchSize",mID);
 }
 //------------------------------------------------------------------------------
-sal_Int32 java_sql_Statement_Base::getMaxFieldSize() throw(SQLException, RuntimeException)
+sal_Int32 java_sql_Statement_Base::getMaxFieldSize()
 {
     static jmethodID mID(NULL);
     return impl_getProperty("getMaxFieldSize",mID);
 }
 //------------------------------------------------------------------------------
-::rtl::OUString java_sql_Statement_Base::getCursorName() throw(SQLException, RuntimeException)
+::rtl::OUString java_sql_Statement_Base::getCursorName()
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
     createStatement(t.pEnv);
     static jmethodID mID(NULL);
     try
@@ -495,24 +495,24 @@ sal_Int32 java_sql_Statement_Base::getMaxFieldSize() throw(SQLException, Runtime
     return ::rtl::OUString();
 }
 //------------------------------------------------------------------------------
-void java_sql_Statement_Base::setQueryTimeOut(sal_Int32 _par0) throw(SQLException, RuntimeException)
+void java_sql_Statement_Base::setQueryTimeOut(sal_Int32 _par0)
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
     createStatement(t.pEnv);
     static jmethodID mID(NULL);
     callVoidMethodWithIntArg("setQueryTimeOut",mID,_par0,true);
 }
 
 //------------------------------------------------------------------------------
-void java_sql_Statement_Base::setEscapeProcessing(sal_Bool _par0) throw(SQLException, RuntimeException)
+void java_sql_Statement_Base::setEscapeProcessing(sal_Bool _par0)
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
     m_aLogger.log( LogLevel::FINE, STR_LOG_SET_ESCAPE_PROCESSING, _par0 );
 
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
     m_bEscapeProcessing = _par0;
     createStatement( t.pEnv );
     static jmethodID mID(NULL);
@@ -520,17 +520,17 @@ void java_sql_Statement_Base::setEscapeProcessing(sal_Bool _par0) throw(SQLExcep
 }
 
 //------------------------------------------------------------------------------
-void java_sql_Statement_Base::setMaxRows(sal_Int32 _par0) throw(SQLException, RuntimeException)
+void java_sql_Statement_Base::setMaxRows(sal_Int32 _par0)
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
     createStatement(t.pEnv);
     static jmethodID mID(NULL);
     callVoidMethodWithIntArg("setMaxRows",mID,_par0,true);
 }
 //------------------------------------------------------------------------------
-void java_sql_Statement_Base::setResultSetConcurrency(sal_Int32 _par0) throw(SQLException, RuntimeException)
+void java_sql_Statement_Base::setResultSetConcurrency(sal_Int32 _par0)
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
@@ -540,7 +540,7 @@ void java_sql_Statement_Base::setResultSetConcurrency(sal_Int32 _par0) throw(SQL
     clearObject();
 }
 //------------------------------------------------------------------------------
-void java_sql_Statement_Base::setResultSetType(sal_Int32 _par0) throw(SQLException, RuntimeException)
+void java_sql_Statement_Base::setResultSetType(sal_Int32 _par0)
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
@@ -550,44 +550,44 @@ void java_sql_Statement_Base::setResultSetType(sal_Int32 _par0) throw(SQLExcepti
     clearObject();
 }
 //------------------------------------------------------------------------------
-void java_sql_Statement_Base::setFetchDirection(sal_Int32 _par0) throw(SQLException, RuntimeException)
+void java_sql_Statement_Base::setFetchDirection(sal_Int32 _par0)
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
     m_aLogger.log( LogLevel::FINER, STR_LOG_FETCH_DIRECTION, (sal_Int32)_par0 );
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
     createStatement(t.pEnv);
     static jmethodID mID(NULL);
     callVoidMethodWithIntArg("setFetchDirection",mID,_par0,true);
 }
 //------------------------------------------------------------------------------
-void java_sql_Statement_Base::setFetchSize(sal_Int32 _par0) throw(SQLException, RuntimeException)
+void java_sql_Statement_Base::setFetchSize(sal_Int32 _par0)
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
     m_aLogger.log( LogLevel::FINER, STR_LOG_FETCH_SIZE, (sal_Int32)_par0 );
 
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
     createStatement(t.pEnv);
     static jmethodID mID(NULL);
     callVoidMethodWithIntArg("setFetchSize",mID,_par0,true);
 }
 //------------------------------------------------------------------------------
-void java_sql_Statement_Base::setMaxFieldSize(sal_Int32 _par0) throw(SQLException, RuntimeException)
+void java_sql_Statement_Base::setMaxFieldSize(sal_Int32 _par0)
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
     createStatement(t.pEnv);
     static jmethodID mID(NULL);
     callVoidMethodWithIntArg("setMaxFieldSize",mID,_par0,true);
 }
 //------------------------------------------------------------------------------
-void java_sql_Statement_Base::setCursorName(const ::rtl::OUString &_par0) throw(SQLException, RuntimeException)
+void java_sql_Statement_Base::setCursorName(const ::rtl::OUString &_par0)
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Statement_BASE::rBHelper.bDisposed);
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
 	{
 		createStatement(t.pEnv);
         static jmethodID mID(NULL);
@@ -627,7 +627,6 @@ sal_Bool java_sql_Statement_Base::convertFastPropertyValue(
 							Any & rOldValue,
 							sal_Int32 nHandle,
 							const Any& rValue )
-								throw (::com::sun::star::lang::IllegalArgumentException)
 {
 	switch(nHandle)
 	{
@@ -661,7 +660,6 @@ void java_sql_Statement_Base::setFastPropertyValue_NoBroadcast(
 								sal_Int32 nHandle,
 								const Any& rValue
 												 )
-												 throw (Exception)
 {
 	switch(nHandle)
 	{
@@ -816,10 +814,8 @@ void SAL_CALL java_sql_Statement::release() throw()
 	OStatement_BASE2::release();
 }
 // -----------------------------------------------------------------------------
-::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL java_sql_Statement_Base::getPropertySetInfo(  ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL java_sql_Statement_Base::getPropertySetInfo(  )
 {
 	return ::cppu::OPropertySetHelper::createPropertySetInfo(getInfoHelper());
 }
 // -----------------------------------------------------------------------------
-
-

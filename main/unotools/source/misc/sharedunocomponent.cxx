@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -87,7 +87,7 @@ namespace utl
         CloseableComponentImpl( const Reference< XInterface >& _rxComponent );
 
         /** closes the component
-        
+
             @nofail
         */
         void    nf_closeComponent();
@@ -96,11 +96,11 @@ namespace utl
         virtual ~CloseableComponentImpl();
 
         // XCloseListener overridables
-        virtual void SAL_CALL queryClosing( const EventObject& Source, ::sal_Bool GetsOwnership ) throw (CloseVetoException, RuntimeException);
-        virtual void SAL_CALL notifyClosing( const EventObject& Source ) throw (RuntimeException);
+        virtual void SAL_CALL queryClosing( const EventObject& Source, ::sal_Bool GetsOwnership );
+        virtual void SAL_CALL notifyClosing( const EventObject& Source );
 
         // XEventListener overridables
-        virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source ) throw (::com::sun::star::uno::RuntimeException);
+        virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source );
 
     private:
         /** starts or stops being a CloseListener at the component
@@ -183,20 +183,20 @@ namespace utl
     #ifdef DBG_UTIL
     Source
     #endif
-    , ::sal_Bool /*GetsOwnership*/ ) throw (CloseVetoException, RuntimeException)
+    , ::sal_Bool /*GetsOwnership*/ )
     {
         // as long as we live, somebody wants to keep the object alive. So, veto the
         // closing
         DBG_ASSERT( Source.Source == m_xCloseable, "CloseableComponentImpl::queryClosing: where did this come from?" );
         throw CloseVetoException();
     }
-    
+
     //--------------------------------------------------------------------
     void SAL_CALL CloseableComponentImpl::notifyClosing( const EventObject&
     #ifdef DBG_UTIL
     Source
     #endif
-    ) throw (RuntimeException)
+    )
     {
         DBG_ASSERT( Source.Source == m_xCloseable, "CloseableComponentImpl::notifyClosing: where did this come from?" );
 
@@ -211,7 +211,7 @@ namespace utl
     #ifdef DBG_UTIL
     Source
     #endif
-    ) throw (RuntimeException)
+    )
     {
         DBG_ASSERT( Source.Source == m_xCloseable, "CloseableComponentImpl::disposing: where did this come from?" );
         DBG_ERROR( "CloseableComponentImpl::disposing: unreachable!" );

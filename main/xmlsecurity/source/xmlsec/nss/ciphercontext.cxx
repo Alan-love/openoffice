@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,19 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
- 
+
 
 #include <precompiled_xmlsecurity.hxx>
 
@@ -95,7 +95,6 @@ void OCipherContext::Dispose()
 }
 
 uno::Sequence< ::sal_Int8 > SAL_CALL OCipherContext::convertWithCipherContext( const uno::Sequence< ::sal_Int8 >& aData )
-    throw ( lang::IllegalArgumentException, lang::DisposedException, uno::RuntimeException)
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 
@@ -176,7 +175,6 @@ uno::Sequence< ::sal_Int8 > SAL_CALL OCipherContext::convertWithCipherContext( c
 }
 
 uno::Sequence< ::sal_Int8 > SAL_CALL OCipherContext::finalizeCipherContextAndDispose()
-    throw (lang::DisposedException, uno::RuntimeException)
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 
@@ -196,7 +194,7 @@ uno::Sequence< ::sal_Int8 > SAL_CALL OCipherContext::finalizeCipherContextAndDis
 
     if ( m_bW3CPadding && m_bEncryption )
     {
-        // in this case the last block should be smaller than standtard block
+        // in this case the last block should be smaller than standard block
         // it will be increased with the padding
         OSL_ENSURE( m_aLastBlock.getLength() < m_nBlockSize, "Unexpected size of cashed incomplete last block!" );
 
@@ -210,7 +208,7 @@ uno::Sequence< ::sal_Int8 > SAL_CALL OCipherContext::finalizeCipherContextAndDis
             TimeValue aTime;
             osl_getSystemTime( &aTime );
             rtlRandomPool aRandomPool = rtl_random_createPool();
-            rtl_random_addBytes( aRandomPool, &aTime, 8 ); 
+            rtl_random_addBytes( aRandomPool, &aTime, 8 );
             rtl_random_getBytes( aRandomPool, m_aLastBlock.getArray() + nOldLastBlockLen, nPaddingSize - 1 );
             rtl_random_destroyPool ( aRandomPool );
         }
@@ -251,7 +249,7 @@ uno::Sequence< ::sal_Int8 > SAL_CALL OCipherContext::finalizeCipherContextAndDis
     if ( m_bW3CPadding && !m_bEncryption )
     {
         // W3CPadding handling for decryption
-        // aResult should have anough data, since we let m_aLastBlock be big enough in case of decryption
+        // aResult should have enough data, since we let m_aLastBlock be big enough in case of decryption
         OSL_ENSURE( aResult.getLength() >= m_nBlockSize, "Not enough data to handle the padding!" );
 
         sal_Int8 nBytesToRemove = aResult[aResult.getLength() - 1];
@@ -269,4 +267,3 @@ uno::Sequence< ::sal_Int8 > SAL_CALL OCipherContext::finalizeCipherContextAndDis
 
     return aResult;
 }
-

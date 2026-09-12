@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -137,28 +137,23 @@ class LoadEnvListener : private ThreadHelpBase
 
         //_______________________________________
         // frame.XLoadEventListener
-        virtual void SAL_CALL loadFinished(const css::uno::Reference< css::frame::XFrameLoader >& xLoader)
-            throw(css::uno::RuntimeException);
+        virtual void SAL_CALL loadFinished(const css::uno::Reference< css::frame::XFrameLoader >& xLoader);
 
-        virtual void SAL_CALL loadCancelled(const css::uno::Reference< css::frame::XFrameLoader >& xLoader)
-            throw(css::uno::RuntimeException);
+        virtual void SAL_CALL loadCancelled(const css::uno::Reference< css::frame::XFrameLoader >& xLoader);
 
         //_______________________________________
         // frame.XDispatchResultListener
-        virtual void SAL_CALL dispatchFinished(const css::frame::DispatchResultEvent& aEvent)
-            throw(css::uno::RuntimeException);
+        virtual void SAL_CALL dispatchFinished(const css::frame::DispatchResultEvent& aEvent);
 
         //_______________________________________
         // lang.XEventListener
-        virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent)
-            throw(css::uno::RuntimeException);
+        virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent);
 };
 
 /*-----------------------------------------------
     14.10.2003 13:43
 -----------------------------------------------*/
 LoadEnv::LoadEnv(const css::uno::Reference< css::lang::XMultiServiceFactory >& xSMGR)
-    throw(LoadEnvException, css::uno::RuntimeException)
     : ThreadHelpBase(     )
     , m_xSMGR       (xSMGR)
     , m_pCheck      (this )
@@ -183,11 +178,8 @@ css::uno::Reference< css::lang::XComponent > LoadEnv::loadComponentFromURL(const
                                                                            const ::rtl::OUString&                                        sTarget,
                                                                                  sal_Int32                                               nFlags ,
                                                                            const css::uno::Sequence< css::beans::PropertyValue >&        lArgs  )
-    throw(css::lang::IllegalArgumentException,
-          css::io::IOException               ,
-          css::uno::RuntimeException         )
 {
-#ifdef WNT	
+#ifdef WNT
 	CEnableAccessInterface e;
 #endif
     css::uno::Reference< css::lang::XComponent > xComponent;
@@ -259,7 +251,6 @@ void LoadEnv::initializeLoading(const ::rtl::OUString&                          
                                       sal_Int32                                                  nSearchFlags    ,
                                       EFeature                                                   eFeature        , // => use default ...
                                       EContentType                                               eContentType    ) // => use default ...
-    throw(LoadEnvException, css::uno::RuntimeException)
 {
     // SAFE -> ----------------------------------
     WriteGuard aWriteLock(m_aLock);
@@ -390,7 +381,6 @@ void LoadEnv::initializeUIDefaults( const css::uno::Reference< css::lang::XMulti
     15.08.2003 08:16
 -----------------------------------------------*/
 void LoadEnv::startLoading()
-    throw(LoadEnvException, css::uno::RuntimeException)
 {
     // SAFE ->
     ReadGuard aReadLock(m_aLock);
@@ -445,7 +435,6 @@ void LoadEnv::startLoading()
         Current implementation counts yield calls only ...
 -----------------------------------------------*/
 sal_Bool LoadEnv::waitWhileLoading(sal_uInt32 nTimeout)
-    throw(LoadEnvException, css::uno::RuntimeException)
 {
     // Because its not a good idea to block the main thread
     // (and we can't be sure that we are currently not used inside the
@@ -484,7 +473,6 @@ sal_Bool LoadEnv::waitWhileLoading(sal_uInt32 nTimeout)
     20.08.2003 10:00
 -----------------------------------------------*/
 void LoadEnv::cancelLoading()
-    throw(LoadEnvException, css::uno::RuntimeException)
 {
     // PARTIAL(!) SAFE -> ------------------------------
     ReadGuard aReadLock(m_aLock);
@@ -562,7 +550,6 @@ css::uno::Reference< css::lang::XComponent > LoadEnv::getTargetComponent() const
     15.08.2003 11:15
 -----------------------------------------------*/
 void SAL_CALL LoadEnvListener::loadFinished(const css::uno::Reference< css::frame::XFrameLoader >&)
-    throw(css::uno::RuntimeException)
 {
     // SAFE -> ----------------------------------
     WriteGuard aWriteLock(m_aLock);
@@ -579,7 +566,6 @@ void SAL_CALL LoadEnvListener::loadFinished(const css::uno::Reference< css::fram
     14.10.2003 12:23
 -----------------------------------------------*/
 void SAL_CALL LoadEnvListener::loadCancelled(const css::uno::Reference< css::frame::XFrameLoader >&)
-    throw(css::uno::RuntimeException)
 {
     // SAFE -> ----------------------------------
     WriteGuard aWriteLock(m_aLock);
@@ -596,7 +582,6 @@ void SAL_CALL LoadEnvListener::loadCancelled(const css::uno::Reference< css::fra
     14.10.2003 12:23
 -----------------------------------------------*/
 void SAL_CALL LoadEnvListener::dispatchFinished(const css::frame::DispatchResultEvent& aEvent)
-    throw(css::uno::RuntimeException)
 {
     // SAFE -> ----------------------------------
     WriteGuard aWriteLock(m_aLock);
@@ -628,7 +613,6 @@ void SAL_CALL LoadEnvListener::dispatchFinished(const css::frame::DispatchResult
     14.10.2003 12:24
 -----------------------------------------------*/
 void SAL_CALL LoadEnvListener::disposing(const css::lang::EventObject&)
-    throw(css::uno::RuntimeException)
 {
     // SAFE -> ----------------------------------
     WriteGuard aWriteLock(m_aLock);
@@ -741,7 +725,7 @@ LoadEnv::EContentType LoadEnv::classifyContent(const ::rtl::OUString&           
         return E_UNSUPPORTED_CONTENT;
     }
 
-    // following operatons can work on an internal type name only :-(
+    // following operations can work on an internal type name only :-(
     css::uno::Reference< css::lang::XMultiServiceFactory > xSMGR = ::utl::getProcessServiceFactory();
     css::uno::Reference< css::document::XTypeDetection > xDetect(xSMGR->createInstance(SERVICENAME_TYPEDETECTION), css::uno::UNO_QUERY);
 
@@ -823,7 +807,6 @@ LoadEnv::EContentType LoadEnv::classifyContent(const ::rtl::OUString&           
     03.11.2003 09:31
 -----------------------------------------------*/
 void LoadEnv::impl_detectTypeAndFilter()
-    throw(LoadEnvException, css::uno::RuntimeException)
 {
     static ::rtl::OUString TYPEPROP_PREFERREDFILTER = ::rtl::OUString::createFromAscii("PreferredFilter");
     static ::rtl::OUString FILTERPROP_FLAGS         = ::rtl::OUString::createFromAscii("Flags"          );
@@ -930,7 +913,6 @@ void LoadEnv::impl_detectTypeAndFilter()
     15.08.2003 09:38
 -----------------------------------------------*/
 sal_Bool LoadEnv::impl_handleContent()
-    throw(LoadEnvException, css::uno::RuntimeException)
 {
     // SAFE -> -----------------------------------
     ReadGuard aReadLock(m_aLock);
@@ -1078,7 +1060,6 @@ sal_Bool LoadEnv::impl_furtherDocsAllowed()
 
 //-----------------------------------------------
 sal_Bool LoadEnv::impl_loadContent()
-    throw(LoadEnvException, css::uno::RuntimeException)
 {
     // SAFE -> -----------------------------------
     WriteGuard aWriteLock(m_aLock);
@@ -1323,7 +1304,6 @@ void LoadEnv::impl_jumpToMark(const css::uno::Reference< css::frame::XFrame >& x
     31.07.2003 09:02
 -----------------------------------------------*/
 css::uno::Reference< css::frame::XFrame > LoadEnv::impl_searchAlreadyLoaded()
-    throw(LoadEnvException, css::uno::RuntimeException)
 {
     // SAFE ->
     ReadGuard aReadLock(m_aLock);
@@ -1488,13 +1468,12 @@ sal_Bool LoadEnv::impl_isFrameAlreadyUsedForLoading(const css::uno::Reference< c
     30.03.2004 09:12
 -----------------------------------------------*/
 css::uno::Reference< css::frame::XFrame > LoadEnv::impl_searchRecycleTarget()
-    throw(LoadEnvException, css::uno::RuntimeException)
 {
     // SAFE -> ..................................
     ReadGuard aReadLock(m_aLock);
 
     // The special backing mode frame will be recycled by definition!
-    // It does'nt matter if somehwere whish to create a new view
+    // It doesn't matter if somewhere wishes to create a new view
     // or open a new untitled document ...
     // The only exception form that - hidden frames!
     if (m_lMediaDescriptor.getUnpackedValueOrDefault(::comphelper::MediaDescriptor::PROP_HIDDEN(), sal_False) == sal_True)
@@ -1622,7 +1601,6 @@ css::uno::Reference< css::frame::XFrame > LoadEnv::impl_searchRecycleTarget()
     15.08.2003 12:39
 -----------------------------------------------*/
 void LoadEnv::impl_reactForLoadingState()
-    throw(LoadEnvException, css::uno::RuntimeException)
 {
     /*TODO reset action locks */
 
@@ -1769,7 +1747,7 @@ void LoadEnv::impl_makeFrameWindowVisible(const css::uno::Reference< css::awt::X
         else
             pWindow->Show(sal_True, (bForceFrontAndFocus || bForceToFront) ? SHOW_FOREGROUNDTASK : 0 );
     }
-    
+
 /* #i19976#
     We tried to prevent a toFront() call in case the user putted the
     loading document into the background ..
@@ -1900,4 +1878,3 @@ void LoadEnv::impl_applyPersistentWindowState(const css::uno::Reference< css::aw
 }
 
 } // namespace framework
-

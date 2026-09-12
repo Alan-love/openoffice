@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -101,10 +101,10 @@ class SwDBTreeList_Impl : public cppu::WeakImplHelper1 < XContainerListener >
             pWrtSh(pShell) {}
         ~SwDBTreeList_Impl();
 
-    virtual void SAL_CALL elementInserted( const ContainerEvent& Event ) throw (RuntimeException);
-    virtual void SAL_CALL elementRemoved( const ContainerEvent& Event ) throw (RuntimeException);
-    virtual void SAL_CALL elementReplaced( const ContainerEvent& Event ) throw (RuntimeException);
-    virtual void SAL_CALL disposing( const EventObject& Source ) throw (RuntimeException);
+    virtual void SAL_CALL elementInserted( const ContainerEvent& Event );
+    virtual void SAL_CALL elementRemoved( const ContainerEvent& Event );
+    virtual void SAL_CALL elementReplaced( const ContainerEvent& Event );
+    virtual void SAL_CALL disposing( const EventObject& Source );
 
     sal_Bool                        HasContext();
     SwWrtShell*                 GetWrtShell() { return pWrtSh;}
@@ -132,14 +132,14 @@ SwDBTreeList_Impl::~SwDBTreeList_Impl()
 /* -----------------------------17.07.01 13:24--------------------------------
 
  ---------------------------------------------------------------------------*/
-void SwDBTreeList_Impl::elementInserted( const ContainerEvent&  ) throw (RuntimeException)
+void SwDBTreeList_Impl::elementInserted( const ContainerEvent&  )
 {
     // information not needed
 }
 /* -----------------------------17.07.01 13:24--------------------------------
 
  ---------------------------------------------------------------------------*/
-void SwDBTreeList_Impl::elementRemoved( const ContainerEvent& rEvent ) throw (RuntimeException)
+void SwDBTreeList_Impl::elementRemoved( const ContainerEvent& rEvent )
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
     ::rtl::OUString sSource;
@@ -161,14 +161,14 @@ void SwDBTreeList_Impl::elementRemoved( const ContainerEvent& rEvent ) throw (Ru
 /* -----------------------------17.07.01 13:24--------------------------------
 
  ---------------------------------------------------------------------------*/
-void SwDBTreeList_Impl::disposing( const EventObject&  ) throw (RuntimeException)
+void SwDBTreeList_Impl::disposing( const EventObject&  )
 {
     xDBContext = 0;
 }
 /* -----------------------------17.07.01 13:24--------------------------------
 
  ---------------------------------------------------------------------------*/
-void SwDBTreeList_Impl::elementReplaced( const ContainerEvent& rEvent ) throw (RuntimeException)
+void SwDBTreeList_Impl::elementReplaced( const ContainerEvent& rEvent )
 {
     elementRemoved(rEvent);
 }

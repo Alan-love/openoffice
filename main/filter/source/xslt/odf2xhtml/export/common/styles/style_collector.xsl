@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--***********************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -8,16 +8,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  ***********************************************************-->
 
 
@@ -90,7 +90,7 @@
 
 	<xsl:template name="collect-global-odf-properties">
 		<!-- to access the variable as a node-set by XPATH expressions, it is necessary to convert it
-			 from a result-tree-fragment (RTF) to a node set by a in a XSLT 1.0 non standarized function -->
+			 from a result-tree-fragment (RTF) to a node set by a in a XSLT 1.0 non standardized function -->
 		<xsl:variable name="globalDataRTF">
 			<xsl:call-template name="collect-document-links-RTF" />
 		</xsl:variable>
@@ -214,7 +214,7 @@
 		<xsl:copy-of select="$documentLinks/styles-file/*/office:styles" />
 		<xsl:copy-of select="$documentLinks/styles-file/*/office:font-face-decls" />
 
-		<!-- office:automatic-styles may be containted in two files (i.e. content.xml and styles.xml).
+		<!-- office:automatic-styles may be contained in two files (i.e. content.xml and styles.xml).
 			 Wild card necessary as top level element differs from flat office files ("SampleName.fsxw") -->
 		<xsl:copy-of select="/*/office:automatic-styles" />
 
@@ -307,7 +307,7 @@
 		<xsl:param name="defaultOfficeStyle" />
 		<xsl:param name="defaultFamilyStyles" />
 
-	   <!--** traversee all style trees - branch after branch - collecting style properties **-->
+	   <!--** traverse all style trees - branch after branch - collecting style properties **-->
 		<xsl:element name="all-doc-styles" namespace="">
 
 	   <!-- Background Information:
@@ -320,7 +320,7 @@
 		   but automatic:styles may inherit from both office:styles and themself.
 		-->
 
-		   <!--** traversee all office:styles trees beginning with the top-level styles **-->
+		   <!--** traverse all office:styles trees beginning with the top-level styles **-->
 			<xsl:for-each select="$globalData/office:styles/style:style[not(@style:parent-style-name)]">
 			   <!-- Looking for parents from style:family
 			   <xsl:for-each select="$globalData/office:styles/style:style[@style:family=current()/@style:family][not(@style:parent-style-name)]"> -->
@@ -344,7 +344,7 @@
 					   an element representing the absolute style properties style:property  ** -->
 			</xsl:for-each>
 
-	   <!--** traversee all office:automatic-styles trees beginning with the top-level styles **-->
+	   <!--** traverse all office:automatic-styles trees beginning with the top-level styles **-->
 			<xsl:for-each select="$globalData/office:automatic-styles/style:style[not(@style:parent-style-name)]">
 			   <!--** creates a style element with style:name and style:family attribute and
 					   an element representing the absolute style properties style:property  ** -->
@@ -386,7 +386,7 @@
 		<xsl:param name="inheritedStyleProperties" />
 		<xsl:param name="searchOnlyInAutomaticStyles" />
 
-		   <!--** create an absolute style by inherting properties from the given parent properties **-->
+		   <!--** create an absolute style by inheriting properties from the given parent properties **-->
 		<xsl:variable name="newStyleProperties-RTF">
 			<xsl:call-template name="create-inherited-style-properties">
 				<xsl:with-param name="inheritedStyleProperties" select="$inheritedStyleProperties" />
@@ -527,7 +527,7 @@
 
 			<xsl:if test="*/@style:font-size-rel">
 <!--
-	The intheritedStyleProperties should include a absolute Font Size, but
+	The inherited StyleProperties should include an absolute Font Size, but
 	<style:properties
 		xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
 		xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
@@ -635,7 +635,7 @@
 	</xsl:template>
 
 	<!-- REASON FOR TEMPLATE:
-	   The OpenOffice style properities gathered in the variable 'globalData' have to be mapped to the CSS style format
+	   The OpenOffice style properties gathered in the variable 'globalData' have to be mapped to the CSS style format
 	-->
 	<xsl:template name="map-odf-properties">
 		<xsl:param name="globalData" />
@@ -663,7 +663,7 @@
     <xsl:template name="writeUsedStyles">
         <xsl:param name="globalData" />
         <xsl:param name="style"/>
-    
+
             <!-- for-each changes the key environment from the previously globalData back to the document root  -->
         <xsl:for-each select="$documentRoot">
                 <!-- only styles, which are used in the content are written as CSS styles -->
@@ -684,7 +684,7 @@
                                     <xsl:with-param name="globalData" select="$globalData" />
                                     <xsl:with-param name="style" select="$style" />
                                 </xsl:call-template>
-                            </xsl:if>    
+                            </xsl:if>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:for-each select="document($stylesFileURL)">
@@ -702,8 +702,8 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
-    </xsl:template>     
-    
+    </xsl:template>
+
 	<xsl:template name="writeUsedStyles2">
 		<xsl:param name="globalData" />
 		<xsl:param name="style"/>
@@ -711,7 +711,7 @@
             <xsl:when test="
                 $style/@style:family='paragraph'
             and((
-                  ( 
+                  (
                         $style/*/@fo:border-top
                      or $style/*/@fo:border-bottom
                      or $style/*/@fo:border
@@ -724,14 +724,14 @@
                 )
                or
                 (
-                  ( 
+                  (
                         $style/*/@fo:margin-top
                      or $style/*/@fo:margin-bottom
                      or $style/*/@fo:margin
                   )
                     and
                   (     $style/*/@fo:background-color
-                    and 
+                    and
                         not($style/*/fo:background-color='transparent')
                   )
                 )
@@ -745,7 +745,7 @@
                         </xsl:apply-templates>
                         <xsl:apply-templates mode="paragraphMerge" select="$style/*/@*[name() = 'fo:margin-bottom' or name() = 'fo:margin']">
                             <xsl:with-param name="globalData" select="$globalData" />
-                        </xsl:apply-templates>                                
+                        </xsl:apply-templates>
                         <xsl:text> border-bottom-style:none; </xsl:text>
                     </xsl:element>
                 </xsl:element>
@@ -759,7 +759,7 @@
                         </xsl:apply-templates>
                         <xsl:apply-templates mode="paragraphMerge" select="$style/*/@*[name() = 'fo:margin-top' or name() = 'fo:margin-bottom' or name() = 'fo:margin']">
                             <xsl:with-param name="globalData" select="$globalData" />
-                        </xsl:apply-templates>                                
+                        </xsl:apply-templates>
                         <xsl:text> border-top-style:none; border-bottom-style:none; </xsl:text>
                     </xsl:element>
                 </xsl:element>
@@ -772,7 +772,7 @@
                         </xsl:apply-templates>
                         <xsl:apply-templates mode="paragraphMerge" select="$style/*/@*[name() = 'fo:margin-top' or name() = 'fo:margin']">
                             <xsl:with-param name="globalData" select="$globalData" />
-                        </xsl:apply-templates>                                
+                        </xsl:apply-templates>
                         <xsl:text> border-top-style:none;</xsl:text>
                     </xsl:element>
                 </xsl:element>
@@ -805,12 +805,12 @@
             </xsl:otherwise>
         </xsl:choose>
 	</xsl:template>
-    
+
 	<xsl:template mode="paragraphMerge" match="@fo:margin | @fo:margin-top | @fo:margin-bottom | @fo:margin-left | @fo:margin-right">
 		<xsl:text>padding</xsl:text>
         <xsl:value-of select="substring-after(name(), 'fo:margin')"/>
 		<xsl:text>:</xsl:text>
-		<!-- Map once erroneusly used inch shortage 'inch' to CSS shortage 'in' -->
+		<!-- Map once erroneously used inch shortage 'inch' to CSS shortage 'in' -->
 		<xsl:choose>
 			<xsl:when test="contains(., 'inch')">
 				<xsl:value-of select="substring-before(.,'ch')"/>
@@ -820,5 +820,5 @@
 			</xsl:otherwise>
 		</xsl:choose>
 		<xsl:text>; </xsl:text>
-	</xsl:template>    
+	</xsl:template>
 </xsl:stylesheet>

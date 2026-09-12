@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -108,10 +108,10 @@ class SfxPrintJob_Impl : public cppu::WeakImplHelper1
 
 public:
         SfxPrintJob_Impl( IMPL_PrintListener_DataContainer* pData );
-    	virtual Sequence< ::com::sun::star::beans::PropertyValue > SAL_CALL getPrintOptions(  ) throw (RuntimeException);
-    	virtual Sequence< ::com::sun::star::beans::PropertyValue > SAL_CALL getPrinter(  ) throw (RuntimeException);
-    	virtual Reference< ::com::sun::star::view::XPrintable > SAL_CALL getPrintable(  ) throw (RuntimeException);
-		virtual void SAL_CALL cancelJob() throw (RuntimeException);
+    	virtual Sequence< ::com::sun::star::beans::PropertyValue > SAL_CALL getPrintOptions(  );
+    	virtual Sequence< ::com::sun::star::beans::PropertyValue > SAL_CALL getPrinter(  );
+    	virtual Reference< ::com::sun::star::view::XPrintable > SAL_CALL getPrintable(  );
+		virtual void SAL_CALL cancelJob();
 };
 
 SfxPrintJob_Impl::SfxPrintJob_Impl( IMPL_PrintListener_DataContainer* pData )
@@ -119,12 +119,12 @@ SfxPrintJob_Impl::SfxPrintJob_Impl( IMPL_PrintListener_DataContainer* pData )
 {
 }
 
-Sequence< ::com::sun::star::beans::PropertyValue > SAL_CALL SfxPrintJob_Impl::getPrintOptions() throw (RuntimeException)
+Sequence< ::com::sun::star::beans::PropertyValue > SAL_CALL SfxPrintJob_Impl::getPrintOptions()
 {
 	return m_pData->m_aPrintOptions;
 }
 
-Sequence< ::com::sun::star::beans::PropertyValue > SAL_CALL SfxPrintJob_Impl::getPrinter() throw (RuntimeException)
+Sequence< ::com::sun::star::beans::PropertyValue > SAL_CALL SfxPrintJob_Impl::getPrinter()
 {
 	if( m_pData->m_pObjectShell.Is() )
 	{
@@ -135,13 +135,13 @@ Sequence< ::com::sun::star::beans::PropertyValue > SAL_CALL SfxPrintJob_Impl::ge
 	return Sequence< ::com::sun::star::beans::PropertyValue >();
 }
 
-Reference< ::com::sun::star::view::XPrintable > SAL_CALL SfxPrintJob_Impl::getPrintable() throw (RuntimeException)
+Reference< ::com::sun::star::view::XPrintable > SAL_CALL SfxPrintJob_Impl::getPrintable()
 {
 	Reference < view::XPrintable > xPrintable( m_pData->m_pObjectShell.Is() ? m_pData->m_pObjectShell->GetModel() : NULL, UNO_QUERY );
 	return xPrintable;
 }
 
-void SAL_CALL SfxPrintJob_Impl::cancelJob() throw (RuntimeException)
+void SAL_CALL SfxPrintJob_Impl::cancelJob()
 {
 	// FIXME: how to cancel PrintJob via API?!
 	if( m_pData->m_pObjectShell.Is() )
@@ -153,7 +153,7 @@ SfxPrintHelper::SfxPrintHelper()
     m_pData = new IMPL_PrintListener_DataContainer(m_aMutex);
 }
 
-void SAL_CALL SfxPrintHelper::initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aArguments ) throw (::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException)
+void SAL_CALL SfxPrintHelper::initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aArguments )
 {
 	if ( aArguments.getLength() )
 	{
@@ -258,25 +258,25 @@ namespace
 //	XPrintable
 //________________________________________________________________________________________________________
 
-uno::Sequence< beans::PropertyValue > SAL_CALL SfxPrintHelper::getPrinter() throw(::com::sun::star::uno::RuntimeException)
+uno::Sequence< beans::PropertyValue > SAL_CALL SfxPrintHelper::getPrinter()
 {
     // object already disposed?
     ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
-    // search for any view of this document that is currently printing   	
+    // search for any view of this document that is currently printing
     const Printer *pPrinter = NULL;
     SfxViewFrame *pViewFrm = m_pData->m_pObjectShell.Is() ? SfxViewFrame::GetFirst( m_pData->m_pObjectShell, sal_False ) : 0;
     SfxViewFrame* pFirst = pViewFrm;
     while ( pViewFrm && !pPrinter )
-    {								
+    {
     	pPrinter = pViewFrm->GetViewShell()->GetActivePrinter();
         pViewFrm = SfxViewFrame::GetNext( *pViewFrm, m_pData->m_pObjectShell, sal_False );
     }
-    	    
+
     // if no view is printing currently, use the permanent SfxPrinter instance
     if ( !pPrinter && pFirst )
     	pPrinter = pFirst->GetViewShell()->GetPrinter(sal_True);
-    	
+
     if ( !pPrinter )
         return uno::Sequence< beans::PropertyValue >();
 
@@ -455,7 +455,6 @@ void SfxPrintHelper::impl_setPrinter(const uno::Sequence< beans::PropertyValue >
 }
 
 void SAL_CALL SfxPrintHelper::setPrinter(const uno::Sequence< beans::PropertyValue >& rPrinter)
-        throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException)
 {
 	// object already disposed?
     ::vos::OGuard aGuard( Application::GetSolarMutex() );
@@ -497,7 +496,7 @@ class ImplUCBPrintWatcher : public ::osl::Thread
 
         /* waits for finishing of the print job and moves the temp file afterwards
            Note: Starting of the job is done outside this thread!
-           But we have to free some of the given ressources on heap!
+           But we have to free some of the given resources on heap!
          */
         void SAL_CALL run()
         {
@@ -511,7 +510,7 @@ class ImplUCBPrintWatcher : public ::osl::Thread
             /* } SAFE */
 
             // lock for further using of our member isn't necessary - because
-            // we truns alone by defenition. Nobody join for us nor use us ...
+            // we truns alone by definition. Nobody join for us nor use us ...
             ImplUCBPrintWatcher::moveAndDeleteTemp(&m_pTempFile,m_sTargetURL);
 
             // finishing of this run() method will call onTerminate() automatically
@@ -574,7 +573,6 @@ class ImplUCBPrintWatcher : public ::osl::Thread
 //  XPrintable
 //________________________________________________________________________________________________________
 void SAL_CALL SfxPrintHelper::print(const uno::Sequence< beans::PropertyValue >& rOptions)
-        throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException)
 {
     if( Application::GetSettings().GetMiscSettings().GetDisablePrinting() )
         return;
@@ -777,7 +775,7 @@ void SAL_CALL SfxPrintHelper::print(const uno::Sequence< beans::PropertyValue >&
         // b)
         else
         {
-            // Note: we create(d) some ressource on the heap. (thread and tep file)
+            // Note: we create(d) some resource on the heap. (thread and tep file)
             // They will be delected by the thread automatically if he finish his run() method.
             ImplUCBPrintWatcher* pWatcher = new ImplUCBPrintWatcher( pPrinter, pUCBPrintTempFile, sUcbUrl );
             pWatcher->create();
@@ -814,16 +812,14 @@ void IMPL_PrintListener_DataContainer::Notify( SfxBroadcaster& rBC, const SfxHin
         ((view::XPrintJobListener*)pIterator.next())->printJobEvent( aEvent );
 }
 
-void SAL_CALL SfxPrintHelper::addPrintJobListener( const ::com::sun::star::uno::Reference< ::com::sun::star::view::XPrintJobListener >& xListener ) throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL SfxPrintHelper::addPrintJobListener( const ::com::sun::star::uno::Reference< ::com::sun::star::view::XPrintJobListener >& xListener )
 {
     ::vos::OGuard aGuard( Application::GetSolarMutex() );
     m_pData->m_aInterfaceContainer.addInterface( ::getCppuType((const uno::Reference < view::XPrintJobListener>*)0), xListener );
 }
 
-void SAL_CALL SfxPrintHelper::removePrintJobListener( const ::com::sun::star::uno::Reference< ::com::sun::star::view::XPrintJobListener >& xListener ) throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL SfxPrintHelper::removePrintJobListener( const ::com::sun::star::uno::Reference< ::com::sun::star::view::XPrintJobListener >& xListener )
 {
     ::vos::OGuard aGuard( Application::GetSolarMutex() );
     m_pData->m_aInterfaceContainer.removeInterface( ::getCppuType((const uno::Reference < view::XPrintJobListener>*)0), xListener );
 }
-
-

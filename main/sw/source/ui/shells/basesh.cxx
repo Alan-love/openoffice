@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
@@ -116,7 +116,7 @@
 
 FlyMode SwBaseShell::eFrameMode = FLY_DRAG_END;
 
-//Fuer die Erkennung der Id, die variable von Gallery mit SID_GALLERY_BG_BRUSH
+//Für die Erkennung der Id, die variable von Gallery mit SID_GALLERY_BG_BRUSH
 //ankommt.
 static sal_uInt8 nParagraphPos;
 static sal_uInt8 nGraphicPos;
@@ -695,7 +695,7 @@ void SwBaseShell::Execute(SfxRequest &rReq)
 
 				if (rSh.HasMark())
 				{
-					MV_KONTEXT(&rSh);
+					MV_CONTEXT(&rSh);
 					if (rSh.IsCrsrPtAtEnd())
 						rSh.SwapPam();
 					rSh.ClearMark();
@@ -757,7 +757,7 @@ void SwBaseShell::Execute(SfxRequest &rReq)
 
                 if( pGalleryItem->IsLink() )
                 {
-                    // Verknuepft
+                    // Verknüpft
                     aGrfName = pGalleryItem->GetURL();
                     aFltName = pGalleryItem->GetFilterName();
                 }
@@ -769,8 +769,8 @@ void SwBaseShell::Execute(SfxRequest &rReq)
 
                 GetView().GetEditWin().GrabFocus();
             }
-            else if(!rSh.IsSelFrmMode() &&
-                nGalleryItemType == com::sun::star::gallery::GalleryItemType::MEDIA  )
+            else if ( !rSh.IsSelFrmMode() &&
+                nGalleryItemType == com::sun::star::gallery::GalleryItemType::MEDIA )
             {
                 const SfxStringItem aMediaURLItem( SID_INSERT_AVMEDIA, pGalleryItem->GetURL() );
                 GetView().GetViewFrame()->GetDispatcher()->Execute( SID_INSERT_AVMEDIA, SFX_CALLMODE_SYNCHRON, &aMediaURLItem, 0L );
@@ -797,7 +797,7 @@ void SwBaseShell::Execute(SfxRequest &rReq)
 		{
 			if (pArgs)
 			{
-				// aktuellen PageDescriptor ermitteln und damit den Set fuellen
+				// aktuellen PageDescriptor ermitteln und damit den Set füllen
 				const sal_uInt16 nCurIdx = rSh.GetCurPageDesc();
 				SwPageDesc aPageDesc(rSh.GetPageDesc(nCurIdx));
 
@@ -824,9 +824,9 @@ void SwBaseShell::Execute(SfxRequest &rReq)
 				GetView().GetViewFrame()->GetDispatcher()->Execute(FN_FORMAT_PAGE_COLUMN_DLG, sal_False);
 		}
 		break;
-        case FN_CONVERT_TABLE_TO_TEXT:
-        case FN_CONVERT_TEXT_TO_TABLE:
-        case FN_CONVERT_TEXT_TABLE:
+		case FN_CONVERT_TABLE_TO_TEXT:
+		case FN_CONVERT_TEXT_TO_TABLE:
+		case FN_CONVERT_TEXT_TABLE:
 		{
             sal_Unicode cDelim = 0;
             bool bToTable = false;
@@ -1016,7 +1016,7 @@ void SwBaseShell::Execute(SfxRequest &rReq)
 		{
 			SvxContourDlg *pDlg = SWCONTOURDLG(GetView());
 
-			// Kontrolle, ob Zuweisung ueberhaupt sinnvoll/erlaubt
+			// Kontrolle, ob Zuweisung überhaupt sinnvoll/erlaubt
 			int nSel = rSh.GetSelectionType();
 			if ( nSel & (nsSelectionType::SEL_GRF|nsSelectionType::SEL_OLE) )
 			{
@@ -1050,21 +1050,21 @@ void SwBaseShell::Execute(SfxRequest &rReq)
 			rSh.CallChgLnk();
 		}
 		break;
-		case FN_TOOL_ANKER:
+		case FN_TOOL_ANCHOR:
 			break;
-		case FN_TOOL_ANKER_PAGE:
-		case FN_TOOL_ANKER_PARAGRAPH:
-		case FN_TOOL_ANKER_CHAR:
-		case FN_TOOL_ANKER_AT_CHAR:
-		case FN_TOOL_ANKER_FRAME:
+		case FN_TOOL_ANCHOR_PAGE:
+		case FN_TOOL_ANCHOR_PARAGRAPH:
+		case FN_TOOL_ANCHOR_CHAR:
+		case FN_TOOL_ANCHOR_AT_CHAR:
+		case FN_TOOL_ANCHOR_FRAME:
 		{
-			RndStdIds eSet = nSlot == FN_TOOL_ANKER_PAGE
+			RndStdIds eSet = nSlot == FN_TOOL_ANCHOR_PAGE
                                 ? FLY_AT_PAGE
-								: nSlot == FN_TOOL_ANKER_PARAGRAPH
+								: nSlot == FN_TOOL_ANCHOR_PARAGRAPH
                                     ? FLY_AT_PARA
-									: nSlot == FN_TOOL_ANKER_FRAME
+									: nSlot == FN_TOOL_ANCHOR_FRAME
 										? FLY_AT_FLY
-										: nSlot == FN_TOOL_ANKER_CHAR
+										: nSlot == FN_TOOL_ANCHOR_CHAR
                                             ? FLY_AS_CHAR
                                             : FLY_AT_CHAR;
 			rSh.StartUndo();
@@ -1074,19 +1074,19 @@ void SwBaseShell::Execute(SfxRequest &rReq)
 			{
 				// Der Set beinhaltet auch VERT/HORI_ORIENT, da in FEShell::
 				// SetFlyFrmAttr/SetFlyFrmAnchor ggf. als Folge des Umankerns
-				// die Ausrichtungen veraendert werden sollen.
+				// die Ausrichtungen verändert werden sollen.
 				SfxItemSet aSet( GetPool(), RES_VERT_ORIENT, RES_ANCHOR );
 				SwFmtAnchor aAnc( eSet, rSh.GetPhyPageNum() );
 				aSet.Put( aAnc );
 				rSh.SetFlyFrmAttr(aSet);
 			}
 
-            // if new anchor is 'as char' and it is a Math object and the usual 
+            // if new anchor is 'as char' and it is a Math object and the usual
             // pre-conditions are met then align the formula to the baseline of the text
             const uno::Reference < embed::XEmbeddedObject > xObj( rSh.GetOleRef() );
             const bool bDoMathBaselineAlignment = xObj.is() && SotExchange::IsMath( xObj->getClassID() )
                     && FLY_AS_CHAR == eSet && rSh.GetDoc()->get( IDocumentSettingAccess::MATH_BASELINE_ALIGNMENT );
-            if (bDoMathBaselineAlignment) 
+            if (bDoMathBaselineAlignment)
                 rSh.AlignFormulaToBaseline( xObj );
 
 			sal_uInt16 nHtmlMode = ::GetHtmlMode(GetView().GetDocShell());
@@ -1131,7 +1131,7 @@ void SwBaseShell::Execute(SfxRequest &rReq)
 					break;
 
                 case FLY_AT_CHAR:
-					//links, von links, rechts, oben,  Durchlauf
+					// links, von links, rechts, oben,  Durchlauf
 					if(eSurround != SURROUND_THROUGHT)
 						aSet.Put(SwFmtSurround(SURROUND_THROUGHT));
 
@@ -1151,7 +1151,7 @@ void SwBaseShell::Execute(SfxRequest &rReq)
 			}
 			rSh.EndUndo();
 
-			GetView().GetViewFrame()->GetBindings().Invalidate( FN_TOOL_ANKER );
+			GetView().GetViewFrame()->GetBindings().Invalidate( FN_TOOL_ANCHOR );
 		}
 		break;
 
@@ -1231,7 +1231,7 @@ void SwBaseShell::Execute(SfxRequest &rReq)
 			}
 			else if ( rSh.IsFrmSelected() )
 			{
-				// Umrandungsattribute ueber Frame-Manager setzen
+				// Umrandungsattribute über Frame-Manager setzen
 				SwFlyFrmAttrMgr aMgr( sal_False, &rSh, FRMMGR_TYPE_NONE );
 				aMgr.SetAttrSet( *pArgs );
 				aMgr.UpdateFlyFrm();
@@ -1263,14 +1263,14 @@ void SwBaseShell::Execute(SfxRequest &rReq)
 			}
 			else if ( rSh.IsFrmSelected() )
 			{
-				// Umrandungsattribute ueber Frame-Manager setzen
+				// Umrandungsattribute über Frame-Manager setzen
 				SwFlyFrmAttrMgr aMgr( sal_False, &rSh, FRMMGR_TYPE_NONE );
 				aMgr.SetAttrSet(*pArgs);
 				aMgr.UpdateFlyFrm();
 			}
 			else
 			{
-				// Umrandungsattribute ganz normal ueber Shell setzen
+				// Umrandungsattribute ganz normal über Shell setzen
 				rSh.SetAttrItem( *pItem );
 			}
 		}
@@ -1283,7 +1283,7 @@ void SwBaseShell::Execute(SfxRequest &rReq)
 }
 
 /* -----------------14.04.99 15:10-------------------
- * Hier wird der State fuer SID_IMAP / SID_CONTOUR behandelt,
+ * Hier wird der State für SID_IMAP / SID_CONTOUR behandelt,
  * wenn die Grafik ausgeswappt ist
  * --------------------------------------------------*/
 IMPL_LINK(SwBaseShell, GraphicArrivedHdl, SwCrsrShell* , EMPTYARG )
@@ -1619,12 +1619,12 @@ void SwBaseShell::GetState( SfxItemSet &rSet )
 			}
 			break;
 
-			case FN_TOOL_ANKER:
-			case FN_TOOL_ANKER_PAGE:
-			case FN_TOOL_ANKER_PARAGRAPH:
-			case FN_TOOL_ANKER_CHAR:
-			case FN_TOOL_ANKER_AT_CHAR:
-			case FN_TOOL_ANKER_FRAME:
+			case FN_TOOL_ANCHOR:
+			case FN_TOOL_ANCHOR_PAGE:
+			case FN_TOOL_ANCHOR_PARAGRAPH:
+			case FN_TOOL_ANCHOR_CHAR:
+			case FN_TOOL_ANCHOR_AT_CHAR:
+			case FN_TOOL_ANCHOR_FRAME:
 			{
 				sal_Bool bObj = 0 != rSh.IsObjSelected();
 				sal_Bool bParentCntProt = rSh.IsSelObjProtected( FLYPROTECT_CONTENT|FLYPROTECT_PARENT ) != 0;
@@ -1638,22 +1638,22 @@ void SwBaseShell::GetState( SfxItemSet &rSet )
 						rSh.GetFlyFrmAttr(aSet);
 					RndStdIds eSet = ((SwFmtAnchor&)aSet.Get(RES_ANCHOR)).GetAnchorId();
                     const sal_Bool bSet =
-                           ((nWhich == FN_TOOL_ANKER_PAGE) &&
+                           ((nWhich == FN_TOOL_ANCHOR_PAGE) &&
                             (eSet == FLY_AT_PAGE))
-                        || ((nWhich == FN_TOOL_ANKER_PARAGRAPH) &&
+                        || ((nWhich == FN_TOOL_ANCHOR_PARAGRAPH) &&
                             (eSet == FLY_AT_PARA))
-                        || ((nWhich == FN_TOOL_ANKER_FRAME) &&
+                        || ((nWhich == FN_TOOL_ANCHOR_FRAME) &&
                             (eSet == FLY_AT_FLY))
-                        || ((nWhich == FN_TOOL_ANKER_AT_CHAR) &&
+                        || ((nWhich == FN_TOOL_ANCHOR_AT_CHAR) &&
                             (eSet == FLY_AT_CHAR))
-                        || ((nWhich == FN_TOOL_ANKER_CHAR) &&
+                        || ((nWhich == FN_TOOL_ANCHOR_CHAR) &&
                             (eSet == FLY_AS_CHAR));
-					if(nWhich != FN_TOOL_ANKER)
+					if(nWhich != FN_TOOL_ANCHOR)
 					{
 						sal_uInt16 nHtmlMode = ::GetHtmlMode(GetView().GetDocShell());
-						if( ( nWhich == FN_TOOL_ANKER_PAGE &&
+						if( ( nWhich == FN_TOOL_ANCHOR_PAGE &&
 							  ((HTMLMODE_ON & nHtmlMode) && (0 == (nHtmlMode & HTMLMODE_SOME_ABS_POS)))) ||
-                            ( nWhich == FN_TOOL_ANKER_FRAME && !rSh.IsFlyInFly() ) )
+                            ( nWhich == FN_TOOL_ANCHOR_FRAME && !rSh.IsFlyInFly() ) )
 							rSet.DisableItem(nWhich);
 						else
 							rSet.Put(SfxBoolItem(nWhich, bSet));
@@ -1665,19 +1665,19 @@ void SwBaseShell::GetState( SfxItemSet &rSet )
 						switch (eSet)
 						{
                             case FLY_AT_PAGE:
-								nSlotId = FN_TOOL_ANKER_PAGE;
+								nSlotId = FN_TOOL_ANCHOR_PAGE;
 							break;
                             case FLY_AT_PARA:
-								nSlotId = FN_TOOL_ANKER_PARAGRAPH;
+								nSlotId = FN_TOOL_ANCHOR_PARAGRAPH;
 							break;
 							case FLY_AS_CHAR:
-								nSlotId = FN_TOOL_ANKER_CHAR;
+								nSlotId = FN_TOOL_ANCHOR_CHAR;
 							break;
                             case FLY_AT_CHAR:
-								nSlotId = FN_TOOL_ANKER_AT_CHAR;
+								nSlotId = FN_TOOL_ANCHOR_AT_CHAR;
 							break;
 							case FLY_AT_FLY:
-								nSlotId = FN_TOOL_ANKER_FRAME;
+								nSlotId = FN_TOOL_ANCHOR_FRAME;
 							break;
 							default:
 								;
@@ -1764,7 +1764,7 @@ void SwBaseShell::GetState( SfxItemSet &rSet )
 						break;
 						case FN_FRAME_WRAP_CONTOUR:
 							bDisable |= bHtmlMode;
-                            //no contour available whenn no wrap or wrap through is set
+                            //no contour available when no wrap or wrap through is set
                             bDisable |= (nSurround == SURROUND_NONE || nSurround == SURROUND_THROUGHT);
 							bSet = rWrap.IsContour();
 							if( !bDisable )
@@ -2968,3 +2968,4 @@ void SwBaseShell::ExecField( SfxRequest& rReq )
 	}
 }
 
+/* vim: set noet sw=4 ts=4: */

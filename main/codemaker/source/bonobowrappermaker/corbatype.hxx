@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -36,7 +36,7 @@ enum BASETYPE
 	BT_ANY,
 	BT_TYPE,
 	BT_BOOLEAN,
-	BT_CHAR,		
+	BT_CHAR,
 	BT_STRING,
 	BT_FLOAT,
 	BT_DOUBLE,
@@ -73,15 +73,15 @@ class CorbaType
 public:
 	CorbaType(TypeReader& typeReader,
 			  const ::rtl::OString& typeName,
-			  const TypeManager& typeMgr, 
+			  const TypeManager& typeMgr,
 			  const TypeDependency& typeDependencies,
 			  TypeSet* generatedConversion);
 
 	virtual ~CorbaType();
 
-	virtual sal_Bool dump(CorbaOptions* pOptions, FileStream& o, TypeSet* allreadyDumped) throw( CannotDumpException );
-	virtual sal_Bool dumpDependedTypes(CorbaOptions* pOptions, FileStream& o, TypeSet* allreadyDumped)  throw( CannotDumpException );
-	virtual sal_Bool dumpConversionFunctions(FileStream& o, TypeSet* allreadyDumped) throw( CannotDumpException );
+	virtual sal_Bool dump(CorbaOptions* pOptions, FileStream& o, TypeSet* allreadyDumped);
+	virtual sal_Bool dumpDependedTypes(CorbaOptions* pOptions, FileStream& o, TypeSet* allreadyDumped);
+	virtual sal_Bool dumpConversionFunctions(FileStream& o, TypeSet* allreadyDumped);
 
 	static  void dumpDefaultHxxIncludes(FileStream& o);
 
@@ -91,29 +91,25 @@ public:
 	virtual void dumpNameSpace(FileStream& o, sal_Bool bOpen = sal_True, sal_Bool bFull = sal_False, const ::rtl::OString& type="");
 	virtual void dumpFunctions(FileStream& o) = 0;
 
-	virtual ::rtl::OString printUnoType( const ::rtl::OString& type, 
+	virtual ::rtl::OString printUnoType( const ::rtl::OString& type,
 										sal_Bool bConst=sal_False,
-										sal_Bool bRef=sal_False, 
-										sal_Bool bNative=sal_False)
-		throw( CannotDumpException );
+										sal_Bool bRef=sal_False,
+										sal_Bool bNative=sal_False);
 
-	virtual void dumpUnoType(FileStream& o, 
-							const ::rtl::OString& type, 
+	virtual void dumpUnoType(FileStream& o,
+							const ::rtl::OString& type,
 							sal_Bool bConst=sal_False,
-							sal_Bool bRef=sal_False, 
-							sal_Bool bNative=sal_False)
-		throw( CannotDumpException );
+							sal_Bool bRef=sal_False,
+							sal_Bool bNative=sal_False);
 
-	 virtual ::rtl::OString printCorbaType(const ::rtl::OString& type, 
-											sal_Bool bConst, 
-											sal_Bool bRef)
-		throw( CannotDumpException );
+	 virtual ::rtl::OString printCorbaType(const ::rtl::OString& type,
+											sal_Bool bConst,
+											sal_Bool bRef);
 
-	virtual void dumpCorbaType(FileStream& o, 
-								const ::rtl::OString& type, 
+	virtual void dumpCorbaType(FileStream& o,
+								const ::rtl::OString& type,
 								sal_Bool bConst=sal_False,
-								sal_Bool bRef=sal_False)
-		throw( CannotDumpException );
+								sal_Bool bRef=sal_False);
 
 	sal_Bool isPassedAsPointer(const ::rtl::OString& type);
 	sal_Bool isArray(const ::rtl::OString& type);
@@ -121,11 +117,10 @@ public:
 	sal_Bool isDerivedFromUnknown(const ::rtl::OString& typeName);
 
 
-	::rtl::OString printCorbaParameter(const ::rtl::OString& type, 
-										sal_Bool bOut = sal_False)
-								throw( CannotDumpException );
+	::rtl::OString printCorbaParameter(const ::rtl::OString& type,
+										sal_Bool bOut = sal_False);
 
-	::rtl::OString	getTypeClass(const ::rtl::OString& type="", 
+	::rtl::OString	getTypeClass(const ::rtl::OString& type="",
 								sal_Bool bCStyle=sal_False);
 	::rtl::OString	getUnoBaseType(const ::rtl::OString& type);
 	::rtl::OString	getCorbaBaseType(const ::rtl::OString& type);
@@ -149,15 +144,15 @@ protected:
 
 	::rtl::OString	checkSpecialCorbaType(const ::rtl::OString& type);
 	::rtl::OString	checkRealBaseType(const ::rtl::OString& type, sal_Bool bResolveTypeOnly = sal_False);
-	
+
 protected:
 	sal_uInt32 			m_inheritedMemberCount;
 	sal_uInt32			m_indentLength;
 	::rtl::OString		m_typeName;
 	::rtl::OString		m_name;
 	TypeReader			m_reader;
-	TypeManager&		m_typeMgr;	
-	TypeDependency  	m_dependencies;	
+	TypeManager&		m_typeMgr;
+	TypeDependency  	m_dependencies;
 	TypeSet* m_generatedConversions;
 };
 
@@ -166,7 +161,7 @@ class InterfaceType : public CorbaType
 public:
 	InterfaceType(TypeReader& typeReader,
 				const ::rtl::OString& typeName,
-				const TypeManager& typeMgr, 
+				const TypeManager& typeMgr,
 				const TypeDependency& typeDependencies,
 				TypeSet* generatedConversion);
 
@@ -194,13 +189,13 @@ class ModuleType : public CorbaType
 public:
 	ModuleType(TypeReader& typeReader,
 				const ::rtl::OString& typeName,
-				const TypeManager& typeMgr, 
+				const TypeManager& typeMgr,
 				const TypeDependency& typeDependencies,
 				TypeSet* generatedConversion);
 
 	virtual ~ModuleType();
 
-	sal_Bool	dumpConversionFunctions(FileStream& o, TypeSet* allreadyDumped) throw( CannotDumpException );
+	sal_Bool	dumpConversionFunctions(FileStream& o, TypeSet* allreadyDumped);
 	void		dumpFunctions(FileStream& o);
 	sal_Bool	hasConstants();
 };
@@ -210,7 +205,7 @@ class ConstantsType : public ModuleType
 public:
 	ConstantsType(TypeReader& typeReader,
 				const ::rtl::OString& typeName,
-				const TypeManager& typeMgr, 
+				const TypeManager& typeMgr,
 				const TypeDependency& typeDependencies,
 				TypeSet* generatedConversion);
 
@@ -224,7 +219,7 @@ class StructureType : public CorbaType
 public:
 	StructureType(TypeReader& typeReader,
 				const ::rtl::OString& typeName,
-				const TypeManager& typeMgr, 
+				const TypeManager& typeMgr,
 				const TypeDependency& typeDependencies,
 				TypeSet* generatedConversion);
 
@@ -240,7 +235,7 @@ class ExceptionType : public CorbaType
 public:
 	ExceptionType(TypeReader& typeReader,
 				const ::rtl::OString& typeName,
-				const TypeManager& typeMgr, 
+				const TypeManager& typeMgr,
 				const TypeDependency& typeDependencies,
 				TypeSet* generatedConversions);
 
@@ -256,7 +251,7 @@ class EnumType : public CorbaType
 public:
 	EnumType(TypeReader& typeReader,
 			const ::rtl::OString& typeName,
-			const TypeManager& typeMgr, 
+			const TypeManager& typeMgr,
 			const TypeDependency& typeDependencies,
 			TypeSet* generatedConversion);
 
@@ -281,26 +276,24 @@ public:
 
 
 sal_Bool produceType(const ::rtl::OString& typeName,
-					TypeManager& typeMgr, 
+					TypeManager& typeMgr,
 					TypeDependency& typeDependencies,
 					CorbaOptions* pOptions,
-					FileStream& o, TypeSet* allreadyDumped, 
-					TypeSet* generatedConversions)
-	throw( CannotDumpException );
+					FileStream& o, TypeSet* allreadyDumped,
+					TypeSet* generatedConversions);
 
 /**
- * This function returns a C++ scoped name, represents the namespace 
+ * This function returns a C++ scoped name, represents the namespace
  * scoping of this type, e.g. com:.sun::star::uno::XInterface. If the scope of
  * the type is equal scope, the relativ name will be used.
  */
-::rtl::OString scopedName(const ::rtl::OString& scope, 
-						  const ::rtl::OString& type, 
+::rtl::OString scopedName(const ::rtl::OString& scope,
+						  const ::rtl::OString& type,
 				   		  sal_Bool bNoNameSpace=sal_False);
 
-::rtl::OString shortScopedName(const ::rtl::OString& scope, 
-							   const ::rtl::OString& type, 
+::rtl::OString shortScopedName(const ::rtl::OString& scope,
+							   const ::rtl::OString& type,
 				   			   sal_Bool bNoNameSpace=sal_False);
 
 
 #endif // _CORBAMAKER_CPPUTYPE_HXX_
-

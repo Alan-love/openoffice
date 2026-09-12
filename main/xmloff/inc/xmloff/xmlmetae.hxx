@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -86,38 +86,21 @@ public:
 						const ::com::sun::star::util::DateTime& rDateTime );
 
     // ::com::sun::star::xml::sax::XDocumentHandler:
-    virtual void SAL_CALL startDocument()
-        throw (::com::sun::star::uno::RuntimeException,
-               ::com::sun::star::xml::sax::SAXException);
-    virtual void SAL_CALL endDocument()
-        throw (::com::sun::star::uno::RuntimeException,
-               ::com::sun::star::xml::sax::SAXException);
+    virtual void SAL_CALL startDocument();
+    virtual void SAL_CALL endDocument();
     virtual void SAL_CALL startElement(const ::rtl::OUString & i_rName,
         const ::com::sun::star::uno::Reference<
-                ::com::sun::star::xml::sax::XAttributeList > & i_xAttribs)
-        throw (::com::sun::star::uno::RuntimeException,
-               ::com::sun::star::xml::sax::SAXException);
-    virtual void SAL_CALL endElement(const ::rtl::OUString & i_rName)
-        throw (::com::sun::star::uno::RuntimeException,
-               ::com::sun::star::xml::sax::SAXException);
-    virtual void SAL_CALL characters(const ::rtl::OUString & i_rChars)
-        throw (::com::sun::star::uno::RuntimeException,
-               ::com::sun::star::xml::sax::SAXException);
+                ::com::sun::star::xml::sax::XAttributeList > & i_xAttribs);
+    virtual void SAL_CALL endElement(const ::rtl::OUString & i_rName);
+    virtual void SAL_CALL characters(const ::rtl::OUString & i_rChars);
     virtual void SAL_CALL ignorableWhitespace(
-        const ::rtl::OUString & i_rWhitespaces)
-        throw (::com::sun::star::uno::RuntimeException,
-               ::com::sun::star::xml::sax::SAXException);
+        const ::rtl::OUString & i_rWhitespaces);
     virtual void SAL_CALL processingInstruction(
-        const ::rtl::OUString & i_rTarget, const ::rtl::OUString & i_rData)
-        throw (::com::sun::star::uno::RuntimeException,
-               ::com::sun::star::xml::sax::SAXException);
+        const ::rtl::OUString & i_rTarget, const ::rtl::OUString & i_rData);
     virtual void SAL_CALL setDocumentLocator(
         const ::com::sun::star::uno::Reference<
-                ::com::sun::star::xml::sax::XLocator > & i_xLocator)
-        throw (::com::sun::star::uno::RuntimeException,
-               ::com::sun::star::xml::sax::SAXException);
+                ::com::sun::star::xml::sax::XLocator > & i_xLocator);
 
 };
 
 #endif // _XMLOFF_XMLMETAE_HXX
-

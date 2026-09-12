@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -68,21 +68,18 @@ ZipOutputStream::~ZipOutputStream( void )
 		delete aZipList[i];
 }
 
-void SAL_CALL ZipOutputStream::setMethod( sal_Int32 nNewMethod ) 
-	throw(RuntimeException)
+void SAL_CALL ZipOutputStream::setMethod( sal_Int32 nNewMethod )
 {
 	nMethod = static_cast < sal_Int16 > (nNewMethod);
 }
-void SAL_CALL ZipOutputStream::setLevel( sal_Int32 nNewLevel ) 
-	throw(RuntimeException)
+void SAL_CALL ZipOutputStream::setLevel( sal_Int32 nNewLevel )
 {
 	aDeflater.setLevel( nNewLevel);
 }
 
-void SAL_CALL ZipOutputStream::putNextEntry( ZipEntry& rEntry, 
+void SAL_CALL ZipOutputStream::putNextEntry( ZipEntry& rEntry,
                         ZipPackageStream* pStream,
 						sal_Bool bEncrypt)
-	throw(IOException, RuntimeException)
 {
 	if (pCurrentEntry != NULL)
 		closeEntry();
@@ -110,13 +107,12 @@ void SAL_CALL ZipOutputStream::putNextEntry( ZipEntry& rEntry,
 		m_pCurrentStream = pStream;
 	}
 	sal_Int32 nLOCLength = writeLOC(rEntry);
-	rEntry.nOffset = static_cast < sal_Int32 > (aChucker.GetPosition()) - nLOCLength;
+	rEntry.nFileHeaderOffset = static_cast < sal_Int32 > (aChucker.GetPosition()) - nLOCLength;
 	aZipList.push_back( &rEntry );
 	pCurrentEntry = &rEntry;
 }
 
-void SAL_CALL ZipOutputStream::closeEntry(  ) 
-	throw(IOException, RuntimeException)
+void SAL_CALL ZipOutputStream::closeEntry(  )
 {
 	ZipEntry *pEntry = pCurrentEntry;
 	if (pEntry)
@@ -188,8 +184,7 @@ void SAL_CALL ZipOutputStream::closeEntry(  )
 	}
 }
 
-void SAL_CALL ZipOutputStream::write( const Sequence< sal_Int8 >& rBuffer, sal_Int32 nNewOffset, sal_Int32 nNewLength ) 
-	throw(IOException, RuntimeException)
+void SAL_CALL ZipOutputStream::write( const Sequence< sal_Int8 >& rBuffer, sal_Int32 nNewOffset, sal_Int32 nNewLength )
 {
 	switch (pCurrentEntry->nMethod)
 	{
@@ -212,23 +207,20 @@ void SAL_CALL ZipOutputStream::write( const Sequence< sal_Int8 >& rBuffer, sal_I
 	}
 }
 
-void SAL_CALL ZipOutputStream::rawWrite( Sequence< sal_Int8 >& rBuffer, sal_Int32 /*nNewOffset*/, sal_Int32 nNewLength ) 
-	throw(IOException, RuntimeException)
+void SAL_CALL ZipOutputStream::rawWrite( Sequence< sal_Int8 >& rBuffer, sal_Int32 /*nNewOffset*/, sal_Int32 nNewLength )
 {
 	Sequence < sal_Int8 > aTmpBuffer ( rBuffer.getConstArray(), nNewLength );
 	aChucker.WriteBytes( aTmpBuffer );
 }
 
-void SAL_CALL ZipOutputStream::rawCloseEntry(  ) 
-	throw(IOException, RuntimeException)
+void SAL_CALL ZipOutputStream::rawCloseEntry(  )
 {
 	if ( pCurrentEntry->nMethod == DEFLATED && ( pCurrentEntry->nFlag & 8 ) )
 		writeEXT(*pCurrentEntry);
 	pCurrentEntry = NULL;
 }
 
-void SAL_CALL ZipOutputStream::finish(  ) 
-	throw(IOException, RuntimeException)
+void SAL_CALL ZipOutputStream::finish(  )
 {
 	if (bFinished)
 		return;
@@ -239,10 +231,10 @@ void SAL_CALL ZipOutputStream::finish(  )
 	if (aZipList.size() < 1)
 		OSL_ENSURE(false,"Zip file must have at least one entry!\n");
 
-	sal_Int32 nOffset= static_cast < sal_Int32 > (aChucker.GetPosition());
+	sal_Int32 nCENOffset= static_cast < sal_Int32 > (aChucker.GetPosition());
 	for (sal_Int32 i =0, nEnd = aZipList.size(); i < nEnd; i++)
 		writeCEN( *aZipList[i] );
-	writeEND( nOffset, static_cast < sal_Int32 > (aChucker.GetPosition()) - nOffset);
+	writeEND( nCENOffset, static_cast < sal_Int32 > (aChucker.GetPosition()) - nCENOffset);
 	bFinished = sal_True;
 	xStream->flush();
 }
@@ -260,7 +252,7 @@ void ZipOutputStream::doDeflate()
             sal_Int32 nDiff = n_ConstDigestLength - mnDigested;
             if ( nDiff )
             {
-                sal_Int32 nEat = ::std::min( nLength, nDiff ); 
+                sal_Int32 nEat = ::std::min( nLength, nDiff );
                 uno::Sequence< sal_Int8 > aTmpSeq( aTmpBuffer.getConstArray(), nEat );
                 m_xDigestContext->updateDigest( aTmpSeq );
                 mnDigested = mnDigested + static_cast< sal_Int16 >( nEat );
@@ -296,8 +288,7 @@ void ZipOutputStream::doDeflate()
     }
 }
 
-void ZipOutputStream::writeEND(sal_uInt32 nOffset, sal_uInt32 nLength)
-	throw(IOException, RuntimeException)
+void ZipOutputStream::writeEND(sal_uInt32 nCENOffset, sal_uInt32 nLength)
 {
 	aChucker << ENDSIG;
 	aChucker << static_cast < sal_Int16 > ( 0 );
@@ -305,11 +296,10 @@ void ZipOutputStream::writeEND(sal_uInt32 nOffset, sal_uInt32 nLength)
 	aChucker << static_cast < sal_Int16 > ( aZipList.size() );
 	aChucker << static_cast < sal_Int16 > ( aZipList.size() );
 	aChucker << nLength;
-	aChucker << nOffset;
+	aChucker << nCENOffset;
 	aChucker << static_cast < sal_Int16 > ( 0 );
 }
 void ZipOutputStream::writeCEN( const ZipEntry &rEntry )
-	throw(IOException, RuntimeException)
 {
     if ( !::comphelper::OStorageHelper::IsValidZipEntryFileName( rEntry.sPath, sal_True ) )
         throw IOException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Unexpected character is used in file name." ) ), uno::Reference< XInterface >() );
@@ -338,18 +328,17 @@ void ZipOutputStream::writeCEN( const ZipEntry &rEntry )
 	aChucker << rEntry.nCompressedSize;
 	aChucker << rEntry.nSize;
 	aChucker << nNameLength;
-	aChucker << static_cast < sal_Int16> (0);
-	aChucker << static_cast < sal_Int16> (0);
-	aChucker << static_cast < sal_Int16> (0);
-	aChucker << static_cast < sal_Int16> (0);
-	aChucker << static_cast < sal_Int32> (0);
-	aChucker << rEntry.nOffset;
+	aChucker << static_cast < sal_Int16> (0); // extra field length
+	aChucker << static_cast < sal_Int16> (0); // file comment length
+	aChucker << static_cast < sal_Int16> (0); // disk number start
+	aChucker << static_cast < sal_Int16> (0); // internal file attributes
+	aChucker << static_cast < sal_Int32> (0); // external file attributes
+	aChucker << rEntry.nFileHeaderOffset;
 
 	Sequence < sal_Int8 > aSequence( (sal_Int8*)sUTF8Name.getStr(), sUTF8Name.getLength() );
 	aChucker.WriteBytes( aSequence );
 }
 void ZipOutputStream::writeEXT( const ZipEntry &rEntry )
-	throw(IOException, RuntimeException)
 {
 	aChucker << EXTSIG;
 	aChucker << static_cast < sal_uInt32> ( rEntry.nCrc );
@@ -358,7 +347,6 @@ void ZipOutputStream::writeEXT( const ZipEntry &rEntry )
 }
 
 sal_Int32 ZipOutputStream::writeLOC( const ZipEntry &rEntry )
-	throw(IOException, RuntimeException)
 {
     if ( !::comphelper::OStorageHelper::IsValidZipEntryFileName( rEntry.sPath, sal_True ) )
         throw IOException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Unexpected character is used in file name." ) ), uno::Reference< XInterface >() );
@@ -367,40 +355,40 @@ sal_Int32 ZipOutputStream::writeLOC( const ZipEntry &rEntry )
 	sal_Int16 nNameLength 		= static_cast < sal_Int16 > ( sUTF8Name.getLength() );
 
 	aChucker << LOCSIG;
-	aChucker << rEntry.nVersion;
+	aChucker << rEntry.nVersion; // version needed to extract
 
 	if (rEntry.nFlag & (1 << 4) )
 	{
 		// If it's an encrypted entry, we pretend its stored plain text
 		sal_Int16 nTmpFlag = rEntry.nFlag;
 		nTmpFlag &= ~(1 <<4 );
-		aChucker << nTmpFlag;
-		aChucker << static_cast < sal_Int16 > ( STORED );
+		aChucker << nTmpFlag;	// general purpose bit flag
+		aChucker << static_cast < sal_Int16 > ( STORED ); // compression method
 	}
 	else
 	{
-		aChucker << rEntry.nFlag;
-		aChucker << rEntry.nMethod;
+		aChucker << rEntry.nFlag; // general purpose bit flag
+		aChucker << rEntry.nMethod; // compression method
 	}
 
-	aChucker << static_cast < sal_uInt32 > (rEntry.nTime);
+	aChucker << static_cast < sal_uInt32 > (rEntry.nTime); // last mod file time & date
 	if ((rEntry.nFlag & 8) == 8 )
 	{
-		aChucker << static_cast < sal_Int32 > (0);
-		aChucker << static_cast < sal_Int32 > (0);
-		aChucker << static_cast < sal_Int32 > (0);
+		aChucker << static_cast < sal_Int32 > (0); // crc-32
+		aChucker << static_cast < sal_Int32 > (0); // compressed size
+		aChucker << static_cast < sal_Int32 > (0); // uncompressed size
 	}
 	else
 	{
-		aChucker << static_cast < sal_uInt32 > (rEntry.nCrc);
-		aChucker << rEntry.nCompressedSize;
-		aChucker << rEntry.nSize;
+		aChucker << static_cast < sal_uInt32 > (rEntry.nCrc); // crc-32
+		aChucker << rEntry.nCompressedSize; // compressed size
+		aChucker << rEntry.nSize; // uncompressed size
 	}
-	aChucker << nNameLength;
-	aChucker << static_cast < sal_Int16 > (0);
+	aChucker << nNameLength; // file name length
+	aChucker << static_cast < sal_Int16 > (0); // extra field length
 
 	Sequence < sal_Int8 > aSequence( (sal_Int8*)sUTF8Name.getStr(), sUTF8Name.getLength() );
-	aChucker.WriteBytes( aSequence );
+	aChucker.WriteBytes( aSequence ); // file name
 
 	return LOCHDR + nNameLength;
 }
@@ -417,7 +405,7 @@ sal_uInt32 ZipOutputStream::getCurrentDosTime( )
 		nYear-=1980;
 	else if (nYear>80)
 		nYear-=80;
-	sal_uInt32 nResult = static_cast < sal_uInt32>( ( ( ( aDateTime.Day) + 
+	sal_uInt32 nResult = static_cast < sal_uInt32>( ( ( ( aDateTime.Day) +
 									      ( 32 * (aDateTime.Month)) +
 									      ( 512 * nYear ) ) << 16) |
 									    ( ( aDateTime.Seconds/2) +
@@ -427,7 +415,7 @@ sal_uInt32 ZipOutputStream::getCurrentDosTime( )
 }
 /*
 
-   This is actually never used, so I removed it, but thought that the 
+   This is actually never used, so I removed it, but thought that the
    implementation details may be useful in the future...mtg 20010307
 
    I stopped using the time library and used the OSL version instead, but
@@ -445,4 +433,3 @@ void ZipOutputStream::dosDateToTMDate ( tm &rTime, sal_uInt32 nDosDate)
 	rTime.tm_sec  = static_cast < sal_uInt32 > ( 2 * (nDosDate & 0x1F) );
 }
 */
-

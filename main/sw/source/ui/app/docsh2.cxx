@@ -845,7 +845,7 @@ void SwDocShell::Execute(SfxRequest& rReq)
                         }
 
                         bool bError = false;
-                        //#b6439685# catch expception if wrong filter is selected - should not happen anymore
+                        //#b6439685# catch exception if wrong filter is selected - should not happen anymore
                         try
                         {
                             xFltMgr->setCurrentFilter( pOwnFlt->GetUIName() );
@@ -1870,4 +1870,3 @@ SfxInPlaceClient* SwDocShell::GetIPClient( const ::svt::EmbeddedObjectRef& xObjR
 
     return pResult;
 }
-

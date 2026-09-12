@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -60,7 +60,7 @@ import com.sun.star.uno.UnoRuntime;
 *   necessary arguuments for loading  a component. If omitted
 *   then zero length array is passed as parameter</li>
 * <ul> <p>
-* Test is <b> NOT </b> multithread compilant. <p>
+* Test is <b> NOT </b> multithread compliant. <p>
 * @see com.sun.star.frame.XFrameLoader
 */
 public class _XFrameLoader extends MultiMethodTest {
@@ -71,7 +71,7 @@ public class _XFrameLoader extends MultiMethodTest {
     private PropertyValue[] args = new PropertyValue[0] ;
 
     /**
-    * Implemetation of load listener which geristers all it's calls.
+    * Implementation of load listener which geristers all it's calls.
     */
     protected class TestListener implements XLoadEventListener {
         public boolean finished = false ;
@@ -203,4 +203,3 @@ public class _XFrameLoader extends MultiMethodTest {
 
     }
 }
-

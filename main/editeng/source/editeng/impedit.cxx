@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -125,13 +125,13 @@ void ImpEditView::SetEditSelection( const EditSelection& rEditSelection )
 		const EditDoc& rDoc = pEditEngine->pImpEditEngine->GetEditDoc();
 		const EditPaM pmEnd = rDoc.GetEndPaM();
 		EENotifyType eNotifyType;
-		if (rDoc.Count() > 1 && 
-			pmEnd == rEditSelection.Min() && 
+		if (rDoc.Count() > 1 &&
+			pmEnd == rEditSelection.Min() &&
 			pmEnd == rEditSelection.Max())//if move cursor to the last para.
 		{
 			eNotifyType = EE_NOTIFY_TEXTVIEWSELECTIONCHANGED_ENDD_PARA;
 		}
-		else 
+		else
 		{
 			eNotifyType = EE_NOTIFY_TEXTVIEWSELECTIONCHANGED;
 		}
@@ -1549,7 +1549,7 @@ void ImpEditView::ShowDDCursor( const Rectangle& rRect )
 	}
 }
 
-void ImpEditView::dragGestureRecognized( const ::com::sun::star::datatransfer::dnd::DragGestureEvent& rDGE ) throw (::com::sun::star::uno::RuntimeException)
+void ImpEditView::dragGestureRecognized( const ::com::sun::star::datatransfer::dnd::DragGestureEvent& rDGE )
 {
     DBG_ASSERT( !pDragAndDropInfo, "dragGestureRecognized - DragAndDropInfo exist!" );
 
@@ -1632,7 +1632,7 @@ void ImpEditView::dragGestureRecognized( const ::com::sun::star::datatransfer::d
     }
 }
 
-void ImpEditView::dragDropEnd( const ::com::sun::star::datatransfer::dnd::DragSourceDropEvent& rDSDE ) throw (::com::sun::star::uno::RuntimeException)
+void ImpEditView::dragDropEnd( const ::com::sun::star::datatransfer::dnd::DragSourceDropEvent& rDSDE )
 {
 	vos::OGuard aVclGuard( Application::GetSolarMutex() );
 
@@ -1725,7 +1725,7 @@ void ImpEditView::dragDropEnd( const ::com::sun::star::datatransfer::dnd::DragSo
 	}
 }
 
-void ImpEditView::drop( const ::com::sun::star::datatransfer::dnd::DropTargetDropEvent& rDTDE ) throw (::com::sun::star::uno::RuntimeException)
+void ImpEditView::drop( const ::com::sun::star::datatransfer::dnd::DropTargetDropEvent& rDTDE )
 {
 	vos::OGuard aVclGuard( Application::GetSolarMutex() );
 
@@ -1798,7 +1798,7 @@ void ImpEditView::drop( const ::com::sun::star::datatransfer::dnd::DropTargetDro
     }
 }
 
-void ImpEditView::dragEnter( const ::com::sun::star::datatransfer::dnd::DropTargetDragEnterEvent& rDTDEE ) throw (::com::sun::star::uno::RuntimeException)
+void ImpEditView::dragEnter( const ::com::sun::star::datatransfer::dnd::DropTargetDragEnterEvent& rDTDEE )
 {
 	vos::OGuard aVclGuard( Application::GetSolarMutex() );
 
@@ -1825,7 +1825,7 @@ void ImpEditView::dragEnter( const ::com::sun::star::datatransfer::dnd::DropTarg
     dragOver( rDTDEE );
 }
 
-void ImpEditView::dragExit( const ::com::sun::star::datatransfer::dnd::DropTargetEvent& ) throw (::com::sun::star::uno::RuntimeException)
+void ImpEditView::dragExit( const ::com::sun::star::datatransfer::dnd::DropTargetEvent& )
 {
 	vos::OGuard aVclGuard( Application::GetSolarMutex() );
 
@@ -1838,7 +1838,7 @@ void ImpEditView::dragExit( const ::com::sun::star::datatransfer::dnd::DropTarge
 	}
 }
 
-void ImpEditView::dragOver( const ::com::sun::star::datatransfer::dnd::DropTargetDragEvent& rDTDE ) throw (::com::sun::star::uno::RuntimeException)
+void ImpEditView::dragOver( const ::com::sun::star::datatransfer::dnd::DropTargetDragEvent& rDTDE )
 {
     vos::OGuard aVclGuard( Application::GetSolarMutex() );
 

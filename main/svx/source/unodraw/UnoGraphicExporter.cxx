@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -160,20 +160,20 @@ namespace svx
 		virtual ~GraphicExporter();
 
 		// XFilter
-		virtual sal_Bool SAL_CALL filter( const Sequence< PropertyValue >& aDescriptor ) throw(RuntimeException);
-		virtual void SAL_CALL cancel(  ) throw(RuntimeException);
+		virtual sal_Bool SAL_CALL filter( const Sequence< PropertyValue >& aDescriptor );
+		virtual void SAL_CALL cancel(  );
 
 		// XExporter
-		virtual void SAL_CALL setSourceDocument( const Reference< XComponent >& xDoc ) throw(IllegalArgumentException, RuntimeException);
+		virtual void SAL_CALL setSourceDocument( const Reference< XComponent >& xDoc );
 
 		// XServiceInfo
-		virtual OUString SAL_CALL getImplementationName(  ) throw(RuntimeException);
-		virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName ) throw(RuntimeException);
-		virtual Sequence< OUString > SAL_CALL getSupportedServiceNames(  ) throw(RuntimeException);
+		virtual OUString SAL_CALL getImplementationName(  );
+		virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName );
+		virtual Sequence< OUString > SAL_CALL getSupportedServiceNames(  );
 
 		// XMimeTypeInfo
-		virtual sal_Bool SAL_CALL supportsMimeType( const ::rtl::OUString& MimeTypeName ) throw (RuntimeException);
-		virtual Sequence< OUString > SAL_CALL getSupportedMimeTypeNames(  ) throw (RuntimeException);
+		virtual sal_Bool SAL_CALL supportsMimeType( const ::rtl::OUString& MimeTypeName );
+		virtual Sequence< OUString > SAL_CALL getSupportedMimeTypeNames(  );
 
 		VirtualDevice* CreatePageVDev( SdrPage* pPage, sal_uIntPtr nWidthPixel, sal_uIntPtr nHeightPixel ) const;
 
@@ -196,7 +196,6 @@ namespace svx
 	};
 
 	SVX_DLLPUBLIC Reference< XInterface > SAL_CALL GraphicExporter_createInstance(const Reference< XMultiServiceFactory > & )
-		throw( Exception )
 	{
 		return (XWeak*)new GraphicExporter();
 	}
@@ -232,7 +231,7 @@ namespace svx
                 // use 100th mm for primitive bitmap converter tool, input is pixel
                 // use a real OutDev to get the correct DPI, the static LogicToLogic assumes 72dpi which is wrong (!)
                 const Size aSize100th(Application::GetDefaultDevice()->PixelToLogic(*pSize, MapMode(MAP_100TH_MM)));
-                    
+
                 aRange.expand(basegfx::B2DPoint(aSize100th.Width(), aSize100th.Height()));
 
                 // when explicitly pixels are requested from the GraphicExporter, use a *very* high limit
@@ -282,7 +281,7 @@ namespace svx
             }
 
             const GraphicConversionParameters aParameters(
-                aTargetSize, 
+                aTargetSize,
                 true, // allow unlimited size
                 aDrawinglayerOpt.IsAntiAliasing(),
                 aDrawinglayerOpt.IsSnapHorVerLinesToDiscrete());
@@ -324,7 +323,7 @@ public:
 	virtual ~ImplExportCheckVisisbilityRedirector();
 
 	virtual drawinglayer::primitive2d::Primitive2DSequence createRedirectedPrimitive2DSequence(
-		const sdr::contact::ViewObjectContact& rOriginal, 
+		const sdr::contact::ViewObjectContact& rOriginal,
 		const sdr::contact::DisplayInfo& rDisplayInfo);
 
 private:
@@ -341,7 +340,7 @@ ImplExportCheckVisisbilityRedirector::~ImplExportCheckVisisbilityRedirector()
 }
 
 drawinglayer::primitive2d::Primitive2DSequence ImplExportCheckVisisbilityRedirector::createRedirectedPrimitive2DSequence(
-	const sdr::contact::ViewObjectContact& rOriginal, 
+	const sdr::contact::ViewObjectContact& rOriginal,
 	const sdr::contact::DisplayInfo& rDisplayInfo)
 {
 	SdrObject* pObject = rOriginal.GetViewContact().TryToGetSdrObject();
@@ -640,7 +639,7 @@ void GraphicExporter::ParseSettings( const Sequence< PropertyValue >& aDescripto
                     if( pDataValues->Value >>= nVal )
                         rSettings.maScaleY = Fraction( rSettings.maScaleY.GetNumerator(), nVal );
                 }
-                
+
 				pDataValues++;
 			}
 		}
@@ -698,7 +697,7 @@ bool GraphicExporter::GetGraphic( ExportSettings& rSettings, Graphic& aGraphic, 
                 pTempBackgroundShape->SetMergedItemSet(pCorrectProperties->GetItemSet());
                 pTempBackgroundShape->SetMergedItem(XLineStyleItem(XLINE_NONE));
                 pTempBackgroundShape->NbcSetStyleSheet(pCorrectProperties->GetStyleSheet(), true);
-		        aShapes.push_back(pTempBackgroundShape);				
+		        aShapes.push_back(pTempBackgroundShape);
             }
 		}
 		else
@@ -780,7 +779,7 @@ bool GraphicExporter::GetGraphic( ExportSettings& rSettings, Graphic& aGraphic, 
 
 	            // create a view
 	            SdrView*		pView;
-            	
+
 	            if( PTR_CAST( FmFormModel, mpDoc ) )
 	            {
 		            pView = new FmFormView( PTR_CAST( FmFormModel, mpDoc ), &aVDev );
@@ -919,7 +918,7 @@ bool GraphicExporter::GetGraphic( ExportSettings& rSettings, Graphic& aGraphic, 
                 {
                     Rectangle aScrollRectangle;
                     Rectangle aPaintRectangle;
-                    
+
                     const boost::scoped_ptr< GDIMetaFile > pMtf(
                         ( (SdrTextObj*) pObj )->GetTextScrollMetaFileAndRectangle(
                         aScrollRectangle, aPaintRectangle ) );
@@ -940,7 +939,7 @@ bool GraphicExporter::GetGraphic( ExportSettings& rSettings, Graphic& aGraphic, 
                     // set actual origin (mtf is at actual shape
                     // output position)
                     MapMode aLocalMapMode( aMap );
-                    aLocalMapMode.SetOrigin( 
+                    aLocalMapMode.SetOrigin(
                         Point( -aPaintRectangle.Left(),
                                -aPaintRectangle.Top() ) );
                     pMtf->SetPrefMapMode( aLocalMapMode );
@@ -953,14 +952,14 @@ bool GraphicExporter::GetGraphic( ExportSettings& rSettings, Graphic& aGraphic, 
                                          "XTEXT_PAINTRECT", 0,
                                          reinterpret_cast<sal_uInt8 const*>(&aPaintRectangle),
                                          sizeof( Rectangle ) ) );
-                    
+
                     aGraphic = Graphic( *pMtf );
-                    
+
                     bSingleGraphic = sal_True;
                 }
             }
         }
-        
+
         if( !bSingleGraphic )
 		{
 			// create a metafile for all shapes
@@ -1012,7 +1011,7 @@ bool GraphicExporter::GetGraphic( ExportSettings& rSettings, Graphic& aGraphic, 
 			if(!aShapes.empty())
 			{
 				// more effective way to paint a vector of SdrObjects. Hand over the processed page
-                // to have it in the 
+                // to have it in the
 				sdr::contact::ObjectContactOfObjListPainter aMultiObjectPainter(aOut, aShapes, mpCurrentPage);
 				ImplExportCheckVisisbilityRedirector aCheckVisibilityRedirector(mpCurrentPage);
 				aMultiObjectPainter.SetViewObjectContactRedirector(&aCheckVisibilityRedirector);
@@ -1058,7 +1057,6 @@ bool GraphicExporter::GetGraphic( ExportSettings& rSettings, Graphic& aGraphic, 
 
 // XFilter
 sal_Bool SAL_CALL GraphicExporter::filter( const Sequence< PropertyValue >& aDescriptor )
-	throw(RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -1066,7 +1064,7 @@ sal_Bool SAL_CALL GraphicExporter::filter( const Sequence< PropertyValue >& aDes
 		return sal_False;
 
 	GraphicFilter*				pFilter = GraphicFilter::GetGraphicFilter();
-   
+
 	if( NULL == pFilter || NULL == mpUnoPage->GetSdrPage() || NULL == mpDoc )
 		return sal_False;
 
@@ -1102,7 +1100,7 @@ sal_Bool SAL_CALL GraphicExporter::filter( const Sequence< PropertyValue >& aDes
             }
 			else if( aSettings.mxOutputStream.is() )
 			{
-                // TODO: Either utilize optional XSeekable functionality for the 
+                // TODO: Either utilize optional XSeekable functionality for the
                 // SvOutputStream, or adapt the graphic filter to not seek anymore.
                 SvMemoryStream aStream( 1024, 1024 );
 
@@ -1139,7 +1137,6 @@ sal_Bool SAL_CALL GraphicExporter::filter( const Sequence< PropertyValue >& aDes
 }
 
 void SAL_CALL GraphicExporter::cancel()
-	throw(RuntimeException)
 {
 }
 
@@ -1147,7 +1144,6 @@ void SAL_CALL GraphicExporter::cancel()
 
 /** the source 'document' could be a XDrawPage, a XShape or a generic XShapes */
 void SAL_CALL GraphicExporter::setSourceDocument( const Reference< lang::XComponent >& xComponent )
-	throw(IllegalArgumentException, RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -1254,13 +1250,11 @@ void SAL_CALL GraphicExporter::setSourceDocument( const Reference< lang::XCompon
 
 // XServiceInfo
 OUString SAL_CALL GraphicExporter::getImplementationName(  )
-	throw(RuntimeException)
 {
 	return GraphicExporter_getImplementationName();
 }
 
 sal_Bool SAL_CALL GraphicExporter::supportsService( const OUString& ServiceName )
-	throw(RuntimeException)
 {
 	Sequence< OUString > aSeq( GraphicExporter_getSupportedServiceNames() );
 	sal_Int32 nArgs = aSeq.getLength();
@@ -1273,13 +1267,12 @@ sal_Bool SAL_CALL GraphicExporter::supportsService( const OUString& ServiceName 
 }
 
 Sequence< OUString > SAL_CALL GraphicExporter::getSupportedServiceNames(  )
-	throw(RuntimeException)
 {
 	return GraphicExporter_getSupportedServiceNames();
 }
 
 // XMimeTypeInfo
-sal_Bool SAL_CALL GraphicExporter::supportsMimeType( const OUString& MimeTypeName ) throw (RuntimeException)
+sal_Bool SAL_CALL GraphicExporter::supportsMimeType( const OUString& MimeTypeName )
 {
 	const String aMimeTypeName( MimeTypeName );
 
@@ -1297,7 +1290,7 @@ sal_Bool SAL_CALL GraphicExporter::supportsMimeType( const OUString& MimeTypeNam
 	return sal_False;
 }
 
-Sequence< OUString > SAL_CALL GraphicExporter::getSupportedMimeTypeNames(  ) throw (RuntimeException)
+Sequence< OUString > SAL_CALL GraphicExporter::getSupportedMimeTypeNames(  )
 {
 	GraphicFilter*	pFilter = GraphicFilter::GetGraphicFilter();
 	sal_uInt16 nCount = pFilter->GetExportFormatCount();
@@ -1340,4 +1333,3 @@ Graphic SvxGetGraphicForShape( SdrObject& rShape, bool bVector )
 	}
 	return aGraphic;
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -77,7 +77,7 @@ enum type {
     UltraExpanded = 9
 };
 }
-    
+
 namespace pitch
 {
 enum type {
@@ -107,13 +107,13 @@ enum type {
 namespace family
 {
 enum type {
-    Unknown = 0, 
-    Decorative = 1, 
+    Unknown = 0,
+    Decorative = 1,
     Modern = 2,
-    Roman = 3, 
-    Script = 4, 
-    Swiss = 5, 
-    System = 6 
+    Roman = 3,
+    Script = 4,
+    Swiss = 5,
+    System = 6
 };
 }
 
@@ -127,19 +127,19 @@ enum type {
 };
 }
 
-namespace fcstatus 
+namespace fcstatus
 {
-enum type { 
+enum type {
     istrue,
     isunset,
-    isfalse 
+    isfalse
 };
 }
 
 /*
  *  the difference between FastPrintFontInfo and PrintFontInfo
  *  is that the information in FastPrintFontInfo can usually
- *  be gathered without openening either the font file or
+ *  be gathered without opening either the font file or
  *  an afm metric file. they are gathered from fonts.dir alone.
  *  if only FastPrintFontInfo is gathered and PrintFontInfo
  *  on demand and for less fonts, then performance in startup
@@ -150,7 +150,7 @@ struct FastPrintFontInfo
 {
     fontID                  			m_nID; // FontID
     fonttype::type          			m_eType;
-        
+
     // font attributes
     rtl::OUString         				m_aFamilyName;
     rtl::OUString                       m_aStyleName;
@@ -257,14 +257,14 @@ class VCL_PLUGIN_PUBLIC PrintFontManager
         std::hash_map< sal_Unicode, bool >		m_bVerticalSubstitutions;
 
         PrintFontMetrics() : m_bKernPairsQueried( false ) {}
-        
+
         bool isEmpty() const { return m_aMetrics.empty(); }
     };
 
     struct PrintFont
     {
         fonttype::type                              m_eType;
-            
+
         // font attributes
         int                                         m_nFamilyName;  // atom
         std::list< int >							m_aAliases;
@@ -396,7 +396,7 @@ class VCL_PLUGIN_PUBLIC PrintFontManager
     bool m_bFontconfigSuccess;
 
     mutable std::vector< fontID >               m_aOverrideFonts;
-        
+
     rtl::OString getAfmFile( PrintFont* pFont ) const;
     rtl::OString getFontFile( PrintFont* pFont ) const;
 
@@ -444,18 +444,18 @@ class VCL_PLUGIN_PUBLIC PrintFontManager
 
     since fontconfig is asked for font substitutes before OOo will check for font availability
     and fontconfig will happily substitute fonts it doesn't know (e.g. "Arial Narrow" -> "DejaVu Sans Book"!)
-    it becomes necessary to tell the library about all the hidden font treasures 
- 
+    it becomes necessary to tell the library about all the hidden font treasures
+
     @returns
     true if libfontconfig accepted the directory
     false else (e.g. no libfontconfig found)
     */
     bool addFontconfigDir(const rtl::OString& rDirectory);
-	
+
     static bool parseXLFD( const rtl::OString& rXLFD, XLFDEntry& rEntry );
     void parseXLFD_appendAliases( const std::list< rtl::OString >& rXLFDs, std::list< XLFDEntry >& rEntries ) const;
     void initFontsAlias();
-    
+
     bool readOverrideMetrics();
 
     PrintFontManager();
@@ -463,17 +463,17 @@ class VCL_PLUGIN_PUBLIC PrintFontManager
 public:
     static PrintFontManager& get(); // one instance only
 
-    int addFontFile( const rtl::OString& rFileName, int nFaceNum ); 
+    int addFontFile( const rtl::OString& rFileName, int nFaceNum );
 
     void initialize();
 
     // returns the number of managed fonts
     int getFontCount() const { return m_aFonts.size(); }
-    
+
     // caution: the getFontList* methods can change the font list on demand
     // depending on the pParser argument. That is getFontCount() may
     // return a larger value after getFontList()
-    
+
     // returns the ids of all managed fonts. on pParser != NULL
     // all fonttype::Builtin type fonts are not listed
     // which do not occur in the PPD of pParser
@@ -500,7 +500,7 @@ public:
 
     // get a specific fonts family name aliases
     void getFontFamilyAliases( fontID nFontID ) const;
-        
+
     // get a specific fonts type
     fonttype::type getFontType( fontID nFontID ) const
     {
@@ -694,11 +694,11 @@ public:
     // returns false if there were not any
     bool getAlternativeFamilyNames( fontID nFont, std::list< rtl::OUString >& rNames ) const;
 
-    /*  system dependendent font matching
+    /*  system dependent font matching
 
     <p>
     <code>matchFont</code> matches a pattern of font characteristics
-    and returns the closest match if possibe. If a match was found
+    and returns the closest match if possible. If a match was found
     the <code>FastPrintFontInfo</code> passed in as parameter
     will be update to the found matching font.
     </p>
@@ -730,8 +730,8 @@ public:
     bool matchFont( FastPrintFontInfo& rInfo, const com::sun::star::lang::Locale& rLocale );
     bool getFontOptions( const FastPrintFontInfo&, int nSize, void (*subcallback)(void*), ImplFontOptions& rResult ) const;
 
-    rtl::OUString Substitute( const rtl::OUString& rFontName, rtl::OUString& rMissingCodes, 
-        const rtl::OString& rLangAttrib, italic::type& rItalic, weight::type& rWeight, 
+    rtl::OUString Substitute( const rtl::OUString& rFontName, rtl::OUString& rMissingCodes,
+        const rtl::OString& rLangAttrib, italic::type& rItalic, weight::type& rWeight,
         width::type& rWidth, pitch::type& rPitch) const;
     bool hasFontconfig() const { return m_bFontconfigSuccess; }
 

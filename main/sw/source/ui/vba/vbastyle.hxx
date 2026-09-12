@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -39,21 +39,21 @@ private:
 	css::uno::Reference< css::beans::XPropertySet > mxStyleProps;
 	css::uno::Reference< css::style::XStyle > mxStyle;
 public:
-	SwVbaStyle( const css::uno::Reference< ov::XHelperInterface >& xParent, const css::uno::Reference< css::uno::XComponentContext > & xContext, const css::uno::Reference< css::beans::XPropertySet >& _xPropertySet ) throw ( css::script::BasicErrorException, css::uno::RuntimeException );
+	SwVbaStyle( const css::uno::Reference< ov::XHelperInterface >& xParent, const css::uno::Reference< css::uno::XComponentContext > & xContext, const css::uno::Reference< css::beans::XPropertySet >& _xPropertySet );
 	virtual ~SwVbaStyle(){}
 
-    static void setStyle( const css::uno::Reference< css::beans::XPropertySet >& xTCProps, const css::uno::Reference< ooo::vba::word::XStyle >& xStyle ) throw (css::uno::RuntimeException);
+    static void setStyle( const css::uno::Reference< css::beans::XPropertySet >& xTCProps, const css::uno::Reference< ooo::vba::word::XStyle >& xStyle );
     static rtl::OUString getOOoStyleTypeFromMSWord( sal_Int32 _wdStyleType );
-    static sal_Int32 getLanguageID( const css::uno::Reference< css::beans::XPropertySet >& xTCProps ) throw (css::uno::RuntimeException);
-    static void setLanguageID( const css::uno::Reference< css::beans::XPropertySet >& xTCProps, sal_Int32 _languageid ) throw (css::uno::RuntimeException);
+    static sal_Int32 getLanguageID( const css::uno::Reference< css::beans::XPropertySet >& xTCProps );
+    static void setLanguageID( const css::uno::Reference< css::beans::XPropertySet >& xTCProps, sal_Int32 _languageid );
 
     // Attributes
-    virtual rtl::OUString SAL_CALL getName() throw (css::uno::RuntimeException);
-    virtual void SAL_CALL setName( const rtl::OUString& Name ) throw (css::uno::RuntimeException);
-    virtual ::sal_Int32 SAL_CALL getLanguageID( ) throw (css::uno::RuntimeException);
-    virtual void SAL_CALL setLanguageID( ::sal_Int32 _languageid ) throw (css::uno::RuntimeException);
-    virtual ::sal_Int32 SAL_CALL getType() throw (css::uno::RuntimeException);
-    virtual css::uno::Reference< ooo::vba::word::XFont > SAL_CALL getFont() throw (css::uno::RuntimeException);
+    virtual rtl::OUString SAL_CALL getName();
+    virtual void SAL_CALL setName( const rtl::OUString& Name );
+    virtual ::sal_Int32 SAL_CALL getLanguageID( );
+    virtual void SAL_CALL setLanguageID( ::sal_Int32 _languageid );
+    virtual ::sal_Int32 SAL_CALL getType();
+    virtual css::uno::Reference< ooo::vba::word::XFont > SAL_CALL getFont();
 
 	// XHelperInterface
 	virtual rtl::OUString& getServiceImplName();

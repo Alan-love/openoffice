@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -108,66 +108,54 @@ public:
         move the thumb to a valid position.
     */
     void CheckValues (void);
-        
+
     /** On some occasions it is necessary to trigger the painting of a
         scrollbar from the outside.
     */
     virtual void Paint (
         const css::awt::Rectangle& rUpdateBox,
         bool bNoClip = false);
-    
+
     virtual sal_Int32 GetSize (void) const = 0;
 
     // XWindowListener
-    
-    virtual void SAL_CALL windowResized (const css::awt::WindowEvent& rEvent)
-        throw (css::uno::RuntimeException);
-    
-    virtual void SAL_CALL windowMoved (const css::awt::WindowEvent& rEvent)
-        throw (css::uno::RuntimeException);
 
-    virtual void SAL_CALL windowShown (const css::lang::EventObject& rEvent)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL windowResized (const css::awt::WindowEvent& rEvent);
 
-    virtual void SAL_CALL windowHidden (const css::lang::EventObject& rEvent)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL windowMoved (const css::awt::WindowEvent& rEvent);
+
+    virtual void SAL_CALL windowShown (const css::lang::EventObject& rEvent);
+
+    virtual void SAL_CALL windowHidden (const css::lang::EventObject& rEvent);
 
 
     // XPaintListener
 
-    virtual void SAL_CALL windowPaint (const css::awt::PaintEvent& rEvent)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL windowPaint (const css::awt::PaintEvent& rEvent);
 
-    
+
     // XMouseListener
 
-    virtual void SAL_CALL mousePressed (const css::awt::MouseEvent& rEvent)
-        throw(css::uno::RuntimeException);
+    virtual void SAL_CALL mousePressed (const css::awt::MouseEvent& rEvent);
 
-    virtual void SAL_CALL mouseReleased (const css::awt::MouseEvent& rEvent)
-        throw(css::uno::RuntimeException);
+    virtual void SAL_CALL mouseReleased (const css::awt::MouseEvent& rEvent);
 
-    virtual void SAL_CALL mouseEntered (const css::awt::MouseEvent& rEvent)
-        throw(css::uno::RuntimeException);
+    virtual void SAL_CALL mouseEntered (const css::awt::MouseEvent& rEvent);
 
-    virtual void SAL_CALL mouseExited (const css::awt::MouseEvent& rEvent)
-        throw(css::uno::RuntimeException);
+    virtual void SAL_CALL mouseExited (const css::awt::MouseEvent& rEvent);
 
 
     // XMouseMotionListener
-    
-    virtual void SAL_CALL mouseMoved (const css::awt::MouseEvent& rEvent)
-        throw (css::uno::RuntimeException);
-    
-    virtual void SAL_CALL mouseDragged (const css::awt::MouseEvent& rEvent)
-        throw (css::uno::RuntimeException);
+
+    virtual void SAL_CALL mouseMoved (const css::awt::MouseEvent& rEvent);
+
+    virtual void SAL_CALL mouseDragged (const css::awt::MouseEvent& rEvent);
 
 
     // lang::XEventListener
-    virtual void SAL_CALL disposing (const css::lang::EventObject& rEvent)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL disposing (const css::lang::EventObject& rEvent);
 
-    
+
     enum Area { Total, Pager, Thumb, PagerUp, PagerDown, PrevButton, NextButton, None,
                 __AreaCount__ = None };
 
@@ -199,7 +187,7 @@ protected:
     SharedBitmapDescriptor mpThumbCenterDescriptor;
     SharedBitmapDescriptor mpThumbEndDescriptor;
     bool maEnabledState[__AreaCount__];
-    
+
     virtual css::geometry::RealRectangle2D GetRectangle (const Area eArea) const;
     virtual double GetDragDistance (const sal_Int32 nX, const sal_Int32 nY) const = 0;
     virtual void UpdateDragAnchor (const double nDragDistance) = 0;

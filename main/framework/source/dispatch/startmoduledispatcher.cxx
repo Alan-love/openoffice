@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -103,7 +103,6 @@ StartModuleDispatcher::~StartModuleDispatcher()
 //-----------------------------------------------
 void SAL_CALL StartModuleDispatcher::dispatch(const css::util::URL&                                  aURL      ,
                                               const css::uno::Sequence< css::beans::PropertyValue >& lArguments)
-    throw(css::uno::RuntimeException)
 {
     dispatchWithNotification(aURL, lArguments, css::uno::Reference< css::frame::XDispatchResultListener >());
 }
@@ -112,7 +111,6 @@ void SAL_CALL StartModuleDispatcher::dispatch(const css::util::URL&             
 void SAL_CALL StartModuleDispatcher::dispatchWithNotification(const css::util::URL&                                             aURL      ,
                                                               const css::uno::Sequence< css::beans::PropertyValue >&            /*lArguments*/,
                                                               const css::uno::Reference< css::frame::XDispatchResultListener >& xListener )
-    throw(css::uno::RuntimeException)
 {
     ::sal_Int16 nResult = css::frame::DispatchResultState::DONTKNOW;
     if (aURL.Complete.equals (CMD_UNO_SHOWSTARTMODULE))
@@ -130,14 +128,12 @@ void SAL_CALL StartModuleDispatcher::dispatchWithNotification(const css::util::U
 
 //-----------------------------------------------
 css::uno::Sequence< ::sal_Int16 > SAL_CALL StartModuleDispatcher::getSupportedCommandGroups()
-    throw(css::uno::RuntimeException)
 {
     return css::uno::Sequence< ::sal_Int16 >();
 }
 
 //-----------------------------------------------
 css::uno::Sequence< css::frame::DispatchInformation > SAL_CALL StartModuleDispatcher::getConfigurableDispatchInformation(::sal_Int16 /*nCommandGroup*/)
-    throw(css::uno::RuntimeException)
 {
     return css::uno::Sequence< css::frame::DispatchInformation >();
 }
@@ -145,14 +141,12 @@ css::uno::Sequence< css::frame::DispatchInformation > SAL_CALL StartModuleDispat
 //-----------------------------------------------
 void SAL_CALL StartModuleDispatcher::addStatusListener(const css::uno::Reference< css::frame::XStatusListener >& /*xListener*/,
                                                        const css::util::URL&                                     /*aURL*/     )
-    throw(css::uno::RuntimeException)
 {
 }
 
 //-----------------------------------------------
 void SAL_CALL StartModuleDispatcher::removeStatusListener(const css::uno::Reference< css::frame::XStatusListener >& /*xListener*/,
                                                           const css::util::URL&                                     /*aURL*/     )
-    throw(css::uno::RuntimeException)
 {
 }
 
@@ -161,24 +155,24 @@ void SAL_CALL StartModuleDispatcher::removeStatusListener(const css::uno::Refere
 {
     if ( ! SvtModuleOptions().IsModuleInstalled(SvtModuleOptions::E_SSTARTMODULE))
         return sal_False;
-    
+
     // SAFE -> ----------------------------------
     ReadGuard aReadLock(m_aLock);
     css::uno::Reference< css::lang::XMultiServiceFactory > xSMGR = m_xSMGR;
     aReadLock.unlock();
     // <- SAFE ----------------------------------
-    
+
     css::uno::Reference< css::frame::XFramesSupplier > xDesktop(
         xSMGR->createInstance(SERVICENAME_DESKTOP), css::uno::UNO_QUERY);
-    
+
     FrameListAnalyzer aCheck(
         xDesktop,
         css::uno::Reference< css::frame::XFrame >(),
         FrameListAnalyzer::E_HELP | FrameListAnalyzer::E_BACKINGCOMPONENT);
-    
+
     ::sal_Bool  bIsPossible    = sal_False;
     ::sal_Int32 nVisibleFrames = aCheck.m_lOtherVisibleFrames.getLength ();
-    
+
     if (
 		( ! aCheck.m_xBackingComponent.is ()) &&
 		(   nVisibleFrames < 1              )
@@ -186,7 +180,7 @@ void SAL_CALL StartModuleDispatcher::removeStatusListener(const css::uno::Refere
     {
         bIsPossible = sal_True;
     }
-    
+
     return bIsPossible;
 }
 

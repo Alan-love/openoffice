@@ -38,10 +38,10 @@ TARGET=openssl
 .ENDIF
 
 
-OPENSSL_NAME=openssl-3.0.13
+OPENSSL_NAME=openssl-3.0.20
 
 TARFILE_NAME=$(OPENSSL_NAME)
-TARFILE_MD5=c15e53a62711002901d3515ac8b30b86
+TARFILE_MD5=fabdcf86f3f54e27689253f85b738959
 
 CONFIGURE_DIR=.
 CONFIGURE_ACTION=config
@@ -107,7 +107,11 @@ UNAME=$(shell uname)
 .ENDIF
 
 .IF "$(OS)" == "MACOSX"
+.IF "$(CPUNAME)" == "AARCH64"
+	CONFIGURE_ACTION=Configure darwin64-arm64-cc no-dso no-shared $(NO_ASM)
+.ELSE
 	CONFIGURE_ACTION=Configure darwin64-x86_64-cc no-dso no-shared $(NO_ASM)
+.ENDIF
 .ENDIF
 
 .IF "$(OS)" == "WNT"
@@ -192,4 +196,3 @@ OUT2BIN += out/libeay32.dll
 .INCLUDE : set_ext.mk
 .INCLUDE : target.mk
 .INCLUDE : tg_ext.mk
-

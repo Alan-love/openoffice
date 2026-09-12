@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -109,8 +109,8 @@ public:
     SwXSelChgLstnr_Impl(SwMailMergeDlg& rParentDlg);
     ~SwXSelChgLstnr_Impl();
 
-    virtual void SAL_CALL selectionChanged( const EventObject& aEvent ) throw (RuntimeException);
-    virtual void SAL_CALL disposing( const EventObject& Source ) throw (RuntimeException);
+    virtual void SAL_CALL selectionChanged( const EventObject& aEvent );
+    virtual void SAL_CALL disposing( const EventObject& Source );
 };
 /* -----------------------------05.06.01 13:51--------------------------------
 
@@ -126,7 +126,7 @@ SwXSelChgLstnr_Impl::~SwXSelChgLstnr_Impl()
 /* -----------------------------05.06.01 14:06--------------------------------
 
  ---------------------------------------------------------------------------*/
-void SwXSelChgLstnr_Impl::selectionChanged( const EventObject&  ) throw (RuntimeException)
+void SwXSelChgLstnr_Impl::selectionChanged( const EventObject&  )
 {
     //call the parent to enable selection mode
     Sequence <Any> aSelection;
@@ -146,7 +146,7 @@ void SwXSelChgLstnr_Impl::selectionChanged( const EventObject&  ) throw (Runtime
 /* -----------------------------05.06.01 14:06--------------------------------
 
  ---------------------------------------------------------------------------*/
-void SwXSelChgLstnr_Impl::disposing( const EventObject&  ) throw (RuntimeException)
+void SwXSelChgLstnr_Impl::disposing( const EventObject&  )
 {
     DBG_ERROR("disposing");
 }
@@ -931,4 +931,3 @@ SwMailMergeFieldConnectionsDlg::SwMailMergeFieldConnectionsDlg(Window* pParent) 
 SwMailMergeFieldConnectionsDlg::~SwMailMergeFieldConnectionsDlg()
 {
 }
-

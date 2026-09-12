@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -39,14 +39,17 @@ all:
 
 .ELSE
 
-TARFILE_NAME=hyphen-2.7.1
-TARFILE_MD5=48a9f787f43a09c0a9b7b00cd1fddbbf
+TARFILE_NAME=hyphen-2.8.8
+TARFILE_MD5=5ade6ae2a99bc1e9e57031ca88d36dad
 
 ADDITIONAL_FILES += makefile.mk
 
 PATCH_FILES= \
-	hyphen-2.7.1.patch \
-	hyphen-2.7.1-read-charset.patch
+	hyphen-2.8.8-makefile-mk.patch
+
+# hyphen 2.8.8 builds cleanly from the upstream tarball; no in-tree patches
+# are needed (the old 2.7.1 patches that rewired the dictionary build and
+# tweaked the charset read are obsolete for this version).
 
 .IF "$(GUI)"=="UNX"
 CONFIGURE_DIR=$(BUILD_DIR)
@@ -80,7 +83,7 @@ BUILD_ACTION=make hyph_en_US.dic
 	echo "Nothing to do here."
 .ELSE
 BUILD_ACTION=$(GNUMAKE) -j$(EXTMAXPROCESS)
-OUT2INC += hyphen.h 
+OUT2INC += hyphen.h
 .ENDIF
 
 .ENDIF # "$(GUI)"=="UNX"

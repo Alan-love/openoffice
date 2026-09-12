@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_dbtools.hxx"
 #include "connectivity/sdbcx/VIndexColumn.hxx"
 #include "TConnection.hxx"
 
@@ -31,14 +31,14 @@ using namespace connectivity::sdbcx;
 using namespace ::com::sun::star::beans;
 using namespace ::com::sun::star::uno;
 // -----------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OIndexColumn::getImplementationName(  ) throw (::com::sun::star::uno::RuntimeException)
+::rtl::OUString SAL_CALL OIndexColumn::getImplementationName(  )
 {
 	if(isNew())
 		return ::rtl::OUString::createFromAscii("com.sun.star.sdbcx.VIndexColumnDescriptor");
 	return ::rtl::OUString::createFromAscii("com.sun.star.sdbcx.VIndexColumn");
 }
 // -----------------------------------------------------------------------------
-::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL OIndexColumn::getSupportedServiceNames(  ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL OIndexColumn::getSupportedServiceNames(  )
 {
 	::com::sun::star::uno::Sequence< ::rtl::OUString > aSupported(1);
 	if(isNew())
@@ -49,7 +49,7 @@ using namespace ::com::sun::star::uno;
 	return aSupported;
 }
 // -----------------------------------------------------------------------------
-sal_Bool SAL_CALL OIndexColumn::supportsService( const ::rtl::OUString& _rServiceName ) throw(::com::sun::star::uno::RuntimeException)
+sal_Bool SAL_CALL OIndexColumn::supportsService( const ::rtl::OUString& _rServiceName )
 {
 	Sequence< ::rtl::OUString > aSupported(getSupportedServiceNames());
 	const ::rtl::OUString* pSupported = aSupported.getConstArray();
@@ -111,6 +111,3 @@ void OIndexColumn::construct()
 	registerProperty(OMetaConnection::getPropMap().getNameByIndex(PROPERTY_ID_ISASCENDING),	PROPERTY_ID_ISASCENDING,	nAttrib,&m_IsAscending,	::getBooleanCppuType());
 }
 // -----------------------------------------------------------------------------
-
-
-

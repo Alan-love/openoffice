@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -28,7 +28,9 @@
 #include <hash_map>
 #include <sal/config.h>
 #include <malloc.h>
-#include <typeinfo.h>
+// <typeinfo.h> was a Microsoft compatibility header, removed in VS2015+.
+// The standard spelling works on VC9 too, so this needs no guard.
+#include <typeinfo>
 #include <signal.h>
 
 #include "rtl/alloc.h"
@@ -38,6 +40,13 @@
 #include "com/sun/star/uno/Any.hxx"
 
 #include "msci.hxx"
+
+#if defined _MSC_VER && _MSC_VER >= 1900
+// The UCRT's own accessor for the field the hack below reaches into by offset.
+// vcruntime exports it and no public header declares it; the CRT's internal
+// ehdata.h spells _pCurrentException as exactly this dereference.
+extern "C" void ** __cdecl __current_exception();
+#endif
 
 
 #pragma pack(push, 8)
@@ -193,12 +202,12 @@ struct ObjectFunction
 
     inline static void * operator new ( size_t nSize );
     inline static void operator delete ( void * pMem );
-    
+
 	ObjectFunction( typelib_TypeDescription * pTypeDescr, void * fpFunc ) throw ();
 	~ObjectFunction() throw ();
 };
 
-inline void * ObjectFunction::operator new ( size_t nSize ) 
+inline void * ObjectFunction::operator new ( size_t nSize )
 {
     void * pMem = rtl_allocateMemory( nSize );
     if (pMem != 0)
@@ -387,7 +396,7 @@ ExceptionInfos::~ExceptionInfos() throw ()
 #if OSL_DEBUG_LEVEL > 1
 	OSL_TRACE( "> freeing exception infos... <\n" );
 #endif
-    
+
 	MutexGuard aGuard( _aMutex );
 	for ( t_string2PtrMap::const_iterator iPos( _allRaiseInfos.begin() );
           iPos != _allRaiseInfos.end(); ++iPos )
@@ -507,7 +516,7 @@ int msci_filterCppException(
     // handle only C++ exceptions:
 	if (pRecord == 0 || pRecord->ExceptionCode != MSVC_ExceptionCode)
         return EXCEPTION_CONTINUE_SEARCH;
-    
+
 #if _MSC_VER < 1300 // MSVC -6
     bool rethrow = (pRecord->NumberParameters < 3 ||
                     pRecord->ExceptionInformation[ 2 ] == 0);
@@ -517,6 +526,25 @@ int msci_filterCppException(
 #endif
     if (rethrow && pRecord == pPointers->ExceptionRecord)
     {
+#if defined _MSC_VER && _MSC_VER >= 1900
+        // Ask the CRT, rather than guessing where it keeps the answer.
+        //
+        // The #else below hard-codes a byte offset into _tiddata, the CRT's
+        // private per-thread block, and the last offset anybody measured was
+        // msvcr80's.  VC9 happens to match it; the UCRT does not, so on a
+        // modern CRT that arithmetic lands in the middle of some unrelated
+        // member and pRecord comes back pointing at nothing in particular.
+        //
+        // The symptom is not a crash.  The bogus record fails the checks just
+        // below, filtering stops, and the caller gets a C++ exception where it
+        // expected a UNO one:
+        //
+        //     getCaughtException() failed!
+        //
+        // __current_exception() is the accessor the CRT uses for this itself.
+        pRecord = *reinterpret_cast< EXCEPTION_RECORD ** >(
+            __current_exception() );
+#else
         // hack to get msvcrt internal _curexception field:
         pRecord = *reinterpret_cast< EXCEPTION_RECORD ** >(
             reinterpret_cast< char * >( __pxcptinfoptrs() ) +
@@ -536,11 +564,12 @@ int msci_filterCppException(
             0x28 // msvcr80.dll
 #endif
             );
+#endif
     }
     // rethrow: handle only C++ exceptions:
 	if (pRecord == 0 || pRecord->ExceptionCode != MSVC_ExceptionCode)
         return EXCEPTION_CONTINUE_SEARCH;
-    
+
     if (pRecord->NumberParameters == 3 &&
 //  		pRecord->ExceptionInformation[ 0 ] == MSVC_magic_number &&
 		pRecord->ExceptionInformation[ 1 ] != 0 &&
@@ -560,7 +589,7 @@ int msci_filterCppException(
                             pType->_pTypeInfo )->_m_d_name,
                         RTL_TEXTENCODING_ASCII_US ) );
 				OUString aUNOname( toUNOname( aRTTIname ) );
-                
+
 				typelib_TypeDescription * pExcTypeDescr = 0;
 				typelib_typedescription_getByName(
                     &pExcTypeDescr, aUNOname.pData );
@@ -604,7 +633,7 @@ int msci_filterCppException(
 #endif
 					typelib_typedescription_release( pExcTypeDescr );
 				}
-                
+
 				return EXCEPTION_EXECUTE_HANDLER;
 			}
 		}
@@ -624,4 +653,3 @@ int msci_filterCppException(
 }
 
 #pragma pack(pop)
-

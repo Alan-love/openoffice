@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,18 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
 
 #ifndef _WRAP_HXX
 #define _WRAP_HXX
@@ -65,7 +64,7 @@ public:
 class SwWrapTabPage: public SfxTabPage
 {
 	// WRAPPING
-    FixedLine           aWrapFLC;
+	FixedLine			aWrapFLC;
 	ImageRadioButton	aNoWrapRB;
 	ImageRadioButton	aWrapLeftRB;
 	ImageRadioButton	aWrapRightRB;
@@ -74,7 +73,7 @@ class SwWrapTabPage: public SfxTabPage
 	ImageRadioButton	aIdealWrapRB;
 
 	// MARGIN
-    FixedLine           aMarginFL;
+	FixedLine			aMarginFL;
 	FixedText			aLeftMarginFT;
 	MetricField 		aLeftMarginED;
 	FixedText			aRightMarginFT;
@@ -84,23 +83,23 @@ class SwWrapTabPage: public SfxTabPage
 	FixedText			aBottomMarginFT;
 	MetricField 		aBottomMarginED;
 
-    // OPTIONS
-    FixedLine           aOptionsSepFL;
-    FixedLine           aOptionsFL;
-    CheckBox            aWrapAnchorOnlyCB;
+	// OPTIONS
+	FixedLine			aOptionsSepFL;
+	FixedLine			aOptionsFL;
+	CheckBox			aWrapAnchorOnlyCB;
 	CheckBox			aWrapTransparentCB;
 	CheckBox			aWrapOutlineCB;
 	CheckBox			aWrapOutsideCB;
 
 	ImageList			aWrapIL;
-    ImageList           aWrapILH;
+	ImageList			aWrapILH;
 
 	sal_uInt16				nOldLeftMargin;
 	sal_uInt16				nOldRightMargin;
 	sal_uInt16				nOldUpperMargin;
 	sal_uInt16				nOldLowerMargin;
 
-    RndStdIds           nAnchorId;
+	RndStdIds			nAnchorId;
 	sal_uInt16 				nHtmlMode;
 
 	Size aFrmSize;
@@ -115,22 +114,22 @@ class SwWrapTabPage: public SfxTabPage
 	SwWrapTabPage(Window *pParent, const SfxItemSet &rSet);
 	~SwWrapTabPage();
 
-    void            ApplyImageList();
-    void            EnableModes(const SfxItemSet& rSet);
+	void			ApplyImageList();
+	void			EnableModes(const SfxItemSet& rSet);
 	virtual void 	ActivatePage(const SfxItemSet& rSet);
 	virtual int 	DeactivatePage(SfxItemSet *pSet);
-    virtual void    DataChanged( const DataChangedEvent& rDCEvt );
+	virtual void	DataChanged( const DataChangedEvent& rDCEvt );
 
 	DECL_LINK( RangeModifyHdl, MetricField * );
 	DECL_LINK( WrapTypeHdl, ImageRadioButton * );
 	DECL_LINK( ContourHdl, CheckBox * );
 
-    using SfxTabPage::ActivatePage;
-    using SfxTabPage::DeactivatePage;
+	using SfxTabPage::ActivatePage;
+	using SfxTabPage::DeactivatePage;
 
 public:
 
-    static SfxTabPage *Create(Window *pParent, const SfxItemSet &rSet);
+	static SfxTabPage *Create(Window *pParent, const SfxItemSet &rSet);
 
 	virtual sal_Bool 	FillItemSet(SfxItemSet &rSet);
 	virtual void 	Reset(const SfxItemSet &rSet);
@@ -144,4 +143,4 @@ public:
 
 #endif
 
-
+/* vim: set noet sw=4 ts=4: */

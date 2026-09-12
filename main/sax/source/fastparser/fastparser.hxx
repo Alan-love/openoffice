@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -85,7 +85,7 @@ struct Entity : public ParserData
 
     ::std::stack< SaxContextImplPtr >       maContextStack;
     ::std::vector< NamespaceDefineRef >     maNamespaceDefines;
-    
+
     explicit Entity( const ParserData& rData );
     ~Entity();
 };
@@ -100,21 +100,22 @@ public:
     virtual ~FastSaxParser();
 
     // The implementation details
+    static ::rtl::OUString getImplementationName_Static(void);
     static ::com::sun::star::uno::Sequence< ::rtl::OUString > getSupportedServiceNames_Static(void);
 
     // XFastParser
-    virtual void SAL_CALL parseStream( const ::com::sun::star::xml::sax::InputSource& aInputSource ) throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL setFastDocumentHandler( const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastDocumentHandler >& Handler ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL setTokenHandler( const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastTokenHandler >& Handler ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL registerNamespace( const ::rtl::OUString& NamespaceURL, sal_Int32 NamespaceToken ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL setErrorHandler( const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XErrorHandler >& Handler ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL setEntityResolver( const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XEntityResolver >& Resolver ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL setLocale( const ::com::sun::star::lang::Locale& rLocale ) throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL parseStream( const ::com::sun::star::xml::sax::InputSource& aInputSource );
+    virtual void SAL_CALL setFastDocumentHandler( const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastDocumentHandler >& Handler );
+    virtual void SAL_CALL setTokenHandler( const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastTokenHandler >& Handler );
+    virtual void SAL_CALL registerNamespace( const ::rtl::OUString& NamespaceURL, sal_Int32 NamespaceToken );
+    virtual void SAL_CALL setErrorHandler( const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XErrorHandler >& Handler );
+    virtual void SAL_CALL setEntityResolver( const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XEntityResolver >& Resolver );
+    virtual void SAL_CALL setLocale( const ::com::sun::star::lang::Locale& rLocale );
 
     // XServiceInfo
-    virtual ::rtl::OUString SAL_CALL getImplementationName(  ) throw (::com::sun::star::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  ) throw (::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getImplementationName(  );
+    virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName );
+    virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  );
 
     // called by the C callbacks of the expat parser
     void callbackStartElement( const XML_Char* name, const XML_Char** atts );
@@ -131,10 +132,10 @@ private:
 
     sal_Int32 GetToken( const ::rtl::OString& rToken );
     sal_Int32 GetToken( const sal_Char* pToken, sal_Int32 nTokenLen = 0 );
-    sal_Int32 GetTokenWithPrefix( const ::rtl::OString& rPrefix, const ::rtl::OString& rName ) throw (::com::sun::star::xml::sax::SAXException);
-    sal_Int32 GetTokenWithPrefix( const sal_Char*pPrefix, int nPrefixLen, const sal_Char* pName, int nNameLen ) throw (::com::sun::star::xml::sax::SAXException);
-    ::rtl::OUString GetNamespaceURL( const ::rtl::OString& rPrefix ) throw (::com::sun::star::xml::sax::SAXException);
-    ::rtl::OUString GetNamespaceURL( const sal_Char*pPrefix, int nPrefixLen ) throw (::com::sun::star::xml::sax::SAXException);
+    sal_Int32 GetTokenWithPrefix( const ::rtl::OString& rPrefix, const ::rtl::OString& rName );
+    sal_Int32 GetTokenWithPrefix( const sal_Char*pPrefix, int nPrefixLen, const sal_Char* pName, int nNameLen );
+    ::rtl::OUString GetNamespaceURL( const ::rtl::OString& rPrefix );
+    ::rtl::OUString GetNamespaceURL( const sal_Char*pPrefix, int nPrefixLen );
     sal_Int32 GetNamespaceToken( const ::rtl::OUString& rNamespaceURL );
     sal_Int32 GetTokenWithNamespaceURL( const ::rtl::OUString& rNamespaceURL, const sal_Char* pName, int nNameLen );
     void DefineNamespace( const ::rtl::OString& rPrefix, const sal_Char* pNamespaceURL );

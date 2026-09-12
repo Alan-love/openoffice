@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -55,7 +55,7 @@
 #include <GL/glu.h>
 
 
-#if defined( WNT ) 
+#if defined( WNT )
     #include <tools/prewin.h>
     #include <windows.h>
     #include <tools/postwin.h>
@@ -116,7 +116,7 @@ namespace
         GLenum eType;
     };
 
-    /* channel ordering: (0:rgba, 1:bgra, 2:argb, 3:abgr)  
+    /* channel ordering: (0:rgba, 1:bgra, 2:argb, 3:abgr)
     */
     int calcComponentOrderIndex(const uno::Sequence<sal_Int8>& rTags)
     {
@@ -127,7 +127,7 @@ namespace
             RGB_RED, RGB_GREEN, RGB_BLUE, ALPHA,
             RGB_BLUE, RGB_GREEN, RGB_RED, ALPHA,
             ALPHA, RGB_RED, RGB_GREEN, RGB_BLUE,
-            ALPHA, RGB_BLUE, RGB_GREEN, RGB_RED, 
+            ALPHA, RGB_BLUE, RGB_GREEN, RGB_RED,
         };
 
         const sal_Int32 nNumComps(rTags.getLength());
@@ -171,20 +171,18 @@ public:
     static bool initialize( const Reference< presentation::XSlideShowView >& xView );
 
     // XTransition
-    virtual void SAL_CALL update( double nTime )
-	throw (uno::RuntimeException);
+    virtual void SAL_CALL update( double nTime );
     virtual void SAL_CALL viewChanged( const Reference< presentation::XSlideShowView >& rView,
 				       const Reference< rendering::XBitmap >& rLeavingBitmap,
-				       const Reference< rendering::XBitmap >& rEnteringBitmap )
-	throw (uno::RuntimeException);
-    
+				       const Reference< rendering::XBitmap >& rEnteringBitmap );
+
 protected:
     void disposeContextAndWindow();
     void disposeTextures();
 
     // WeakComponentImplHelperBase
     virtual void SAL_CALL disposing();
-    
+
     bool isDisposed() const
     {
         return (rBHelper.bDisposed || rBHelper.bInDispose);
@@ -202,7 +200,7 @@ protected:
     void prepareEnvironment ();
     const OGLFormat* chooseFormats();
 
-private:    
+private:
     /** After the window has been created, and the slides have been set, we'll initialize the slides with OpenGL.
     */
     void GLInitSlides();
@@ -211,7 +209,7 @@ private:
     /// Holds the information of our new child window
     struct GLWindow
     {
-#if defined( WNT ) 
+#if defined( WNT )
 	HWND					hWnd;
 	HDC						hDC;
 	HGLRC					hRC;
@@ -236,14 +234,14 @@ private:
         bool HasGLXExtension( const char* name ) { return gluCheckExtension( (const GLubyte*) name, (const GLubyte*) GLXExtensions ); }
 	bool HasGLExtension( const char* name ) { return gluCheckExtension( (const GLubyte*) name, GLExtensions ); }
     } GLWin;
-    
+
     /** OpenGL handle to the leaving slide's texture
     */
     unsigned int GLleavingSlide;
     /** OpenGL handle to the entering slide's texture
     */
     unsigned int GLenteringSlide;
-    
+
     /** pointer to our window which we MIGHT create.
     */
     class SystemChildWindow* pWindow;
@@ -251,11 +249,11 @@ private:
     Reference< presentation::XSlideShowView > mxView;
     Reference< rendering::XIntegerBitmap > mxLeavingBitmap;
     Reference< rendering::XIntegerBitmap > mxEnteringBitmap;
-    
+
     /** raw bytes of the entering bitmap
     */
     uno::Sequence<sal_Int8> EnteringBytes;
-    
+
     /** raw bytes of the leaving bitmap
     */
     uno::Sequence<sal_Int8> LeavingBytes;
@@ -271,17 +269,17 @@ private:
     bool mbFreeEnteringPixmap;
     unx::Pixmap maLeavingPixmap;
     unx::Pixmap maEnteringPixmap;
-    
+
     /** the form the raw bytes are in for the bitmaps
     */
-    rendering::IntegerBitmapLayout SlideBitmapLayout; 
-    
+    rendering::IntegerBitmapLayout SlideBitmapLayout;
+
     /** the size of the slides
-    */    
+    */
     geometry::IntegerSize2D SlideSize;
-    
+
     /** Our Transition to be used.
-    */    
+    */
     OGLTransitionImpl* pTransition;
 
 public:
@@ -376,7 +374,7 @@ bool OGLTransitionerImpl::initialize( const Reference< presentation::XSlideShowV
 bool OGLTransitionerImpl::createWindow( Window* pPWindow )
 {
     const SystemEnvData* sysData(pPWindow->GetSystemData());
-#if defined( WNT ) 
+#if defined( WNT )
 	GLWin.hWnd = sysData->hWnd;
 #elif defined( UNX )
     GLWin.dpy = reinterpret_cast<unx::Display*>(sysData->pDisplay);
@@ -408,7 +406,7 @@ bool OGLTransitionerImpl::createWindow( Window* pPWindow )
             GLX_DEPTH_SIZE,0,//no depth buffer
             None
         };
-    static int attrList2[] = 
+    static int attrList2[] =
 	{
 	    GLX_RGBA,//only TrueColor or DirectColor
             /// single buffered
@@ -437,8 +435,8 @@ bool OGLTransitionerImpl::createWindow( Window* pPWindow )
             GLX_BLUE_SIZE,4,/// use the maximum blue bits, with a minimum of 4 bits
             GLX_DEPTH_SIZE,1,/// use the maximum depth bits, making sure there is a depth buffer
             None
-       }; 
-    static int* attrTable[] = 
+       };
+    static int* attrTable[] =
         {
             attrList0,
             attrList1,
@@ -534,13 +532,13 @@ bool OGLTransitionerImpl::createWindow( Window* pPWindow )
       }
 #endif
 
-#if defined( WNT ) 
+#if defined( WNT )
       const SystemEnvData* pChildSysData = NULL;
       SystemWindowData winData;
       winData.nSize = sizeof(winData);
       pWindow=new SystemChildWindow(pPWindow, 0, &winData, sal_False);
       pChildSysData = pWindow->GetSystemData();
-#endif            
+#endif
 
       if( pWindow )
       {
@@ -550,7 +548,7 @@ bool OGLTransitionerImpl::createWindow( Window* pPWindow )
 	  pWindow->SetControlForeground();
 	  pWindow->SetControlBackground();
 	  pWindow->EnablePaint(sal_False);
-#if defined( WNT ) 
+#if defined( WNT )
 		GLWin.hWnd = sysData->hWnd;
 #elif defined( UNX )
         GLWin.dpy = reinterpret_cast<unx::Display*>(pChildSysData->pDisplay);
@@ -600,7 +598,7 @@ bool OGLTransitionerImpl::initWindowFromSlideShowView( const Reference< presenta
     GLWin.Height = aCanvasArea.Height;
     OSL_TRACE("canvas area: %d,%d - %dx%d", aCanvasArea.X, aCanvasArea.Y, aCanvasArea.Width, aCanvasArea.Height);
 
-#if defined( WNT ) 
+#if defined( WNT )
 		GLWin.hDC = GetDC(GLWin.hWnd);
 #elif defined( UNX )
     GLWin.ctx = glXCreateContext(GLWin.dpy,
@@ -613,7 +611,7 @@ bool OGLTransitionerImpl::initWindowFromSlideShowView( const Reference< presenta
     }
 #endif
 
-#if defined( WNT ) 
+#if defined( WNT )
 	PIXELFORMATDESCRIPTOR PixelFormatFront =					// PixelFormat Tells Windows How We Want Things To Be
 	{
 		sizeof(PIXELFORMATDESCRIPTOR),
@@ -690,12 +688,12 @@ bool OGLTransitionerImpl::initWindowFromSlideShowView( const Reference< presenta
     glCullFace(GL_BACK);
     glClearColor (0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
-#if defined( WNT ) 
+#if defined( WNT )
 	SwapBuffers(GLWin.hDC);
 #elif defined( UNX )
     unx::glXSwapBuffers(GLWin.dpy, GLWin.win);
 #endif
-   
+
     glEnable(GL_LIGHTING);
     GLfloat light_direction[] = { 0.0 , 0.0 , 1.0 };
     GLfloat materialDiffuse[] = { 1.0 , 1.0 , 1.0 , 1.0};
@@ -705,7 +703,7 @@ bool OGLTransitionerImpl::initWindowFromSlideShowView( const Reference< presenta
     glEnable(GL_NORMALIZE);
 
     if( LeavingBytes.hasElements() && EnteringBytes.hasElements())
-       GLInitSlides();//we already have uninitialized slides, let's initialize 
+       GLInitSlides();//we already have uninitialized slides, let's initialize
 
     if( pTransition && pTransition->mnRequiredGLVersion <= cnGLVersion )
         pTransition->prepare( GLleavingSlide, GLenteringSlide );
@@ -713,14 +711,14 @@ bool OGLTransitionerImpl::initWindowFromSlideShowView( const Reference< presenta
     return true;
 }
 
-void OGLTransitionerImpl::setSlides( const uno::Reference< rendering::XBitmap >& xLeavingSlide, 
+void OGLTransitionerImpl::setSlides( const uno::Reference< rendering::XBitmap >& xLeavingSlide,
                                      const uno::Reference< rendering::XBitmap >& xEnteringSlide )
 {
     osl::MutexGuard const guard( m_aMutex );
 
     if (isDisposed())
         return;
-        
+
     mxLeavingBitmap.set( xLeavingSlide , UNO_QUERY_THROW );
     mxEnteringBitmap.set( xEnteringSlide , UNO_QUERY_THROW );
     Reference< XFastPropertySet > xLeavingSet( xLeavingSlide , UNO_QUERY );
@@ -800,7 +798,7 @@ void OGLTransitionerImpl::setSlides( const uno::Reference< rendering::XBitmap >&
 		}
 		errorTriggered = false;
 	    }
-          
+
 	    EnteringPixmap = glXCreatePixmap( GLWin.dpy, GLWin.fbc, maEnteringPixmap, pixmapAttribs );
 
 	    // sync so that we possibly get an XError
@@ -830,7 +828,7 @@ void OGLTransitionerImpl::setSlides( const uno::Reference< rendering::XBitmap >&
     if( !mbUseEnteringPixmap )
 	EnteringBytes = mxEnteringBitmap->getData(SlideBitmapLayout,SlideRect);
 
-// TODO    
+// TODO
 #ifdef UNX
     if(GLWin.ctx)//if we have a rendering context, let's init the slides
 #endif
@@ -885,16 +883,16 @@ void OGLTransitionerImpl::createTexture( unsigned int* texID,
 #endif
     if( !pFormat )
     {
-        // force-convert color to ARGB8888 int color space  
+        // force-convert color to ARGB8888 int color space
         uno::Sequence<sal_Int8> tempBytes(
             SlideBitmapLayout.ColorSpace->convertToIntegerColorSpace(
                 data,
                 canvas::tools::getStdColorSpace()));
-        gluBuild2DMipmaps(GL_TEXTURE_2D, 
-                          4, 
-                          SlideSize.Width, 
-                          SlideSize.Height, 
-                          GL_RGBA, 
+        gluBuild2DMipmaps(GL_TEXTURE_2D,
+                          4,
+                          SlideSize.Width,
+                          SlideSize.Height,
+                          GL_RGBA,
                           GL_UNSIGNED_BYTE,
                           &tempBytes[0]);
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
@@ -967,7 +965,7 @@ const OGLFormat* OGLTransitionerImpl::chooseFormats()
            (0:16, 1:24, 2:32), then channel ordering: (0:rgba, 1:bgra,
            2:argb, 3:abgr)
          */
-        static const OGLFormat lcl_RGB24[] = 
+        static const OGLFormat lcl_RGB24[] =
         {
             // 24 bit RGB
             {3, GL_BGR, GL_UNSIGNED_BYTE},
@@ -978,7 +976,7 @@ const OGLFormat* OGLTransitionerImpl::chooseFormats()
 
 #if defined(GL_VERSION_1_2) && defined(GLU_VERSION_1_3)
         // more format constants available
-        static const OGLFormat lcl_RGB16[] = 
+        static const OGLFormat lcl_RGB16[] =
         {
             // 16 bit RGB
             {3, GL_RGB, GL_UNSIGNED_SHORT_5_6_5_REV},
@@ -987,7 +985,7 @@ const OGLFormat* OGLTransitionerImpl::chooseFormats()
             {3, GL_RGB, GL_UNSIGNED_SHORT_5_6_5}
         };
 
-        static const OGLFormat lcl_ARGB16_4[] = 
+        static const OGLFormat lcl_ARGB16_4[] =
         {
             // 16 bit ARGB
             {4, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4_REV},
@@ -996,7 +994,7 @@ const OGLFormat* OGLTransitionerImpl::chooseFormats()
             {4, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4}
         };
 
-        static const OGLFormat lcl_ARGB16_5[] = 
+        static const OGLFormat lcl_ARGB16_5[] =
         {
             // 16 bit ARGB
             {4, GL_RGBA, GL_UNSIGNED_SHORT_1_5_5_5_REV},
@@ -1005,7 +1003,7 @@ const OGLFormat* OGLTransitionerImpl::chooseFormats()
             {4, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1}
         };
 
-        static const OGLFormat lcl_ARGB32[] = 
+        static const OGLFormat lcl_ARGB32[] =
         {
             // 32 bit ARGB
             {4, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV},
@@ -1024,7 +1022,7 @@ const OGLFormat* OGLTransitionerImpl::chooseFormats()
         // supported component ordering?
         const int nComponentOrderIndex(
             calcComponentOrderIndex(aComponentTags));
-        if( nComponentOrderIndex != -1 ) 
+        if( nComponentOrderIndex != -1 )
         {
             switch( nBitsPerPixel )
             {
@@ -1060,8 +1058,8 @@ const OGLFormat* OGLTransitionerImpl::chooseFormats()
         const uno::Sequence<sal_Int8> aComponentTags(
             xIntColorSpace->getComponentTags());
         const int nComponentOrderIndex(calcComponentOrderIndex(aComponentTags));
-        if( aComponentTags.getLength() == 3 && 
-            nComponentOrderIndex != -1 && 
+        if( aComponentTags.getLength() == 3 &&
+            nComponentOrderIndex != -1 &&
             xIntColorSpace->getBitsPerPixel() == 24 )
         {
             pDetectedFormat = &lcl_RGB24[nComponentOrderIndex];
@@ -1114,7 +1112,7 @@ void OGLTransitionerImpl::GLInitSlides()
 #endif
 }
 
-void SAL_CALL OGLTransitionerImpl::update( double nTime ) throw (uno::RuntimeException)
+void SAL_CALL OGLTransitionerImpl::update( double nTime )
 {
 #ifdef DEBUG
     frame_count ++;
@@ -1140,12 +1138,12 @@ void SAL_CALL OGLTransitionerImpl::update( double nTime ) throw (uno::RuntimeExc
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     if(pTransition)
-	pTransition->display( nTime, GLleavingSlide, GLenteringSlide, 
+	pTransition->display( nTime, GLleavingSlide, GLenteringSlide,
                               SlideSize.Width, SlideSize.Height,
                               static_cast<double>(GLWin.Width),
                               static_cast<double>(GLWin.Height) );
 
-#if defined( WNT ) 
+#if defined( WNT )
     SwapBuffers(GLWin.hDC);
 #elif defined( UNX )
     unx::glXSwapBuffers(GLWin.dpy, GLWin.win);
@@ -1171,7 +1169,6 @@ void SAL_CALL OGLTransitionerImpl::update( double nTime ) throw (uno::RuntimeExc
 void SAL_CALL OGLTransitionerImpl::viewChanged( const Reference< presentation::XSlideShowView >& rView,
 						const Reference< rendering::XBitmap >& rLeavingBitmap,
 						const Reference< rendering::XBitmap >& rEnteringBitmap )
-    throw (uno::RuntimeException)
 {
     OSL_TRACE("transitioner: view changed");
 
@@ -1301,12 +1298,12 @@ void OGLTransitionerImpl::disposing()
     mxView.clear();
 }
 
-OGLTransitionerImpl::OGLTransitionerImpl(OGLTransitionImpl* pOGLTransition) : 
-    OGLTransitionerImplBase(m_aMutex), 
+OGLTransitionerImpl::OGLTransitionerImpl(OGLTransitionImpl* pOGLTransition) :
+    OGLTransitionerImplBase(m_aMutex),
     GLWin(),
-    GLleavingSlide( 0 ), 
-    GLenteringSlide( 0 ), 
-    pWindow( NULL ), 
+    GLleavingSlide( 0 ),
+    GLenteringSlide( 0 ),
+    pWindow( NULL ),
     mxView(),
     EnteringBytes(),
     LeavingBytes(),
@@ -1336,7 +1333,7 @@ public:
     {}
 
     // XTransitionFactory
-    virtual ::sal_Bool SAL_CALL hasTransition( ::sal_Int16 transitionType, ::sal_Int16 transitionSubType ) throw (uno::RuntimeException)
+    virtual ::sal_Bool SAL_CALL hasTransition( ::sal_Int16 transitionType, ::sal_Int16 transitionSubType )
     {
         if( transitionType == animations::TransitionType::MISCSHAPEWIPE ) {
             switch( transitionSubType )
@@ -1345,7 +1342,7 @@ public:
                 case animations::TransitionSubType::CORNERSOUT:
                 case animations::TransitionSubType::CIRCLE:
                 case animations::TransitionSubType::FANOUTHORIZONTAL:
-                case animations::TransitionSubType::CORNERSIN:  
+                case animations::TransitionSubType::CORNERSIN:
                 case animations::TransitionSubType::LEFTTORIGHT:
                 case animations::TransitionSubType::TOPTOBOTTOM:
                 case animations::TransitionSubType::TOPRIGHT:
@@ -1372,13 +1369,12 @@ public:
             return sal_False;
     }
 
-    virtual uno::Reference< presentation::XTransition > SAL_CALL createTransition( 
-        ::sal_Int16                                           transitionType, 
-        ::sal_Int16                                           transitionSubType, 
-        const uno::Reference< presentation::XSlideShowView >& view, 
-        const uno::Reference< rendering::XBitmap >&           leavingBitmap, 
+    virtual uno::Reference< presentation::XTransition > SAL_CALL createTransition(
+        ::sal_Int16                                           transitionType,
+        ::sal_Int16                                           transitionSubType,
+        const uno::Reference< presentation::XSlideShowView >& view,
+        const uno::Reference< rendering::XBitmap >&           leavingBitmap,
         const uno::Reference< rendering::XBitmap >&           enteringBitmap )
-	throw (uno::RuntimeException)
     {
         if( !hasTransition( transitionType, transitionSubType ) )
             return uno::Reference< presentation::XTransition >();
@@ -1390,7 +1386,7 @@ public:
             ( transitionType == animations::TransitionType::FADE && transitionSubType == animations::TransitionSubType::FADEOVERCOLOR ) ||
             ( transitionType == animations::TransitionType::IRISWIPE && transitionSubType == animations::TransitionSubType::DIAMOND ) ) )
             return uno::Reference< presentation::XTransition >();
-            
+
 
         OGLTransitionImpl* pTransition = NULL;
 
@@ -1400,17 +1396,17 @@ public:
                 {
                 case animations::TransitionSubType::ACROSS:
                     pTransition->makeNByMTileFlip(8,6);
-                    break;   
+                    break;
                 case animations::TransitionSubType::CORNERSOUT:
                     pTransition->makeOutsideCubeFaceToLeft();
-                    break;            
+                    break;
                 case animations::TransitionSubType::CIRCLE:
                     pTransition->makeRevolvingCircles(8,128);
                     break;
                 case animations::TransitionSubType::FANOUTHORIZONTAL:
                     pTransition->makeHelix(20);
                     break;
-                case animations::TransitionSubType::CORNERSIN:  
+                case animations::TransitionSubType::CORNERSIN:
                     pTransition->makeInsideCubeFaceToLeft();
                     break;
                 case animations::TransitionSubType::LEFTTORIGHT:

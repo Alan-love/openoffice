@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -54,16 +54,14 @@ BreakIteratorImpl::~BreakIteratorImpl()
 
 sal_Int32 SAL_CALL BreakIteratorImpl::nextCharacters( const OUString& Text, sal_Int32 nStartPos,
         const Locale &rLocale, sal_Int16 nCharacterIteratorMode, sal_Int32 nCount, sal_Int32& nDone )
-        throw(RuntimeException)
 {
         if (nCount < 0) throw RuntimeException();
 
         return LBI->nextCharacters( Text, nStartPos, rLocale, nCharacterIteratorMode, nCount, nDone);
 }
 
-sal_Int32 SAL_CALL BreakIteratorImpl::previousCharacters( const OUString& Text, sal_Int32 nStartPos, 
+sal_Int32 SAL_CALL BreakIteratorImpl::previousCharacters( const OUString& Text, sal_Int32 nStartPos,
         const Locale& rLocale, sal_Int16 nCharacterIteratorMode, sal_Int32 nCount, sal_Int32& nDone )
-        throw(RuntimeException)
 {
         if (nCount < 0) throw RuntimeException();
 
@@ -102,7 +100,7 @@ static sal_Int32 skipSpace(const OUString& Text, sal_Int32 nPos, sal_Int32 len, 
 }
 
 Boundary SAL_CALL BreakIteratorImpl::nextWord( const OUString& Text, sal_Int32 nStartPos,
-        const Locale& rLocale, sal_Int16 rWordType ) throw(RuntimeException)
+        const Locale& rLocale, sal_Int16 rWordType )
 {
         sal_Int32 len = Text.getLength();
         if( nStartPos < 0 || len == 0 )
@@ -132,7 +130,7 @@ static inline sal_Bool SAL_CALL isCJK( const Locale& rLocale ) {
 }
 
 Boundary SAL_CALL BreakIteratorImpl::previousWord( const OUString& Text, sal_Int32 nStartPos,
-        const Locale& rLocale, sal_Int16 rWordType) throw(RuntimeException)
+        const Locale& rLocale, sal_Int16 rWordType)
 {
         sal_Int32 len = Text.getLength();
         if( nStartPos <= 0 || len == 0 ) {
@@ -145,7 +143,7 @@ Boundary SAL_CALL BreakIteratorImpl::previousWord( const OUString& Text, sal_Int
 
         sal_Int32 nPos = skipSpace(Text, nStartPos, len, rWordType, sal_False);
 
-        // if some spaces are skiped, and the script type is Asian with no CJK rLocale, we have to return
+        // if some spaces are skipped, and the script type is Asian with no CJK rLocale, we have to return
         // (nStartPos, -1) for caller to send correct rLocale for loading correct dictionary.
         result.startPos = nPos;
         if (nPos != nStartPos && nPos > 0 && !isCJK(rLocale) && getScriptClass(Text.iterateCodePoints(&nPos, -1)) == ScriptType::ASIAN) {
@@ -158,7 +156,7 @@ Boundary SAL_CALL BreakIteratorImpl::previousWord( const OUString& Text, sal_Int
 
 
 Boundary SAL_CALL BreakIteratorImpl::getWordBoundary( const OUString& Text, sal_Int32 nPos, const Locale& rLocale,
-        sal_Int16 rWordType, sal_Bool bDirection ) throw(RuntimeException)
+        sal_Int16 rWordType, sal_Bool bDirection )
 {
         sal_Int32 len = Text.getLength();
         if( nPos < 0 || len == 0 )
@@ -191,7 +189,7 @@ Boundary SAL_CALL BreakIteratorImpl::getWordBoundary( const OUString& Text, sal_
 }
 
 sal_Bool SAL_CALL BreakIteratorImpl::isBeginWord( const OUString& Text, sal_Int32 nPos,
-        const Locale& rLocale, sal_Int16 rWordType ) throw(RuntimeException)
+        const Locale& rLocale, sal_Int16 rWordType )
 {
         sal_Int32 len = Text.getLength();
 
@@ -207,7 +205,7 @@ sal_Bool SAL_CALL BreakIteratorImpl::isBeginWord( const OUString& Text, sal_Int3
 }
 
 sal_Bool SAL_CALL BreakIteratorImpl::isEndWord( const OUString& Text, sal_Int32 nPos,
-        const Locale& rLocale, sal_Int16 rWordType ) throw(RuntimeException)
+        const Locale& rLocale, sal_Int16 rWordType )
 {
         sal_Int32 len = Text.getLength();
 
@@ -223,7 +221,7 @@ sal_Bool SAL_CALL BreakIteratorImpl::isEndWord( const OUString& Text, sal_Int32 
 }
 
 sal_Int32 SAL_CALL BreakIteratorImpl::beginOfSentence( const OUString& Text, sal_Int32 nStartPos,
-        const Locale &rLocale ) throw(RuntimeException)
+        const Locale &rLocale )
 {
         if (nStartPos < 0 || nStartPos > Text.getLength())
             return -1;
@@ -232,7 +230,7 @@ sal_Int32 SAL_CALL BreakIteratorImpl::beginOfSentence( const OUString& Text, sal
 }
 
 sal_Int32 SAL_CALL BreakIteratorImpl::endOfSentence( const OUString& Text, sal_Int32 nStartPos,
-        const Locale &rLocale ) throw(RuntimeException)
+        const Locale &rLocale )
 {
         if (nStartPos < 0 || nStartPos > Text.getLength())
             return -1;
@@ -242,13 +240,12 @@ sal_Int32 SAL_CALL BreakIteratorImpl::endOfSentence( const OUString& Text, sal_I
 
 LineBreakResults SAL_CALL BreakIteratorImpl::getLineBreak( const OUString& Text, sal_Int32 nStartPos,
         const Locale& rLocale, sal_Int32 nMinBreakPos, const LineBreakHyphenationOptions& hOptions,
-        const LineBreakUserOptions& bOptions ) throw(RuntimeException)
+        const LineBreakUserOptions& bOptions )
 {
         return LBI->getLineBreak(Text, nStartPos, rLocale, nMinBreakPos, hOptions, bOptions);
 }
 
 sal_Int16 SAL_CALL BreakIteratorImpl::getScriptType( const OUString& Text, sal_Int32 nPos )
-        throw(RuntimeException)
 {
         return (nPos < 0 || nPos >= Text.getLength()) ? ScriptType::WEAK :
                             getScriptClass(Text.iterateCodePoints(&nPos, 0));
@@ -266,14 +263,14 @@ static sal_Int32 SAL_CALL iterateCodePoints(const OUString& Text, sal_Int32 &nSt
 		} else {
 			ch = Text.iterateCodePoints(&nStartPos, inc);
             // Fix for #i80436#.
-            // erAck: 2009-06-30T21:52+0200  This logic looks somewhat 
-            // suspicious as if it cures a symptom.. anyway, had to add 
-            // nStartPos < Text.getLength() to silence the (correct) assertion 
-            // in rtl_uString_iterateCodePoints() if Text was one character 
+            // erAck: 2009-06-30T21:52+0200  This logic looks somewhat
+            // suspicious as if it cures a symptom.. anyway, had to add
+            // nStartPos < Text.getLength() to silence the (correct) assertion
+            // in rtl_uString_iterateCodePoints() if Text was one character
             // (codepoint) only, made up of a surrogate pair.
             //if (inc > 0 && nStartPos < Text.getLength())
             //    ch = Text.iterateCodePoints(&nStartPos, 0);
-            // With surrogates, nStartPos may actually point behind string  
+            // With surrogates, nStartPos may actually point behind string
             // now, even if inc is only +1
 			if (inc > 0)
                 ch = (nStartPos < nLen ? Text.iterateCodePoints(&nStartPos, 0) : 0);
@@ -283,7 +280,7 @@ static sal_Int32 SAL_CALL iterateCodePoints(const OUString& Text, sal_Int32 &nSt
 
 
 sal_Int32 SAL_CALL BreakIteratorImpl::beginOfScript( const OUString& Text,
-        sal_Int32 nStartPos, sal_Int16 ScriptType ) throw(RuntimeException)
+        sal_Int32 nStartPos, sal_Int16 ScriptType )
 {
         if (nStartPos < 0 || nStartPos >= Text.getLength())
             return -1;
@@ -301,7 +298,7 @@ sal_Int32 SAL_CALL BreakIteratorImpl::beginOfScript( const OUString& Text,
 }
 
 sal_Int32 SAL_CALL BreakIteratorImpl::endOfScript( const OUString& Text,
-        sal_Int32 nStartPos, sal_Int16 ScriptType ) throw(RuntimeException)
+        sal_Int32 nStartPos, sal_Int16 ScriptType )
 {
         if (nStartPos < 0 || nStartPos >= Text.getLength())
             return -1;
@@ -320,7 +317,7 @@ sal_Int32 SAL_CALL BreakIteratorImpl::endOfScript( const OUString& Text,
 }
 
 sal_Int32  SAL_CALL BreakIteratorImpl::previousScript( const OUString& Text,
-        sal_Int32 nStartPos, sal_Int16 ScriptType ) throw(RuntimeException)
+        sal_Int32 nStartPos, sal_Int16 ScriptType )
 {
         if (nStartPos < 0)
             return -1;
@@ -336,7 +333,7 @@ sal_Int32  SAL_CALL BreakIteratorImpl::previousScript( const OUString& Text,
 			else if (nStartPos == 0) {
 				if (numberOfChange > 0)
 					numberOfChange--;
-				if (nStartPos > 0) 
+				if (nStartPos > 0)
 					Text.iterateCodePoints(&nStartPos, -1);
 				else
 					return -1;
@@ -346,7 +343,7 @@ sal_Int32  SAL_CALL BreakIteratorImpl::previousScript( const OUString& Text,
 }
 
 sal_Int32 SAL_CALL BreakIteratorImpl::nextScript( const OUString& Text, sal_Int32 nStartPos,
-        sal_Int16 ScriptType ) throw(RuntimeException)
+        sal_Int16 ScriptType )
 
 {
         if (nStartPos < 0)
@@ -368,7 +365,7 @@ sal_Int32 SAL_CALL BreakIteratorImpl::nextScript( const OUString& Text, sal_Int3
 }
 
 sal_Int32 SAL_CALL BreakIteratorImpl::beginOfCharBlock( const OUString& Text, sal_Int32 nStartPos,
-        const Locale& /*rLocale*/, sal_Int16 CharType ) throw(RuntimeException)
+        const Locale& /*rLocale*/, sal_Int16 CharType )
 {
         if (CharType == CharType::ANY_CHAR) return 0;
         if (nStartPos < 0 || nStartPos >= Text.getLength()) return -1;
@@ -380,7 +377,7 @@ sal_Int32 SAL_CALL BreakIteratorImpl::beginOfCharBlock( const OUString& Text, sa
 }
 
 sal_Int32 SAL_CALL BreakIteratorImpl::endOfCharBlock( const OUString& Text, sal_Int32 nStartPos,
-        const Locale& /*rLocale*/, sal_Int16 CharType ) throw(RuntimeException)
+        const Locale& /*rLocale*/, sal_Int16 CharType )
 {
         sal_Int32 strLen = Text.getLength();
 
@@ -394,7 +391,7 @@ sal_Int32 SAL_CALL BreakIteratorImpl::endOfCharBlock( const OUString& Text, sal_
 }
 
 sal_Int32 SAL_CALL BreakIteratorImpl::nextCharBlock( const OUString& Text, sal_Int32 nStartPos,
-        const Locale& /*rLocale*/, sal_Int16 CharType ) throw(RuntimeException)
+        const Locale& /*rLocale*/, sal_Int16 CharType )
 {
         if (CharType == CharType::ANY_CHAR) return -1;
         if (nStartPos < 0 || nStartPos >= Text.getLength()) return -1;
@@ -411,7 +408,7 @@ sal_Int32 SAL_CALL BreakIteratorImpl::nextCharBlock( const OUString& Text, sal_I
 }
 
 sal_Int32 SAL_CALL BreakIteratorImpl::previousCharBlock( const OUString& Text, sal_Int32 nStartPos,
-        const Locale& /*rLocale*/, sal_Int16 CharType ) throw(RuntimeException)
+        const Locale& /*rLocale*/, sal_Int16 CharType )
 {
         if(CharType == CharType::ANY_CHAR) return -1;
         if (nStartPos < 0 || nStartPos >= Text.getLength()) return -1;
@@ -433,7 +430,7 @@ sal_Int32 SAL_CALL BreakIteratorImpl::previousCharBlock( const OUString& Text, s
 
 
 sal_Int16 SAL_CALL BreakIteratorImpl::getWordType( const OUString& /*Text*/,
-        sal_Int32 /*nPos*/, const Locale& /*rLocale*/ ) throw(RuntimeException)
+        sal_Int32 /*nPos*/, const Locale& /*rLocale*/ )
 {
         return 0;
 }
@@ -487,11 +484,11 @@ sal_Int16  BreakIteratorImpl::getScriptClass(sal_uInt32 currentChar)
                 nRet = ScriptType::WEAK;
             // workaround for Coptic
             else if ( 0x2C80 <= currentChar && 0x2CE3 >= currentChar)
-                nRet = ScriptType::LATIN; 
+                nRet = ScriptType::LATIN;
             // work-around for ligatures (see http://www.unicode.org/charts/PDF/UFB00.pdf)
-            else if ((0xFB00 <= currentChar && currentChar <= 0xFB06) || 
+            else if ((0xFB00 <= currentChar && currentChar <= 0xFB06) ||
                      (0xFB13 <= currentChar && currentChar <= 0xFB17))
-                nRet = ScriptType::LATIN; 
+                nRet = ScriptType::LATIN;
             else {
                 UBlockCode block=ublock_getCode(currentChar);
                 sal_uInt16 i;
@@ -508,7 +505,7 @@ static inline sal_Bool operator == (const Locale& l1, const Locale& l2) {
         return l1.Language == l2.Language && l1.Country == l2.Country && l1.Variant == l2.Variant;
 }
 
-sal_Bool SAL_CALL BreakIteratorImpl::createLocaleSpecificBreakIterator(const OUString& aLocaleName) throw( RuntimeException )
+sal_Bool SAL_CALL BreakIteratorImpl::createLocaleSpecificBreakIterator(const OUString& aLocaleName)
 {
         // to share service between same Language but different Country code, like zh_CN and zh_TW
         for (size_t l = 0; l < lookupTable.size(); l++) {
@@ -533,7 +530,7 @@ sal_Bool SAL_CALL BreakIteratorImpl::createLocaleSpecificBreakIterator(const OUS
 }
 
 Reference < XBreakIterator > SAL_CALL
-BreakIteratorImpl::getLocaleSpecificBreakIterator(const Locale& rLocale) throw (RuntimeException)
+BreakIteratorImpl::getLocaleSpecificBreakIterator(const Locale& rLocale)
 {
         if (xBI.is() && rLocale == aLocale)
             return xBI;
@@ -553,7 +550,7 @@ BreakIteratorImpl::getLocaleSpecificBreakIterator(const Locale& rLocale) throw (
             sal_Int32 v = rLocale.Variant.getLength();
             OUStringBuffer aBuf(l+c+v+3);
 
-            if ((l > 0 && c > 0 && v > 0 && 
+            if ((l > 0 && c > 0 && v > 0 &&
                     // load service with name <base>_<lang>_<country>_<varian>
                     createLocaleSpecificBreakIterator(aBuf.append(rLocale.Language).append(under).append(
                                     rLocale.Country).append(under).append(rLocale.Variant).makeStringAndClear())) ||
@@ -561,13 +558,13 @@ BreakIteratorImpl::getLocaleSpecificBreakIterator(const Locale& rLocale) throw (
                     // load service with name <base>_<lang>_<country>
                     createLocaleSpecificBreakIterator(aBuf.append(rLocale.Language).append(under).append(
                                     rLocale.Country).makeStringAndClear())) ||
-                (l > 0 && c > 0 && rLocale.Language.compareToAscii("zh") == 0 && 
+                (l > 0 && c > 0 && rLocale.Language.compareToAscii("zh") == 0 &&
                                     (rLocale.Country.compareToAscii("HK") == 0 ||
                                     rLocale.Country.compareToAscii("MO") == 0) &&
                     // if the country code is HK or MO, one more step to try TW.
                     createLocaleSpecificBreakIterator(aBuf.append(rLocale.Language).append(under).appendAscii(
                                     "TW").makeStringAndClear())) ||
-                (l > 0 && 
+                (l > 0 &&
                     // load service with name <base>_<lang>
                     createLocaleSpecificBreakIterator(rLocale.Language)) ||
                     // load default service with name <base>_Unicode
@@ -582,19 +579,19 @@ BreakIteratorImpl::getLocaleSpecificBreakIterator(const Locale& rLocale) throw (
 const sal_Char cBreakIterator[] = "com.sun.star.i18n.BreakIterator";
 
 OUString SAL_CALL
-BreakIteratorImpl::getImplementationName(void) throw( RuntimeException )
+BreakIteratorImpl::getImplementationName(void)
 {
         return OUString::createFromAscii(cBreakIterator);
 }
 
 sal_Bool SAL_CALL
-BreakIteratorImpl::supportsService(const OUString& rServiceName) throw( RuntimeException )
+BreakIteratorImpl::supportsService(const OUString& rServiceName)
 {
         return !rServiceName.compareToAscii(cBreakIterator);
 }
 
 Sequence< OUString > SAL_CALL
-BreakIteratorImpl::getSupportedServiceNames(void) throw( RuntimeException )
+BreakIteratorImpl::getSupportedServiceNames(void)
 {
         Sequence< OUString > aRet(1);
         aRet[0] = OUString::createFromAscii(cBreakIterator);
@@ -602,4 +599,3 @@ BreakIteratorImpl::getSupportedServiceNames(void) throw( RuntimeException )
 }
 
 } } } }
-

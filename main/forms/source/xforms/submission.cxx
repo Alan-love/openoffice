@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -343,7 +343,7 @@ bool Submission::doSubmit( const Reference< XInteractionHandler >& xHandler )
         Reference< XDocument > aInstanceDoc = getInstanceDocument(xResult);
         aResult = xSubmission->replace(getReplace(), aInstanceDoc, Reference< XFrame >());
     }
-        
+
     return ( aResult == CSubmission::SUCCESS );
 }
 
@@ -369,7 +369,6 @@ Submission* Submission::getSubmission(
 
 
 void Submission::liveCheck()
-    throw( RuntimeException )
 {
     bool bValid = mxModel.is();
 
@@ -441,11 +440,10 @@ void Submission::initializePropertySet()
 
 sal_Bool SAL_CALL Submission::convertFastPropertyValue(
     Any& rConvertedValue, Any& rOldValue, sal_Int32 nHandle, const Any& rValue )
-	throw ( IllegalArgumentException )
 {
     if ( nHandle == HANDLE_IncludeNamespacePrefixes )
     {
-        // for convinience reasons (????), we accept a string which contains
+        // for convenience reasons (????), we accept a string which contains
         // a comma-separated list of namespace prefixes
         ::rtl::OUString sTokenList;
         if ( rValue >>= sTokenList )
@@ -464,13 +462,11 @@ sal_Bool SAL_CALL Submission::convertFastPropertyValue(
 }
 
 OUString SAL_CALL Submission::getName()
-    throw( RuntimeException )
 {
     return getID();
 }
 
 void SAL_CALL Submission::setName( const OUString& sID )
-    throw( RuntimeException )
 {
     setID( sID );
 }
@@ -479,7 +475,6 @@ void SAL_CALL Submission::setName( const OUString& sID )
 
 sal_Int64 SAL_CALL Submission::getSomething(
     const Sequence<sal_Int8>& aId )
-    throw( RuntimeException )
 {
     return ( aId == getUnoTunnelID() ) ? reinterpret_cast<sal_Int64>(this) : 0;
 }
@@ -496,11 +491,8 @@ OUString lcl_message( const OUString& rID, const OUString& rText )
     return aMessage.makeStringAndClear();
 }
 
-void SAL_CALL Submission::submitWithInteraction( 
-    const Reference<XInteractionHandler>& _rxHandler ) 
-    throw ( VetoException, 
-            WrappedTargetException, 
-            RuntimeException )
+void SAL_CALL Submission::submitWithInteraction(
+    const Reference<XInteractionHandler>& _rxHandler )
 {
     // as long as this class is not really threadsafe, we need to copy
     // the members we're interested in
@@ -521,14 +513,14 @@ void SAL_CALL Submission::submitWithInteraction(
     bool bValid = pModel->isValid();
     if( ! bValid )
     {
-        InvalidDataOnSubmitException aInvalidDataException( 
+        InvalidDataOnSubmitException aInvalidDataException(
             lcl_message(sID, OUSTRING(" due to invalid data") ), *this );
 
         if( _rxHandler.is() )
         {
-            // labouriously create interaction request
-            comphelper::OInteractionRequest* pRequest 
-                = new comphelper::OInteractionRequest( 
+            // laboriously create interaction request
+            comphelper::OInteractionRequest* pRequest
+                = new comphelper::OInteractionRequest(
                     makeAny( aInvalidDataException ) );
             Reference<XInteractionRequest> xRequest = pRequest;
 
@@ -572,7 +564,7 @@ void SAL_CALL Submission::submitWithInteraction(
     catch( const Exception& e )
     {
         // exception caught: re-throw as wrapped target exception
-        throw WrappedTargetException( 
+        throw WrappedTargetException(
             lcl_message( sID, OUSTRING(" due to exception being thrown") ),
             *this, makeAny( e ) );
     }
@@ -581,26 +573,26 @@ void SAL_CALL Submission::submitWithInteraction(
     {
         mxModel->rebuild();
     }
-    else 
+    else
     {
         // other failure: throw wrapped target exception, too.
-        throw WrappedTargetException( 
+        throw WrappedTargetException(
             lcl_message( sID, OUString() ), *this, Any() );
     }
 }
 
-void SAL_CALL Submission::submit( ) throw ( VetoException, WrappedTargetException, RuntimeException )
+void SAL_CALL Submission::submit( )
 {
     submitWithInteraction( NULL );
 }
 
-void SAL_CALL Submission::addSubmissionVetoListener( const Reference< XSubmissionVetoListener >& /*listener*/ ) throw (NoSupportException, RuntimeException)
+void SAL_CALL Submission::addSubmissionVetoListener( const Reference< XSubmissionVetoListener >& /*listener*/ )
 {
     // TODO
     throw NoSupportException();
 }
 
-void SAL_CALL Submission::removeSubmissionVetoListener( const Reference< XSubmissionVetoListener >& /*listener*/ ) throw (NoSupportException, RuntimeException)
+void SAL_CALL Submission::removeSubmissionVetoListener( const Reference< XSubmissionVetoListener >& /*listener*/ )
 {
     // TODO
     throw NoSupportException();
@@ -653,7 +645,7 @@ Reference< XDocument > Submission::getInstanceDocument(const Reference< XXPathOb
         if (aList->getLength() > 0)
             aDocument = aList->item(0)->getOwnerDocument();
     }
-    return aDocument;            
+    return aDocument;
 }
 
 Reference< XDocumentFragment > Submission::createSubmissionDocument(const Reference< XXPathObject >& aObj, sal_Bool bRemoveWSNodes)
@@ -684,32 +676,31 @@ Reference< XDocumentFragment > Submission::createSubmissionDocument(const Refere
 
 // some forwarding: XPropertySet is implemented in our base class,
 // but also available as base of XSubmission
-Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL Submission::getPropertySetInfo(  ) throw(RuntimeException)
+Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL Submission::getPropertySetInfo(  )
 {
     return PropertySetBase::getPropertySetInfo();
 }
-void SAL_CALL Submission::setPropertyValue( const ::rtl::OUString& aPropertyName, const Any& aValue ) throw(UnknownPropertyException, PropertyVetoException, IllegalArgumentException, WrappedTargetException, RuntimeException)
+void SAL_CALL Submission::setPropertyValue( const ::rtl::OUString& aPropertyName, const Any& aValue )
 {
     PropertySetBase::setPropertyValue( aPropertyName, aValue );
 }
-Any SAL_CALL Submission::getPropertyValue( const ::rtl::OUString& PropertyName ) throw(UnknownPropertyException, WrappedTargetException, RuntimeException)
+Any SAL_CALL Submission::getPropertyValue( const ::rtl::OUString& PropertyName )
 {
     return PropertySetBase::getPropertyValue( PropertyName );
 }
-void SAL_CALL Submission::addPropertyChangeListener( const ::rtl::OUString& aPropertyName, const Reference< ::com::sun::star::beans::XPropertyChangeListener >& xListener ) throw(UnknownPropertyException, WrappedTargetException, RuntimeException)
+void SAL_CALL Submission::addPropertyChangeListener( const ::rtl::OUString& aPropertyName, const Reference< ::com::sun::star::beans::XPropertyChangeListener >& xListener )
 {
     PropertySetBase::addPropertyChangeListener( aPropertyName, xListener );
 }
-void SAL_CALL Submission::removePropertyChangeListener( const ::rtl::OUString& aPropertyName, const Reference< ::com::sun::star::beans::XPropertyChangeListener >& aListener ) throw(UnknownPropertyException, WrappedTargetException, RuntimeException)
+void SAL_CALL Submission::removePropertyChangeListener( const ::rtl::OUString& aPropertyName, const Reference< ::com::sun::star::beans::XPropertyChangeListener >& aListener )
 {
     PropertySetBase::removePropertyChangeListener( aPropertyName, aListener );
 }
-void SAL_CALL Submission::addVetoableChangeListener( const ::rtl::OUString& PropertyName, const Reference< ::com::sun::star::beans::XVetoableChangeListener >& aListener ) throw(UnknownPropertyException, WrappedTargetException, RuntimeException)
+void SAL_CALL Submission::addVetoableChangeListener( const ::rtl::OUString& PropertyName, const Reference< ::com::sun::star::beans::XVetoableChangeListener >& aListener )
 {
     PropertySetBase::addVetoableChangeListener( PropertyName, aListener );
 }
-void SAL_CALL Submission::removeVetoableChangeListener( const ::rtl::OUString& PropertyName, const Reference< ::com::sun::star::beans::XVetoableChangeListener >& aListener ) throw(UnknownPropertyException, WrappedTargetException, RuntimeException)
+void SAL_CALL Submission::removeVetoableChangeListener( const ::rtl::OUString& PropertyName, const Reference< ::com::sun::star::beans::XVetoableChangeListener >& aListener )
 {
     PropertySetBase::removeVetoableChangeListener( PropertyName, aListener );
 }
-

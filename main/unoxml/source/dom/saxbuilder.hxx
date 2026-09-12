@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -97,47 +97,30 @@ namespace DOM
         CSAXDocumentBuilder(const Reference< XMultiServiceFactory >& mgr);
 
         // XServiceInfo
-        virtual OUString SAL_CALL getImplementationName()
-            throw (RuntimeException);
-        virtual sal_Bool SAL_CALL supportsService(const OUString& ServiceName)
-            throw (RuntimeException);
-        virtual Sequence< OUString > SAL_CALL getSupportedServiceNames ()
-            throw (RuntimeException);
+        virtual OUString SAL_CALL getImplementationName();
+        virtual sal_Bool SAL_CALL supportsService(const OUString& ServiceName);
+        virtual Sequence< OUString > SAL_CALL getSupportedServiceNames ();
 
         // XDocumentHandler
-        virtual void SAL_CALL startDocument()
-            throw( RuntimeException, com::sun::star::xml::sax::SAXException );
-        virtual void SAL_CALL endDocument()
-            throw( RuntimeException, com::sun::star::xml::sax::SAXException );
+        virtual void SAL_CALL startDocument();
+        virtual void SAL_CALL endDocument();
         virtual void SAL_CALL startElement( const OUString& aName,
-             const Reference< XAttributeList >& xAttribs )
-            throw( RuntimeException, com::sun::star::xml::sax::SAXException );
-        virtual void SAL_CALL endElement( const OUString& aName )
-            throw( RuntimeException, com::sun::star::xml::sax::SAXException );
-        virtual void SAL_CALL characters( const OUString& aChars )
-            throw( RuntimeException, com::sun::star::xml::sax::SAXException );
-        virtual void SAL_CALL ignorableWhitespace( const OUString& aWhitespaces )
-            throw( RuntimeException, com::sun::star::xml::sax::SAXException );
+             const Reference< XAttributeList >& xAttribs );
+        virtual void SAL_CALL endElement( const OUString& aName );
+        virtual void SAL_CALL characters( const OUString& aChars );
+        virtual void SAL_CALL ignorableWhitespace( const OUString& aWhitespaces );
         virtual void SAL_CALL processingInstruction( const OUString& aTarget,
-             const OUString& aData )
-            throw( RuntimeException, com::sun::star::xml::sax::SAXException );
-        virtual void SAL_CALL setDocumentLocator( const Reference< XLocator >& xLocator )
-            throw( RuntimeException, com::sun::star::xml::sax::SAXException );
+             const OUString& aData );
+        virtual void SAL_CALL setDocumentLocator( const Reference< XLocator >& xLocator );
 
 
         // XSAXDocumentBuilder
-        virtual SAXDocumentBuilderState SAL_CALL getState()
-            throw (RuntimeException);
-        virtual void SAL_CALL reset()
-            throw (RuntimeException);
-        virtual Reference< XDocument > SAL_CALL getDocument()
-            throw (RuntimeException);
-        virtual Reference< XDocumentFragment > SAL_CALL getDocumentFragment()
-            throw (RuntimeException);
-        virtual void SAL_CALL startDocumentFragment(const Reference< XDocument >& ownerDoc)
-            throw (RuntimeException);
-        virtual void SAL_CALL endDocumentFragment()
-            throw (RuntimeException);
+        virtual SAXDocumentBuilderState SAL_CALL getState();
+        virtual void SAL_CALL reset();
+        virtual Reference< XDocument > SAL_CALL getDocument();
+        virtual Reference< XDocumentFragment > SAL_CALL getDocumentFragment();
+        virtual void SAL_CALL startDocumentFragment(const Reference< XDocument >& ownerDoc);
+        virtual void SAL_CALL endDocumentFragment();
 
 
     };

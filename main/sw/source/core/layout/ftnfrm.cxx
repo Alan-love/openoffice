@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -2109,7 +2109,7 @@ void SwFtnBossFrm::_CollectFtns( const SwCntntFrm*   _pRef,
 			} while( !pNxtFtn && pBoss );
 		}
 		else if( !pNxtFtn->GetAttr()->GetFtn().IsEndNote() )
-		{	ASSERT( !pNxtFtn->GetMaster(), "_CollectFtn: Master exspected" );
+		{	ASSERT( !pNxtFtn->GetMaster(), "_CollectFtn: Master expected" );
 			while ( pNxtFtn->GetMaster() )
 				pNxtFtn = pNxtFtn->GetMaster();
 		}
@@ -2812,7 +2812,7 @@ SwTwips SwFtnBossFrm::GetVarSpace() const
 			if( pSect->IsEndnAtEnd() ) // endnotes allowed?
 			{
 				ASSERT( !Lower() || !Lower()->GetNext() || Lower()->GetNext()->
-						IsFtnContFrm(), "FtnContainer exspected" );
+						IsFtnContFrm(), "FtnContainer expected" );
 				const SwFtnContFrm* pCont = Lower() ?
 					(SwFtnContFrm*)Lower()->GetNext() : 0;
 				if( pCont )
@@ -2881,7 +2881,7 @@ sal_uInt8 SwFtnBossFrm::_NeighbourhoodAdjustment( const SwFrm* ) const
 			nRet = NA_GROW_SHRINK;
 		else
 		{
-			ASSERT( GetUpper()->IsSctFrm(), "NeighbourhoodAdjustment: Unexspected Upper" );
+			ASSERT( GetUpper()->IsSctFrm(), "NeighbourhoodAdjustment: Unexpected Upper" );
 			if( !GetNext() && !GetPrev() )
 				nRet = NA_GROW_ADJUST; // section with a single column (FtnAtEnd)
 			else
@@ -3268,4 +3268,3 @@ SwCntntFrm* SwFtnFrm::FindLastCntnt()
 
     return pLastCntntFrm;
 }
-

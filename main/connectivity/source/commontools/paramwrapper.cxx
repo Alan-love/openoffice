@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,21 +7,21 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_dbtools.hxx"
 #include <connectivity/paramwrapper.hxx>
 
 /** === begin UNO includes === **/
@@ -111,7 +111,7 @@ namespace param
     IMPLEMENT_FORWARD_XINTERFACE2( ParameterWrapper, UnoBase, PropertyBase )
 
     //--------------------------------------------------------------------
-    Sequence< Type > SAL_CALL ParameterWrapper::getTypes(   ) throw(RuntimeException)
+    Sequence< Type > SAL_CALL ParameterWrapper::getTypes(   )
     {
         Sequence< Type > aTypes( 4 );
         aTypes[ 1 ] = ::getCppuType( static_cast< Reference< XWeak >*             >( NULL ) );
@@ -141,7 +141,7 @@ namespace param
     }
 
     //--------------------------------------------------------------------
-    Reference< XPropertySetInfo > ParameterWrapper::getPropertySetInfo() throw( RuntimeException )
+    Reference< XPropertySetInfo > ParameterWrapper::getPropertySetInfo()
     {
         return createPropertySetInfo( getInfoHelper() );
     }
@@ -175,7 +175,7 @@ namespace param
     }
 
     //--------------------------------------------------------------------
-    sal_Bool ParameterWrapper::convertFastPropertyValue(Any& rConvertedValue, Any& rOldValue, sal_Int32 nHandle, const Any& rValue) throw( IllegalArgumentException )
+    sal_Bool ParameterWrapper::convertFastPropertyValue(Any& rConvertedValue, Any& rOldValue, sal_Int32 nHandle, const Any& rValue)
     {
         OSL_ENSURE( PROPERTY_ID_VALUE == nHandle, "ParameterWrapper::convertFastPropertyValue: the only non-readonly prop should be our PROPERTY_VALUE!" );
         (void)nHandle;
@@ -187,7 +187,7 @@ namespace param
     }
 
     //--------------------------------------------------------------------
-    void ParameterWrapper::setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any& rValue ) throw( Exception )
+    void ParameterWrapper::setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any& rValue )
     {
         if ( nHandle == PROPERTY_ID_VALUE )
         {
@@ -285,7 +285,7 @@ namespace param
     }
 
     //--------------------------------------------------------------------
-    Type SAL_CALL ParameterWrapperContainer::getElementType() throw( RuntimeException )
+    Type SAL_CALL ParameterWrapperContainer::getElementType()
     {
         ::osl::MutexGuard aGuard( m_aMutex );
         impl_checkDisposed_throw();
@@ -293,7 +293,7 @@ namespace param
     }
 
     //--------------------------------------------------------------------
-    sal_Bool SAL_CALL ParameterWrapperContainer::hasElements() throw( RuntimeException )
+    sal_Bool SAL_CALL ParameterWrapperContainer::hasElements()
     {
         ::osl::MutexGuard aGuard( m_aMutex );
         impl_checkDisposed_throw();
@@ -301,7 +301,7 @@ namespace param
     }
 
     //--------------------------------------------------------------------
-    sal_Int32 SAL_CALL ParameterWrapperContainer::getCount() throw( RuntimeException )
+    sal_Int32 SAL_CALL ParameterWrapperContainer::getCount()
     {
         ::osl::MutexGuard aGuard( m_aMutex );
         impl_checkDisposed_throw();
@@ -309,7 +309,7 @@ namespace param
     }
 
     //--------------------------------------------------------------------
-    Any SAL_CALL ParameterWrapperContainer::getByIndex( sal_Int32 _nIndex ) throw( IndexOutOfBoundsException, WrappedTargetException, RuntimeException )
+    Any SAL_CALL ParameterWrapperContainer::getByIndex( sal_Int32 _nIndex )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
         impl_checkDisposed_throw();
@@ -321,7 +321,7 @@ namespace param
     }
 
     //--------------------------------------------------------------------
-    Reference< XEnumeration > ParameterWrapperContainer::createEnumeration() throw( RuntimeException )
+    Reference< XEnumeration > ParameterWrapperContainer::createEnumeration()
     {
         ::osl::MutexGuard aGuard( m_aMutex );
         impl_checkDisposed_throw();
@@ -357,4 +357,3 @@ namespace param
 //........................................................................
 } } // namespace dbtools::param
 //........................................................................
-

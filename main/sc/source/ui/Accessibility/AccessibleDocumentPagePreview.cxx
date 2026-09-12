@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -702,7 +702,7 @@ public:
 		const ::com::sun::star::uno::Reference< ::com::sun::star::drawing::XShape >& _rxShape,
 		const long _nIndex,
 		const ::accessibility::AccessibleShapeTreeInfo& _rShapeTreeInfo
-	)	throw (::com::sun::star::uno::RuntimeException);
+	);
 
     ///=====  Internal  ========================================================
 
@@ -922,7 +922,6 @@ void ScShapeChilds::VisAreaChanged() const
 sal_Bool ScShapeChilds::ReplaceChild (::accessibility::AccessibleShape* /* pCurrentChild */,
     const ::com::sun::star::uno::Reference< ::com::sun::star::drawing::XShape >& /* _rxShape */,
         const long /* _nIndex */, const ::accessibility::AccessibleShapeTreeInfo& /* _rShapeTreeInfo */)
-        throw (uno::RuntimeException)
 {
     DBG_ERRORFILE("should not be called in the page preview");
     return sal_False;
@@ -1587,7 +1586,6 @@ void ScAccessibleDocumentPagePreview::Notify( SfxBroadcaster& rBC, const SfxHint
 //=====  XAccessibleComponent  ============================================
 
 uno::Reference< XAccessible > SAL_CALL ScAccessibleDocumentPagePreview::getAccessibleAtPoint( const awt::Point& rPoint )
-								throw (uno::RuntimeException)
 {
 	uno::Reference<XAccessible> xAccessible;
     if (containsPoint(rPoint))
@@ -1664,7 +1662,7 @@ uno::Reference< XAccessible > SAL_CALL ScAccessibleDocumentPagePreview::getAcces
 	return xAccessible;
 }
 
-void SAL_CALL ScAccessibleDocumentPagePreview::grabFocus() throw (uno::RuntimeException)
+void SAL_CALL ScAccessibleDocumentPagePreview::grabFocus()
 {
 	ScUnoGuard aGuard;
     IsObjectValid();
@@ -1681,7 +1679,7 @@ void SAL_CALL ScAccessibleDocumentPagePreview::grabFocus() throw (uno::RuntimeEx
 
 //=====  XAccessibleContext  ==============================================
 
-sal_Int32 SAL_CALL ScAccessibleDocumentPagePreview::getAccessibleChildCount(void) throw (uno::RuntimeException)
+sal_Int32 SAL_CALL ScAccessibleDocumentPagePreview::getAccessibleChildCount(void)
 {
 	ScUnoGuard aGuard;
     IsObjectValid();
@@ -1697,7 +1695,6 @@ sal_Int32 SAL_CALL ScAccessibleDocumentPagePreview::getAccessibleChildCount(void
 }
 
 uno::Reference<XAccessible> SAL_CALL ScAccessibleDocumentPagePreview::getAccessibleChild(sal_Int32 nIndex)
-			    throw (uno::RuntimeException, lang::IndexOutOfBoundsException)
 {
 	ScUnoGuard aGuard;
     IsObjectValid();
@@ -1763,7 +1760,6 @@ uno::Reference<XAccessible> SAL_CALL ScAccessibleDocumentPagePreview::getAccessi
 
     ///	Return the set of current states.
 uno::Reference<XAccessibleStateSet> SAL_CALL ScAccessibleDocumentPagePreview::getAccessibleStateSet(void)
-					    throw (uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
 	uno::Reference<XAccessibleStateSet> xParentStates;
@@ -1791,13 +1787,11 @@ uno::Reference<XAccessibleStateSet> SAL_CALL ScAccessibleDocumentPagePreview::ge
 	//=====  XServiceInfo  ====================================================
 
 ::rtl::OUString SAL_CALL ScAccessibleDocumentPagePreview::getImplementationName(void)
-				    throw (uno::RuntimeException)
 {
 	return ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("ScAccessibleDocumentPagePreview"));
 }
 
 uno::Sequence< ::rtl::OUString> SAL_CALL ScAccessibleDocumentPagePreview::getSupportedServiceNames(void)
-			        throw (uno::RuntimeException)
 {
 	uno::Sequence< ::rtl::OUString > aSequence = ScAccessibleContextBase::getSupportedServiceNames();
     sal_Int32 nOldSize(aSequence.getLength());
@@ -1813,7 +1807,6 @@ uno::Sequence< ::rtl::OUString> SAL_CALL ScAccessibleDocumentPagePreview::getSup
 
 uno::Sequence<sal_Int8> SAL_CALL
 	ScAccessibleDocumentPagePreview::getImplementationId(void)
-    throw (uno::RuntimeException)
 {
     ScUnoGuard aGuard;
     IsObjectValid();
@@ -1829,20 +1822,18 @@ uno::Sequence<sal_Int8> SAL_CALL
 //=====  internal  ========================================================
 
 ::rtl::OUString SAL_CALL ScAccessibleDocumentPagePreview::createAccessibleDescription(void)
-				    throw (uno::RuntimeException)
 {
     rtl::OUString sDescription = String(ScResId(STR_ACC_PREVIEWDOC_DESCR));
 	return sDescription;
 }
 
 ::rtl::OUString SAL_CALL ScAccessibleDocumentPagePreview::createAccessibleName(void)
-				    throw (uno::RuntimeException)
 {
     rtl::OUString sName = String(ScResId(STR_ACC_PREVIEWDOC_NAME));
 	return sName;
 }
 
-Rectangle ScAccessibleDocumentPagePreview::GetBoundingBoxOnScreen() const throw (uno::RuntimeException)
+Rectangle ScAccessibleDocumentPagePreview::GetBoundingBoxOnScreen() const
 {
 	Rectangle aRect;
 	if (mpViewShell)
@@ -1854,7 +1845,7 @@ Rectangle ScAccessibleDocumentPagePreview::GetBoundingBoxOnScreen() const throw 
 	return aRect;
 }
 
-Rectangle ScAccessibleDocumentPagePreview::GetBoundingBox() const throw (uno::RuntimeException)
+Rectangle ScAccessibleDocumentPagePreview::GetBoundingBox() const
 {
 	Rectangle aRect;
 	if (mpViewShell)
@@ -1900,7 +1891,6 @@ ScShapeChilds* ScAccessibleDocumentPagePreview::GetShapeChilds()
 }
 
 ::rtl::OUString ScAccessibleDocumentPagePreview::getAccessibleName(void)
-throw (::com::sun::star::uno::RuntimeException)
 {
 	rtl::OUString sName = String(ScResId(STR_ACC_DOC_SPREADSHEET));
 	ScDocument* pScDoc = mpViewShell->GetDocument();
@@ -1919,7 +1909,7 @@ throw (::com::sun::star::uno::RuntimeException)
 		{
 			sName = sFileName + rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(" - ")) + sName;
 			sName += String(ScResId(STR_ACC_DOC_PREVIEW_SUFFIX));
-			
+
 		}
 	}
 
@@ -1936,7 +1926,7 @@ throw (::com::sun::star::uno::RuntimeException)
 //UNUSED2009-05             ScPagePreviewCountData aCount( rData, mpViewShell->GetWindow(), GetNotesChilds(), GetShapeChilds() );
 //UNUSED2009-05             //! order is background shapes, header, table or notes, footer, foreground shapes, controls
 //UNUSED2009-05             sal_Int32 nIndex (aCount.nBackShapes + aCount.nHeaders);
-//UNUSED2009-05 
+//UNUSED2009-05
 //UNUSED2009-05             mpTable = new ScAccessiblePreviewTable( this, mpViewShell, nIndex );
 //UNUSED2009-05             mpTable->acquire();
 //UNUSED2009-05             mpTable->Init();
@@ -1958,7 +1948,7 @@ throw (::com::sun::star::uno::RuntimeException)
 //UNUSED2009-05             mpTable->SetCurrentIndexInParent(aCount.nBackShapes + aCount.nHeaders);
 //UNUSED2009-05         if (mpFooter)
 //UNUSED2009-05             mpFooter->SetCurrentIndexInParent(aCount.nBackShapes + aCount.nHeaders + aCount.nTables + aCount.nNoteParagraphs);
-//UNUSED2009-05 
+//UNUSED2009-05
 //UNUSED2009-05         if (mpNotesChilds)
 //UNUSED2009-05             mpNotesChilds->SetOffset(aCount.nBackShapes + aCount.nHeaders);
 //UNUSED2009-05     }

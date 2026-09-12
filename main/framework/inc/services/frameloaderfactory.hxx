@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -169,8 +169,7 @@ class FrameLoaderFactory	:	public ThreadHelpBase							,		// Struct for right in
 			@onerror	A null reference is returned.
 		*//*-*****************************************************************************************************/
 
-		virtual css::uno::Reference< css::uno::XInterface > SAL_CALL createInstance( const ::rtl::OUString& sTypeName ) throw(	css::uno::Exception			,
-																																css::uno::RuntimeException	);
+		virtual css::uno::Reference< css::uno::XInterface > SAL_CALL createInstance( const ::rtl::OUString& sTypeName );
 
 		/*-****************************************************************************************************//**
 			@short		create a new frameloder
@@ -190,8 +189,7 @@ class FrameLoaderFactory	:	public ThreadHelpBase							,		// Struct for right in
 		*//*-*****************************************************************************************************/
 
     	virtual css::uno::Reference< css::uno::XInterface > SAL_CALL createInstanceWithArguments(	const	::rtl::OUString&						sTypeName	,
-																									const	css::uno::Sequence< css::uno::Any >&	seqArguments) throw(	css::uno::Exception		,
-																									  																		css::uno::RuntimeException);
+																									const	css::uno::Sequence< css::uno::Any >&	seqArguments);
 
 		/*-****************************************************************************************************//**
 			@short		not supported
@@ -205,7 +203,7 @@ class FrameLoaderFactory	:	public ThreadHelpBase							,		// Struct for right in
 			@onerror	-
 		*//*-*****************************************************************************************************/
 
-    	virtual css::uno::Sequence< ::rtl::OUString > SAL_CALL getAvailableServiceNames() throw( css::uno::RuntimeException );
+    	virtual css::uno::Sequence< ::rtl::OUString > SAL_CALL getAvailableServiceNames();
 
 		//---------------------------------------------------------------------------------------------------------
 		//	XNameAccess
@@ -233,9 +231,7 @@ class FrameLoaderFactory	:	public ThreadHelpBase							,		// Struct for right in
 			@onerror	If given name not exist a NoSuchElementException is thrown.
 		*//*-*****************************************************************************************************/
 
-    	virtual css::uno::Any SAL_CALL getByName( const ::rtl::OUString& sName ) throw(	css::container::NoSuchElementException	,
-																						css::lang::WrappedTargetException		,
-																						css::uno::RuntimeException				);
+    	virtual css::uno::Any SAL_CALL getByName( const ::rtl::OUString& sName );
 
 		/*-****************************************************************************************************//**
 			@short		return list of all well known loader names from configuration
@@ -251,7 +247,7 @@ class FrameLoaderFactory	:	public ThreadHelpBase							,		// Struct for right in
 			@onerror	No error should occur.
 		*//*-*****************************************************************************************************/
 
-    	virtual css::uno::Sequence< ::rtl::OUString > SAL_CALL getElementNames() throw( css::uno::RuntimeException );
+    	virtual css::uno::Sequence< ::rtl::OUString > SAL_CALL getElementNames();
 
 		/*-****************************************************************************************************//**
 			@short		check if searched frame loader exist in configuration
@@ -269,7 +265,7 @@ class FrameLoaderFactory	:	public ThreadHelpBase							,		// Struct for right in
 			@onerror	No error should occur.
 		*//*-*****************************************************************************************************/
 
-    	virtual sal_Bool SAL_CALL hasByName( const ::rtl::OUString& sName ) throw( css::uno::RuntimeException );
+    	virtual sal_Bool SAL_CALL hasByName( const ::rtl::OUString& sName );
 
 		//---------------------------------------------------------------------------------------------------------
 		//	XElementAccess
@@ -287,11 +283,11 @@ class FrameLoaderFactory	:	public ThreadHelpBase							,		// Struct for right in
 			@onerror	No error should occur.
 		*//*-*****************************************************************************************************/
 
-		virtual css::uno::Type SAL_CALL getElementType() throw( css::uno::RuntimeException );
+		virtual css::uno::Type SAL_CALL getElementType();
 
 		/*-****************************************************************************************************//**
 			@short		return state if informations about frame loader available
-			@descr		If these method return false - no information could'nt read from configuration ...
+			@descr		If these method return false - no information couldn't read from configuration ...
 						I think nothing will work then. Normally we return sal_True!
 
 			@seealso	class FilterCache!
@@ -302,7 +298,7 @@ class FrameLoaderFactory	:	public ThreadHelpBase							,		// Struct for right in
 			@onerror	No error should occur.
 		*//*-*****************************************************************************************************/
 
-    	virtual sal_Bool SAL_CALL hasElements() throw( css::uno::RuntimeException );
+    	virtual sal_Bool SAL_CALL hasElements();
 
 	//-------------------------------------------------------------------------------------------------------------
 	//	protected methods
@@ -340,7 +336,7 @@ class FrameLoaderFactory	:	public ThreadHelpBase							,		// Struct for right in
 	//-------------------------------------------------------------------------------------------------------------
 
 		/*-****************************************************************************************************//**
-			@short		debug-method to check incoming parameter of some other mehods of this class
+			@short		debug-method to check incoming parameter of some other methods of this class
 			@descr		The following methods are used to check parameters for other methods
 						of this class. The return value is used directly for an ASSERT(...).
 

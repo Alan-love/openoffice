@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -161,7 +161,6 @@ void ChildAccess::release() throw () {
 }
 
 css::uno::Reference< css::uno::XInterface > ChildAccess::getParent()
-    throw (css::uno::RuntimeException)
 {
     OSL_ASSERT(thisIs(IS_ANY));
     osl::MutexGuard g(lock);
@@ -170,7 +169,6 @@ css::uno::Reference< css::uno::XInterface > ChildAccess::getParent()
 }
 
 void ChildAccess::setParent(css::uno::Reference< css::uno::XInterface > const &)
-    throw (css::lang::NoSupportException, css::uno::RuntimeException)
 {
     OSL_ASSERT(thisIs(IS_ANY));
     osl::MutexGuard g(lock);
@@ -182,7 +180,6 @@ void ChildAccess::setParent(css::uno::Reference< css::uno::XInterface > const &)
 
 sal_Int64 ChildAccess::getSomething(
     css::uno::Sequence< sal_Int8 > const & aIdentifier)
-    throw (css::uno::RuntimeException)
 {
     OSL_ASSERT(thisIs(IS_ANY));
     osl::MutexGuard g(lock);
@@ -382,7 +379,6 @@ void ChildAccess::addSupportedServiceNames(
 }
 
 css::uno::Any ChildAccess::queryInterface(css::uno::Type const & aType)
-    throw (css::uno::RuntimeException)
 {
     OSL_ASSERT(thisIs(IS_ANY));
     osl::MutexGuard g(lock);

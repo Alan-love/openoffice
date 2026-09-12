@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -42,12 +42,12 @@ class SectionEnumeration : public SectionEnumeration_BASE
 
 public:
 	SectionEnumeration( const XSectionVec& rVec ) : mxSections( rVec ), mIt( mxSections.begin() ) {}
-	virtual ::sal_Bool SAL_CALL hasMoreElements(  ) throw (uno::RuntimeException)
+	virtual ::sal_Bool SAL_CALL hasMoreElements(  )
 	{
 		return ( mIt != mxSections.end() );
 	}
 
-	virtual uno::Any SAL_CALL nextElement(  ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
+	virtual uno::Any SAL_CALL nextElement(  )
 	{
 		if ( hasMoreElements() )
 			return uno::makeAny( *mIt++ );
@@ -65,7 +65,7 @@ private:
     XSectionVec mxSections;
 
 public:
-    SectionCollectionHelper( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext >& xContext, const uno::Reference< frame::XModel >& xModel ) throw (uno::RuntimeException) : mxParent( xParent ), mxContext( xContext ), mxModel( xModel )
+    SectionCollectionHelper( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext >& xContext, const uno::Reference< frame::XModel >& xModel ) : mxParent( xParent ), mxContext( xContext ), mxModel( xModel )
     {
         uno::Reference< style::XStyleFamiliesSupplier > xSytleFamSupp( mxModel, uno::UNO_QUERY_THROW );
         uno::Reference< container::XNameAccess > xSytleFamNames( xSytleFamSupp->getStyleFamilies(), uno::UNO_QUERY_THROW );
@@ -86,28 +86,28 @@ public:
     ~SectionCollectionHelper(){}
 
     // XIndexAccess
-    virtual sal_Int32 SAL_CALL getCount(  ) throw (uno::RuntimeException)
+    virtual sal_Int32 SAL_CALL getCount(  )
     {
         return mxSections.size();
     }
-    virtual uno::Any SAL_CALL getByIndex( sal_Int32 Index ) throw (lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
+    virtual uno::Any SAL_CALL getByIndex( sal_Int32 Index )
     {
-        if ( Index < 0 || Index >= getCount() )    
+        if ( Index < 0 || Index >= getCount() )
             throw css::lang::IndexOutOfBoundsException();
 
         uno::Reference< beans::XPropertySet > xPageProps( mxSections[ Index ], uno::UNO_QUERY_THROW );
-        return uno::makeAny( uno::Reference< word::XSection >( new SwVbaSection( mxParent,  mxContext, mxModel, xPageProps ) ) );    
+        return uno::makeAny( uno::Reference< word::XSection >( new SwVbaSection( mxParent,  mxContext, mxModel, xPageProps ) ) );
     }
-    virtual uno::Type SAL_CALL getElementType(  ) throw (uno::RuntimeException)
+    virtual uno::Type SAL_CALL getElementType(  )
     {
         return word::XSection::static_type(0);
     }
-    virtual sal_Bool SAL_CALL hasElements(  ) throw (uno::RuntimeException)
+    virtual sal_Bool SAL_CALL hasElements(  )
     {
         return sal_True;
     }
     // XEnumerationAccess
-    virtual uno::Reference< container::XEnumeration > SAL_CALL createEnumeration(  ) throw (uno::RuntimeException)
+    virtual uno::Reference< container::XEnumeration > SAL_CALL createEnumeration(  )
     {
         return new SectionEnumeration( mxSections );
     }
@@ -117,10 +117,10 @@ class SectionsEnumWrapper : public EnumerationHelperImpl
 {
 	uno::Reference< frame::XModel > mxModel;
 public:
-	SectionsEnumWrapper( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext >& xContext, const uno::Reference< container::XEnumeration >& xEnumeration,  const uno::Reference< frame::XModel >& xModel  ) throw ( uno::RuntimeException ) : EnumerationHelperImpl( xParent, xContext, xEnumeration ), mxModel( xModel ){}
+	SectionsEnumWrapper( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext >& xContext, const uno::Reference< container::XEnumeration >& xEnumeration,  const uno::Reference< frame::XModel >& xModel  ) : EnumerationHelperImpl( xParent, xContext, xEnumeration ), mxModel( xModel ){}
 
-	virtual uno::Any SAL_CALL nextElement(  ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException) 
-	{ 
+	virtual uno::Any SAL_CALL nextElement(  )
+	{
 		uno::Reference< beans::XPropertySet > xPageProps( m_xEnumeration->nextElement(), uno::UNO_QUERY_THROW );
 		return uno::makeAny( uno::Reference< word::XSection > ( new SwVbaSection( m_xParent, m_xContext, mxModel, xPageProps ) ) );
 	}
@@ -131,7 +131,7 @@ SwVbaSections::SwVbaSections( const uno::Reference< XHelperInterface >& xParent,
 }
 
 uno::Any SAL_CALL
-SwVbaSections::PageSetup( ) throw (uno::RuntimeException)
+SwVbaSections::PageSetup( )
 {
     if( m_xIndexAccess->getCount() )
     {
@@ -144,13 +144,13 @@ SwVbaSections::PageSetup( ) throw (uno::RuntimeException)
 
 // XEnumerationAccess
 uno::Type SAL_CALL
-SwVbaSections::getElementType() throw (uno::RuntimeException)
+SwVbaSections::getElementType()
 {
 	return word::XSection::static_type(0);
 }
 
 uno::Reference< container::XEnumeration > SAL_CALL
-SwVbaSections::createEnumeration() throw (uno::RuntimeException)
+SwVbaSections::createEnumeration()
 {
     uno::Reference< container::XEnumerationAccess > xEnumAccess( m_xIndexAccess, uno::UNO_QUERY_THROW );
     return new SectionsEnumWrapper( this, mxContext, xEnumAccess->createEnumeration(), mxModel );
@@ -162,14 +162,14 @@ SwVbaSections::createCollectionObject( const css::uno::Any& aSource )
     return aSource;
 }
 
-rtl::OUString& 
+rtl::OUString&
 SwVbaSections::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("SwVbaSections") );
 	return sImplName;
 }
 
-css::uno::Sequence<rtl::OUString> 
+css::uno::Sequence<rtl::OUString>
 SwVbaSections::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > sNames;

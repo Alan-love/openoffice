@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -100,7 +100,7 @@ Reference<XInterface> SAL_CALL BasicPaneFactory_createInstance (
 
 
 
-::rtl::OUString BasicPaneFactory_getImplementationName (void) throw(RuntimeException)
+::rtl::OUString BasicPaneFactory_getImplementationName (void)
 {
     return ::rtl::OUString(
         RTL_CONSTASCII_USTRINGPARAM("com.sun.star.comp.Draw.framework.BasicPaneFactory"));
@@ -110,7 +110,6 @@ Reference<XInterface> SAL_CALL BasicPaneFactory_createInstance (
 
 
 Sequence<rtl::OUString> SAL_CALL BasicPaneFactory_getSupportedServiceNames (void)
-    throw (RuntimeException)
 {
 	static const ::rtl::OUString sServiceName(
         ::rtl::OUString::createFromAscii("com.sun.star.drawing.framework.BasicPaneFactory"));
@@ -141,7 +140,7 @@ BasicPaneFactory::BasicPaneFactory (
 BasicPaneFactory::~BasicPaneFactory (void)
 {
 }
-    
+
 
 
 
@@ -175,7 +174,6 @@ void SAL_CALL BasicPaneFactory::disposing (void)
 
 
 void SAL_CALL BasicPaneFactory::initialize (const Sequence<Any>& aArguments)
-    throw (Exception, RuntimeException)
 {
     if (aArguments.getLength() > 0)
     {
@@ -261,7 +259,6 @@ void SAL_CALL BasicPaneFactory::initialize (const Sequence<Any>& aArguments)
 
 Reference<XResource> SAL_CALL BasicPaneFactory::createResource (
     const Reference<XResourceId>& rxPaneId)
-    throw (RuntimeException, IllegalArgumentException, WrappedTargetException)
 {
     ThrowIfDisposed();
 
@@ -332,7 +329,6 @@ Reference<XResource> SAL_CALL BasicPaneFactory::createResource (
 
 void SAL_CALL BasicPaneFactory::releaseResource (
     const Reference<XResource>& rxPane)
-    throw (RuntimeException)
 {
     ThrowIfDisposed();
 
@@ -390,7 +386,6 @@ void SAL_CALL BasicPaneFactory::releaseResource (
 
 void SAL_CALL BasicPaneFactory::notifyConfigurationChange (
     const ConfigurationChangeEvent& rEvent)
-    throw (RuntimeException)
 {
     sal_Int32 nEventType = 0;
     rEvent.UserData >>= nEventType;
@@ -429,12 +424,11 @@ void SAL_CALL BasicPaneFactory::notifyConfigurationChange (
 
 
 
-                
+
 //===== lang::XEventListener ==================================================
 
 void SAL_CALL BasicPaneFactory::disposing (
     const lang::EventObject& rEventObject)
-    throw (RuntimeException)
 {
     if (mxConfigurationControllerWeak == rEventObject.Source)
     {
@@ -466,7 +460,7 @@ Reference<XResource> BasicPaneFactory::CreateFrameWindowPane (
     const Reference<XResourceId>& rxPaneId)
 {
     Reference<XResource> xPane;
-    
+
     if (mpViewShellBase != NULL)
     {
         xPane = new FrameWindowPane(rxPaneId, mpViewShellBase->GetViewWindow());
@@ -511,7 +505,7 @@ Reference<XResource> BasicPaneFactory::CreateChildWindowPane (
                 pShell.reset(new LeftImpressPaneShell());
                 nChildWindowId = ::sd::LeftPaneImpressChildWindow::GetChildWindowId();
                 break;
-                
+
             case LeftDrawPaneId:
                 pShell.reset(new LeftDrawPaneShell());
                 nChildWindowId = ::sd::LeftPaneDrawChildWindow::GetChildWindowId();
@@ -537,7 +531,6 @@ Reference<XResource> BasicPaneFactory::CreateChildWindowPane (
 }
 
 void BasicPaneFactory::ThrowIfDisposed (void) const
-    throw (lang::DisposedException)
 {
 	if (rBHelper.bDisposed || rBHelper.bInDispose)
 	{

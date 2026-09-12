@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -129,7 +129,7 @@ HyperLinkContext::HyperLinkContext( ContextHandler& rParent,
 							sURL = CREATE_OUSTRING( "#Slide " ).concat( rtl::OUString::valueOf( nPageNumber ) );
 						else if ( aSlideType.match( sNotesSlide ) )
 							sURL = CREATE_OUSTRING( "#Notes " ).concat( rtl::OUString::valueOf( nPageNumber ) );
-//						else: todo for other types such as notesMaster or slideMaster as they can't be referenced easily			
+//						else: todo for other types such as notesMaster or slideMaster as they can't be referenced easily
 					}
 				}
 			}
@@ -150,7 +150,7 @@ HyperLinkContext::~HyperLinkContext()
 }
 
 Reference< XFastContextHandler > HyperLinkContext::createFastChildContext(
-        ::sal_Int32 aElement, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+        ::sal_Int32 aElement, const Reference< XFastAttributeList >& xAttribs )
 {
     Reference< XFastContextHandler > xRet;
     switch( aElement )
@@ -169,4 +169,3 @@ Reference< XFastContextHandler > HyperLinkContext::createFastChildContext(
 
 } // namespace drawingml
 } // namespace oox
-

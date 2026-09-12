@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -50,23 +50,21 @@ typedef ::cppu::WeakComponentImplHelper1<
 class SingletonFactory : public MutexHolder, public t_impl
 {
     ::rtl::Reference< ::jvmaccess::UnoVirtualMachine > m_vm_access;
-    
+
 protected:
     virtual void SAL_CALL disposing();
-    
+
 public:
     inline SingletonFactory( ::rtl::Reference< ::jvmaccess::UnoVirtualMachine > const & vm_access )
         : t_impl( m_mutex ),
           m_vm_access( vm_access )
         {}
-    
+
     // XSingleComponentFactory impl
     virtual css::uno::Reference< css::uno::XInterface > SAL_CALL createInstanceWithContext(
-        css::uno::Reference< css::uno::XComponentContext > const & xContext )
-        throw (css::uno::Exception);
+        css::uno::Reference< css::uno::XComponentContext > const & xContext );
     virtual css::uno::Reference< css::uno::XInterface > SAL_CALL createInstanceWithArgumentsAndContext(
-        css::uno::Sequence< css::uno::Any > const & args, css::uno::Reference< css::uno::XComponentContext > const & xContext )
-        throw (css::uno::Exception);
+        css::uno::Sequence< css::uno::Any > const & args, css::uno::Reference< css::uno::XComponentContext > const & xContext );
 };
 
 void SingletonFactory::disposing()
@@ -76,7 +74,6 @@ void SingletonFactory::disposing()
 
 css::uno::Reference< css::uno::XInterface > SingletonFactory::createInstanceWithContext(
     css::uno::Reference< css::uno::XComponentContext > const & xContext )
-    throw (css::uno::Exception)
 {
     sal_Int64 handle = reinterpret_cast< sal_Int64 >( m_vm_access.get() );
     css::uno::Any arg(
@@ -94,7 +91,6 @@ css::uno::Reference< css::uno::XInterface > SingletonFactory::createInstanceWith
 
 css::uno::Reference< css::uno::XInterface > SingletonFactory::createInstanceWithArgumentsAndContext(
     css::uno::Sequence< css::uno::Any > const & args, css::uno::Reference< css::uno::XComponentContext > const & xContext )
-    throw (css::uno::Exception)
 {
     return xContext->getServiceManager()->createInstanceWithArgumentsAndContext(
         ::rtl::OUString(

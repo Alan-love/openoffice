@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -63,7 +63,7 @@ namespace sfx2
 		GraphicFilter*				mpGraphicFilter;
 		FileDialogHelper*			mpAntiImpl;
 		Window*						mpPreferredParentWindow;
-        
+
         ::comphelper::SequenceAsVector< ::rtl::OUString > mlLastURLs;
 
 		::rtl::OUString				maPath;
@@ -150,7 +150,7 @@ namespace sfx2
 		void					SaveLastUsedFilter( void );
 
 		void					implInitializeFileName( );
-        
+
         void                    implGetAndCacheFiles( const ::com::sun::star::uno::Reference< XInterface >& xPicker  ,
                                                             SvStringsDtor*&               rpURLList,
                                                       const SfxFilter*                    pFilter  );
@@ -163,17 +163,17 @@ namespace sfx2
 
 	public:
 		// XFilePickerListener methods
-		virtual void SAL_CALL				fileSelectionChanged( const ::com::sun::star::ui::dialogs::FilePickerEvent& aEvent ) throw( ::com::sun::star::uno::RuntimeException );
-		virtual void SAL_CALL				directoryChanged( const ::com::sun::star::ui::dialogs::FilePickerEvent& aEvent ) throw( ::com::sun::star::uno::RuntimeException );
-		virtual ::rtl::OUString SAL_CALL	helpRequested( const ::com::sun::star::ui::dialogs::FilePickerEvent& aEvent ) throw( ::com::sun::star::uno::RuntimeException );
-		virtual void SAL_CALL				controlStateChanged( const ::com::sun::star::ui::dialogs::FilePickerEvent& aEvent ) throw( ::com::sun::star::uno::RuntimeException );
-		virtual void SAL_CALL				dialogSizeChanged() throw( ::com::sun::star::uno::RuntimeException );
+		virtual void SAL_CALL				fileSelectionChanged( const ::com::sun::star::ui::dialogs::FilePickerEvent& aEvent );
+		virtual void SAL_CALL				directoryChanged( const ::com::sun::star::ui::dialogs::FilePickerEvent& aEvent );
+		virtual ::rtl::OUString SAL_CALL	helpRequested( const ::com::sun::star::ui::dialogs::FilePickerEvent& aEvent );
+		virtual void SAL_CALL				controlStateChanged( const ::com::sun::star::ui::dialogs::FilePickerEvent& aEvent );
+		virtual void SAL_CALL				dialogSizeChanged();
 
         // XDialogClosedListener methods
-        virtual void SAL_CALL               dialogClosed( const ::com::sun::star::ui::dialogs::DialogClosedEvent& _rEvent ) throw (::com::sun::star::uno::RuntimeException);
+        virtual void SAL_CALL               dialogClosed( const ::com::sun::star::ui::dialogs::DialogClosedEvent& _rEvent );
 
         // XEventListener methods
-		virtual void SAL_CALL		disposing( const ::com::sun::star::lang::EventObject& Source ) throw( ::com::sun::star::uno::RuntimeException );
+		virtual void SAL_CALL		disposing( const ::com::sun::star::lang::EventObject& Source );
 
 		// handle XFilePickerListener events
 		void					handleFileSelectionChanged( const ::com::sun::star::ui::dialogs::FilePickerEvent& aEvent );
@@ -231,4 +231,3 @@ namespace sfx2
 }	// end of namespace sfx2
 
 #endif // _SFX_FILEDLGIMPL_HXX
-

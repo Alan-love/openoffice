@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -55,11 +55,11 @@ import com.sun.star.uno.UnoRuntime;
 * <code>TargetURL</code> property. <p>
 *
 * Short description : test adds two listeners, call
-* <code> submit </code> method and cecks if both listeners
+* <code> submit </code> method and checks if both listeners
 * were called. Then one listener is removed and after
 * <code> submit </code> method call it must not be called. <p>
 *
-* Test is <b> NOT </b> multithread compilant. <p>
+* Test is <b> NOT </b> multithread compliant. <p>
 * @see com.sun.star.form.XSubmit
 */
 public class _XSubmit extends MultiMethodTest {
@@ -93,7 +93,7 @@ public class _XSubmit extends MultiMethodTest {
     }
 
     /**
-    * Before submision tries to set 'TargetURL' property
+    * Before submission tries to set 'TargetURL' property
     * of component to some value assuming that component
     * supports <code>com.sun.star.form.HTMLForm</code>
     * service.
@@ -135,7 +135,7 @@ public class _XSubmit extends MultiMethodTest {
                 e.printStackTrace(log);
             }
         } else {
-            log.println("!!! The tested compoennt doesn't support XPropertySet ");
+            log.println("!!! The tested component doesn't support XPropertySet ");
         }
 
         oObj.submit(cntrl, new MouseEvent());
@@ -175,13 +175,12 @@ public class _XSubmit extends MultiMethodTest {
             log.println("While waiting :" + e) ;
         }
     }
-    
+
     /**
     * Forces environment recreation.
     */
     protected void after() {
         disposeEnvironment();
-    }    
-    
-}
+    }
 
+}

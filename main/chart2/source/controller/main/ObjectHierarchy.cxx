@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartcontroller.hxx"
 
 #include "ObjectHierarchy.hxx"
 #include "ObjectIdentifier.hxx"
@@ -40,6 +40,7 @@
 
 #include <map>
 #include <algorithm>
+#include <iterator>
 
 #include <com/sun/star/chart2/XTitled.hpp>
 #include <com/sun/star/chart2/XCoordinateSystemContainer.hpp>
@@ -245,7 +246,7 @@ void ImplObjectHierarchy::createTree( const Reference< XChartDocument >& xChartD
             Sequence< Reference< XAxis > > aAxes( AxisHelper::getAllAxesOfDiagram( xDiagram ) );
             for( sal_Int32 i=0; i<aAxes.getLength(); ++i )
                 lcl_addAxisTitle( aAxes[i], aTopLevelContainer, xModel );
-        
+
             // Diagram
             aTopLevelContainer.push_back( aDiaOID );
         }
@@ -335,7 +336,7 @@ void ImplObjectHierarchy::createAxesTree(
             AxisHelper::getIndicesForAxis( xAxis, xDiagram, nCooSysIndex, nDimensionIndex, nAxisIndex );
             if( nAxisIndex>0 && !ChartTypeHelper::isSupportingSecondaryAxis( xChartType, nDimensionCount, nDimensionIndex ) )
                 continue;
-            
+
             if( m_bOrderingForElementSelector )
             {
                 // axis
@@ -355,7 +356,7 @@ void ImplObjectHierarchy::createAxesTree(
                     ObjectIdentifier( ObjectIdentifier( ObjectIdentifier::createClassifiedIdentifierForGrid( xAxis, xChartModel ) ) ) );
             }
 
-            Sequence< Reference< beans::XPropertySet > > aSubGrids( xAxis->getSubGridProperties() );;
+            Sequence< Reference< beans::XPropertySet > > aSubGrids( xAxis->getSubGridProperties() );
             sal_Int32 nSubGrid = 0;
             for( nSubGrid = 0; nSubGrid < aSubGrids.getLength(); ++nSubGrid )
             {
@@ -446,7 +447,7 @@ void ImplObjectHierarchy::createDataSeriesTree(
 
                     Reference< chart2::XDataSeries > xSeries( aSeriesSeq[nSeriesIdx], uno::UNO_QUERY );
 
-                    // data lablels
+                    // data labels
                     if( DataSeriesHelper::hasDataLabelsAtSeries( xSeries ) )
                     {
                         rtl::OUString aChildParticle( ObjectIdentifier::getStringForType( OBJECTTYPE_DATA_LABELS ) );

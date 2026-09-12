@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -34,7 +34,7 @@ enum BASETYPE
 	BT_ANY,
 	BT_TYPE,
 	BT_BOOLEAN,
-	BT_CHAR,		
+	BT_CHAR,
 	BT_STRING,
 	BT_FLOAT,
 	BT_DOUBLE,
@@ -54,7 +54,7 @@ enum CunoTypeDecl
 	CUNOTYPEDECL_ALLTYPES,
 	CUNOTYPEDECL_NOINTERFACES,
 	CUNOTYPEDECL_ONLYINTERFACES
-};	
+};
 
 class CunoOptions;
 class FileStream;
@@ -64,15 +64,15 @@ class CunoType
 public:
 	CunoType(TypeReader& typeReader,
 			 const ::rtl::OString& typeName,
-			 const TypeManager& typeMgr, 
+			 const TypeManager& typeMgr,
 			 const TypeDependency& typeDependencies);
 
 	virtual ~CunoType();
 
-	virtual sal_Bool dump(CunoOptions* pOptions) throw( CannotDumpException );
-	virtual sal_Bool dumpDependedTypes(CunoOptions* pOptions)  throw( CannotDumpException );
-	virtual sal_Bool dumpHFile(FileStream& o) throw( CannotDumpException ) = 0;
-	virtual sal_Bool dumpCFile(FileStream& o) throw( CannotDumpException ) = 0;
+	virtual sal_Bool dump(CunoOptions* pOptions);
+	virtual sal_Bool dumpDependedTypes(CunoOptions* pOptions);
+	virtual sal_Bool dumpHFile(FileStream& o) = 0;
+	virtual sal_Bool dumpCFile(FileStream& o) = 0;
 
 	virtual ::rtl::OString dumpHeaderDefine(FileStream& o, sal_Char* prefix, sal_Bool bExtended=sal_False);
 	virtual void dumpDefaultHIncludes(FileStream& o);
@@ -88,8 +88,7 @@ public:
 	virtual void dumpLGetCunoType(FileStream& o);
 
 	virtual void dumpType(FileStream& o, const ::rtl::OString& type, sal_Bool bConst=sal_False,
-						  sal_Bool bPointer=sal_False, sal_Bool bParam=sal_False)
-					throw( CannotDumpException );
+						  sal_Bool bPointer=sal_False, sal_Bool bParam=sal_False);
 	::rtl::OString	getTypeClass(const ::rtl::OString& type="", sal_Bool bCStyle=sal_False);
 	::rtl::OString	getBaseType(const ::rtl::OString& type);
 	void	dumpCppuGetType(FileStream& o, const ::rtl::OString& type, sal_Bool bDecl=sal_False, CunoTypeDecl eDeclFlag=CUNOTYPEDECL_ALLTYPES);
@@ -119,10 +118,10 @@ protected:
 	::rtl::OString	checkRealBaseType(const ::rtl::OString& type, sal_Bool bResolveTypeOnly = sal_False);
 	void	dumpCppuGetTypeMemberDecl(FileStream& o, CunoTypeDecl eDeclFlag);
 
- 	sal_Bool isNestedType() 
+ 	sal_Bool isNestedType()
 		{ return m_bIsNestedType; };
 
- 	RegistryKeyNames& getNestedTypeNames() 
+ 	RegistryKeyNames& getNestedTypeNames()
 		{ return  m_nestedTypeNames; };
 
  	sal_Bool isNestedTypeByName(const ::rtl::OString& type);
@@ -138,8 +137,8 @@ protected:
 	::rtl::OString		m_typeName;
 	::rtl::OString		m_name;
 	TypeReader			m_reader;
-	TypeManager&		m_typeMgr;	
-	TypeDependency  	m_dependencies;	
+	TypeManager&		m_typeMgr;
+	TypeDependency  	m_dependencies;
 	sal_Bool 			m_bIsNestedType;
 	RegistryKeyNames 	m_nestedTypeNames;
 };
@@ -149,14 +148,14 @@ class InterfaceType : public CunoType
 public:
 	InterfaceType(TypeReader& typeReader,
 				 const ::rtl::OString& typeName,
-				 const TypeManager& typeMgr, 
+				 const TypeManager& typeMgr,
 				 const TypeDependency& typeDependencies);
 
 	virtual ~InterfaceType();
 
-	sal_Bool	dumpDeclaration(FileStream& o) throw( CannotDumpException );
-	sal_Bool	dumpHFile(FileStream& o) throw( CannotDumpException );
-	sal_Bool	dumpCFile(FileStream& o) throw( CannotDumpException );
+	sal_Bool	dumpDeclaration(FileStream& o);
+	sal_Bool	dumpHFile(FileStream& o);
+	sal_Bool	dumpCFile(FileStream& o);
 
 	void 		dumpInheritedFunctions(FileStream& o, rtl::OString& superType);
 	void		dumpAttributes(FileStream& o, const ::rtl::OString& interfaceType, TypeReader& reader );
@@ -189,16 +188,16 @@ class ModuleType : public CunoType
 public:
 	ModuleType(TypeReader& typeReader,
 		   	   const ::rtl::OString& typeName,
-			   const TypeManager& typeMgr, 
+			   const TypeManager& typeMgr,
 			   const TypeDependency& typeDependencies);
 
 	virtual ~ModuleType();
 
-	virtual sal_Bool 	dump(CunoOptions* pOptions) throw( CannotDumpException );
+	virtual sal_Bool 	dump(CunoOptions* pOptions);
 
-	sal_Bool			dumpDeclaration(FileStream& o) throw( CannotDumpException );
-	sal_Bool			dumpHFile(FileStream& o) throw( CannotDumpException );
-	sal_Bool			dumpCFile(FileStream& o) throw( CannotDumpException );
+	sal_Bool			dumpDeclaration(FileStream& o);
+	sal_Bool			dumpHFile(FileStream& o);
+	sal_Bool			dumpCFile(FileStream& o);
 	sal_Bool			hasConstants();
 };
 
@@ -207,12 +206,12 @@ class ConstantsType : public ModuleType
 public:
 	ConstantsType(TypeReader& typeReader,
 		   	   const ::rtl::OString& typeName,
-			   const TypeManager& typeMgr, 
+			   const TypeManager& typeMgr,
 			   const TypeDependency& typeDependencies);
 
 	virtual ~ConstantsType();
 
-	virtual sal_Bool 	dump(CunoOptions* pOptions) throw( CannotDumpException );
+	virtual sal_Bool 	dump(CunoOptions* pOptions);
 };
 
 class StructureType : public CunoType
@@ -220,14 +219,14 @@ class StructureType : public CunoType
 public:
 	StructureType(TypeReader& typeReader,
 				  const ::rtl::OString& typeName,
-				  const TypeManager& typeMgr, 
+				  const TypeManager& typeMgr,
 				  const TypeDependency& typeDependencies);
 
 	virtual ~StructureType();
 
-	sal_Bool	dumpDeclaration(FileStream& o) throw( CannotDumpException );
-	sal_Bool	dumpHFile(FileStream& o) throw( CannotDumpException );
-	sal_Bool	dumpCFile(FileStream& o) throw( CannotDumpException );
+	sal_Bool	dumpDeclaration(FileStream& o);
+	sal_Bool	dumpHFile(FileStream& o);
+	sal_Bool	dumpCFile(FileStream& o);
 };
 
 class ExceptionType : public CunoType
@@ -235,14 +234,14 @@ class ExceptionType : public CunoType
 public:
 	ExceptionType(TypeReader& typeReader,
 				  const ::rtl::OString& typeName,
-				  const TypeManager& typeMgr, 
+				  const TypeManager& typeMgr,
 				  const TypeDependency& typeDependencies);
 
 	virtual ~ExceptionType();
 
-	sal_Bool	dumpDeclaration(FileStream& o) throw( CannotDumpException );
-	sal_Bool	dumpHFile(FileStream& o) throw( CannotDumpException );
-	sal_Bool	dumpCFile(FileStream& o) throw( CannotDumpException );
+	sal_Bool	dumpDeclaration(FileStream& o);
+	sal_Bool	dumpHFile(FileStream& o);
+	sal_Bool	dumpCFile(FileStream& o);
 };
 
 class EnumType : public CunoType
@@ -250,14 +249,14 @@ class EnumType : public CunoType
 public:
 	EnumType(TypeReader& typeReader,
 	 		 const ::rtl::OString& typeName,
-	 		 const TypeManager& typeMgr, 
+	 		 const TypeManager& typeMgr,
 	 		 const TypeDependency& typeDependencies);
 
 	virtual ~EnumType();
 
-	sal_Bool	dumpDeclaration(FileStream& o) throw( CannotDumpException );
-	sal_Bool	dumpHFile(FileStream& o) throw( CannotDumpException );
-	sal_Bool	dumpCFile(FileStream& o) throw( CannotDumpException );
+	sal_Bool	dumpDeclaration(FileStream& o);
+	sal_Bool	dumpHFile(FileStream& o);
+	sal_Bool	dumpCFile(FileStream& o);
 
 	void		dumpGetCunoType(FileStream& o);
 	void 		dumpCGetCunoType(FileStream& o);
@@ -273,9 +272,9 @@ public:
 
 	virtual ~TypeDefType();
 
-	sal_Bool	dumpDeclaration(FileStream& o) throw( CannotDumpException );
-	sal_Bool	dumpHFile(FileStream& o) throw( CannotDumpException );
-	sal_Bool	dumpCFile(FileStream& o) throw( CannotDumpException );
+	sal_Bool	dumpDeclaration(FileStream& o);
+	sal_Bool	dumpHFile(FileStream& o);
+	sal_Bool	dumpCFile(FileStream& o);
 
 	void		dumpGetCunoType(FileStream& o);
 	void		dumpLGetCunoType(FileStream& o);
@@ -284,22 +283,20 @@ public:
 
 
 sal_Bool produceType(const ::rtl::OString& typeName,
-					 TypeManager& typeMgr, 
+					 TypeManager& typeMgr,
 					 TypeDependency& typeDependencies,
-					 CunoOptions* pOptions)
-				 throw( CannotDumpException );
+					 CunoOptions* pOptions);
 
 /**
- * This function returns a C++ scoped name, represents the namespace 
+ * This function returns a C++ scoped name, represents the namespace
  * scoping of this type, e.g. com:.sun::star::uno::XInterface. If the scope of
  * the type is equal scope, the relativ name will be used.
  */
-::rtl::OString scopedName(const ::rtl::OString& scope, const ::rtl::OString& type, 
+::rtl::OString scopedName(const ::rtl::OString& scope, const ::rtl::OString& type,
 				   sal_Bool bNoNameSpace=sal_False);
 
-::rtl::OString shortScopedName(const ::rtl::OString& scope, const ::rtl::OString& type, 
+::rtl::OString shortScopedName(const ::rtl::OString& scope, const ::rtl::OString& type,
 				   		sal_Bool bNoNameSpace=sal_False);
 
 
 #endif // INCLUDED_CODEMAKER_SOURCE_CUNOMAKER_CUNOTYPE_HXX
-

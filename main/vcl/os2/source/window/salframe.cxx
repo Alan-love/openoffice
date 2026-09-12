@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 #define INCL_DOS
 #define INCL_PM
@@ -122,21 +120,21 @@ sal_Bool APIENTRY _WinQueryWindowPos( Os2SalFrame* pFrame, PSWP pswp)
 	sal_Bool rc = WinQueryWindowPos( pFrame->mhWndFrame, pswp);
 
 #if OSL_DEBUG_LEVEL>1
-	debug_printf( "> WinQueryWindowPos hwnd %x at %d,%d (%dx%d)\n", 
+	debug_printf( "> WinQueryWindowPos hwnd %x at %d,%d (%dx%d)\n",
 					pFrame->mhWndFrame, pswp->x, pswp->y, pswp->cx, pswp->cy);
 #endif
 
 	Os2SalFrame* pParentFrame = pFrame->mpParentFrame;
 
-	//YD adjust to owner coordinates
+	// YD adjust to owner coordinates
 	if ( pParentFrame )
 	{
 		POINTL ptlOwner = {0};
-		
-		// coords are relative to screen, map to parent frame client area 
+
+		// coords are relative to screen, map to parent frame client area
 		ptlOwner.x = pswp->x;
 		ptlOwner.y = pswp->y;
-		WinMapWindowPoints( HWND_DESKTOP, pParentFrame->mhWndClient, &ptlOwner, 1);			
+		WinMapWindowPoints( HWND_DESKTOP, pParentFrame->mhWndClient, &ptlOwner, 1);
 		pswp->x = ptlOwner.x;
 		pswp->y = ptlOwner.y;
 		// get parent client area size
@@ -152,33 +150,33 @@ sal_Bool APIENTRY _WinQueryWindowPos( Os2SalFrame* pFrame, PSWP pswp)
 	pswp->y = swpOwner.cy - (pswp->y + pswp->cy);
 
 #if OSL_DEBUG_LEVEL>1
-	debug_printf( "< WinQueryWindowPos hwnd %x at %d,%d (%dx%d)\n", 
+	debug_printf( "< WinQueryWindowPos hwnd %x at %d,%d (%dx%d)\n",
 					pFrame->mhWndFrame, pswp->x, pswp->y, pswp->cx, pswp->cy);
 #endif
 	return rc;
 }
 
 sal_Bool APIENTRY _WinSetWindowPos( Os2SalFrame* pFrame, HWND hwndInsertBehind, LONG x, LONG y,
-    LONG cx, LONG cy, ULONG fl)
+	LONG cx, LONG cy, ULONG fl)
 {
 	SWP 	swpOwner = {0};
 	POINTL 	ptlOwner = {0};
 	HWND	hParent = NULL;
 
 #if OSL_DEBUG_LEVEL>1
-	debug_printf( ">WinSetWindowPos hwnd %x at %d,%d (%dx%d) fl 0x%08x\n", 
+	debug_printf( ">WinSetWindowPos hwnd %x at %d,%d (%dx%d) fl 0x%08x\n",
 					pFrame->mhWndFrame, x, y, cx, cy, fl);
 #endif
 
 	// first resize window if requested
-	if ( (fl & SWP_SIZE) ) { 
+	if ( (fl & SWP_SIZE) ) {
 		ULONG	flag = SWP_SIZE;
 		LONG	nX = 0, nY = 0;
 		LONG	frameFrameX, frameFrameY, frameCaptionY;
 
 		ImplSalCalcFrameSize( pFrame, frameFrameX, frameFrameY, frameCaptionY );
 		// if we change y size, we need to move the window down
-		// because os2 window origin is lower left corner
+		// because OS/2 window origin is lower left corner
 		if (pFrame->maGeometry.nHeight != cy) {
 			SWP		aSWP;
 			WinQueryWindowPos( pFrame->mhWndFrame, &aSWP);
@@ -186,7 +184,7 @@ sal_Bool APIENTRY _WinSetWindowPos( Os2SalFrame* pFrame, HWND hwndInsertBehind, 
 			nY = aSWP.y - (cy + 2*frameFrameY + frameCaptionY - aSWP.cy);
 			flag |= SWP_MOVE;
 		}
-		WinSetWindowPos( pFrame->mhWndFrame, NULL, nX, nY, 
+		WinSetWindowPos( pFrame->mhWndFrame, NULL, nX, nY,
 			cx+2*frameFrameX, cy+2*frameFrameY+frameCaptionY, flag);
 		fl = fl & ~SWP_SIZE;
 	}
@@ -208,9 +206,9 @@ sal_Bool APIENTRY _WinSetWindowPos( Os2SalFrame* pFrame, HWND hwndInsertBehind, 
 
 	WinQueryWindowPos( hParent, &swpOwner);
 
-	//YD adjust to owner coordinates only when moving and not centering
-	//if (!(fl & SWP_CENTER) && (fl & SWP_MOVE)) 
-	if ((fl & SWP_MOVE)) 
+	//Y D adjust to owner coordinates only when moving and not centering
+	//if (!(fl & SWP_CENTER) && (fl & SWP_MOVE))
+	if ((fl & SWP_MOVE))
 	{
 
 		// if SWP_CENTER is specified, change position to parent center
@@ -221,30 +219,30 @@ sal_Bool APIENTRY _WinSetWindowPos( Os2SalFrame* pFrame, HWND hwndInsertBehind, 
 			debug_printf( "_WinSetWindowPos SWP_CENTER\n");
 #endif
 			fl = fl & ~SWP_CENTER;
-		} else {  
-			// coords are relative to parent frame client area, map to screen 
+		} else {
+			// coords are relative to parent frame client area, map to screen
 			// map Y to OS/2 system coordinates
 			ptlOwner.x = x;
 			ptlOwner.y = swpOwner.cy - (y + cy);
 
 #if OSL_DEBUG_LEVEL>0
-			debug_printf( "_WinSetWindowPos owner 0x%x at %d,%d (%dx%d) OS2\n", 
+			debug_printf( "_WinSetWindowPos owner 0x%x at %d,%d (%dx%d) OS2\n",
 				hParent, ptlOwner.x, ptlOwner.y, swpOwner.cx, swpOwner.cy);
 #endif
 		}
 		// map from client area to screen
-		WinMapWindowPoints( hParent, HWND_DESKTOP, &ptlOwner, 1);			
+		WinMapWindowPoints( hParent, HWND_DESKTOP, &ptlOwner, 1);
 		x = ptlOwner.x;
 		y = ptlOwner.y;
 
 #if OSL_DEBUG_LEVEL>0
-		debug_printf( "_WinSetWindowPos owner 0x%x at %d,%d (%dx%d) MAPPED OS2\n", 
+		debug_printf( "_WinSetWindowPos owner 0x%x at %d,%d (%dx%d) MAPPED OS2\n",
 			hParent, ptlOwner.x, ptlOwner.y, swpOwner.cx, swpOwner.cy);
 #endif
 	}
 
 #if OSL_DEBUG_LEVEL>0
-	debug_printf( "<WinSetWindowPos hwnd %x at %d,%d (%dx%d) fl=%x\n", 
+	debug_printf( "<WinSetWindowPos hwnd %x at %d,%d (%dx%d) fl=%x\n",
 					pFrame->mhWndFrame, x, y, cx, cy, fl);
 #endif
 	return WinSetWindowPos( pFrame->mhWndFrame, hwndInsertBehind, x, y, 0, 0, fl);
@@ -258,23 +256,23 @@ static void dumpWindowInfo( char* fnc, HWND hwnd)
 	SWP aSWP;
 	HWND	hwnd2;
 	char	szTitle[256];
-	
+
 #if 0
 	_WinQueryWindowPos( hwnd, &aSWP );
 	strcpy(szTitle,"");
-	WinQueryWindowText(hwnd, sizeof(szTitle), szTitle);	
+	WinQueryWindowText(hwnd, sizeof(szTitle), szTitle);
 	debug_printf( "%s: window %08x at %d,%d (size %dx%d) '%s'\n", fnc, hwnd,
 				aSWP.x, aSWP.y, aSWP.cx, aSWP.cy, szTitle);
 	hwnd2 = WinQueryWindow(hwnd, QW_PARENT);
 	_WinQueryWindowPos( hwnd2, &aSWP );
 	strcpy(szTitle,"");
-	WinQueryWindowText(hwnd2, sizeof(szTitle), szTitle);	
+	WinQueryWindowText(hwnd2, sizeof(szTitle), szTitle);
 	debug_printf( "%s: parent %08x at %d,%d (size %dx%d) '%s'\n", fnc, hwnd2,
 				aSWP.x, aSWP.y, aSWP.cx, aSWP.cy, szTitle);
 	hwnd2 = WinQueryWindow(hwnd, QW_OWNER);
 	_WinQueryWindowPos( hwnd2, &aSWP );
 	strcpy(szTitle,"");
-	WinQueryWindowText(hwnd2, sizeof(szTitle), szTitle);	
+	WinQueryWindowText(hwnd2, sizeof(szTitle), szTitle);
 	debug_printf( "%s: owner %08x at %d,%d (size %dx%d) '%s'\n", fnc, hwnd2,
 				aSWP.x, aSWP.y, aSWP.cx, aSWP.cy, szTitle);
 #endif
@@ -287,8 +285,8 @@ static void dumpWindowInfo( char* fnc, HWND hwnd)
 
 struct ImplSalIMEProc
 {
-    ULONG       nOrd;
-    PFN*        pProc;
+	ULONG       nOrd;
+	PFN*        pProc;
 };
 
 #define SAL_IME_PROC_COUNT          12
@@ -297,15 +295,15 @@ struct ImplSalIMEProc
 
 static SalIMEData* GetSalIMEData()
 {
-    SalData* pSalData = GetSalData();
+	SalData* pSalData = GetSalData();
 
-    if ( !pSalData->mbIMEInit )
-    {
-        pSalData->mbIMEInit = TRUE;
+	if ( !pSalData->mbIMEInit )
+	{
+		pSalData->mbIMEInit = TRUE;
 
-        HMODULE hMod = 0;
-        if ( 0 == DosLoadModule( NULL, 0, "OS2IM", &hMod ) )
-        {
+		HMODULE hMod = 0;
+		if ( 0 == DosLoadModule( NULL, 0, "OS2IM", &hMod ) )
+		{
             SalIMEData*     pIMEData = new SalIMEData;
             sal_Bool            bError = FALSE;
             ImplSalIMEProc  aProcAry[SAL_IME_PROC_COUNT] =
@@ -341,23 +339,23 @@ static SalIMEData* GetSalIMEData()
             }
             else
                 pSalData->mpIMEData = pIMEData;
-        }
-    }
+		}
+	}
 
-    return pSalData->mpIMEData;
+	return pSalData->mpIMEData;
 }
 
 // -----------------------------------------------------------------------
 
 void ImplReleaseSALIMEData()
 {
-    SalData* pSalData = GetSalData();
+	SalData* pSalData = GetSalData();
 
-    if ( pSalData->mpIMEData )
-    {
-        DosFreeModule( pSalData->mpIMEData->mhModIME );
-        delete pSalData->mpIMEData;
-    }
+	if ( pSalData->mpIMEData )
+	{
+		DosFreeModule( pSalData->mpIMEData->mhModIME );
+		delete pSalData->mpIMEData;
+	}
 }
 
 #endif
@@ -366,27 +364,27 @@ void ImplReleaseSALIMEData()
 
 static void ImplSaveFrameState( Os2SalFrame* pFrame )
 {
-    // Position, Groesse und Status fuer GetWindowState() merken
-    if ( !pFrame->mbFullScreen )
-    {
-        SWP aSWP;
-        sal_Bool bVisible = WinIsWindowVisible( pFrame->mhWndFrame);
+	// Position, Größe und Status für GetWindowState() merken
+	if ( !pFrame->mbFullScreen )
+	{
+		SWP aSWP;
+		sal_Bool bVisible = WinIsWindowVisible( pFrame->mhWndFrame);
 
-        // Query actual state (maState uses screen coords)
-        WinQueryWindowPos( pFrame->mhWndFrame, &aSWP );
+		// Query actual state (maState uses screen coords)
+		WinQueryWindowPos( pFrame->mhWndFrame, &aSWP );
 
-        if ( aSWP.fl & SWP_MINIMIZE )
-        {
+		if ( aSWP.fl & SWP_MINIMIZE )
+		{
 #if OSL_DEBUG_LEVEL>0
 			debug_printf("Os2SalFrame::GetWindowState %08x SAL_FRAMESTATE_MINIMIZED\n",
 					pFrame->mhWndFrame);
 #endif
-            pFrame->maState.mnState |= SAL_FRAMESTATE_MINIMIZED;
-            if ( bVisible )
-                pFrame->mnShowState = SWP_SHOWMAXIMIZED;
-        }
-        else if ( aSWP.fl & SWP_MAXIMIZE )
-        {
+			pFrame->maState.mnState |= SAL_FRAMESTATE_MINIMIZED;
+			if ( bVisible )
+				pFrame->mnShowState = SWP_SHOWMAXIMIZED;
+		}
+		else if ( aSWP.fl & SWP_MAXIMIZE )
+		{
 #if OSL_DEBUG_LEVEL>0
 			debug_printf("Os2SalFrame::GetWindowState %08x SAL_FRAMESTATE_MAXIMIZED\n",
 					pFrame->mhWndFrame);
@@ -396,9 +394,9 @@ static void ImplSaveFrameState( Os2SalFrame* pFrame )
             if ( bVisible )
                 pFrame->mnShowState = SWP_SHOWMINIMIZED;
             pFrame->mbRestoreMaximize = TRUE;
-        }
-        else
-        {
+		}
+		else
+		{
 			LONG nFrameX, nFrameY, nCaptionY;
 			ImplSalCalcFrameSize( pFrame, nFrameX, nFrameY, nCaptionY );
 			// to be consistent with Unix, the frame state is without(!) decoration
@@ -407,32 +405,32 @@ static void ImplSaveFrameState( Os2SalFrame* pFrame )
 			long nBottomDeco = nFrameY;
 			long nRightDeco = nFrameX;
 
-            pFrame->maState.mnState &= ~(SAL_FRAMESTATE_MINIMIZED | SAL_FRAMESTATE_MAXIMIZED);
-            // subtract decoration, store screen coords
-            pFrame->maState.mnX      = aSWP.x+nLeftDeco;
-            pFrame->maState.mnY      = nScreenHeight - (aSWP.y+aSWP.cy)+nTopDeco;
-            pFrame->maState.mnWidth  = aSWP.cx-nLeftDeco-nRightDeco;
-            pFrame->maState.mnHeight = aSWP.cy-nTopDeco-nBottomDeco;
+			pFrame->maState.mnState &= ~(SAL_FRAMESTATE_MINIMIZED | SAL_FRAMESTATE_MAXIMIZED);
+			// subtract decoration, store screen coords
+			pFrame->maState.mnX      = aSWP.x+nLeftDeco;
+			pFrame->maState.mnY      = nScreenHeight - (aSWP.y+aSWP.cy)+nTopDeco;
+			pFrame->maState.mnWidth  = aSWP.cx-nLeftDeco-nRightDeco;
+			pFrame->maState.mnHeight = aSWP.cy-nTopDeco-nBottomDeco;
 #if OSL_DEBUG_LEVEL>0
 			debug_printf("Os2SalFrame::GetWindowState %08x (%dx%d) at %d,%d VCL\n",
 					pFrame->mhWndFrame,
 					pFrame->maState.mnWidth,pFrame->maState.mnHeight,pFrame->maState.mnX,pFrame->maState.mnY);
 #endif
-            if ( bVisible )
-                pFrame->mnShowState = SWP_SHOWNORMAL;
-            pFrame->mbRestoreMaximize = FALSE;
-			//debug_printf( "ImplSaveFrameState: window %08x at %d,%d (size %dx%d)\n", 
+			if ( bVisible )
+				pFrame->mnShowState = SWP_SHOWNORMAL;
+			pFrame->mbRestoreMaximize = FALSE;
+			//debug_printf( "ImplSaveFrameState: window %08x at %d,%d (size %dx%d)\n",
 			//	pFrame->mhWndFrame,
 			//	pFrame->maState.mnX, pFrame->maState.mnY, pFrame->maState.mnWidth, pFrame->maState.mnHeight);
-        }
-    }
+		}
+	}
 }
 
 // -----------------------------------------------------------------------
 
 long ImplSalCallbackDummy( void*, SalFrame*, USHORT, const void* )
 {
-    return 0;
+	return 0;
 }
 
 // -----------------------------------------------------------------------
@@ -440,40 +438,40 @@ long ImplSalCallbackDummy( void*, SalFrame*, USHORT, const void* )
 static void ImplSalCalcFrameSize( HWND hWnd,
                                   LONG& nFrameX, LONG& nFrameY, LONG& nCaptionY )
 {
-    Os2SalFrame* pFrame = GetWindowPtr( hWnd );
-    if ( !pFrame )
-        return;
+	Os2SalFrame* pFrame = GetWindowPtr( hWnd );
+	if ( !pFrame )
+		return;
 	return ImplSalCalcFrameSize( pFrame, nFrameX, nFrameY, nCaptionY );
 }
 
 static void ImplSalCalcFrameSize( const Os2SalFrame* pFrame,
                                   LONG& nFrameX, LONG& nFrameY, LONG& nCaptionY )
 {
-    if ( pFrame->mbSizeBorder )
-    {
-        nFrameX = WinQuerySysValue( HWND_DESKTOP, SV_CXSIZEBORDER );
-        nFrameY = WinQuerySysValue( HWND_DESKTOP, SV_CYSIZEBORDER );
-    }
-    else if ( pFrame->mbFixBorder )
-    {
-        nFrameX = WinQuerySysValue( HWND_DESKTOP, SV_CXDLGFRAME );
-        nFrameY = WinQuerySysValue( HWND_DESKTOP, SV_CYDLGFRAME );
-    }
-    else if ( pFrame->mbBorder )
-    {
-        nFrameX = WinQuerySysValue( HWND_DESKTOP, SV_CXBORDER );
-        nFrameY = WinQuerySysValue( HWND_DESKTOP, SV_CYBORDER );
-    }
-    else
-    {
-        nFrameX = 0;
-        nFrameY = 0;
-    }
-    if ( pFrame->mbCaption )
-        nCaptionY = WinQuerySysValue( HWND_DESKTOP, SV_CYTITLEBAR );
-    else
-        nCaptionY = 0;
-	
+	if ( pFrame->mbSizeBorder )
+	{
+		nFrameX = WinQuerySysValue( HWND_DESKTOP, SV_CXSIZEBORDER );
+		nFrameY = WinQuerySysValue( HWND_DESKTOP, SV_CYSIZEBORDER );
+	}
+	else if ( pFrame->mbFixBorder )
+	{
+		nFrameX = WinQuerySysValue( HWND_DESKTOP, SV_CXDLGFRAME );
+		nFrameY = WinQuerySysValue( HWND_DESKTOP, SV_CYDLGFRAME );
+	}
+	else if ( pFrame->mbBorder )
+	{
+		nFrameX = WinQuerySysValue( HWND_DESKTOP, SV_CXBORDER );
+		nFrameY = WinQuerySysValue( HWND_DESKTOP, SV_CYBORDER );
+	}
+	else
+	{
+		nFrameX = 0;
+		nFrameY = 0;
+	}
+	if ( pFrame->mbCaption )
+		nCaptionY = WinQuerySysValue( HWND_DESKTOP, SV_CYTITLEBAR );
+	else
+		nCaptionY = 0;
+
 #if OSL_DEBUG_LEVEL>0
 	//if (_bCapture)
 		debug_printf("ImplSalCalcFrameSize 0x%08x x=%d y=%d t=%d\n", pFrame->mhWndFrame, nFrameX, nFrameY, nCaptionY);
@@ -485,28 +483,28 @@ static void ImplSalCalcFrameSize( const Os2SalFrame* pFrame,
 static void ImplSalCalcFullScreenSize( const Os2SalFrame* pFrame,
                                        LONG& rX, LONG& rY, LONG& rDX, LONG& rDY )
 {
-    // set window to screen size
-    LONG nFrameX, nFrameY, nCaptionY;
-    LONG rScreenDX = WinQuerySysValue( HWND_DESKTOP, SV_CXSCREEN );
-    LONG rScreenDY = WinQuerySysValue( HWND_DESKTOP, SV_CYSCREEN );
+	// set window to screen size
+	LONG nFrameX, nFrameY, nCaptionY;
+	LONG rScreenDX = WinQuerySysValue( HWND_DESKTOP, SV_CXSCREEN );
+	LONG rScreenDY = WinQuerySysValue( HWND_DESKTOP, SV_CYSCREEN );
 
-    // Framegroessen berechnen
-    ImplSalCalcFrameSize( pFrame, nFrameX, nFrameY, nCaptionY );
+	// calculate frame size
+	ImplSalCalcFrameSize( pFrame, nFrameX, nFrameY, nCaptionY );
 
-    rX  = -nFrameX;
-    rY  = -(nFrameY+nCaptionY);
-    rDX = rScreenDX+(nFrameX*2);
-    rDY = rScreenDY+(nFrameY*2)+nCaptionY;
+	rX  = -nFrameX;
+	rY  = -(nFrameY+nCaptionY);
+	rDX = rScreenDX+(nFrameX*2);
+	rDY = rScreenDY+(nFrameY*2)+nCaptionY;
 }
 
 // -----------------------------------------------------------------------
 
 static void ImplSalFrameFullScreenPos( Os2SalFrame* pFrame, sal_Bool bAlways = FALSE )
 {
-    SWP aSWP;
-    _WinQueryWindowPos( pFrame, &aSWP );
-    if ( bAlways || !(aSWP.fl & SWP_MINIMIZE) )
-    {
+	SWP aSWP;
+	_WinQueryWindowPos( pFrame, &aSWP );
+	if ( bAlways || !(aSWP.fl & SWP_MINIMIZE) )
+	{
         // set window to screen size
         LONG nX;
         LONG nY;
@@ -516,12 +514,12 @@ static void ImplSalFrameFullScreenPos( Os2SalFrame* pFrame, sal_Bool bAlways = F
         _WinSetWindowPos( pFrame, 0,
                          nX, nY, nWidth, nHeight,
                          SWP_MOVE | SWP_SIZE );
-    }
+	}
 }
 
 // -----------------------------------------------------------------------
 
-// Uebersetzungstabelle von System-Keycodes in StarView-Keycodes
+// Übersetzungstabelle von System-Keycodes in StarView-Keycodes
 #define KEY_TAB_SIZE     (VK_ENDDRAG+1)
 
 static USHORT aImplTranslateKeyTab[KEY_TAB_SIZE] =
@@ -590,17 +588,17 @@ static USHORT aImplTranslateKeyTab[KEY_TAB_SIZE] =
 
 SalFrame* ImplSalCreateFrame( Os2SalInstance* pInst, HWND hWndParent, ULONG nSalFrameStyle )
 {
-    SalData*    	pSalData = GetSalData();
-    Os2SalFrame*   	pFrame = new Os2SalFrame;
-    HWND        	hWndFrame;
-    HWND        	hWndClient;
-    ULONG    		nFrameFlags = FCF_NOBYTEALIGN | FCF_SCREENALIGN;
-    ULONG    		nFrameStyle = 0;
-    ULONG    		nClientStyle = WS_CLIPSIBLINGS;
-    sal_Bool        	bSubFrame = FALSE;
+	SalData*    	pSalData = GetSalData();
+	Os2SalFrame*   	pFrame = new Os2SalFrame;
+	HWND        	hWndFrame;
+	HWND        	hWndClient;
+	ULONG    		nFrameFlags = FCF_NOBYTEALIGN | FCF_SCREENALIGN;
+	ULONG    		nFrameStyle = 0;
+	ULONG    		nClientStyle = WS_CLIPSIBLINGS;
+	sal_Bool        	bSubFrame = FALSE;
 
 #if OSL_DEBUG_LEVEL>0
-    debug_printf(">ImplSalCreateFrame hWndParent 0x%x, nSalFrameStyle 0x%x\n", hWndParent, nSalFrameStyle);
+	debug_printf(">ImplSalCreateFrame hWndParent 0x%x, nSalFrameStyle 0x%x\n", hWndParent, nSalFrameStyle);
 #endif
 
 	if ( hWndParent )
@@ -609,10 +607,10 @@ SalFrame* ImplSalCreateFrame( Os2SalInstance* pInst, HWND hWndParent, ULONG nSal
 		pFrame->mbNoIcon = TRUE;
 	}
 
-    // determine creation data (bei Moveable nehmen wir DLG-Border, damit
-    // es besser aussieht)
-    if ( nSalFrameStyle & SAL_FRAME_STYLE_CLOSEABLE )
-        nFrameFlags |= FCF_CLOSEBUTTON;
+	// determine creation data (bei Moveable nehmen wir DLG-Border, damit
+	// es besser aussieht)
+	if ( nSalFrameStyle & SAL_FRAME_STYLE_CLOSEABLE )
+		nFrameFlags |= FCF_CLOSEBUTTON;
 
 	if ( nSalFrameStyle & SAL_FRAME_STYLE_MOVEABLE ) {
 		pFrame->mbCaption = TRUE;
@@ -636,7 +634,7 @@ SalFrame* ImplSalCreateFrame( Os2SalInstance* pInst, HWND hWndParent, ULONG nSal
 			nFrameFlags |= FCF_TASKLIST;
 		}
 	}
-	
+
 	if( nSalFrameStyle & SAL_FRAME_STYLE_TOOLWINDOW )
 	{
 		pFrame->mbNoIcon = TRUE;
@@ -651,60 +649,60 @@ SalFrame* ImplSalCreateFrame( Os2SalInstance* pInst, HWND hWndParent, ULONG nSal
     //if( nSalFrameStyle & SAL_FRAME_STYLE_TOOLTIP )
     //    nExSysStyle |= WS_EX_TOPMOST;
 
-    // init frame data
-    pFrame->mnStyle = nSalFrameStyle;
+	// init frame data
+	pFrame->mnStyle = nSalFrameStyle;
 
-    // determine show style
-    pFrame->mnShowState = SWP_SHOWNORMAL;
+	// determine show style
+	pFrame->mnShowState = SWP_SHOWNORMAL;
 
-    // create frame
-	//YD FIXME this is a potential bug with multiple threads and cuncurrent
-	//window creation, because this field is accessed in
-	//WM_CREATE to get window data, 
-    pSalData->mpCreateFrame = pFrame;
+	// create frame
+	// YD FIXME this is a potential bug with multiple threads and concurrent
+	// window creation, because this field is accessed in
+	// WM_CREATE to get window data,
+	pSalData->mpCreateFrame = pFrame;
 
-	//YD FIXME if SAL_FRAME_CHILD is specified, use hWndParent as parent handle...
-    hWndFrame = WinCreateStdWindow( HWND_DESKTOP, nFrameStyle, &nFrameFlags,
-					(PSZ)(bSubFrame ? SAL_SUBFRAME_CLASSNAME : SAL_FRAME_CLASSNAME), 
+	// YD FIXME if SAL_FRAME_CHILD is specified, use hWndParent as parent handle...
+	hWndFrame = WinCreateStdWindow( HWND_DESKTOP, nFrameStyle, &nFrameFlags,
+					(PSZ)(bSubFrame ? SAL_SUBFRAME_CLASSNAME : SAL_FRAME_CLASSNAME),
 					NULL,
 					nClientStyle, 0, 0, &hWndClient );
-    debug_printf("ImplSalCreateFrame hWndParent 0x%x, hWndFrame 0x%x, hWndClient 0x%x\n", hWndParent, hWndFrame, hWndClient);
-    if ( !hWndFrame )
-    {
-        delete pFrame;
-        return NULL;
-    }
+	debug_printf("ImplSalCreateFrame hWndParent 0x%x, hWndFrame 0x%x, hWndClient 0x%x\n", hWndParent, hWndFrame, hWndClient);
+	if ( !hWndFrame )
+	{
+		delete pFrame;
+		return NULL;
+	}
 
-    // Parent setzen (Owner)
-    if ( hWndParent != 0 && hWndParent != HWND_DESKTOP ) 
-        WinSetOwner( hWndFrame, hWndParent );
+	// Parent setzen (Owner)
+	if ( hWndParent != 0 && hWndParent != HWND_DESKTOP )
+		WinSetOwner( hWndFrame, hWndParent );
 
-    Os2SalFrame* pParentFrame = GetWindowPtr( hWndParent );
-    if ( pParentFrame )
+	Os2SalFrame* pParentFrame = GetWindowPtr( hWndParent );
+	if ( pParentFrame )
 		pFrame->mpParentFrame = pParentFrame;
 
-    // since os2 windows always have a close button, always set icon
-    WinSendMsg( hWndFrame, WM_SETICON, (MPARAM)pInst->mhAppIcon, (MPARAM)0 );
+	// since OS/2 windows always have a close button, always set icon
+	WinSendMsg( hWndFrame, WM_SETICON, (MPARAM)pInst->mhAppIcon, (MPARAM)0 );
 
-    // If we have an Window with an Caption Bar and without
-    // an MaximizeBox, we change the SystemMenu
-    if ( (nFrameFlags & (FCF_TITLEBAR | FCF_MAXBUTTON)) == (FCF_TITLEBAR) )
-    {
-        HWND hSysMenu = WinWindowFromID( hWndFrame, FID_SYSMENU );
-        if ( hSysMenu )
-        {
-            if ( !(nFrameFlags & (FCF_MINBUTTON | FCF_MAXBUTTON)) )
+	// If we have an Window with an Caption Bar and without
+	// an MaximizeBox, we change the SystemMenu
+	if ( (nFrameFlags & (FCF_TITLEBAR | FCF_MAXBUTTON)) == (FCF_TITLEBAR) )
+	{
+		HWND hSysMenu = WinWindowFromID( hWndFrame, FID_SYSMENU );
+		if ( hSysMenu )
+		{
+			if ( !(nFrameFlags & (FCF_MINBUTTON | FCF_MAXBUTTON)) )
 				WinEnableMenuItem(hSysMenu, SC_RESTORE, FALSE);
-            if ( !(nFrameFlags & FCF_MINBUTTON) )
+			if ( !(nFrameFlags & FCF_MINBUTTON) )
 				WinEnableMenuItem(hSysMenu, SC_MINIMIZE, FALSE);
-            if ( !(nFrameFlags & FCF_MAXBUTTON) )
+			if ( !(nFrameFlags & FCF_MAXBUTTON) )
 				WinEnableMenuItem(hSysMenu, SC_MAXIMIZE, FALSE);
-            if ( !(nFrameFlags & FCF_SIZEBORDER) )
+			if ( !(nFrameFlags & FCF_SIZEBORDER) )
 				WinEnableMenuItem(hSysMenu, SC_SIZE, FALSE);
-        }
-    }
-    if ( (nFrameFlags & FCF_SYSMENU) && !(nSalFrameStyle & SAL_FRAME_STYLE_CLOSEABLE) )
-    {
+		}
+	}
+	if ( (nFrameFlags & FCF_SYSMENU) && !(nSalFrameStyle & SAL_FRAME_STYLE_CLOSEABLE) )
+	{
         HWND hSysMenu = WinWindowFromID( hWndFrame, FID_SYSMENU );
         if ( hSysMenu )
         {
@@ -712,67 +710,67 @@ SalFrame* ImplSalCreateFrame( Os2SalInstance* pInst, HWND hWndParent, ULONG nSal
         }
     }
 
-    // ticket#124 subclass frame window: we need to intercept TRACK message
-    aSalShlData.mpFrameProc = WinSubclassWindow( hWndFrame, SalFrameSubClassWndProc);
+	// ticket#124 subclass frame window: we need to intercept TRACK message
+	aSalShlData.mpFrameProc = WinSubclassWindow( hWndFrame, SalFrameSubClassWndProc);
 
-    // init OS/2 frame data
-    pFrame->mhAB            = pInst->mhAB;
+	// init OS/2 frame data
+	pFrame->mhAB            = pInst->mhAB;
 
-    // YD 18/08 under OS/2, invisible frames have size 0,0 at 0,0, so 
-    // we need to set an initial size/position manually
-    SWP aSWP;
-    memset( &aSWP, 0, sizeof( aSWP ) );
-    WinQueryTaskSizePos( pInst->mhAB, 0, &aSWP );
-    WinSetWindowPos( hWndFrame, NULL, aSWP.x, aSWP.y, aSWP.cx, aSWP.cy,
-                     SWP_MOVE | SWP_SIZE);
+	// YD 18/08 under OS/2, invisible frames have size 0,0 at 0,0, so
+	// we need to set an initial size/position manually
+	SWP aSWP;
+	memset( &aSWP, 0, sizeof( aSWP ) );
+	WinQueryTaskSizePos( pInst->mhAB, 0, &aSWP );
+	WinSetWindowPos( hWndFrame, NULL, aSWP.x, aSWP.y, aSWP.cx, aSWP.cy,
+					 SWP_MOVE | SWP_SIZE);
 
 #ifdef ENABLE_IME
-    // Input-Context einstellen
-    SalIMEData* pIMEData = GetSalIMEData();
-    if ( pIMEData )
-    {
-        pFrame->mhIMEContext = 0;
-        if ( 0 != pIMEData->mpAssocIME( hWndClient, pFrame->mhIMEContext, &pFrame->mhDefIMEContext ) )
-            pFrame->mhDefIMEContext = 0;
-    }
-    else
-    {
-        pFrame->mhIMEContext = 0;
-        pFrame->mhDefIMEContext = 0;
-    }
+	// Input-Context einstellen
+	SalIMEData* pIMEData = GetSalIMEData();
+	if ( pIMEData )
+	{
+		pFrame->mhIMEContext = 0;
+		if ( 0 != pIMEData->mpAssocIME( hWndClient, pFrame->mhIMEContext, &pFrame->mhDefIMEContext ) )
+			pFrame->mhDefIMEContext = 0;
+	}
+	else
+	{
+		pFrame->mhIMEContext = 0;
+		pFrame->mhDefIMEContext = 0;
+	}
 #endif
 
-    RECTL rectl;
-    _WinQueryWindowRect( hWndClient, &rectl );
-    pFrame->mnWidth  = rectl.xRight;
-    pFrame->mnHeight = rectl.yBottom;
-    debug_printf( "ImplSalCreateFrame %dx%d\n", pFrame->mnWidth, pFrame->mnHeight);
-    ImplSaveFrameState( pFrame );
-    pFrame->mbDefPos = TRUE;
+	RECTL rectl;
+	_WinQueryWindowRect( hWndClient, &rectl );
+	pFrame->mnWidth  = rectl.xRight;
+	pFrame->mnHeight = rectl.yBottom;
+	debug_printf( "ImplSalCreateFrame %dx%d\n", pFrame->mnWidth, pFrame->mnHeight);
+	ImplSaveFrameState( pFrame );
+	pFrame->mbDefPos = TRUE;
 
 	UpdateFrameGeometry( hWndFrame, pFrame );
 
-    if( pFrame->mnShowState == SWP_SHOWMAXIMIZED )
+	if( pFrame->mnShowState == SWP_SHOWMAXIMIZED )
 	{
 		// #96084 set a useful internal window size because
 		// the window will not be maximized (and the size updated) before show()
-        SetMaximizedFrameGeometry( hWndFrame, pFrame );
+		SetMaximizedFrameGeometry( hWndFrame, pFrame );
 	}
 
 #if OSL_DEBUG_LEVEL > 1
 	dumpWindowInfo( "<ImplSalCreateFrame (exit)", hWndFrame);
 #endif
 
-    return pFrame;
+	return pFrame;
 }
 
 // =======================================================================
 
 Os2SalFrame::Os2SalFrame()
 {
-    SalData* pSalData = GetSalData();
+	SalData* pSalData = GetSalData();
 
-    mbGraphics          = NULL;
+	mbGraphics          = NULL;
     mhPointer           = WinQuerySysPointer( HWND_DESKTOP, SPTR_ARROW, FALSE );
     mpGraphics          = NULL;
     mpInst              = NULL;
@@ -900,31 +898,31 @@ SalGraphics* Os2SalFrame::GetGraphics()
     else
         mbGraphics = TRUE;
 
-    return mpGraphics;
+	return mpGraphics;
 }
 
 // -----------------------------------------------------------------------
 
 void Os2SalFrame::ReleaseGraphics( SalGraphics* )
 {
-    mbGraphics = FALSE;
+	mbGraphics = FALSE;
 }
 
 // -----------------------------------------------------------------------
 
 sal_Bool Os2SalFrame::PostEvent( void* pData )
 {
-    return (sal_Bool)WinPostMsg( mhWndClient, SAL_MSG_USEREVENT, 0, (MPARAM)pData );
+	return (sal_Bool)WinPostMsg( mhWndClient, SAL_MSG_USEREVENT, 0, (MPARAM)pData );
 }
 
 // -----------------------------------------------------------------------
 
 void Os2SalFrame::SetTitle( const XubString& rTitle )
 {
-    // set window title
+	// set window title
 	ByteString title( rTitle, gsl_getSystemTextEncoding() );
 	debug_printf("Os2SalFrame::SetTitle %x '%s'\n", mhWndFrame, title.GetBuffer() );
-    WinSetWindowText( mhWndFrame, title.GetBuffer() );
+	WinSetWindowText( mhWndFrame, title.GetBuffer() );
 }
 
 // -----------------------------------------------------------------------
@@ -933,20 +931,20 @@ void Os2SalFrame::SetIcon( USHORT nIcon )
 {
 	debug_printf("Os2SalFrame::SetIcon\n");
 
-    // If we have a window without an Icon (for example a dialog), ignore this call
-    if ( mbNoIcon )
-        return;
+	// If we have a window without an Icon (for example a dialog), ignore this call
+	if ( mbNoIcon )
+		return;
 
-    // 0 means default (class) icon
-    HPOINTER hIcon = NULL;
-    if ( !nIcon )
-        nIcon = 1;
+	// 0 means default (class) icon
+	HPOINTER hIcon = NULL;
+	if ( !nIcon )
+		nIcon = 1;
 
-    ImplLoadSalIcon( nIcon, hIcon );
+	ImplLoadSalIcon( nIcon, hIcon );
 
-    DBG_ASSERT( hIcon , "Os2SalFrame::SetIcon(): Could not load icon !" );
+	DBG_ASSERT( hIcon , "Os2SalFrame::SetIcon(): Could not load icon !" );
 
-    // Icon setzen
+	// Icon setzen
 	WinSendMsg( mhWndFrame, WM_SETICON, (MPARAM)hIcon, (MPARAM)0 );
 }
 
@@ -955,48 +953,48 @@ void Os2SalFrame::SetIcon( USHORT nIcon )
 SalFrame* Os2SalFrame::GetParent() const
 {
 	//debug_printf("Os2SalFrame::GetParent\n");
-    return GetWindowPtr( WinQueryWindow(mhWndFrame, QW_OWNER) );
+	return GetWindowPtr( WinQueryWindow(mhWndFrame, QW_OWNER) );
 }
 
 // -----------------------------------------------------------------------
 
 static void ImplSalShow( HWND hWnd, ULONG bVisible, ULONG bNoActivate )
 {
-    Os2SalFrame* pFrame = GetWindowPtr( hWnd );
-    if ( !pFrame )
-        return;
+	Os2SalFrame* pFrame = GetWindowPtr( hWnd );
+	if ( !pFrame )
+		return;
 
-    if ( bVisible )
-    {
-        pFrame->mbDefPos = FALSE;
-        pFrame->mbOverwriteState = TRUE;
-        pFrame->mbInShow = TRUE;
+	if ( bVisible )
+	{
+		pFrame->mbDefPos = FALSE;
+		pFrame->mbOverwriteState = TRUE;
+		pFrame->mbInShow = TRUE;
 
 #if OSL_DEBUG_LEVEL > 0
 		debug_printf( "ImplSalShow hwnd %x visible flag %d, no activate: flag %d\n", hWnd, bVisible, bNoActivate);
 #endif
 
-        if( bNoActivate )
+		if( bNoActivate )
 			WinSetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_SHOW);
-        else
-            WinSetWindowPos(hWnd, NULL, 0, 0, 0, 0, pFrame->mnShowState);
+		else
+			WinSetWindowPos(hWnd, NULL, 0, 0, 0, 0, pFrame->mnShowState);
 
-        pFrame->mbInShow = FALSE;
+		pFrame->mbInShow = FALSE;
 
-        // Direct Paint only, if we get the SolarMutx
-        if ( ImplSalYieldMutexTryToAcquire() )
-        {
-            WinUpdateWindow( hWnd );
-            ImplSalYieldMutexRelease();
-        }
-    }
-    else
-    {
+		// Direct Paint only, if we get the SolarMutx
+		if ( ImplSalYieldMutexTryToAcquire() )
+		{
+			WinUpdateWindow( hWnd );
+			ImplSalYieldMutexRelease();
+		}
+	}
+	else
+	{
 #if OSL_DEBUG_LEVEL > 0
 		debug_printf( "ImplSalShow hwnd %x HIDE\n");
 #endif
 		WinSetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_HIDE);
-    }
+	}
 }
 
 
@@ -1024,23 +1022,23 @@ void Os2SalFrame::Show( sal_Bool bVisible, sal_Bool bNoActivate )
 
 void Os2SalFrame::Enable( sal_Bool bEnable )
 {
-    WinEnableWindow( mhWndFrame, bEnable );
+	WinEnableWindow( mhWndFrame, bEnable );
 }
 
 // -----------------------------------------------------------------------
 
 void Os2SalFrame::SetMinClientSize( long nWidth, long nHeight )
 {
-    debug_printf("Os2SalFrame::SetMinClientSize\n");
-    mnMinWidth  = nWidth;
-    mnMinHeight = nHeight;
+	debug_printf("Os2SalFrame::SetMinClientSize\n");
+	mnMinWidth  = nWidth;
+	mnMinHeight = nHeight;
 }
 
 void Os2SalFrame::SetMaxClientSize( long nWidth, long nHeight )
 {
-    debug_printf("Os2SalFrame::SetMaxClientSize\n");
-    mnMaxWidth  = nWidth;
-    mnMaxHeight = nHeight;
+	debug_printf("Os2SalFrame::SetMaxClientSize\n");
+	mnMaxWidth  = nWidth;
+	mnMaxHeight = nHeight;
 }
 
 // -----------------------------------------------------------------------
@@ -1048,8 +1046,8 @@ void Os2SalFrame::SetMaxClientSize( long nWidth, long nHeight )
 void Os2SalFrame::SetPosSize( long nX, long nY, long nWidth, long nHeight,
                                                    USHORT nFlags )
 {
-    // calculation frame size
-    USHORT 	nEvent = 0;
+	// calculation frame size
+	USHORT 	nEvent = 0;
 	ULONG	nPosFlags = 0;
 
 #if OSL_DEBUG_LEVEL > 0
@@ -1059,68 +1057,68 @@ void Os2SalFrame::SetPosSize( long nX, long nY, long nWidth, long nHeight,
 
 	SWP aSWP;
 	_WinQueryWindowPos( this, &aSWP );
-    sal_Bool bVisible = WinIsWindowVisible( mhWndFrame );
-    if ( !bVisible )
-    {
-        if ( mbFloatWin )
+	sal_Bool bVisible = WinIsWindowVisible( mhWndFrame );
+	if ( !bVisible )
+	{
+		if ( mbFloatWin )
 			mnShowState = SWP_SHOW;
-        else
+		else
 			mnShowState = SWP_SHOWNORMAL;
-    }
-    else
-    {
-        if ( (aSWP.fl & SWP_MINIMIZE) || (aSWP.fl & SWP_MAXIMIZE) )
+	}
+	else
+	{
+		if ( (aSWP.fl & SWP_MINIMIZE) || (aSWP.fl & SWP_MAXIMIZE) )
 			WinSetWindowPos(mhWndFrame, NULL, 0, 0, 0, 0, SWP_RESTORE );
-    }
+	}
 
-    if ( (nFlags & (SAL_FRAME_POSSIZE_X | SAL_FRAME_POSSIZE_Y)) ) {
-        nPosFlags |= SWP_MOVE;
+	if ( (nFlags & (SAL_FRAME_POSSIZE_X | SAL_FRAME_POSSIZE_Y)) ) {
+		nPosFlags |= SWP_MOVE;
 #if OSL_DEBUG_LEVEL > 0
 		debug_printf( "-Os2SalFrame::SetPosSize MOVE to %d,%d\n", nX, nY);
 #endif
-        //DBG_ASSERT( nX && nY, " Windowposition of (0,0) requested!" );
-        nEvent = SALEVENT_MOVE;
+		//DBG_ASSERT( nX && nY, " Windowposition of (0,0) requested!" );
+		nEvent = SALEVENT_MOVE;
 	}
 
-    if ( (nFlags & (SAL_FRAME_POSSIZE_WIDTH | SAL_FRAME_POSSIZE_HEIGHT)) ) {
-        nPosFlags |= SWP_SIZE;
+	if ( (nFlags & (SAL_FRAME_POSSIZE_WIDTH | SAL_FRAME_POSSIZE_HEIGHT)) ) {
+		nPosFlags |= SWP_SIZE;
 #if OSL_DEBUG_LEVEL > 0
 		debug_printf( "-Os2SalFrame::SetPosSize SIZE to %d,%d\n", nWidth,nHeight);
 #endif
-        nEvent = (nEvent == SALEVENT_MOVE) ? SALEVENT_MOVERESIZE : SALEVENT_RESIZE;
+		nEvent = (nEvent == SALEVENT_MOVE) ? SALEVENT_MOVERESIZE : SALEVENT_RESIZE;
 	}
-	
-    // Default-Position, dann zentrieren, ansonsten Position beibehalten
-    if ( mbDefPos  && !(nPosFlags & SWP_MOVE))
-    {
-        // calculate bottom left corner of frame
-        mbDefPos = FALSE;
+
+	// Default-Position, dann zentrieren, ansonsten Position beibehalten
+	if ( mbDefPos  && !(nPosFlags & SWP_MOVE))
+	{
+		// calculate bottom left corner of frame
+		mbDefPos = FALSE;
 		nPosFlags |= SWP_MOVE | SWP_CENTER;
-        nEvent = SALEVENT_MOVERESIZE;
+		nEvent = SALEVENT_MOVERESIZE;
 #if OSL_DEBUG_LEVEL > 10
 		debug_printf( "-Os2SalFrame::SetPosSize CENTER\n");
 		debug_printf( "-Os2SalFrame::SetPosSize default position to %d,%d\n", nX, nY);
 #endif
-    }
+	}
 
-    // Adjust Window in the screen
-    sal_Bool bCheckOffScreen = TRUE;
+	// Adjust Window in the screen
+	sal_Bool bCheckOffScreen = TRUE;
 
-    // but don't do this for floaters or ownerdraw windows that are currently moved interactively
-    if( (mnStyle & SAL_FRAME_STYLE_FLOAT) && !(mnStyle & SAL_FRAME_STYLE_OWNERDRAWDECORATION) )
-        bCheckOffScreen = FALSE;
+	// but don't do this for floaters or ownerdraw windows that are currently moved interactively
+	if( (mnStyle & SAL_FRAME_STYLE_FLOAT) && !(mnStyle & SAL_FRAME_STYLE_OWNERDRAWDECORATION) )
+		bCheckOffScreen = FALSE;
 
-    if( mnStyle & SAL_FRAME_STYLE_OWNERDRAWDECORATION )
-    {
-        // may be the window is currently being moved (mouse is captured), then no check is required
+	if( mnStyle & SAL_FRAME_STYLE_OWNERDRAWDECORATION )
+	{
+        // maybe the window is currently being moved (mouse is captured), then no check is required
         if( mhWndClient == WinQueryCapture( HWND_DESKTOP) )
             bCheckOffScreen = FALSE;
         else
             bCheckOffScreen = TRUE;
-    }
+	}
 
-    if( bCheckOffScreen )
-    {
+	if( bCheckOffScreen )
+	{
         if ( nX+nWidth > nScreenWidth )
             nX = nScreenWidth - nWidth;
         if ( nY+nHeight > nScreenHeight )
@@ -1155,16 +1153,16 @@ void Os2SalFrame::SetPosSize( long nX, long nY, long nWidth, long nHeight,
 
 void Os2SalFrame::SetParent( SalFrame* pNewParent )
 {
-    APIRET rc;
+	APIRET rc;
 #if OSL_DEBUG_LEVEL>0
-    debug_printf("Os2SalFrame::SetParent mhWndFrame 0x%08x to 0x%08x\n", 
+	debug_printf("Os2SalFrame::SetParent mhWndFrame 0x%08x to 0x%08x\n",
 			static_cast<Os2SalFrame*>(this)->mhWndFrame,
 			static_cast<Os2SalFrame*>(pNewParent)->mhWndClient);
 #endif
     Os2SalFrame::mbInReparent = TRUE;
-    //rc = WinSetParent(static_cast<Os2SalFrame*>(this)->mhWndFrame, 
+    //rc = WinSetParent(static_cast<Os2SalFrame*>(this)->mhWndFrame,
     //                  static_cast<Os2SalFrame*>(pNewParent)->mhWndClient, TRUE);
-    rc = WinSetOwner(static_cast<Os2SalFrame*>(this)->mhWndFrame, 
+    rc = WinSetOwner(static_cast<Os2SalFrame*>(this)->mhWndFrame,
                       static_cast<Os2SalFrame*>(pNewParent)->mhWndClient);
 	mpParentFrame = static_cast<Os2SalFrame*>(pNewParent);
     Os2SalFrame::mbInReparent = FALSE;
@@ -1179,7 +1177,7 @@ bool Os2SalFrame::SetPluginParent( SystemParentData* pNewParent )
     }
 
     Os2SalFrame::mbInReparent = TRUE;
-    rc = WinSetOwner(static_cast<Os2SalFrame*>(this)->mhWndFrame, 
+    rc = WinSetOwner(static_cast<Os2SalFrame*>(this)->mhWndFrame,
                       pNewParent->hWnd);
     Os2SalFrame::mbInReparent = FALSE;
     return true;
@@ -1245,7 +1243,7 @@ void Os2SalFrame::SetWindowState( const SalFrameState* pState )
     long nBottomDeco = nFrameY;
     long nRightDeco = nFrameX;
 
-    // Fenster-Position/Groesse in den Bildschirm einpassen
+    // Fenster-Position/Größe in den Bildschirm einpassen
     if ((pState->mnMask & (SAL_FRAMESTATE_MASK_X | SAL_FRAMESTATE_MASK_Y)) )
         nPosSize |= SWP_MOVE;
     if ((pState->mnMask & (SAL_FRAMESTATE_MASK_WIDTH | SAL_FRAMESTATE_MASK_HEIGHT)) )
@@ -1270,7 +1268,7 @@ void Os2SalFrame::SetWindowState( const SalFrameState* pState )
         nHeight = (int)pState->mnHeight + nTopDeco + nBottomDeco;
     else
         nHeight = aSWP.cy;
-	
+
 #if OSL_DEBUG_LEVEL>0
 	debug_printf("Os2SalFrame::SetWindowState (%dx%d) at %d,%d\n", nWidth,nHeight,nX,nY);
 #endif
@@ -1338,8 +1336,8 @@ void Os2SalFrame::SetWindowState( const SalFrameState* pState )
     // Wenn Fenster nicht minimiert/maximiert ist oder nicht optisch
     // umgesetzt werden muss, dann SetWindowPos() benutzen, da
     // SetWindowPlacement() die TaskBar mit einrechnet
-    if ( !(aPlacement.fl & SWP_MINIMIZE) 
-		 && !( aPlacement.fl & SWP_MAXIMIZE ) 
+    if ( !(aPlacement.fl & SWP_MINIMIZE)
+		 && !( aPlacement.fl & SWP_MAXIMIZE )
 	 	 && (!bVisible || (aPlacement.fl == SWP_RESTORE)) )
     {
 		if( bUpdateHiddenFramePos )
@@ -1349,7 +1347,7 @@ void Os2SalFrame::SetWindowState( const SalFrameState* pState )
             SetMaximizedFrameGeometry( mhWndFrame, this );
 		}
 		else
-			WinSetWindowPos( mhWndFrame, 0, nX, 
+			WinSetWindowPos( mhWndFrame, 0, nX,
 				nScreenHeight - (nY+nHeight), nWidth, nHeight, nPosSize);
     }
     else
@@ -1361,7 +1359,7 @@ void Os2SalFrame::SetWindowState( const SalFrameState* pState )
 			aPlacement.cx = nWidth;
 			aPlacement.cy = nHeight;
         }
-		WinSetWindowPos( mhWndFrame, 0, aPlacement.x, aPlacement.y, 
+		WinSetWindowPos( mhWndFrame, 0, aPlacement.x, aPlacement.y,
 						 aPlacement.cx, aPlacement.cy, aPlacement.fl );
     }
 
@@ -1464,7 +1462,7 @@ void Os2SalFrame::ShowFullScreen( sal_Bool bFullScreen, sal_Int32 nDisplay )
 
 void Os2SalFrame::StartPresentation( sal_Bool bStart )
 {
-    // SysSetObjectData("<WP_DESKTOP>","Autolockup=no"); oder OS2.INI: PM_Lockup
+	// SysSetObjectData("<WP_DESKTOP>","Autolockup=no"); oder OS2.INI: PM_Lockup
 }
 
 // -----------------------------------------------------------------------
@@ -1519,25 +1517,25 @@ static void ImplSalToTop( HWND hWnd, ULONG nFlags )
 void Os2SalFrame::ToTop( USHORT nFlags )
 {
 	nFlags &= ~SAL_FRAME_TOTOP_GRABFOCUS;	// this flag is not needed on win32
-    // Post this Message to the window, because this only works
-    // in the thread of the window, which has create this window.
-    // We post this message to avoid deadlocks
-    if ( GetSalData()->mnAppThreadId != GetCurrentThreadId() )
-        WinPostMsg( mhWndFrame, SAL_MSG_TOTOP, (MPARAM)nFlags, 0 );
-    else
-        ImplSalToTop( mhWndFrame, nFlags );
+	// Post this Message to the window, because this only works
+	// in the thread of the window, which has create this window.
+	// We post this message to avoid deadlocks
+	if ( GetSalData()->mnAppThreadId != GetCurrentThreadId() )
+		WinPostMsg( mhWndFrame, SAL_MSG_TOTOP, (MPARAM)nFlags, 0 );
+	else
+		ImplSalToTop( mhWndFrame, nFlags );
 }
 
 // -----------------------------------------------------------------------
 
 void Os2SalFrame::SetPointer( PointerStyle ePointerStyle )
 {
-    struct ImplPtrData
-    {
-        HPOINTER	mhPointer;
-        ULONG       mnSysId;
-        ULONG       mnOwnId;
-    };
+	struct ImplPtrData
+	{
+		HPOINTER	mhPointer;
+		ULONG		mnSysId;
+		ULONG		mnOwnId;
+	};
 
     static ImplPtrData aImplPtrTab[POINTER_COUNT] =
     {
@@ -1547,7 +1545,7 @@ void Os2SalFrame::SetPointer( PointerStyle ePointerStyle )
     { 0, SPTR_TEXT, 0 },                            // POINTER_BEAM
     { 0, 0, SAL_RESID_POINTER_HELP },               // POINTER_HELP
     { 0, 0, SAL_RESID_POINTER_CROSS },              // POINTER_CROSS
-    { 0, 0, SAL_RESID_POINTER_MOVE },               // POINTER_MOVE
+    { 0, SPTR_MOVE, 0 },                            // POINTER_MOVE
     { 0, SPTR_SIZENS, 0 },                          // POINTER_NSIZE
     { 0, SPTR_SIZENS, 0 },                          // POINTER_SSIZE
     { 0, SPTR_SIZEWE, 0 },                          // POINTER_WSIZE
@@ -1564,10 +1562,10 @@ void Os2SalFrame::SetPointer( PointerStyle ePointerStyle )
     { 0, SPTR_SIZENESW, 0 },                        // POINTER_WINDOW_NESIZE
     { 0, SPTR_SIZENESW, 0 },                        // POINTER_WINDOW_SWSIZE
     { 0, SPTR_SIZENWSE, 0 },                        // POINTER_WINDOW_SESIZE
-    { 0, 0, SAL_RESID_POINTER_HSPLIT },             // POINTER_HSPLIT
-    { 0, 0, SAL_RESID_POINTER_VSPLIT },             // POINTER_VSPLIT
-    { 0, 0, SAL_RESID_POINTER_HSIZEBAR },           // POINTER_HSIZEBAR
-    { 0, 0, SAL_RESID_POINTER_VSIZEBAR },           // POINTER_VSIZEBAR
+    { 0, SPTR_SIZEWE, 0 },                          // POINTER_HSPLIT
+    { 0, SPTR_SIZENS, 0 },                          // POINTER_VSPLIT
+    { 0, SPTR_SIZEWE, 0 },                          // POINTER_HSIZEBAR
+    { 0, SPTR_SIZENS, 0 },                          // POINTER_VSIZEBAR
     { 0, 0, SAL_RESID_POINTER_HAND },               // POINTER_HAND
     { 0, 0, SAL_RESID_POINTER_REFHAND },            // POINTER_REFHAND
     { 0, 0, SAL_RESID_POINTER_PEN },                // POINTER_PEN
@@ -1613,8 +1611,6 @@ void Os2SalFrame::SetPointer( PointerStyle ePointerStyle )
     { 0, 0, SAL_RESID_POINTER_PIVOT_FIELD },        // POINTER_PIVOT_FIELD
     { 0, 0, SAL_RESID_POINTER_CHAIN },              // POINTER_CHAIN
     { 0, 0, SAL_RESID_POINTER_CHAIN_NOTALLOWED },   // POINTER_CHAIN_NOTALLOWED
-    { 0, 0, SAL_RESID_POINTER_TIMEEVENT_MOVE },     // POINTER_TIMEEVENT_MOVE
-    { 0, 0, SAL_RESID_POINTER_TIMEEVENT_SIZE },     // POINTER_TIMEEVENT_SIZE
     { 0, 0, SAL_RESID_POINTER_AUTOSCROLL_N },       // POINTER_AUTOSCROLL_N
     { 0, 0, SAL_RESID_POINTER_AUTOSCROLL_S },       // POINTER_AUTOSCROLL_S
     { 0, 0, SAL_RESID_POINTER_AUTOSCROLL_W },       // POINTER_AUTOSCROLL_W
@@ -1625,7 +1621,7 @@ void Os2SalFrame::SetPointer( PointerStyle ePointerStyle )
     { 0, 0, SAL_RESID_POINTER_AUTOSCROLL_SE },      // POINTER_AUTOSCROLL_SE
     { 0, 0, SAL_RESID_POINTER_AUTOSCROLL_NS },      // POINTER_AUTOSCROLL_NS
     { 0, 0, SAL_RESID_POINTER_AUTOSCROLL_WE },      // POINTER_AUTOSCROLL_WE
-    { 0, 0, SAL_RESID_POINTER_AUTOSCROLL_NSWE },     // POINTER_AUTOSCROLL_NSWE
+    { 0, 0, SAL_RESID_POINTER_AUTOSCROLL_NSWE },    // POINTER_AUTOSCROLL_NSWE
     { 0, 0, SAL_RESID_POINTER_AIRBRUSH },           // POINTER_AIRBRUSH
     { 0, 0, SAL_RESID_POINTER_TEXT_VERTICAL },      // POINTER_TEXT_VERTICAL
     { 0, 0, SAL_RESID_POINTER_PIVOT_DELETE },       // POINTER_PIVOT_DELETE
@@ -1643,31 +1639,31 @@ void Os2SalFrame::SetPointer( PointerStyle ePointerStyle )
     // <--
     };
 
-#if POINTER_COUNT != 94
+#if POINTER_COUNT != 92
 #error New Pointer must be defined!
 #endif
 
 	//debug_printf("Os2SalFrame::SetPointer\n");
-	
-    // Mousepointer loaded ?
-    if ( !aImplPtrTab[ePointerStyle].mhPointer )
-    {
-        if ( aImplPtrTab[ePointerStyle].mnOwnId )
-            aImplPtrTab[ePointerStyle].mhPointer = ImplLoadSalCursor( (ULONG)aImplPtrTab[ePointerStyle].mnOwnId );
-        else
-            aImplPtrTab[ePointerStyle].mhPointer = WinQuerySysPointer( HWND_DESKTOP, aImplPtrTab[ePointerStyle].mnSysId, FALSE );
-    }
+
+	// Mousepointer loaded ?
+	if ( !aImplPtrTab[ePointerStyle].mhPointer )
+	{
+		if ( aImplPtrTab[ePointerStyle].mnOwnId )
+			aImplPtrTab[ePointerStyle].mhPointer = ImplLoadSalCursor( (ULONG)aImplPtrTab[ePointerStyle].mnOwnId );
+		else
+			aImplPtrTab[ePointerStyle].mhPointer = WinQuerySysPointer( HWND_DESKTOP, aImplPtrTab[ePointerStyle].mnSysId, FALSE );
+	}
 	if (aImplPtrTab[ePointerStyle].mhPointer == 0) {
 		debug_printf( "SetPointer ePointerStyle %d unknown\n", ePointerStyle);
 		aImplPtrTab[ePointerStyle].mhPointer = SPTR_ICONERROR;
 	}
 
-    // Unterscheidet sich der Mauspointer, dann den neuen setzen
-    if ( mhPointer != aImplPtrTab[ePointerStyle].mhPointer )
-    {
-        mhPointer = aImplPtrTab[ePointerStyle].mhPointer;
-        WinSetPointer( HWND_DESKTOP, mhPointer );
-    }
+	// Unterscheidet sich der Mauspointer, dann den neuen setzen
+	if ( mhPointer != aImplPtrTab[ePointerStyle].mhPointer )
+	{
+		mhPointer = aImplPtrTab[ePointerStyle].mhPointer;
+		WinSetPointer( HWND_DESKTOP, mhPointer );
+	}
 }
 
 // -----------------------------------------------------------------------
@@ -1678,21 +1674,21 @@ void Os2SalFrame::CaptureMouse( sal_Bool bCapture )
 	_bCapture=bCapture;
 	debug_printf("Os2SalFrame::CaptureMouse bCapture %d\n", bCapture);
 #endif
-    if ( bCapture )
-        WinSetCapture( HWND_DESKTOP, mhWndClient );
-    else
-        WinSetCapture( HWND_DESKTOP, 0 );
+	if ( bCapture )
+		WinSetCapture( HWND_DESKTOP, mhWndClient );
+	else
+		WinSetCapture( HWND_DESKTOP, 0 );
 }
 
 // -----------------------------------------------------------------------
 
 void Os2SalFrame::SetPointerPos( long nX, long nY )
 {
-    POINTL aPt;
-    aPt.x = nX;
-    aPt.y = mnHeight - nY - 1;  // convert sal coords to sys
-    WinMapWindowPoints( mhWndClient, HWND_DESKTOP, &aPt, 1 );
-    WinSetPointerPos( HWND_DESKTOP, aPt.x, aPt.y );
+	POINTL aPt;
+	aPt.x = nX;
+	aPt.y = mnHeight - nY - 1;  // convert sal coords to sys
+	WinMapWindowPoints( mhWndClient, HWND_DESKTOP, &aPt, 1 );
+	WinSetPointerPos( HWND_DESKTOP, aPt.x, aPt.y );
 }
 
 // -----------------------------------------------------------------------
@@ -1712,9 +1708,9 @@ void Os2SalFrame::Sync()
 void Os2SalFrame::SetInputContext( SalInputContext* pContext )
 {
 #ifdef ENABLE_IME
-    SalIMEData* pIMEData = GetSalIMEData();
-    if ( pIMEData )
-    {
+	SalIMEData* pIMEData = GetSalIMEData();
+	if ( pIMEData )
+	{
         HWND hWnd = mhWndClient;
         HIMI hIMI = 0;
         pIMEData->mpGetIME( hWnd, &hIMI );
@@ -1729,7 +1725,7 @@ void Os2SalFrame::SetInputContext( SalInputContext* pContext )
                     nInputMode &= ~IMI_IM_IME_DISABLE;
                     if ( pContext->mnOptions & SAL_INPUTCONTEXT_EXTTEXTINPUT_OFF )
                         nInputMode &= ~IMI_IM_IME_ON;
-// !!! Da derzeit ueber das OS2-IME-UI der IME-Mode nicht einschaltbar ist !!!
+// !!! Da derzeit über das OS/2-IME-UI der IME-Mode nicht einschaltbar ist !!!
 //                    if ( SAL_INPUTCONTEXT_EXTTEXTINPUT_ON )
                         nInputMode |= IMI_IM_IME_ON;
                 }
@@ -1758,9 +1754,9 @@ void Os2SalFrame::UpdateExtTextInputArea()
 void Os2SalFrame::EndExtTextInput( USHORT nFlags )
 {
 #ifdef ENABLE_IME
-    SalIMEData* pIMEData = GetSalIMEData();
-    if ( pIMEData )
-    {
+	SalIMEData* pIMEData = GetSalIMEData();
+	if ( pIMEData )
+	{
         HWND hWnd = mhWndClient;
         HIMI hIMI = 0;
         pIMEData->mpGetIME( hWnd, &hIMI );
@@ -1837,9 +1833,9 @@ XubString Os2SalFrame::GetKeyName( USHORT nCode )
             aCode += '2';
             aCode += sal::static_int_cast<sal_Char>('0' + (nKeyCode - KEY_F20));
         }
-    }
-    else
-    {
+	}
+	else
+	{
 		switch ( nKeyCode )
 		{
 			case KEY_DOWN:
@@ -1887,7 +1883,7 @@ XubString Os2SalFrame::GetKeyName( USHORT nCode )
 			case KEY_DELETE:
 				aCode = pLangTab[LSTR_KEY_DELETE];
 				break;
-	
+
 			case KEY_ADD:
 				aCode += '+';
 				break;
@@ -1929,32 +1925,32 @@ XubString Os2SalFrame::GetKeyName( USHORT nCode )
         }
     }
 
-    return aKeyCode;
+	return aKeyCode;
 }
 
 // -----------------------------------------------------------------------
 
 XubString Os2SalFrame::GetSymbolKeyName( const XubString&, USHORT nKeyCode )
 {
-    return GetKeyName( nKeyCode );
+	return GetKeyName( nKeyCode );
 }
 
 // -----------------------------------------------------------------------
 
 inline long ImplOS2ColorToSal( long nOS2Color )
 {
-    return MAKE_SALCOLOR( (PM_BYTE)( nOS2Color>>16), (PM_BYTE)(nOS2Color>>8), (PM_BYTE)nOS2Color );
+	return MAKE_SALCOLOR( (PM_BYTE)( nOS2Color>>16), (PM_BYTE)(nOS2Color>>8), (PM_BYTE)nOS2Color );
 }
 
 // -----------------------------------------------------------------------
 
 static USHORT ImplMouseSysValueToSAL( int iSysValue, USHORT& rCode, USHORT& rClicks, sal_Bool& rDown )
 {
-    LONG lValue = WinQuerySysValue( HWND_DESKTOP, iSysValue );
+	LONG lValue = WinQuerySysValue( HWND_DESKTOP, iSysValue );
 
-    rCode   = 0;
-    rClicks = 1;
-    rDown   = TRUE;
+	rCode   = 0;
+	rClicks = 1;
+	rDown   = TRUE;
 
     switch ( lValue & 0xFFFF )
     {
@@ -2058,7 +2054,7 @@ static sal_Bool ImplOS2NameFontToVCLFont( const char* pFontName, Font& rFont )
         rFont.SetItalic( ITALIC_NONE );
 		// search for a style embedded in the name, e.g. 'WarpSans Bold'
 		// because we need to split the style from the family name
-		if (strstr( pFontName, " Bold") 
+		if (strstr( pFontName, " Bold")
 			|| strstr( pFontName, " Italic")
 			|| strstr( pFontName, "-Normal"))
 		{
@@ -2081,13 +2077,13 @@ static sal_Bool ImplOS2NameFontToVCLFont( const char* pFontName, Font& rFont )
 			// store family name
 			rFont.SetName( ::rtl::OStringToOUString ( fontName, gsl_getSystemTextEncoding()) );
 			free( fontName);
-		} 
+		}
 		else
 		{
 			rFont.SetName( ::rtl::OStringToOUString (pFontName, gsl_getSystemTextEncoding()) );
 			rFont.SetStyleName( ::rtl::OStringToOUString ("", gsl_getSystemTextEncoding()) );
 		}
-			
+
         rFont.SetSize( Size( 0, nFontHeight ) );
         return TRUE;
     }
@@ -2510,7 +2506,7 @@ static long ImplHandleMouseMsg( HWND hWnd,
 	// and sent a mouse leave message to the application which killed the help window, ie ourself
 	if( !WinIsWindow( pFrame->mhAB, hWnd ) )
 		return 0;
-	
+
 #if OSL_DEBUG_LEVEL>10
 	//if (_bCapture)
 		debug_printf("ImplHandleMouseMsg mouse %d,%d\n",aMouseEvt.mnX,aMouseEvt.mnY);
@@ -2524,7 +2520,7 @@ static long ImplHandleMouseMsg( HWND hWnd,
         // --- RTL --- (mirror mouse pos)
         //if( Application::GetSettings().GetLayoutRTL() )
         //    aMouseEvt.mnX = pFrame->maGeometry.nWidth-1-aMouseEvt.mnX;
-		
+
         nRet = pFrame->CallCallback( nEvent, &aMouseEvt );
         if ( nMsg == WM_MOUSEMOVE )
         {
@@ -2657,7 +2653,7 @@ static USHORT ImplSalGetKeyCode( Os2SalFrame* pFrame, MPARAM aMP1, MPARAM aMP2 )
         rSVCode = KEY_COMMA;
     if ( nCharCode == '.' )
         rSVCode = KEY_POINT;
-	
+
     return rSVCode;
 }
 
@@ -2672,8 +2668,8 @@ static void ImplUpdateInputLang( Os2SalFrame* pFrame )
 	LocaleObject locale_object = NULL;
 	UniChar		*pinfo_item;
 
-	// we do not support change of input language while working, 
-	// so exit if already defined (mnInputLang is a static class field) 
+	// we do not support change of input language while working,
+	// so exit if already defined (mnInputLang is a static class field)
 	if (pFrame->mnInputLang)
 		return;
 
@@ -2697,14 +2693,14 @@ static void ImplUpdateInputLang( Os2SalFrame* pFrame )
 
 	// keep input lang up-to-date
 #if OSL_DEBUG_LEVEL>10
-	debug_printf("ImplUpdateInputLang pFrame %08x lang changed from %d to %d\n", 
+	debug_printf("ImplUpdateInputLang pFrame %08x lang changed from %d to %d\n",
 		pFrame, pFrame->mnInputLang, nLang);
 #endif
 	pFrame->mnInputLang = nLang;
 }
 
 
-static sal_Unicode ImplGetCharCode( Os2SalFrame* pFrame, USHORT nKeyFlags, 
+static sal_Unicode ImplGetCharCode( Os2SalFrame* pFrame, USHORT nKeyFlags,
 									sal_Char nCharCode, UCHAR nScanCode )
 {
     ImplUpdateInputLang( pFrame );
@@ -2746,7 +2742,7 @@ static sal_Unicode ImplConvertKey( Os2SalFrame* pFrame, MPARAM aMP1, MPARAM aMP2
 	sal_Unicode	rSVCharCode = 0;
 
     // Ist Character-Code gesetzt
-    // !!! Bei CTRL/ALT ist KC_CHAR nicht gesetzt, jedoch moechten wir
+    // !!! Bei CTRL/ALT ist KC_CHAR nicht gesetzt, jedoch möchten wir
     // !!! dann auch einen CharCode und machen die Behandlung deshalb
     // !!! selber
     if ( (nKeyFlags & KC_CHAR) || (nKeyFlags & KC_CTRL) || (nKeyFlags & KC_ALT) )
@@ -2803,7 +2799,7 @@ static long ImplHandleKeyMsg( HWND hWnd,
 		debug_printf("nSVCode %04x nSVCharCode %04x\n",nSVCode,nSVCharCode );
 #endif
 
-        // Fuer Java muessen wir bei KeyUp einen CharCode liefern
+        // Für Java müssen wir bei KeyUp einen CharCode liefern
         if ( nFlags & KC_KEYUP )
         {
             if ( !nSVCharCode )
@@ -2941,17 +2937,17 @@ static void UpdateFrameGeometry( HWND hWnd, Os2SalFrame* pFrame )
     if( !pFrame )
         return;
 
-	//SalFrame has a 
-	//maGeometry member that holds absolute screen positions (and needs to be 
+	//SalFrame has a
+	//maGeometry member that holds absolute screen positions (and needs to be
 	//updated if the window is moved by the way).
-	
+
 	// reset data
     memset(&pFrame->maGeometry, 0, sizeof(SalFrameGeometry) );
 
 	SWP	swp;
 	LONG nFrameX, nFrameY, nCaptionY;
-	
-	// get frame size 
+
+	// get frame size
 	WinQueryWindowPos(pFrame->mhWndFrame, &swp);
 	if (swp.fl & SWP_MINIMIZE)
       return;
@@ -2995,7 +2991,7 @@ static void ImplHandleMoveMsg( HWND hWnd)
             if ( WinIsWindowVisible( hWnd ))
 				pFrame->mbDefPos = FALSE;
 
-			// Gegen moegliche Rekursionen sichern
+			// Gegen mögliche Rekursionen sichern
 			if ( !pFrame->mbInMoveMsg )
 			{
 				// Fenster im FullScreenModus wieder einpassen
@@ -3004,16 +3000,16 @@ static void ImplHandleMoveMsg( HWND hWnd)
 					ImplSalFrameFullScreenPos( pFrame );
 				pFrame->mbInMoveMsg = FALSE;
 			}
-		
+
 			// Status merken
 			ImplSaveFrameState( pFrame );
-			
+
             // Call Hdl
             //#93851 if we call this handler, VCL floating windows are not updated correctly
             //ImplCallMoveHdl( hWnd );
 
         }
-			
+
         ImplSalYieldMutexRelease();
     }
     else
@@ -3180,7 +3176,7 @@ static long ImplHandleIMEStartConversion( Os2SalFrame* pFrame )
             if ( pFrame->mbHandleIME )
             {
 /* Windows-Code, der noch nicht angepasst wurde !!!
-                // Cursor-Position ermitteln und aus der die Default-Position fuer
+                // Cursor-Position ermitteln und aus der die Default-Position für
                 // das Composition-Fenster berechnen
                 SalCursorPosEvent aCursorPosEvt;
                 pFrame->CallCallback( pFrame->mpInst, pFrame,
@@ -3339,7 +3335,7 @@ static long ImplHandleIMEConversion( Os2SalFrame* pFrame, MPARAM nMP2Param )
                 pIMEData->mpReleaseIME( hWnd, hIMI );
 
                 // Handler rufen und wenn wir ein Attribute-Array haben, danach
-                // wieder zerstoeren
+                // wieder zerstören
                 pFrame->CallCallback( SALEVENT_EXTTEXTINPUT, (void*)&aEvt );
                 if ( pSalAttrAry )
                     delete [] pSalAttrAry;
@@ -3554,7 +3550,7 @@ MRESULT EXPENTRY SalFrameWndProc( HWND hWnd, ULONG nMsg,
 
         case WM_TRANSLATEACCEL:
             {
-            // Da uns OS/2 zu viele Tasten abfaegnt, unternehmen wir etwas,
+            // Da uns OS/2 zu viele Tasten abfängt, unternehmen wir etwas,
             // damit wir Shift+F1, Shift+F10 und Shift+Enter bekommen
             PQMSG   pMsg        = (PQMSG)nMP1;
             USHORT  nKeyFlags   = SHORT1FROMMP( pMsg->mp1 );
@@ -3581,67 +3577,67 @@ MRESULT EXPENTRY SalFrameWndProc( HWND hWnd, ULONG nMsg,
 				SetWindowPtr( hWnd, pFrame );
 				SetWindowPtr( hWndFrame, pFrame);
 				// HWND schon hier setzen, da schon auf den Instanzdaten
-				// gearbeitet werden kann, wenn Messages waehrend
+				// gearbeitet werden kann, wenn Messages während
 				// CreateWindow() gesendet werden
 				pFrame->mhWndClient = hWnd;
 				pFrame->mhWndFrame = hWndFrame;
 				pFrame->maSysData.hWnd = hWnd;
-            }
-            break;
+			}
+			break;
 
-        case WM_CLOSE:
-            ImplHandleCloseMsg( hWnd );
-            bDef = FALSE;
-            break;
+		case WM_CLOSE:
+			ImplHandleCloseMsg( hWnd );
+			bDef = FALSE;
+			break;
 
-        case WM_SYSVALUECHANGED:
-            if ( pFrame->mbFullScreen )
-                ImplSalFrameFullScreenPos( pFrame );
-            // kein break, da der Rest auch noch verarbeitet werden soll
-        case PL_ALTERED:
-        case WM_SYSCOLORCHANGE:
-            ImplSalYieldMutexAcquire();
-            pFrame->CallCallback( SALEVENT_SETTINGSCHANGED, 0 );
-            ImplSalYieldMutexRelease();
-            break;
+		case WM_SYSVALUECHANGED:
+			if ( pFrame->mbFullScreen )
+				ImplSalFrameFullScreenPos( pFrame );
+			// kein break, da der Rest auch noch verarbeitet werden soll
+		case PL_ALTERED:
+		case WM_SYSCOLORCHANGE:
+			ImplSalYieldMutexAcquire();
+			pFrame->CallCallback( SALEVENT_SETTINGSCHANGED, 0 );
+			ImplSalYieldMutexRelease();
+			break;
 
-        case SAL_MSG_USEREVENT:
-            ImplHandleUserEvent( hWnd, nMP2 );
-            bDef = FALSE;
-            break;
-        case SAL_MSG_TOTOP:
-            ImplSalToTop( hWnd, (ULONG)nMP1 );
-            bDef = FALSE;
-            break;
-        case SAL_MSG_SHOW:
-            ImplSalShow( hWnd, (ULONG)nMP1, (ULONG)nMP2 );
-            bDef = FALSE;
-            break;
+		case SAL_MSG_USEREVENT:
+			ImplHandleUserEvent( hWnd, nMP2 );
+			bDef = FALSE;
+			break;
+		case SAL_MSG_TOTOP:
+			ImplSalToTop( hWnd, (ULONG)nMP1 );
+			bDef = FALSE;
+			break;
+		case SAL_MSG_SHOW:
+			ImplSalShow( hWnd, (ULONG)nMP1, (ULONG)nMP2 );
+			bDef = FALSE;
+			break;
 
 		case WM_KBDLAYERCHANGED:
 			debug_printf("hWnd 0x%08x WM_KBDLAYERCHANGED\n", hWnd);
-            ImplHandleInputLangChange( hWnd );
-            break;
+			ImplHandleInputLangChange( hWnd );
+			break;
 
 		case WM_HSCROLL:
 		case WM_VSCROLL:
 			ImplHandleWheelMsg( hWnd, nMsg, nMP1, nMP2 );
-            bDef = FALSE;
+			bDef = FALSE;
 			break;
 
-        case WM_COMMAND:
-        case SAL_MSG_SYSPROCESSMENU:
-            if ( SalImplHandleProcessMenu( pFrame, nMsg, nMP1, nMP2 ) )
-            {
-                bDef = FALSE;
-                nRet = (MRESULT)1;
-            }
-            break;
+		case WM_COMMAND:
+		case SAL_MSG_SYSPROCESSMENU:
+			if ( SalImplHandleProcessMenu( pFrame, nMsg, nMP1, nMP2 ) )
+			{
+				bDef = FALSE;
+				nRet = (MRESULT)1;
+			}
+			break;
 
 #ifdef ENABLE_IME
-        case WM_IMEREQUEST:
-            if ( (ULONG)nMP1 == IMR_CONVRESULT )
-            {
+		case WM_IMEREQUEST:
+			if ( (ULONG)nMP1 == IMR_CONVRESULT )
+			{
                 if ( pFrame->mbHandleIME )
                 {
                     // Nur im Conversionmodus akzeptieren wir den IME-Input
@@ -3715,10 +3711,10 @@ MRESULT EXPENTRY SalFrameWndProc( HWND hWnd, ULONG nMsg,
 		}
 	}
 
-    if ( bDef )
-        nRet = WinDefWindowProc( hWnd, nMsg, nMP1, nMP2 );
+	if ( bDef )
+		nRet = WinDefWindowProc( hWnd, nMsg, nMP1, nMP2 );
 
-    return nRet;
+	return nRet;
 }
 
 // -----------------------------------------------------------------------
@@ -3744,10 +3740,10 @@ void Os2SalFrame::EndSetClipRegion()
 MRESULT EXPENTRY SalFrameSubClassWndProc( HWND hWnd, ULONG nMsg,
                                   MPARAM nMP1, MPARAM nMP2 )
 {
-    MRESULT mReturn = 0L;
+	MRESULT mReturn = 0L;
 
-    // ticket#124 min size of 132 px is too much
-    if (nMsg == WM_QUERYTRACKINFO) {
+	// ticket#124 min size of 132 px is too much
+	if (nMsg == WM_QUERYTRACKINFO) {
 	PTRACKINFO pti;
 	// first, let PM initialize TRACKINFO
 	mReturn = aSalShlData.mpFrameProc( hWnd, nMsg, nMP1, nMP2 );
@@ -3756,9 +3752,9 @@ MRESULT EXPENTRY SalFrameSubClassWndProc( HWND hWnd, ULONG nMsg,
 	pti->ptlMinTrackSize.x = 64L;
 	// now return to PM
 	return mReturn;
-    }
+	}
 
-    return aSalShlData.mpFrameProc( hWnd, nMsg, nMP1, nMP2 );
+	return aSalShlData.mpFrameProc( hWnd, nMsg, nMP1, nMP2 );
 }
 
-// -----------------------------------------------------------------------
+/* vim: set noet sw=4 ts=4: */

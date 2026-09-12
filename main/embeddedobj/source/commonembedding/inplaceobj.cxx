@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -42,9 +42,6 @@ sal_Bool RectanglesEqual( const awt::Rectangle& aRect1, const awt::Rectangle& aR
 
 void SAL_CALL OCommonEmbeddedObject::setObjectRectangles( const awt::Rectangle& aPosRect,
 										  			 	const awt::Rectangle& aClipRect )
-		throw ( embed::WrongStateException,
-				uno::Exception,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_bDisposed )
@@ -68,18 +65,12 @@ void SAL_CALL OCommonEmbeddedObject::setObjectRectangles( const awt::Rectangle& 
 }
 
 void SAL_CALL OCommonEmbeddedObject::enableModeless( sal_Bool /*bEnable*/ )
-		throw ( embed::WrongStateException,
-				uno::Exception,
-				uno::RuntimeException )
 {
 	// TODO: notify model that it can not use modal dialogs
 }
 
 void SAL_CALL OCommonEmbeddedObject::translateAccelerators(
 					const uno::Sequence< awt::KeyEvent >& /*aKeys*/ )
-		throw ( embed::WrongStateException,
-				uno::RuntimeException )
 {
 	// TODO: UI activation related
 }
-

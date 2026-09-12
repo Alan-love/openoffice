@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -26,10 +26,10 @@
 
 ANT_LIB*:=$(ANT_HOME)/lib
 
-ANT_CLASSPATH:=$(ANT_LIB)/xercesImpl.jar$(PATH_SEPERATOR)$(ANT_LIB)/xml-apis.jar$(PATH_SEPERATOR)$(ANT_LIB)/ant.jar
+ANT_CLASSPATH:=$(ANT_LIB)/ant.jar
 
 # PATH_SEPERATOR won't work here as it is defined
-# as ; for wondows (all shells)
+# as ; for windows (all shells)
 #PATH!:=$(ANT_HOME)/bin$(PATH_SEPERATOR)$(PATH)
 PATH!:=$(ANT_HOME)/bin:$(PATH)
 
@@ -80,4 +80,12 @@ ANT_FLAGS=
 .IF "$(WITH_LANG)"!=""
 ANT_FLAGS+=-Dsolar.langs="$(WITH_LANG)" -Dsolar.localized="true"
 .ENDIF			# "$(WITH_LANG)"!=""
- 
+
+# Tree-wide Java bytecode floor for ant-driven builds: ant.build.javac.source/
+# target is Ant's global default for any <javac> task that does not set its own
+# source/target, so bytecode stays Java 8 compatible on newer build JDKs. Tasks
+# that specify their own source/target (e.g. patched saxon/lucene) are not
+# overridden. gcj does not accept these, so skip that path.
+.IF "$(SOLAR_JAVA)"!="" && "$(JAVACISGCJ)"!="yes"
+ANT_FLAGS+=-Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8
+.ENDIF			# "$(SOLAR_JAVA)"!="" && "$(JAVACISGCJ)"!="yes"

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -187,7 +187,6 @@ void SAL_CALL SfxDialogLibraryContainer::writeLibraryElement
 	const OUString& aElementName,
 	const Reference< XOutputStream >& xOutput
 )
-	throw(Exception)
 {
 	Any aElement = xLib->getByName( aElementName );
 	Reference< XInputStreamProvider > xISP;
@@ -220,7 +219,7 @@ void SAL_CALL SfxDialogLibraryContainer::writeLibraryElement
 	xInput->closeInput();
 }
 
-void SfxDialogLibraryContainer::storeLibrariesToStorage( const uno::Reference< embed::XStorage >& xStorage ) throw ( RuntimeException )
+void SfxDialogLibraryContainer::storeLibrariesToStorage( const uno::Reference< embed::XStorage >& xStorage )
 {
     LibraryContainerMethodGuard aGuard( *this );
 	mbOasis2OOoFormat = sal_False;
@@ -254,7 +253,7 @@ void SfxDialogLibraryContainer::storeLibrariesToStorage( const uno::Reference< e
 
 Any SAL_CALL SfxDialogLibraryContainer::importLibraryElement
 	( const Reference < XNameContainer >& /*xLib*/,
-	  const OUString& /*aElementName */, const OUString& aFile, 
+	  const OUString& /*aElementName */, const OUString& aFile,
 	  const uno::Reference< io::XInputStream >& xElementStream )
 {
 	Any aRetAny;
@@ -263,7 +262,7 @@ Any SAL_CALL SfxDialogLibraryContainer::importLibraryElement
 	//Reference< XMultiServiceFactory > xMSF( comphelper::getProcessServiceFactory() );
 	//if( !xMSF.is() )
 	//{
-	//	OSL_ENSURE( 0, "### couln't get ProcessServiceFactory\n" );
+	//	OSL_ENSURE( 0, "### couldn't get ProcessServiceFactory\n" );
 	//	return aRetAny;
 	//}
 
@@ -271,7 +270,7 @@ Any SAL_CALL SfxDialogLibraryContainer::importLibraryElement
 		OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.xml.sax.Parser") ) ), UNO_QUERY );
 	if( !xParser.is() )
 	{
-		OSL_ENSURE( 0, "### couln't create sax parser component\n" );
+		OSL_ENSURE( 0, "### couldn't create sax parser component\n" );
 		return aRetAny;
 	}
 
@@ -279,7 +278,7 @@ Any SAL_CALL SfxDialogLibraryContainer::importLibraryElement
 		( OUString(RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.awt.UnoControlDialogModel" ) ) ), UNO_QUERY );
 	if( !xDialogModel.is() )
 	{
-		OSL_ENSURE( 0, "### couln't create com.sun.star.awt.UnoControlDialogModel component\n" );
+		OSL_ENSURE( 0, "### couldn't create com.sun.star.awt.UnoControlDialogModel component\n" );
 		return aRetAny;
 	}
 
@@ -489,12 +488,12 @@ void createRegistryInfo_SfxDialogLibraryContainer()
     static OAutoRegistration< SfxDialogLibraryContainer > aAutoRegistration;
 }
 
-::rtl::OUString SAL_CALL SfxDialogLibraryContainer::getImplementationName( ) throw (RuntimeException)
+::rtl::OUString SAL_CALL SfxDialogLibraryContainer::getImplementationName( )
 {
     return getImplementationName_static();
 }
 
-Sequence< ::rtl::OUString > SAL_CALL SfxDialogLibraryContainer::getSupportedServiceNames( ) throw (RuntimeException)
+Sequence< ::rtl::OUString > SAL_CALL SfxDialogLibraryContainer::getSupportedServiceNames( )
 {
     return getSupportedServiceNames_static();
 }
@@ -522,7 +521,7 @@ OUString SfxDialogLibraryContainer::getImplementationName_static()
     return aImplName;
 }
 
-Reference< XInterface > SAL_CALL SfxDialogLibraryContainer::Create( const Reference< XComponentContext >& ) throw( Exception )
+Reference< XInterface > SAL_CALL SfxDialogLibraryContainer::Create( const Reference< XComponentContext >& )
 {
     Reference< XInterface > xRet =
         static_cast< XInterface* >( static_cast< OWeakObject* >(new SfxDialogLibraryContainer()) );
@@ -628,7 +627,7 @@ void SfxDialogLibrary::storeResourcesToStorage( const ::com::sun::star::uno::Ref
 
 // XStringResourceSupplier
 Reference< resource::XStringResourceResolver >
-	SAL_CALL SfxDialogLibrary::getStringResource(  ) throw (RuntimeException)
+	SAL_CALL SfxDialogLibrary::getStringResource(  )
 {
 	if( !m_xStringResourcePersistence.is() )
 		m_xStringResourcePersistence = m_pParent->implCreateStringResource( this );
@@ -651,4 +650,3 @@ bool SAL_CALL SfxDialogLibrary::isLibraryElementValid( ::com::sun::star::uno::An
 
 }
 //============================================================================
-

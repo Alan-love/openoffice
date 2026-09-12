@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -36,103 +36,102 @@ using namespace ::com::sun::star::lang;
 using namespace ::com::sun::star::util;
 using namespace ::com::sun::star;
 
-::sal_Bool SAL_CALL OPrivateRow::wasNull(  ) throw (SQLException, RuntimeException)
+::sal_Bool SAL_CALL OPrivateRow::wasNull(  )
     {
         return m_aRow[m_nPos].isNull();
     }
-    ::rtl::OUString SAL_CALL OPrivateRow::getString( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    ::rtl::OUString SAL_CALL OPrivateRow::getString( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return m_aRow[m_nPos];
     }
-    ::sal_Bool SAL_CALL OPrivateRow::getBoolean( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    ::sal_Bool SAL_CALL OPrivateRow::getBoolean( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return m_aRow[m_nPos];
     }
-    ::sal_Int8 SAL_CALL OPrivateRow::getByte( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    ::sal_Int8 SAL_CALL OPrivateRow::getByte( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return m_aRow[m_nPos];
     }
-    ::sal_Int16 SAL_CALL OPrivateRow::getShort( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    ::sal_Int16 SAL_CALL OPrivateRow::getShort( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return m_aRow[m_nPos];
     }
-    ::sal_Int32 SAL_CALL OPrivateRow::getInt( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    ::sal_Int32 SAL_CALL OPrivateRow::getInt( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return m_aRow[m_nPos];
     }
-    ::sal_Int64 SAL_CALL OPrivateRow::getLong( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    ::sal_Int64 SAL_CALL OPrivateRow::getLong( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return m_aRow[m_nPos];
     }
-    float SAL_CALL OPrivateRow::getFloat( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    float SAL_CALL OPrivateRow::getFloat( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return m_aRow[m_nPos];
     }
-    double SAL_CALL OPrivateRow::getDouble( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    double SAL_CALL OPrivateRow::getDouble( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return m_aRow[m_nPos];
     }
-    Sequence< ::sal_Int8 > SAL_CALL OPrivateRow::getBytes( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    Sequence< ::sal_Int8 > SAL_CALL OPrivateRow::getBytes( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return m_aRow[m_nPos];
     }
-    ::com::sun::star::util::Date SAL_CALL OPrivateRow::getDate( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    ::com::sun::star::util::Date SAL_CALL OPrivateRow::getDate( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return m_aRow[m_nPos];
     }
-    ::com::sun::star::util::Time SAL_CALL OPrivateRow::getTime( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    ::com::sun::star::util::Time SAL_CALL OPrivateRow::getTime( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return m_aRow[m_nPos];
     }
-    ::com::sun::star::util::DateTime SAL_CALL OPrivateRow::getTimestamp( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    ::com::sun::star::util::DateTime SAL_CALL OPrivateRow::getTimestamp( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return m_aRow[m_nPos];
     }
-    Reference< ::com::sun::star::io::XInputStream > SAL_CALL OPrivateRow::getBinaryStream( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    Reference< ::com::sun::star::io::XInputStream > SAL_CALL OPrivateRow::getBinaryStream( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return Reference< ::com::sun::star::io::XInputStream >(m_aRow[m_nPos].makeAny(),UNO_QUERY);
     }
-    Reference< ::com::sun::star::io::XInputStream > SAL_CALL OPrivateRow::getCharacterStream( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    Reference< ::com::sun::star::io::XInputStream > SAL_CALL OPrivateRow::getCharacterStream( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return Reference< ::com::sun::star::io::XInputStream >(m_aRow[m_nPos].makeAny(),UNO_QUERY);
     }
-    Any SAL_CALL OPrivateRow::getObject( ::sal_Int32 columnIndex, const Reference< ::com::sun::star::container::XNameAccess >&  ) throw (SQLException, RuntimeException)
+    Any SAL_CALL OPrivateRow::getObject( ::sal_Int32 columnIndex, const Reference< ::com::sun::star::container::XNameAccess >&  )
     {
         m_nPos = columnIndex;
         return m_aRow[m_nPos].makeAny();
     }
-    Reference< XRef > SAL_CALL OPrivateRow::getRef( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    Reference< XRef > SAL_CALL OPrivateRow::getRef( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return Reference< XRef >(m_aRow[m_nPos].makeAny(),UNO_QUERY);
     }
-    Reference< XBlob > SAL_CALL OPrivateRow::getBlob( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    Reference< XBlob > SAL_CALL OPrivateRow::getBlob( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return Reference< XBlob >(m_aRow[m_nPos].makeAny(),UNO_QUERY);
     }
-    Reference< XClob > SAL_CALL OPrivateRow::getClob( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    Reference< XClob > SAL_CALL OPrivateRow::getClob( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return Reference< XClob >(m_aRow[m_nPos].makeAny(),UNO_QUERY);
     }
-    Reference< XArray > SAL_CALL OPrivateRow::getArray( ::sal_Int32 columnIndex ) throw (SQLException, RuntimeException)
+    Reference< XArray > SAL_CALL OPrivateRow::getArray( ::sal_Int32 columnIndex )
     {
         m_nPos = columnIndex;
         return Reference< XArray >(m_aRow[m_nPos].makeAny(),UNO_QUERY);
     }
-

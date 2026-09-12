@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 #ifndef _RESOURCE_H
 #define _RESOURCE_H
@@ -28,7 +26,7 @@
 #define IDS_APP_PROD_TITLE	11
 #define IDS_OUTOFMEM	12
 #define IDS_NOMSI	13
-#define IDS_USER_CANCELLED	14
+#define IDS_USER_CANCELED	14
 #define IDS_REQUIRES_ADMIN_PRIV	15
 #define IDS_FILE_NOT_FOUND	16
 #define IDS_INVALID_PARAM	17
@@ -40,6 +38,8 @@
 #define IDS_UNKNOWN_LANG	23
 #define IDS_SETUP_TO_OLD    24
 #define IDS_SETUP_NOT_FOUND 25
+#define IDS_OS_TO_OLD       26
+#define IDS_RUNTIME_FAILED  27
 #define IDS_LANGUAGE_ENGLISH	50
 #define IDS_LANGUAGE_SPAIN	51
 #define IDS_LANGUAGE_GERMAN	52

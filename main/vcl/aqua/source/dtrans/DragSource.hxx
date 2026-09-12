@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -44,7 +44,7 @@
 class DragSource;
 class AquaSalFrame;
 
-/* The functions declared in this protocol are actually 
+/* The functions declared in this protocol are actually
    declared in vcl/aqua/inc/salframe.h. Because we want
    to avoid importing VCL headers in UNO services and
    on the other hand want to avoid warnings caused by
@@ -77,8 +77,8 @@ class AquaSalFrame;
 
 
 class DragSource : public ::cppu::BaseMutex,
-				   public ::cppu::WeakComponentImplHelper3< com::sun::star::datatransfer::dnd::XDragSource, 
-															com::sun::star::lang::XInitialization, 
+				   public ::cppu::WeakComponentImplHelper3< com::sun::star::datatransfer::dnd::XDragSource,
+															com::sun::star::lang::XInitialization,
 															com::sun::star::lang::XServiceInfo >,
 				   private ::boost::noncopyable
 {
@@ -87,27 +87,24 @@ public:
   virtual ~DragSource();
 
   // XInitialization
-  virtual void SAL_CALL initialize( const com::sun::star::uno::Sequence< com::sun::star::uno::Any >& aArguments )
-	throw(com::sun::star::uno::Exception/*, com::sun::star::uno::RuntimeException*/);
+  virtual void SAL_CALL initialize( const com::sun::star::uno::Sequence< com::sun::star::uno::Any >& aArguments );
 
   // XDragSource
-  virtual sal_Bool SAL_CALL isDragImageSupported(  ) throw(com::sun::star::uno::RuntimeException);
+  virtual sal_Bool SAL_CALL isDragImageSupported(  );
 
-  virtual sal_Int32 SAL_CALL getDefaultCursor(sal_Int8 dragAction)
-	throw(com::sun::star::lang::IllegalArgumentException, com::sun::star::uno::RuntimeException);
-  
+  virtual sal_Int32 SAL_CALL getDefaultCursor(sal_Int8 dragAction);
+
   virtual void SAL_CALL startDrag( const com::sun::star::datatransfer::dnd::DragGestureEvent& trigger,
 								   sal_Int8 sourceActions,
 								   sal_Int32 cursor,
 								   sal_Int32 image,
 								   const com::sun::star::uno::Reference< com::sun::star::datatransfer::XTransferable >& transferable,
-								   const com::sun::star::uno::Reference< com::sun::star::datatransfer::dnd::XDragSourceListener >& listener )
-	throw(com::sun::star::uno::RuntimeException);
+								   const com::sun::star::uno::Reference< com::sun::star::datatransfer::dnd::XDragSourceListener >& listener );
 
   // XServiceInfo
-  virtual rtl::OUString SAL_CALL getImplementationName() throw (com::sun::star::uno::RuntimeException);
-  virtual sal_Bool SAL_CALL supportsService(const rtl::OUString& ServiceName) throw (com::sun::star::uno::RuntimeException);
-  virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames() throw (com::sun::star::uno::RuntimeException);
+  virtual rtl::OUString SAL_CALL getImplementationName();
+  virtual sal_Bool SAL_CALL supportsService(const rtl::OUString& ServiceName);
+  virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames();
 
   virtual void saveMouseEvent(NSEvent* theEvent);
   virtual unsigned int getSupportedDragOperations(bool isLocal) const;
@@ -126,7 +123,7 @@ public:
   // The mouse button that set off the drag and drop operation
   short m_MouseButton;
   sal_Int8 mDragSourceActions;
-  
+
   static com::sun::star::uno::Reference< com::sun::star::datatransfer::XTransferable > g_XTransferable;
   static NSView* g_DragSourceView;
   static bool    g_DropSuccessSet;

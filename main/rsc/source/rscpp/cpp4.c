@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -232,7 +232,7 @@ bad_define:
         cerror("#define syntax error", NULLST);
         inmacro = FALSE;                        /* Stop <newline> hack  */
 }
-
+
 void checkparm(int c, DEFBUF* dp)
 /*
  * Replace this param if it's defined.  Note that the macro name is a
@@ -260,7 +260,7 @@ void checkparm(int c, DEFBUF* dp)
         for (cp = token; *cp != EOS;)           /* And save             */
             save(*cp++);                        /* The token itself     */
 }
-
+
 #if STRING_FORMAL
 void stparmscan(delim, dp)
 int             delim;
@@ -332,7 +332,7 @@ void stparmscan(int delim)
         workp[-1] = wp[-1];             /* Nope, reset end quote.       */
 }
 #endif
-
+
 void doundef()
 /*
  * Remove the symbol from the defined list.
@@ -380,7 +380,7 @@ void charput(int c)
             *parmp++ = (char)c;
         }
 }
-
+
 /*
  *              M a c r o   E x p a n s i o n
  */
@@ -483,7 +483,7 @@ void expand(DEFBUF* tokenp)
             expstuff(tokenp);           /* Do actual parameters         */
         }                               /* nargs switch                 */
 }
-
+
 FILE_LOCAL int
 expcollect()
 /*
@@ -544,7 +544,7 @@ expcollect()
         }                                       /* Collect all args.    */
         return (TRUE);                          /* Normal return        */
 }
-
+
 FILE_LOCAL
 void expstuff(DEFBUF* tokenp)
 /*

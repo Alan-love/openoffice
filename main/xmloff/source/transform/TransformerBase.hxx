@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -56,13 +56,13 @@ class XMLTransformerBase : public XMLTransformer
 {
 	friend class XMLTransformerContext;
 
-	::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XLocator > 
+	::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XLocator >
 		m_xLocator;
 
 	::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XDocumentHandler > 			m_xHandler;		// the handlers
 	::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XExtendedDocumentHandler > 	m_xExtHandler;
 	::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet > m_xPropSet;
-	::com::sun::star::uno::Reference< 
+	::com::sun::star::uno::Reference<
 		::com::sun::star::i18n::XCharacterClassification > xCharClass;
 
 	::rtl::OUString m_aExtPathPrefix;
@@ -94,37 +94,26 @@ public:
 	virtual ~XMLTransformerBase() throw();
 
 	// ::com::sun::star::xml::sax::XDocumentHandler
-	virtual void SAL_CALL startDocument(void)
-		throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
-	virtual void SAL_CALL endDocument(void)
-		throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
+	virtual void SAL_CALL startDocument(void);
+	virtual void SAL_CALL endDocument(void);
 	virtual void SAL_CALL startElement(const ::rtl::OUString& aName,
-							  const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XAttributeList > & xAttribs)
-		throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
-	virtual void SAL_CALL endElement(const ::rtl::OUString& aName)
-		throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
-	virtual void SAL_CALL characters(const ::rtl::OUString& aChars)
-		throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
-	virtual void SAL_CALL ignorableWhitespace(const ::rtl::OUString& aWhitespaces)
-		throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
+							  const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XAttributeList > & xAttribs);
+	virtual void SAL_CALL endElement(const ::rtl::OUString& aName);
+	virtual void SAL_CALL characters(const ::rtl::OUString& aChars);
+	virtual void SAL_CALL ignorableWhitespace(const ::rtl::OUString& aWhitespaces);
 	virtual void SAL_CALL processingInstruction(const ::rtl::OUString& aTarget,
-									   const ::rtl::OUString& aData)
-		throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
-	virtual void SAL_CALL setDocumentLocator(const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XLocator > & xLocator)
-		throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
+									   const ::rtl::OUString& aData);
+	virtual void SAL_CALL setDocumentLocator(const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XLocator > & xLocator);
 
 	// ::com::sun::star::xml::sax::XExtendedDocumentHandler
-	virtual void SAL_CALL startCDATA(void) throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
-	virtual void SAL_CALL endCDATA(void) throw( ::com::sun::star::uno::RuntimeException );
-	virtual void SAL_CALL comment(const ::rtl::OUString& sComment)
-		throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
-	virtual void SAL_CALL allowLineBreak(void)
-		throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
-	virtual void SAL_CALL unknown(const ::rtl::OUString& sString)
-		throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
+	virtual void SAL_CALL startCDATA(void);
+	virtual void SAL_CALL endCDATA(void);
+	virtual void SAL_CALL comment(const ::rtl::OUString& sComment);
+	virtual void SAL_CALL allowLineBreak(void);
+	virtual void SAL_CALL unknown(const ::rtl::OUString& sString);
 
 	// XInitialization
-    virtual void SAL_CALL initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aArguments ) throw(::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aArguments );
 
 	// C++
 	const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XDocumentHandler > & GetDocHandler() { return m_xHandler; }
@@ -138,7 +127,7 @@ public:
 
 	XMLTransformerActions& GetElemActions() { return *m_pElemActions; }
 	virtual XMLTransformerActions *GetUserDefinedActions( sal_uInt16 n );
-	virtual XMLTransformerContext *CreateUserDefinedContext( 
+	virtual XMLTransformerContext *CreateUserDefinedContext(
 									  const TransformerAction_Impl& rAction,
 									  const ::rtl::OUString& rQName,
 		   							  sal_Bool bPersistent=sal_False ) = 0;
@@ -146,7 +135,7 @@ public:
 		   								  sal_Bool bForm = sal_False ) = 0;
 
 
-	XMLMutableAttributeList *ProcessAttrList( ::com::sun::star::uno::Reference< 
+	XMLMutableAttributeList *ProcessAttrList( ::com::sun::star::uno::Reference<
 				::com::sun::star::xml::sax::XAttributeList >& rAttrList,
 						 sal_uInt16 nActionMap, sal_Bool bClone );
 

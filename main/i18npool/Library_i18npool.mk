@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,19 +7,17 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
-
-
 
 $(eval $(call gb_Library_Library,i18npool))
 
@@ -144,7 +142,13 @@ $(WORKDIR)/CustomTarget/i18npool/source/collator/lrl_include.hxx : $(wildcard $(
 
 
 # fdo#31271 ")" reclassified in more recent ICU/Unicode Standards
+# icuversion.mk is only delivered when building the bundled ICU; with
+# SYSTEM_ICU=YES it's never produced, and even -include still lets make try
+# (and fail) to remake it via the generic Package delivery rule. ICU_MAJOR/
+# ICU_MINOR are already set from the system ICU in that case, so just skip it.
+ifneq ($(SYSTEM_ICU),YES)
 -include $(OUTDIR)/inc/icuversion.mk
+endif
 ICU_RECLASSIFIED_BRACKET := $(shell [ ${ICU_MAJOR} -ge 5 -o \( ${ICU_MAJOR} -eq 4 -a ${ICU_MINOR} -ge 4 \) ] && echo YES)
 
 
@@ -200,4 +204,3 @@ $(foreach txt,$(wildcard $(SRCDIR)/i18npool/source/breakiterator/data/*.txt),$(e
 $(eval $(call gb_Library_add_generated_cobject,i18npool,CustomTarget/i18npool/source/breakiterator/data/OpenOffice_dat))
 
 # vim: set noet sw=4 ts=4:
-

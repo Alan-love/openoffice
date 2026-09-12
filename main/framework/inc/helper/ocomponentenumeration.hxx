@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -126,7 +126,7 @@ class OComponentEnumeration	:	public ThreadHelpBase               ,
 			@onerror	-
 		*//*-*****************************************************************************************************/
 
-		virtual void SAL_CALL disposing( const css::lang::EventObject& aEvent ) throw( css::uno::RuntimeException );
+		virtual void SAL_CALL disposing( const css::lang::EventObject& aEvent );
 
 		//---------------------------------------------------------------------------------------------------------
 		//	XEnumeration
@@ -147,7 +147,7 @@ class OComponentEnumeration	:	public ThreadHelpBase               ,
 						(List is emtpy and there no accessible elements ...)
 		*//*-*****************************************************************************************************/
 
-    	virtual sal_Bool SAL_CALL hasMoreElements() throw( css::uno::RuntimeException );
+    	virtual sal_Bool SAL_CALL hasMoreElements();
 
 		/*-****************************************************************************************************//**
 			@short		give the next element, if some exist
@@ -161,9 +161,7 @@ class OComponentEnumeration	:	public ThreadHelpBase               ,
 			@onerror	If end of enumeration is arrived or there are no elements in list => a NoSuchElementException is thrown.
 		*//*-*****************************************************************************************************/
 
-    	virtual css::uno::Any SAL_CALL nextElement() throw(	css::container::NoSuchElementException	,
-							 								css::lang::WrappedTargetException		,
-															css::uno::RuntimeException				);
+    	virtual css::uno::Any SAL_CALL nextElement();
 
 	//-------------------------------------------------------------------------------------------------------------
 	//	protected methods
@@ -219,7 +217,7 @@ class OComponentEnumeration	:	public ThreadHelpBase               ,
 	//-------------------------------------------------------------------------------------------------------------
 
 		/*-****************************************************************************************************//**
-			@short		debug-method to check incoming parameter of some other mehods of this class
+			@short		debug-method to check incoming parameter of some other methods of this class
 			@descr		The following methods are used to check parameters for other methods
 						of this class. The return value is used directly for an ASSERT(...).
 

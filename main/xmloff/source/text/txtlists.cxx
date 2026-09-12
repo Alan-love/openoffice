@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -104,7 +104,7 @@ void XMLTextListsHelper::PopListContext()
     OSL_ENSURE(mListStack.size(),
         "internal error: PopListContext: mListStack empty");
 //    fprintf(stderr, "PopListContext\n");
-    if ( !mListStack.empty()) 
+    if ( !mListStack.empty())
         mListStack.pop();
 }
 
@@ -387,8 +387,8 @@ XMLTextListsHelper::EnsureNumberedParagraph(
     const ::rtl::OUString i_ListId,
     sal_Int16 & io_rLevel, const ::rtl::OUString i_StyleName)
 {
-    OSL_ENSURE(i_ListId.getLength(), "inavlid ListId");
-    OSL_ENSURE(io_rLevel >= 0, "inavlid Level");
+    OSL_ENSURE(i_ListId.getLength(), "invalid ListId");
+    OSL_ENSURE(io_rLevel >= 0, "invalid Level");
     NumParaList_t & rNPList( mNPLists[i_ListId] );
     const ::rtl::OUString none; // default
     if ( rNPList.empty() && (0 != io_rLevel)) {
@@ -534,4 +534,3 @@ XMLTextListsHelper::MakeNumRule(
 
     return xNumRules;
 }
-

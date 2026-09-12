@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -46,7 +46,7 @@ namespace rtl
 /**
   This String class provide base functionality for C++ like Unicode
   character array handling. The advantage of this class is, that it
-  handle all the memory managament for you - and it do it
+  handle all the memory management for you - and it do it
   more efficient. If you assign a string to another string, the
   data of both strings are shared (without any copy operation or
   memory allocation) as long as you do not change the string. This class
@@ -227,13 +227,13 @@ public:
     {
         rtl_uString_release( pData );
     }
-    
+
     /** Provides an OUString const & passing a storage pointer of an
         rtl_uString * handle.
         It is more convenient to use C++ OUString member functions when dealing
         with rtl_uString * handles.  Using this function avoids unnecessary
         acquire()/release() calls for a temporary OUString object.
-        
+
         @param ppHandle
                pointer to storage
         @return
@@ -241,7 +241,7 @@ public:
     */
     static inline OUString const & unacquired( rtl_uString * const * ppHandle )
         { return * reinterpret_cast< OUString const * >( ppHandle ); }
-    
+
     /**
       Assign a new string.
 
@@ -412,7 +412,7 @@ public:
       This function can't be used for language specific comparison.
 
       @param    str         the object (substring) to be compared.
-      @param    fromIndex   the index to start the comparion from.
+      @param    fromIndex   the index to start the comparison from.
                             The index must be greater or equal than 0
                             and less or equal as the string length.
       @return   sal_True if str match with the characters in the string
@@ -436,7 +436,7 @@ public:
       This function can't be used for language specific comparison.
 
       @param    str         the object (substring) to be compared.
-      @param    fromIndex   the index to start the comparion from.
+      @param    fromIndex   the index to start the comparison from.
                             The index must be greater or equal than 0
                             and less or equal as the string length.
       @return   sal_True if str match with the characters in the string
@@ -562,7 +562,7 @@ public:
         if ( pData->length != asciiStrLength )
             return sal_False;
 
-        return rtl_ustr_asciil_reverseEquals_WithLength( 
+        return rtl_ustr_asciil_reverseEquals_WithLength(
 					pData->buffer, asciiStr, asciiStrLength );
     }
 
@@ -630,7 +630,7 @@ public:
       This function can't be used for language specific comparison.
 
       @param    str         the object (substring) to be compared.
-      @param    fromIndex   the index to start the comparion from.
+      @param    fromIndex   the index to start the comparison from.
                             The index must be greater or equal than 0
                             and less or equal as the string length.
       @return   sal_True if str match with the characters in the string
@@ -660,7 +660,7 @@ public:
 
       @param    asciiStr        the 8-Bit ASCII character string to be compared.
       @param    asciiStrLength  the length of the ascii string
-      @param    fromIndex       the index to start the comparion from.
+      @param    fromIndex       the index to start the comparison from.
                                 The index must be greater or equal than 0
                                 and less or equal as the string length.
       @return   sal_True if str match with the characters in the string
@@ -996,7 +996,7 @@ public:
       @param  index   the replacing index in str.
                       The index must be greater or equal as 0 and
                       less or equal as the length of the string.
-      @param  count   the count of charcters that will replaced
+      @param  count   the count of characters that will replaced
                       The count must be greater or equal as 0 and
                       less or equal as the length of the string minus index.
       @param  newStr  the new substring.
@@ -1129,7 +1129,7 @@ public:
       Returns the first character from this string.
 
       @return   the first character from this string or 0, if this string
-                is emptry.
+                is empty.
     */
     sal_Unicode toChar() const SAL_THROW(())
     {

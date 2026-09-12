@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_ado.hxx"
 #include <com/sun/star/sdbcx/Privilege.hpp>
 #include <com/sun/star/sdbcx/PrivilegeObject.hpp>
 #include "connectivity/dbexception.hxx"
@@ -82,7 +82,7 @@ OLEString& ADOS::GetKeyStr()
 // -------------------------------------------------------------------------
 sal_Int32 ADOS::MapADOType2Jdbc(DataTypeEnum eType)
 {
-	sal_Int32 nType = DataType::VARCHAR;;
+	sal_Int32 nType = DataType::VARCHAR;
 	switch (eType)
 	{
 		case adUnsignedSmallInt:
@@ -311,7 +311,7 @@ sal_Int32 ADOS::mapRights2Ado(sal_Int32 nRights)
 	return eRights;
 }
 // -----------------------------------------------------------------------------
-WpADOField ADOS::getField(ADORecordset* _pRecordSet,sal_Int32 _nColumnIndex) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException)
+WpADOField ADOS::getField(ADORecordset* _pRecordSet,sal_Int32 _nColumnIndex)
 {
 	if ( !_pRecordSet )
 		return WpADOField();
@@ -327,7 +327,3 @@ WpADOField ADOS::getField(ADORecordset* _pRecordSet,sal_Int32 _nColumnIndex) thr
 	return aField;
 }
 // -----------------------------------------------------------------------------
-
-
-
-

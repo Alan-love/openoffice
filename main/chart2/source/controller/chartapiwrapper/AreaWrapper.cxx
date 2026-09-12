@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartcontroller.hxx"
 
 #include "AreaWrapper.hxx"
 #include "macros.hxx"
@@ -103,40 +103,33 @@ AreaWrapper::~AreaWrapper()
 
 // ____ XShape ____
 awt::Point SAL_CALL AreaWrapper::getPosition()
-    throw (uno::RuntimeException)
 {
     return awt::Point(0,0);
 }
 
 void SAL_CALL AreaWrapper::setPosition( const awt::Point& /*aPosition*/ )
-    throw (uno::RuntimeException)
 {
     OSL_ENSURE( false, "trying to set position of chart area" );
 }
 
 awt::Size SAL_CALL AreaWrapper::getSize()
-    throw (uno::RuntimeException)
 {
     return m_spChart2ModelContact->GetPageSize();
 }
 
 void SAL_CALL AreaWrapper::setSize( const awt::Size& /*aSize*/ )
-    throw (beans::PropertyVetoException,
-           uno::RuntimeException)
 {
     OSL_ENSURE( false, "trying to set size of chart area" );
 }
 
 // ____ XShapeDescriptor (base of XShape) ____
 ::rtl::OUString SAL_CALL AreaWrapper::getShapeType()
-    throw (uno::RuntimeException)
 {
     return C2U( "com.sun.star.chart.ChartArea" );
 }
 
 // ____ XComponent ____
 void SAL_CALL AreaWrapper::dispose()
-    throw (uno::RuntimeException)
 {
     Reference< uno::XInterface > xSource( static_cast< ::cppu::OWeakObject* >( this ) );
     m_aEventListenerContainer.disposeAndClear( lang::EventObject( xSource ) );
@@ -149,14 +142,12 @@ void SAL_CALL AreaWrapper::dispose()
 
 void SAL_CALL AreaWrapper::addEventListener(
     const Reference< lang::XEventListener >& xListener )
-    throw (uno::RuntimeException)
 {
     m_aEventListenerContainer.addInterface( xListener );
 }
 
 void SAL_CALL AreaWrapper::removeEventListener(
     const Reference< lang::XEventListener >& aListener )
-    throw (uno::RuntimeException)
 {
     m_aEventListenerContainer.removeInterface( aListener );
 }

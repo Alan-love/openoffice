@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -103,28 +103,27 @@ UIElementWrapperBase::~UIElementWrapperBase()
 {
 }
 
-void SAL_CALL UIElementWrapperBase::dispose() throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL UIElementWrapperBase::dispose()
 {
     // must be implemented by derived class
     ResetableGuard aLock( m_aLock );
     m_bDisposed = sal_True;
 }
 
-void SAL_CALL UIElementWrapperBase::addEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& xListener ) throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL UIElementWrapperBase::addEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& xListener )
 {
     m_aListenerContainer.addInterface( ::getCppuType( ( const css::uno::Reference< css::lang::XEventListener >* ) NULL ), xListener );
 }
 
-void SAL_CALL UIElementWrapperBase::removeEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& xListener ) throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL UIElementWrapperBase::removeEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& xListener )
 {
     m_aListenerContainer.removeInterface( ::getCppuType( ( const css::uno::Reference< css::lang::XEventListener >* ) NULL ), xListener );
 }
 
 void SAL_CALL UIElementWrapperBase::initialize( const Sequence< Any >& aArguments )
-throw ( Exception, RuntimeException )
 {
     ResetableGuard aLock( m_aLock );
-    
+
     if ( !m_bInitialized )
     {
         for ( sal_Int32 n = 0; n < aArguments.getLength(); n++ )
@@ -148,24 +147,24 @@ throw ( Exception, RuntimeException )
 }
 
 // XUIElement
-::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame > SAL_CALL UIElementWrapperBase::getFrame() throw (::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame > SAL_CALL UIElementWrapperBase::getFrame()
 {
     ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame > xFrame( m_xWeakFrame );
     return xFrame;
 }
 
-::rtl::OUString SAL_CALL UIElementWrapperBase::getResourceURL() throw (::com::sun::star::uno::RuntimeException)
+::rtl::OUString SAL_CALL UIElementWrapperBase::getResourceURL()
 {
     return m_aResourceURL;
 }
 
-::sal_Int16 SAL_CALL UIElementWrapperBase::getType() throw (::com::sun::star::uno::RuntimeException)
+::sal_Int16 SAL_CALL UIElementWrapperBase::getType()
 {
     return m_nType;
 }
 
 // XUpdatable
-void SAL_CALL UIElementWrapperBase::update() throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL UIElementWrapperBase::update()
 {
     // can be implemented by derived class
 }
@@ -174,7 +173,7 @@ void SAL_CALL UIElementWrapperBase::update() throw (::com::sun::star::uno::Runti
 sal_Bool SAL_CALL UIElementWrapperBase::convertFastPropertyValue( Any&       /*aConvertedValue*/ ,
                                                                   Any&       /*aOldValue*/       ,
                                                                   sal_Int32  /*nHandle*/         ,
-                                                                  const Any& /*aValue*/             ) throw( com::sun::star::lang::IllegalArgumentException )
+                                                                  const Any& /*aValue*/             )
 {
 	//	Initialize state with sal_False !!!
 	//	(Handle can be invalid)
@@ -182,7 +181,7 @@ sal_Bool SAL_CALL UIElementWrapperBase::convertFastPropertyValue( Any&       /*a
 }
 
 void SAL_CALL UIElementWrapperBase::setFastPropertyValue_NoBroadcast(   sal_Int32               /*nHandle*/ ,
-                                                                        const com::sun::star::uno::Any&    /*aValue*/  ) throw( com::sun::star::uno::Exception )
+                                                                        const com::sun::star::uno::Any&    /*aValue*/  )
 {
 }
 
@@ -191,10 +190,10 @@ void SAL_CALL UIElementWrapperBase::getFastPropertyValue( com::sun::star::uno::A
 {
     switch( nHandle )
 	{
-        case UIELEMENT_PROPHANDLE_RESOURCEURL: 
+        case UIELEMENT_PROPHANDLE_RESOURCEURL:
             aValue <<= m_aResourceURL;
             break;
-        case UIELEMENT_PROPHANDLE_TYPE: 
+        case UIELEMENT_PROPHANDLE_TYPE:
             aValue <<= m_nType;
             break;
         case UIELEMENT_PROPHANDLE_FRAME:
@@ -230,7 +229,7 @@ void SAL_CALL UIElementWrapperBase::getFastPropertyValue( com::sun::star::uno::A
     return(*pInfoHelper);
 }
 
-com::sun::star::uno::Reference< com::sun::star::beans::XPropertySetInfo > SAL_CALL UIElementWrapperBase::getPropertySetInfo() throw (::com::sun::star::uno::RuntimeException)
+com::sun::star::uno::Reference< com::sun::star::beans::XPropertySetInfo > SAL_CALL UIElementWrapperBase::getPropertySetInfo()
 {
 	// Optimize this method !
 	// We initialize a static variable only one time. And we don't must use a mutex at every call!

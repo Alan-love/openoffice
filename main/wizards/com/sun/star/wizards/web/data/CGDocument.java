@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,14 +49,14 @@ import com.sun.star.wizards.document.OfficeDocument;
 import com.sun.star.wizards.ui.event.Task;
 
 /**
- * About the member fields Title, Decription and Author:
- * There is an ambiguicy in handling these fields.
+ * About the member fields Title, Description and Author:
+ * There is an ambiguity in handling these fields.
  * On the one hand, the user can set those fields to a custom value,
  * relevant only for the web-wizard.
  * On the other-hand, the web-wizard can read those fields automatically
  * from SO documents.
  * In order to avoid conflict by saving, I use two fields: "cp_title", which
- * should be read from the configuratin (saved session), and "title" which is
+ * should be read from the configuration (saved session), and "title" which is
  * the value read from the document.
  * The *cp_title* "overrides" *title*, if exists. if not, *title* is used.
  * The same is valid for *description* and *author*.
@@ -89,7 +89,7 @@ public class CGDocument extends ConfigSetItem implements XMLProvider
     /**
      * The contents subdirectory name in which the document is in.
      * This subdirectory will be created in the content's "docs"
-     * subdirectory.  
+     * subdirectory.
      */
     public String dirName;
     /**
@@ -102,7 +102,7 @@ public class CGDocument extends ConfigSetItem implements XMLProvider
      */
     public boolean isSODocument;
     /**
-     * can this document be opend through SO?
+     * can this document be opened through SO?
      */
     public boolean isSOOpenable;
     /**
@@ -177,7 +177,7 @@ public class CGDocument extends ConfigSetItem implements XMLProvider
             xProps = UnoRuntime.queryInterface(XDocumentPropertiesSupplier.class, component).getDocumentProperties();
         }
 
-        task.advance(true); //4    
+        task.advance(true); //4
 
         //now use the object to read some document properties.
         if (xProps != null)
@@ -252,7 +252,7 @@ public class CGDocument extends ConfigSetItem implements XMLProvider
     /**
      * @param media is the media description string returned by an UNO TypeDetection object.
      * @return one of the constants in the interface TypeDetection.
-     * 
+     *
      */
     private String getDocType(String media)
     {

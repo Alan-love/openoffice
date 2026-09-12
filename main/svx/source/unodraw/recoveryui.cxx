@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -70,14 +70,12 @@ RecoveryUI::~RecoveryUI()
 
 //===============================================
 ::rtl::OUString SAL_CALL RecoveryUI::getImplementationName()
-    throw(css::uno::RuntimeException)
 {
     return RecoveryUI::st_getImplementationName();
 }
 
 //===============================================
 sal_Bool SAL_CALL RecoveryUI::supportsService(const ::rtl::OUString& sServiceName)
-    throw(css::uno::RuntimeException)
 {
     const css::uno::Sequence< ::rtl::OUString > lServices = RecoveryUI::st_getSupportedServiceNames();
           sal_Int32                             c         = lServices.getLength();
@@ -93,7 +91,6 @@ sal_Bool SAL_CALL RecoveryUI::supportsService(const ::rtl::OUString& sServiceNam
 
 //===============================================
 css::uno::Sequence< ::rtl::OUString > SAL_CALL RecoveryUI::getSupportedServiceNames()
-    throw(css::uno::RuntimeException)
 {
     return RecoveryUI::st_getSupportedServiceNames();
 }
@@ -101,7 +98,6 @@ css::uno::Sequence< ::rtl::OUString > SAL_CALL RecoveryUI::getSupportedServiceNa
 //===============================================
 css::uno::Any SAL_CALL RecoveryUI::dispatchWithReturnValue(const css::util::URL& aURL,
                                                    const css::uno::Sequence< css::beans::PropertyValue >& )
-    throw(css::uno::RuntimeException)
 {
     // Internally we use VCL ... every call into vcl based code must
     // be guarded by locking the global solar mutex.
@@ -138,14 +134,13 @@ css::uno::Any SAL_CALL RecoveryUI::dispatchWithReturnValue(const css::util::URL&
 //===============================================
 void SAL_CALL RecoveryUI::dispatch(const css::util::URL&                                  aURL      ,
                                    const css::uno::Sequence< css::beans::PropertyValue >& lArguments)
-    throw(css::uno::RuntimeException)
 {
     // recycle this method :-)
     dispatchWithReturnValue(aURL, lArguments);
 }
 
 //===============================================
-void SAL_CALL RecoveryUI::addStatusListener(const css::uno::Reference< css::frame::XStatusListener >&, const css::util::URL& ) throw(css::uno::RuntimeException)
+void SAL_CALL RecoveryUI::addStatusListener(const css::uno::Reference< css::frame::XStatusListener >&, const css::util::URL& )
 {
     // TODO
     OSL_ENSURE(sal_False, "RecoveryUI::addStatusListener()\nNot implemented yet!");
@@ -153,7 +148,6 @@ void SAL_CALL RecoveryUI::addStatusListener(const css::uno::Reference< css::fram
 
 //===============================================
 void SAL_CALL RecoveryUI::removeStatusListener(const css::uno::Reference< css::frame::XStatusListener >&, const css::util::URL& )
-    throw(css::uno::RuntimeException)
 {
     // TODO
     OSL_ENSURE(sal_False, "RecoveryUI::removeStatusListener()\nNot implemented yet!");
@@ -182,7 +176,7 @@ css::uno::Reference< css::uno::XInterface > SAL_CALL RecoveryUI::st_createInstan
 
 //===============================================
 
-static OUString GetCrashConfigDir() 
+static OUString GetCrashConfigDir()
 {
 
 #if defined(WNT) || defined(OS2)
@@ -272,13 +266,13 @@ sal_Bool RecoveryUI::impl_doEmergencySave()
     svxdr::TabDialog4Recovery* pWizard = new svxdr::TabDialog4Recovery(m_pParentWindow);
     svxdr::IExtendedTabPage*   pPage1  = new svxdr::SaveDialog        (pWizard, pCore );
     pWizard->addTabPage(pPage1);
-    
+
     // start the wizard
     short nRet = pWizard->Execute();
-    
+
     delete pPage1 ;
     delete pWizard;
-    
+
     return (nRet==DLG_RET_OK_AUTOLUNCH);
 }
 
@@ -290,7 +284,7 @@ void RecoveryUI::impl_doRecovery()
     ::rtl::OUString CFG_PACKAGE_RECOVERY( RTL_CONSTASCII_USTRINGPARAM  ( "org.openoffice.Office.Recovery/" ));
     ::rtl::OUString CFG_PATH_CRASHREPORTER( RTL_CONSTASCII_USTRINGPARAM( "CrashReporter"                 ));
     ::rtl::OUString CFG_ENTRY_ENABLED( RTL_CONSTASCII_USTRINGPARAM     ( "Enabled"                       ));
-    
+
     sal_Bool bCrashRepEnabled( sal_True );
     css::uno::Any aVal = ::comphelper::ConfigurationHelper::readDirectKey(
                                 m_xSMGR,
@@ -300,7 +294,7 @@ void RecoveryUI::impl_doRecovery()
                                 ::comphelper::ConfigurationHelper::E_READONLY);
     aVal >>= bCrashRepEnabled;
     bRecoveryOnly = !bCrashRepEnabled;
-    
+
     // create core service, which implements the real "emergency save" algorithm.
     svxdr::RecoveryCore* pCore = new svxdr::RecoveryCore(m_xSMGR, sal_False);
     css::uno::Reference< css::frame::XStatusListener > xCore(pCore);
@@ -311,7 +305,7 @@ void RecoveryUI::impl_doRecovery()
     svxdr::IExtendedTabPage*   pPage1  = new svxdr::RecoveryDialog       (pWizard, pCore );
     svxdr::IExtendedTabPage*   pPage2  = 0;
     svxdr::IExtendedTabPage*   pPage3  = 0;
-    
+
     pWizard->addTabPage(pPage1);
     if ( !bRecoveryOnly && new_crash_pending() )
     {
@@ -319,13 +313,13 @@ void RecoveryUI::impl_doRecovery()
         pPage3 = new svxdr::ErrorRepSendDialog   (pWizard        );
         pWizard->addTabPage(pPage2);
         pWizard->addTabPage(pPage3);
-    }   
-    
+    }
+
     // start the wizard
     pWizard->Execute();
 
     impl_showAllRecoveredDocs();
-    
+
     delete pPage3 ;
     delete pPage2 ;
     delete pPage1 ;
@@ -345,10 +339,10 @@ void RecoveryUI::impl_doCrashReport()
 		svxdr::IExtendedTabPage*   pPage2  = new svxdr::ErrorRepSendDialog   (pWizard           );
 		pWizard->addTabPage(pPage1);
 		pWizard->addTabPage(pPage2);
-	    
+
 		// start the wizard
 		pWizard->Execute();
-	    
+
 		delete pPage2 ;
 		delete pPage1 ;
 		delete pWizard;
@@ -378,12 +372,12 @@ void RecoveryUI::impl_showAllRecoveredDocs()
             xTaskContainer->getByIndex(i) >>= xTask;
             if (!xTask.is())
                 continue;
-            
+
             css::uno::Reference< css::awt::XWindow > xWindow = xTask->getContainerWindow();
             if (!xWindow.is())
                 continue;
-            
-            xWindow->setVisible(sal_True);        
+
+            xWindow->setVisible(sal_True);
         }
         catch(const css::uno::RuntimeException& exRun)
             { throw exRun; }

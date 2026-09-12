@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -110,7 +110,7 @@ MenuBarWrapper::~MenuBarWrapper()
 {
 }
 
-void SAL_CALL MenuBarWrapper::dispose() throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL MenuBarWrapper::dispose()
 {
     Reference< XComponent > xThis( static_cast< OWeakObject* >(this), UNO_QUERY );
 
@@ -129,7 +129,7 @@ void SAL_CALL MenuBarWrapper::dispose() throw (::com::sun::star::uno::RuntimeExc
 }
 
 // XInitialization
-void SAL_CALL MenuBarWrapper::initialize( const Sequence< Any >& aArguments ) throw ( Exception, RuntimeException )
+void SAL_CALL MenuBarWrapper::initialize( const Sequence< Any >& aArguments )
 {
     RTL_LOGFILE_CONTEXT( aLog, "framework (cd100003) ::MenuBarWrapper::initialize" );
 
@@ -226,7 +226,7 @@ void SAL_CALL MenuBarWrapper::initialize( const Sequence< Any >& aArguments ) th
 }
 
 // XUIElementSettings
-void SAL_CALL MenuBarWrapper::updateSettings() throw ( RuntimeException )
+void SAL_CALL MenuBarWrapper::updateSettings()
 {
     ResetableGuard aLock( m_aLock );
 
@@ -279,13 +279,11 @@ void MenuBarWrapper::fillPopupControllerCache()
 
 // XElementAccess
 Type SAL_CALL MenuBarWrapper::getElementType()
-throw (::com::sun::star::uno::RuntimeException)
 {
     return ::getCppuType(( Reference< XDispatchProvider >*)0);
 }
 
 ::sal_Bool SAL_CALL MenuBarWrapper::hasElements()
-throw (::com::sun::star::uno::RuntimeException)
 {
     ResetableGuard aLock( m_aLock );
 
@@ -299,9 +297,6 @@ throw (::com::sun::star::uno::RuntimeException)
 // XNameAccess
 Any SAL_CALL MenuBarWrapper::getByName(
     const ::rtl::OUString& aName )
-throw ( container::NoSuchElementException,
-        lang::WrappedTargetException,
-        uno::RuntimeException)
 {
     ResetableGuard aLock( m_aLock );
 
@@ -322,7 +317,6 @@ throw ( container::NoSuchElementException,
 }
 
 Sequence< ::rtl::OUString > SAL_CALL MenuBarWrapper::getElementNames()
-throw (::com::sun::star::uno::RuntimeException)
 {
     ResetableGuard aLock( m_aLock );
 
@@ -346,7 +340,6 @@ throw (::com::sun::star::uno::RuntimeException)
 
 ::sal_Bool SAL_CALL MenuBarWrapper::hasByName(
     const ::rtl::OUString& aName )
-throw (::com::sun::star::uno::RuntimeException)
 {
     ResetableGuard aLock( m_aLock );
 
@@ -363,7 +356,7 @@ throw (::com::sun::star::uno::RuntimeException)
 }
 
 // XUIElement
-Reference< XInterface > SAL_CALL MenuBarWrapper::getRealInterface() throw ( RuntimeException )
+Reference< XInterface > SAL_CALL MenuBarWrapper::getRealInterface()
 {
     if ( m_bDisposed )
         throw DisposedException();
@@ -372,4 +365,3 @@ Reference< XInterface > SAL_CALL MenuBarWrapper::getRealInterface() throw ( Runt
 }
 
 } // namespace framework
-

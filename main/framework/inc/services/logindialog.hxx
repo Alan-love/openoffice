@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -280,13 +280,13 @@ class cIMPL_Dialog	:	public ModalDialog
 
 		/*-****************************************************************************************************//**
 			@short		default ctor
-			@descr		This ctor initialize the dialog, load ressources but not set values on edits or check boxes!
+			@descr		This ctor initialize the dialog, load resources but not set values on edits or check boxes!
 						These is implemented by setValues() on the same class.
-						You must give us a language identifier to describe which ressource should be used!
+						You must give us a language identifier to describe which resource should be used!
 
 			@seealso	method setValues()
 
-            @param      "aLanguage" , identifier to describe ressource language
+            @param      "aLanguage" , identifier to describe resource language
             @param      "pParent"   , parent window handle for dialog! If is it NULL -> no parent exist ...
 			@return		-
 
@@ -297,7 +297,7 @@ class cIMPL_Dialog	:	public ModalDialog
 
 		/*-****************************************************************************************************//**
 			@short		default dtor
-			@descr		This dtor deinitialize the dialog and free all used ressources.
+			@descr		This dtor deinitialize the dialog and free all used resources.
 						But you can't get the values of the dialog. Use getValues() to do this.
 
 			@seealso	method getValues()
@@ -368,16 +368,16 @@ class cIMPL_Dialog	:	public ModalDialog
 		void			getProxyHostPort( const OUSTRING& aProxyHostPort, OUSTRING& aHost, OUSTRING& aPort );
 
 		/*-****************************************************************************************************//**
-			@short		get a ressource for given id from right ressource file
-			@descr		This dialog need his own ressource. We can't use the global ressource manager!
+			@short		get a resource for given id from right resource file
+			@descr		This dialog need his own resource. We can't use the global resource manager!
 						We must use our own.
-						You must give us the ressource language. If no right ressource could be found -
+						You must give us the resource language. If no right resource could be found -
 						any  existing one is used automatically!
 
 			@seealso	method setValues()
 
-			@param		"nId"		; id to convert it in right ressource id
-			@param		"aLanguage"	; type of ressource language
+			@param		"nId"		; id to convert it in right resource id
+			@param		"aLanguage"	; type of resource language
 			@return		-
 
 			@onerror	-
@@ -503,7 +503,7 @@ class LoginDialog	:	public XTYPEPROVIDER				,
         /*-****************************************************************************************************//**
 			@short		write changed values to configuration
 			@descr		Normally the dialog returns with an OK or ERROR value. If OK occur - we flush data
-						automaticly. But otherwise we do nothing. If user of this service wish to use property set
+						automatically. But otherwise we do nothing. If user of this service wish to use property set
 						only without any UI(!) - he must call "flush()" explicitly to write data!
 
 			@seealso	-
@@ -514,9 +514,9 @@ class LoginDialog	:	public XTYPEPROVIDER				,
 			@onerror	-
 		*//*-*****************************************************************************************************/
 
-    	virtual void SAL_CALL flush() throw( RUNTIMEEXCEPTION );
-    	virtual void SAL_CALL addFlushListener( const REFERENCE< XFLUSHLISTENER >& xListener ) throw( RUNTIMEEXCEPTION );
-    	virtual void SAL_CALL removeFlushListener( const REFERENCE< XFLUSHLISTENER >& xListener ) throw( RUNTIMEEXCEPTION );
+    	virtual void SAL_CALL flush();
+    	virtual void SAL_CALL addFlushListener( const REFERENCE< XFLUSHLISTENER >& xListener );
+    	virtual void SAL_CALL removeFlushListener( const REFERENCE< XFLUSHLISTENER >& xListener );
 
 		//---------------------------------------------------------------------------------------------------------
 		//	XDialog
@@ -534,7 +534,7 @@ class LoginDialog	:	public XTYPEPROVIDER				,
 			@onerror	-
 		*//*-*****************************************************************************************************/
 
-    	virtual void SAL_CALL setTitle( const OUSTRING& sTitle ) throw( RUNTIMEEXCEPTION );
+    	virtual void SAL_CALL setTitle( const OUSTRING& sTitle );
 
 		/*-****************************************************************************************************//**
 			@short		return the current title of this dialog
@@ -548,7 +548,7 @@ class LoginDialog	:	public XTYPEPROVIDER				,
 			@onerror	-
 		*//*-*****************************************************************************************************/
 
-    	virtual OUSTRING SAL_CALL getTitle() throw( RUNTIMEEXCEPTION );
+    	virtual OUSTRING SAL_CALL getTitle();
 
 		/*-****************************************************************************************************//**
 			@short		show the dialog and return user reaction
@@ -565,7 +565,7 @@ class LoginDialog	:	public XTYPEPROVIDER				,
 			@onerror	We return 0(sal_False).
 		*//*-*****************************************************************************************************/
 
-    	virtual sal_Int16 SAL_CALL execute() throw( RUNTIMEEXCEPTION );
+    	virtual sal_Int16 SAL_CALL execute();
 
 		/*-****************************************************************************************************//**
 			@short		not implemented yet!
@@ -579,7 +579,7 @@ class LoginDialog	:	public XTYPEPROVIDER				,
 			@onerror	-
 		*//*-*****************************************************************************************************/
 
-    	virtual void SAL_CALL endExecute() throw( RUNTIMEEXCEPTION );
+    	virtual void SAL_CALL endExecute();
 
 	//-------------------------------------------------------------------------------------------------------------
 	//	protected methods
@@ -616,7 +616,7 @@ class LoginDialog	:	public XTYPEPROVIDER				,
 		virtual sal_Bool SAL_CALL convertFastPropertyValue(			ANY&		aConvertedValue	,
 								  									ANY&		aOldValue		,
 																	sal_Int32	nHandle			,
-															const	ANY&		aValue			) throw( ILLEGALARGUMENTEXCEPTION );
+															const	ANY&		aValue			);
 
 		/*-****************************************************************************************************//**
 			@short		set value of a transient property
@@ -635,7 +635,7 @@ class LoginDialog	:	public XTYPEPROVIDER				,
 		*//*-*****************************************************************************************************/
 
 		virtual void SAL_CALL setFastPropertyValue_NoBroadcast(			sal_Int32	nHandle	,
-							  									const	ANY&		aValue	) throw( EXCEPTION );
+							  									const	ANY&		aValue	);
 
 		/*-****************************************************************************************************//**
 			@short		get value of a transient property
@@ -684,7 +684,7 @@ class LoginDialog	:	public XTYPEPROVIDER				,
 			@onerror	-
 		*//*-*****************************************************************************************************/
 
-		virtual REFERENCE< XPROPERTYSETINFO > SAL_CALL getPropertySetInfo() throw (::com::sun::star::uno::RuntimeException);
+		virtual REFERENCE< XPROPERTYSETINFO > SAL_CALL getPropertySetInfo();
 
 	//-------------------------------------------------------------------------------------------------------------
 	//	private methods
@@ -721,27 +721,27 @@ class LoginDialog	:	public XTYPEPROVIDER				,
 		sal_Bool impl_tryToChangeProperty(	const	OUSTRING&				sProperty		,
 											const	ANY&					aValue			,
 													ANY&					aOldValue		,
-													ANY&					aConvertedValue	) throw( ILLEGALARGUMENTEXCEPTION );
+													ANY&					aConvertedValue	);
 
 		sal_Bool impl_tryToChangeProperty(	const	SEQUENCE< OUSTRING >&	seqProperty		,
 											const	ANY&					aValue			,
 													ANY&					aOldValue		,
-													ANY&					aConvertedValue	) throw( ILLEGALARGUMENTEXCEPTION );
+													ANY&					aConvertedValue	);
 
 		sal_Bool impl_tryToChangeProperty(	const	sal_Int32&				nProperty		,
 											const	ANY&					aValue			,
 													ANY&					aOldValue		,
-													ANY&					aConvertedValue	) throw( ILLEGALARGUMENTEXCEPTION );
+													ANY&					aConvertedValue	);
 
 		sal_Bool impl_tryToChangeProperty(	const	LOCALE&					aProperty		,
 											const	ANY&					aValue			,
 													ANY&					aOldValue		,
-													ANY&					aConvertedValue	) throw( ILLEGALARGUMENTEXCEPTION );
+													ANY&					aConvertedValue	);
 
         sal_Bool impl_tryToChangeProperty(  const   ANY&                    aProperty       ,
 											const	ANY&					aValue			,
 													ANY&					aOldValue		,
-													ANY&					aConvertedValue	) throw( ILLEGALARGUMENTEXCEPTION );
+													ANY&					aConvertedValue	);
 
 		/*-****************************************************************************************************//**
 			@short		search and open profile
@@ -843,7 +843,7 @@ class LoginDialog	:	public XTYPEPROVIDER				,
 	//-------------------------------------------------------------------------------------------------------------
 
 		/*-****************************************************************************************************//**
-			@short		debug-method to check incoming parameter of some other mehods of this class
+			@short		debug-method to check incoming parameter of some other methods of this class
 			@descr		The following methods are used to check parameters for other methods
 						of this class. The return value is used directly for an ASSERT(...).
 

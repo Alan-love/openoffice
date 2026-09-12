@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -51,7 +51,7 @@ namespace vclcanvas
     namespace
     {
         void setupLayoutMode( OutputDevice& rOutDev,
-                              sal_Int8		nTextDirection )	
+                              sal_Int8		nTextDirection )
         {
             // TODO(P3): avoid if already correctly set
             sal_uIntPtr nLayoutMode;
@@ -107,7 +107,7 @@ namespace vclcanvas
     }
 
     // XTextLayout
-    uno::Sequence< uno::Reference< rendering::XPolyPolygon2D > > SAL_CALL TextLayout::queryTextShapes(  ) throw (uno::RuntimeException)
+    uno::Sequence< uno::Reference< rendering::XPolyPolygon2D > > SAL_CALL TextLayout::queryTextShapes(  )
     {
         tools::LocalGuard aGuard;
 
@@ -159,7 +159,7 @@ namespace vclcanvas
         return aOutlineSequence;
     }
 
-    uno::Sequence< geometry::RealRectangle2D > SAL_CALL TextLayout::queryInkMeasures(  ) throw (uno::RuntimeException)
+    uno::Sequence< geometry::RealRectangle2D > SAL_CALL TextLayout::queryInkMeasures(  )
     {
         tools::LocalGuard aGuard;
 
@@ -211,7 +211,7 @@ namespace vclcanvas
         return aBoundingBoxes;
     }
 
-    uno::Sequence< geometry::RealRectangle2D > SAL_CALL TextLayout::queryMeasures(  ) throw (uno::RuntimeException)
+    uno::Sequence< geometry::RealRectangle2D > SAL_CALL TextLayout::queryMeasures(  )
     {
         tools::LocalGuard aGuard;
 
@@ -219,14 +219,14 @@ namespace vclcanvas
         return uno::Sequence< geometry::RealRectangle2D >();
     }
 
-    uno::Sequence< double > SAL_CALL TextLayout::queryLogicalAdvancements(  ) throw (uno::RuntimeException)
+    uno::Sequence< double > SAL_CALL TextLayout::queryLogicalAdvancements(  )
     {
         tools::LocalGuard aGuard;
 
         return maLogicalAdvancements;
     }
 
-    void SAL_CALL TextLayout::applyLogicalAdvancements( const uno::Sequence< double >& aAdvancements ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+    void SAL_CALL TextLayout::applyLogicalAdvancements( const uno::Sequence< double >& aAdvancements )
     {
         tools::LocalGuard aGuard;
 
@@ -236,7 +236,7 @@ namespace vclcanvas
         maLogicalAdvancements = aAdvancements;
     }
 
-    geometry::RealRectangle2D SAL_CALL TextLayout::queryTextBounds(  ) throw (uno::RuntimeException)
+    geometry::RealRectangle2D SAL_CALL TextLayout::queryTextBounds(  )
     {
         tools::LocalGuard aGuard;
 
@@ -274,7 +274,7 @@ namespace vclcanvas
         }
     }
 
-    double SAL_CALL TextLayout::justify( double nSize ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+    double SAL_CALL TextLayout::justify( double nSize )
     {
         tools::LocalGuard aGuard;
 
@@ -284,8 +284,8 @@ namespace vclcanvas
         return 0.0;
     }
 
-    double SAL_CALL TextLayout::combinedJustify( const uno::Sequence< uno::Reference< rendering::XTextLayout > >& aNextLayouts, 
-                                                 double                                                           nSize ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+    double SAL_CALL TextLayout::combinedJustify( const uno::Sequence< uno::Reference< rendering::XTextLayout > >& aNextLayouts,
+                                                 double                                                           nSize )
     {
         tools::LocalGuard aGuard;
 
@@ -296,7 +296,7 @@ namespace vclcanvas
         return 0.0;
     }
 
-    rendering::TextHit SAL_CALL TextLayout::getTextHit( const geometry::RealPoint2D& aHitPoint ) throw (uno::RuntimeException)
+    rendering::TextHit SAL_CALL TextLayout::getTextHit( const geometry::RealPoint2D& aHitPoint )
     {
         tools::LocalGuard aGuard;
 
@@ -306,7 +306,7 @@ namespace vclcanvas
         return rendering::TextHit();
     }
 
-    rendering::Caret SAL_CALL TextLayout::getCaret( sal_Int32 nInsertionIndex, sal_Bool bExcludeLigatures ) throw (lang::IndexOutOfBoundsException, uno::RuntimeException)
+    rendering::Caret SAL_CALL TextLayout::getCaret( sal_Int32 nInsertionIndex, sal_Bool bExcludeLigatures )
     {
         tools::LocalGuard aGuard;
 
@@ -317,7 +317,7 @@ namespace vclcanvas
         return rendering::Caret();
     }
 
-    sal_Int32 SAL_CALL TextLayout::getNextInsertionIndex( sal_Int32 nStartIndex, sal_Int32 nCaretAdvancement, sal_Bool bExcludeLigatures ) throw (lang::IndexOutOfBoundsException, uno::RuntimeException)
+    sal_Int32 SAL_CALL TextLayout::getNextInsertionIndex( sal_Int32 nStartIndex, sal_Int32 nCaretAdvancement, sal_Bool bExcludeLigatures )
     {
         tools::LocalGuard aGuard;
 
@@ -329,7 +329,7 @@ namespace vclcanvas
         return 0;
     }
 
-    uno::Reference< rendering::XPolyPolygon2D > SAL_CALL TextLayout::queryVisualHighlighting( sal_Int32 nStartIndex, sal_Int32 nEndIndex ) throw (lang::IndexOutOfBoundsException, uno::RuntimeException)
+    uno::Reference< rendering::XPolyPolygon2D > SAL_CALL TextLayout::queryVisualHighlighting( sal_Int32 nStartIndex, sal_Int32 nEndIndex )
     {
         tools::LocalGuard aGuard;
 
@@ -340,7 +340,7 @@ namespace vclcanvas
         return uno::Reference< rendering::XPolyPolygon2D >();
     }
 
-    uno::Reference< rendering::XPolyPolygon2D > SAL_CALL TextLayout::queryLogicalHighlighting( sal_Int32 nStartIndex, sal_Int32 nEndIndex ) throw (lang::IndexOutOfBoundsException, uno::RuntimeException)
+    uno::Reference< rendering::XPolyPolygon2D > SAL_CALL TextLayout::queryLogicalHighlighting( sal_Int32 nStartIndex, sal_Int32 nEndIndex )
     {
         tools::LocalGuard aGuard;
 
@@ -351,7 +351,7 @@ namespace vclcanvas
         return uno::Reference< rendering::XPolyPolygon2D >();
     }
 
-    double SAL_CALL TextLayout::getBaselineOffset(  ) throw (uno::RuntimeException)
+    double SAL_CALL TextLayout::getBaselineOffset(  )
     {
         tools::LocalGuard aGuard;
 
@@ -359,21 +359,21 @@ namespace vclcanvas
         return 0.0;
     }
 
-    sal_Int8 SAL_CALL TextLayout::getMainTextDirection(  ) throw (uno::RuntimeException)
+    sal_Int8 SAL_CALL TextLayout::getMainTextDirection(  )
     {
         tools::LocalGuard aGuard;
 
         return mnTextDirection;
     }
 
-    uno::Reference< rendering::XCanvasFont > SAL_CALL TextLayout::getFont(  ) throw (uno::RuntimeException)
+    uno::Reference< rendering::XCanvasFont > SAL_CALL TextLayout::getFont(  )
     {
         tools::LocalGuard aGuard;
 
         return mpFont.getRef();
     }
 
-    rendering::StringContext SAL_CALL TextLayout::getText(  ) throw (uno::RuntimeException)
+    rendering::StringContext SAL_CALL TextLayout::getText(  )
     {
         tools::LocalGuard aGuard;
 
@@ -394,10 +394,10 @@ namespace vclcanvas
             // TODO(P2): cache that
             ::boost::scoped_array< sal_Int32 > aOffsets(new sal_Int32[maLogicalAdvancements.getLength()]);
             setupTextOffsets( aOffsets.get(), maLogicalAdvancements, viewState, renderState );
-            
+
             // TODO(F3): ensure correct length and termination for DX
             // array (last entry _must_ contain the overall width)
-            
+
             rOutDev.DrawTextArray( rOutpos,
                                    maText.Text,
                                    aOffsets.get(),
@@ -472,17 +472,17 @@ namespace vclcanvas
 #define IMPLEMENTATION_NAME "VCLCanvas::TextLayout"
 #define SERVICE_NAME "com.sun.star.rendering.TextLayout"
 
-    ::rtl::OUString SAL_CALL TextLayout::getImplementationName() throw( uno::RuntimeException )
+    ::rtl::OUString SAL_CALL TextLayout::getImplementationName()
     {
         return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( IMPLEMENTATION_NAME ) );
     }
 
-    sal_Bool SAL_CALL TextLayout::supportsService( const ::rtl::OUString& ServiceName ) throw( uno::RuntimeException )
+    sal_Bool SAL_CALL TextLayout::supportsService( const ::rtl::OUString& ServiceName )
     {
         return ServiceName.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM ( SERVICE_NAME ) );
     }
 
-    uno::Sequence< ::rtl::OUString > SAL_CALL TextLayout::getSupportedServiceNames()  throw( uno::RuntimeException )
+    uno::Sequence< ::rtl::OUString > SAL_CALL TextLayout::getSupportedServiceNames()
     {
         uno::Sequence< ::rtl::OUString > aRet(1);
         aRet[0] = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM ( SERVICE_NAME ) );

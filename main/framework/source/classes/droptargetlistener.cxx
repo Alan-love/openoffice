@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -80,7 +80,7 @@ DropTargetListener::~DropTargetListener()
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DropTargetListener::disposing( const css::lang::EventObject& ) throw( css::uno::RuntimeException )
+void SAL_CALL DropTargetListener::disposing( const css::lang::EventObject& )
 {
     m_xTargetFrame = css::uno::WeakReference< css::frame::XFrame >();
     m_xFactory     = css::uno::Reference< css::lang::XMultiServiceFactory >();
@@ -88,7 +88,7 @@ void SAL_CALL DropTargetListener::disposing( const css::lang::EventObject& ) thr
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DropTargetListener::drop( const css::datatransfer::dnd::DropTargetDropEvent& dtde ) throw( css::uno::RuntimeException )
+void SAL_CALL DropTargetListener::drop( const css::datatransfer::dnd::DropTargetDropEvent& dtde )
 {
 	const sal_Int8 nAction = dtde.DropAction;
 
@@ -123,7 +123,7 @@ void SAL_CALL DropTargetListener::drop( const css::datatransfer::dnd::DropTarget
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DropTargetListener::dragEnter( const css::datatransfer::dnd::DropTargetDragEnterEvent& dtdee ) throw( css::uno::RuntimeException )
+void SAL_CALL DropTargetListener::dragEnter( const css::datatransfer::dnd::DropTargetDragEnterEvent& dtdee )
 {
 	try
 	{
@@ -138,7 +138,7 @@ void SAL_CALL DropTargetListener::dragEnter( const css::datatransfer::dnd::DropT
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DropTargetListener::dragExit( const css::datatransfer::dnd::DropTargetEvent& ) throw( css::uno::RuntimeException )
+void SAL_CALL DropTargetListener::dragExit( const css::datatransfer::dnd::DropTargetEvent& )
 {
 	try
 	{
@@ -151,7 +151,7 @@ void SAL_CALL DropTargetListener::dragExit( const css::datatransfer::dnd::DropTa
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DropTargetListener::dragOver( const css::datatransfer::dnd::DropTargetDragEvent& dtde ) throw( css::uno::RuntimeException )
+void SAL_CALL DropTargetListener::dragOver( const css::datatransfer::dnd::DropTargetDragEvent& dtde )
 {
 	try
 	{
@@ -170,7 +170,7 @@ void SAL_CALL DropTargetListener::dragOver( const css::datatransfer::dnd::DropTa
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DropTargetListener::dropActionChanged( const css::datatransfer::dnd::DropTargetDragEvent& ) throw( css::uno::RuntimeException )
+void SAL_CALL DropTargetListener::dropActionChanged( const css::datatransfer::dnd::DropTargetDragEvent& )
 {
 }
 
@@ -247,4 +247,3 @@ void DropTargetListener::implts_OpenFile( const String& rFilePath )
 }
 
 }
-

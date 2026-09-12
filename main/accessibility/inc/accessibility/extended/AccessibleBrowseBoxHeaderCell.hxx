@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -37,17 +37,17 @@ namespace accessibility
 										  const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow >& _xFocusWindow,
 										  ::svt::AccessibleBrowseBoxObjType  _eObjType);
 		/** @return  The count of visible children. */
-		virtual sal_Int32 SAL_CALL getAccessibleChildCount() throw ( ::com::sun::star::uno::RuntimeException );
+		virtual sal_Int32 SAL_CALL getAccessibleChildCount();
 
 		/** @return  The XAccessible interface of the specified child. */
 		virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL
-			getAccessibleChild( sal_Int32 nChildIndex ) throw ( ::com::sun::star::lang::IndexOutOfBoundsException,::com::sun::star::uno::RuntimeException );
+			getAccessibleChild( sal_Int32 nChildIndex );
 
 		/** @return  The index of this object among the parent's children. */
-		virtual sal_Int32 SAL_CALL getAccessibleIndexInParent() throw ( ::com::sun::star::uno::RuntimeException );
+		virtual sal_Int32 SAL_CALL getAccessibleIndexInParent();
 
 		/** Grabs the focus to the BrowseBox. */
-		virtual void SAL_CALL grabFocus() throw ( ::com::sun::star::uno::RuntimeException );
+		virtual void SAL_CALL grabFocus();
 
 		inline sal_Bool isRowBarCell() const
 		{
@@ -57,7 +57,7 @@ namespace accessibility
 		/** @return
 				The name of this class.
 		*/
-		virtual ::rtl::OUString SAL_CALL getImplementationName() throw ( ::com::sun::star::uno::RuntimeException );
+		virtual ::rtl::OUString SAL_CALL getImplementationName();
 
 		/** Creates a new AccessibleStateSetHelper and fills it with states of the
 			current object.
@@ -74,4 +74,3 @@ namespace accessibility
 }
 
 #endif // ACCESSIBILITY_EXT_ACCESSIBLEBROWSEBOXHEADERCELL_HXX
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -322,15 +322,15 @@ public:
 	FmFilterAdapter(FmFilterModel* pModel, const Reference< XIndexAccess >& xControllers);
 
 // XEventListener
-	virtual void SAL_CALL disposing(const EventObject& Source) throw( RuntimeException );
+	virtual void SAL_CALL disposing(const EventObject& Source);
 
 // XFilterControllerListener
-    virtual void SAL_CALL predicateExpressionChanged( const FilterEvent& _Event ) throw (RuntimeException);
-    virtual void SAL_CALL disjunctiveTermRemoved( const FilterEvent& _Event ) throw (RuntimeException);
-    virtual void SAL_CALL disjunctiveTermAdded( const FilterEvent& _Event ) throw (RuntimeException);
+    virtual void SAL_CALL predicateExpressionChanged( const FilterEvent& _Event );
+    virtual void SAL_CALL disjunctiveTermRemoved( const FilterEvent& _Event );
+    virtual void SAL_CALL disjunctiveTermAdded( const FilterEvent& _Event );
 
 // helpers
-	void dispose() throw( RuntimeException );
+	void dispose();
 
 	void AddOrRemoveListener( const Reference< XIndexAccess >& _rxControllers, const bool _bAdd );
 
@@ -348,7 +348,7 @@ FmFilterAdapter::FmFilterAdapter(FmFilterModel* pModel, const Reference< XIndexA
 }
 
 //------------------------------------------------------------------------
-void FmFilterAdapter::dispose() throw( RuntimeException )
+void FmFilterAdapter::dispose()
 {
     AddOrRemoveListener( m_xControllers, false );
 }
@@ -397,7 +397,7 @@ void FmFilterAdapter::setText(sal_Int32 nRowPos,
 
 // XEventListener
 //------------------------------------------------------------------------
-void SAL_CALL FmFilterAdapter::disposing(const EventObject& /*e*/) throw( RuntimeException )
+void SAL_CALL FmFilterAdapter::disposing(const EventObject& /*e*/)
 {
 }
 
@@ -439,7 +439,7 @@ namespace
 
 // XFilterControllerListener
 //------------------------------------------------------------------------
-void FmFilterAdapter::predicateExpressionChanged( const FilterEvent& _Event ) throw( RuntimeException )
+void FmFilterAdapter::predicateExpressionChanged( const FilterEvent& _Event )
 {
     ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -489,7 +489,7 @@ void FmFilterAdapter::predicateExpressionChanged( const FilterEvent& _Event ) th
 }
 
 //------------------------------------------------------------------------
-void SAL_CALL FmFilterAdapter::disjunctiveTermRemoved( const FilterEvent& _Event ) throw (RuntimeException)
+void SAL_CALL FmFilterAdapter::disjunctiveTermRemoved( const FilterEvent& _Event )
 {
     ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -524,7 +524,7 @@ void SAL_CALL FmFilterAdapter::disjunctiveTermRemoved( const FilterEvent& _Event
 }
 
 //------------------------------------------------------------------------
-void SAL_CALL FmFilterAdapter::disjunctiveTermAdded( const FilterEvent& _Event ) throw (RuntimeException)
+void SAL_CALL FmFilterAdapter::disjunctiveTermAdded( const FilterEvent& _Event )
 {
     ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -1430,19 +1430,19 @@ sal_Int8 FmFilterNavigator::AcceptDrop( const AcceptDropEvent& rEvt )
 	return rEvt.mnAction;
 }
 // -----------------------------------------------------------------------------
-namespace 
+namespace
 {
 	FmFilterItems* getTargetItems(SvLBoxEntry* _pTarget)
 	{
 		FmFilterData*	pData = static_cast<FmFilterData*>(_pTarget->GetUserData());
-		FmFilterItems*	pTargetItems = pData->ISA(FmFilterItems) 
-										? 
+		FmFilterItems*	pTargetItems = pData->ISA(FmFilterItems)
+										?
 										PTR_CAST(FmFilterItems,pData)
-										: 
+										:
 									PTR_CAST(FmFilterItems,pData->GetParent());
 		return pTargetItems;
 	}
-}	
+}
 //------------------------------------------------------------------------
 sal_Int8 FmFilterNavigator::ExecuteDrop( const ExecuteDropEvent& rEvt )
 {
@@ -1468,7 +1468,7 @@ sal_Int8 FmFilterNavigator::ExecuteDrop( const ExecuteDropEvent& rEvt )
 	SetCurEntry(pEntry);
 
 	insertFilterItem(m_aControlExchange->getDraggedEntries(),pTargetItems,DND_ACTION_COPY == rEvt.mnAction);
-	
+
 	return sal_True;
 }
 

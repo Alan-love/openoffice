@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -85,44 +85,35 @@ public:
     virtual bool ImplUpdateChildren();
     virtual ::com::sun::star::uno::Reference<
             ::com::sun::star::accessibility::XAccessible >
-        ImplGetAccessibleChildById( sal_Int32 i ) const
-        throw (::com::sun::star::lang::IndexOutOfBoundsException,
-               ::com::sun::star::uno::RuntimeException);
-    virtual sal_Int32 ImplGetAccessibleChildCount() const
-        throw (::com::sun::star::uno::RuntimeException);
+        ImplGetAccessibleChildById( sal_Int32 i ) const;
+    virtual sal_Int32 ImplGetAccessibleChildCount() const;
 
     // ________ XAccessibleContext ________
-    virtual ::rtl::OUString SAL_CALL getAccessibleName()
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual ::rtl::OUString SAL_CALL getAccessibleDescription()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getAccessibleName();
+    virtual ::rtl::OUString SAL_CALL getAccessibleDescription();
 
     // ________ XAccessibleExtendedComponent ________
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::awt::XFont > SAL_CALL getFont()
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual ::rtl::OUString SAL_CALL getTitledBorderText()
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual ::rtl::OUString SAL_CALL getToolTipText()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::awt::XFont > SAL_CALL getFont();
+    virtual ::rtl::OUString SAL_CALL getTitledBorderText();
+    virtual ::rtl::OUString SAL_CALL getToolTipText();
 
     // the following interface is implemented in AccessibleBase, however it is
     // also a (non-virtual) base class of XAccessibleExtendedComponent Thus
     // these methods have to be overloaded and forward to AccessibleBase
 
     // ________ XAccessibleComponent ________
-    virtual sal_Bool SAL_CALL containsPoint( const ::com::sun::star::awt::Point& aPoint ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL getAccessibleAtPoint( const ::com::sun::star::awt::Point& aPoint ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::awt::Rectangle SAL_CALL getBounds() throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::awt::Point SAL_CALL getLocation() throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::awt::Point SAL_CALL getLocationOnScreen() throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::awt::Size SAL_CALL getSize() throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL grabFocus() throw (::com::sun::star::uno::RuntimeException);
-    virtual sal_Int32 SAL_CALL getForeground() throw (::com::sun::star::uno::RuntimeException);
-    virtual sal_Int32 SAL_CALL getBackground() throw (::com::sun::star::uno::RuntimeException);
+    virtual sal_Bool SAL_CALL containsPoint( const ::com::sun::star::awt::Point& aPoint );
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL getAccessibleAtPoint( const ::com::sun::star::awt::Point& aPoint );
+    virtual ::com::sun::star::awt::Rectangle SAL_CALL getBounds();
+    virtual ::com::sun::star::awt::Point SAL_CALL getLocation();
+    virtual ::com::sun::star::awt::Point SAL_CALL getLocationOnScreen();
+    virtual ::com::sun::star::awt::Size SAL_CALL getSize();
+    virtual void SAL_CALL grabFocus();
+    virtual sal_Int32 SAL_CALL getForeground();
+    virtual sal_Int32 SAL_CALL getBackground();
 
     // ________ XServiceInfo ________
-    virtual ::rtl::OUString SAL_CALL getImplementationName()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getImplementationName();
 
 private:
     bool                m_bHasText;

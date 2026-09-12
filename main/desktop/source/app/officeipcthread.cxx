@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -307,19 +307,16 @@ OSignalHandler::TSignalAction SAL_CALL SalMainPipeExchangeSignalHandler::signal(
 
 // XServiceInfo
 OUString SAL_CALL OfficeIPCThreadController::getImplementationName()
-throw ( RuntimeException )
 {
 	return OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.comp.OfficeIPCThreadController" ));
 }
 
 sal_Bool SAL_CALL OfficeIPCThreadController::supportsService( const OUString& )
-throw ( RuntimeException )
 {
 	return sal_False;
 }
 
 Sequence< OUString > SAL_CALL OfficeIPCThreadController::getSupportedServiceNames()
-throw ( RuntimeException )
 {
 	Sequence< OUString > aSeq( 0 );
 	return aSeq;
@@ -327,13 +324,11 @@ throw ( RuntimeException )
 
 // XEventListener
 void SAL_CALL OfficeIPCThreadController::disposing( const EventObject& )
-throw( RuntimeException )
 {
 }
 
 // XTerminateListener
 void SAL_CALL OfficeIPCThreadController::queryTermination( const EventObject& )
-throw( TerminationVetoException, RuntimeException )
 {
 	// Desktop ask about pending request through our office ipc pipe. We have to
 	// be sure that no pending request is waiting because framework is not able to
@@ -346,7 +341,6 @@ throw( TerminationVetoException, RuntimeException )
 }
 
 void SAL_CALL OfficeIPCThreadController::notifyTermination( const EventObject& )
-throw( RuntimeException )
 {
 }
 
@@ -452,7 +446,7 @@ OfficeIPCThread::Status OfficeIPCThread::EnableOfficeIPCThread()
 	// and connectPipe!!
 
     OUString            aIniName;
-    
+
     aInfo.getExecutableFile( aIniName );
     sal_uInt32     lastIndex = aIniName.lastIndexOf('/');
     if ( lastIndex > 0 )
@@ -465,12 +459,12 @@ OfficeIPCThread::Status OfficeIPCThread::EnableOfficeIPCThread()
         aIniName    += OUString( RTL_CONSTASCII_USTRINGPARAM( "rc" ));
 #endif
     }
-   
+
 	::rtl::Bootstrap aPerfTuneIniFile( aIniName );
-    
+
     OUString aDefault( RTL_CONSTASCII_USTRINGPARAM( "0" ));
     OUString aPreloadData;
-    
+
     aPerfTuneIniFile.getFrom( OUString( RTL_CONSTASCII_USTRINGPARAM( "FastPipeCommunication" )), aPreloadData, aDefault );
 
 
@@ -484,7 +478,7 @@ OfficeIPCThread::Status OfficeIPCThread::EnableOfficeIPCThread()
     }
 	else
 		aUserInstallPathHashCode = CreateMD5FromString( aDummy );
-	
+
 
 	// Check result to create a hash code from the user install path
 	if ( aUserInstallPathHashCode.getLength() == 0 )
@@ -497,7 +491,7 @@ OfficeIPCThread::Status OfficeIPCThread::EnableOfficeIPCThread()
 	{
 		OSecurity &rSecurity = Security::get();
 		// #119950# Try to connect pipe first. If connected, means another instance already launched.
-		if( pThread->maPipe.create( pThread->maPipeIdent.getStr(), OPipe::TOption_Open, rSecurity )) 
+		if( pThread->maPipe.create( pThread->maPipeIdent.getStr(), OPipe::TOption_Open, rSecurity ))
 		{
 			// #119950# Test if launched in a new terminal session for same user. On Windows platform, normally a user is restricted
 			// to have only one terminal session. But if multiple terminal session for one user is allowed, crash will happen if launched
@@ -975,7 +969,7 @@ sal_Bool OfficeIPCThread::ExecuteCmdLineRequests( ProcessDocumentsRequest& aRequ
 	{
         if( ! pGlobalOfficeIPCThread->AreRequestsEnabled() )
             return bShutdown;
-        
+
 		pGlobalOfficeIPCThread->mnPendingRequests += aDispatchList.size();
 		if ( !pGlobalOfficeIPCThread->mpDispatchWatcher )
 		{
@@ -986,7 +980,7 @@ sal_Bool OfficeIPCThread::ExecuteCmdLineRequests( ProcessDocumentsRequest& aRequ
         // copy for execute
         DispatchWatcher::DispatchList aTempList( aDispatchList );
         aDispatchList.clear();
-        
+
 		aGuard.clear();
 
 		// Execute dispatch requests

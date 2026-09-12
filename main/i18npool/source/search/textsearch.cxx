@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -91,7 +91,7 @@ TextSearch::~TextSearch()
     delete pJumpTable2;
 }
 
-void TextSearch::setOptions( const SearchOptions& rOptions ) throw( RuntimeException )
+void TextSearch::setOptions( const SearchOptions& rOptions )
 {
     aSrchPara = rOptions;
 
@@ -120,7 +120,7 @@ void TextSearch::setOptions( const SearchOptions& rOptions ) throw( RuntimeExcep
                     aSrchPara.Locale);
     }
     else if( xTranslit.is() )
-        xTranslit = 0; 
+        xTranslit = 0;
 
     // Create Transliteration for 2<->1, 2<->2 transliteration
     if ( aSrchPara.transliterateFlags & COMPLEX_TRANS_MASK )
@@ -165,7 +165,7 @@ void TextSearch::setOptions( const SearchOptions& rOptions ) throw( RuntimeExcep
 	sSrchStr2 = xTranslit2->transliterateString2String(
 	        aSrchPara.searchString, 0, aSrchPara.searchString.getLength());
 
-    // When start or end of search string is a complex script type, we need to 
+    // When start or end of search string is a complex script type, we need to
     // make sure the result boundary is not located in the middle of cell.
     checkCTLStart = (xBreak.is() && (xBreak->getScriptType(sSrchStr, 0) ==
                 ScriptType::COMPLEX));
@@ -190,7 +190,7 @@ void TextSearch::setOptions( const SearchOptions& rOptions ) throw( RuntimeExcep
 
             nLimit = pWLD->GetLimit();
 			break;
-		
+
 		default:
             fnForward = &TextSearch::NSrchFrwrd;
             fnBackward = &TextSearch::NSrchBkwrd;
@@ -206,7 +206,6 @@ sal_Int32 FindPosInSeq_Impl( const Sequence <sal_Int32>& rOff, sal_Int32 nPos )
 }
 
 sal_Bool TextSearch::isCellStart(const OUString& searchStr, sal_Int32 nPos)
-        throw( RuntimeException )
 {
     sal_Int32 nDone;
     return nPos == xBreak->previousCharacters(searchStr, nPos+1,
@@ -214,7 +213,6 @@ sal_Bool TextSearch::isCellStart(const OUString& searchStr, sal_Int32 nPos)
 }
 
 SearchResult TextSearch::searchForward( const OUString& searchStr, sal_Int32 startPos, sal_Int32 endPos )
-        throw( RuntimeException )
 {
     SearchResult sres;
 
@@ -311,7 +309,6 @@ SearchResult TextSearch::searchForward( const OUString& searchStr, sal_Int32 sta
 }
 
 SearchResult TextSearch::searchBackward( const OUString& searchStr, sal_Int32 startPos, sal_Int32 endPos )
-        throw(RuntimeException)
 {
     SearchResult sres;
 
@@ -546,7 +543,7 @@ sal_Int32 TextSearch::GetDiff( const sal_Unicode cChr ) const
 {
     TextSearchJumpTable *pJump;
     OUString sSearchKey;
-    
+
     if ( bUsePrimarySrchStr ) {
       pJump = pJumpTable;
       sSearchKey = sSrchStr;
@@ -564,7 +561,6 @@ sal_Int32 TextSearch::GetDiff( const sal_Unicode cChr ) const
 
 // TextSearch::NSrchFrwrd is mis-optimized on unxsoli (#i105945#)
 SearchResult TextSearch::NSrchFrwrd( const OUString& searchStr, sal_Int32 startPos, sal_Int32 endPos )
-        throw(RuntimeException)
 {
     SearchResult aRet;
     aRet.subRegExpressions = 0;
@@ -636,7 +632,6 @@ SearchResult TextSearch::NSrchFrwrd( const OUString& searchStr, sal_Int32 startP
 }
 
 SearchResult TextSearch::NSrchBkwrd( const OUString& searchStr, sal_Int32 startPos, sal_Int32 endPos )
-        throw(RuntimeException)
 {
     SearchResult aRet;
     aRet.subRegExpressions = 0;
@@ -721,7 +716,7 @@ SearchResult TextSearch::NSrchBkwrd( const OUString& searchStr, sal_Int32 startP
 void TextSearch::RESrchPrepare( const ::com::sun::star::util::SearchOptions& rOptions)
 {
 	// select the transliterated pattern string
-	const OUString& rPatternStr = 
+	const OUString& rPatternStr =
 		(rOptions.transliterateFlags & REGEX_TRANS_MASK) ? sSrchStr
 		: ((rOptions.transliterateFlags & COMPLEX_TRANS_MASK) ? sSrchStr2 : rOptions.searchString);
 
@@ -741,7 +736,7 @@ void TextSearch::RESrchPrepare( const ::com::sun::star::util::SearchOptions& rOp
 	// assumption: transliteration didn't mangle regexp control chars
 	IcuUniString aIcuSearchPatStr( (const UChar*)rPatternStr.getStr(), rPatternStr.getLength());
 #ifndef DISABLE_WORDBOUND_EMULATION
-	// for conveniance specific syntax elements of the old regex engine are emulated
+	// for convenience specific syntax elements of the old regex engine are emulated
 	// - by replacing \< with "word-break followed by a look-ahead word-char"
 	static const IcuUniString aChevronPatternB( "\\\\<", -1, IcuUniString::kInvariant);
 	static const IcuUniString aChevronReplaceB( "\\\\b(?=\\\\w)", -1, IcuUniString::kInvariant);
@@ -766,7 +761,6 @@ void TextSearch::RESrchPrepare( const ::com::sun::star::util::SearchOptions& rOp
 
 SearchResult TextSearch::RESrchFrwrd( const OUString& searchStr,
                                       sal_Int32 startPos, sal_Int32 endPos )
-            throw(RuntimeException)
 {
 	SearchResult aRet;
 	aRet.subRegExpressions = 0;
@@ -813,7 +807,6 @@ SearchResult TextSearch::RESrchFrwrd( const OUString& searchStr,
 
 SearchResult TextSearch::RESrchBkwrd( const OUString& searchStr,
                                       sal_Int32 startPos, sal_Int32 endPos )
-            throw(RuntimeException)
 {
 	// NOTE: for backwards search callers provide startPos/endPos inverted!
 	SearchResult aRet;
@@ -869,7 +862,6 @@ SearchResult TextSearch::RESrchBkwrd( const OUString& searchStr,
 // search for words phonetically
 SearchResult TextSearch::ApproxSrchFrwrd( const OUString& searchStr,
                                           sal_Int32 startPos, sal_Int32 endPos )
-            throw(RuntimeException)
 {
     SearchResult aRet;
     aRet.subRegExpressions = 0;
@@ -916,7 +908,6 @@ SearchResult TextSearch::ApproxSrchFrwrd( const OUString& searchStr,
 
 SearchResult TextSearch::ApproxSrchBkwrd( const OUString& searchStr,
                                           sal_Int32 startPos, sal_Int32 endPos )
-            throw(RuntimeException)
 {
     SearchResult aRet;
     aRet.subRegExpressions = 0;
@@ -974,20 +965,18 @@ static OUString getImplementationName_Static()
 
 OUString SAL_CALL
 TextSearch::getImplementationName()
-                throw( RuntimeException )
 {
     return getImplementationName_Static();
 }
 
 sal_Bool SAL_CALL
 TextSearch::supportsService(const OUString& rServiceName)
-                throw( RuntimeException )
 {
     return !rServiceName.compareToAscii( cSearchName );
 }
 
 Sequence< OUString > SAL_CALL
-TextSearch::getSupportedServiceNames(void) throw( RuntimeException )
+TextSearch::getSupportedServiceNames(void)
 {
     Sequence< OUString > aRet(1);
     aRet[0] = getServiceName_Static();

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -45,7 +45,7 @@ namespace DOM
     A NamedNodeMap containing the general entities, both external and
     internal, declared in the DTD.
     */
-    Reference< XNamedNodeMap > SAL_CALL CDocumentType::getEntities() throw (RuntimeException)
+    Reference< XNamedNodeMap > SAL_CALL CDocumentType::getEntities()
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -60,7 +60,7 @@ namespace DOM
     /**
     The internal subset as a string, or null if there is none.
     */
-    OUString SAL_CALL CDocumentType::getInternalSubset() throw (RuntimeException)
+    OUString SAL_CALL CDocumentType::getInternalSubset()
     {
         OSL_ENSURE(false,
             "CDocumentType::getInternalSubset: not implemented (#i113683#)");
@@ -71,7 +71,7 @@ namespace DOM
     The name of DTD; i.e., the name immediately following the DOCTYPE
     keyword.
     */
-    OUString SAL_CALL CDocumentType::getName() throw (RuntimeException)
+    OUString SAL_CALL CDocumentType::getName()
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -86,7 +86,7 @@ namespace DOM
     /**
     A NamedNodeMap containing the notations declared in the DTD.
     */
-    Reference< XNamedNodeMap > SAL_CALL CDocumentType::getNotations() throw (RuntimeException)
+    Reference< XNamedNodeMap > SAL_CALL CDocumentType::getNotations()
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -101,7 +101,7 @@ namespace DOM
     /**
     The public identifier of the external subset.
     */
-    OUString SAL_CALL CDocumentType::getPublicId() throw (RuntimeException)
+    OUString SAL_CALL CDocumentType::getPublicId()
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -116,7 +116,7 @@ namespace DOM
     /**
     The system identifier of the external subset.
     */
-    OUString SAL_CALL CDocumentType::getSystemId() throw (RuntimeException)
+    OUString SAL_CALL CDocumentType::getSystemId()
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -128,12 +128,12 @@ namespace DOM
         return aId;
     }
 
-    OUString SAL_CALL CDocumentType::getNodeName()throw (RuntimeException)
+    OUString SAL_CALL CDocumentType::getNodeName()
     {
         return getName();
     }
 
-    OUString SAL_CALL CDocumentType::getNodeValue() throw (RuntimeException)
+    OUString SAL_CALL CDocumentType::getNodeValue()
     {
         return OUString();
     }

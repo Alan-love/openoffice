@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 #ifndef CONNECTIVITY_RESOURCE_MOZAB_HRC
 #define CONNECTIVITY_RESOURCE_MOZAB_HRC
@@ -28,15 +26,13 @@
 #include "resource/conn_shared_res.hrc"
 #endif
 
-// ============================================================================
-// = the mozab driver's resource strings
-// ============================================================================
+// mozab driver resource strings
 
-#define STR_MOZILLA_ADDRESSBOOKS            ( STR_MOZAB_BASE +    0 )
+// FREE
 #define STR_THUNDERBIRD_ADDRESSBOOKS        ( STR_MOZAB_BASE +    1 )
 #define STR_OE_ADDRESSBOOK                  ( STR_MOZAB_BASE +    2 )
 #define STR_OUTLOOK_MAPI_ADDRESSBOOK        ( STR_MOZAB_BASE +    3 )
-    // FREE
+// FREE
 #define STR_NO_TABLE_CREATION_SUPPORT       ( STR_MOZAB_BASE +    5 )
 #define STR_MOZILLA_IS_RUNNING              ( STR_MOZAB_BASE +    6 )
 #define STR_COULD_NOT_RETRIEVE_AB_ENTRY     ( STR_MOZAB_BASE +    7 )
@@ -67,4 +63,3 @@
 #define STR_COULD_NOT_CREATE_ADDRESSBOOK    ( STR_MOZAB_BASE +   32 )
 
 #endif // CONNECTIVITY_RESOURCE_MOZAB_HRC
-

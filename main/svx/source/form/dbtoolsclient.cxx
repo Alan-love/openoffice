@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -98,7 +98,7 @@ namespace svxform
 	//--------------------------------------------------------------------
     extern "C" { static void SAL_CALL thisModule() {} }
 
-	void ODbtoolsClient::registerClient() 
+	void ODbtoolsClient::registerClient()
 	{
 		::osl::MutexGuard aGuard(s_aMutex);
 		if (1 == ++s_nClients)
@@ -186,7 +186,6 @@ namespace svxform
 	//--------------------------------------------------------------------
 	Reference< XConnection> OStaticDataAccessTools::getConnection_withFeedback(const ::rtl::OUString& _rDataSourceName,
 		const ::rtl::OUString& _rUser, const ::rtl::OUString& _rPwd, const Reference< XMultiServiceFactory>& _rxFactory) const
-			SAL_THROW ( (SQLException) )
 	{
 		Reference< XConnection > xReturn;
 		if ( ensureLoaded() )
@@ -197,7 +196,6 @@ namespace svxform
 	//--------------------------------------------------------------------
 	Reference< XConnection > OStaticDataAccessTools::connectRowset( const Reference< XRowSet >& _rxRowSet,
         const Reference< XMultiServiceFactory >& _rxFactory, sal_Bool _bSetAsActiveConnection ) const
-        SAL_THROW ( ( SQLException, WrappedTargetException, RuntimeException ) )
 	{
 		Reference< XConnection > xReturn;
 		if ( ensureLoaded() )
@@ -206,7 +204,7 @@ namespace svxform
 	}
 
 	//--------------------------------------------------------------------
-	Reference< XConnection > OStaticDataAccessTools::getRowSetConnection(const Reference< XRowSet >& _rxRowSet) const SAL_THROW ( (RuntimeException) )
+	Reference< XConnection > OStaticDataAccessTools::getRowSetConnection(const Reference< XRowSet >& _rxRowSet) const
 	{
 		Reference< XConnection > xReturn;
 		if ( ensureLoaded() )
@@ -358,5 +356,3 @@ namespace svxform
 //........................................................................
 }	// namespace svxform
 //........................................................................
-
-

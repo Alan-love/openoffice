@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -71,7 +71,7 @@
 
 using namespace ::com::sun::star;
 using ::rtl::OUString;
-/*  */
+/* */
 
 const sal_uInt32 HTML_FRMOPTS_CONTROL   =
     0;
@@ -88,7 +88,7 @@ const sal_uInt32 HTML_FRMOPTS_IMG_CONTROL_CSS1 =
     HTML_FRMOPT_S_SPACE;
 
 
-/*  */
+/* */
 
 struct HTMLControl
 {
@@ -114,7 +114,7 @@ struct HTMLControl
 
 SV_IMPL_OP_PTRARR_SORT( HTMLControls, HTMLControl* )
 
-/*  */
+/* */
 
 void lcl_html_outEvents( SvStream& rStrm,
                          const uno::Reference< form::XFormComponent > rFormComp,
@@ -674,7 +674,7 @@ void SwHTMLWriter::OutHiddenControls(
     }
 }
 
-/*  */
+/* */
 
 // hier folgen die Ausgabe-Routinen, dadurch sind die form::Forms gebuendelt:
 
@@ -1342,7 +1342,7 @@ Writer& OutHTML_DrawFrmFmtAsControl( Writer& rWrt,
     return rWrt;
 }
 
-/*  */
+/* */
 
 // Ermitteln, ob eine Format zu einem Control gehoert und wenn ja
 // dessen Form zurueckgeben
@@ -1427,7 +1427,7 @@ void SwHTMLWriter::GetControls()
     }
 }
 
-/*  */
+/* */
 
 HTMLControl::HTMLControl(
         const uno::Reference< container::XIndexContainer > & rFormComps,
@@ -1438,5 +1438,3 @@ HTMLControl::HTMLControl(
 
 HTMLControl::~HTMLControl()
 {}
-
-

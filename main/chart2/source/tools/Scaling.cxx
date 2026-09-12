@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_charttools.hxx"
 #include "Scaling.hxx"
 #include <rtl/math.hxx>
 #include "com/sun/star/uno/RuntimeException.hpp"
@@ -75,7 +75,6 @@ LogarithmicScaling::~LogarithmicScaling()
 
     double SAL_CALL
 LogarithmicScaling::doScaling( double value )
-    throw (uno::RuntimeException)
 {
     double fResult;
     if( ::rtl::math::isNan( value ) || ::rtl::math::isInf( value ) )
@@ -87,14 +86,12 @@ LogarithmicScaling::doScaling( double value )
 
     uno::Reference< XScaling > SAL_CALL
 LogarithmicScaling::getInverseScaling()
-    throw (uno::RuntimeException)
 {
     return new ExponentialScaling( m_fBase );
 }
 
     ::rtl::OUString SAL_CALL
 LogarithmicScaling::getServiceName()
-    throw (uno::RuntimeException)
 {
     return lcl_aServiceName_Logarithmic;
 }
@@ -126,7 +123,6 @@ ExponentialScaling::~ExponentialScaling()
 
     double SAL_CALL
 ExponentialScaling::doScaling( double value )
-    throw (uno::RuntimeException)
 {
     double fResult;
     if( ::rtl::math::isNan( value ) || ::rtl::math::isInf( value ) )
@@ -138,14 +134,12 @@ ExponentialScaling::doScaling( double value )
 
     uno::Reference< XScaling > SAL_CALL
 ExponentialScaling::getInverseScaling()
-    throw (uno::RuntimeException)
 {
     return new LogarithmicScaling( m_fBase );
 }
 
     ::rtl::OUString SAL_CALL
 ExponentialScaling::getServiceName()
-    throw (uno::RuntimeException)
 {
     return lcl_aServiceName_Exponential;
 }
@@ -175,7 +169,6 @@ LinearScaling::~LinearScaling()
 {}
 
 double SAL_CALL LinearScaling::doScaling( double value )
-    throw (uno::RuntimeException)
 {
     double fResult;
     if( ::rtl::math::isNan( value ) || ::rtl::math::isInf( value ) )
@@ -187,7 +180,6 @@ double SAL_CALL LinearScaling::doScaling( double value )
 
 uno::Reference< XScaling > SAL_CALL
     LinearScaling::getInverseScaling()
-    throw (uno::RuntimeException)
 {
     // ToDo: ApproxEqual ?
     if( m_fSlope == 0 )
@@ -198,7 +190,6 @@ uno::Reference< XScaling > SAL_CALL
 
     ::rtl::OUString SAL_CALL
 LinearScaling::getServiceName()
-    throw (uno::RuntimeException)
 {
     return lcl_aServiceName_Linear;
 }
@@ -226,7 +217,6 @@ PowerScaling::~PowerScaling()
 {}
 
 double SAL_CALL PowerScaling::doScaling( double value )
-    throw (uno::RuntimeException)
 {
     double fResult;
     if( ::rtl::math::isNan( value ) || ::rtl::math::isInf( value ) )
@@ -238,7 +228,6 @@ double SAL_CALL PowerScaling::doScaling( double value )
 
 uno::Reference< XScaling > SAL_CALL
     PowerScaling::getInverseScaling()
-    throw (uno::RuntimeException)
 {
     // ToDo: ApproxEqual ?
     if( m_fExponent == 0 )
@@ -249,7 +238,6 @@ uno::Reference< XScaling > SAL_CALL
 
     ::rtl::OUString SAL_CALL
 PowerScaling::getServiceName()
-    throw (uno::RuntimeException)
 {
     return lcl_aServiceName_Power;
 }

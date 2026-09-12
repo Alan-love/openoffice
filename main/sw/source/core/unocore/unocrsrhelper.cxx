@@ -560,7 +560,7 @@ sal_Bool getCrsrPropertyValue(
                 }
                 eNewState =
                     aCharStyles.getLength() ?
-                        PropertyState_DIRECT_VALUE : PropertyState_DEFAULT_VALUE;;
+                        PropertyState_DIRECT_VALUE : PropertyState_DEFAULT_VALUE;
                 if(pAny)
                     (*pAny) <<= aCharStyles;
             }
@@ -640,7 +640,7 @@ void setNumberingProperty(const Any& rValue, SwPaM& rPam)
 							SwCharFmt* pCharFmt = 0;
                             for(sal_uInt16 nCharFmt = 0; nCharFmt < nChCount; nCharFmt++)
 							{
-                                SwCharFmt& rChFmt = *((*(pDoc->GetCharFmts()))[nCharFmt]);;
+                                SwCharFmt& rChFmt = *((*(pDoc->GetCharFmts()))[nCharFmt]);
 								if(rChFmt.GetName() == pNewCharStyles[i])
 								{
 									pCharFmt = &rChFmt;
@@ -804,7 +804,7 @@ void resetCrsrPropertyValue(const SfxItemPropertySimpleEntry& rEntry, SwPaM& rPa
 void InsertFile(SwUnoCrsr* pUnoCrsr,
     const String& rURL,
     const uno::Sequence< beans::PropertyValue >& rOptions
-    ) throw( lang::IllegalArgumentException, io::IOException, uno::RuntimeException )
+    )
 {
 	SfxMedium* pMed = 0;
 	SwDoc* pDoc = pUnoCrsr->GetDoc();
@@ -1024,7 +1024,6 @@ sal_Bool DocInsertStringSplitCR(
 void makeRedline( SwPaM& rPaM,
     const ::rtl::OUString& rRedlineType,
     const uno::Sequence< beans::PropertyValue >& rRedlineProperties )
-        throw (lang::IllegalArgumentException, uno::RuntimeException)
 {
     IDocumentRedlineAccess* pRedlineAccess = rPaM.GetDoc();
 

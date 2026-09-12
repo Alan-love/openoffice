@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -77,7 +77,7 @@ namespace connectivity
 			static const CLSID	CLSID_ADOVIEW_25;
 			static const IID	IID_ADOVIEW_25;
 
-            static void ThrowException(ADOConnection* _pAdoCon,const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >& _xInterface) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
+            static void ThrowException(ADOConnection* _pAdoCon,const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >& _xInterface);
 			static sal_Int32 MapADOType2Jdbc(DataTypeEnum eType);
 			static DataTypeEnum MapJdbc2ADOType(sal_Int32 _nType,sal_Int32 _nJetEngine);
 			static sal_Bool isJetEngine(sal_Int32 _nEngineType);
@@ -87,7 +87,7 @@ namespace connectivity
 			static sal_Int32		mapAdoRights2Sdbc(RightsEnum eRights);
 			static sal_Int32		mapRights2Ado(sal_Int32 nRights);
 
-			static WpADOField		getField(ADORecordset* _pRecordSet,sal_Int32 _nColumnIndex) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
+			static WpADOField		getField(ADORecordset* _pRecordSet,sal_Int32 _nColumnIndex);
 		};
 
 
@@ -104,5 +104,3 @@ namespace connectivity
 
 
 #endif //_CONNECTIVITY_ADO_ADOIMP_HXX_
-
-

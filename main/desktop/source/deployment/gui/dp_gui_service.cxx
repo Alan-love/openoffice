@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -165,15 +165,12 @@ public:
                  Reference<XComponentContext> const & xComponentContext );
 
     // XAsynchronousExecutableDialog
-    virtual void SAL_CALL setDialogTitle( OUString const & aTitle )
-        throw (RuntimeException);
+    virtual void SAL_CALL setDialogTitle( OUString const & aTitle );
     virtual void SAL_CALL startExecuteModal(
-        Reference< ui::dialogs::XDialogClosedListener > const & xListener )
-        throw (RuntimeException);
+        Reference< ui::dialogs::XDialogClosedListener > const & xListener );
 
     // XJobExecutor
-    virtual void SAL_CALL trigger( OUString const & event )
-        throw (RuntimeException);
+    virtual void SAL_CALL trigger( OUString const & event );
 };
 
 //______________________________________________________________________________
@@ -200,7 +197,6 @@ ServiceImpl::ServiceImpl( Sequence<Any> const& args,
 // XAsynchronousExecutableDialog
 //______________________________________________________________________________
 void ServiceImpl::setDialogTitle( OUString const & title )
-    throw (RuntimeException)
 {
     if ( dp_gui::TheExtensionManager::s_ExtMgr.is() )
     {
@@ -218,7 +214,6 @@ void ServiceImpl::setDialogTitle( OUString const & title )
 //______________________________________________________________________________
 void ServiceImpl::startExecuteModal(
     Reference< ui::dialogs::XDialogClosedListener > const & xListener )
-    throw (RuntimeException)
 {
     bool bCloseDialog = true;  // only used if m_bShowUpdateOnly is true
     ::std::auto_ptr<Application> app;
@@ -259,7 +254,7 @@ void ServiceImpl::startExecuteModal(
             app->SetSettings( as );
             String sTitle = ::utl::ConfigManager::GetDirectConfigProperty(
                                 ::utl::ConfigManager::PRODUCTNAME).get<OUString>()
-                                + String(static_cast<sal_Unicode>(' '))     
+                                + String(static_cast<sal_Unicode>(' '))
                                 + ::utl::ConfigManager::GetDirectConfigProperty(
                                     ::utl::ConfigManager::PRODUCTVERSION).get<OUString>();
             app->SetDisplayName(sTitle);
@@ -269,12 +264,12 @@ void ServiceImpl::startExecuteModal(
     else
     {
         // When m_bShowUpdateOnly is set, we are inside the office and the user clicked
-        // the update notification icon in the menu bar. We must not close the extensions 
+        // the update notification icon in the menu bar. We must not close the extensions
         // dialog after displaying the update dialog when it has been visible before
         if ( m_bShowUpdateOnly )
             bCloseDialog = ! dp_gui::TheExtensionManager::s_ExtMgr->isVisible();
     }
-    
+
     {
         const ::vos::OGuard guard( Application::GetSolarMutex() );
         ::rtl::Reference< ::dp_gui::TheExtensionManager > myExtMgr(
@@ -316,7 +311,7 @@ void ServiceImpl::startExecuteModal(
 
 // XJobExecutor
 //______________________________________________________________________________
-void ServiceImpl::trigger( OUString const &rEvent ) throw (RuntimeException)
+void ServiceImpl::trigger( OUString const &rEvent )
 {
     if ( rEvent == OUSTR("SHOW_UPDATE_DIALOG") )
         m_bShowUpdateOnly = true;

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -47,17 +47,17 @@ public:
 	OInterfaceTest() {}
 	~OInterfaceTest() {}
 
-public:	
+public:
 	// XInterface
-	Any	SAL_CALL queryInterface( const com::sun::star::uno::Type & aType) throw ( ::com::sun::star::uno::RuntimeException );
+	Any	SAL_CALL queryInterface( const com::sun::star::uno::Type & aType);
 	void 		SAL_CALL acquire() throw() 						 { OWeakObject::acquire(); }
 	void 		SAL_CALL release() throw()						 { OWeakObject::release(); }
 
-public:	
-    virtual void SAL_CALL setIn( const ::com::sun::star::uno::Reference< ::test::XCallMe >& callback ) throw(::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL setInOut( ::com::sun::star::uno::Reference< ::test::XCallMe >& callback ) throw(::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL getOut( ::com::sun::star::uno::Reference< ::test::XCallMe >& callback ) throw(::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Reference< ::test::XCallMe > SAL_CALL get(  ) throw(::com::sun::star::uno::RuntimeException);
+public:
+    virtual void SAL_CALL setIn( const ::com::sun::star::uno::Reference< ::test::XCallMe >& callback );
+    virtual void SAL_CALL setInOut( ::com::sun::star::uno::Reference< ::test::XCallMe >& callback );
+    virtual void SAL_CALL getOut( ::com::sun::star::uno::Reference< ::test::XCallMe >& callback );
+    virtual ::com::sun::star::uno::Reference< ::test::XCallMe > SAL_CALL get(  );
 private:
 	void call();
 
@@ -74,28 +74,23 @@ public:
 	OCallMe() : m_nLastToDos(-1) {}
 	~OCallMe() {}
 
-public:	
+public:
 	// XInterface
-	Any	SAL_CALL queryInterface( const com::sun::star::uno::Type & aType) throw ( ::com::sun::star::uno::RuntimeException );
+	Any	SAL_CALL queryInterface( const com::sun::star::uno::Type & aType);
 	void 		SAL_CALL acquire()throw() 						 { OWeakObject::acquire(); }
 	void 		SAL_CALL release()throw() 						 { OWeakObject::release(); }
 public:
 	// XCallMe
-    virtual void SAL_CALL call( const ::rtl::OUString& s, sal_Int32 nToDo )
-		throw(::com::sun::star::uno::RuntimeException,
-			  ::test::TestBridgeException);
-    virtual void SAL_CALL callOneway( const ::rtl::OUString& s, sal_Int32 nToDo )
-		throw(::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL drawLine( sal_Int32 x1, sal_Int32 y1 , sal_Int32 x2 , sal_Int32 y2 )
-		throw(::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL call( const ::rtl::OUString& s, sal_Int32 nToDo );
+    virtual void SAL_CALL callOneway( const ::rtl::OUString& s, sal_Int32 nToDo );
+    virtual void SAL_CALL drawLine( sal_Int32 x1, sal_Int32 y1 , sal_Int32 x2 , sal_Int32 y2 );
 
-	virtual ::rtl::OUString SAL_CALL getsAttribute() throw(::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL setsAttribute( const ::rtl::OUString& _sattribute ) throw(::com::sun::star::uno::RuntimeException);
+	virtual ::rtl::OUString SAL_CALL getsAttribute();
+    virtual void SAL_CALL setsAttribute( const ::rtl::OUString& _sattribute );
     virtual void SAL_CALL callAgain( const ::com::sun::star::uno::Reference< ::test::XCallMe >& callAgain,
-									 sal_Int32 nToCall ) throw(::com::sun::star::uno::RuntimeException);
+									 sal_Int32 nToCall );
 
-    virtual ::test::TestTypes SAL_CALL transport( const ::test::TestTypes& types )
-		throw(::com::sun::star::uno::RuntimeException);
+    virtual ::test::TestTypes SAL_CALL transport( const ::test::TestTypes& types );
 
 	::osl::Mutex m_mutex;
 	::rtl::OUString m_sAttribute;
@@ -110,16 +105,14 @@ public:
 	OTestFactory() {}
 	~OTestFactory() {}
 
-public:	
+public:
 	// XInterface
-	Any	        SAL_CALL queryInterface( const  com::sun::star::uno::Type & aType ) throw ( ::com::sun::star::uno::RuntimeException );
+	Any	        SAL_CALL queryInterface( const  com::sun::star::uno::Type & aType );
 	void 		SAL_CALL acquire() throw() 						 { OWeakObject::acquire(); }
 	void 		SAL_CALL release() throw()						 { OWeakObject::release(); }
 public:
-	virtual ::com::sun::star::uno::Reference< ::test::XCallMe > SAL_CALL createCallMe(  )
-		throw(::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Reference< ::test::XInterfaceTest > SAL_CALL createInterfaceTest(  )
-		throw(::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::test::XCallMe > SAL_CALL createCallMe(  );
+    virtual ::com::sun::star::uno::Reference< ::test::XInterfaceTest > SAL_CALL createInterfaceTest(  );
 
 };
 
@@ -134,17 +127,15 @@ public:
 		m_rSMgr( r )
 		{}
 	~OInstanceProvider(){ printf( "instance provider dies\n" );}
-public:	
+public:
 	// XInterface
-	Any	        SAL_CALL queryInterface( const Type & aType)throw ( ::com::sun::star::uno::RuntimeException );
+	Any	        SAL_CALL queryInterface( const Type & aType);
 	void 		SAL_CALL acquire()throw() 						 { OWeakObject::acquire(); }
 	void 		SAL_CALL release() throw()						 { OWeakObject::release(); }
-	
+
 public:
     virtual ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface > SAL_CALL
-	       getInstance( const ::rtl::OUString& sObjectName )
-		         throw( ::com::sun::star::container::NoSuchElementException,
-			            ::com::sun::star::uno::RuntimeException);
+	       getInstance( const ::rtl::OUString& sObjectName );
 
 	::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > m_rSMgr;
 };

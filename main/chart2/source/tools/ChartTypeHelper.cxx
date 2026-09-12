@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_charttools.hxx"
 
 #include "ChartTypeHelper.hxx"
 #include "DiagramHelper.hxx"
@@ -302,7 +302,7 @@ uno::Sequence < sal_Int32 > ChartTypeHelper::getSupportedLabelPlacements( const 
             xSeriesProp->getPropertyValue( C2U("StackingDirection") ) >>= eStacking;
             bStacked = (chart2::StackingDirection_Y_STACKING == eStacking);
         }
-        
+
         aRet.realloc( bStacked ? 3 : 6 );
         sal_Int32* pSeq = aRet.getArray();
         if(!bStacked)
@@ -315,7 +315,7 @@ uno::Sequence < sal_Int32 > ChartTypeHelper::getSupportedLabelPlacements( const 
             else
             {
                 *pSeq++ = ::com::sun::star::chart::DataLabelPlacement::TOP;
-                *pSeq++ = ::com::sun::star::chart::DataLabelPlacement::BOTTOM;            
+                *pSeq++ = ::com::sun::star::chart::DataLabelPlacement::BOTTOM;
             }
         }
         *pSeq++ = ::com::sun::star::chart::DataLabelPlacement::CENTER;
@@ -525,7 +525,7 @@ drawing::Direction3D ChartTypeHelper::getDefaultRealisticLightDirection( const u
 sal_Int32 ChartTypeHelper::getAxisType( const uno::Reference<
             XChartType >& xChartType, sal_Int32 nDimensionIndex )
 {
-    //retruned is a constant from constant group ::com::sun::star::chart2::AxisType
+    //returned is a constant from constant group ::com::sun::star::chart2::AxisType
 
     //@todo ask charttype itself --> need model change first
 	if(!xChartType.is())

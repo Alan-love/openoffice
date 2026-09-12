@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -76,21 +76,21 @@ namespace oooimprovecore
             virtual ~Core();
 
             // XCore
-            virtual sal_Int32 SAL_CALL getSessionLogEventCount() throw(RuntimeException);
-            virtual sal_Bool SAL_CALL getUiEventsLoggerEnabled() throw(RuntimeException);
-            virtual void SAL_CALL inviteUser() throw(RuntimeException);
+            virtual sal_Int32 SAL_CALL getSessionLogEventCount();
+            virtual sal_Bool SAL_CALL getUiEventsLoggerEnabled();
+            virtual void SAL_CALL inviteUser();
 
             // XServiceInfo
-            virtual OUString SAL_CALL getImplementationName() throw(RuntimeException);
-            virtual sal_Bool SAL_CALL supportsService(const OUString& service_name) throw(RuntimeException);
-            virtual Sequence<OUString> SAL_CALL getSupportedServiceNames() throw(RuntimeException);
+            virtual OUString SAL_CALL getImplementationName();
+            virtual sal_Bool SAL_CALL supportsService(const OUString& service_name);
+            virtual Sequence<OUString> SAL_CALL getSupportedServiceNames();
 
             // XTerminateListener
-            virtual void SAL_CALL queryTermination(const EventObject&) throw(RuntimeException);
-            virtual void SAL_CALL notifyTermination(const EventObject&) throw(RuntimeException);
+            virtual void SAL_CALL queryTermination(const EventObject&);
+            virtual void SAL_CALL notifyTermination(const EventObject&);
 
             // XEventListener
-            virtual void SAL_CALL disposing(const EventObject&) throw(RuntimeException);
+            virtual void SAL_CALL disposing(const EventObject&);
     };
 }
 
@@ -105,13 +105,13 @@ namespace oooimprovecore
     Core::~Core()
     { }
 
-    sal_Int32 SAL_CALL Core::getSessionLogEventCount() throw(RuntimeException)
+    sal_Int32 SAL_CALL Core::getSessionLogEventCount()
     { return UiEventsLogger::getSessionLogEventCount(); }
 
-    sal_Bool SAL_CALL Core::getUiEventsLoggerEnabled() throw(RuntimeException)
+    sal_Bool SAL_CALL Core::getUiEventsLoggerEnabled()
     { return UiEventsLogger::isEnabled(); }
 
-    void SAL_CALL Core::inviteUser() throw(RuntimeException)
+    void SAL_CALL Core::inviteUser()
     {
         Reference<XMultiServiceFactory> xServiceFactory = ::comphelper::getProcessServiceFactory();
 
@@ -142,7 +142,7 @@ namespace oooimprovecore
         }
     }
 
-    sal_Bool SAL_CALL Core::supportsService(const OUString& service_name) throw(RuntimeException)
+    sal_Bool SAL_CALL Core::supportsService(const OUString& service_name)
     {
         const Sequence<OUString> service_names(getSupportedServiceNames());
         for (sal_Int32 idx = service_names.getLength()-1; idx>=0; --idx)
@@ -150,10 +150,10 @@ namespace oooimprovecore
         return sal_False;
     }
 
-    OUString SAL_CALL Core::getImplementationName() throw(RuntimeException)
+    OUString SAL_CALL Core::getImplementationName()
     { return getImplementationName_static(); }
 
-    Sequence<OUString> SAL_CALL Core::getSupportedServiceNames() throw(RuntimeException)
+    Sequence<OUString> SAL_CALL Core::getSupportedServiceNames()
     { return getSupportedServiceNames_static(); }
 
     OUString SAL_CALL Core::getImplementationName_static()
@@ -166,15 +166,15 @@ namespace oooimprovecore
         return aServiceNames;
     }
 
-    void Core::queryTermination(const EventObject&) throw(RuntimeException)
+    void Core::queryTermination(const EventObject&)
     { }
 
-    void Core::notifyTermination(const EventObject&) throw(RuntimeException)
+    void Core::notifyTermination(const EventObject&)
     {
         UiEventsLogger::disposing();
     }
 
-    void Core::disposing(const EventObject&) throw(RuntimeException)
+    void Core::disposing(const EventObject&)
     { }
 
     Reference<XInterface> Core::Create(const Reference<XComponentContext>& context)

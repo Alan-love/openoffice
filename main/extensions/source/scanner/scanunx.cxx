@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,7 +49,7 @@ BitmapTransporter::~BitmapTransporter()
 
 // -----------------------------------------------------------------------------
 
-ANY SAL_CALL BitmapTransporter::queryInterface( const Type& rType ) throw( RuntimeException )
+ANY SAL_CALL BitmapTransporter::queryInterface( const Type& rType )
 {
 	const ANY aRet( cppu::queryInterface( rType, static_cast< AWT::XBitmap* >( this ) ) );
 
@@ -142,8 +142,8 @@ namespace
             m_aSanes.clear();
     }
 
-    struct theSaneProtector : public rtl::Static<vos::OMutex, theSaneProtector> {}; 
-    struct theSanes : public rtl::Static<allSanes, theSanes> {}; 
+    struct theSaneProtector : public rtl::Static<vos::OMutex, theSaneProtector> {};
+    struct theSanes : public rtl::Static<allSanes, theSanes> {};
 }
 
 // -----------------
@@ -273,7 +273,7 @@ SEQ( ScannerContext ) ScannerManager::getAvailableScanners() throw()
 
 // -----------------------------------------------------------------------------
 
-sal_Bool ScannerManager::configureScanner( ScannerContext& scanner_context ) throw( ScannerException )
+sal_Bool ScannerManager::configureScanner( ScannerContext& scanner_context )
 {
 	vos::OGuard aGuard( theSaneProtector::get() );
 	sanevec &rSanes = theSanes::get().m_aSanes;
@@ -301,14 +301,14 @@ sal_Bool ScannerManager::configureScanner( ScannerContext& scanner_context ) thr
 	SaneDlg aDlg( NULL, pHolder->m_aSane );
     sal_Bool bRet = (sal_Bool)aDlg.Execute();
     pHolder->m_bBusy = false;
-        
+
 	return bRet;
 }
 
 // -----------------------------------------------------------------------------
 
 void ScannerManager::startScan( const ScannerContext& scanner_context,
-								const REF( com::sun::star::lang::XEventListener )& listener ) throw( ScannerException )
+								const REF( com::sun::star::lang::XEventListener )& listener )
 {
 	vos::OGuard aGuard( theSaneProtector::get() );
 	sanevec &rSanes = theSanes::get().m_aSanes;
@@ -338,7 +338,7 @@ void ScannerManager::startScan( const ScannerContext& scanner_context,
 
 // -----------------------------------------------------------------------------
 
-ScanError ScannerManager::getError( const ScannerContext& scanner_context ) throw( ScannerException )
+ScanError ScannerManager::getError( const ScannerContext& scanner_context )
 {
 	vos::OGuard aGuard( theSaneProtector::get() );
 	sanevec &rSanes = theSanes::get().m_aSanes;
@@ -357,7 +357,7 @@ ScanError ScannerManager::getError( const ScannerContext& scanner_context ) thro
 
 // -----------------------------------------------------------------------------
 
-REF( AWT::XBitmap ) ScannerManager::getBitmap( const ScannerContext& scanner_context ) throw( ScannerException )
+REF( AWT::XBitmap ) ScannerManager::getBitmap( const ScannerContext& scanner_context )
 {
 	vos::OGuard aGuard( theSaneProtector::get() );
 	sanevec &rSanes = theSanes::get().m_aSanes;

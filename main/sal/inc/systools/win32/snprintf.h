@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 #ifndef _SNPRINTF_H
 #define _SNPRINTF_H
@@ -68,21 +68,30 @@ extern "C" {
 #endif
 
 
-/*	Implementations of snprintf following the ISO/IEC 9899:1999 (ISO C99) 
+/*	Implementations of snprintf following the ISO/IEC 9899:1999 (ISO C99)
 	standard.
-	The difference compared to _snprintf is that the buffer always is zero 
-	terminated (unless count is zero) and the return value is the number of 
-	characters (not including terminating zero) that would have been written 
+	The difference compared to _snprintf is that the buffer always is zero
+	terminated (unless count is zero) and the return value is the number of
+	characters (not including terminating zero) that would have been written
 	even if the buffer wasn't large
 	enough to hold the string. */
 
 
+
+/*	A C runtime from VS2015 onwards supplies a conforming snprintf of its own.
+	Declaring these alongside it is a redefinition with different linkage
+	(C2375), so on such a runtime the declarations are simply left out and the
+	CRT's own are used. Older runtimes, which is every one the XP-era targets
+	build against, keep the declarations exactly as before. */
+#if !defined(_MSC_VER) || (_MSC_VER < 1900)
 
 /* UNICODE version */
 _SNPRINTF_DLLIMPORT int __cdecl snwprintf( wchar_t *buffer, size_t count, const wchar_t *format, ... );
 
 /* SBCS and MBCS version */
 _SNPRINTF_DLLIMPORT int __cdecl snprintf( char *buffer, size_t count, const char *format, ... );
+
+#endif
 
 /* Conflict with STL_port inline implementation */
 #if 0

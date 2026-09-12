@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -43,30 +43,30 @@ ScVbaToggleButton::~ScVbaToggleButton()
 }
 
 // Attributes
-rtl::OUString SAL_CALL 
-ScVbaToggleButton::getCaption() throw (css::uno::RuntimeException)
+rtl::OUString SAL_CALL
+ScVbaToggleButton::getCaption()
 {
     rtl::OUString Label;
     m_xProps->getPropertyValue( LABEL ) >>= Label;
     return Label;
 }
 
-void SAL_CALL 
-ScVbaToggleButton::setCaption( const rtl::OUString& _caption ) throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL
+ScVbaToggleButton::setCaption( const rtl::OUString& _caption )
 {
     m_xProps->setPropertyValue( LABEL, uno::makeAny( _caption ) );
 }
 
-uno::Any SAL_CALL 
-ScVbaToggleButton::getValue() throw (uno::RuntimeException)
+uno::Any SAL_CALL
+ScVbaToggleButton::getValue()
 {
 	sal_Int16 nState = 0;
     	m_xProps->getPropertyValue( STATE ) >>= nState;
  	return uno::makeAny( nState ? sal_Int16( -1 ) : sal_Int16( 0 ) );
 }
 
-void SAL_CALL 
-ScVbaToggleButton::setValue( const uno::Any& _value ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaToggleButton::setValue( const uno::Any& _value )
 {
 	sal_Int16 nState = 0;
 	_value >>= nState;
@@ -76,52 +76,52 @@ ScVbaToggleButton::setValue( const uno::Any& _value ) throw (uno::RuntimeExcepti
 	m_xProps->setPropertyValue( STATE, uno::makeAny(  nState ) );
 }
 
-sal_Bool SAL_CALL ScVbaToggleButton::getAutoSize() throw (uno::RuntimeException)
+sal_Bool SAL_CALL ScVbaToggleButton::getAutoSize()
 {
     return sal_False;
 }
 
-void SAL_CALL ScVbaToggleButton::setAutoSize( sal_Bool /*bAutoSize*/ ) throw (uno::RuntimeException)
+void SAL_CALL ScVbaToggleButton::setAutoSize( sal_Bool /*bAutoSize*/ )
 {
 }
 
-sal_Bool SAL_CALL ScVbaToggleButton::getCancel() throw (uno::RuntimeException)
-{
-    return sal_False;
-}
-
-void SAL_CALL ScVbaToggleButton::setCancel( sal_Bool /*bCancel*/ ) throw (uno::RuntimeException)
-{
-}
-
-sal_Bool SAL_CALL ScVbaToggleButton::getDefault() throw (uno::RuntimeException)
+sal_Bool SAL_CALL ScVbaToggleButton::getCancel()
 {
     return sal_False;
 }
 
-void SAL_CALL ScVbaToggleButton::setDefault( sal_Bool /*bDefault*/ ) throw (uno::RuntimeException)
+void SAL_CALL ScVbaToggleButton::setCancel( sal_Bool /*bCancel*/ )
 {
 }
 
-sal_Int32 SAL_CALL ScVbaToggleButton::getBackColor() throw (uno::RuntimeException)
+sal_Bool SAL_CALL ScVbaToggleButton::getDefault()
+{
+    return sal_False;
+}
+
+void SAL_CALL ScVbaToggleButton::setDefault( sal_Bool /*bDefault*/ )
+{
+}
+
+sal_Int32 SAL_CALL ScVbaToggleButton::getBackColor()
 {
     return 0;
 }
 
-void SAL_CALL ScVbaToggleButton::setBackColor( sal_Int32 /*nBackColor*/ ) throw (uno::RuntimeException)
+void SAL_CALL ScVbaToggleButton::setBackColor( sal_Int32 /*nBackColor*/ )
 {
 }
 
-sal_Int32 SAL_CALL ScVbaToggleButton::getForeColor() throw (uno::RuntimeException)
+sal_Int32 SAL_CALL ScVbaToggleButton::getForeColor()
 {
     return 0;
 }
 
-void SAL_CALL ScVbaToggleButton::setForeColor( sal_Int32 /*nForeColor*/ ) throw (uno::RuntimeException)
+void SAL_CALL ScVbaToggleButton::setForeColor( sal_Int32 /*nForeColor*/ )
 {
 }
 
-uno::Reference< msforms::XNewFont > SAL_CALL ScVbaToggleButton::getFont() throw (uno::RuntimeException)
+uno::Reference< msforms::XNewFont > SAL_CALL ScVbaToggleButton::getFont()
 {
     return new VbaNewFont( this, mxContext, m_xProps );
 }
@@ -133,7 +133,7 @@ ScVbaToggleButton::getServiceImplName()
 	return sImplName;
 }
 
-uno::Sequence< rtl::OUString > 
+uno::Sequence< rtl::OUString >
 ScVbaToggleButton::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > aServiceNames;
@@ -144,4 +144,3 @@ ScVbaToggleButton::getServiceNames()
 	}
 	return aServiceNames;
 }
-

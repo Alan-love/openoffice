@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -116,7 +116,7 @@ namespace canvas
     {
         geometry::RealSize2D createInfiniteSize2D()
         {
-            return geometry::RealSize2D( 
+            return geometry::RealSize2D(
                 ::std::numeric_limits<double>::infinity(),
                 ::std::numeric_limits<double>::infinity() );
         }
@@ -215,7 +215,7 @@ namespace canvas
             ::basegfx::unotools::homMatrixFromAffineMatrix( viewTransform, viewState.AffineTransform );
 
 			// this statement performs combinedTransform = viewTransform * combinedTransform
-            combinedTransform *= viewTransform; 
+            combinedTransform *= viewTransform;
 
             return combinedTransform;
         }
@@ -230,10 +230,10 @@ namespace canvas
 
             resultViewState.Clip = NULL; // TODO(F2): intersect clippings
 
-            return setViewStateTransform( 
+            return setViewStateTransform(
                 resultViewState,
                 mergeViewAndRenderTransform( aTmpMatrix,
-                                             viewState, 
+                                             viewState,
                                              renderState ) );
         }
 
@@ -259,33 +259,32 @@ namespace canvas
             return matrix;
         }
 
-        namespace 
-        { 
+        namespace
+        {
             class StandardColorSpace : public cppu::WeakImplHelper1< com::sun::star::rendering::XIntegerBitmapColorSpace >
             {
             private:
                 uno::Sequence< sal_Int8 >  maComponentTags;
                 uno::Sequence< sal_Int32 > maBitCounts;
 
-                virtual ::sal_Int8 SAL_CALL getType(  ) throw (uno::RuntimeException)
+                virtual ::sal_Int8 SAL_CALL getType(  )
                 {
                     return rendering::ColorSpaceType::RGB;
                 }
-                virtual uno::Sequence< ::sal_Int8 > SAL_CALL getComponentTags(  ) throw (uno::RuntimeException)
+                virtual uno::Sequence< ::sal_Int8 > SAL_CALL getComponentTags(  )
                 {
                     return maComponentTags;
                 }
-                virtual ::sal_Int8 SAL_CALL getRenderingIntent(  ) throw (uno::RuntimeException)
+                virtual ::sal_Int8 SAL_CALL getRenderingIntent(  )
                 {
                     return rendering::RenderingIntent::PERCEPTUAL;
                 }
-                virtual uno::Sequence< beans::PropertyValue > SAL_CALL getProperties(  ) throw (uno::RuntimeException)
+                virtual uno::Sequence< beans::PropertyValue > SAL_CALL getProperties(  )
                 {
                     return uno::Sequence< beans::PropertyValue >();
                 }
-                virtual uno::Sequence< double > SAL_CALL convertColorSpace( const uno::Sequence< double >& deviceColor, 
-                                                                            const uno::Reference< rendering::XColorSpace >& targetColorSpace ) throw (lang::IllegalArgumentException, 
-                                                                                                                                                      uno::RuntimeException)
+                virtual uno::Sequence< double > SAL_CALL convertColorSpace( const uno::Sequence< double >& deviceColor,
+                                                                            const uno::Reference< rendering::XColorSpace >& targetColorSpace )
                 {
                     // TODO(P3): if we know anything about target
                     // colorspace, this can be greatly sped up
@@ -293,11 +292,11 @@ namespace canvas
                         convertToARGB(deviceColor));
                     return targetColorSpace->convertFromARGB(aIntermediate);
                 }
-                virtual uno::Sequence< rendering::RGBColor > SAL_CALL convertToRGB( const uno::Sequence< double >& deviceColor ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+                virtual uno::Sequence< rendering::RGBColor > SAL_CALL convertToRGB( const uno::Sequence< double >& deviceColor )
                 {
                     const double*  pIn( deviceColor.getConstArray() );
                     const sal_Size nLen( deviceColor.getLength() );
-                    ENSURE_ARG_OR_THROW2(nLen%4==0, 
+                    ENSURE_ARG_OR_THROW2(nLen%4==0,
                                          "number of channels no multiple of 4",
                                          static_cast<rendering::XColorSpace*>(this), 0);
 
@@ -310,11 +309,11 @@ namespace canvas
                     }
                     return aRes;
                 }
-                virtual uno::Sequence< rendering::ARGBColor > SAL_CALL convertToARGB( const uno::Sequence< double >& deviceColor ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+                virtual uno::Sequence< rendering::ARGBColor > SAL_CALL convertToARGB( const uno::Sequence< double >& deviceColor )
                 {
                     const double*  pIn( deviceColor.getConstArray() );
                     const sal_Size nLen( deviceColor.getLength() );
-                    ENSURE_ARG_OR_THROW2(nLen%4==0, 
+                    ENSURE_ARG_OR_THROW2(nLen%4==0,
                                          "number of channels no multiple of 4",
                                          static_cast<rendering::XColorSpace*>(this), 0);
 
@@ -327,11 +326,11 @@ namespace canvas
                     }
                     return aRes;
                 }
-                virtual uno::Sequence< rendering::ARGBColor > SAL_CALL convertToPARGB( const uno::Sequence< double >& deviceColor ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+                virtual uno::Sequence< rendering::ARGBColor > SAL_CALL convertToPARGB( const uno::Sequence< double >& deviceColor )
                 {
                     const double*  pIn( deviceColor.getConstArray() );
                     const sal_Size nLen( deviceColor.getLength() );
-                    ENSURE_ARG_OR_THROW2(nLen%4==0, 
+                    ENSURE_ARG_OR_THROW2(nLen%4==0,
                                          "number of channels no multiple of 4",
                                          static_cast<rendering::XColorSpace*>(this), 0);
 
@@ -344,7 +343,7 @@ namespace canvas
                     }
                     return aRes;
                 }
-                virtual uno::Sequence< double > SAL_CALL convertFromRGB( const uno::Sequence< rendering::RGBColor >& rgbColor ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+                virtual uno::Sequence< double > SAL_CALL convertFromRGB( const uno::Sequence< rendering::RGBColor >& rgbColor )
                 {
                     const rendering::RGBColor* pIn( rgbColor.getConstArray() );
                     const sal_Size             nLen( rgbColor.getLength() );
@@ -361,7 +360,7 @@ namespace canvas
                     }
                     return aRes;
                 }
-                virtual uno::Sequence< double > SAL_CALL convertFromARGB( const uno::Sequence< rendering::ARGBColor >& rgbColor ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+                virtual uno::Sequence< double > SAL_CALL convertFromARGB( const uno::Sequence< rendering::ARGBColor >& rgbColor )
                 {
                     const rendering::ARGBColor* pIn( rgbColor.getConstArray() );
                     const sal_Size              nLen( rgbColor.getLength() );
@@ -378,7 +377,7 @@ namespace canvas
                     }
                     return aRes;
                 }
-                virtual uno::Sequence< double > SAL_CALL convertFromPARGB( const uno::Sequence< rendering::ARGBColor >& rgbColor ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+                virtual uno::Sequence< double > SAL_CALL convertFromPARGB( const uno::Sequence< rendering::ARGBColor >& rgbColor )
                 {
                     const rendering::ARGBColor* pIn( rgbColor.getConstArray() );
                     const sal_Size              nLen( rgbColor.getLength() );
@@ -397,27 +396,26 @@ namespace canvas
                 }
 
                 // XIntegerBitmapColorSpace
-                virtual ::sal_Int32 SAL_CALL getBitsPerPixel(  ) throw (uno::RuntimeException)
+                virtual ::sal_Int32 SAL_CALL getBitsPerPixel(  )
                 {
                     return 32;
                 }
-                virtual uno::Sequence< ::sal_Int32 > SAL_CALL getComponentBitCounts(  ) throw (uno::RuntimeException)
+                virtual uno::Sequence< ::sal_Int32 > SAL_CALL getComponentBitCounts(  )
                 {
                     return maBitCounts;
                 }
-                virtual ::sal_Int8 SAL_CALL getEndianness(  ) throw (uno::RuntimeException)
+                virtual ::sal_Int8 SAL_CALL getEndianness(  )
                 {
                     return util::Endianness::LITTLE;
                 }
-                virtual uno::Sequence<double> SAL_CALL convertFromIntegerColorSpace( const uno::Sequence< ::sal_Int8 >& deviceColor, 
-                                                                                     const uno::Reference< rendering::XColorSpace >& targetColorSpace ) throw (lang::IllegalArgumentException, 
-                                                                                                                                                               uno::RuntimeException)
+                virtual uno::Sequence<double> SAL_CALL convertFromIntegerColorSpace( const uno::Sequence< ::sal_Int8 >& deviceColor,
+                                                                                     const uno::Reference< rendering::XColorSpace >& targetColorSpace )
                 {
                     if( dynamic_cast<StandardColorSpace*>(targetColorSpace.get()) )
                     {
                         const sal_Int8* pIn( deviceColor.getConstArray() );
                         const sal_Size  nLen( deviceColor.getLength() );
-                        ENSURE_ARG_OR_THROW2(nLen%4==0, 
+                        ENSURE_ARG_OR_THROW2(nLen%4==0,
                                              "number of channels no multiple of 4",
                                              static_cast<rendering::XColorSpace*>(this), 0);
 
@@ -441,9 +439,8 @@ namespace canvas
                         return targetColorSpace->convertFromARGB(aIntermediate);
                     }
                 }
-                virtual uno::Sequence< ::sal_Int8 > SAL_CALL convertToIntegerColorSpace( const uno::Sequence< ::sal_Int8 >& deviceColor, 
-                                                                                         const uno::Reference< rendering::XIntegerBitmapColorSpace >& targetColorSpace ) throw (lang::IllegalArgumentException, 
-                                                                                                                                                                              uno::RuntimeException)
+                virtual uno::Sequence< ::sal_Int8 > SAL_CALL convertToIntegerColorSpace( const uno::Sequence< ::sal_Int8 >& deviceColor,
+                                                                                         const uno::Reference< rendering::XIntegerBitmapColorSpace >& targetColorSpace )
                 {
                     if( dynamic_cast<StandardColorSpace*>(targetColorSpace.get()) )
                     {
@@ -459,11 +456,11 @@ namespace canvas
                         return targetColorSpace->convertIntegerFromARGB(aIntermediate);
                     }
                 }
-                virtual uno::Sequence< rendering::RGBColor > SAL_CALL convertIntegerToRGB( const uno::Sequence< ::sal_Int8 >& deviceColor ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+                virtual uno::Sequence< rendering::RGBColor > SAL_CALL convertIntegerToRGB( const uno::Sequence< ::sal_Int8 >& deviceColor )
                 {
                     const sal_Int8* pIn( deviceColor.getConstArray() );
                     const sal_Size  nLen( deviceColor.getLength() );
-                    ENSURE_ARG_OR_THROW2(nLen%4==0, 
+                    ENSURE_ARG_OR_THROW2(nLen%4==0,
                                          "number of channels no multiple of 4",
                                          static_cast<rendering::XColorSpace*>(this), 0);
 
@@ -480,11 +477,11 @@ namespace canvas
                     return aRes;
                 }
 
-                virtual uno::Sequence< rendering::ARGBColor > SAL_CALL convertIntegerToARGB( const uno::Sequence< ::sal_Int8 >& deviceColor ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+                virtual uno::Sequence< rendering::ARGBColor > SAL_CALL convertIntegerToARGB( const uno::Sequence< ::sal_Int8 >& deviceColor )
                 {
                     const sal_Int8* pIn( deviceColor.getConstArray() );
                     const sal_Size  nLen( deviceColor.getLength() );
-                    ENSURE_ARG_OR_THROW2(nLen%4==0, 
+                    ENSURE_ARG_OR_THROW2(nLen%4==0,
                                          "number of channels no multiple of 4",
                                          static_cast<rendering::XColorSpace*>(this), 0);
 
@@ -502,11 +499,11 @@ namespace canvas
                     return aRes;
                 }
 
-                virtual uno::Sequence< rendering::ARGBColor > SAL_CALL convertIntegerToPARGB( const uno::Sequence< ::sal_Int8 >& deviceColor ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+                virtual uno::Sequence< rendering::ARGBColor > SAL_CALL convertIntegerToPARGB( const uno::Sequence< ::sal_Int8 >& deviceColor )
                 {
                     const sal_Int8* pIn( deviceColor.getConstArray() );
                     const sal_Size  nLen( deviceColor.getLength() );
-                    ENSURE_ARG_OR_THROW2(nLen%4==0, 
+                    ENSURE_ARG_OR_THROW2(nLen%4==0,
                                          "number of channels no multiple of 4",
                                          static_cast<rendering::XColorSpace*>(this), 0);
 
@@ -525,7 +522,7 @@ namespace canvas
                     return aRes;
                 }
 
-                virtual uno::Sequence< ::sal_Int8 > SAL_CALL convertIntegerFromRGB( const uno::Sequence< rendering::RGBColor >& rgbColor ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+                virtual uno::Sequence< ::sal_Int8 > SAL_CALL convertIntegerFromRGB( const uno::Sequence< rendering::RGBColor >& rgbColor )
                 {
                     const rendering::RGBColor* pIn( rgbColor.getConstArray() );
                     const sal_Size             nLen( rgbColor.getLength() );
@@ -543,7 +540,7 @@ namespace canvas
                     return aRes;
                 }
 
-                virtual uno::Sequence< ::sal_Int8 > SAL_CALL convertIntegerFromARGB( const uno::Sequence< rendering::ARGBColor >& rgbColor ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+                virtual uno::Sequence< ::sal_Int8 > SAL_CALL convertIntegerFromARGB( const uno::Sequence< rendering::ARGBColor >& rgbColor )
                 {
                     const rendering::ARGBColor* pIn( rgbColor.getConstArray() );
                     const sal_Size              nLen( rgbColor.getLength() );
@@ -561,7 +558,7 @@ namespace canvas
                     return aRes;
                 }
 
-                virtual uno::Sequence< ::sal_Int8 > SAL_CALL convertIntegerFromPARGB( const uno::Sequence< rendering::ARGBColor >& rgbColor ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+                virtual uno::Sequence< ::sal_Int8 > SAL_CALL convertIntegerFromPARGB( const uno::Sequence< rendering::ARGBColor >& rgbColor )
                 {
                     const rendering::ARGBColor* pIn( rgbColor.getConstArray() );
                     const sal_Size              nLen( rgbColor.getLength() );
@@ -580,7 +577,7 @@ namespace canvas
                 }
 
             public:
-                StandardColorSpace() : 
+                StandardColorSpace() :
                     maComponentTags(4),
                     maBitCounts(4)
                 {
@@ -591,21 +588,21 @@ namespace canvas
                     pTags[2] = rendering::ColorComponentTag::RGB_BLUE;
                     pTags[3] = rendering::ColorComponentTag::ALPHA;
 
-                    pBitCounts[0] = 
-                    pBitCounts[1] = 
-                    pBitCounts[2] = 
+                    pBitCounts[0] =
+                    pBitCounts[1] =
+                    pBitCounts[2] =
                     pBitCounts[3] = 8;
                 }
             };
 
             struct StandardColorSpaceHolder : public rtl::StaticWithInit<uno::Reference<rendering::XIntegerBitmapColorSpace>,
-                                                                         StandardColorSpaceHolder> 
+                                                                         StandardColorSpaceHolder>
             {
                 uno::Reference<rendering::XIntegerBitmapColorSpace> operator()()
                 {
                     return new StandardColorSpace();
                 }
-            }; 
+            };
         }
 
         uno::Reference<rendering::XIntegerBitmapColorSpace> getStdColorSpace()
@@ -635,7 +632,7 @@ namespace canvas
             return ::Color( pCols[3], pCols[0], pCols[1], pCols[2] );
 #else
             return ::Color( *reinterpret_cast< const ::ColorData* >(rColor.getConstArray()) );
-#endif            
+#endif
         }
 
         uno::Sequence<sal_Int8> colorToStdIntSequence( const ::Color& rColor )
@@ -666,9 +663,9 @@ namespace canvas
                 return o_transform=i_transformation;
 
             // transform by given transformation
-            ::basegfx::B2DRectangle aTransformedRect; 
+            ::basegfx::B2DRectangle aTransformedRect;
 
-            calcTransformedRectBounds( aTransformedRect, 
+            calcTransformedRectBounds( aTransformedRect,
                                        i_srcRect,
                                        i_transformation );
 
@@ -693,7 +690,7 @@ namespace canvas
 
             // transform all four extremal points of the rectangle,
             // take bounding rect of those.
-            
+
             // transform left-top point
             outRect.expand( transformation * inRect.getMinimum() );
 
@@ -719,7 +716,7 @@ namespace canvas
             // over and out.
             return outRect;
         }
-        
+
         ::basegfx::B2DHomMatrix& calcRectToRectTransform( ::basegfx::B2DHomMatrix&			o_transform,
                                                           const ::basegfx::B2DRange&		destRect,
                                                           const ::basegfx::B2DRange&		srcRect,
@@ -732,8 +729,8 @@ namespace canvas
             }
 
             // transform inputRect by transformation
-            ::basegfx::B2DRectangle aTransformedRect; 
-            calcTransformedRectBounds( aTransformedRect, 
+            ::basegfx::B2DRectangle aTransformedRect;
+            calcTransformedRectBounds( aTransformedRect,
                                        srcRect,
                                        transformation );
 
@@ -745,14 +742,14 @@ namespace canvas
             const double xDenom( aTransformedRect.getWidth() );
             const double yDenom( aTransformedRect.getHeight() );
             if( xDenom != 0.0 && yDenom != 0.0 )
-                aCorrectedTransform.scale( destRect.getWidth() / xDenom, 
+                aCorrectedTransform.scale( destRect.getWidth() / xDenom,
                                            destRect.getHeight() / yDenom );
             // TODO(E2): error handling
 
             // translate to final position
-            aCorrectedTransform.translate( destRect.getMinX(), 
+            aCorrectedTransform.translate( destRect.getMinX(),
                                            destRect.getMinY() );
-            
+
             ::basegfx::B2DHomMatrix transform( transformation );
             o_transform = aCorrectedTransform * transform;
 
@@ -760,13 +757,13 @@ namespace canvas
         }
 
 		bool isInside( const ::basegfx::B2DRange& 		rContainedRect,
-                       const ::basegfx::B2DRange& 		rTransformRect, 
+                       const ::basegfx::B2DRange& 		rTransformRect,
                        const ::basegfx::B2DHomMatrix&	rTransformation )
         {
             if( rContainedRect.isEmpty() || rTransformRect.isEmpty() )
                 return false;
 
-            ::basegfx::B2DPolygon aPoly( 
+            ::basegfx::B2DPolygon aPoly(
                 ::basegfx::tools::createPolygonFromRect( rTransformRect ) );
             aPoly.transform( rTransformation );
 
@@ -784,7 +781,7 @@ namespace canvas
                                const ::basegfx::B2IRange& rSourceBounds,
                                const ::basegfx::B2IRange& rDestBounds )
             {
-                const ::basegfx::B2IPoint aSourceTopLeft( 
+                const ::basegfx::B2IPoint aSourceTopLeft(
                     io_rSourceArea.getMinimum() );
 
                 ::basegfx::B2IRange aLocalSourceArea( io_rSourceArea );
@@ -794,28 +791,28 @@ namespace canvas
 
                 if( aLocalSourceArea.isEmpty() )
                     return false;
-            
+
                 // calc relative new source area points (relative to orig
                 // source area)
-                const ::basegfx::B2IVector aUpperLeftOffset( 
+                const ::basegfx::B2IVector aUpperLeftOffset(
                     aLocalSourceArea.getMinimum()-aSourceTopLeft );
-                const ::basegfx::B2IVector aLowerRightOffset( 
+                const ::basegfx::B2IVector aLowerRightOffset(
                     aLocalSourceArea.getMaximum()-aSourceTopLeft );
 
                 ::basegfx::B2IRange aLocalDestArea( io_rDestPoint + aUpperLeftOffset,
                                                     io_rDestPoint + aLowerRightOffset );
-            
+
                 // clip dest area (which must be inside rDestBounds)
                 aLocalDestArea.intersect( rDestBounds );
-            
+
                 if( aLocalDestArea.isEmpty() )
                     return false;
 
                 // calc relative new dest area points (relative to orig
                 // source area)
-                const ::basegfx::B2IVector aDestUpperLeftOffset( 
+                const ::basegfx::B2IVector aDestUpperLeftOffset(
                     aLocalDestArea.getMinimum()-io_rDestPoint );
-                const ::basegfx::B2IVector aDestLowerRightOffset( 
+                const ::basegfx::B2IVector aDestLowerRightOffset(
                     aLocalDestArea.getMaximum()-io_rDestPoint );
 
                 io_rSourceArea = ::basegfx::B2IRange( aSourceTopLeft + aDestUpperLeftOffset,
@@ -843,7 +840,7 @@ namespace canvas
                                                 io_rDestPoint.getY(),
                                                 (io_rDestPoint.getX()
                                                  + static_cast<sal_Int32>(rRange.getX())),
-                                                (io_rDestPoint.getY() 
+                                                (io_rDestPoint.getY()
                                                  + static_cast<sal_Int32>(rRange.getY())) );
             // limit to output area (no point updating outside of it)
             aInputDestArea.intersect( rBounds );
@@ -881,11 +878,11 @@ namespace canvas
         {
             if( rRange.isEmpty() )
                 return ::basegfx::B2IRange();
-            
+
             const ::basegfx::B2IPoint aTopLeft( ::basegfx::fround( rRange.getMinX() ),
                                                 ::basegfx::fround( rRange.getMinY() ) );
             return ::basegfx::B2IRange( aTopLeft,
-                                        aTopLeft + ::basegfx::B2IPoint( 
+                                        aTopLeft + ::basegfx::B2IPoint(
                                             ::basegfx::fround( rRange.getWidth() ),
                                             ::basegfx::fround( rRange.getHeight() ) ) );
         }
@@ -894,23 +891,23 @@ namespace canvas
 												  uno::Sequence< uno::Any >& 				  o_rxParams )
 		{
 			o_rxParams.realloc( 0 );
-			
+
 			if( i_rxCanvas.is() )
 			{
                 try
                 {
                     uno::Reference< rendering::XGraphicDevice > xDevice( i_rxCanvas->getDevice(),
                                                                          uno::UNO_QUERY_THROW );
-				
-                    uno::Reference< lang::XServiceInfo >  xServiceInfo( xDevice, 
+
+                    uno::Reference< lang::XServiceInfo >  xServiceInfo( xDevice,
                                                                         uno::UNO_QUERY_THROW );
-                    uno::Reference< beans::XPropertySet > xPropSet( xDevice, 
+                    uno::Reference< beans::XPropertySet > xPropSet( xDevice,
                                                                     uno::UNO_QUERY_THROW );
-					
+
                     o_rxParams.realloc( 2 );
-                
+
                     o_rxParams[ 0 ] = uno::makeAny( xServiceInfo->getImplementationName() );
-                    o_rxParams[ 1 ] = uno::makeAny( xPropSet->getPropertyValue( 
+                    o_rxParams[ 1 ] = uno::makeAny( xPropSet->getPropertyValue(
                                                         ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("DeviceHandle") ) ) );
                 }
                 catch( uno::Exception& )
@@ -918,7 +915,7 @@ namespace canvas
                     // ignore, but return empty sequence
                 }
 			}
-			
+
 			return o_rxParams;
 		}
 
@@ -988,7 +985,7 @@ namespace canvas
         }
 
         int calcGradientStepCount( ::basegfx::B2DHomMatrix&      rTotalTransform,
-                                   const rendering::ViewState&   viewState, 
+                                   const rendering::ViewState&   viewState,
                                    const rendering::RenderState& renderState,
                                    const rendering::Texture&     texture,
                                    int                           nColorSteps )
@@ -998,7 +995,7 @@ namespace canvas
             ::basegfx::B2DHomMatrix aMatrix;
 
             rTotalTransform.identity();
-            ::basegfx::unotools::homMatrixFromAffineMatrix( rTotalTransform, 
+            ::basegfx::unotools::homMatrixFromAffineMatrix( rTotalTransform,
                                                             texture.AffineTransform );
             ::canvas::tools::mergeViewAndRenderTransform(aMatrix,
                                                          viewState,
@@ -1018,9 +1015,9 @@ namespace canvas
             aRightBottom*= rTotalTransform;
 
             // longest line in gradient bound rect
-            const int nGradientSize( 
-                static_cast<int>( 
-                    ::std::max( 
+            const int nGradientSize(
+                static_cast<int>(
+                    ::std::max(
                         ::basegfx::B2DVector(aRightBottom-aLeftTop).getLength(),
                         ::basegfx::B2DVector(aRightTop-aLeftBottom).getLength() ) + 1.0 ) );
 
@@ -1030,7 +1027,7 @@ namespace canvas
             // use at least three steps, and at utmost the number of color
             // steps
             return ::std::max( 3,
-                               ::std::min( 
+                               ::std::min(
                                    nGradientSize / nStripSize,
                                    nColorSteps ) );
         }

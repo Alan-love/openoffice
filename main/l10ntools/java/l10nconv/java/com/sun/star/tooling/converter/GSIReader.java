@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -38,7 +38,7 @@ import com.sun.star.tooling.languageResolver.LanguageResolver.LanguageResolvingE
 
 /**
  * @author Christian Schmidt 2005
- * 
+ *
  */
 public class GSIReader extends DataReader {
     /**
@@ -98,7 +98,7 @@ public class GSIReader extends DataReader {
 
     /**
      * Create a new Instance of GSIReader
-     * 
+     *
      * @param source
      *            the file to read from
      * @param sourceLanguage
@@ -123,10 +123,10 @@ public class GSIReader extends DataReader {
 
     /**
      * Read the next GSIBlock and return the data
-     * 
-     * @return A Map containing the data of the read GSIBlock the keys for the language depending data are the language id (numeric) the 
+     *
+     * @return A Map containing the data of the read GSIBlock the keys for the language depending data are the language id (numeric) the
      * single language are accessible with the keys "BlockNr", "resType", "languageNr", "status", "content".
-     * 
+     *
      * @throws IOException
      */
     public Map getGSIData() throws IOException {
@@ -143,7 +143,7 @@ public class GSIReader extends DataReader {
 
         while (useBuffer || (line = readLine()) != null) {
 
-            
+
 
             if (useBuffer) {
                 GSILine = GSILineBuffer;
@@ -178,7 +178,7 @@ public class GSIReader extends DataReader {
                 if ((lang = languageResolver.getISOfromNr((String) GSILine
                         .get("languageNr"))).equals(this.sourceLanguage)) {
                     // ok..store it as Source String under the depending
-                    // ressource type
+                    // resource type
 
                     ((Map) GSIBlock.get(sourceLanguage)).put("Source"
                             + ResTypeResolver.getInternKey((String) GSILine
@@ -193,7 +193,7 @@ public class GSIReader extends DataReader {
                     if (lang.equals(this.targetLanguage)) {
 
                         // ok..store it as target String under the depending
-                        // ressource type
+                        // resource type
                         ((Map) GSIBlock.get(targetLanguage)).put("Target"
                                 + ResTypeResolver.getInternKey((String) GSILine
                                         .get("resType")), GSILine
@@ -210,7 +210,7 @@ public class GSIReader extends DataReader {
                 OutputHandler.out("\n\n");
                 OutputHandler.out("GSI Blocks    :         " + this.blockCounter);
                 OutputHandler.out("GSI Lines     :         " + this.lineCounter);
-            
+
                 return null;
             }else{
                 lastLineFound = true;
@@ -226,7 +226,7 @@ public class GSIReader extends DataReader {
 
     /**
      * Split a GSILine to single fields
-     * 
+     *
      * @param line
      *            The line to split
      * @return An array containing the contents of the columns in the given line

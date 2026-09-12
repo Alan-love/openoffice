@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -77,7 +77,7 @@ namespace framework{
 					XElementAccess
 	@base			OWeakObject
 
-	@ATTENTION		Don't use this class as direct member - use it dynamicly. Do not derive from this class.
+	@ATTENTION		Don't use this class as direct member - use it dynamically. Do not derive from this class.
 					We hold a weakreference to our owner not to our superclass.
 
 	@devstatus		deprecated
@@ -132,7 +132,7 @@ class OFrames   :   private ThreadHelpBase      ,   // Must be the first of base
 			@onerror	We do nothing in release or throw an assert in debug version.
 		*//*-*****************************************************************************************************/
 
-    	virtual void SAL_CALL append( const css::uno::Reference< css::frame::XFrame >& xFrame ) throw( css::uno::RuntimeException );
+    	virtual void SAL_CALL append( const css::uno::Reference< css::frame::XFrame >& xFrame );
 
 		/*-****************************************************************************************************//**
 			@short      remove frame from container
@@ -147,7 +147,7 @@ class OFrames   :   private ThreadHelpBase      ,   // Must be the first of base
 			@onerror	We do nothing in release or throw an assert in debug version.
 		*//*-*****************************************************************************************************/
 
-    	virtual void SAL_CALL remove( const css::uno::Reference< css::frame::XFrame >& xFrame ) throw( css::uno::RuntimeException );
+    	virtual void SAL_CALL remove( const css::uno::Reference< css::frame::XFrame >& xFrame );
 
 		/*-****************************************************************************************************//**
 			@short      return list of all applicable frames for given flags
@@ -161,7 +161,7 @@ class OFrames   :   private ThreadHelpBase      ,   // Must be the first of base
 			@onerror	An empty list is returned.
 		*//*-*****************************************************************************************************/
 
-    	virtual css::uno::Sequence< css::uno::Reference< css::frame::XFrame > > SAL_CALL queryFrames( sal_Int32 nSearchFlags ) throw( css::uno::RuntimeException );
+    	virtual css::uno::Sequence< css::uno::Reference< css::frame::XFrame > > SAL_CALL queryFrames( sal_Int32 nSearchFlags );
 
 		//---------------------------------------------------------------------------------------------------------
 		//	XIndexAccess
@@ -170,7 +170,7 @@ class OFrames   :   private ThreadHelpBase      ,   // Must be the first of base
 		/*-****************************************************************************************************//**
 			@short      get count of all current frames in container
 			@descr		This is the beginning of full index-access. With a count you can step over all items in container.
-						Next call shuoöd be getByIndex(). But these mechanism works only, if no lock in container is set!
+						Next call should be getByIndex(). But these mechanism works only, if no lock in container is set!
 
 			@seealso	class FrameContainer
 			@seealso	method getByIndex()
@@ -181,7 +181,7 @@ class OFrames   :   private ThreadHelpBase      ,   // Must be the first of base
 			@onerror	If a lock is set, we return 0 for prevent further access!
 		*//*-*****************************************************************************************************/
 
-    	virtual sal_Int32 SAL_CALL getCount() throw( css::uno::RuntimeException );
+    	virtual sal_Int32 SAL_CALL getCount();
 
 		/*-****************************************************************************************************//**
 			@short		get specified container item by index
@@ -198,9 +198,7 @@ class OFrames   :   private ThreadHelpBase      ,   // Must be the first of base
 			@onerror	If index out of range, an IndexOutOfBoundsException is thrown.
 		*//*-*****************************************************************************************************/
 
-    	virtual css::uno::Any SAL_CALL getByIndex( sal_Int32 nIndex ) throw(	css::lang::IndexOutOfBoundsException	,
-																				css::lang::WrappedTargetException		,
-																				css::uno::RuntimeException				);
+    	virtual css::uno::Any SAL_CALL getByIndex( sal_Int32 nIndex );
 
 		//---------------------------------------------------------------------------------------------------------
 		//	XElementAccess
@@ -219,7 +217,7 @@ class OFrames   :   private ThreadHelpBase      ,   // Must be the first of base
 			@onerror	-
 		*//*-*****************************************************************************************************/
 
-		virtual css::uno::Type SAL_CALL getElementType() throw( css::uno::RuntimeException );
+		virtual css::uno::Type SAL_CALL getElementType();
 
 		/*-****************************************************************************************************//**
 			@short      get fill state of current container
@@ -235,7 +233,7 @@ class OFrames   :   private ThreadHelpBase      ,   // Must be the first of base
 			@onerror	We return sal_False.
 		*//*-*****************************************************************************************************/
 
-    	virtual sal_Bool SAL_CALL hasElements() throw( css::uno::RuntimeException );
+    	virtual sal_Bool SAL_CALL hasElements();
 
 	//-------------------------------------------------------------------------------------------------------------
 	//	protected methods
@@ -306,7 +304,7 @@ class OFrames   :   private ThreadHelpBase      ,   // Must be the first of base
 	//-------------------------------------------------------------------------------------------------------------
 
 		/*-****************************************************************************************************//**
-			@short		debug-method to check incoming parameter of some other mehods of this class
+			@short		debug-method to check incoming parameter of some other methods of this class
 			@descr		The following methods are used to check parameters for other methods
 						of this class. The return value is used directly for an ASSERT(...).
 

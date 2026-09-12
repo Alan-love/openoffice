@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_mysql.hxx"
 #include "mysql/YCatalog.hxx"
 #include "mysql/YUsers.hxx"
 #include "mysql/YTables.hxx"
@@ -68,7 +68,7 @@ void OMySQLCatalog::refreshTables()
 	sTableTypes[0] = s_sTableTypeView;
 	sTableTypes[1] = s_sTableTypeTable;
 	sTableTypes[2] = s_sAll;	// just to be sure to include anything else ....
-	
+
 	refreshObjects(sTableTypes,aVector);
 
 	if ( m_pTables )
@@ -139,7 +139,7 @@ void OMySQLCatalog::refreshUsers()
 		m_pUsers = new OUsers(*this,m_aMutex,aVector,m_xConnection,this);
 }
 // -----------------------------------------------------------------------------
-Any SAL_CALL OMySQLCatalog::queryInterface( const Type & rType ) throw(RuntimeException)
+Any SAL_CALL OMySQLCatalog::queryInterface( const Type & rType )
 {
 	if ( rType == ::getCppuType((const Reference<XGroupsSupplier>*)0) )
 		return Any();
@@ -148,11 +148,11 @@ Any SAL_CALL OMySQLCatalog::queryInterface( const Type & rType ) throw(RuntimeEx
 	return OCatalog::queryInterface(rType);
 }
 // -----------------------------------------------------------------------------
-Sequence< Type > SAL_CALL OMySQLCatalog::getTypes(  ) throw(RuntimeException)
+Sequence< Type > SAL_CALL OMySQLCatalog::getTypes(  )
 {
 	Sequence< Type > aTypes = OCatalog::getTypes();
 	::std::vector<Type> aOwnTypes;
-	aOwnTypes.reserve(aTypes.getLength());	
+	aOwnTypes.reserve(aTypes.getLength());
 	const Type* pBegin = aTypes.getConstArray();
 	const Type* pEnd = pBegin + aTypes.getLength();
 	for(;pBegin != pEnd;++pBegin)
@@ -166,5 +166,3 @@ Sequence< Type > SAL_CALL OMySQLCatalog::getTypes(  ) throw(RuntimeException)
 	return Sequence< Type >(pTypes, aOwnTypes.size());
 }
 // -----------------------------------------------------------------------------
-
-

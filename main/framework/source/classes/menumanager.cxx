@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -97,7 +97,6 @@ class StringLength : public ::cppu::WeakImplHelper1< ::com::sun::star::util::XSt
 
 		// XStringWidth
 		sal_Int32 SAL_CALL queryStringWidth( const ::rtl::OUString& aString )
-			throw (::com::sun::star::uno::RuntimeException)
 		{
 			return aString.getLength();
 		}
@@ -248,7 +247,7 @@ MenuManager::MenuManager(
 				if ( pMenu->GetItemText( nItemId ).Len() == 0 )
 					aQueryLabelItemIdVector.push_back( nItemId );
 #endif
-				
+
                 if ( bShowMenuImages && !pMenu->GetItemImage( nItemId ))
 				{
 					Image aImage = GetImageFromURL( rFrame, aItemCommand, sal_False, m_bWasHiContrast );
@@ -273,7 +272,7 @@ MenuManager::MenuManager(
 				if ( pMenu->GetItemText( nItemId ).Len() == 0 )
 					aQueryLabelItemIdVector.push_back( nItemId );
 #endif
-				
+
                 if ( bShowMenuImages && !pMenu->GetItemImage( nItemId ))
 				{
 					Image aImage = GetImageFromURL( rFrame, aItemCommand, sal_False, m_bWasHiContrast );
@@ -458,7 +457,6 @@ MenuManager::MenuItemHandler* MenuManager::GetMenuItemHandler( sal_uInt16 nItemI
 
 
 void SAL_CALL MenuManager::statusChanged( const FEATURSTATEEVENT& Event )
-throw ( RuntimeException )
 {
 	::rtl::OUString aFeatureURL = Event.FeatureURL.Complete;
 	MenuItemHandler* pStatusChangedMenu = NULL;
@@ -559,7 +557,7 @@ void MenuManager::ClearMenuDispatch(const EVENTOBJECT& Source,bool _bRemoveOnly)
 }
 
 
-void SAL_CALL MenuManager::disposing( const EVENTOBJECT& Source ) throw ( RUNTIMEEXCEPTION )
+void SAL_CALL MenuManager::disposing( const EVENTOBJECT& Source )
 {
 	if ( Source.Source == m_xFrame )
 	{

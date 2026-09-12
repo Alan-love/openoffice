@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -156,7 +156,7 @@ PresenterHelpView::PresenterHelpView (
 
         mxWindow = mxPane->getWindow();
         ProvideCanvas();
-        
+
         mxWindow->addWindowListener(this);
         mxWindow->addPaintListener(this);
         Reference<awt::XWindowPeer> xPeer (mxWindow, UNO_QUERY);
@@ -229,7 +229,6 @@ void SAL_CALL PresenterHelpView::disposing (void)
 //----- lang::XEventListener --------------------------------------------------
 
 void SAL_CALL PresenterHelpView::disposing (const lang::EventObject& rEventObject)
-    throw (RuntimeException)
 {
     if (rEventObject.Source == mxCanvas)
     {
@@ -246,9 +245,8 @@ void SAL_CALL PresenterHelpView::disposing (const lang::EventObject& rEventObjec
 
 
 //----- XWindowListener -------------------------------------------------------
-    
+
 void SAL_CALL PresenterHelpView::windowResized (const awt::WindowEvent& rEvent)
-    throw (uno::RuntimeException)
 {
     (void)rEvent;
     ThrowIfDisposed();
@@ -259,7 +257,6 @@ void SAL_CALL PresenterHelpView::windowResized (const awt::WindowEvent& rEvent)
 
 
 void SAL_CALL PresenterHelpView::windowMoved (const awt::WindowEvent& rEvent)
-    throw (uno::RuntimeException)
 {
     (void)rEvent;
     ThrowIfDisposed();
@@ -269,7 +266,6 @@ void SAL_CALL PresenterHelpView::windowMoved (const awt::WindowEvent& rEvent)
 
 
 void SAL_CALL PresenterHelpView::windowShown (const lang::EventObject& rEvent)
-    throw (uno::RuntimeException)
 {
     (void)rEvent;
     ThrowIfDisposed();
@@ -280,7 +276,6 @@ void SAL_CALL PresenterHelpView::windowShown (const lang::EventObject& rEvent)
 
 
 void SAL_CALL PresenterHelpView::windowHidden (const lang::EventObject& rEvent)
-    throw (uno::RuntimeException)
 {
     (void)rEvent;
     ThrowIfDisposed();
@@ -292,7 +287,6 @@ void SAL_CALL PresenterHelpView::windowHidden (const lang::EventObject& rEvent)
 //----- XPaintListener --------------------------------------------------------
 
 void SAL_CALL PresenterHelpView::windowPaint (const css::awt::PaintEvent& rEvent)
-    throw (RuntimeException)
 {
     Paint(rEvent.UpdateRect);
 }
@@ -327,7 +321,7 @@ void PresenterHelpView::Paint (const awt::Rectangle& rUpdateBox)
         Sequence<double>(4),
         rendering::CompositeOperation::SOURCE);
     PresenterCanvasHelper::SetDeviceColor(aRenderState, mpFont->mnColor);
-    
+
     mxCanvas->drawLine(
         geometry::RealPoint2D(aWindowBox.Width/2, gnVerticalBorder),
         geometry::RealPoint2D(aWindowBox.Width/2, mnSeparatorY - gnVerticalBorder),
@@ -422,7 +416,7 @@ void PresenterHelpView::CheckFontSize (void)
 {
     if (mpFont.get() == NULL)
         return;
-    
+
     const awt::Rectangle aWindowBox (mxWindow->getPosSize());
     if (aWindowBox.Width<=0 || aWindowBox.Height<=0)
         return;
@@ -449,7 +443,7 @@ void PresenterHelpView::CheckFontSize (void)
             // too much space below the help text.
             return;
         }
-        
+
         // Font is too large.  Make it smaller.
 
         // Use a simple linear transformation to calculate initial guess of
@@ -464,7 +458,7 @@ void PresenterHelpView::CheckFontSize (void)
         mpFont->mnSize = nFontSizeGuess;
         mpFont->mxFont = NULL;
         mpFont->PrepareFont(mxCanvas);
-            
+
         // Reformat blocks.
         for (iBlock=mpTextContainer->begin(); iBlock!=iBlockEnd; ++iBlock)
             (*iBlock)->Update(mpFont->mxFont, mnMaximalWidth);
@@ -475,7 +469,7 @@ void PresenterHelpView::CheckFontSize (void)
         mpFont->mnSize = nBestSize;
         mpFont->mxFont = NULL;
         mpFont->PrepareFont(mxCanvas);
-            
+
         // Reformat blocks.
         for (TextContainer::iterator
                  iBlock (mpTextContainer->begin()),
@@ -494,7 +488,6 @@ void PresenterHelpView::CheckFontSize (void)
 //----- XResourceId -----------------------------------------------------------
 
 Reference<XResourceId> SAL_CALL PresenterHelpView::getResourceId (void)
-    throw (RuntimeException)
 {
     ThrowIfDisposed();
     return mxViewId;
@@ -504,7 +497,6 @@ Reference<XResourceId> SAL_CALL PresenterHelpView::getResourceId (void)
 
 
 sal_Bool SAL_CALL PresenterHelpView::isAnchorOnly (void)
-    throw (RuntimeException)
 {
     return false;
 }
@@ -551,12 +543,11 @@ void PresenterHelpView::Resize (void)
         CheckFontSize();
     }
 }
-    
+
 
 
 
 void PresenterHelpView::ThrowIfDisposed (void)
-    throw (lang::DisposedException)
 {
 	if (rBHelper.bDisposed || rBHelper.bInDispose)
 	{
@@ -648,7 +639,7 @@ double LineDescriptorList::Paint(
 {
     if ( ! rxCanvas.is())
         return 0;
-   
+
     double nY (rBBox.Y1);
     vector<LineDescriptor>::const_iterator iLine (mpLineDescriptors->begin());
     vector<LineDescriptor>::const_iterator iEnd (mpLineDescriptors->end());
@@ -815,5 +806,3 @@ void Block::Update (
 } // end of anonymous namespace
 
 } } // end of namespace ::sdext::presenter
-
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -103,7 +103,7 @@ OFrames::~OFrames()
 //*****************************************************************************************************************
 //	XFrames
 //*****************************************************************************************************************
-void SAL_CALL OFrames::append( const css::uno::Reference< XFrame >& xFrame ) throw( RuntimeException )
+void SAL_CALL OFrames::append( const css::uno::Reference< XFrame >& xFrame )
 {
 	// Ready for multithreading
 	ResetableGuard aGuard( m_aLock );
@@ -129,7 +129,7 @@ void SAL_CALL OFrames::append( const css::uno::Reference< XFrame >& xFrame ) thr
 //*****************************************************************************************************************
 //	XFrames
 //*****************************************************************************************************************
-void SAL_CALL OFrames::remove( const css::uno::Reference< XFrame >& xFrame ) throw( RuntimeException )
+void SAL_CALL OFrames::remove( const css::uno::Reference< XFrame >& xFrame )
 {
 	// Ready for multithreading
 	ResetableGuard aGuard( m_aLock );
@@ -156,7 +156,7 @@ void SAL_CALL OFrames::remove( const css::uno::Reference< XFrame >& xFrame ) thr
 //*****************************************************************************************************************
 //	XFrames
 //*****************************************************************************************************************
-Sequence< css::uno::Reference< XFrame > > SAL_CALL OFrames::queryFrames( sal_Int32 nSearchFlags ) throw( RuntimeException )
+Sequence< css::uno::Reference< XFrame > > SAL_CALL OFrames::queryFrames( sal_Int32 nSearchFlags )
 {
 	// Ready for multithreading
 	ResetableGuard aGuard( m_aLock );
@@ -259,14 +259,14 @@ Sequence< css::uno::Reference< XFrame > > SAL_CALL OFrames::queryFrames( sal_Int
 	// Else; Do nothing! Our owner is dead.
 	LOG_ASSERT( !(xOwner.is()==sal_False), "OFrames::queryFrames()\nOur owner is dead - you can't query for frames ...!\n" )
 
-	// Resturn result of this operation.
+	// Return result of this operation.
 	return seqFrames;
 }
 
 //*****************************************************************************************************************
 //	XIndexAccess
 //*****************************************************************************************************************
-sal_Int32 SAL_CALL OFrames::getCount() throw( RuntimeException )
+sal_Int32 SAL_CALL OFrames::getCount()
 {
 	// Ready for multithreading
 	ResetableGuard aGuard( m_aLock );
@@ -290,9 +290,7 @@ sal_Int32 SAL_CALL OFrames::getCount() throw( RuntimeException )
 //*****************************************************************************************************************
 //	XIndexAccess
 //*****************************************************************************************************************
-Any SAL_CALL OFrames::getByIndex( sal_Int32 nIndex ) throw(	IndexOutOfBoundsException	,
-															WrappedTargetException		,
-															RuntimeException			)
+Any SAL_CALL OFrames::getByIndex( sal_Int32 nIndex )
 {
 	// Ready for multithreading
 	ResetableGuard aGuard( m_aLock );
@@ -322,7 +320,7 @@ Any SAL_CALL OFrames::getByIndex( sal_Int32 nIndex ) throw(	IndexOutOfBoundsExce
 //*****************************************************************************************************************
 //	XElementAccess
 //*****************************************************************************************************************
-Type SAL_CALL OFrames::getElementType() throw( RuntimeException )
+Type SAL_CALL OFrames::getElementType()
 {
 	// This "container" support XFrame-interfaces only!
 	return ::getCppuType( (const css::uno::Reference< XFrame >*)NULL );
@@ -331,7 +329,7 @@ Type SAL_CALL OFrames::getElementType() throw( RuntimeException )
 //*****************************************************************************************************************
 //	XElementAccess
 //*****************************************************************************************************************
-sal_Bool SAL_CALL OFrames::hasElements() throw( RuntimeException )
+sal_Bool SAL_CALL OFrames::hasElements()
 {
 	// Ready for multithreading
 	ResetableGuard aGuard( m_aLock );
@@ -428,7 +426,7 @@ void OFrames::impl_appendSequence(			Sequence< css::uno::Reference< XFrame > >&	
 
 //*****************************************************************************************************************
 // An instance of this class can only work with valid initialization.
-// We share the mutex with our owner class, need a valid factory to instanciate new services and
+// We share the mutex with our owner class, need a valid factory to instantiate new services and
 // use the access to our owner for some operations.
 sal_Bool OFrames::impldbg_checkParameter_OFramesCtor(	const	css::uno::Reference< XMultiServiceFactory >&	xFactory		,
 														const	css::uno::Reference< XFrame >&				xOwner			,

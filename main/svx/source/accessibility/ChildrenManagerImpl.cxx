@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -126,7 +126,6 @@ long ChildrenManagerImpl::GetChildCount (void) const throw ()
 
 ::com::sun::star::uno::Reference<
         ::com::sun::star::drawing::XShape> ChildrenManagerImpl::GetChildShape(long nIndex)
-    throw (::com::sun::star::uno::RuntimeException)
 {
 	uno::Reference<XAccessible> xAcc = GetChild(nIndex);
 	ChildDescriptorListType::iterator I, aEnd = maVisibleChildren.end();
@@ -143,8 +142,6 @@ long ChildrenManagerImpl::GetChildCount (void) const throw ()
 */
 uno::Reference<XAccessible>
     ChildrenManagerImpl::GetChild (long nIndex)
-    throw (::com::sun::star::uno::RuntimeException,
-           ::com::sun::star::lang::IndexOutOfBoundsException)
 {
     // Check whether the given index is valid.
     if (nIndex < 0 || (unsigned long)nIndex >= maVisibleChildren.size())
@@ -164,7 +161,6 @@ uno::Reference<XAccessible>
 */
 uno::Reference<XAccessible>
     ChildrenManagerImpl::GetChild (ChildDescriptor& rChildDescriptor,sal_Int32 _nIndex)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     if ( ! rChildDescriptor.mxAccessibleShape.is())
     {
@@ -205,7 +201,6 @@ uno::Reference<XAccessible>
 
 uno::Reference<XAccessible>
     ChildrenManagerImpl::GetChild (const uno::Reference<drawing::XShape>& xShape)
-    throw (uno::RuntimeException)
 {
     ChildDescriptorListType::iterator I, aEnd = maVisibleChildren.end();
     for (I = maVisibleChildren.begin(); I != aEnd; ++I)
@@ -673,7 +668,6 @@ void ChildrenManagerImpl::SetInfo (const AccessibleShapeTreeInfo& rShapeTreeInfo
 
 void SAL_CALL
     ChildrenManagerImpl::disposing (const lang::EventObject& rEventObject)
-    throw (uno::RuntimeException)
 {
     if (rEventObject.Source == maShapeTreeInfo.GetModelBroadcaster()
             || rEventObject.Source == maShapeTreeInfo.GetController())
@@ -709,7 +703,6 @@ void SAL_CALL
 void SAL_CALL
     ChildrenManagerImpl::notifyEvent (
 		const document::EventObject& rEventObject)
-    throw (uno::RuntimeException)
 {
     static const ::rtl::OUString sShapeInserted (
 		RTL_CONSTASCII_USTRINGPARAM("ShapeInserted"));
@@ -731,7 +724,6 @@ void SAL_CALL
 
 void  SAL_CALL
     ChildrenManagerImpl::selectionChanged (const lang::EventObject& /*rEvent*/)
-        throw (uno::RuntimeException)
 {
     UpdateSelection ();
 }
@@ -755,7 +747,7 @@ void ChildrenManagerImpl::impl_dispose (void)
     }
     catch( uno::RuntimeException&)
     {}
- 
+
     try
     {
         if (xController.is())
@@ -764,7 +756,7 @@ void ChildrenManagerImpl::impl_dispose (void)
     }
     catch( uno::RuntimeException&)
     {}
-    
+
     maShapeTreeInfo.SetController (NULL);
 
     try
@@ -777,7 +769,7 @@ void ChildrenManagerImpl::impl_dispose (void)
     }
     catch( uno::RuntimeException& )
     {}
- 
+
     ClearAccessibleShapeList ();
     SetShapeList (NULL);
 }
@@ -795,7 +787,6 @@ void SAL_CALL ChildrenManagerImpl::disposing (void)
 // This method is experimental.  Use with care.
 long int ChildrenManagerImpl::GetChildIndex (const ::com::sun::star::uno::Reference<
     ::com::sun::star::accessibility::XAccessible>& xChild) const
-    throw (::com::sun::star::uno::RuntimeException)
 {
     ::osl::MutexGuard aGuard (maMutex);
 	sal_Int32 nCount = maVisibleChildren.size();
@@ -842,7 +833,6 @@ sal_Bool ChildrenManagerImpl::ReplaceChild (
 	const ::com::sun::star::uno::Reference< ::com::sun::star::drawing::XShape >& _rxShape,
 	const long _nIndex,
 	const AccessibleShapeTreeInfo& _rShapeTreeInfo)
-    throw (uno::RuntimeException)
 {
     AccessibleShapeInfo aShapeInfo( _rxShape, pCurrentChild->getAccessibleParent(), this, _nIndex );
 	// create the new child
@@ -891,7 +881,7 @@ sal_Bool ChildrenManagerImpl::ReplaceChild (
     return bResult;
 }
 // Add the impl method for IAccessibleParent interface
-AccessibleControlShape * ChildrenManagerImpl::GetAccControlShapeFromModel(::com::sun::star::beans::XPropertySet* pSet) throw (::com::sun::star::uno::RuntimeException)
+AccessibleControlShape * ChildrenManagerImpl::GetAccControlShapeFromModel(::com::sun::star::beans::XPropertySet* pSet)
 {
 	sal_Int32 count = GetChildCount();
 	for (sal_Int32 index=0;index<count;index++)
@@ -908,7 +898,6 @@ AccessibleControlShape * ChildrenManagerImpl::GetAccControlShapeFromModel(::com:
 }
 uno::Reference<XAccessible>
     ChildrenManagerImpl::GetAccessibleCaption (const uno::Reference<drawing::XShape>& xShape)
-    throw (uno::RuntimeException)
 {
     ChildDescriptorListType::iterator I, aEnd = maVisibleChildren.end();
     for (I = maVisibleChildren.begin(); I != aEnd; ++I)
@@ -964,11 +953,11 @@ void ChildrenManagerImpl::UpdateSelection (void)
         {
 			short nRole = pAccessibleShape->getAccessibleRole();
 			bool bDrawShape = (
-				nRole == AccessibleRole::GRAPHIC || 
-				nRole == AccessibleRole::EMBEDDED_OBJECT || 
-				nRole == AccessibleRole::SHAPE || 
-				nRole == AccessibleRole::IMAGE_MAP || 
-				nRole == AccessibleRole::TABLE_CELL || 
+				nRole == AccessibleRole::GRAPHIC ||
+				nRole == AccessibleRole::EMBEDDED_OBJECT ||
+				nRole == AccessibleRole::SHAPE ||
+				nRole == AccessibleRole::IMAGE_MAP ||
+				nRole == AccessibleRole::TABLE_CELL ||
 				nRole == AccessibleRole::TABLE );
             bool bShapeIsSelected = false;
 
@@ -1039,7 +1028,7 @@ void ChildrenManagerImpl::UpdateSelection (void)
     */
 	Window *pParentWidow = maShapeTreeInfo.GetWindow();
 	bool bShapeActive= false;
-	// For table cell, the table's parent must be checked to make sure it has focus. 
+	// For table cell, the table's parent must be checked to make sure it has focus.
 	Window *pPWindow = pParentWidow->GetParent();
 	if (pParentWidow && ( pParentWidow->HasFocus() || (pPWindow && pPWindow->HasFocus())))
 	{
@@ -1054,7 +1043,7 @@ void ChildrenManagerImpl::UpdateSelection (void)
             pNewFocusedShape->SetState (AccessibleStateType::FOCUSED);
 	}
 
-	if (nAddSelect >= 10 )//fire selection  within 
+	if (nAddSelect >= 10 )//fire selection  within
 	{
 		mrContext.CommitChange(AccessibleEventId::SELECTION_CHANGED_WITHIN,uno::Any(),uno::Any());
 		nAddSelect =0 ;//not fire selection event
@@ -1077,7 +1066,7 @@ void ChildrenManagerImpl::UpdateSelection (void)
 				if (  nAddSelect > 0 )
 				{
 					mrContext.CommitChange(AccessibleEventId::SELECTION_CHANGED_ADD,anyShape,uno::Any());
-				}				
+				}
 			}
 			else
 			{
@@ -1221,4 +1210,3 @@ void ChildDescriptor::disposeAccessibleObject (AccessibleContextBase& rParent)
 
 
 } // end of namespace accessibility
-

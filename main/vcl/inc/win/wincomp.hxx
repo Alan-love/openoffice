@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -146,37 +146,37 @@ inline HFONT GetWindowFont( HWND hWnd )
 
 inline void SetClassCursor( HWND hWnd, HCURSOR hCursor )
 {
-	SetClassLong( hWnd, GCL_HCURSOR, (DWORD)hCursor );
+	SetClassLongPtr( hWnd, GCLP_HCURSOR, (LONG_PTR)hCursor );
 }
 
 inline HCURSOR GetClassCursor( HWND hWnd )
 {
-	return (HCURSOR)GetClassLong( hWnd, GCL_HCURSOR );
+	return (HCURSOR)GetClassLongPtr( hWnd, GCLP_HCURSOR );
 }
 
 inline void SetClassIcon( HWND hWnd, HICON hIcon )
 {
-	SetClassLong( hWnd, GCL_HICON, (DWORD)hIcon );
+	SetClassLongPtr( hWnd, GCLP_HICON, (LONG_PTR)hIcon );
 }
 
 inline HICON GetClassIcon( HWND hWnd )
 {
-	return (HICON)GetClassLong( hWnd, GCL_HICON );
+	return (HICON)GetClassLongPtr( hWnd, GCLP_HICON );
 }
 
 inline HBRUSH SetClassBrush( HWND hWnd, HBRUSH hBrush )
 {
-	return (HBRUSH)SetClassLong( hWnd, GCL_HBRBACKGROUND, (DWORD)hBrush );
+	return (HBRUSH)SetClassLongPtr( hWnd, GCLP_HBRBACKGROUND, (LONG_PTR)hBrush );
 }
 
 inline HBRUSH GetClassBrush( HWND hWnd )
 {
-	return (HBRUSH)GetClassLong( hWnd, GCL_HBRBACKGROUND );
+	return (HBRUSH)GetClassLongPtr( hWnd, GCLP_HBRBACKGROUND );
 }
 
 inline HINSTANCE GetWindowInstance( HWND hWnd )
 {
-	return (HINSTANCE)GetWindowLong( hWnd, GWL_HINSTANCE );
+	return (HINSTANCE)GetWindowLongPtr( hWnd, GWLP_HINSTANCE );
 }
 
 // ------------------------
@@ -237,7 +237,7 @@ typedef int (APIENTRY* SysAgt_Enable_PROC)( int );
 #define COLOR_MENUBAR       30
 #endif
 #ifndef COLOR_MENUHILIGHT
-#define COLOR_MENUHILIGHT   29   
+#define COLOR_MENUHILIGHT   29
 #endif
 
 #ifndef CS_DROPSHADOW

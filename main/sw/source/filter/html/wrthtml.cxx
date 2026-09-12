@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -700,7 +700,7 @@ static Writer& OutHTML_Section( Writer& rWrt, const SwSectionNode& rSectNd )
 	}
 
 	// The surrounding section must be closed before the current one is
-	// opended, except that it start immediately before the current one or
+	// opened, except that it start immediately before the current one or
 	// another end immediately before the current one
 	if( pSurrCol && nSectSttIdx - pSurrSectNd->GetIndex() > 1 &&
 		!lcl_html_IsMultiColEnd( rHTMLWrt, nSectSttIdx-1 ) )
@@ -723,7 +723,7 @@ static Writer& OutHTML_Section( Writer& rWrt, const SwSectionNode& rSectNd )
 		lcl_html_OutSectionEndTag( rHTMLWrt, pCol );
 
 	// The surrounding section must be started again, except that it ends
-	// immeditaly behind the current one.
+	// immediately behind the current one.
 	if( pSurrCol &&
 		pSurrSectNd->EndOfSectionIndex() - nSectEndIdx > 1 &&
 		!lcl_html_IsMultiColStart( rHTMLWrt, nSectEndIdx+1 ) )
@@ -1089,7 +1089,7 @@ void SwHTMLWriter::OutBookmarks()
     sal_uInt16 nPos;
     for( nPos = 0; nPos < aOutlineMarkPoss.Count() &&
                    aOutlineMarkPoss[nPos] < nNode; nPos++ )
-        ; 
+        ;
 
     while( nPos < aOutlineMarkPoss.Count() && aOutlineMarkPoss[nPos] == nNode )
     {
@@ -1436,5 +1436,3 @@ void GetHTMLWriter( const String&, const String& rBaseURL, WriterRef& xRet )
 {
     xRet = new SwHTMLWriter( rBaseURL );
 }
-
-

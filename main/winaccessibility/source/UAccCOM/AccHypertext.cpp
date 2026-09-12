@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #include "stdafx.h"
@@ -39,7 +39,7 @@ using namespace com::sun::star::uno;
 */
 STDMETHODIMP CAccHypertext::addSelection(long startOffset, long endOffset)
 {
-    
+
     return CAccTextBase::get_addSelection(startOffset, endOffset);
 }
 
@@ -54,7 +54,7 @@ STDMETHODIMP CAccHypertext::addSelection(long startOffset, long endOffset)
 */
 STDMETHODIMP CAccHypertext::get_attributes(long offset, long * startOffset, long * endOffset, BSTR * textAttributes)
 {
-    
+
     return CAccTextBase::get_attributes(offset, startOffset, endOffset, textAttributes);
 }
 
@@ -65,7 +65,7 @@ STDMETHODIMP CAccHypertext::get_attributes(long offset, long * startOffset, long
 */
 STDMETHODIMP CAccHypertext::get_caretOffset(long * offset)
 {
-    
+
     return CAccTextBase::get_caretOffset(offset);
 }
 
@@ -76,33 +76,33 @@ STDMETHODIMP CAccHypertext::get_caretOffset(long * offset)
 */
 STDMETHODIMP CAccHypertext::get_characterCount(long * nCharacters)
 {
-    
+
     return CAccTextBase::get_characterCount(nCharacters);
 }
 
 /**
    * Get character extents.
    * @param offset  Offset.
-   * @param x Variant to accpet x position.
-   * @param y Variant to accpet y position.
-   * @param width Variant to accpet width.
-   * @param Height Variant to accpet height.
+   * @param x Variant to accept x position.
+   * @param y Variant to accept y position.
+   * @param width Variant to accept width.
+   * @param Height Variant to accept height.
    * @return Result.
 */
 STDMETHODIMP CAccHypertext::get_characterExtents(long offset, IA2CoordinateType coordType, long * x, long * y, long * width, long * height)
 {
-    
+
     return CAccTextBase::get_characterExtents(offset, coordType, x, y, width, height);
 }
 
 /**
-   * Get slections count.
-   * @param nSelections Variant to accpet slections count.
+   * Get selections count.
+   * @param nSelections Variant to accept selections count.
    * @return Result.
 */
 STDMETHODIMP CAccHypertext::get_nSelections(long * nSelections)
 {
-    
+
     return CAccTextBase::get_nSelections(nSelections);
 }
 
@@ -128,7 +128,7 @@ STDMETHODIMP CAccHypertext::get_offsetAtPoint(long x, long y, IA2CoordinateType 
 */
 STDMETHODIMP CAccHypertext::get_selection(long selection, long * startOffset, long * endOffset)
 {
-    
+
     return CAccTextBase::get_selection(selection, startOffset, endOffset);
 }
 
@@ -141,7 +141,7 @@ STDMETHODIMP CAccHypertext::get_selection(long selection, long * startOffset, lo
 */
 STDMETHODIMP CAccHypertext::get_text(long startOffset, long endOffset, BSTR * text)
 {
-    
+
     return CAccTextBase::get_text(startOffset, endOffset, text);
 }
 
@@ -156,7 +156,7 @@ STDMETHODIMP CAccHypertext::get_text(long startOffset, long endOffset, BSTR * te
 */
 STDMETHODIMP CAccHypertext::get_textBeforeOffset(long offset, IA2TextBoundaryType boundaryType, long * startOffset, long * endOffset, BSTR * text)
 {
-    
+
     return CAccTextBase::get_textBeforeOffset(offset, boundaryType,
             startOffset, endOffset, text);
 }
@@ -172,7 +172,7 @@ STDMETHODIMP CAccHypertext::get_textBeforeOffset(long offset, IA2TextBoundaryTyp
 */
 STDMETHODIMP CAccHypertext::get_textAfterOffset(long offset, IA2TextBoundaryType boundaryType, long * startOffset, long * endOffset, BSTR * text)
 {
-    
+
     return CAccTextBase::get_textAfterOffset(offset, boundaryType,
             startOffset, endOffset, text);
 }
@@ -188,7 +188,7 @@ STDMETHODIMP CAccHypertext::get_textAfterOffset(long offset, IA2TextBoundaryType
 */
 STDMETHODIMP CAccHypertext::get_textAtOffset(long offset, IA2TextBoundaryType boundaryType, long * startOffset, long * endOffset, BSTR * text)
 {
-    
+
     return CAccTextBase::get_textAtOffset(offset, boundaryType,
                                           startOffset, endOffset, text);
 }
@@ -196,24 +196,24 @@ STDMETHODIMP CAccHypertext::get_textAtOffset(long offset, IA2TextBoundaryType bo
 /**
    * Remove selection.
    * @param selectionIndex Special selection index
-   * @param success Variant to accept the memthod called result.
+   * @param success Variant to accept the method called result.
    * @return Result.
 */
 STDMETHODIMP CAccHypertext::removeSelection(long selectionIndex)
 {
-    
+
     return CAccTextBase::removeSelection(selectionIndex);
 }
 
 /**
    * Set caret position.
    * @param offset Special position.
-   * @param success Variant to accept the memthod called result.
+   * @param success Variant to accept the method called result.
    * @return Result.
 */
 STDMETHODIMP CAccHypertext::setCaretOffset(long offset)
 {
-    
+
     return CAccTextBase::setCaretOffset(offset);
 }
 
@@ -222,12 +222,12 @@ STDMETHODIMP CAccHypertext::setCaretOffset(long offset)
    * @param selectionIndex Special selection index.
    * @param startOffset start position.
    * @param endOffset end position.
-   * @param success Variant to accept the memthod called result.
+   * @param success Variant to accept the method called result.
    * @return Result.
 */
 STDMETHODIMP CAccHypertext::setSelection(long selectionIndex, long startOffset, long endOffset)
 {
-    
+
     return CAccTextBase::setSelection(selectionIndex, startOffset,
                                       endOffset);
 }
@@ -239,7 +239,7 @@ STDMETHODIMP CAccHypertext::setSelection(long selectionIndex, long startOffset, 
 */
 STDMETHODIMP CAccHypertext::get_nCharacters(long * nCharacters)
 {
-    
+
     return CAccTextBase::get_nCharacters(nCharacters);
 }
 
@@ -261,23 +261,23 @@ STDMETHODIMP CAccHypertext::get_oldText( IA2TextSegment *oldText)
 */
 STDMETHODIMP CAccHypertext::scrollSubstringToPoint(long startIndex, long endIndex,enum IA2CoordinateType coordinateType, long x, long y )
 {
-    
+
     return CAccTextBase::scrollSubstringToPoint(startIndex, endIndex, coordinateType, x, y);
 }
 STDMETHODIMP CAccHypertext::scrollSubstringTo(long startIndex, long endIndex,enum IA2ScrollType scrollType)
 {
-    
+
     return CAccTextBase::scrollSubstringTo(startIndex, endIndex,scrollType);
 }
 
 /**
    * Get hyperlink count.
-   * @param hyperlinkCount Variant to accpet hyperlink count.
+   * @param hyperlinkCount Variant to accept hyperlink count.
    * @return Result.
 */
 STDMETHODIMP CAccHypertext::get_nHyperlinks(long *hyperlinkCount)
 {
-    
+
 	CHECK_ENABLE_INF
 
     ENTER_PROTECTED_BLOCK
@@ -305,7 +305,7 @@ STDMETHODIMP CAccHypertext::get_nHyperlinks(long *hyperlinkCount)
 */
 STDMETHODIMP CAccHypertext::get_hyperlink(long index,IAccessibleHyperlink **hyperlink)
 {
-    
+
 	CHECK_ENABLE_INF
 
     ENTER_PROTECTED_BLOCK
@@ -338,7 +338,7 @@ STDMETHODIMP CAccHypertext::get_hyperlink(long index,IAccessibleHyperlink **hype
         plink->QueryInterface(IID_IUNOXWrapper, (void**)&wrapper);
         if(wrapper)
         {
-            wrapper->put_XSubInterface((long)pRLink.get()/*pXI*/);
+            wrapper->put_XSubInterface((LONG_PTR)pRLink.get()/*pXI*/);
             wrapper->Release();
         }
         *hyperlink = plink;
@@ -358,7 +358,7 @@ STDMETHODIMP CAccHypertext::get_hyperlink(long index,IAccessibleHyperlink **hype
 */
 STDMETHODIMP CAccHypertext::get_hyperlinkIndex(long charIndex, long *hyperlinkIndex)
 {
-    
+
 	CHECK_ENABLE_INF
 
     ENTER_PROTECTED_BLOCK
@@ -383,9 +383,9 @@ STDMETHODIMP CAccHypertext::get_hyperlinkIndex(long charIndex, long *hyperlinkIn
    * @param pXInterface UNO interface.
    * @return Result.
 */
-STDMETHODIMP CAccHypertext::put_XInterface(long pXInterface)
+STDMETHODIMP CAccHypertext::put_XInterface(LONG_PTR pXInterface)
 {
-    
+
 
     ENTER_PROTECTED_BLOCK
 

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -52,7 +52,6 @@ CookieList::~CookieList() SAL_THROW(())
 
 void
 executeCookieDialog(Window * pParent, CntHTTPCookieRequest & rRequest)
-    SAL_THROW((uno::RuntimeException))
 {
     try
     {
@@ -78,7 +77,6 @@ handleCookiesRequest_(
     ucb::HandleCookiesRequest const & rRequest,
     uno::Sequence< uno::Reference< task::XInteractionContinuation > > const &
         rContinuations)
-    SAL_THROW((uno::RuntimeException))
 {
     CookieList aCookies;
     for (sal_Int32 i = 0; i < rRequest.Cookies.getLength(); ++i)
@@ -188,7 +186,6 @@ handleCookiesRequest_(
 bool
 UUIInteractionHelper::handleCookiesRequest(
     uno::Reference< task::XInteractionRequest > const & rRequest)
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Any aAnyRequest(rRequest->getRequest());
 
@@ -202,4 +199,3 @@ UUIInteractionHelper::handleCookiesRequest(
     }
     return false;
 }
-

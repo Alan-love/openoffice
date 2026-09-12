@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -97,16 +97,16 @@ extern "C" { static void SAL_CALL thisModule() {} }
 class SfxNotificationListener_Impl : public cppu::WeakImplHelper1< XDispatchResultListener >
 {
 public:
-    virtual void SAL_CALL dispatchFinished( const DispatchResultEvent& aEvent ) throw( RuntimeException );
-    virtual void SAL_CALL disposing( const EventObject& aEvent ) throw( RuntimeException );
+    virtual void SAL_CALL dispatchFinished( const DispatchResultEvent& aEvent );
+    virtual void SAL_CALL disposing( const EventObject& aEvent );
 };
 
-void SAL_CALL SfxNotificationListener_Impl::dispatchFinished( const DispatchResultEvent& ) throw( RuntimeException )
+void SAL_CALL SfxNotificationListener_Impl::dispatchFinished( const DispatchResultEvent& )
 {
 	ShutdownIcon::LeaveModalMode();
 }
 
-void SAL_CALL SfxNotificationListener_Impl::disposing( const EventObject& ) throw( RuntimeException )
+void SAL_CALL SfxNotificationListener_Impl::disposing( const EventObject& )
 {
 }
 
@@ -394,7 +394,7 @@ void ShutdownIcon::StartFileDialog()
     ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
     bool bDirty = ( m_bSystemDialogs != static_cast<bool>(SvtMiscOptions().UseSystemFileDialog()) );
-    
+
     if ( m_pFileDlg && bDirty )
     {
         // Destroy instance as changing the system file dialog setting
@@ -402,7 +402,7 @@ void ShutdownIcon::StartFileDialog()
         delete m_pFileDlg;
         m_pFileDlg = NULL;
     }
-    
+
     if ( !m_pFileDlg )
         m_pFileDlg = new FileDialogHelper( WB_OPEN | SFXWB_MULTISELECTION, String() );
     m_pFileDlg->StartExecuteModal( STATIC_LINK( this, ShutdownIcon, DialogClosedHdl_Impl ) );
@@ -560,14 +560,14 @@ void ShutdownIcon::addTerminateListener()
     ShutdownIcon* pInst = getInstance();
     if ( ! pInst)
         return;
-        
+
     if (pInst->m_bListenForTermination)
         return;
 
     Reference< XDesktop > xDesktop = pInst->m_xDesktop;
     if ( ! xDesktop.is())
         return;
-        
+
 	xDesktop->addTerminateListener( pInst );
     pInst->m_bListenForTermination = true;
 }
@@ -583,7 +583,7 @@ void ShutdownIcon::terminateDesktop()
     Reference< XDesktop > xDesktop = pInst->m_xDesktop;
     if ( ! xDesktop.is())
         return;
-        
+
     // always remove ourselves as listener
     pInst->m_bListenForTermination = true;
     xDesktop->removeTerminateListener( pInst );
@@ -644,7 +644,7 @@ ShutdownIcon* ShutdownIcon::createInstance()
 	return pShutdownIcon;
 }
 
-void ShutdownIcon::init() throw( ::com::sun::star::uno::Exception )
+void ShutdownIcon::init()
 {
 	// access resource system and sfx only protected by solarmutex
 	vos::OGuard aSolarGuard( Application::GetSolarMutex() );
@@ -672,7 +672,6 @@ void SAL_CALL ShutdownIcon::disposing()
 
 // XEventListener
 void SAL_CALL ShutdownIcon::disposing( const ::com::sun::star::lang::EventObject& )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 }
 
@@ -680,7 +679,6 @@ void SAL_CALL ShutdownIcon::disposing( const ::com::sun::star::lang::EventObject
 
 // XTerminateListener
 void SAL_CALL ShutdownIcon::queryTermination( const ::com::sun::star::lang::EventObject& )
-throw(::com::sun::star::frame::TerminationVetoException, ::com::sun::star::uno::RuntimeException)
 {
 	::osl::ClearableMutexGuard	aGuard(	m_aMutex );
 
@@ -692,7 +690,6 @@ throw(::com::sun::star::frame::TerminationVetoException, ::com::sun::star::uno::
 // ---------------------------------------------------------------------------
 
 void SAL_CALL ShutdownIcon::notifyTermination( const ::com::sun::star::lang::EventObject& )
-throw(::com::sun::star::uno::RuntimeException)
 {
 }
 
@@ -700,7 +697,6 @@ throw(::com::sun::star::uno::RuntimeException)
 // ---------------------------------------------------------------------------
 
 void SAL_CALL ShutdownIcon::initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any>& aArguments )
-	throw( ::com::sun::star::uno::Exception )
 {
 	::osl::ResettableMutexGuard	aGuard(	m_aMutex );
 
@@ -735,8 +731,8 @@ void SAL_CALL ShutdownIcon::initialize( const ::com::sun::star::uno::Sequence< :
 #ifdef OS2
 				// above win32 starts the quickstart thread, but we have
 				// quickstart running only when -quickstart is specified
-				// on command line (next boot). 
-				// so if -quickstart was not specified, we cannot issue	
+				// on command line (next boot).
+				// so if -quickstart was not specified, we cannot issue
 				// quickstart veto on shutdown.
 				if (bQuickstart)
 				{
@@ -904,10 +900,10 @@ void ShutdownIcon::SetAutostart( bool bActivate )
 													 osl_getThreadTextEncoding() );
 		OString aShortcutUnx = OUStringToOString( aShortcut,
 												  osl_getThreadTextEncoding() );
-		if ((0 != symlink( aDesktopFileUnx.getStr(), aShortcutUnx.getStr())) && (errno == EEXIST)) 
-		{ 
-		unlink( aShortcutUnx.getStr()); 
-		symlink( aDesktopFileUnx.getStr(), aShortcutUnx.getStr()); 
+		if ((0 != symlink( aDesktopFileUnx.getStr(), aShortcutUnx.getStr())) && (errno == EEXIST))
+		{
+		unlink( aShortcutUnx.getStr());
+		symlink( aDesktopFileUnx.getStr(), aShortcutUnx.getStr());
 		}
 
 		ShutdownIcon *pIcon = ShutdownIcon::createInstance();
@@ -940,11 +936,6 @@ static const ::sal_Int32 PROPHANDLE_TERMINATEVETOSTATE = 0;
 // XFastPropertySet
 void SAL_CALL ShutdownIcon::setFastPropertyValue(       ::sal_Int32                  nHandle,
                                                   const ::com::sun::star::uno::Any& aValue )
-    throw (::com::sun::star::beans::UnknownPropertyException,
-            ::com::sun::star::beans::PropertyVetoException,
-            ::com::sun::star::lang::IllegalArgumentException,
-            ::com::sun::star::lang::WrappedTargetException,
-            ::com::sun::star::uno::RuntimeException)
 {
     switch(nHandle)
     {
@@ -954,23 +945,20 @@ void SAL_CALL ShutdownIcon::setFastPropertyValue(       ::sal_Int32             
                 ::sal_Bool bState( sal_False );
                 if (! (aValue >>= bState))
                     return;
-                    
+
                 m_bVeto = bState;
                 if (m_bVeto && ! m_bListenForTermination)
                     addTerminateListener();
              }
              break;
-             
+
         default :
             throw ::com::sun::star::beans::UnknownPropertyException();
     }
 }
-            
+
 // XFastPropertySet
 ::com::sun::star::uno::Any SAL_CALL ShutdownIcon::getFastPropertyValue( ::sal_Int32 nHandle )
-    throw (::com::sun::star::beans::UnknownPropertyException,
-            ::com::sun::star::lang::WrappedTargetException,
-            ::com::sun::star::uno::RuntimeException)
 {
     ::com::sun::star::uno::Any aValue;
     switch(nHandle)
@@ -981,10 +969,10 @@ void SAL_CALL ShutdownIcon::setFastPropertyValue(       ::sal_Int32             
                      aValue <<= bState;
              }
              break;
-             
+
         default :
             throw ::com::sun::star::beans::UnknownPropertyException();
     }
-    
+
     return aValue;
 }

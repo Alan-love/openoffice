@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartcontroller.hxx"
 
 #include "ShapeToolbarController.hxx"
 
@@ -45,29 +45,29 @@ namespace chart
 {
 //.............................................................................
 
-::rtl::OUString ShapeToolbarController::getImplementationName() throw (uno::RuntimeException)
+::rtl::OUString ShapeToolbarController::getImplementationName()
 {
     return getImplementationName_Static();
 }
 
-::rtl::OUString ShapeToolbarController::getImplementationName_Static() throw (uno::RuntimeException)
+::rtl::OUString ShapeToolbarController::getImplementationName_Static()
 {
     return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.comp.chart2.ShapeToolbarController" ) );
 }
 
-Sequence< ::rtl::OUString > ShapeToolbarController::getSupportedServiceNames_Static() throw (uno::RuntimeException)
+Sequence< ::rtl::OUString > ShapeToolbarController::getSupportedServiceNames_Static()
 {
     Sequence< ::rtl::OUString > aSupported(1);
     aSupported.getArray()[0] = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.chart2.ShapeToolbarController" ) );
     return aSupported;
 }
 
-::sal_Bool ShapeToolbarController::supportsService( const ::rtl::OUString& ServiceName ) throw (uno::RuntimeException)
+::sal_Bool ShapeToolbarController::supportsService( const ::rtl::OUString& ServiceName )
 {
     return ::comphelper::existsValue( ServiceName, getSupportedServiceNames_Static() );
 }
 
-Sequence< ::rtl::OUString> ShapeToolbarController::getSupportedServiceNames() throw (uno::RuntimeException)
+Sequence< ::rtl::OUString> ShapeToolbarController::getSupportedServiceNames()
 {
     return getSupportedServiceNames_Static();
 }
@@ -92,7 +92,7 @@ ShapeToolbarController::~ShapeToolbarController()
 }
 
 // ::com::sun::star::uno::XInterface
-uno::Any ShapeToolbarController::queryInterface( const uno::Type& rType ) throw (uno::RuntimeException)
+uno::Any ShapeToolbarController::queryInterface( const uno::Type& rType )
 {
     uno::Any aReturn = ToolboxController::queryInterface( rType );
     if ( !aReturn.hasValue() )
@@ -113,7 +113,7 @@ void ShapeToolbarController::release() throw ()
 }
 
 // ::com::sun::star::lang::XInitialization
-void ShapeToolbarController::initialize( const Sequence< uno::Any >& rArguments ) throw (uno::Exception, uno::RuntimeException)
+void ShapeToolbarController::initialize( const Sequence< uno::Any >& rArguments )
 {
     ToolboxController::initialize( rArguments );
     ::vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
@@ -185,9 +185,9 @@ void ShapeToolbarController::initialize( const Sequence< uno::Any >& rArguments 
 }
 
 // ::com::sun::star::frame::XStatusListener
-void ShapeToolbarController::statusChanged( const frame::FeatureStateEvent& Event ) throw ( uno::RuntimeException )
+void ShapeToolbarController::statusChanged( const frame::FeatureStateEvent& Event )
 {
-	::osl::MutexGuard aGuard( m_aMutex );	
+	::osl::MutexGuard aGuard( m_aMutex );
 	TCommandState::iterator aFind = m_aStates.find( Event.FeatureURL.Complete );
 	if ( aFind != m_aStates.end() )
 	{
@@ -227,10 +227,10 @@ void ShapeToolbarController::statusChanged( const frame::FeatureStateEvent& Even
 }
 
 // ::com::sun::star::frame::XToolbarController
-Reference< awt::XWindow > ShapeToolbarController::createPopupWindow() throw (uno::RuntimeException)
+Reference< awt::XWindow > ShapeToolbarController::createPopupWindow()
 {
     ::vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
-    ::osl::MutexGuard aGuard( m_aMutex );	
+    ::osl::MutexGuard aGuard( m_aMutex );
 
     Reference< awt::XWindow > xRet;
     if ( m_pToolbarController.is() )
@@ -242,7 +242,7 @@ Reference< awt::XWindow > ShapeToolbarController::createPopupWindow() throw (uno
 }
 
 // ::com::sun::star::frame::XSubToolbarController
-::sal_Bool ShapeToolbarController::opensSubToolbar() throw (uno::RuntimeException)
+::sal_Bool ShapeToolbarController::opensSubToolbar()
 {
     return ( m_nSlotId == SID_DRAWTBX_CS_BASIC ||
              m_nSlotId == SID_DRAWTBX_CS_SYMBOL ||
@@ -252,10 +252,10 @@ Reference< awt::XWindow > ShapeToolbarController::createPopupWindow() throw (uno
              m_nSlotId == SID_DRAWTBX_CS_STAR );
 }
 
-::rtl::OUString ShapeToolbarController::getSubToolbarName() throw (uno::RuntimeException)
+::rtl::OUString ShapeToolbarController::getSubToolbarName()
 {
     ::vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
-	::osl::MutexGuard aGuard(m_aMutex);	
+	::osl::MutexGuard aGuard(m_aMutex);
     uno::Reference< frame::XSubToolbarController > xSub( m_pToolbarController.getRef(), uno::UNO_QUERY );
     if ( xSub.is() )
     {
@@ -264,11 +264,11 @@ Reference< awt::XWindow > ShapeToolbarController::createPopupWindow() throw (uno
     return ::rtl::OUString();
 }
 
-void ShapeToolbarController::functionSelected( const ::rtl::OUString& rCommand ) throw (uno::RuntimeException)
+void ShapeToolbarController::functionSelected( const ::rtl::OUString& rCommand )
 {
     ::vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
 	::osl::MutexGuard aGuard( m_aMutex );
-    
+
     uno::Reference< frame::XSubToolbarController > xSub( m_pToolbarController.getRef(), uno::UNO_QUERY );
     if ( xSub.is() )
     {
@@ -277,7 +277,7 @@ void ShapeToolbarController::functionSelected( const ::rtl::OUString& rCommand )
     }
 }
 
-void ShapeToolbarController::updateImage() throw (uno::RuntimeException)
+void ShapeToolbarController::updateImage()
 {
     ::vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
     ::osl::MutexGuard aGuard( m_aMutex );

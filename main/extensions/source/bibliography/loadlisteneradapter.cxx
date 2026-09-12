@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -50,7 +50,7 @@ namespace bib
 	}
 
 	//---------------------------------------------------------------------
-	void OComponentListener::_disposing( const EventObject& /*_rSource*/ ) throw( RuntimeException)
+	void OComponentListener::_disposing( const EventObject& /*_rSource*/ )
 	{
 		// nothing to do here, overrride if you're interested in
 	}
@@ -130,7 +130,7 @@ namespace bib
 	// XEventListener
 
 	//---------------------------------------------------------------------
-	void SAL_CALL OComponentAdapterBase::disposing( const EventObject& _rSource ) throw( RuntimeException )
+	void SAL_CALL OComponentAdapterBase::disposing( const EventObject& _rSource )
 	{
 		if ( m_pListener )
 		{
@@ -181,7 +181,7 @@ namespace bib
 	}
 
 	//---------------------------------------------------------------------
-	void SAL_CALL OLoadListenerAdapter::disposing( const  EventObject& _rSource ) throw( RuntimeException)
+	void SAL_CALL OLoadListenerAdapter::disposing( const  EventObject& _rSource )
 	{
 		OComponentAdapterBase::disposing( _rSource );
 	}
@@ -195,35 +195,35 @@ namespace bib
 	}
 
 	//---------------------------------------------------------------------
-	void SAL_CALL OLoadListenerAdapter::loaded( const EventObject& _rEvent ) throw (RuntimeException)
+	void SAL_CALL OLoadListenerAdapter::loaded( const EventObject& _rEvent )
 	{
 		if ( !locked() && getLoadListener( ) )
 			getLoadListener( )->_loaded( _rEvent );
 	}
 
 	//---------------------------------------------------------------------
-	void SAL_CALL OLoadListenerAdapter::unloading( const EventObject& _rEvent ) throw (RuntimeException)
+	void SAL_CALL OLoadListenerAdapter::unloading( const EventObject& _rEvent )
 	{
 		if ( !locked() && getLoadListener( ) )
 			getLoadListener( )->_unloading( _rEvent );
 	}
 
 	//---------------------------------------------------------------------
-	void SAL_CALL OLoadListenerAdapter::unloaded( const EventObject& _rEvent ) throw (RuntimeException)
+	void SAL_CALL OLoadListenerAdapter::unloaded( const EventObject& _rEvent )
 	{
 		if ( !locked() && getLoadListener( ) )
 			getLoadListener( )->_unloaded( _rEvent );
 	}
 
 	//---------------------------------------------------------------------
-	void SAL_CALL OLoadListenerAdapter::reloading( const EventObject& _rEvent ) throw (RuntimeException)
+	void SAL_CALL OLoadListenerAdapter::reloading( const EventObject& _rEvent )
 	{
 		if ( !locked() && getLoadListener( ) )
 			getLoadListener( )->_reloading( _rEvent );
 	}
 
 	//---------------------------------------------------------------------
-	void SAL_CALL OLoadListenerAdapter::reloaded( const EventObject& _rEvent ) throw (RuntimeException)
+	void SAL_CALL OLoadListenerAdapter::reloaded( const EventObject& _rEvent )
 	{
 		if ( !locked() && getLoadListener( ) )
 			getLoadListener( )->_reloaded( _rEvent );
@@ -232,4 +232,3 @@ namespace bib
 //.........................................................................
 }	// namespace bib
 //.........................................................................
-

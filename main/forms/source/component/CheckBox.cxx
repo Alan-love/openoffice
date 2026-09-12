@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -59,13 +59,13 @@ OCheckBoxControl::OCheckBoxControl(const Reference<XMultiServiceFactory>& _rxFac
 }
 
 //------------------------------------------------------------------
-InterfaceRef SAL_CALL OCheckBoxControl_CreateInstance(const Reference<XMultiServiceFactory>& _rxFactory) throw (RuntimeException)
+InterfaceRef SAL_CALL OCheckBoxControl_CreateInstance(const Reference<XMultiServiceFactory>& _rxFactory)
 {
 	return *(new OCheckBoxControl(_rxFactory));
 }
 
 //------------------------------------------------------------------------------
-StringSequence SAL_CALL	OCheckBoxControl::getSupportedServiceNames() throw(::com::sun::star::uno::RuntimeException)
+StringSequence SAL_CALL	OCheckBoxControl::getSupportedServiceNames()
 {
 	StringSequence aSupported = OBoundControl::getSupportedServiceNames();
 	aSupported.realloc(aSupported.getLength() + 1);
@@ -80,7 +80,7 @@ StringSequence SAL_CALL	OCheckBoxControl::getSupportedServiceNames() throw(::com
 //==================================================================
 
 //==================================================================
-InterfaceRef SAL_CALL OCheckBoxModel_CreateInstance(const Reference<XMultiServiceFactory>& _rxFactory) throw (RuntimeException)
+InterfaceRef SAL_CALL OCheckBoxModel_CreateInstance(const Reference<XMultiServiceFactory>& _rxFactory)
 {
 	return *(new OCheckBoxModel(_rxFactory));
 }
@@ -116,7 +116,7 @@ IMPLEMENT_DEFAULT_CLONING( OCheckBoxModel )
 
 // XServiceInfo
 //------------------------------------------------------------------------------
-StringSequence SAL_CALL	OCheckBoxModel::getSupportedServiceNames() throw(::com::sun::star::uno::RuntimeException)
+StringSequence SAL_CALL	OCheckBoxModel::getSupportedServiceNames()
 {
 	StringSequence aSupported = OReferenceValueComponent::getSupportedServiceNames();
 
@@ -147,14 +147,13 @@ void OCheckBoxModel::describeFixedProperties( Sequence< Property >& _rProps ) co
 }
 
 //------------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OCheckBoxModel::getServiceName() throw(RuntimeException)
+::rtl::OUString SAL_CALL OCheckBoxModel::getServiceName()
 {
 	return FRM_COMPONENT_CHECKBOX;	// old (non-sun) name for compatibility !
 }
 
 //------------------------------------------------------------------------------
 void SAL_CALL OCheckBoxModel::write(const Reference<stario::XObjectOutputStream>& _rxOutStream)
-	throw(stario::IOException, RuntimeException)
 {
 	OReferenceValueComponent::write(_rxOutStream);
 
@@ -169,7 +168,7 @@ void SAL_CALL OCheckBoxModel::write(const Reference<stario::XObjectOutputStream>
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL OCheckBoxModel::read(const Reference<stario::XObjectInputStream>& _rxInStream) throw(stario::IOException, RuntimeException)
+void SAL_CALL OCheckBoxModel::read(const Reference<stario::XObjectInputStream>& _rxInStream)
 {
 	OReferenceValueComponent::read(_rxInStream);
 	osl::MutexGuard aGuard(m_aMutex);
@@ -268,4 +267,3 @@ sal_Bool OCheckBoxModel::commitControlValueToDbColumn( bool /*_bPostReset*/ )
 //.........................................................................
 }
 //.........................................................................
-

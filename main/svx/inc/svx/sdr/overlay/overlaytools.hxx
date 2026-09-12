@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -30,7 +30,7 @@
 //////////////////////////////////////////////////////////////////////////////
 // Overlay helper class which holds a BotmapEx which is to be visualized
 // at the given logic position with the Bitmap's pixel size, unscaled and
-// unrotated (like a marker). The discrete pixel on the bitmap assocciated
+// unrotated (like a marker). The discrete pixel on the bitmap associated
 // with the target position is given in discrete X,Y coordinates
 namespace drawinglayer
 {
@@ -45,7 +45,7 @@ namespace drawinglayer
             // The logic position
 			basegfx::B2DPoint						maBasePosition;
 
-            // The pixel inside the BitmapEx which is assocciated with
+            // The pixel inside the BitmapEx which is associated with
             // the target position (offset in the bitmap)
 			sal_uInt16								mnCenterX;
 			sal_uInt16								mnCenterY;
@@ -98,7 +98,7 @@ namespace drawinglayer
 			basegfx::BColor							maRGBColorA;
 			basegfx::BColor							maRGBColorB;
 			double									mfDiscreteDashLength;
-		
+
 		protected:
 			virtual Primitive2DSequence create2DDecomposition(const geometry::ViewInformation2D& rViewInformation) const;
 
@@ -124,7 +124,7 @@ namespace drawinglayer
 } // end of namespace drawinglayer
 
 //////////////////////////////////////////////////////////////////////////////
-// Overlay helper class for a hatch rectangle as used e.g. for text object 
+// Overlay helper class for a hatch rectangle as used e.g. for text object
 // selection hilighting
 namespace drawinglayer
 {
@@ -146,7 +146,7 @@ namespace drawinglayer
 
             // the rotation of the primitive itself
             double							mfRotation;
-		
+
 		protected:
 			virtual Primitive2DSequence create2DDecomposition(const geometry::ViewInformation2D& rViewInformation) const;
 
@@ -202,7 +202,7 @@ namespace drawinglayer
 			basegfx::BColor							maRGBColorA;
 			basegfx::BColor							maRGBColorB;
 			double									mfDiscreteDashLength;
-		
+
 		protected:
 			virtual Primitive2DSequence create2DDecomposition(const geometry::ViewInformation2D& rViewInformation) const;
 
@@ -230,7 +230,7 @@ namespace drawinglayer
 } // end of namespace drawinglayer
 
 //////////////////////////////////////////////////////////////////////////////
-// Overlay helper class for rolling rectangle helplines. This primitive is 
+// Overlay helper class for rolling rectangle helplines. This primitive is
 // only for the extended lines to the ends of the view
 
 namespace drawinglayer
@@ -247,7 +247,7 @@ namespace drawinglayer
 			basegfx::BColor							maRGBColorA;
 			basegfx::BColor							maRGBColorB;
 			double									mfDiscreteDashLength;
-		
+
 		protected:
 			virtual Primitive2DSequence create2DDecomposition(const geometry::ViewInformation2D& rViewInformation) const;
 

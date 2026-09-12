@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -307,9 +307,9 @@ sal_Bool ScOutlineDocFunc::AutoOutline( const ScRange& rRange, sal_Bool bRecord,
             SCCOLROW nCol1, nCol2, nRow1, nRow2;
             pTable->GetColArray()->GetRange( nCol1, nCol2 );
             pTable->GetRowArray()->GetRange( nRow1, nRow2 );
-			SCCOL nOutStartCol = static_cast<SCCOL>(nCol1);;
+			SCCOL nOutStartCol = static_cast<SCCOL>(nCol1);
 			SCROW nOutStartRow = nRow1;
-			SCCOL nOutEndCol = static_cast<SCCOL>(nCol2);;
+			SCCOL nOutEndCol = static_cast<SCCOL>(nCol2);
 			SCROW nOutEndRow = nRow2;
 
 			pUndoDoc = new ScDocument( SCDOCMODE_UNDO );
@@ -811,8 +811,3 @@ sal_Bool ScOutlineDocFunc::HideOutline( SCTAB nTab, sal_Bool bColumns, sal_uInt1
 
 	return sal_True;		//! immer ???
 }
-
-
-
-
-

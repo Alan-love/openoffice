@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_xmloff.hxx"
@@ -33,14 +31,11 @@
 #include <xmloff/xmluconv.hxx>
 #include <xmloff/xmltoken.hxx>
 
-
 using ::rtl::OUString;
 using ::com::sun::star::uno::Reference;
 using ::com::sun::star::uno::Sequence;
 using ::com::sun::star::xml::sax::XAttributeList;
 using namespace ::xmloff::token;
-
-
 
 TYPEINIT1( XMLTrackedChangesImportContext, SvXMLImportContext );
 
@@ -56,7 +51,7 @@ XMLTrackedChangesImportContext::~XMLTrackedChangesImportContext()
 {
 }
 
-void XMLTrackedChangesImportContext::StartElement( 
+void XMLTrackedChangesImportContext::StartElement(
 	const Reference<XAttributeList> & xAttrList )
 {
 	sal_Bool bTrackChanges = sal_True;
@@ -74,7 +69,7 @@ void XMLTrackedChangesImportContext::StartElement(
 			if ( IsXMLToken( sLocalName, XML_TRACK_CHANGES ) )
 			{
 				sal_Bool bTmp;
-				if( SvXMLUnitConverter::convertBool( 
+				if( SvXMLUnitConverter::convertBool(
 					bTmp, xAttrList->getValueByIndex(i)) )
 				{
 					bTrackChanges = bTmp;
@@ -85,7 +80,7 @@ void XMLTrackedChangesImportContext::StartElement(
 
 	// set tracked changes
 	GetImport().GetTextImport()->SetRecordChanges( bTrackChanges );
-}  
+}
 
 
 SvXMLImportContext* XMLTrackedChangesImportContext::CreateChildContext(
@@ -98,15 +93,17 @@ SvXMLImportContext* XMLTrackedChangesImportContext::CreateChildContext(
 	if ( (XML_NAMESPACE_TEXT == nPrefix) &&
 		 IsXMLToken( rLocalName, XML_CHANGED_REGION ) )
 	{
-		pContext = new XMLChangedRegionImportContext(GetImport(), 
+		pContext = new XMLChangedRegionImportContext(GetImport(),
 													 nPrefix, rLocalName);
 	}
 
 	if (NULL == pContext)
 	{
-		pContext = SvXMLImportContext::CreateChildContext(nPrefix, rLocalName, 
+		pContext = SvXMLImportContext::CreateChildContext(nPrefix, rLocalName,
 														  xAttrList);
 	}
 
 	return pContext;
 }
+
+/* vim: set noet sw=4 ts=4: */

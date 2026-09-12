@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -61,7 +61,7 @@ IMPLEMENT_2_FORWARD_XINTERFACE1( VCLXScroller, VCLXWindow, Container );
 
 IMPLEMENT_FORWARD_XTYPEPROVIDER1( VCLXScroller, VCLXWindow );
 
-void SAL_CALL VCLXScroller::dispose() throw(RuntimeException)
+void SAL_CALL VCLXScroller::dispose()
 {
     {
         ::vos::OGuard aGuard( GetMutex() );
@@ -98,7 +98,6 @@ void VCLXScroller::ensureScrollBars()
 
 void SAL_CALL VCLXScroller::allocateArea(
     const ::com::sun::star::awt::Rectangle &rArea )
-    throw (::com::sun::star::uno::RuntimeException)
 {
     ensureScrollBars();        // shouldn't be needed
 
@@ -129,7 +128,6 @@ void SAL_CALL VCLXScroller::allocateArea(
 
 #define MAX_CHILD_REQ 40
 ::com::sun::star::awt::Size SAL_CALL VCLXScroller::getMinimumSize()
-    throw(::com::sun::star::uno::RuntimeException)
 {
     ensureScrollBars();
     assert( mpHorScrollBar && mpVerScrollBar );
@@ -159,7 +157,7 @@ void VCLXScroller::ProcessWindowEvent( const VclWindowEvent& _rVclWindowEvent )
 */
 }
 
-void SAL_CALL VCLXScroller::setProperty( const ::rtl::OUString& PropertyName, const Any &Value ) throw(RuntimeException)
+void SAL_CALL VCLXScroller::setProperty( const ::rtl::OUString& PropertyName, const Any &Value )
 {
     ::vos::OGuard aGuard( GetMutex() );
 
@@ -178,7 +176,7 @@ void SAL_CALL VCLXScroller::setProperty( const ::rtl::OUString& PropertyName, co
     }
 }
 
-Any SAL_CALL VCLXScroller::getProperty( const ::rtl::OUString& PropertyName ) throw(RuntimeException)
+Any SAL_CALL VCLXScroller::getProperty( const ::rtl::OUString& PropertyName )
 {
     ::vos::OGuard aGuard( GetMutex() );
 

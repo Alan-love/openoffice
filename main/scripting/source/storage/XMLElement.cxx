@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -79,11 +79,11 @@ void XMLElement::dump( Reference< xml::sax::XExtendedDocumentHandler > const & x
     OSL_TRACE( "XMLElement::dump" );
 
     xOut->ignorableWhitespace( OUString() );
-    OSL_TRACE( "XMLElement::dump starting %s",::rtl::OUStringToOString( 
+    OSL_TRACE( "XMLElement::dump starting %s",::rtl::OUStringToOString(
                 _name, RTL_TEXTENCODING_ASCII_US ).pData->buffer );
     xOut->startElement( _name, static_cast< xml::sax::XAttributeList * >( this ) );
     // Write out CDATA
-    if( _chars.getLength() > 0 ) 
+    if( _chars.getLength() > 0 )
     {
         xOut->ignorableWhitespace( OUString() );
         xOut->characters( _chars );
@@ -92,14 +92,13 @@ void XMLElement::dump( Reference< xml::sax::XExtendedDocumentHandler > const & x
     dumpSubElements( xOut );
     xOut->ignorableWhitespace( OUString() );
     xOut->endElement( _name );
-    OSL_TRACE( "XMLElement::dump ending %s",::rtl::OUStringToOString( 
+    OSL_TRACE( "XMLElement::dump ending %s",::rtl::OUStringToOString(
                 _name, RTL_TEXTENCODING_ASCII_US ).pData->buffer );
 }
 
 //*************************************************************************
 // XAttributeList
 sal_Int16 XMLElement::getLength()
-throw ( RuntimeException )
 {
     OSL_TRACE( "XMLElement::getLength\n" );
 
@@ -108,7 +107,6 @@ throw ( RuntimeException )
 
 //*************************************************************************
 OUString XMLElement::getNameByIndex( sal_Int16 nPos )
-throw ( RuntimeException )
 {
     OSL_TRACE( "XMLElement::getNameByIndex\n" );
     OSL_ASSERT( ( size_t )nPos < _attrNames.size() );
@@ -118,7 +116,6 @@ throw ( RuntimeException )
 
 //*************************************************************************
 OUString XMLElement::getTypeByIndex( sal_Int16 nPos )
-throw ( RuntimeException )
 {
     OSL_TRACE( "XMLElement::getTypeByIndex\n" );
     OSL_ASSERT( (size_t)nPos < _attrNames.size() );
@@ -129,7 +126,6 @@ throw ( RuntimeException )
 
 //*************************************************************************
 OUString XMLElement::getTypeByName( OUString const & rName )
-throw ( RuntimeException )
 {
     OSL_TRACE( "XMLElement::getTypeByName\n" );
     // xxx todo
@@ -138,7 +134,6 @@ throw ( RuntimeException )
 
 //*************************************************************************
 OUString XMLElement::getValueByIndex( sal_Int16 nPos )
-throw ( RuntimeException )
 {
     OSL_TRACE( "XMLElement::getValueByIndex\n" );
     OSL_ASSERT( ( size_t )nPos < _attrNames.size() );
@@ -148,7 +143,6 @@ throw ( RuntimeException )
 
 //*************************************************************************
 OUString XMLElement::getValueByName( OUString const & rName )
-throw ( RuntimeException )
 {
     OSL_TRACE( "XMLElement::getValueByName\n" );
 

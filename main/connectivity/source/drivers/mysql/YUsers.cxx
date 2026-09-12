@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_mysql.hxx"
 #include "mysql/YUsers.hxx"
 #include "mysql/YUser.hxx"
 #include "mysql/YTable.hxx"
@@ -49,7 +49,7 @@ OUsers::OUsers( ::cppu::OWeakObject& _rParent,
 				::osl::Mutex& _rMutex,
 				const TStringVector &_rVector,
 				const ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XConnection >& _xConnection,
-				connectivity::sdbcx::IRefreshableUsers* _pParent) 
+				connectivity::sdbcx::IRefreshableUsers* _pParent)
 	: sdbcx::OCollection(_rParent,sal_True,_rMutex,_rVector)
 	,m_xConnection(_xConnection)
 	,m_pParent(_pParent)
@@ -62,7 +62,7 @@ sdbcx::ObjectType OUsers::createObject(const ::rtl::OUString& _rName)
 	return new OMySQLUser(m_xConnection,_rName);
 }
 // -------------------------------------------------------------------------
-void OUsers::impl_refresh() throw(RuntimeException)
+void OUsers::impl_refresh()
 {
 	m_pParent->refreshUsers();
 }

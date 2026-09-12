@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -50,7 +50,6 @@ namespace cppu
 
 //--------------------------------------------------------------------------------------------------
 static inline void checkInterface( Type const & rType )
-    SAL_THROW( (RuntimeException) )
 {
     if (TypeClass_INTERFACE != rType.getTypeClass())
     {
@@ -87,7 +86,6 @@ static inline bool __td_equals(
 }
 //--------------------------------------------------------------------------------------------------
 static inline type_entry * __getTypeEntries( class_data * cd )
-    SAL_THROW( (RuntimeException) )
 {
     type_entry * pEntries = cd->m_typeEntries;
     if (! cd->m_storedTypeRefs) // not inited?
@@ -125,7 +123,6 @@ static inline type_entry * __getTypeEntries( class_data * cd )
 }
 //--------------------------------------------------------------------------------------------------
 static inline void __fillTypes( Type * types, class_data * cd )
-    SAL_THROW( (RuntimeException) )
 {
     type_entry * pEntries = __getTypeEntries( cd );
     for ( sal_Int32 n = cd->m_nTypes; n--; )
@@ -143,7 +140,7 @@ bool recursivelyFindType(
     // This code assumes that the vtables of a multiple-inheritance class (the
     // offset amount by which to adjust the this pointer) follow one another in
     // the object layout, and that they contain slots for the inherited classes
-    // in a specifc order.  In theory, that need not hold for any given
+    // in a specific order.  In theory, that need not hold for any given
     // platform; in practice, it seems to work well on all supported platforms:
  next:
     for (sal_Int32 i = 0; i < type->nBaseTypes; ++i) {
@@ -178,7 +175,6 @@ bool recursivelyFindType(
 
 static inline void * __queryDeepNoXInterface(
     typelib_TypeDescriptionReference * pDemandedTDR, class_data * cd, void * that )
-    SAL_THROW( (RuntimeException) )
 {
     type_entry * pEntries = __getTypeEntries( cd );
     sal_Int32 nTypes = cd->m_nTypes;
@@ -236,7 +232,6 @@ static inline void * __queryDeepNoXInterface(
 //==================================================================================================
 Any SAL_CALL ImplHelper_query(
     Type const & rType, class_data * cd, void * that )
-    SAL_THROW( (RuntimeException) )
 {
     checkInterface( rType );
     typelib_TypeDescriptionReference * pTDR = rType.getTypeLibType();
@@ -261,7 +256,6 @@ Any SAL_CALL ImplHelper_query(
 //==================================================================================================
 Any SAL_CALL ImplHelper_queryNoXInterface(
     Type const & rType, class_data * cd, void * that )
-    SAL_THROW( (RuntimeException) )
 {
     checkInterface( rType );
     typelib_TypeDescriptionReference * pTDR = rType.getTypeLibType();
@@ -278,7 +272,6 @@ Any SAL_CALL ImplHelper_queryNoXInterface(
 }
 //==================================================================================================
 Sequence< sal_Int8 > SAL_CALL ImplHelper_getImplementationId( class_data * cd )
-    SAL_THROW( (RuntimeException) )
 {
     if (! cd->m_createdId)
     {
@@ -300,7 +293,6 @@ Sequence< sal_Int8 > SAL_CALL ImplHelper_getImplementationId( class_data * cd )
 //==================================================================================================
 Sequence< Type > SAL_CALL ImplHelper_getTypes(
     class_data * cd )
-    SAL_THROW( (RuntimeException) )
 {
     Sequence< Type > types( cd->m_nTypes );
     Type * pTypes = types.getArray();
@@ -310,7 +302,6 @@ Sequence< Type > SAL_CALL ImplHelper_getTypes(
 //==================================================================================================
 Sequence< Type >  SAL_CALL ImplInhHelper_getTypes(
     class_data * cd, Sequence< Type > const & rAddTypes )
-    SAL_THROW( (RuntimeException) )
 {
     sal_Int32 nImplTypes = cd->m_nTypes;
     sal_Int32 nAddTypes = rAddTypes.getLength();
@@ -330,7 +321,6 @@ Sequence< Type >  SAL_CALL ImplInhHelper_getTypes(
 //==================================================================================================
 Any SAL_CALL WeakImplHelper_query(
     Type const & rType, class_data * cd, void * that, OWeakObject * pBase )
-    SAL_THROW( (RuntimeException) )
 {
     checkInterface( rType );
     typelib_TypeDescriptionReference * pTDR = rType.getTypeLibType();
@@ -349,7 +339,6 @@ Any SAL_CALL WeakImplHelper_query(
 //==================================================================================================
 Sequence< Type > SAL_CALL WeakImplHelper_getTypes(
     class_data * cd )
-    SAL_THROW( (RuntimeException) )
 {
     sal_Int32 nTypes = cd->m_nTypes;
     Sequence< Type > types( nTypes +1 );
@@ -363,7 +352,6 @@ Sequence< Type > SAL_CALL WeakImplHelper_getTypes(
 //==================================================================================================
 Any SAL_CALL WeakAggImplHelper_queryAgg(
     Type const & rType, class_data * cd, void * that, OWeakAggObject * pBase )
-    SAL_THROW( (RuntimeException) )
 {
     checkInterface( rType );
     typelib_TypeDescriptionReference * pTDR = rType.getTypeLibType();
@@ -382,7 +370,6 @@ Any SAL_CALL WeakAggImplHelper_queryAgg(
 //==================================================================================================
 Sequence< Type > SAL_CALL WeakAggImplHelper_getTypes(
     class_data * cd )
-    SAL_THROW( (RuntimeException) )
 {
     sal_Int32 nTypes = cd->m_nTypes;
     Sequence< Type > types( nTypes +2 );
@@ -397,7 +384,6 @@ Sequence< Type > SAL_CALL WeakAggImplHelper_getTypes(
 //==================================================================================================
 Any SAL_CALL WeakComponentImplHelper_query(
     Type const & rType, class_data * cd, void * that, WeakComponentImplHelperBase * pBase )
-    SAL_THROW( (RuntimeException) )
 {
     checkInterface( rType );
     typelib_TypeDescriptionReference * pTDR = rType.getTypeLibType();
@@ -416,7 +402,6 @@ Any SAL_CALL WeakComponentImplHelper_query(
 //==================================================================================================
 Sequence< Type > SAL_CALL WeakComponentImplHelper_getTypes(
     class_data * cd )
-    SAL_THROW( (RuntimeException) )
 {
     sal_Int32 nTypes = cd->m_nTypes;
     Sequence< Type > types( nTypes +2 );
@@ -431,7 +416,6 @@ Sequence< Type > SAL_CALL WeakComponentImplHelper_getTypes(
 //==================================================================================================
 Any SAL_CALL WeakAggComponentImplHelper_queryAgg(
     Type const & rType, class_data * cd, void * that, WeakAggComponentImplHelperBase * pBase )
-    SAL_THROW( (RuntimeException) )
 {
     checkInterface( rType );
     typelib_TypeDescriptionReference * pTDR = rType.getTypeLibType();
@@ -450,7 +434,6 @@ Any SAL_CALL WeakAggComponentImplHelper_queryAgg(
 //==================================================================================================
 Sequence< Type > SAL_CALL WeakAggComponentImplHelper_getTypes(
     class_data * cd )
-    SAL_THROW( (RuntimeException) )
 {
     sal_Int32 nTypes = cd->m_nTypes;
     Sequence< Type > types( nTypes +3 );

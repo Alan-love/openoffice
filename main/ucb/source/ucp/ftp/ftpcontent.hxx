@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -88,52 +88,41 @@ namespace ftp
 
         // XContent
         virtual rtl::OUString SAL_CALL
-        getContentType()
-            throw( com::sun::star::uno::RuntimeException );
+        getContentType();
 
         // XCommandProcessor
         virtual com::sun::star::uno::Any SAL_CALL
         execute( const com::sun::star::ucb::Command& aCommand,
                  sal_Int32 CommandId,
                  const com::sun::star::uno::Reference<
-                 com::sun::star::ucb::XCommandEnvironment >& Environment )
-            throw( com::sun::star::uno::Exception,
-                   com::sun::star::ucb::CommandAbortedException,
-                   com::sun::star::uno::RuntimeException );
+                 com::sun::star::ucb::XCommandEnvironment >& Environment );
 
         virtual void SAL_CALL
-        abort(sal_Int32 CommandId)
-            throw( com::sun::star::uno::RuntimeException);
+        abort(sal_Int32 CommandId);
 
         // XContentCreator
         virtual com::sun::star::uno::Sequence<
         com::sun::star::ucb::ContentInfo > SAL_CALL
-        queryCreatableContentsInfo(  )
-            throw (com::sun::star::uno::RuntimeException);
+        queryCreatableContentsInfo(  );
 
         virtual com::sun::star::uno::Reference<
         com::sun::star::ucb::XContent > SAL_CALL
-        createNewContent( const com::sun::star::ucb::ContentInfo& Info )
-            throw (com::sun::star::uno::RuntimeException);
+        createNewContent( const com::sun::star::ucb::ContentInfo& Info );
 
         // XChild
 
         virtual ::com::sun::star::uno::Reference<
         ::com::sun::star::uno::XInterface > SAL_CALL
-        getParent(  )
-            throw (::com::sun::star::uno::RuntimeException);
+        getParent(  );
 
         virtual void SAL_CALL
         setParent( const ::com::sun::star::uno::Reference<
-                   ::com::sun::star::uno::XInterface >& Parent )
-            throw (::com::sun::star::lang::NoSupportException,
-                   ::com::sun::star::uno::RuntimeException);
+                   ::com::sun::star::uno::XInterface >& Parent );
 
 
         static com::sun::star::uno::Sequence<
         com::sun::star::ucb::ContentInfo >
-        queryCreatableContentsInfo_Static(  )
-            throw (com::sun::star::uno::RuntimeException);
+        queryCreatableContentsInfo_Static(  );
 
     private:
 

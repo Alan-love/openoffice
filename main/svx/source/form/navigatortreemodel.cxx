@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -74,14 +74,14 @@ namespace svxform
 
 	// XPropertyChangeListener
 	//------------------------------------------------------------------------
-	void SAL_CALL OFormComponentObserver::disposing(const EventObject& Source) throw( RuntimeException )
+	void SAL_CALL OFormComponentObserver::disposing(const EventObject& Source)
 	{
         RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "OFormComponentObserver::disposing" );
 		Remove( Source.Source );
 	}
 
 	//------------------------------------------------------------------------
-	void SAL_CALL OFormComponentObserver::propertyChange(const PropertyChangeEvent& evt) throw(RuntimeException)
+	void SAL_CALL OFormComponentObserver::propertyChange(const PropertyChangeEvent& evt)
 	{
         RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "OFormComponentObserver::propertyChange" );
 		if( !m_pNavModel ) return;
@@ -107,7 +107,7 @@ namespace svxform
 
 	// XContainerListener
 	//------------------------------------------------------------------------------
-	void SAL_CALL OFormComponentObserver::elementInserted(const ContainerEvent& evt) throw(RuntimeException)
+	void SAL_CALL OFormComponentObserver::elementInserted(const ContainerEvent& evt)
 	{
         RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "OFormComponentObserver::elementInserted" );
 		if (IsLocked() || !m_pNavModel)
@@ -148,7 +148,7 @@ namespace svxform
 	}
 
 	//------------------------------------------------------------------------------
-	void SAL_CALL OFormComponentObserver::elementReplaced(const ContainerEvent& evt) throw(RuntimeException)
+	void SAL_CALL OFormComponentObserver::elementReplaced(const ContainerEvent& evt)
 	{
         RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "OFormComponentObserver::elementReplaced" );
 		if (IsLocked() || !m_pNavModel)
@@ -198,7 +198,7 @@ namespace svxform
 	}
 
 	//------------------------------------------------------------------------------
-	void SAL_CALL OFormComponentObserver::elementRemoved(const ContainerEvent& evt) throw(RuntimeException)
+	void SAL_CALL OFormComponentObserver::elementRemoved(const ContainerEvent& evt)
 	{
         RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "OFormComponentObserver::elementRemoved" );
 		Reference< XInterface > xElement;
@@ -995,7 +995,7 @@ namespace svxform
 				&&	(pEntryData!=pChildData)
 				)
 			{
-				
+
 
 				SQLContext aError;
 				aError.Message = String(SVX_RES(RID_ERR_CONTEXT_ADDFORM));
@@ -1118,5 +1118,3 @@ namespace svxform
 //............................................................................
 }	// namespace svxform
 //............................................................................
-
-

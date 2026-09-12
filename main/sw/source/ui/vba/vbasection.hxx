@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -36,17 +36,17 @@ private:
     css::uno::Reference< css::beans::XPropertySet > mxPageProps;
 
 public:
-	SwVbaSection( const css::uno::Reference< ooo::vba::XHelperInterface >& rParent, const css::uno::Reference< css::uno::XComponentContext >& rContext, const css::uno::Reference< css::frame::XModel >& xModel, const css::uno::Reference< css::beans::XPropertySet >& xProps ) throw ( css::uno::RuntimeException );
+	SwVbaSection( const css::uno::Reference< ooo::vba::XHelperInterface >& rParent, const css::uno::Reference< css::uno::XComponentContext >& rContext, const css::uno::Reference< css::frame::XModel >& xModel, const css::uno::Reference< css::beans::XPropertySet >& xProps );
 	virtual ~SwVbaSection();
 
     // Attributes
-    virtual ::sal_Bool SAL_CALL getProtectedForForms() throw (css::uno::RuntimeException);
-    virtual void SAL_CALL setProtectedForForms( ::sal_Bool _protectedforforms ) throw (css::uno::RuntimeException);
+    virtual ::sal_Bool SAL_CALL getProtectedForForms();
+    virtual void SAL_CALL setProtectedForForms( ::sal_Bool _protectedforforms );
 
     // Methods
-    virtual css::uno::Any SAL_CALL Headers(  ) throw (css::uno::RuntimeException);
-    virtual css::uno::Any SAL_CALL Footers(  ) throw (css::uno::RuntimeException);
-    virtual css::uno::Any SAL_CALL PageSetup(  ) throw (css::uno::RuntimeException);
+    virtual css::uno::Any SAL_CALL Headers(  );
+    virtual css::uno::Any SAL_CALL Footers(  );
+    virtual css::uno::Any SAL_CALL PageSetup(  );
 
 	// XHelperInterface
 	virtual rtl::OUString& getServiceImplName();

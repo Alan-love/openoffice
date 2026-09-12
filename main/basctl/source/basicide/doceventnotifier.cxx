@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -83,10 +83,10 @@ namespace basctl
         DocumentEventNotifier_Impl( DocumentEventListener& _rListener, const Reference< XModel >& _rxDocument );
 
         // document::XEventListener
-        virtual void SAL_CALL notifyEvent( const EventObject& Event ) throw (RuntimeException);
+        virtual void SAL_CALL notifyEvent( const EventObject& Event );
 
         // lang::XEventListener
-        virtual void SAL_CALL disposing( const csslang::EventObject& Event ) throw (RuntimeException);
+        virtual void SAL_CALL disposing( const csslang::EventObject& Event );
 
         // ComponentHelper
         virtual void SAL_CALL disposing();
@@ -131,7 +131,7 @@ namespace basctl
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL DocumentEventNotifier_Impl::notifyEvent( const EventObject& _rEvent ) throw (RuntimeException)
+    void SAL_CALL DocumentEventNotifier_Impl::notifyEvent( const EventObject& _rEvent )
     {
         ::osl::ClearableMutexGuard aGuard( m_aMutex );
 
@@ -183,9 +183,9 @@ namespace basctl
             break;
         }
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL DocumentEventNotifier_Impl::disposing( const csslang::EventObject& /*Event*/ ) throw (RuntimeException)
+    void SAL_CALL DocumentEventNotifier_Impl::disposing( const csslang::EventObject& /*Event*/ )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );

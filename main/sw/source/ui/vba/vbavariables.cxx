@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -28,7 +28,7 @@
 using namespace ::ooo::vba;
 using namespace ::com::sun::star;
 
-uno::Reference< container::XIndexAccess > createVariablesAccess( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext >& xContext, const uno::Reference< beans::XPropertyAccess >& xUserDefined ) throw ( uno::RuntimeException )
+uno::Reference< container::XIndexAccess > createVariablesAccess( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext >& xContext, const uno::Reference< beans::XPropertyAccess >& xUserDefined )
 {
     // FIXME: the performance is poor?
     XNamedObjectCollectionHelper< word::XVariable >::XNamedVec mVariables;
@@ -47,12 +47,12 @@ SwVbaVariables::SwVbaVariables( const uno::Reference< XHelperInterface >& xParen
 }
 // XEnumerationAccess
 uno::Type
-SwVbaVariables::getElementType() throw (uno::RuntimeException)
+SwVbaVariables::getElementType()
 {
 	return word::XVariable::static_type(0);
 }
 uno::Reference< container::XEnumeration >
-SwVbaVariables::createEnumeration() throw (uno::RuntimeException)
+SwVbaVariables::createEnumeration()
 {
     uno::Reference< container::XEnumerationAccess > xEnumerationAccess( m_xIndexAccess, uno::UNO_QUERY_THROW );
     return xEnumerationAccess->createEnumeration();
@@ -65,7 +65,7 @@ SwVbaVariables::createCollectionObject( const css::uno::Any& aSource )
 }
 
 uno::Any SAL_CALL
-SwVbaVariables::Add( const rtl::OUString& rName, const uno::Any& rValue ) throw (uno::RuntimeException)
+SwVbaVariables::Add( const rtl::OUString& rName, const uno::Any& rValue )
 {
     uno::Any aValue;
     if( rValue.hasValue() )
@@ -78,14 +78,14 @@ SwVbaVariables::Add( const rtl::OUString& rName, const uno::Any& rValue ) throw 
     return uno::makeAny( uno::Reference< word::XVariable >( new SwVbaVariable( getParent(), mxContext, mxUserDefined, rName ) ) );
 }
 
-rtl::OUString& 
+rtl::OUString&
 SwVbaVariables::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("SwVbaVariables") );
 	return sImplName;
 }
 
-css::uno::Sequence<rtl::OUString> 
+css::uno::Sequence<rtl::OUString>
 SwVbaVariables::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > sNames;

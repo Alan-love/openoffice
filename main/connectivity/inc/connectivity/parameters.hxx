@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -70,7 +70,7 @@ namespace dbtools
                 name is a column name, so an implicit parameter had to be generated for it
             */
             eLinkedByColumnName,
-            /** parameters which are filled externally (i.e. by XParamaters::setXXX, or by the parameter listeners)
+            /** parameters which are filled externally (i.e. by XParameters::setXXX, or by the parameter listeners)
             */
             eFilledExternally
         };
@@ -192,13 +192,13 @@ namespace dbtools
             @precond
                 the instance is alive, i.e. <member>isAlive</member> returns <TRUE/>
         */
-        void    setAllParametersNull() SAL_THROW( ( ::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException ) );
+        void    setAllParametersNull();
 
         /** resets all detail columns which are, via a parameter, linked to a master column, to
             the value of this master column.
 
             For instance, if the database component is bound to a statement <code>SELECT * from invoice where inv_id = :cid</code>,
-            and there is <em>one</em> master-detail link from 
+            and there is <em>one</em> master-detail link from
 
             @precond
                 the instance is alive, i.e. <member>isAlive</member> returns <TRUE/>
@@ -263,7 +263,7 @@ namespace dbtools
                 );
 
         /** initializes our query composer, and the collection of inner parameter columns
-        
+
             @param _rxComponent
                 the database component to initialize from. Must not be <NULL/>
             @return
@@ -277,7 +277,7 @@ namespace dbtools
                     const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet >& _rxComponent
                 );
 
-        /** collects initial meta information about inner paramaters (i.e. it initially fills
+        /** collects initial meta information about inner parameters (i.e. it initially fills
             <member>m_aParameterInformation</member>).
 
             @param _bSecondRun
@@ -322,7 +322,7 @@ namespace dbtools
                     const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess >& _rxParentColumns,
                     const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess >& _rxColumns,
                     ::std::vector< ::rtl::OUString >& _out_rAdditionalFilterComponents
-                )   SAL_THROW(( ::com::sun::star::uno::Exception ));
+                );
 
         /** finalizes our <member>m_pOuterParameters</member> so that it can be used for
             external parameter listeners
@@ -347,7 +347,7 @@ namespace dbtools
                 );
 
         /** completes all missing parameters via an interaction handler
-        
+
             @precond
                 the instance is alive, i.e. <member>isAlive</member> returns <TRUE/>
 
@@ -360,7 +360,7 @@ namespace dbtools
                 );
 
         /** asks the parameter listeners to fill in final values
-        
+
             @precond
                 the instance is alive, i.e. <member>isAlive</member> returns <TRUE/>
 
@@ -375,7 +375,7 @@ namespace dbtools
 
     private:
         /** retrieves the columns of the parent database component
-        
+
             @precond
                 the instance is alive, i.e. <member>isAlive</member> returns <TRUE/>
             @return
@@ -383,7 +383,7 @@ namespace dbtools
         */
         bool    getParentColumns(
                     ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess >& /* [out] */ _out_rxParentColumns,
-                    bool _bFromComposer 
+                    bool _bFromComposer
                 );
 
         /** retrieves the columns of our database component
@@ -396,7 +396,7 @@ namespace dbtools
         bool    getColumns(
                     ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess >& /* [out] */ _rxColumns,
                     bool _bFromComposer
-                ) SAL_THROW(( ::com::sun::star::uno::Exception ));
+                );
 
         /** retrieves the active connection of the database component
         */
@@ -419,4 +419,3 @@ namespace dbtools
 //........................................................................
 
 #endif // CONNECTIVITY_PARAMETERS_HXX
-

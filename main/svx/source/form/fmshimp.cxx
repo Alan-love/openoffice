@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -110,6 +110,7 @@
 
 #include <algorithm>
 #include <functional>
+#include <iterator>
 
 // wird fuer Invalidate verwendet -> mitpflegen
 sal_uInt16 DatabaseSlotMap[] =
@@ -768,17 +769,17 @@ bool FmXFormShell::IsReadonlyDoc() const
 }
 
 //------------------------------------------------------------------
-Any SAL_CALL FmXFormShell::queryInterface( const Type& type) throw ( RuntimeException )
+Any SAL_CALL FmXFormShell::queryInterface( const Type& type)
 {
 	return FmXFormShell_BASE::queryInterface(type);
 }
 //------------------------------------------------------------------------------
-Sequence< Type > SAL_CALL FmXFormShell::getTypes(  ) throw(RuntimeException)
+Sequence< Type > SAL_CALL FmXFormShell::getTypes(  )
 {
 	return FmXFormShell_BASE::getTypes();
 }
 //------------------------------------------------------------------------------
-Sequence< sal_Int8 > SAL_CALL FmXFormShell::getImplementationId() throw(RuntimeException)
+Sequence< sal_Int8 > SAL_CALL FmXFormShell::getImplementationId()
 {
     static ::cppu::OImplementationId* pId = 0;
 	if (! pId)
@@ -794,7 +795,7 @@ Sequence< sal_Int8 > SAL_CALL FmXFormShell::getImplementationId() throw(RuntimeE
 }
 //	EventListener
 //------------------------------------------------------------------------------
-void SAL_CALL FmXFormShell::disposing(const EventObject& e) throw( RuntimeException )
+void SAL_CALL FmXFormShell::disposing(const EventObject& e)
 {
     impl_checkDisposed();
 
@@ -833,7 +834,7 @@ void SAL_CALL FmXFormShell::disposing(const EventObject& e) throw( RuntimeExcept
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL FmXFormShell::propertyChange(const PropertyChangeEvent& evt) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL FmXFormShell::propertyChange(const PropertyChangeEvent& evt)
 {
     if ( impl_checkDisposed() )
         return;
@@ -898,7 +899,7 @@ void FmXFormShell::invalidateFeatures( const ::std::vector< sal_Int32 >& _rFeatu
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL FmXFormShell::formActivated(const EventObject& rEvent) throw( RuntimeException )
+void SAL_CALL FmXFormShell::formActivated(const EventObject& rEvent)
 {
     if ( impl_checkDisposed() )
         return;
@@ -909,7 +910,7 @@ void SAL_CALL FmXFormShell::formActivated(const EventObject& rEvent) throw( Runt
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL FmXFormShell::formDeactivated(const EventObject& rEvent) throw( RuntimeException )
+void SAL_CALL FmXFormShell::formDeactivated(const EventObject& rEvent)
 {
     if ( impl_checkDisposed() )
         return;
@@ -1844,7 +1845,7 @@ namespace
     {
 	    return  ( _nWhich == SID_FM_RECORD_FIRST )
 	        ||  ( _nWhich == SID_FM_RECORD_PREV )
-            ||  ( _nWhich == SID_FM_RECORD_NEXT ) 
+            ||  ( _nWhich == SID_FM_RECORD_NEXT )
 	        ||  ( _nWhich == SID_FM_RECORD_LAST )
 	        ||  ( _nWhich == SID_FM_RECORD_NEW );
     }
@@ -1991,7 +1992,7 @@ void FmXFormShell::setActiveController( const Reference< runtime::XFormControlle
 
 		stopListening();
 
-        impl_switchActiveControllerListening( false );        
+        impl_switchActiveControllerListening( false );
 
         m_aActiveControllerFeatures.dispose();
 		m_xActiveController = xController;
@@ -2596,7 +2597,7 @@ IMPL_LINK(FmXFormShell, OnSearchContextRequest, FmSearchContext*, pfmscContextIn
 
   // XContainerListener
 //------------------------------------------------------------------------------
-void FmXFormShell::elementInserted(const ContainerEvent& evt) throw(::com::sun::star::uno::RuntimeException)
+void FmXFormShell::elementInserted(const ContainerEvent& evt)
 {
     if ( impl_checkDisposed() )
         return;
@@ -2609,7 +2610,7 @@ void FmXFormShell::elementInserted(const ContainerEvent& evt) throw(::com::sun::
 }
 
 //------------------------------------------------------------------------------
-void FmXFormShell::elementReplaced(const ContainerEvent& evt) throw(::com::sun::star::uno::RuntimeException)
+void FmXFormShell::elementReplaced(const ContainerEvent& evt)
 {
     if ( impl_checkDisposed() )
         return;
@@ -2622,7 +2623,7 @@ void FmXFormShell::elementReplaced(const ContainerEvent& evt) throw(::com::sun::
 }
 
 //------------------------------------------------------------------------------
-void FmXFormShell::elementRemoved(const ContainerEvent& evt) throw(::com::sun::star::uno::RuntimeException)
+void FmXFormShell::elementRemoved(const ContainerEvent& evt)
 {
     if ( impl_checkDisposed() )
         return;
@@ -2727,7 +2728,7 @@ void FmXFormShell::impl_RemoveElement_nothrow(const Reference< XInterface>& Elem
 }
 
 //------------------------------------------------------------------------------
-void FmXFormShell::selectionChanged(const EventObject& rEvent) throw(::com::sun::star::uno::RuntimeException)
+void FmXFormShell::selectionChanged(const EventObject& rEvent)
 {
     if ( impl_checkDisposed() )
         return;

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_svx.hxx"
@@ -136,7 +134,7 @@ SdrObjList::~SdrObjList()
 
 	// #111111#
 	// To avoid that the Clear() method will broadcast changes when in destruction
-	// which would call virtual methos (not allowed in destructor), the model is set
+	// which would call virtual methods (not allowed in destructor), the model is set
 	// to NULL here.
 	pModel = 0L;
 
@@ -252,7 +250,7 @@ void SdrObjList::Clear()
         RemoveObjectFromContainer(maList.size()-1);
 
 		// flushViewObjectContacts() is done since SdrObject::Free is not guaranteed
-		// to delete the object and thus refresh visualisations
+		// to delete the object and thus refresh visualizations
         pObj->GetViewContact().flushViewObjectContacts(true);
 
 		bObjectsRemoved = sal_True;
@@ -347,7 +345,7 @@ void SdrObjList::SetRectsDirty()
 void SdrObjList::impChildInserted(SdrObject& rChild) const
 {
 	sdr::contact::ViewContact* pParent = rChild.GetViewContact().GetParentContact();
-	
+
 	if(pParent)
 	{
 		pParent->ActionChildInserted(rChild.GetViewContact());
@@ -369,7 +367,7 @@ void SdrObjList::NbcInsertObject(SdrObject* pObj, sal_uIntPtr nPos, const SdrIns
 		pObj->SetPage(pPage);
 
 		// #110094# Inform the parent about change to allow invalidations at
-		// evtl. existing parent visualisations
+		// evtl. existing parent visualizations
 		impChildInserted(*pObj);
 
 		if (!bRectsDirty) {
@@ -467,7 +465,7 @@ SdrObject* SdrObjList::RemoveObject(sal_uIntPtr nObjNum)
     RemoveObjectFromContainer(nObjNum);
 
 	DBG_ASSERT(pObj!=NULL,"Object zum Removen nicht gefunden");
-	if(pObj) 
+	if(pObj)
 	{
 		// flushViewObjectContacts() clears the VOC's and those invalidate
         pObj->GetViewContact().flushViewObjectContacts(true);
@@ -495,7 +493,7 @@ SdrObject* SdrObjList::RemoveObject(sal_uIntPtr nObjNum)
 		if(pOwnerObj && !GetObjCount())
 		{
 			// empty group created; it needs to be repainted since it's
-			// visualisation changes
+			// visualization changes
 			pOwnerObj->ActionChanged();
 		}
 	}
@@ -528,7 +526,7 @@ SdrObject* SdrObjList::NbcReplaceObject(SdrObject* pNewObj, sal_uIntPtr nObjNum)
 		pNewObj->SetPage(pPage);
 
 		// #110094#  Inform the parent about change to allow invalidations at
-		// evtl. existing parent visualisations
+		// evtl. existing parent visualizations
 		impChildInserted(*pNewObj);
 
 		pNewObj->SetInserted(sal_True);
@@ -549,7 +547,7 @@ SdrObject* SdrObjList::ReplaceObject(SdrObject* pNewObj, sal_uIntPtr nObjNum)
         OSL_ASSERT(pNewObj!=NULL);
         return NULL;
     }
-    
+
 	SdrObject* pObj=maList[nObjNum];
 	DBG_ASSERT(pObj!=NULL,"SdrObjList::ReplaceObject: Object zum Removen nicht gefunden");
 	if (pObj!=NULL) {
@@ -575,7 +573,7 @@ SdrObject* SdrObjList::ReplaceObject(SdrObject* pNewObj, sal_uIntPtr nObjNum)
 		pNewObj->SetPage(pPage);
 
 		// #110094#  Inform the parent about change to allow invalidations at
-		// evtl. existing parent visualisations
+		// evtl. existing parent visualizations
 		impChildInserted(*pNewObj);
 
 		pNewObj->SetInserted(sal_True);
@@ -611,7 +609,7 @@ SdrObject* SdrObjList::NbcSetObjectOrdNum(sal_uIntPtr nOldObjNum, sal_uIntPtr nN
 
         InsertObjectIntoContainer(*pObj,nNewObjNum);
 
-		// #110094# No need to delete visualisation data since same object
+		// #110094# No need to delete visualization data since same object
 		// gets inserted again. Also a single ActionChanged is enough
 		pObj->ActionChanged();
 
@@ -638,13 +636,13 @@ SdrObject* SdrObjList::SetObjectOrdNum(sal_uIntPtr nOldObjNum, sal_uIntPtr nNewO
 		RemoveObjectFromContainer(nOldObjNum);
 		InsertObjectIntoContainer(*pObj,nNewObjNum);
 
-		// #110094#No need to delete visualisation data since same object
+		// #110094#No need to delete visualization data since same object
 		// gets inserted again. Also a single ActionChanged is enough
 		pObj->ActionChanged();
 
 		pObj->SetOrdNum(nNewObjNum);
 		bObjOrdNumsDirty=sal_True;
-		if (pModel!=NULL) 
+		if (pModel!=NULL)
 		{
 			// Hier muss ein anderer Broadcast her!
 			if (pObj->GetPage()!=NULL) pModel->Broadcast(SdrHint(*pObj));
@@ -668,7 +666,7 @@ const Rectangle& SdrObjList::GetAllObjBoundRect() const
     // #i106183# for deep group hierarchies like in chart2, the invalidates
     // through the hierarchy are not correct; use a 2nd hint for the needed
     // recalculation. Future versions will have no bool flag at all, but
-    // just aOutRect in empty state to representate an invalid state, thus
+    // just aOutRect in empty state to represent an invalid state, thus
     // it's a step in the right direction.
 	if (bRectsDirty || aOutRect.IsEmpty())
     {
@@ -722,7 +720,7 @@ void SdrObjList::ReformatAllTextObjects()
 
 /** steps over all available objects and reformats all
 	edge objects that are connected to other objects so that
-	they may reposition itselfs.
+	they may reposition itself.
 	#103122#
 */
 void SdrObjList::ReformatAllEdgeObjects()
@@ -733,7 +731,7 @@ void SdrObjList::ReformatAllEdgeObjects()
     while(aIter.IsMore())
 	{
 		SdrEdgeObj* pSdrEdgeObj = dynamic_cast< SdrEdgeObj* >(aIter.Next());
-		
+
         if(pSdrEdgeObj)
         {
 			pSdrEdgeObj->Reformat();
@@ -985,7 +983,7 @@ bool SdrObjList::RecalcNavigationPositions (void)
         if (mpNavigationOrder.get() != NULL)
         {
             mbIsNavigationOrderDirty = false;
-            
+
             WeakSdrObjectContainerType::iterator iObject;
             WeakSdrObjectContainerType::const_iterator iEnd (mpNavigationOrder->end());
             sal_uInt32 nIndex (0);
@@ -1012,7 +1010,7 @@ void SdrObjList::SetNavigationOrder (const uno::Reference<container::XIndexAcces
 
         if (mpNavigationOrder.get() == NULL)
             mpNavigationOrder.reset(new WeakSdrObjectContainerType(nCount));
-        
+
         for (sal_Int32 nIndex=0; nIndex<nCount; ++nIndex)
         {
             uno::Reference<uno::XInterface> xShape (rxOrder->getByIndex(nIndex), uno::UNO_QUERY);
@@ -1083,9 +1081,9 @@ void SdrObjList::ReplaceObjectInContainer (
             aReference));
         if (iObject != mpNavigationOrder->end())
             mpNavigationOrder->erase(iObject);
-        
+
         mpNavigationOrder->push_back(&rNewObject);
-        
+
         mbIsNavigationOrderDirty = true;
     }
 
@@ -1165,7 +1163,7 @@ sdr::contact::ViewContact& SdrPage::GetViewContact() const
 {
 	if(!mpViewContact)
 	{
-		const_cast< SdrPage* >(this)->mpViewContact = 
+		const_cast< SdrPage* >(this)->mpViewContact =
             const_cast< SdrPage* >(this)->CreateObjectSpecificViewContact();
 	}
 
@@ -1317,7 +1315,7 @@ SdrPage::SdrPage(SdrModel& rNewModel, bool bMasterPage)
 	mbSwappingLocked(false),
     mbPageBorderOnlyLeftRight(false)
 {
-    DBG_CTOR(SdrPage,NULL);    
+    DBG_CTOR(SdrPage,NULL);
 	aPrefVisiLayers.SetAll();
 	eListKind = (bMasterPage) ? SDROBJLIST_MASTERPAGE : SDROBJLIST_DRAWPAGE;
 
@@ -1344,7 +1342,7 @@ SdrPage::SdrPage(const SdrPage& rSrcPage)
 	mbSwappingLocked(rSrcPage.mbSwappingLocked),
     mbPageBorderOnlyLeftRight(rSrcPage.mbPageBorderOnlyLeftRight)
 {
-    DBG_CTOR(SdrPage,NULL);    
+    DBG_CTOR(SdrPage,NULL);
 	aPrefVisiLayers.SetAll();
 	eListKind = (mbMaster) ? SDROBJLIST_MASTERPAGE : SDROBJLIST_DRAWPAGE;
 
@@ -1352,7 +1350,7 @@ SdrPage::SdrPage(const SdrPage& rSrcPage)
     // Warning: this leads to slicing (see issue 93186) and has to be
     // removed as soon as possible.
 	*this = rSrcPage;
-    OSL_ENSURE(mpSdrPageProperties, 
+    OSL_ENSURE(mpSdrPageProperties,
         "SdrPage::SdrPage: operator= did not create needed SdrPageProperties (!)");
 
 	// be careful and correct eListKind, a member of SdrObjList which
@@ -1420,7 +1418,7 @@ SdrPage::~SdrPage()
         mpSdrPageProperties = 0;
     }
 
-	DBG_DTOR(SdrPage,NULL);    
+	DBG_DTOR(SdrPage,NULL);
 }
 
 void SdrPage::operator=(const SdrPage& rSrcPage)
@@ -1450,7 +1448,7 @@ void SdrPage::operator=(const SdrPage& rSrcPage)
 	nBordRgt = rSrcPage.nBordRgt;
 	nBordLwr = rSrcPage.nBordLwr;
 	nPageNum = rSrcPage.nPageNum;
-	
+
 	if(rSrcPage.TRG_HasMasterPage())
 	{
 		TRG_SetMasterPage(rSrcPage.TRG_GetMasterPage());
@@ -1461,7 +1459,7 @@ void SdrPage::operator=(const SdrPage& rSrcPage)
 		TRG_ClearMasterPage();
 	}
 	//aMasters = rSrcPage.aMasters;
-	
+
 	mbObjectsNotPersistent = rSrcPage.mbObjectsNotPersistent;
 
     {
@@ -1489,7 +1487,7 @@ void SdrPage::operator=(const SdrPage& rSrcPage)
         mpSdrPageProperties->SetStyleSheet(rSrcPage.getSdrPageProperties().GetStyleSheet());
     }
 
-    // Now copy the contained obejcts (by cloning them)
+    // Now copy the contained objects (by cloning them)
 	SdrObjList::operator=(rSrcPage);
 }
 
@@ -1703,14 +1701,14 @@ void SdrPage::SetPageNum(sal_uInt16 nNew)
 		// change
 		nPageNum = nNew;
 
-		// notify visualisations, also notifies e.g. buffered MasterPages
+		// notify visualizations, also notifies e.g. buffered MasterPages
 		ActionChanged();
 	}
 }
 
 sal_uInt16 SdrPage::GetPageNum() const
 {
-	if (!mbInserted) 
+	if (!mbInserted)
         return 0;
 
 	if (mbMaster) {
@@ -1926,9 +1924,9 @@ Color SdrPage::GetPageBackgroundColor() const
 	bEdit selects if visibility test is for an editing view or a final render,
 	like printing.
 */
-bool SdrPage::checkVisibility( 
-	const sdr::contact::ViewObjectContact& /*rOriginal*/, 
-	const sdr::contact::DisplayInfo& /*rDisplayInfo*/, 
+bool SdrPage::checkVisibility(
+	const sdr::contact::ViewObjectContact& /*rOriginal*/,
+	const sdr::contact::DisplayInfo& /*rDisplayInfo*/,
 	bool /*bEdit*/)
 {
 	// this will be handled in the application if needed
@@ -1954,15 +1952,15 @@ Bitmap      SdrPage::GetBitmap(const SetOfByte& /*rVisibleLayers*/, FASTBOOL /*b
 	DBG_ASSERT(0, "SdrPage::GetBitmap(): not yet implemented.");
 	return Bitmap();
 }
-GDIMetaFile SdrPage::GetMetaFile(const SetOfByte& /*rVisibleLayers*/, FASTBOOL /*bTrimBorders*/) 
+GDIMetaFile SdrPage::GetMetaFile(const SetOfByte& /*rVisibleLayers*/, FASTBOOL /*bTrimBorders*/)
 {
 	DBG_ASSERT(0, "SdrPage::GetMetaFile(): not yet implemented.");
 	return GDIMetaFile();
 }
 
-bool SdrPage::isHandoutMasterPage() const 
-{ 
-    return mbMaster && GetModel() && GetModel()->GetMasterPageCount() 
+bool SdrPage::isHandoutMasterPage() const
+{
+    return mbMaster && GetModel() && GetModel()->GetMasterPageCount()
         && GetModel()->GetMasterPage(0) == this;
 }
 
@@ -2007,8 +2005,8 @@ const SdrPageProperties* SdrPage::getCorrectSdrPageProperties() const
 //////////////////////////////////////////////////////////////////////////////
 // use new redirector instead of pPaintProc
 
-StandardCheckVisisbilityRedirector::StandardCheckVisisbilityRedirector() 
-:	ViewObjectContactRedirector() 
+StandardCheckVisisbilityRedirector::StandardCheckVisisbilityRedirector()
+:	ViewObjectContactRedirector()
 {
 }
 
@@ -2017,7 +2015,7 @@ StandardCheckVisisbilityRedirector::~StandardCheckVisisbilityRedirector()
 }
 
 drawinglayer::primitive2d::Primitive2DSequence StandardCheckVisisbilityRedirector::createRedirectedPrimitive2DSequence(
-	const sdr::contact::ViewObjectContact& rOriginal, 
+	const sdr::contact::ViewObjectContact& rOriginal,
 	const sdr::contact::DisplayInfo& rDisplayInfo)
 {
 	SdrObject* pObject = rOriginal.GetViewContact().TryToGetSdrObject();
@@ -2041,5 +2039,4 @@ drawinglayer::primitive2d::Primitive2DSequence StandardCheckVisisbilityRedirecto
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////////
-// eof
+/* vim: set noet sw=4 ts=4: */

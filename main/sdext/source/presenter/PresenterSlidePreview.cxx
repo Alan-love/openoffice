@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -90,10 +90,10 @@ PresenterSlidePreview::PresenterSlidePreview (
         Reference<awt::XWindowPeer> xPeer (mxWindow, UNO_QUERY);
         if (xPeer.is())
             xPeer->setBackground(util::Color(0xff000000));
-        
+
         mxWindow->setVisible(sal_True);
     }
-    
+
     if (mpPresenterController.get() != NULL)
         mnSlideAspectRatio = mpPresenterController->GetSlideAspectRatio();
 
@@ -139,7 +139,6 @@ void SAL_CALL PresenterSlidePreview::disposing (void)
 //----- XResourceId -----------------------------------------------------------
 
 Reference<XResourceId> SAL_CALL PresenterSlidePreview::getResourceId (void)
-    throw (RuntimeException)
 {
     return mxViewId;
 }
@@ -148,7 +147,6 @@ Reference<XResourceId> SAL_CALL PresenterSlidePreview::getResourceId (void)
 
 
 sal_Bool SAL_CALL PresenterSlidePreview::isAnchorOnly (void)
-    throw (RuntimeException)
 {
     return false;
 }
@@ -159,7 +157,6 @@ sal_Bool SAL_CALL PresenterSlidePreview::isAnchorOnly (void)
 //----- XWindowListener -------------------------------------------------------
 
 void SAL_CALL PresenterSlidePreview::windowResized (const awt::WindowEvent& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
     ThrowIfDisposed();
@@ -172,7 +169,6 @@ void SAL_CALL PresenterSlidePreview::windowResized (const awt::WindowEvent& rEve
 
 
 void SAL_CALL PresenterSlidePreview::windowMoved (const awt::WindowEvent& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
 }
@@ -181,7 +177,6 @@ void SAL_CALL PresenterSlidePreview::windowMoved (const awt::WindowEvent& rEvent
 
 
 void SAL_CALL PresenterSlidePreview::windowShown (const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
     ThrowIfDisposed();
@@ -193,7 +188,6 @@ void SAL_CALL PresenterSlidePreview::windowShown (const lang::EventObject& rEven
 
 
 void SAL_CALL PresenterSlidePreview::windowHidden (const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
 }
@@ -204,7 +198,6 @@ void SAL_CALL PresenterSlidePreview::windowHidden (const lang::EventObject& rEve
 //----- XPaintListener --------------------------------------------------------
 
 void SAL_CALL PresenterSlidePreview::windowPaint (const awt::PaintEvent& rEvent)
-    throw (RuntimeException)
 {
     ThrowIfDisposed();
 
@@ -223,7 +216,6 @@ void SAL_CALL PresenterSlidePreview::windowPaint (const awt::PaintEvent& rEvent)
 //----- lang::XEventListener --------------------------------------------------
 
 void SAL_CALL PresenterSlidePreview::disposing (const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     if (rEvent.Source == mxWindow)
     {
@@ -239,7 +231,6 @@ void SAL_CALL PresenterSlidePreview::disposing (const lang::EventObject& rEvent)
 //----- XDrawView -------------------------------------------------------------
 
 void SAL_CALL PresenterSlidePreview::setCurrentPage (const Reference<drawing::XDrawPage>& rxSlide)
-    throw (RuntimeException)
 {
     ThrowIfDisposed();
     ::osl::MutexGuard aGuard (::osl::Mutex::getGlobalMutex());
@@ -250,7 +241,6 @@ void SAL_CALL PresenterSlidePreview::setCurrentPage (const Reference<drawing::XD
 
 
 Reference<drawing::XDrawPage> SAL_CALL PresenterSlidePreview::getCurrentPage (void)
-    throw (RuntimeException)
 {
     ThrowIfDisposed();
     return NULL;
@@ -388,7 +378,7 @@ void PresenterSlidePreview::Resize (void)
     {
         const awt::Rectangle aWindowBox (mxWindow->getPosSize());
         const awt::Size aNewPreviewSize (mxPreviewRenderer->calculatePreviewSize(
-            mnSlideAspectRatio, 
+            mnSlideAspectRatio,
                 awt::Size(aWindowBox.Width, aWindowBox.Height)));
         const geometry::IntegerSize2D aPreviewSize (mxPreview->getSize());
         if (aNewPreviewSize.Width==aPreviewSize.Width
@@ -407,7 +397,6 @@ void PresenterSlidePreview::Resize (void)
 
 
 void PresenterSlidePreview::ThrowIfDisposed (void)
-    throw (::com::sun::star::lang::DisposedException)
 {
 	if (PresenterSlidePreviewInterfaceBase::rBHelper.bDisposed || PresenterSlidePreviewInterfaceBase::rBHelper.bInDispose)
 	{
@@ -420,4 +409,3 @@ void PresenterSlidePreview::ThrowIfDisposed (void)
 
 
 } } // end of namespace ::sd::presenter
-

@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -59,7 +59,7 @@ PATCH_FILES=$(OOO_PATCH_FILES) \
 OOO_PATCH_FILES+=$(TARFILE_NAME).patch.os2
 CONFIGURE_DIR=
 CONFIGURE_ACTION=libtoolize --force && aclocal && autoconf && .$/configure RAPTOR2_CFLAGS=-I${PWD}$/..$/${INPATH}/inc RAPTOR2_LIBS='-L${PWD}/..$/${INPATH}/lib -lraptor2 -lxml2 -lcurl' PKG_CONFIG_PATH='../raptor2-2.0.15;../rasqal-0.9.33'
-CONFIGURE_FLAGS=--disable-dependency-tracking --disable-static --disable-gtk-doc --with-threads --with-openssl-digests --with-xml-parser=libxml --with-raptor=system --with-rasqual=system --without-bdb --without-sqlite --without-mysql --without-postgresql --without-threestore -without-iodbc --without-unixodbc --without-datadirect --without-virtuoso --with-regex-library=posix --with-decimal=none --with-www=xml --disable-ltdl-install --disable-modular --without-included-ltdl --disable-ltdl-convenience
+CONFIGURE_FLAGS=--disable-dependency-tracking --disable-static --disable-gtk-doc --with-threads --with-openssl-digests --with-xml-parser=libxml --with-raptor=system --with-rasqual=system --without-bdb --without-sqlite --without-mysql --without-postgresql --without-threestore -without-iodbc --without-unixodbc --without-datadirect --without-virtuoso --with-regex-library=posix --with-decimal=none --disable-ltdl-install --disable-modular --without-included-ltdl --disable-ltdl-convenience
 BUILD_ACTION=$(GNUMAKE)
 BUILD_FLAGS+= -j$(EXTMAXPROCESS)
 BUILD_DIR=$(CONFIGURE_DIR)
@@ -76,13 +76,18 @@ redland_LIBS+=$(MINGW_SHARED_LIBSTDCPP)
 
 CONFIGURE_DIR=
 CONFIGURE_ACTION=.$/configure PATH="..$/..$/..$/bin:$$PATH"
-CONFIGURE_FLAGS=--disable-static --disable-gtk-doc --with-openssl-digests --with-xml-parser=libxml --with-raptor=system --with-rasqual=system --without-bdb --without-sqlite --without-mysql --without-postgresql --without-threestore --with-regex-library=posix --with-decimal=none --with-www=xml --build=i586-pc-mingw32 --host=i586-pc-mingw32 lt_cv_cc_dll_switch="-shared" CC="$(redland_CC)" CPPFLAGS="-nostdinc $(INCLUDE)" LDFLAGS="-no-undefined -Wl,--enable-runtime-pseudo-reloc-v2,--export-all-symbols -L$(ILIB:s/;/ -L/)" LIBS="$(redland_LIBS)" OBJDUMP="$(WRAPCMD) objdump" LIBXML2LIB=$(LIBXML2LIB) XSLTLIB="$(XSLTLIB)"
+CONFIGURE_FLAGS=--disable-static --disable-gtk-doc --with-openssl-digests --with-xml-parser=libxml --with-raptor=system --with-rasqual=system --without-bdb --without-sqlite --without-mysql --without-postgresql --without-threestore --with-regex-library=posix --with-decimal=none --build=i586-pc-mingw32 --host=i586-pc-mingw32 lt_cv_cc_dll_switch="-shared" CC="$(redland_CC)" CPPFLAGS="-nostdinc $(INCLUDE)" LDFLAGS="-no-undefined -Wl,--enable-runtime-pseudo-reloc-v2,--export-all-symbols -L$(ILIB:s/;/ -L/)" LIBS="$(redland_LIBS)" OBJDUMP="$(WRAPCMD) objdump" LIBXML2LIB=$(LIBXML2LIB) XSLTLIB="$(XSLTLIB)"
 BUILD_ACTION=$(GNUMAKE)
 BUILD_FLAGS+= -j$(EXTMAXPROCESS)
 BUILD_DIR=$(CONFIGURE_DIR)
 .ELSE
 # there is no wntmsci build environment in the tarball; we use custom dmakefile
 OOO_PATCH_FILES+= $(TARFILE_NAME).patch.win32
+# Must come after .patch.win32, which touches the same header: three of the
+# win32 shims stopped being redundant and became harmful once the UCRT started
+# declaring the real functions.  The guards are on _MSC_VER, so this is inert
+# on VC9 and the file behaves exactly as it did before.
+OOO_PATCH_FILES+= $(TARFILE_NAME).patch.ucrt
 CONFIGURE_ACTION= \
 	$(COPY) src/rdf_config.h.in src/rdf_config.h
 BUILD_ACTION=dmake
@@ -129,7 +134,7 @@ XSLTLIB!:=$(XSLTLIB) # expand dmake variables for xslt-config
 CONFIGURE_DIR=
 #CONFIGURE_ACTION=.$/configure PATH="..$/..$/..$/bin:$$PATH" RAPTOR2_CFLAGS=-I${PWD}$/..$/${INPATH}/inc RAPTOR2_LIBS="-L${PWD}/..$/${INPATH}/lib -lraptor2" PKG_CONFIG_PATH="../raptor2-2.0.15:../rasqal-0.9.33"
 CONFIGURE_ACTION=.$/configure PATH="..$/..$/..$/bin:$$PATH" PKG_CONFIG_PATH="../raptor2-2.0.15:../rasqal-0.9.33"
-CONFIGURE_FLAGS=--disable-static --disable-gtk-doc --with-threads --with-openssl-digests --with-xml-parser=libxml --with-raptor=system --with-rasqual=system --without-bdb --without-sqlite --without-mysql --without-postgresql --without-threestore -without-iodbc --without-unixodbc --without-datadirect --without-virtuoso --with-regex-library=posix --with-decimal=none --with-www=xml --disable-ltdl-install --disable-modular --without-included-ltdl --disable-ltdl-convenience
+CONFIGURE_FLAGS=--disable-static --disable-gtk-doc --with-threads --with-openssl-digests --with-xml-parser=libxml --with-raptor=system --with-rasqual=system --without-bdb --without-sqlite --without-mysql --without-postgresql --without-threestore -without-iodbc --without-unixodbc --without-datadirect --without-virtuoso --with-regex-library=posix --with-decimal=none --disable-ltdl-install --disable-modular --without-included-ltdl --disable-ltdl-convenience
 BUILD_ACTION=$(AUGMENT_LIBRARY_PATH) $(GNUMAKE)
 BUILD_FLAGS+= -j$(EXTMAXPROCESS)
 BUILD_DIR=$(CONFIGURE_DIR)
@@ -180,4 +185,3 @@ OUT2LIB+=src$/.libs$/librdf.so.$(REDLAND_MAJOR)
 .INCLUDE : set_ext.mk
 .INCLUDE : target.mk
 .INCLUDE : tg_ext.mk
-

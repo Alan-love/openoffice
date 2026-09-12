@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 package fvt.uno.db;
@@ -42,7 +42,9 @@ import java.io.IOException;
 
 // ---------- junit imports -----------------
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openoffice.test.common.FileUtil;
 import org.openoffice.test.common.Testspace;
@@ -54,7 +56,7 @@ import static org.junit.Assert.*;
  * test case for Base's application UI
  */
 public class DBAccess {
-	UnoApp app = new UnoApp();
+	static final UnoApp app = new UnoApp();
 	private XOfficeDatabaseDocument m_databaseDocument;
 	private XDatabaseDocumentUI m_documentUI;
 
@@ -62,10 +64,18 @@ public class DBAccess {
 //		super();
 //	}
 
+	@BeforeClass
+	public static void setUpConnection() throws Exception {
+		app.start();
+	}
+
+	@AfterClass
+	public static void tearDownConnection() throws InterruptedException, Exception {
+		app.close();
+	}
 
 	@Before
 	public void before() throws java.lang.Exception {
-		app.start();
 		String a = null;
 		switchToDocument(a);
 	}
@@ -73,9 +83,8 @@ public class DBAccess {
 	@After
 	public void after() throws java.lang.Exception {
 		closeDocument();
-		app.close();
 	}
-	
+
 	private void closeDocument() {
 		DBUtil.close();
 		m_databaseDocument = null;

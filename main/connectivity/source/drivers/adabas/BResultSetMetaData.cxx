@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_adabas.hxx"
 
 #ifndef _CONNECTIVITY_ADABAS_BRESULTSETMETADATA_HXX_
 #include "adabas/BResultSetMetaData.hxx"
@@ -46,7 +46,7 @@ OAdabasResultSetMetaData::~OAdabasResultSetMetaData()
 {
 }
 // -----------------------------------------------------------------------------
-sal_Int32 SAL_CALL OAdabasResultSetMetaData::getColumnType( sal_Int32 column ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL OAdabasResultSetMetaData::getColumnType( sal_Int32 column )
 {
 	sal_Int32 nType = OAdabasResultSetMetaData_BASE::getColumnType( column);
 	// special handling for float values which could be doubles
@@ -56,7 +56,7 @@ sal_Int32 SAL_CALL OAdabasResultSetMetaData::getColumnType( sal_Int32 column ) t
 	return nType;
 }
 // -----------------------------------------------------------------------------
-sal_Int32 SAL_CALL OAdabasResultSetMetaData::isNullable( sal_Int32 column ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL OAdabasResultSetMetaData::isNullable( sal_Int32 column )
 {
 	sal_Int32 nValue = 0;
 	sal_Bool bFound = sal_False;
@@ -68,7 +68,7 @@ sal_Int32 SAL_CALL OAdabasResultSetMetaData::isNullable( sal_Int32 column ) thro
 	return nValue;
 }
 // -------------------------------------------------------------------------
-sal_Bool SAL_CALL OAdabasResultSetMetaData::isAutoIncrement( sal_Int32 column ) throw(SQLException, RuntimeException)
+sal_Bool SAL_CALL OAdabasResultSetMetaData::isAutoIncrement( sal_Int32 column )
 {
 	if ( m_aSelectColumns.isValid() && column > 0 && column <= (sal_Int32)m_aSelectColumns->get().size() )
     {
@@ -80,4 +80,3 @@ sal_Bool SAL_CALL OAdabasResultSetMetaData::isAutoIncrement( sal_Int32 column ) 
 	return getNumColAttrib(column,SQL_DESC_AUTO_UNIQUE_VALUE) == SQL_TRUE;
 }
 // -------------------------------------------------------------------------
-

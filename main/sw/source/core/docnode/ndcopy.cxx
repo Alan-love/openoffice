@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -1142,7 +1142,7 @@ bool SwDoc::CopyImpl( SwPaM& rPam, SwPosition& rPos,
             else if( bCanMoveBack )
             {   //Insertion at the first position of a text node. It will not be splitted, the table
                 // will be inserted before the text node.
-                // See below, before the SetInsertRange funciton of the undo object will be called,
+                // See below, before the SetInsertRange function of the undo object will be called,
                 // the CpyPam would be moved to the next content position. This has to be avoided
                 // We want to be moved to the table node itself thus we have to set bCanMoveBack
                 // and to manipulate aCpyPam.
@@ -1442,7 +1442,7 @@ void SwDoc::CopyFlyInFlyImpl(
 			//frames at the last source node are not always copied:
             //- if the node is empty and is the last node of the document or a table cell
             //  or a text frame then tey have to be copied
-            //- if the content index in this node is > 0 then paragph and frame bound objects are copied
+            //- if the content index in this node is > 0 then paragraph and frame bound objects are copied
             //- to-character bound objects are copied if their index is <= nEndContentIndex
             bool bAdd = false;
             if( pAPos->nNode < rRg.aEnd )
@@ -1640,7 +1640,3 @@ void SwDoc::CopyFlyInFlyImpl(
 		}
 	}
 }
-
-
-
-

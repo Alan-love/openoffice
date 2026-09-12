@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -151,7 +151,7 @@ void SAL_CALL ORowSetDataColumn::getFastPropertyValue( Any& rValue, sal_Int32 nH
 }
 
 // -------------------------------------------------------------------------
-void SAL_CALL ORowSetDataColumn::setFastPropertyValue_NoBroadcast(sal_Int32 nHandle,const Any& rValue )throw (Exception)
+void SAL_CALL ORowSetDataColumn::setFastPropertyValue_NoBroadcast(sal_Int32 nHandle,const Any& rValue )
 {
     switch( nHandle )
     {
@@ -174,7 +174,7 @@ void SAL_CALL ORowSetDataColumn::setFastPropertyValue_NoBroadcast(sal_Int32 nHan
 sal_Bool SAL_CALL ORowSetDataColumn::convertFastPropertyValue( Any & rConvertedValue,
 															Any & rOldValue,
 															sal_Int32 nHandle,
-															const Any& rValue ) throw (IllegalArgumentException)
+															const Any& rValue )
 {
     sal_Bool bModified = sal_False;
     switch( nHandle )
@@ -201,7 +201,7 @@ sal_Bool SAL_CALL ORowSetDataColumn::convertFastPropertyValue( Any & rConvertedV
 	return bModified;
 }
 //--------------------------------------------------------------------------
-Sequence< sal_Int8 > ORowSetDataColumn::getImplementationId() throw (RuntimeException)
+Sequence< sal_Int8 > ORowSetDataColumn::getImplementationId()
 {
 	static OImplementationId * pId = 0;
 	if (! pId)
@@ -280,9 +280,7 @@ void ORowSetDataColumns::assign(const ::vos::ORef< ::connectivity::OSQLColumns>&
 	reFill(_rVector);
 }
 // -----------------------------------------------------------------------------
-void ORowSetDataColumns::impl_refresh() throw(::com::sun::star::uno::RuntimeException)
+void ORowSetDataColumns::impl_refresh()
 {
 }
 // -----------------------------------------------------------------------------
-
-

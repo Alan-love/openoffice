@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -64,7 +64,6 @@ XINTERFACE_COMMON_IMPL( CachedContentResultSetStub )
 
 Any SAL_CALL CachedContentResultSetStub
 	::queryInterface( const Type&  rType )
-	throw ( RuntimeException )
 {
 	//list all interfaces inclusive baseclasses of interfaces
 
@@ -89,7 +88,6 @@ Any SAL_CALL CachedContentResultSetStub
 //virtual
 void SAL_CALL CachedContentResultSetStub
 	::impl_propertyChange( const PropertyChangeEvent& rEvt )
-	throw( RuntimeException )
 {
 	impl_EnsureNotDisposed();
 
@@ -110,11 +108,9 @@ void SAL_CALL CachedContentResultSetStub
 //virtual
 void SAL_CALL CachedContentResultSetStub
 	::impl_vetoableChange( const PropertyChangeEvent& rEvt )
-	throw( PropertyVetoException,
-		   RuntimeException )
 {
 	impl_EnsureNotDisposed();
-	
+
 	//don't notify events on fetchsize and fetchdirection to the above CachedContentResultSet
 	//because it will ignore them anyway and we can save this remote calls
 	if(	   rEvt.PropertyName == m_aPropertyNameForFetchSize
@@ -136,7 +132,6 @@ XTYPEPROVIDER_COMMON_IMPL( CachedContentResultSetStub )
 //list all interfaces exclusive baseclasses
 Sequence< Type > SAL_CALL CachedContentResultSetStub
 	::getTypes()
-	throw( RuntimeException )
 {
 	static Sequence< Type >* pTypes = NULL;
 	if( !pTypes )
@@ -360,7 +355,6 @@ return aRet;
 FetchResult SAL_CALL CachedContentResultSetStub
 	::fetch( sal_Int32 nRowStartPosition
 	, sal_Int32 nRowCount, sal_Bool bDirection )
-	throw( RuntimeException )
 {
 	impl_init_xRowOrigin();
 	FETCH_XXX( impl_getCurrentRowContent, m_xRowOrigin );
@@ -399,7 +393,6 @@ sal_Int32 SAL_CALL CachedContentResultSetStub
 void SAL_CALL CachedContentResultSetStub
 	::impl_getCurrentRowContent( Any& rRowContent
 		, Reference< XRow > xRow )
-		throw ( SQLException, RuntimeException )
 {
 	sal_Int32 nCount = impl_getColumnCount();
 
@@ -414,9 +407,8 @@ void SAL_CALL CachedContentResultSetStub
 
 void SAL_CALL CachedContentResultSetStub
 	::impl_propagateFetchSizeAndDirection( sal_Int32 nFetchSize, sal_Bool bFetchDirection )
-		throw ( RuntimeException )
 {
-	//this is done only for the case, that there is another CachedContentResultSet in the chain of underlying ResulSets
+	//this is done only for the case, that there is another CachedContentResultSet in the chain of underlying ResultSets
 
 	//we do not propagate the property 'FetchSize' or 'FetchDirection' via 'setPropertyValue' from the above CachedContentResultSet to save remote calls
 
@@ -447,10 +439,10 @@ void SAL_CALL CachedContentResultSetStub
 		if(!bFirstPropagationDone)
 		{
 			//check whether the properties 'FetchSize' and 'FetchDirection' do exist
-			
+
 			Reference< XPropertySetInfo > xPropertySetInfo = getPropertySetInfo();
-			sal_Bool bHasSize = xPropertySetInfo->hasPropertyByName( m_aPropertyNameForFetchSize ); 
-			sal_Bool bHasDirection = xPropertySetInfo->hasPropertyByName( m_aPropertyNameForFetchDirection ); 
+			sal_Bool bHasSize = xPropertySetInfo->hasPropertyByName( m_aPropertyNameForFetchSize );
+			sal_Bool bHasDirection = xPropertySetInfo->hasPropertyByName( m_aPropertyNameForFetchDirection );
 
 			if(!bHasSize || !bHasDirection)
 			{
@@ -459,7 +451,7 @@ void SAL_CALL CachedContentResultSetStub
 				return;
 			}
 		}
-		
+
 		sal_Bool bSetSize		= ( nLastSize		!=nFetchSize		) || !bFirstPropagationDone;
 		sal_Bool bSetDirection	= ( bLastDirection	!=bFetchDirection	) || !bFirstPropagationDone;
 
@@ -469,7 +461,7 @@ void SAL_CALL CachedContentResultSetStub
 			m_nLastFetchSize		= nFetchSize;
 			m_bLastFetchDirection	= bFetchDirection;
 		}
-		
+
 		if( bSetSize )
 		{
 			Any aValue;
@@ -504,7 +496,6 @@ void SAL_CALL CachedContentResultSetStub
 void SAL_CALL CachedContentResultSetStub
 	::impl_getCurrentContentIdentifierString( Any& rAny
 		, Reference< XContentAccess > xContentAccess )
-		throw ( RuntimeException )
 {
  	rAny <<= xContentAccess->queryContentIdentifierString();
 }
@@ -512,7 +503,6 @@ void SAL_CALL CachedContentResultSetStub
 void SAL_CALL CachedContentResultSetStub
 	::impl_getCurrentContentIdentifier( Any& rAny
 		, Reference< XContentAccess > xContentAccess )
-		throw ( RuntimeException )
 {
  	rAny <<= xContentAccess->queryContentIdentifier();
 }
@@ -520,7 +510,6 @@ void SAL_CALL CachedContentResultSetStub
 void SAL_CALL CachedContentResultSetStub
 	::impl_getCurrentContent( Any& rAny
 		, Reference< XContentAccess > xContentAccess )
-		throw ( RuntimeException )
 {
  	rAny <<= xContentAccess->queryContent();
 }
@@ -529,7 +518,6 @@ void SAL_CALL CachedContentResultSetStub
 FetchResult SAL_CALL CachedContentResultSetStub
 	::fetchContentIdentifierStrings( sal_Int32 nRowStartPosition
 		, sal_Int32 nRowCount, sal_Bool bDirection )
-		throw( com::sun::star::uno::RuntimeException )
 {
 	impl_init_xContentAccessOrigin();
 	FETCH_XXX( impl_getCurrentContentIdentifierString, m_xContentAccessOrigin );
@@ -539,7 +527,6 @@ FetchResult SAL_CALL CachedContentResultSetStub
 FetchResult SAL_CALL CachedContentResultSetStub
 	::fetchContentIdentifiers( sal_Int32 nRowStartPosition
 		, sal_Int32 nRowCount, sal_Bool bDirection )
-		throw( com::sun::star::uno::RuntimeException )
 {
 	impl_init_xContentAccessOrigin();
 	FETCH_XXX( impl_getCurrentContentIdentifier, m_xContentAccessOrigin );
@@ -549,7 +536,6 @@ FetchResult SAL_CALL CachedContentResultSetStub
 FetchResult SAL_CALL CachedContentResultSetStub
 	::fetchContents( sal_Int32 nRowStartPosition
 		, sal_Int32 nRowCount, sal_Bool bDirection )
-		throw( com::sun::star::uno::RuntimeException )
 {
 	impl_init_xContentAccessOrigin();
 	FETCH_XXX( impl_getCurrentContent, m_xContentAccessOrigin );
@@ -613,7 +599,6 @@ ONE_INSTANCE_SERVICE_FACTORY_IMPL( CachedContentResultSetStubFactory );
 Reference< XResultSet > SAL_CALL CachedContentResultSetStubFactory
 	::createCachedContentResultSetStub(
 			const Reference< XResultSet > & xSource )
-			throw( RuntimeException )
 {
 	if( xSource.is() )
 	{
@@ -623,5 +608,3 @@ Reference< XResultSet > SAL_CALL CachedContentResultSetStubFactory
 	}
 	return NULL;
 }
-
-

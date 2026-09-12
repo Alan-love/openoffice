@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -47,7 +47,7 @@ import util.utils;
 *  <li> <code>com::sun::star::beans::XMultiPropertySet</code></li>
 * </ul>
 * This object test <b> is NOT </b> designed to be run in several
-* threads concurently.
+* threads concurrently.
 * @see com.sun.star.awt.UnoControlFixedLineModel
 * @see com.sun.star.io.XPersistObject
 * @see com.sun.star.lang.XComponent
@@ -70,7 +70,7 @@ public class UnoControlFixedLineModel extends TestCase {
     *      {@link ifc.io._XPersistObject} </li>
     * </ul>
     */
-    public synchronized TestEnvironment createTestEnvironment(TestParameters Param, 
+    public synchronized TestEnvironment createTestEnvironment(TestParameters Param,
                                                               PrintWriter log)
         throws StatusException {
         XInterface oObj = null;

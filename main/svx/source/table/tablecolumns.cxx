@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -66,7 +66,7 @@ void TableColumns::dispose()
 
 // -----------------------------------------------------------------------------
 
-void TableColumns::throwIfDisposed() const throw (::com::sun::star::uno::RuntimeException)
+void TableColumns::throwIfDisposed() const
 {
 	if( !mxTableModel.is() )
 		throw DisposedException();
@@ -76,7 +76,7 @@ void TableColumns::throwIfDisposed() const throw (::com::sun::star::uno::Runtime
 // XTableRows
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TableColumns::insertByIndex( sal_Int32 nIndex, sal_Int32 nCount ) throw (RuntimeException)
+void SAL_CALL TableColumns::insertByIndex( sal_Int32 nIndex, sal_Int32 nCount )
 {
 	throwIfDisposed();
 	mxTableModel->insertColumns( nIndex, nCount );
@@ -84,7 +84,7 @@ void SAL_CALL TableColumns::insertByIndex( sal_Int32 nIndex, sal_Int32 nCount ) 
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TableColumns::removeByIndex( sal_Int32 nIndex, sal_Int32 nCount ) throw (RuntimeException)
+void SAL_CALL TableColumns::removeByIndex( sal_Int32 nIndex, sal_Int32 nCount )
 {
 	throwIfDisposed();
 	mxTableModel->removeColumns( nIndex, nCount );
@@ -94,7 +94,7 @@ void SAL_CALL TableColumns::removeByIndex( sal_Int32 nIndex, sal_Int32 nCount ) 
 // XIndexAccess
 // -----------------------------------------------------------------------------
 
-sal_Int32 SAL_CALL TableColumns::getCount() throw (RuntimeException)
+sal_Int32 SAL_CALL TableColumns::getCount()
 {
 	throwIfDisposed();
 	return mxTableModel->getColumnCount();
@@ -102,7 +102,7 @@ sal_Int32 SAL_CALL TableColumns::getCount() throw (RuntimeException)
 
 // -----------------------------------------------------------------------------
 
-Any SAL_CALL TableColumns::getByIndex( sal_Int32 Index ) throw (IndexOutOfBoundsException, WrappedTargetException, RuntimeException)
+Any SAL_CALL TableColumns::getByIndex( sal_Int32 Index )
 {
 	throwIfDisposed();
 
@@ -116,7 +116,7 @@ Any SAL_CALL TableColumns::getByIndex( sal_Int32 Index ) throw (IndexOutOfBounds
 // XElementAccess
 // -----------------------------------------------------------------------------
 
-Type SAL_CALL TableColumns::getElementType() throw (RuntimeException)
+Type SAL_CALL TableColumns::getElementType()
 {
 	throwIfDisposed();
 
@@ -125,7 +125,7 @@ Type SAL_CALL TableColumns::getElementType() throw (RuntimeException)
 
 // -----------------------------------------------------------------------------
 
-sal_Bool SAL_CALL TableColumns::hasElements() throw (RuntimeException)
+sal_Bool SAL_CALL TableColumns::hasElements()
 {
 	throwIfDisposed();
 

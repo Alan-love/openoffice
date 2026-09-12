@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -83,21 +83,19 @@ struct LdapDefinition
 typedef std::map< rtl::OUString, rtl::OUString > LdapData; // key/value pairs
 
 /** Class encapsulating all LDAP functionality */
-class LdapConnection 
+class LdapConnection
 {
     friend struct LdapMessageHolder;
 public:
-	
+
     /** Default constructor */
     LdapConnection(void) : mConnection(NULL),mLdapDefinition() {}
     /** Destructor, releases the connection */
     ~LdapConnection(void) ;
 	/** Make connection to LDAP server */
-	void  connectSimple(const LdapDefinition& aDefinition)
-        throw (ldap::LdapConnectionException,
-                ldap::LdapGenericException);
+	void  connectSimple(const LdapDefinition& aDefinition);
 
-	/** 
+	/**
         Gets LdapUserProfile from LDAP repository for specified user
         @param aUser    name of logged on user
         @param aUserProfileMap  Map containing LDAP->00o mapping
@@ -106,37 +104,28 @@ public:
          @throws com::sun::star::ldap::LdapGenericException
                   if an LDAP error occurs.
     */
-    void getUserProfile(const rtl::OUString& aUser, LdapData * data)
-         throw (lang::IllegalArgumentException,
-                 ldap::LdapConnectionException,
-                 ldap::LdapGenericException);
+    void getUserProfile(const rtl::OUString& aUser, LdapData * data);
 
     /** finds DN of user
 		@return  DN of User
 	*/
-	rtl::OString findUserDn(const rtl::OString& aUser)  
-        throw (lang::IllegalArgumentException,
-                ldap::LdapConnectionException, 
-                ldap::LdapGenericException);
+	rtl::OString findUserDn(const rtl::OString& aUser);
 
     void loadModule();
 
     static t_ldap_err2string        s_p_err2string;
 private:
-	
-	void initConnection()
-         throw (ldap::LdapConnectionException);
+
+	void initConnection();
     void disconnect();
 	/**
       Indicates whether the connection is in a valid state.
 	  @return   sal_True if connection is valid, sal_False otherwise
       */
     bool isValid(void) const { return mConnection != NULL ; }
-	
-    void  connectSimple()
-        throw (ldap::LdapConnectionException,
-                ldap::LdapGenericException);
-    
+
+    void  connectSimple();
+
     /** LDAP connection object */
     LDAP* mConnection ;
 	LdapDefinition mLdapDefinition;
@@ -154,7 +143,7 @@ private:
     static t_ldap_first_attribute   s_p_first_attribute;
     static t_ldap_next_attribute    s_p_next_attribute;
     static t_ldap_search_s          s_p_search_s;
-    
+
     static t_ldap_memfree           s_p_memfree;
 
 } ;

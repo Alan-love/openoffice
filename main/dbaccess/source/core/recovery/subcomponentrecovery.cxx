@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -299,14 +299,14 @@ namespace dbaccess
 
     public:
         // XDocumentHandler
-        virtual void SAL_CALL startDocument(  ) throw (SAXException, RuntimeException);
-        virtual void SAL_CALL endDocument(  ) throw (SAXException, RuntimeException);
-        virtual void SAL_CALL startElement( const ::rtl::OUString& aName, const Reference< XAttributeList >& xAttribs ) throw (SAXException, RuntimeException);
-        virtual void SAL_CALL endElement( const ::rtl::OUString& aName ) throw (SAXException, RuntimeException);
-        virtual void SAL_CALL characters( const ::rtl::OUString& aChars ) throw (SAXException, RuntimeException);
-        virtual void SAL_CALL ignorableWhitespace( const ::rtl::OUString& aWhitespaces ) throw (SAXException, RuntimeException);
-        virtual void SAL_CALL processingInstruction( const ::rtl::OUString& aTarget, const ::rtl::OUString& aData ) throw (SAXException, RuntimeException);
-        virtual void SAL_CALL setDocumentLocator( const Reference< XLocator >& xLocator ) throw (SAXException, RuntimeException);
+        virtual void SAL_CALL startDocument(  );
+        virtual void SAL_CALL endDocument(  );
+        virtual void SAL_CALL startElement( const ::rtl::OUString& aName, const Reference< XAttributeList >& xAttribs );
+        virtual void SAL_CALL endElement( const ::rtl::OUString& aName );
+        virtual void SAL_CALL characters( const ::rtl::OUString& aChars );
+        virtual void SAL_CALL ignorableWhitespace( const ::rtl::OUString& aWhitespaces );
+        virtual void SAL_CALL processingInstruction( const ::rtl::OUString& aTarget, const ::rtl::OUString& aData );
+        virtual void SAL_CALL setDocumentLocator( const Reference< XLocator >& xLocator );
 
         const ::comphelper::NamedValueCollection&   getSettings() const { return m_aSettings; }
 
@@ -316,17 +316,17 @@ namespace dbaccess
     };
 
     //--------------------------------------------------------------------
-    void SAL_CALL SettingsDocumentHandler::startDocument(  ) throw (SAXException, RuntimeException)
+    void SAL_CALL SettingsDocumentHandler::startDocument(  )
     {
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL SettingsDocumentHandler::endDocument(  ) throw (SAXException, RuntimeException)
+    void SAL_CALL SettingsDocumentHandler::endDocument(  )
     {
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL SettingsDocumentHandler::startElement( const ::rtl::OUString& i_Name, const Reference< XAttributeList >& i_Attribs ) throw (SAXException, RuntimeException)
+    void SAL_CALL SettingsDocumentHandler::startElement( const ::rtl::OUString& i_Name, const Reference< XAttributeList >& i_Attribs )
     {
         ::rtl::Reference< SettingsImport >  pNewState;
 
@@ -356,9 +356,9 @@ namespace dbaccess
 
         m_aStates.push( pNewState );
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL SettingsDocumentHandler::endElement( const ::rtl::OUString& i_Name ) throw (SAXException, RuntimeException)
+    void SAL_CALL SettingsDocumentHandler::endElement( const ::rtl::OUString& i_Name )
     {
         ENSURE_OR_THROW( !m_aStates.empty(), "no active element" );
         (void)i_Name;
@@ -367,33 +367,33 @@ namespace dbaccess
         pCurrentState->endElement();
         m_aStates.pop();
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL SettingsDocumentHandler::characters( const ::rtl::OUString& i_Chars ) throw (SAXException, RuntimeException)
+    void SAL_CALL SettingsDocumentHandler::characters( const ::rtl::OUString& i_Chars )
     {
         ENSURE_OR_THROW( !m_aStates.empty(), "no active element" );
 
         ::rtl::Reference< SettingsImport > pCurrentState( m_aStates.top() );
         pCurrentState->characters( i_Chars );
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL SettingsDocumentHandler::ignorableWhitespace( const ::rtl::OUString& aWhitespaces ) throw (SAXException, RuntimeException)
+    void SAL_CALL SettingsDocumentHandler::ignorableWhitespace( const ::rtl::OUString& aWhitespaces )
     {
         // ignore them - that's why they're called "ignorable"
         (void)aWhitespaces;
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL SettingsDocumentHandler::processingInstruction( const ::rtl::OUString& i_Target, const ::rtl::OUString& i_Data ) throw (SAXException, RuntimeException)
+    void SAL_CALL SettingsDocumentHandler::processingInstruction( const ::rtl::OUString& i_Target, const ::rtl::OUString& i_Data )
     {
         OSL_ENSURE( false, "SettingsDocumentHandler::processingInstruction: unexpected ..." );
         (void)i_Target;
         (void)i_Data;
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL SettingsDocumentHandler::setDocumentLocator( const Reference< XLocator >& i_Locator ) throw (SAXException, RuntimeException)
+    void SAL_CALL SettingsDocumentHandler::setDocumentLocator( const Reference< XLocator >& i_Locator )
     {
         (void)i_Locator;
     }

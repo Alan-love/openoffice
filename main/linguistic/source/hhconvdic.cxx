@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -70,7 +70,7 @@ using namespace i18n;
 #define SCRIPT_HANGUL   2
 
 // from i18npool/source/textconversion/textconversion_ko.cxx
-sal_Int16 SAL_CALL checkScriptType(sal_Unicode c) throw (RuntimeException)
+sal_Int16 SAL_CALL checkScriptType(sal_Unicode c)
 {
   UErrorCode status = U_ZERO_ERROR;
 
@@ -78,7 +78,7 @@ sal_Int16 SAL_CALL checkScriptType(sal_Unicode c) throw (RuntimeException)
 
   if ( !U_SUCCESS(status) ) throw RuntimeException();
 
-  return scriptCode == USCRIPT_HANGUL ? SCRIPT_HANGUL : 
+  return scriptCode == USCRIPT_HANGUL ? SCRIPT_HANGUL :
             scriptCode == USCRIPT_HAN ? SCRIPT_HANJA : SCRIPT_OTHERS;
 }
 
@@ -109,13 +109,12 @@ HHConvDic::~HHConvDic()
 }
 
 
-void SAL_CALL HHConvDic::addEntry( 
-        const OUString& aLeftText, 
-        const OUString& aRightText ) 
-    throw (IllegalArgumentException, container::ElementExistException, RuntimeException)
+void SAL_CALL HHConvDic::addEntry(
+        const OUString& aLeftText,
+        const OUString& aRightText )
 {
     MutexGuard  aGuard( GetLinguMutex() );
-    
+
     if ((aLeftText.getLength() != aRightText.getLength()) ||
         !TextIsAllScriptType( aLeftText,  SCRIPT_HANGUL ) ||
         !TextIsAllScriptType( aRightText, SCRIPT_HANJA ))
@@ -124,16 +123,14 @@ void SAL_CALL HHConvDic::addEntry(
 }
 
 
-OUString SAL_CALL HHConvDic::getImplementationName(  ) 
-    throw (RuntimeException)
+OUString SAL_CALL HHConvDic::getImplementationName(  )
 {
     MutexGuard  aGuard( GetLinguMutex() );
     return getImplementationName_Static();
 }
 
 
-sal_Bool SAL_CALL HHConvDic::supportsService( const OUString& rServiceName ) 
-    throw (RuntimeException)
+sal_Bool SAL_CALL HHConvDic::supportsService( const OUString& rServiceName )
 {
     MutexGuard  aGuard( GetLinguMutex() );
     sal_Bool bRes = sal_False;
@@ -144,15 +141,14 @@ sal_Bool SAL_CALL HHConvDic::supportsService( const OUString& rServiceName )
 }
 
 
-uno::Sequence< OUString > SAL_CALL HHConvDic::getSupportedServiceNames(  ) 
-    throw (RuntimeException)
+uno::Sequence< OUString > SAL_CALL HHConvDic::getSupportedServiceNames(  )
 {
     MutexGuard  aGuard( GetLinguMutex() );
     return getSupportedServiceNames_Static();
 }
 
 
-uno::Sequence< OUString > HHConvDic::getSupportedServiceNames_Static() 
+uno::Sequence< OUString > HHConvDic::getSupportedServiceNames_Static()
     throw()
 {
     uno::Sequence< OUString > aSNS( 2 );
@@ -162,4 +158,3 @@ uno::Sequence< OUString > HHConvDic::getSupportedServiceNames_Static()
 }
 
 ///////////////////////////////////////////////////////////////////////////
-

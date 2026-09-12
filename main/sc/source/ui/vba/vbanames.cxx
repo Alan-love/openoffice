@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -44,9 +44,9 @@ class NamesEnumeration : public EnumerationHelperImpl
 	uno::WeakReference< XHelperInterface > m_xParent;
 	uno::Reference< sheet::XNamedRanges > m_xNames;
 public:
-    NamesEnumeration( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext >& xContext, const uno::Reference< container::XEnumeration >& xEnumeration,  const uno::Reference< frame::XModel >& xModel , const uno::Reference< sheet::XNamedRanges >& xNames ) throw ( uno::RuntimeException ) : EnumerationHelperImpl( xParent, xContext, xEnumeration ), m_xModel( xModel ), m_xParent( xParent ), m_xNames( xNames ) {}
+    NamesEnumeration( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext >& xContext, const uno::Reference< container::XEnumeration >& xEnumeration,  const uno::Reference< frame::XModel >& xModel , const uno::Reference< sheet::XNamedRanges >& xNames ) : EnumerationHelperImpl( xParent, xContext, xEnumeration ), m_xModel( xModel ), m_xParent( xParent ), m_xNames( xNames ) {}
 
-	virtual uno::Any SAL_CALL nextElement(  ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
+	virtual uno::Any SAL_CALL nextElement(  )
 	{
 		uno::Reference< sheet::XNamedRange > xNamed( m_xEnumeration->nextElement(), uno::UNO_QUERY_THROW );
 		return uno::makeAny( uno::Reference< excel::XName > ( new ScVbaName( m_xParent, m_xContext, xNamed ,m_xNames , m_xModel ) ) );
@@ -55,11 +55,11 @@ public:
 };
 
 
-ScVbaNames::ScVbaNames(const css::uno::Reference< ov::XHelperInterface >& xParent, 
+ScVbaNames::ScVbaNames(const css::uno::Reference< ov::XHelperInterface >& xParent,
 			const css::uno::Reference< css::uno::XComponentContext >& xContext,
 			const css::uno::Reference< css::sheet::XNamedRanges >& xNames,
 			const css::uno::Reference< css::frame::XModel >& xModel ):
-			ScVbaNames_BASE(  xParent , xContext , uno::Reference< container::XIndexAccess >( xNames, uno::UNO_QUERY ) ), 
+			ScVbaNames_BASE(  xParent , xContext , uno::Reference< container::XIndexAccess >( xNames, uno::UNO_QUERY ) ),
 			mxModel( xModel ),
 			mxNames( xNames )
 {
@@ -94,7 +94,7 @@ ScVbaNames::Add( const css::uno::Any& Name ,
                                         const css::uno::Any& /*RefersToLocal*/,
                                         const css::uno::Any& /*CategoryLocal*/,
                                         const css::uno::Any& RefersToR1C1,
-                                        const css::uno::Any& RefersToR1C1Local ) throw (css::uno::RuntimeException)
+                                        const css::uno::Any& RefersToR1C1Local )
 {
 	rtl::OUString sName;
 	uno::Reference< excel::XRange > xRange;
@@ -161,14 +161,14 @@ ScVbaNames::Add( const css::uno::Any& Name ,
 }
 
 // XEnumerationAccess
-css::uno::Type 
-ScVbaNames::getElementType() throw( css::uno::RuntimeException )
+css::uno::Type
+ScVbaNames::getElementType()
 {
 	return ov::excel::XName::static_type(0);
 }
 
 uno::Reference< container::XEnumeration >
-ScVbaNames::createEnumeration() throw (uno::RuntimeException)
+ScVbaNames::createEnumeration()
 {
 	uno::Reference< container::XEnumerationAccess > xEnumAccess( mxNames, uno::UNO_QUERY_THROW );
 	return new NamesEnumeration( getParent(), mxContext, xEnumAccess->createEnumeration(), mxModel , mxNames );
@@ -181,14 +181,14 @@ ScVbaNames::createCollectionObject( const uno::Any& aSource )
 	return uno::makeAny( uno::Reference< excel::XName > ( new ScVbaName( getParent(), mxContext, xName, mxNames , mxModel ) ) );
 }
 
-rtl::OUString& 
+rtl::OUString&
 ScVbaNames::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("ScVbaNames") );
 	return sImplName;
-}	
+}
 
-css::uno::Sequence<rtl::OUString> 
+css::uno::Sequence<rtl::OUString>
 ScVbaNames::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > aServiceNames;
@@ -199,5 +199,3 @@ ScVbaNames::getServiceNames()
 	}
 	return aServiceNames;
 }
-
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -103,21 +103,21 @@ public:
     explicit LangGuess_Impl(css::uno::Reference< css::uno::XComponentContext > const & rxContext);
 
     // XServiceInfo	implementation
-    virtual OUString SAL_CALL getImplementationName(  ) throw(RuntimeException);
-    virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName ) throw(RuntimeException);
-    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames(  ) throw(RuntimeException);
+    virtual OUString SAL_CALL getImplementationName(  );
+    virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName );
+    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames(  );
     static Sequence< OUString > SAL_CALL getSupportedServiceNames_Static(  );
 
     // XLanguageGuessing implementation
-    virtual ::com::sun::star::lang::Locale SAL_CALL guessPrimaryLanguage( const ::rtl::OUString& aText, ::sal_Int32 nStartPos, ::sal_Int32 nLen ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL disableLanguages( const ::com::sun::star::uno::Sequence< ::com::sun::star::lang::Locale >& aLanguages ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL enableLanguages( const ::com::sun::star::uno::Sequence< ::com::sun::star::lang::Locale >& aLanguages ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::lang::Locale > SAL_CALL getAvailableLanguages(  ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::lang::Locale > SAL_CALL getEnabledLanguages(  ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::lang::Locale > SAL_CALL getDisabledLanguages(  ) throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::lang::Locale SAL_CALL guessPrimaryLanguage( const ::rtl::OUString& aText, ::sal_Int32 nStartPos, ::sal_Int32 nLen );
+    virtual void SAL_CALL disableLanguages( const ::com::sun::star::uno::Sequence< ::com::sun::star::lang::Locale >& aLanguages );
+    virtual void SAL_CALL enableLanguages( const ::com::sun::star::uno::Sequence< ::com::sun::star::lang::Locale >& aLanguages );
+    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::lang::Locale > SAL_CALL getAvailableLanguages(  );
+    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::lang::Locale > SAL_CALL getEnabledLanguages(  );
+    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::lang::Locale > SAL_CALL getDisabledLanguages(  );
 
     // implementation specific
-    void SetFingerPrintsDB( const rtl::OUString &fileName ) throw (RuntimeException);
+    void SetFingerPrintsDB( const rtl::OUString &fileName );
 
     static const OUString & SAL_CALL getImplementationName_Static() throw();
 
@@ -225,7 +225,6 @@ Locale SAL_CALL LangGuess_Impl::guessPrimaryLanguage(
         const ::rtl::OUString& rText,
         ::sal_Int32 nStartPos,
         ::sal_Int32 nLen )
-    throw (lang::IllegalArgumentException, uno::RuntimeException)
 {
     osl::MutexGuard aGuard( GetLangGuessMutex() );
 
@@ -250,7 +249,6 @@ Locale SAL_CALL LangGuess_Impl::guessPrimaryLanguage(
 
 void LangGuess_Impl::SetFingerPrintsDB(
         const rtl::OUString &filePath )
-    throw (RuntimeException)
 {
 	//! text encoding for file name / path needs to be in the same encoding the OS uses
     OString path = OUStringToOString( filePath, osl_getThreadTextEncoding() );
@@ -265,7 +263,6 @@ void LangGuess_Impl::SetFingerPrintsDB(
 
 //*************************************************************************
 uno::Sequence< Locale > SAL_CALL LangGuess_Impl::getAvailableLanguages(  )
-        throw (uno::RuntimeException)
 {
     osl::MutexGuard aGuard( GetLangGuessMutex() );
 
@@ -289,7 +286,6 @@ uno::Sequence< Locale > SAL_CALL LangGuess_Impl::getAvailableLanguages(  )
 
 //*************************************************************************
 uno::Sequence< Locale > SAL_CALL LangGuess_Impl::getEnabledLanguages(  )
-        throw (uno::RuntimeException)
 {
     osl::MutexGuard aGuard( GetLangGuessMutex() );
 
@@ -313,7 +309,6 @@ uno::Sequence< Locale > SAL_CALL LangGuess_Impl::getEnabledLanguages(  )
 
 //*************************************************************************
 uno::Sequence< Locale > SAL_CALL LangGuess_Impl::getDisabledLanguages(  )
-        throw (uno::RuntimeException)
 {
     osl::MutexGuard aGuard( GetLangGuessMutex() );
 
@@ -338,7 +333,6 @@ uno::Sequence< Locale > SAL_CALL LangGuess_Impl::getDisabledLanguages(  )
 //*************************************************************************
 void SAL_CALL LangGuess_Impl::disableLanguages(
         const uno::Sequence< Locale >& rLanguages )
-    throw (lang::IllegalArgumentException, uno::RuntimeException)
 {
     osl::MutexGuard aGuard( GetLangGuessMutex() );
 
@@ -364,7 +358,6 @@ void SAL_CALL LangGuess_Impl::disableLanguages(
 //*************************************************************************
 void SAL_CALL LangGuess_Impl::enableLanguages(
         const uno::Sequence< Locale >& rLanguages )
-    throw (lang::IllegalArgumentException, uno::RuntimeException)
 {
     osl::MutexGuard aGuard( GetLangGuessMutex() );
 
@@ -389,7 +382,6 @@ void SAL_CALL LangGuess_Impl::enableLanguages(
 
 //*************************************************************************
 OUString SAL_CALL LangGuess_Impl::getImplementationName(  )
-	throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLangGuessMutex() );
     return A2OU( IMPLNAME );
@@ -397,7 +389,6 @@ OUString SAL_CALL LangGuess_Impl::getImplementationName(  )
 
 //*************************************************************************
 sal_Bool SAL_CALL LangGuess_Impl::supportsService( const OUString& ServiceName )
-	throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLangGuessMutex() );
 	Sequence< OUString > aSNL = getSupportedServiceNames();
@@ -410,7 +401,6 @@ sal_Bool SAL_CALL LangGuess_Impl::supportsService( const OUString& ServiceName )
 
 //*************************************************************************
 Sequence<OUString> SAL_CALL LangGuess_Impl::getSupportedServiceNames(  )
-	throw(RuntimeException)
 {
     osl::MutexGuard aGuard( GetLangGuessMutex() );
 	return getSupportedServiceNames_Static();
@@ -470,4 +460,3 @@ SAL_DLLPUBLIC_EXPORT void * SAL_CALL component_getFactory(
 }
 
 }
-

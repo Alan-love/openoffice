@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -53,7 +53,7 @@ class SlideSorter;
 
 namespace sd { namespace slidesorter { namespace controller {
 
-typedef cppu::WeakComponentImplHelper4< 
+typedef cppu::WeakComponentImplHelper4<
     ::com::sun::star::document::XEventListener,
     ::com::sun::star::beans::XPropertyChangeListener,
     ::com::sun::star::accessibility::XAccessibleEventListener,
@@ -100,38 +100,33 @@ public:
         const SfxHint& rHint);
 
     //=====  lang::XEventListener  ============================================
-    virtual void SAL_CALL 
-        disposing (const ::com::sun::star::lang::EventObject& rEventObject)
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL
+        disposing (const ::com::sun::star::lang::EventObject& rEventObject);
 
 
     //=====  document::XEventListener  ========================================
     virtual void SAL_CALL
         notifyEvent (
-            const ::com::sun::star::document::EventObject& rEventObject)
-        throw (::com::sun::star::uno::RuntimeException);
+            const ::com::sun::star::document::EventObject& rEventObject);
 
     //=====  beans::XPropertySetListener  =====================================
-    virtual void SAL_CALL 
+    virtual void SAL_CALL
         propertyChange (
-            const com::sun::star::beans::PropertyChangeEvent& rEvent)
-        throw (::com::sun::star::uno::RuntimeException);
+            const com::sun::star::beans::PropertyChangeEvent& rEvent);
 
     //===== accessibility::XAccessibleEventListener  ==========================
     virtual void SAL_CALL
         notifyEvent (
-            const ::com::sun::star::accessibility::AccessibleEventObject& 
-            rEvent)
-        throw (::com::sun::star::uno::RuntimeException);
+            const ::com::sun::star::accessibility::AccessibleEventObject&
+            rEvent);
 
     //===== frame::XFrameActionListener  ======================================
     /** For certain actions the listener connects to a new controller of the
         frame it is listening to.  This usually happens when the view shell
         in the center pane is replaced by another view shell.
     */
-    virtual void SAL_CALL 
-        frameAction (const ::com::sun::star::frame::FrameActionEvent& rEvent)
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL
+        frameAction (const ::com::sun::star::frame::FrameActionEvent& rEvent);
 
     virtual void SAL_CALL disposing (void);
 
@@ -179,8 +174,7 @@ private:
     /** This method throws a DisposedException when the object has already been
         disposed.
     */
-    void ThrowIfDisposed (void)
-        throw (::com::sun::star::lang::DisposedException);
+    void ThrowIfDisposed (void);
 
     DECL_LINK(EventMultiplexerCallback, tools::EventMultiplexerEvent*);
 };

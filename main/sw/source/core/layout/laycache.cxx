@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,23 +7,20 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_sw.hxx"
-
 
 #include <hintids.hxx>
 #include <editeng/brkitem.hxx>
@@ -63,7 +60,6 @@
 #include <com/sun/star/beans/XPropertySet.hpp>
 
 #include <set>
-
 
 using namespace ::com::sun::star;
 // <--
@@ -499,9 +495,9 @@ SwActualSection::SwActualSection( SwActualSection *pUp,
 /*-----------------28.5.2001 11:09------------------
  * SwLayHelper
  *  is the helper class, which utilizes the layout cache information
- *  to distribute the document content to the rigth pages.
+ *  to distribute the document content to the right pages.
  * It's used by the _InsertCnt(..)-function.
- * If there's no layout cache, the distibution to the pages is more
+ * If there's no layout cache, the distribution to the pages is more
  * a guess, but a guess with statistical background.
  * --------------------------------------------------*/
 
@@ -1392,3 +1388,5 @@ void SwLayCacheIoImpl::CloseFlagRec()
 			pStream->Seek( nFlagRecEnd );
 	}
 }
+
+/* vim: set noet sw=4 ts=4: */

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -2445,7 +2445,7 @@ sal_Bool SfxDocTemplate_Impl::Construct( )
     uno::Reference< XLocalizable > xLocalizable( xTemplates, UNO_QUERY );
 
     Sequence< Any > aCompareArg(1);
-    *(aCompareArg.getArray()) <<= xLocalizable->getLocale();;
+    *(aCompareArg.getArray()) <<= xLocalizable->getLocale();
     m_rCompareFactory = uno::Reference< XAnyCompareFactory >(
                     xFactory->createInstanceWithArguments( OUString::createFromAscii( "com.sun.star.ucb.AnyCompareFactory" ),
                                                            aCompareArg ),
@@ -2732,4 +2732,3 @@ sal_Bool getTextProperty_Impl( Content& rContent,
 
     return bGotProperty;
 }
-

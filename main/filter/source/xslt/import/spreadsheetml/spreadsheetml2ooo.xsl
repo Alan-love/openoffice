@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--***********************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -8,16 +8,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  ***********************************************************-->
 
 
@@ -4348,7 +4348,7 @@
 				</xsl:choose>
 			</xsl:if>
 			<!-- fix means the horizontal alignment is dependent on ss:Horizontal,
-				 but set on paragaraph properties not cell paragraphs -->
+				 but set on paragraph properties not cell paragraphs -->
 			<xsl:if test="ss:Alignment/@ss:Horizontal">
 				<xsl:attribute name="style:text-align-source">fix</xsl:attribute>
 			</xsl:if>
@@ -5079,7 +5079,7 @@
 					</xsl:call-template>
 					<xsl:text>cm</xsl:text>
 				</xsl:when>
-				<!-- Note: This is the default row hight value in spec it is written 255 point, this seems wrong -->
+				<!-- Note: This is the default row height value in spec it is written 255 point, this seems wrong -->
 				<!-- <xsl:otherwise>0.503cm</xsl:otherwise> -->
 				<xsl:otherwise>0.45cm</xsl:otherwise>
 			</xsl:choose>
@@ -6364,7 +6364,7 @@
 						<xsl:when test="../@ss:StyleID">
 							<xsl:value-of select="../@ss:StyleID"/>
 						</xsl:when>
-						<!-- if no correspondent column style exisit.. -->
+						<!-- if no corresponding column style exists... -->
 						<!-- inherit style from parent table style -->
 						<xsl:when test="../../@ss:StyleID">
 							<!-- function to give in col-pos and get back column style  -->
@@ -6787,7 +6787,7 @@
 							<xsl:value-of select="../@ss:StyleID"/>
 						</xsl:attribute>
 					</xsl:when>
-					<!-- if no correspondent column style exisit.. -->
+					<!-- if no corresponding column style exists... -->
 					<!-- inherit style from parent table style -->
 					<xsl:when test="../../@ss:StyleID">
 						<!-- function to give in col-pos and get back column style  -->
@@ -7057,7 +7057,7 @@
 		</xsl:if>
 	</xsl:template>
 	<xsl:template name="validation-row-column-string">
-		<!-- returns a string with structer,including row\column position by extraction from x:DataValidation -->
+		<!-- returns a string with structure, including row\column position by extraction from x:DataValidation -->
 		<xsl:param name="last"/>
 		<xsl:param name="total"/>
 		<xsl:param name="index"/>
@@ -7080,7 +7080,7 @@
 		</xsl:if>
 	</xsl:template>
 	<xsl:template name="condition-row-column-string">
-		<!-- returns a string with structer,including row\column position by extraction from x:ConditionalFormatting -->
+		<!-- returns a string with structure, including row\column position by extraction from x:ConditionalFormatting -->
 		<xsl:param name="last"/>
 		<xsl:param name="total"/>
 		<xsl:param name="index"/>
@@ -7431,7 +7431,7 @@
 					<xsl:with-param name="current-pos" select="$current-pos + 1 + $font-size-length"/>
 				</xsl:call-template>
 			</xsl:when>
-			<!-- dont' consider tangled or adjoined '&X' and '&Y', '&U' & '&E', processing-check is necessary, too complex. :( -->
+			<!-- don't consider tangled or adjoined '&X' and '&Y', '&U' & '&E', processing-check is necessary, too complex. :( -->
 			<xsl:when test="starts-with($current-style-data,'&amp;X')">
 				<xsl:variable name="superscript-count-before">
 					<xsl:call-template name="get-substyle-count-in-data">
@@ -8218,30 +8218,35 @@
 		<xsl:variable name="zero-based-column-number">
 			<xsl:value-of select="$column-number - 1"/>
 		</xsl:variable>
-		<xsl:variable name="column-number1">
-			<xsl:value-of select="floor( $zero-based-column-number div 676 )"/>
+		<xsl:variable name="column-div26-minus1">
+			<xsl:value-of select="floor( $zero-based-column-number div 26 ) - 1"/>
 		</xsl:variable>
-		<xsl:variable name="column-remainder1">
-			<xsl:value-of select="floor( $zero-based-column-number mod 676 )"/>
+		<xsl:variable name="column-number1">
+			<xsl:value-of select="floor ( $column-div26-minus1 div 26 )"/>
 		</xsl:variable>
 		<xsl:variable name="column-number2">
-			<xsl:value-of select="floor( $column-remainder1 div 26 )"/>
-		</xsl:variable>
-		<xsl:variable name="column-remainder2">
-			<xsl:value-of select="floor( $column-remainder1 mod 26 )"/>
+			<xsl:value-of select="$column-div26-minus1 mod 26 + 1"/>
 		</xsl:variable>
 		<xsl:variable name="column-number3">
-			<xsl:value-of select="( $column-remainder2 mod 26 ) + 1"/>
+			<xsl:value-of select="( $zero-based-column-number mod 26 ) + 1"/>
 		</xsl:variable>
 		<xsl:variable name="column-character1">
-			<xsl:call-template name="number-to-character">
-				<xsl:with-param name="number" select="$column-number1"/>
-			</xsl:call-template>
+			<xsl:choose>
+				<xsl:when test="($zero-based-column-number &gt; 701)">
+					<xsl:call-template name="number-to-character">
+						<xsl:with-param name="number" select="$column-number1"/>
+					</xsl:call-template>
+				</xsl:when>
+			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="column-character2">
-			<xsl:call-template name="number-to-character">
-				<xsl:with-param name="number" select="$column-number2"/>
-			</xsl:call-template>
+			<xsl:choose>
+				<xsl:when test="($zero-based-column-number &gt; 25)">
+					<xsl:call-template name="number-to-character">
+						<xsl:with-param name="number" select="$column-number2"/>
+					</xsl:call-template>
+				</xsl:when>
+			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="column-character3">
 			<xsl:call-template name="number-to-character">

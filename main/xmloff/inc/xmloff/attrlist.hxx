@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -54,7 +54,7 @@ class XMLOFF_DLLPUBLIC SvXMLAttributeList : public ::cppu::WeakImplHelper3<
 public:
 	SvXMLAttributeList();
 	SvXMLAttributeList( const SvXMLAttributeList& );
-	SvXMLAttributeList( const ::com::sun::star::uno::Reference< 
+	SvXMLAttributeList( const ::com::sun::star::uno::Reference<
 		::com::sun::star::xml::sax::XAttributeList> & rAttrList );
 	~SvXMLAttributeList();
 
@@ -62,13 +62,13 @@ public:
 	static SvXMLAttributeList* getImplementation( ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface > ) throw();
 
 	// XUnoTunnel
-    virtual sal_Int64 SAL_CALL getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier ) throw(::com::sun::star::uno::RuntimeException);			 
+    virtual sal_Int64 SAL_CALL getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier );
 
     /** Return the number of attributes.
      *
      * Required by ::com::sun::star::xml::sax::XAttributeList
      */
-	virtual sal_Int16 SAL_CALL getLength(void) throw( ::com::sun::star::uno::RuntimeException );
+	virtual sal_Int16 SAL_CALL getLength(void);
     /** Return the name of the i-th attribute.
      *
      * @param i index starting from zero.
@@ -76,21 +76,21 @@ public:
      * @return the name of the i-th attribute, or empty string if i is
      * not a valid index.
      */
-	virtual ::rtl::OUString SAL_CALL getNameByIndex(sal_Int16 i) throw( ::com::sun::star::uno::RuntimeException );
+	virtual ::rtl::OUString SAL_CALL getNameByIndex(sal_Int16 i);
     /** Returns the type of the i-th attribute.
      *
      * @param i index starting from zero.
      *
      * @return CDATA for any value of i.
      */
-	virtual ::rtl::OUString SAL_CALL getTypeByIndex(sal_Int16 i) throw( ::com::sun::star::uno::RuntimeException );
+	virtual ::rtl::OUString SAL_CALL getTypeByIndex(sal_Int16 i);
     /** Returns the type of an attribute.
      *
      * @param aName name of the attribute to look for.
      *
      * @return CDATA for any value of aName.
      */
-	virtual ::rtl::OUString SAL_CALL getTypeByName(const ::rtl::OUString& aName) throw( ::com::sun::star::uno::RuntimeException );
+	virtual ::rtl::OUString SAL_CALL getTypeByName(const ::rtl::OUString& aName);
     /** Return the value of the i-th attribute.
      *
      * @param i index starting from zero.
@@ -98,7 +98,7 @@ public:
      * @return the value of the i-th attribute, or empty string if i is
      * not a valid index.
      */
-	virtual ::rtl::OUString SAL_CALL getValueByIndex(sal_Int16 i) throw( ::com::sun::star::uno::RuntimeException );
+	virtual ::rtl::OUString SAL_CALL getValueByIndex(sal_Int16 i);
     /** Return the value of an attribute.
      *
      * @param aName name of the attribute to look for.
@@ -106,7 +106,7 @@ public:
      * @return the value of the attribute named aName, or empty string
      * if no attributes are named aName.
      */
-	virtual ::rtl::OUString SAL_CALL getValueByName(const ::rtl::OUString& aName) throw( ::com::sun::star::uno::RuntimeException );
+	virtual ::rtl::OUString SAL_CALL getValueByName(const ::rtl::OUString& aName);
 
 	/** Make a clone of this object.
      *
@@ -114,7 +114,7 @@ public:
      *
      * @return a clone of the current object.
      */
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::util::XCloneable > SAL_CALL createClone()	throw( ::com::sun::star::uno::RuntimeException );
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::util::XCloneable > SAL_CALL createClone();
 
 	// methods that are not contained in any interface
 

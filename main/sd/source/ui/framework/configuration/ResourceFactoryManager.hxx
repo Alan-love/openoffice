@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -50,21 +50,19 @@ public:
         @param rsURL
             The type of the resource that will be created by the factory.
         @param rxFactory
-            The factory that will create resource objects of the specfied type.
+            The factory that will create resource objects of the specified type.
     */
     void AddFactory (
         const ::rtl::OUString& rsURL,
-        const css::uno::Reference<css::drawing::framework::XResourceFactory>& rxFactory)
-        throw (css::uno::RuntimeException);
+        const css::uno::Reference<css::drawing::framework::XResourceFactory>& rxFactory);
 
-    /** Unregister the specifed factory.
+    /** Unregister the specified factory.
         @param rsURL
             Unregister only the factory for this URL.  When the same factory
             is registered for other URLs then these remain registered.
     */
     void RemoveFactoryForURL(
-        const ::rtl::OUString& rsURL)
-        throw (css::uno::RuntimeException);
+        const ::rtl::OUString& rsURL);
 
     /** Unregister the specified factory.
         @param rxFactory
@@ -72,8 +70,7 @@ public:
             registered for.
     */
     void RemoveFactoryForReference(
-        const css::uno::Reference<css::drawing::framework::XResourceFactory>& rxFactory)
-        throw (css::uno::RuntimeException);
+        const css::uno::Reference<css::drawing::framework::XResourceFactory>& rxFactory);
 
     /** Return a factory that can create resources specified by the given URL.
         @param rsCompleteURL
@@ -84,8 +81,7 @@ public:
             is returned.  Otherwise an empty reference is returned.
     */
     css::uno::Reference<css::drawing::framework::XResourceFactory> GetFactory (
-        const ::rtl::OUString& rsURL)
-        throw (css::uno::RuntimeException);
+        const ::rtl::OUString& rsURL);
 
 private:
     ::osl::Mutex maMutex;
@@ -98,7 +94,7 @@ private:
 
     typedef ::std::vector<
         ::std::pair<
-            rtl::OUString, 
+            rtl::OUString,
             css::uno::Reference<css::drawing::framework::XResourceFactory> > >
         FactoryPatternList;
     FactoryPatternList maFactoryPatternList;
@@ -114,8 +110,7 @@ private:
             When the factory has not yet been added then return NULL.
     */
     css::uno::Reference<css::drawing::framework::XResourceFactory> FindFactory (
-        const ::rtl::OUString& rsURLBase)
-        throw (css::uno::RuntimeException);
+        const ::rtl::OUString& rsURLBase);
 };
 
 

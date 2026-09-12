@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -170,7 +170,7 @@ TransliterationImpl::~TransliterationImpl()
 
 // Methods
 OUString SAL_CALL
-TransliterationImpl::getName() throw(RuntimeException)
+TransliterationImpl::getName()
 {
     if (numCascade == 1 && bodyCascade[0].is())
         return bodyCascade[0]->getName();
@@ -180,7 +180,7 @@ TransliterationImpl::getName() throw(RuntimeException)
 }
 
 sal_Int16 SAL_CALL
-TransliterationImpl::getType() throw(RuntimeException)
+TransliterationImpl::getType()
 {
     if (numCascade > 1)
         return (TransliterationType::CASCADE|TransliterationType::IGNORE);
@@ -191,7 +191,6 @@ TransliterationImpl::getType() throw(RuntimeException)
 
 void SAL_CALL
 TransliterationImpl::loadModule( TransliterationModules modType, const Locale& rLocale )
-        throw(RuntimeException)
 {
         clear();
     if (modType&TransliterationModules_IGNORE_MASK && modType&TransliterationModules_NON_IGNORE_MASK) {
@@ -200,7 +199,7 @@ TransliterationImpl::loadModule( TransliterationModules modType, const Locale& r
 #define TransliterationModules_IGNORE_CASE_MASK (TransliterationModules_IGNORE_CASE | \
                                                 TransliterationModules_IGNORE_WIDTH | \
                                                 TransliterationModules_IGNORE_KANA)
-        sal_Int32 mask = ((modType&TransliterationModules_IGNORE_CASE_MASK) == modType) ? 
+        sal_Int32 mask = ((modType&TransliterationModules_IGNORE_CASE_MASK) == modType) ?
                 TransliterationModules_IGNORE_CASE_MASK : TransliterationModules_IGNORE_MASK;
         for (sal_Int16 i = 0; TMlist[i].tm & mask; i++) {
             if (modType & TMlist[i].tm)
@@ -221,7 +220,6 @@ TransliterationImpl::loadModule( TransliterationModules modType, const Locale& r
 
 void SAL_CALL
 TransliterationImpl::loadModuleNew( const Sequence < TransliterationModulesNew > & modType, const Locale& rLocale )
-  throw(RuntimeException)
 {
     clear();
     sal_Int32 mask = 0, count = modType.getLength();
@@ -231,9 +229,9 @@ TransliterationImpl::loadModuleNew( const Sequence < TransliterationModulesNew >
         for (sal_Int16 j = 0; TMlist[j].tmn; j++) {
             if (TMlist[j].tmn == modType[i]) {
                 if (mask == 0)
-                    mask = TMlist[i].tm && (TMlist[i].tm&TransliterationModules_IGNORE_MASK) ? 
+                    mask = TMlist[i].tm && (TMlist[i].tm&TransliterationModules_IGNORE_MASK) ?
                         TransliterationModules_IGNORE_MASK : TransliterationModules_NON_IGNORE_MASK;
-                else if (mask == TransliterationModules_IGNORE_MASK && 
+                else if (mask == TransliterationModules_IGNORE_MASK &&
                         (TMlist[i].tm&TransliterationModules_IGNORE_MASK) == 0)
                     throw ERROR; // could not mess up ignore trans. with non_ignore trans.
                 if (loadModuleByName(OUString::createFromAscii(TMlist[j].implName), bodyCascade[numCascade], rLocale))
@@ -246,7 +244,6 @@ TransliterationImpl::loadModuleNew( const Sequence < TransliterationModulesNew >
 
 void SAL_CALL
 TransliterationImpl::loadModuleByImplName(const OUString& implName, const Locale& rLocale)
-  throw(RuntimeException)
 {
     clear();
     if (loadModuleByName(implName, bodyCascade[numCascade], rLocale))
@@ -255,7 +252,7 @@ TransliterationImpl::loadModuleByImplName(const OUString& implName, const Locale
 
 
 void SAL_CALL
-TransliterationImpl::loadModulesByImplNames(const Sequence< OUString >& implNameList, const Locale& rLocale ) throw(RuntimeException)
+TransliterationImpl::loadModulesByImplNames(const Sequence< OUString >& implNameList, const Locale& rLocale )
 {
     if (implNameList.getLength() > maxCascade || implNameList.getLength() <= 0)
         throw ERROR;
@@ -268,7 +265,7 @@ TransliterationImpl::loadModulesByImplNames(const Sequence< OUString >& implName
 
 
 Sequence<OUString> SAL_CALL
-TransliterationImpl::getAvailableModules( const Locale& rLocale, sal_Int16 sType ) throw(RuntimeException)
+TransliterationImpl::getAvailableModules( const Locale& rLocale, sal_Int16 sType )
 {
     const Sequence<OUString> &translist = localedata->getTransliterations(rLocale);
     Sequence<OUString> r(translist.getLength());
@@ -288,8 +285,8 @@ TransliterationImpl::getAvailableModules( const Locale& rLocale, sal_Int16 sType
 
 
 OUString SAL_CALL
-TransliterationImpl::transliterate( const OUString& inStr, sal_Int32 startPos, sal_Int32 nCount, 
-                    Sequence< sal_Int32 >& offset ) throw(RuntimeException)
+TransliterationImpl::transliterate( const OUString& inStr, sal_Int32 startPos, sal_Int32 nCount,
+                    Sequence< sal_Int32 >& offset )
 {
     if (numCascade == 0)
         return inStr;
@@ -344,7 +341,7 @@ TransliterationImpl::transliterate( const OUString& inStr, sal_Int32 startPos, s
 //
 OUString SAL_CALL
 TransliterationImpl::folding( const OUString& inStr, sal_Int32 startPos, sal_Int32 nCount,
-        Sequence< sal_Int32 >& offset ) throw(RuntimeException)
+        Sequence< sal_Int32 >& offset )
 {
     if (numCascade == 0)
         return inStr;
@@ -395,7 +392,7 @@ TransliterationImpl::folding( const OUString& inStr, sal_Int32 startPos, sal_Int
 }
 
 OUString SAL_CALL
-TransliterationImpl::transliterateString2String( const OUString& inStr, sal_Int32 startPos, sal_Int32 nCount ) throw(RuntimeException)
+TransliterationImpl::transliterateString2String( const OUString& inStr, sal_Int32 startPos, sal_Int32 nCount )
 {
     if (numCascade == 0)
         return inStr;
@@ -411,7 +408,7 @@ TransliterationImpl::transliterateString2String( const OUString& inStr, sal_Int3
 }
 
 OUString SAL_CALL
-TransliterationImpl::transliterateChar2String( sal_Unicode inChar ) throw(RuntimeException)
+TransliterationImpl::transliterateChar2String( sal_Unicode inChar )
 {
     if (numCascade == 0)
         return OUString(&inChar, 1);
@@ -427,7 +424,7 @@ TransliterationImpl::transliterateChar2String( sal_Unicode inChar ) throw(Runtim
 }
 
 sal_Unicode SAL_CALL
-TransliterationImpl::transliterateChar2Char( sal_Unicode inChar ) throw(MultipleCharsOutputException, RuntimeException)
+TransliterationImpl::transliterateChar2Char( sal_Unicode inChar )
 {
     sal_Unicode tmpChar = inChar;
     for (sal_Int32 i = 0; i < numCascade; i++)
@@ -440,7 +437,6 @@ sal_Bool SAL_CALL
 TransliterationImpl::equals(
     const OUString& str1, sal_Int32 pos1, sal_Int32 nCount1, sal_Int32& nMatch1,
     const OUString& str2, sal_Int32 pos2, sal_Int32 nCount2, sal_Int32& nMatch2)
-    throw(RuntimeException)
 {
     // since this is an API function make it user fail safe
     if ( nCount1 < 0 ) {
@@ -470,7 +466,7 @@ TransliterationImpl::equals(
 
     OUString tmpStr1 = folding(str1, pos1, nCount1, offset1);
     OUString tmpStr2 = folding(str2, pos2, nCount2, offset2);
-    // Length of offset1 and offset2 may still be 0 if there was no folding 
+    // Length of offset1 and offset2 may still be 0 if there was no folding
     // necessary!
 
     const sal_Unicode *p1 = tmpStr1.getStr();
@@ -485,7 +481,7 @@ TransliterationImpl::equals(
         }
     }
     // i==nLen
-    if ( tmpStr1.getLength() != tmpStr2.getLength() ) {   
+    if ( tmpStr1.getLength() != tmpStr2.getLength() ) {
         // return number of matched code points so far
         nMatch1 = (i <= offset1.getLength()) ? offset1[i-1] + 1 : i;
         nMatch2 = (i <= offset2.getLength()) ? offset2[i-1] + 1 : i;
@@ -501,7 +497,7 @@ TransliterationImpl::equals(
 
 Sequence< OUString > SAL_CALL
 TransliterationImpl::getRange(const Sequence< OUString > &inStrs,
-                const sal_Int32 length, sal_Int16 _numCascade) throw(RuntimeException)
+                const sal_Int32 length, sal_Int16 _numCascade)
 {
     if (_numCascade >= numCascade || ! bodyCascade[_numCascade].is())
         return inStrs;
@@ -524,7 +520,6 @@ TransliterationImpl::getRange(const Sequence< OUString > &inStrs,
 
 Sequence< OUString > SAL_CALL
 TransliterationImpl::transliterateRange( const OUString& str1, const OUString& str2 )
-throw(RuntimeException)
 {
     if (numCascade == 1)
         return bodyCascade[0]->transliterateRange(str1, str2);
@@ -541,7 +536,6 @@ sal_Int32 SAL_CALL
 TransliterationImpl::compareSubstring(
     const OUString& str1, sal_Int32 off1, sal_Int32 len1,
     const OUString& str2, sal_Int32 off2, sal_Int32 len2)
-    throw(RuntimeException)
 {
     if (caseignoreOnly && caseignore.is())
         return caseignore->compareSubstring(str1, off1, len1, str2, off2, len2);
@@ -566,7 +560,7 @@ TransliterationImpl::compareSubstring(
 
 
 sal_Int32 SAL_CALL
-TransliterationImpl::compareString(const OUString& str1, const OUString& str2 ) throw (RuntimeException)
+TransliterationImpl::compareString(const OUString& str1, const OUString& str2 )
 {
     if (caseignoreOnly && caseignore.is())
         return caseignore->compareString(str1, str2);
@@ -586,8 +580,7 @@ TransliterationImpl::clear()
     caseignoreOnly = sal_True;
 }
 
-void TransliterationImpl::loadBody( OUString &implName, Reference<XExtendedTransliteration>& body ) 
-    throw (RuntimeException)
+void TransliterationImpl::loadBody( OUString &implName, Reference<XExtendedTransliteration>& body )
 {
     Reference< XContentEnumerationAccess > xEnumAccess( xSMgr, UNO_QUERY );
     Reference< XEnumeration > xEnum(xEnumAccess->createContentEnumeration(
@@ -616,8 +609,8 @@ void TransliterationImpl::loadBody( OUString &implName, Reference<XExtendedTrans
 }
 
 sal_Bool SAL_CALL
-TransliterationImpl::loadModuleByName( const OUString& implName, 
-        Reference<XExtendedTransliteration>& body, const Locale& rLocale) throw(RuntimeException)
+TransliterationImpl::loadModuleByName( const OUString& implName,
+        Reference<XExtendedTransliteration>& body, const Locale& rLocale)
 {
     OUString cname = OUString::createFromAscii(TRLT_IMPLNAME_PREFIX) + implName;
     loadBody(cname, body);
@@ -647,20 +640,20 @@ TransliterationImpl::loadModuleByName( const OUString& implName,
 const sal_Char cTrans[] = "com.sun.star.i18n.Transliteration";
 
 OUString SAL_CALL
-TransliterationImpl::getImplementationName() throw( RuntimeException )
+TransliterationImpl::getImplementationName()
 {
     return OUString::createFromAscii(cTrans);
 }
 
 
 sal_Bool SAL_CALL
-TransliterationImpl::supportsService(const OUString& rServiceName) throw( RuntimeException )
+TransliterationImpl::supportsService(const OUString& rServiceName)
 {
     return !rServiceName.compareToAscii(cTrans);
 }
 
 Sequence< OUString > SAL_CALL
-TransliterationImpl::getSupportedServiceNames(void) throw( RuntimeException )
+TransliterationImpl::getSupportedServiceNames(void)
 {
     Sequence< OUString > aRet(1);
     aRet[0] = OUString::createFromAscii(cTrans);

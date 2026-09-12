@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -443,7 +443,7 @@ namespace sdr { namespace contact {
     {
         return m_rPageView.GetView().IsDesignMode();
     }
-    
+
     //--------------------------------------------------------------------
     Reference< XControlContainer > SdrPageViewAccess::getControlContainer( const OutputDevice& _rDevice ) const
     {
@@ -452,7 +452,7 @@ namespace sdr { namespace contact {
             "SdrPageViewAccess::getControlContainer: the output device is known, but there is no control container for it?" );
         return xControlContainer;
     }
-    
+
     //--------------------------------------------------------------------
     bool SdrPageViewAccess::isLayerVisible( SdrLayerID _nLayerID ) const
     {
@@ -486,7 +486,7 @@ namespace sdr { namespace contact {
     {
         return true;
     }
-    
+
     //--------------------------------------------------------------------
     Reference< XControlContainer > InvisibleControlViewAccess::getControlContainer( const OutputDevice& _rDevice ) const
     {
@@ -499,7 +499,7 @@ namespace sdr { namespace contact {
         }
         return m_rControlContainer;
     }
-    
+
     //--------------------------------------------------------------------
     bool InvisibleControlViewAccess::isLayerVisible( SdrLayerID /*_nLayerID*/ ) const
     {
@@ -534,13 +534,13 @@ namespace sdr { namespace contact {
     {
         return true;
     }
-    
+
     //--------------------------------------------------------------------
     Reference< XControlContainer > DummyPageViewAccess::getControlContainer( const OutputDevice& /*_rDevice*/ ) const
     {
         return NULL;
     }
-    
+
     //--------------------------------------------------------------------
     bool DummyPageViewAccess::isLayerVisible( SdrLayerID /*_nLayerID*/ ) const
     {
@@ -692,24 +692,24 @@ namespace sdr { namespace contact {
         ~ViewObjectContactOfUnoControl_Impl();
 
         // XEventListener
-        virtual void SAL_CALL disposing( const EventObject& Source ) throw(RuntimeException);
+        virtual void SAL_CALL disposing( const EventObject& Source );
 
         // XWindowListener
-        virtual void SAL_CALL windowResized( const WindowEvent& e ) throw(RuntimeException);
-        virtual void SAL_CALL windowMoved( const WindowEvent& e ) throw(RuntimeException);
-        virtual void SAL_CALL windowShown( const EventObject& e ) throw(RuntimeException);
-        virtual void SAL_CALL windowHidden( const EventObject& e ) throw(RuntimeException);
+        virtual void SAL_CALL windowResized( const WindowEvent& e );
+        virtual void SAL_CALL windowMoved( const WindowEvent& e );
+        virtual void SAL_CALL windowShown( const EventObject& e );
+        virtual void SAL_CALL windowHidden( const EventObject& e );
 
         // XPropertyChangeListener
-        virtual void SAL_CALL propertyChange( const PropertyChangeEvent& evt ) throw(RuntimeException);
+        virtual void SAL_CALL propertyChange( const PropertyChangeEvent& evt );
 
         // XModeChangeListener
-        virtual void SAL_CALL modeChanged( const ModeChangeEvent& _rSource ) throw (RuntimeException);
+        virtual void SAL_CALL modeChanged( const ModeChangeEvent& _rSource );
 
         // XContainerListener
-        virtual void SAL_CALL elementInserted( const ::com::sun::star::container::ContainerEvent& Event ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL elementRemoved( const ::com::sun::star::container::ContainerEvent& Event ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL elementReplaced( const ::com::sun::star::container::ContainerEvent& Event ) throw (::com::sun::star::uno::RuntimeException);
+        virtual void SAL_CALL elementInserted( const ::com::sun::star::container::ContainerEvent& Event );
+        virtual void SAL_CALL elementRemoved( const ::com::sun::star::container::ContainerEvent& Event );
+        virtual void SAL_CALL elementReplaced( const ::com::sun::star::container::ContainerEvent& Event );
 
     private:
         /** retrieves the SdrPageView which our associated SdrPageViewWindow belongs to
@@ -1429,7 +1429,7 @@ namespace sdr { namespace contact {
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL ViewObjectContactOfUnoControl_Impl::disposing( const EventObject& Source ) throw(RuntimeException)
+    void SAL_CALL ViewObjectContactOfUnoControl_Impl::disposing( const EventObject& Source )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
             // some code below - in particular our disposal - might trigger actions which require the
@@ -1454,35 +1454,35 @@ namespace sdr { namespace contact {
 
         DBG_ASSERT( Source.Source == m_xContainer, "ViewObjectContactOfUnoControl_Impl::disposing: Who's this?" );
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL ViewObjectContactOfUnoControl_Impl::windowResized( const WindowEvent& /*e*/ ) throw(RuntimeException)
+    void SAL_CALL ViewObjectContactOfUnoControl_Impl::windowResized( const WindowEvent& /*e*/ )
     {
         // not interested in
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL ViewObjectContactOfUnoControl_Impl::windowMoved( const WindowEvent& /*e*/ ) throw(RuntimeException)
+    void SAL_CALL ViewObjectContactOfUnoControl_Impl::windowMoved( const WindowEvent& /*e*/ )
     {
         // not interested in
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL ViewObjectContactOfUnoControl_Impl::windowShown( const EventObject& /*e*/ ) throw(RuntimeException)
+    void SAL_CALL ViewObjectContactOfUnoControl_Impl::windowShown( const EventObject& /*e*/ )
     {
         VOCGuard aGuard( *this );
         m_bControlIsVisible = true;
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL ViewObjectContactOfUnoControl_Impl::windowHidden( const EventObject& /*e*/ ) throw(RuntimeException)
+    void SAL_CALL ViewObjectContactOfUnoControl_Impl::windowHidden( const EventObject& /*e*/ )
     {
         VOCGuard aGuard( *this );
         m_bControlIsVisible = false;
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL ViewObjectContactOfUnoControl_Impl::propertyChange( const PropertyChangeEvent& /*_rEvent*/ ) throw(RuntimeException)
+    void SAL_CALL ViewObjectContactOfUnoControl_Impl::propertyChange( const PropertyChangeEvent& /*_rEvent*/ )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
             // (re)painting might require VCL operations, which need the SolarMutex
@@ -1502,9 +1502,9 @@ namespace sdr { namespace contact {
             m_pAntiImpl->propertyChange();
         }
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL ViewObjectContactOfUnoControl_Impl::modeChanged( const ModeChangeEvent& _rSource ) throw (RuntimeException)
+    void SAL_CALL ViewObjectContactOfUnoControl_Impl::modeChanged( const ModeChangeEvent& _rSource )
     {
         VOCGuard aGuard( *this );
 
@@ -1528,13 +1528,13 @@ namespace sdr { namespace contact {
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL ViewObjectContactOfUnoControl_Impl::elementInserted( const ContainerEvent& /*_Event*/ ) throw (RuntimeException)
+    void SAL_CALL ViewObjectContactOfUnoControl_Impl::elementInserted( const ContainerEvent& /*_Event*/ )
     {
         // not interested in
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL ViewObjectContactOfUnoControl_Impl::elementRemoved( const ContainerEvent& Event ) throw (RuntimeException)
+    void SAL_CALL ViewObjectContactOfUnoControl_Impl::elementRemoved( const ContainerEvent& Event )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
             // some code below - in particular our disposal - might trigger actions which require the
@@ -1548,9 +1548,9 @@ namespace sdr { namespace contact {
         if ( m_aControl == Event.Element )
             impl_dispose_nothrow( false );
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL ViewObjectContactOfUnoControl_Impl::elementReplaced( const ContainerEvent& Event ) throw (RuntimeException)
+    void SAL_CALL ViewObjectContactOfUnoControl_Impl::elementReplaced( const ContainerEvent& Event )
     {
         VOCGuard aGuard( *this );
         DBG_ASSERT( Event.Source == m_xContainer, "ViewObjectContactOfUnoControl_Impl::elementReplaced: where did this come from?" );
@@ -1866,7 +1866,7 @@ namespace sdr { namespace contact {
         // call parent
         ViewObjectContactOfSdrObj::ActionChanged();
         const ControlHolder& rControl(m_pImpl->getExistentControl());
-        
+
         if(rControl.is() && !rControl.isDesignMode())
         {
             // #i93180# if layer visibility has changed and control is in live mode, it is necessary
@@ -1927,4 +1927,3 @@ namespace sdr { namespace contact {
 //........................................................................
 } } // namespace sdr::contact
 //........................................................................
-

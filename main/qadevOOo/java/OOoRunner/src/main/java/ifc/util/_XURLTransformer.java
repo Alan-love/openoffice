@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -36,7 +36,7 @@ import lib.MultiMethodTest;
 *  <li><code> parseSmart() </code></li>
 *  <li><code> getPresentation() </code></li>
 * </ul> <p>
-* Test is <b> NOT </b> multithread compilant. <p>
+* Test is <b> NOT </b> multithread compliant. <p>
 * @see com.sun.star.util.XURLTransformer
 */
 public class _XURLTransformer extends MultiMethodTest {
@@ -68,7 +68,7 @@ public class _XURLTransformer extends MultiMethodTest {
      * passed and assembled. Then incomplete URL (only
      * <code>Server</code> field is set) is passed. <p>
      * Has <b> OK </b> status if in the first case <code>true</code>
-     * retruned and <code>Complete</code> field is set and in the
+     * returned and <code>Complete</code> field is set and in the
      * second case <code>false</code> is returned. <p>
      */
     public void _assemble(){
@@ -140,7 +140,7 @@ public class _XURLTransformer extends MultiMethodTest {
      * to proper URL) is passed and parsed. Then incomplete URL (only
      * <code>Server</code> field is set) is passed. <p>
      * Has <b> OK </b> status if in the first case <code>true</code>
-     * retruned and all URL fields are set to proper values and in the
+     * returned and all URL fields are set to proper values and in the
      * second case <code>false</code> is returned. <p>
      */
     public void _parseStrict() {
@@ -432,7 +432,7 @@ public class _XURLTransformer extends MultiMethodTest {
         }
         asterix = "<" + asterix.substring(1,asterix.length());
         asterix = asterix.substring(0,asterix.length()-1) + ">";
-        
+
         presentation = oObj.getPresentation(url, false);
         String expectedPresentation = "ftp://" + user + ":" + asterix + "@" +
             server + ":" + port + path + "/" + name;
@@ -464,4 +464,3 @@ public class _XURLTransformer extends MultiMethodTest {
     }
 
 }  // finish class _XURLTransformer
-

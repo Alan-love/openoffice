@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -141,7 +141,7 @@ const Sequence<sal_Int8>& OGridColumn::getUnoTunnelImplementationId()
 }
 
 //------------------------------------------------------------------
-sal_Int64 SAL_CALL OGridColumn::getSomething( const Sequence<sal_Int8>& _rIdentifier) throw(RuntimeException)
+sal_Int64 SAL_CALL OGridColumn::getSomething( const Sequence<sal_Int8>& _rIdentifier)
 {
     sal_Int64 nReturn(0);
 
@@ -161,13 +161,13 @@ sal_Int64 SAL_CALL OGridColumn::getSomething( const Sequence<sal_Int8>& _rIdenti
 }
 
 //------------------------------------------------------------------
-Sequence<sal_Int8> SAL_CALL OGridColumn::getImplementationId() throw(RuntimeException)
+Sequence<sal_Int8> SAL_CALL OGridColumn::getImplementationId()
 {
     return OImplementationIds::getImplementationId(getTypes());
 }
 
 //------------------------------------------------------------------
-Sequence<Type> SAL_CALL OGridColumn::getTypes() throw(RuntimeException)
+Sequence<Type> SAL_CALL OGridColumn::getTypes()
 {
     TypeBag aTypes( OGridColumn_BASE::getTypes() );
     // erase the types which we do not support
@@ -175,7 +175,7 @@ Sequence<Type> SAL_CALL OGridColumn::getTypes() throw(RuntimeException)
     aTypes.removeType( XServiceInfo::static_type() );
     aTypes.removeType( XBindableValue::static_type() );
     aTypes.removeType( XPropertyContainer::static_type() );
-    
+
     // but re-add their base class(es)
     aTypes.addType( XChild::static_type() );
 
@@ -191,7 +191,7 @@ Sequence<Type> SAL_CALL OGridColumn::getTypes() throw(RuntimeException)
 }
 
 //------------------------------------------------------------------
-Any SAL_CALL OGridColumn::queryAggregation( const Type& _rType ) throw (RuntimeException)
+Any SAL_CALL OGridColumn::queryAggregation( const Type& _rType )
 {
     Any aReturn;
     // some functionality at our aggregate cannot be reasonably fulfilled here.
@@ -295,7 +295,7 @@ OGridColumn::~OGridColumn()
 
 // XEventListener
 //------------------------------------------------------------------------------
-void SAL_CALL OGridColumn::disposing(const EventObject& _rSource) throw(RuntimeException)
+void SAL_CALL OGridColumn::disposing(const EventObject& _rSource)
 {
     OPropertySetAggregationHelper::disposing(_rSource);
 
@@ -416,7 +416,7 @@ void OGridColumn::getFastPropertyValue(Any& rValue, sal_Int32 nHandle ) const
 
 //------------------------------------------------------------------------------
 sal_Bool OGridColumn::convertFastPropertyValue( Any& rConvertedValue, Any& rOldValue,
-                                            sal_Int32 nHandle, const Any& rValue )throw( IllegalArgumentException )
+                                            sal_Int32 nHandle, const Any& rValue )
 {
     sal_Bool bModified(sal_False);
     switch (nHandle)
@@ -446,7 +446,7 @@ sal_Bool OGridColumn::convertFastPropertyValue( Any& rConvertedValue, Any& rOldV
 }
 
 //------------------------------------------------------------------------------
-void OGridColumn::setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any& rValue ) throw (::com::sun::star::uno::Exception)
+void OGridColumn::setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any& rValue )
 {
     switch (nHandle)
     {
@@ -485,7 +485,7 @@ Any OGridColumn::getPropertyDefaultByHandle( sal_Int32 nHandle ) const
 
 // XCloneable
 //------------------------------------------------------------------------------
-Reference< XCloneable > SAL_CALL OGridColumn::createClone(  ) throw (RuntimeException)
+Reference< XCloneable > SAL_CALL OGridColumn::createClone(  )
 {
     OGridColumn* pNewColumn = createCloneColumn();
     return pNewColumn;
@@ -604,4 +604,3 @@ IMPL_COLUMN(FormattedFieldColumn,   FRM_SUN_COMPONENT_FORMATTEDFIELD,   sal_Fals
 //.........................................................................
 }   // namespace frm
 //.........................................................................
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 #include "BubbleChartTypeTemplate.hxx"
 #include "macros.hxx"
 #include "BubbleDataInterpreter.hxx"
@@ -70,7 +70,7 @@ struct StaticBubbleChartTypeTemplateDefaults_Initializer
 private:
     void lcl_AddDefaultsToMap( ::chart::tPropertyValueMap & /*rOutMap*/ )
     {
-    }    
+    }
 };
 
 struct StaticBubbleChartTypeTemplateDefaults : public rtl::StaticAggregate< ::chart::tPropertyValueMap, StaticBubbleChartTypeTemplateDefaults_Initializer >
@@ -136,7 +136,6 @@ BubbleChartTypeTemplate::~BubbleChartTypeTemplate()
 
 // ____ OPropertySet ____
 uno::Any BubbleChartTypeTemplate::GetDefaultValue( sal_Int32 nHandle ) const
-    throw(beans::UnknownPropertyException)
 {
     const tPropertyValueMap& rStaticDefaults = *StaticBubbleChartTypeTemplateDefaults::get();
     tPropertyValueMap::const_iterator aFound( rStaticDefaults.find( nHandle ) );
@@ -152,7 +151,6 @@ uno::Any BubbleChartTypeTemplate::GetDefaultValue( sal_Int32 nHandle ) const
 
 // ____ XPropertySet ____
 uno::Reference< beans::XPropertySetInfo > SAL_CALL BubbleChartTypeTemplate::getPropertySetInfo()
-    throw (uno::RuntimeException)
 {
     return *StaticBubbleChartTypeTemplateInfo::get();
 }
@@ -172,7 +170,6 @@ void SAL_CALL BubbleChartTypeTemplate::applyStyle(
     ::sal_Int32 nChartTypeIndex,
     ::sal_Int32 nSeriesIndex,
     ::sal_Int32 nSeriesCount )
-    throw (uno::RuntimeException)
 {
     ChartTypeTemplate::applyStyle( xSeries, nChartTypeIndex, nSeriesIndex, nSeriesCount );
     DataSeriesHelper::setPropertyAlsoToAllAttributedDataPoints( xSeries, C2U( "BorderStyle" ), uno::makeAny( drawing::LineStyle_NONE ) );
@@ -188,7 +185,6 @@ void SAL_CALL BubbleChartTypeTemplate::applyStyle(
 
 // ____ XChartTypeTemplate ____
 sal_Bool SAL_CALL BubbleChartTypeTemplate::supportsCategories()
-    throw (uno::RuntimeException)
 {
     return false;
 }
@@ -196,7 +192,6 @@ sal_Bool SAL_CALL BubbleChartTypeTemplate::supportsCategories()
 sal_Bool SAL_CALL BubbleChartTypeTemplate::matchesTemplate(
     const Reference< chart2::XDiagram >& xDiagram,
     sal_Bool bAdaptProperties )
-    throw (uno::RuntimeException)
 {
     sal_Bool bResult = ChartTypeTemplate::matchesTemplate( xDiagram, bAdaptProperties );
 
@@ -254,7 +249,6 @@ Reference< chart2::XChartType > BubbleChartTypeTemplate::getChartTypeForIndex( s
 
 Reference< chart2::XChartType > SAL_CALL BubbleChartTypeTemplate::getChartTypeForNewSeries(
         const uno::Sequence< Reference< chart2::XChartType > >& aFormerlyUsedChartTypes )
-    throw (uno::RuntimeException)
 {
     Reference< chart2::XChartType > xResult;
 
@@ -276,7 +270,6 @@ Reference< chart2::XChartType > SAL_CALL BubbleChartTypeTemplate::getChartTypeFo
 }
 
 Reference< chart2::XDataInterpreter > SAL_CALL BubbleChartTypeTemplate::getDataInterpreter()
-    throw (uno::RuntimeException)
 {
     if( ! m_xDataInterpreter.is())
         m_xDataInterpreter.set( new BubbleDataInterpreter( GetComponentContext()) );

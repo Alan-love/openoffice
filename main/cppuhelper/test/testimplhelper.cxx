@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -86,37 +86,37 @@ using namespace com::sun::star::uno;
 struct TestImpl : public ImplHelper4< CA, DBA, FE, G >
 {
 	sal_Int32 nRef;
-	
+
 	virtual ~TestImpl()
 		{ OSL_TRACE( "> TestImpl dtor called... <\n" ); }
 
-    virtual Any SAL_CALL queryInterface( const Type & rType ) throw(RuntimeException)
+    virtual Any SAL_CALL queryInterface( const Type & rType )
 		{ return ImplHelper4< CA, DBA, FE, G >::queryInterface( rType ); }
     virtual void SAL_CALL acquire(  ) throw()
 		{ ++nRef; }
     virtual void SAL_CALL release(  ) throw()
 		{ if (! --nRef) delete this; }
-	
+
 	// A
-	virtual OUString SAL_CALL a() throw(RuntimeException)
+	virtual OUString SAL_CALL a()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("a") ); }
 	// BA
-	virtual OUString SAL_CALL ba() throw(RuntimeException)
+	virtual OUString SAL_CALL ba()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("ba") ); }
 	// CA
-	virtual OUString SAL_CALL ca() throw(RuntimeException)
+	virtual OUString SAL_CALL ca()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("ca") ); }
 	// DBA
-	virtual OUString SAL_CALL dba() throw(RuntimeException)
+	virtual OUString SAL_CALL dba()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("dba") ); }
 	// E
-	virtual OUString SAL_CALL e() throw(RuntimeException)
+	virtual OUString SAL_CALL e()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("e") ); }
 	// FE
-	virtual OUString SAL_CALL fe() throw(RuntimeException)
+	virtual OUString SAL_CALL fe()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("fe") ); }
 	// G
-	virtual OUString SAL_CALL g() throw(RuntimeException)
+	virtual OUString SAL_CALL g()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("g") ); }
 };
 
@@ -125,27 +125,27 @@ struct TestWeakAggImpl : public WeakAggImplHelper4< CA, DBA, FE, G >
 {
 	virtual ~TestWeakAggImpl()
 		{ OSL_TRACE( "> TestWeakAggImpl dtor called... <\n" ); }
-	
+
 	// A
-	virtual OUString SAL_CALL a() throw(RuntimeException)
+	virtual OUString SAL_CALL a()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("a") ); }
 	// BA
-	virtual OUString SAL_CALL ba() throw(RuntimeException)
+	virtual OUString SAL_CALL ba()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("ba") ); }
 	// CA
-	virtual OUString SAL_CALL ca() throw(RuntimeException)
+	virtual OUString SAL_CALL ca()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("ca") ); }
 	// DBA
-	virtual OUString SAL_CALL dba() throw(RuntimeException)
+	virtual OUString SAL_CALL dba()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("dba") ); }
 	// E
-	virtual OUString SAL_CALL e() throw(RuntimeException)
+	virtual OUString SAL_CALL e()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("e") ); }
 	// FE
-	virtual OUString SAL_CALL fe() throw(RuntimeException)
+	virtual OUString SAL_CALL fe()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("fe") ); }
 	// G
-	virtual OUString SAL_CALL g() throw(RuntimeException)
+	virtual OUString SAL_CALL g()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("g") ); }
 };
 
@@ -156,27 +156,27 @@ struct TestWeakImpl : public WeakImplHelper4< CA, DBA, FE, G >
 
 	virtual ~TestWeakImpl()
 		{ OSL_TRACE( "> TestWeakImpl dtor called... <\n" ); }
-	
+
 	// A
-	virtual OUString SAL_CALL a() throw(RuntimeException)
+	virtual OUString SAL_CALL a()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("a") ); }
 	// BA
-	virtual OUString SAL_CALL ba() throw(RuntimeException)
+	virtual OUString SAL_CALL ba()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("ba") ); }
 	// CA
-	virtual OUString SAL_CALL ca() throw(RuntimeException)
+	virtual OUString SAL_CALL ca()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("ca") ); }
 	// DBA
-	virtual OUString SAL_CALL dba() throw(RuntimeException)
+	virtual OUString SAL_CALL dba()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("dba") ); }
 	// E
-	virtual OUString SAL_CALL e() throw(RuntimeException)
+	virtual OUString SAL_CALL e()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("e") ); }
 	// FE
-	virtual OUString SAL_CALL fe() throw(RuntimeException)
+	virtual OUString SAL_CALL fe()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("fe") ); }
 	// G
-	virtual OUString SAL_CALL g() throw(RuntimeException)
+	virtual OUString SAL_CALL g()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("g") ); }
 
 protected:
@@ -205,27 +205,27 @@ struct TestWeakComponentImpl : public WeakComponentImplHelper4< CA, DBA, FE, G >
 
 	void SAL_CALL disposing()
 		{ OSL_TRACE( "> TestWeakComponentImpl disposing called... <\n" ); }
-	
+
 	// A
-	virtual OUString SAL_CALL a() throw(RuntimeException)
+	virtual OUString SAL_CALL a()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("a") ); }
 	// BA
-	virtual OUString SAL_CALL ba() throw(RuntimeException)
+	virtual OUString SAL_CALL ba()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("ba") ); }
 	// CA
-	virtual OUString SAL_CALL ca() throw(RuntimeException)
+	virtual OUString SAL_CALL ca()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("ca") ); }
 	// DBA
-	virtual OUString SAL_CALL dba() throw(RuntimeException)
+	virtual OUString SAL_CALL dba()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("dba") ); }
 	// E
-	virtual OUString SAL_CALL e() throw(RuntimeException)
+	virtual OUString SAL_CALL e()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("e") ); }
 	// FE
-	virtual OUString SAL_CALL fe() throw(RuntimeException)
+	virtual OUString SAL_CALL fe()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("fe") ); }
 	// G
-	virtual OUString SAL_CALL g() throw(RuntimeException)
+	virtual OUString SAL_CALL g()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("g") ); }
 };
 
@@ -241,27 +241,27 @@ struct TestWeakAggComponentImpl : public WeakAggComponentImplHelper4< CA, DBA, F
 
 	void SAL_CALL disposing()
 		{ OSL_TRACE( "> TestWeakAggComponentImpl disposing called... <\n" ); }
-	
+
 	// A
-	virtual OUString SAL_CALL a() throw(RuntimeException)
+	virtual OUString SAL_CALL a()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("a") ); }
 	// BA
-	virtual OUString SAL_CALL ba() throw(RuntimeException)
+	virtual OUString SAL_CALL ba()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("ba") ); }
 	// CA
-	virtual OUString SAL_CALL ca() throw(RuntimeException)
+	virtual OUString SAL_CALL ca()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("ca") ); }
 	// DBA
-	virtual OUString SAL_CALL dba() throw(RuntimeException)
+	virtual OUString SAL_CALL dba()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("dba") ); }
 	// E
-	virtual OUString SAL_CALL e() throw(RuntimeException)
+	virtual OUString SAL_CALL e()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("e") ); }
 	// FE
-	virtual OUString SAL_CALL fe() throw(RuntimeException)
+	virtual OUString SAL_CALL fe()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("fe") ); }
 	// G
-	virtual OUString SAL_CALL g() throw(RuntimeException)
+	virtual OUString SAL_CALL g()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("g") ); }
 };
 
@@ -290,12 +290,12 @@ struct TestImplInh : public ImplInheritanceHelper2< TestWeakImpl, H, I >
 
 	virtual ~TestImplInh()
 		{ OSL_TRACE( "> TestWeakImplInh dtor called... <\n" ); }
-    
+
 	// H
-	virtual OUString SAL_CALL h() throw(RuntimeException)
+	virtual OUString SAL_CALL h()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("h") ); }
 	// I
-	virtual OUString SAL_CALL i() throw(RuntimeException)
+	virtual OUString SAL_CALL i()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("i") ); }
 };
 
@@ -304,12 +304,12 @@ struct TestAggImplInh : public AggImplInheritanceHelper2< TestWeakAggImpl, H, I 
 {
 	virtual ~TestAggImplInh()
 		{ OSL_TRACE( "> TestAggImplInh dtor called... <\n" ); }
-    
+
 	// H
-	virtual OUString SAL_CALL h() throw(RuntimeException)
+	virtual OUString SAL_CALL h()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("h2") ); }
 	// I
-	virtual OUString SAL_CALL i() throw(RuntimeException)
+	virtual OUString SAL_CALL i()
 		{ return OUString( RTL_CONSTASCII_USTRINGPARAM("i2") ); }
 };
 
@@ -343,7 +343,7 @@ static void dotest( const Reference< XInterface > & xOriginal )
     {
         ::fprintf( stderr, n < 15 ? "%x " : "%x \n", id[ n ] );
     }
-    
+
 	Reference< A > xa( xOriginal, UNO_QUERY );
 	OSL_ENSURE( xa->a().equalsAsciiL( RTL_CONSTASCII_STRINGPARAM("a") ), "### A failed!" );
 	Reference< BA > xba( xa, UNO_QUERY );
@@ -367,14 +367,14 @@ static void dotest( const Reference< XInterface > & xOriginal )
 	// type provider
 	Reference< lang::XTypeProvider > xProv( xg, UNO_QUERY );
 	Sequence< Type > aTypes( xProv->getTypes() );
-	
+
 	// CA, DBA, FE, G, XTypeProvider
 	OSL_ASSERT( isIn( aTypes, "test.CA" ) );
 	OSL_ASSERT( isIn( aTypes, "test.DBA" ) );
 	OSL_ASSERT( isIn( aTypes, "test.FE") );
 	OSL_ASSERT( isIn( aTypes, "test.G") );
 	OSL_ASSERT( isIn( aTypes, "com.sun.star.lang.XTypeProvider") );
-	
+
 	Reference< XWeak > xWeak( xg, UNO_QUERY );
     if (xWeak.is())
     {
@@ -385,7 +385,7 @@ static void dotest( const Reference< XInterface > & xOriginal )
 	{
         OSL_ASSERT( isIn( aTypes, "com.sun.star.lang.XComponent") );
     }
-    
+
 	Reference< XAggregation > xAgg( xg, UNO_QUERY );
     if (xAgg.is())
     {
@@ -401,7 +401,7 @@ static void dotest( const Reference< XInterface > & xOriginal )
     {
         OSL_ASSERT( isIn( aTypes, "test.I") );
     }
-    
+
 	OSL_ENSURE( xg == xOriginal, "### root!" );
 }
 
@@ -450,7 +450,7 @@ void test_ImplHelper( const Reference< lang::XMultiServiceFactory > & /*xSF*/ )
         xTP3->getImplementationId() != xTP5->getImplementationId() &&
         xTP4->getImplementationId() != xTP5->getImplementationId() );
     //
-    
+
 	dotest( xImpl );
 	dotest( xWeakImpl );
 	dotest( xWeakAggImpl );
@@ -464,7 +464,7 @@ void test_ImplHelper( const Reference< lang::XMultiServiceFactory > & /*xSF*/ )
     Reference< I > xI( xH, UNO_QUERY );
     OSL_ASSERT( xH->h().equalsAsciiL( RTL_CONSTASCII_STRINGPARAM("h") ) );
     OSL_ASSERT( xI->i().equalsAsciiL( RTL_CONSTASCII_STRINGPARAM("i") ) );
-    
+
 	xWeakAggImpl = (OWeakObject *)new TestAggImplInh();
     Reference< lang::XTypeProvider > xTP7( xWeakAggImpl, UNO_QUERY );
     dotest( xWeakAggImpl );
@@ -501,7 +501,7 @@ void test_ImplHelper( const Reference< lang::XMultiServiceFactory > & /*xSF*/ )
     {
         Any a( getCaughtException() );
         OSL_ASSERT( a == exc );
-        
+
         try
         {
             throwException( a );
@@ -509,7 +509,7 @@ void test_ImplHelper( const Reference< lang::XMultiServiceFactory > & /*xSF*/ )
         catch (lang::IllegalAccessException & e)
         {
             OSL_ASSERT( exc.Message == e.Message && exc.Context == e.Context );
-            
+
             try
             {
                 throw_one( exc );
@@ -533,7 +533,7 @@ void test_ImplHelper( const Reference< lang::XMultiServiceFactory > & /*xSF*/ )
         }
     }
     OSL_ASSERT( exc_succ );
-    
+
 	try
 	{
 		throwException( makeAny( RuntimeException(
@@ -574,4 +574,3 @@ void test_ImplHelper( const Reference< lang::XMultiServiceFactory > & /*xSF*/ )
 	}
 	OSL_ENSURE( sal_False, "### exception test failed!" );
 }
-

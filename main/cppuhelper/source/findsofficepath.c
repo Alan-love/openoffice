@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -90,7 +90,7 @@ static char* platformSpecific()
     const char* SUBKEYNAME64 = "Software\\Wow6432Node\\OpenOffice\\UNO\\InstallPath";
 
     char* path = NULL;
-    
+
     /* read the key's default value from HKEY_CURRENT_USER */
     path = getPathFromRegistryKey( HKEY_CURRENT_USER, SUBKEYNAME );
 
@@ -118,13 +118,13 @@ static char* platformSpecific()
 #include <unistd.h>
 #include <limits.h>
 #include <stdio.h>
-/*     
+/*
  * Gets the installation path from the PATH environment variable.
  *
  * <p>An installation is found, if the executable 'soffice' or a symbolic link
  * is in one of the directories listed in the PATH environment variable.</p>
  *
- * @return the installation path or NULL, if no installation was found or 
+ * @return the installation path or NULL, if no installation was found or
  *         if an error occurred
  */
 static char* platformSpecific()
@@ -135,13 +135,26 @@ static char* platformSpecific()
     /* On MacOS we have no soffice link under /usr/bin but the default office location is known
        and we check this only
      */
-    const char* MACDEFAULTOFFICEPATH = "/Applications/OpenOffice.app/Contents/MacOS";
-    const char* MACDEFAULTSOFFICE = "/Applications/OpenOffice.app/Contents/MacOS/soffice";
+    /* The installation lives in Contents/program (Contents/MacOS holds only the
+       launcher, so that the bundle can be code-signed); soffice is reachable
+       there through a symlink. Before 4.2 everything was in Contents/MacOS, so
+       fall back to that for an older office -- it has to be tried second, as
+       the launcher is in Contents/MacOS in both layouts. */
+    const char* MACDEFAULTOFFICEPATH = "/Applications/OpenOffice.app/Contents/program";
+    const char* MACDEFAULTSOFFICE = "/Applications/OpenOffice.app/Contents/program/soffice";
+    const char* MACLEGACYOFFICEPATH = "/Applications/OpenOffice.app/Contents/MacOS";
+    const char* MACLEGACYSOFFICE = "/Applications/OpenOffice.app/Contents/MacOS/soffice";
+    const char* found = NULL;
 
     if ( !access( MACDEFAULTSOFFICE, F_OK ) )
+        found = MACDEFAULTOFFICEPATH;
+    else if ( !access( MACLEGACYSOFFICE, F_OK ) )
+        found = MACLEGACYOFFICEPATH;
+
+    if ( found )
     {
-        path = (char*) malloc( strlen(MACDEFAULTOFFICEPATH) + 1 );
-        strcpy( path, MACDEFAULTOFFICEPATH);
+        path = (char*) malloc( strlen(found) + 1 );
+        strcpy( path, found );
     }
     return path;
 #else

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -332,7 +332,7 @@ void SwTxtFormatter::InsertPortion( SwTxtFormatInfo &rInf,
     if( pPor == pCurr )
     {
         if ( pCurr->GetPortion() )
-        {        
+        {
             pPor = pCurr->GetPortion();
         }
 
@@ -1347,7 +1347,7 @@ SwLinePortion *SwTxtFormatter::NewPortion( SwTxtFormatInfo &rInf )
                     // --> FME 2005-12-19 #127428# Abandon dec. tab position if line is full:
                     // We have a decimal tab portion in the line and the next character has to be
                     // aligned at the tab stop position. We store the width from the beginning of
-                    // the tab stop portion up to the portion containint the decimal separator:
+                    // the tab stop portion up to the portion containing the decimal separator:
 				  if ( GetTxtFrm()->GetTxtNode()->getIDocumentSettingAccess()->get(IDocumentSettingAccess::TAB_COMPAT) /*rInf.GetVsh()->IsTabCompat();*/ &&
 						 POR_TABDECIMAL == pLastTabPortion->GetWhichPor() )
                     {
@@ -1578,7 +1578,7 @@ xub_StrLen SwTxtFormatter::FormatLine( const xub_StrLen nStartPos )
         pCurr->CalcLine( *this, GetInfo() );
 		CalcRealHeight( GetInfo().IsNewLine() );
 
-		//Bug 120864:For Special case that at the first caculation couldn't get correct height. And need to recaculate for the right height.
+		//Bug 120864:For Special case that at the first calculation couldn't get correct height. And need to recalculate for the right height.
 		SwLinePortion* pPorTmp = pCurr->GetPortion();
 		if ( IsFlyInCntBase() && (!IsQuick() || (pPorTmp && pPorTmp->IsFlyCntPortion() && !pPorTmp->GetPortion() &&
 			pCurr->Height() > pPorTmp->Height())))
@@ -1632,7 +1632,7 @@ xub_StrLen SwTxtFormatter::FormatLine( const xub_StrLen nStartPos )
             delete pFlyStart;
     }
     else
-        // Special case: We do not allow an optimitation of the repaint
+        // Special case: We do not allow an optimization of the repaint
         // area, but during formatting the repaint offset is set to indicate
         // a maximum value for the offset. This value has to be reset:
         GetInfo().SetPaintOfst( 0 );

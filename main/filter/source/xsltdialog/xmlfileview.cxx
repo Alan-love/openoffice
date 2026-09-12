@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -83,9 +83,9 @@ public:
 	XMLErrorHandler( XMLSourceFileDialog* pParent, ListBox& rListBox );
 
     // Methods
-    virtual void SAL_CALL error( const Any& aSAXParseException ) throw (SAXException, RuntimeException);
-    virtual void SAL_CALL fatalError( const Any& aSAXParseException ) throw (SAXException, RuntimeException);
-    virtual void SAL_CALL warning( const Any& aSAXParseException ) throw (SAXException, RuntimeException);
+    virtual void SAL_CALL error( const Any& aSAXParseException );
+    virtual void SAL_CALL fatalError( const Any& aSAXParseException );
+    virtual void SAL_CALL warning( const Any& aSAXParseException );
 
 private:
 	XMLSourceFileDialog*	mpParent;
@@ -99,7 +99,7 @@ XMLErrorHandler::XMLErrorHandler( XMLSourceFileDialog* pParent, ListBox& rListBo
 }
 
 // XMLErrorHandler
-void SAL_CALL XMLErrorHandler::error( const Any& aSAXParseException ) throw (SAXException, RuntimeException)
+void SAL_CALL XMLErrorHandler::error( const Any& aSAXParseException )
 {
 	vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -114,7 +114,7 @@ void SAL_CALL XMLErrorHandler::error( const Any& aSAXParseException ) throw (SAX
 	}
 }
 
-void SAL_CALL XMLErrorHandler::fatalError( const Any& aSAXParseException ) throw (SAXException, RuntimeException)
+void SAL_CALL XMLErrorHandler::fatalError( const Any& aSAXParseException )
 {
 	vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -129,7 +129,7 @@ void SAL_CALL XMLErrorHandler::fatalError( const Any& aSAXParseException ) throw
 	}
 }
 
-void SAL_CALL XMLErrorHandler::warning( const Any& /* aSAXParseException */ ) throw (SAXException, RuntimeException)
+void SAL_CALL XMLErrorHandler::warning( const Any& /* aSAXParseException */ )
 {
 /*
 	SAXParseException e;
@@ -487,7 +487,7 @@ void XMLFileWindow::ShowWindow( const rtl::OUString& rFileName )
 		nCurTextWidth = pTextEngine->CalcTextWidth() + 25;	// kleine Toleranz
 		if ( nCurTextWidth != nPrevTextWidth )
 			SetScrollBarRanges();
-		
+
 		TextPaM aPaM( pTextView->CursorStartOfDoc() );
 		TextSelection aSelection( aPaM, aPaM );
 		pTextView->SetSelection( aSelection, true );
@@ -511,7 +511,7 @@ XMLSourceFileDialog::XMLSourceFileDialog( Window* pParent, ResMgr& rResMgr, cons
 :	WorkWindow( pParent, ResId( DLG_XML_SOURCE_FILE_DIALOG, rResMgr ) ),
 	mnOutputHeight( LogicToPixel( Size( 80, 80 ), MAP_APPFONT ).Height() ),
 	mxMSF( rxMSF ),
-	mrResMgr( rResMgr ),	
+	mrResMgr( rResMgr ),
 	maLBOutput( this ),
 	maPBValidate( this, ResId( PB_VALIDATE, rResMgr ) )
 {
@@ -623,7 +623,7 @@ void XMLSourceFileDialog::onValidate()
 			/* osl::File::RC rc = */ aInputFile.open( OpenFlag_Read );
 
 			Reference< XInputStream > xIS( new comphelper::OSLInputStreamWrapper( aInputFile ) );
-			
+
 			Sequence< PropertyValue > aSourceData(3);
 			aSourceData[0].Name = OUString( RTL_CONSTASCII_USTRINGPARAM( "InputStream" ) );
 			aSourceData[0].Value <<= xIS;
@@ -635,7 +635,7 @@ void XMLSourceFileDialog::onValidate()
 			Reference< XErrorHandler > xHandle( new XMLErrorHandler( this, maLBOutput ) );
 			aSourceData[2].Value <<= xHandle;
 
-			Reference< XDocumentHandler > xWriter( mxMSF->createInstance( OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.xml.sax.Writer" ) ) ), UNO_QUERY );	
+			Reference< XDocumentHandler > xWriter( mxMSF->createInstance( OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.xml.sax.Writer" ) ) ), UNO_QUERY );
 			Reference< XOutputStream > xOS( mxMSF->createInstance( OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.io.Pipe" ) ) ), UNO_QUERY );
 			Reference< XActiveDataSource > xDocSrc( xWriter, UNO_QUERY );
 			xDocSrc->setOutputStream( xOS );
@@ -643,7 +643,7 @@ void XMLSourceFileDialog::onValidate()
 			Sequence< OUString > aFilterUserData( mpFilterInfo->getFilterUserData() );
 			xImporter->importer( aSourceData, xWriter, aFilterUserData );
 		}
-	}				
+	}
 	catch(Exception& e)
 	{
 		String sErr( e.Message );
@@ -799,8 +799,8 @@ void lcl_Highlight(const String& rSource, SwTextPortions& aPortionList)
 					aText2.nStart = nPortStart + 1;
 					aText2.nEnd = nPortEnd;
 					aText2.eType = eFoundType;
-					aPortionList.push_back( aText2 ); 
-					nInsert++;		
+					aPortionList.push_back( aText2 );
+					nInsert++;
 					eFoundType = svtools::HTMLUNKNOWN;
 				}
 

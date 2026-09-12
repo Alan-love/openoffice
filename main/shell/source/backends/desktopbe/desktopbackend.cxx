@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -86,73 +86,47 @@ private:
     virtual ~Default() {}
 
     virtual rtl::OUString SAL_CALL getImplementationName()
-        throw (css::uno::RuntimeException)
     { return getDefaultImplementationName(); }
 
     virtual sal_Bool SAL_CALL supportsService(rtl::OUString const & ServiceName)
-        throw (css::uno::RuntimeException)
     { return ServiceName == getSupportedServiceNames()[0]; }
 
     virtual css::uno::Sequence< rtl::OUString > SAL_CALL
-    getSupportedServiceNames() throw (css::uno::RuntimeException)
+    getSupportedServiceNames()
     { return getDefaultSupportedServiceNames(); }
 
     virtual css::uno::Reference< css::beans::XPropertySetInfo > SAL_CALL
-    getPropertySetInfo() throw (css::uno::RuntimeException)
+    getPropertySetInfo()
     { return css::uno::Reference< css::beans::XPropertySetInfo >(); }
 
     virtual void SAL_CALL setPropertyValue(
-        rtl::OUString const &, css::uno::Any const &)
-        throw (
-            css::beans::UnknownPropertyException,
-            css::beans::PropertyVetoException,
-            css::lang::IllegalArgumentException,
-            css::lang::WrappedTargetException, css::uno::RuntimeException);
+        rtl::OUString const &, css::uno::Any const &);
 
     virtual css::uno::Any SAL_CALL getPropertyValue(
-        rtl::OUString const & PropertyName)
-        throw (
-            css::beans::UnknownPropertyException,
-            css::lang::WrappedTargetException, css::uno::RuntimeException);
+        rtl::OUString const & PropertyName);
 
     virtual void SAL_CALL addPropertyChangeListener(
         rtl::OUString const &,
         css::uno::Reference< css::beans::XPropertyChangeListener > const &)
-        throw (
-            css::beans::UnknownPropertyException,
-            css::lang::WrappedTargetException, css::uno::RuntimeException)
     {}
 
     virtual void SAL_CALL removePropertyChangeListener(
         rtl::OUString const &,
         css::uno::Reference< css::beans::XPropertyChangeListener > const &)
-        throw (
-            css::beans::UnknownPropertyException,
-            css::lang::WrappedTargetException, css::uno::RuntimeException)
     {}
 
     virtual void SAL_CALL addVetoableChangeListener(
         rtl::OUString const &,
         css::uno::Reference< css::beans::XVetoableChangeListener > const &)
-        throw (
-            css::beans::UnknownPropertyException,
-            css::lang::WrappedTargetException, css::uno::RuntimeException)
     {}
 
     virtual void SAL_CALL removeVetoableChangeListener(
         rtl::OUString const &,
         css::uno::Reference< css::beans::XVetoableChangeListener > const &)
-        throw (
-            css::beans::UnknownPropertyException,
-            css::lang::WrappedTargetException, css::uno::RuntimeException)
     {}
 };
 
 void Default::setPropertyValue(rtl::OUString const &, css::uno::Any const &)
-    throw (
-        css::beans::UnknownPropertyException, css::beans::PropertyVetoException,
-        css::lang::IllegalArgumentException, css::lang::WrappedTargetException,
-        css::uno::RuntimeException)
 {
     throw css::lang::IllegalArgumentException(
         rtl::OUString(
@@ -161,9 +135,6 @@ void Default::setPropertyValue(rtl::OUString const &, css::uno::Any const &)
 }
 
 css::uno::Any Default::getPropertyValue(rtl::OUString const & PropertyName)
-    throw (
-        css::beans::UnknownPropertyException, css::lang::WrappedTargetException,
-        css::uno::RuntimeException)
 {
     if (PropertyName.equalsAsciiL(
             RTL_CONSTASCII_STRINGPARAM("EnableATToolSupport")) ||

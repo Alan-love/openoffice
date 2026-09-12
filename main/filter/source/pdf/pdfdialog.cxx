@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,25 +7,25 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
- 
+
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_filter.hxx"
 
-#include "pdfdialog.hxx" 
-#include "impdialog.hxx" 
+#include "pdfdialog.hxx"
+#include "impdialog.hxx"
 #include <vcl/svapp.hxx>
 #include <vcl/dialog.hxx>
 #include <svl/solar.hrc>
@@ -47,15 +47,13 @@ using namespace ::com::sun::star::beans;
 // -----------------------------------------------------------------------------
 
 OUString PDFDialog_getImplementationName ()
-	throw (RuntimeException)
 {
 	return OUString ( RTL_CONSTASCII_USTRINGPARAM ( "com.sun.star.comp.PDF.PDFDialog" ) );
 }
 
 // -----------------------------------------------------------------------------
 
-Sequence< sal_Int8 > SAL_CALL PDFDialog_getImplementationId() 
-    throw(RuntimeException)
+Sequence< sal_Int8 > SAL_CALL PDFDialog_getImplementationId()
 {
     static ::cppu::OImplementationId aId;
     return aId.getImplementationId();
@@ -63,8 +61,7 @@ Sequence< sal_Int8 > SAL_CALL PDFDialog_getImplementationId()
 
 // -----------------------------------------------------------------------------
 
-Sequence< OUString > SAL_CALL PDFDialog_getSupportedServiceNames() 
-    throw (RuntimeException)
+Sequence< OUString > SAL_CALL PDFDialog_getSupportedServiceNames()
 {
 	Sequence < OUString > aRet(1);
     OUString* pArray = aRet.getArray();
@@ -74,8 +71,7 @@ Sequence< OUString > SAL_CALL PDFDialog_getSupportedServiceNames()
 
 // -----------------------------------------------------------------------------
 
-Reference< XInterface > SAL_CALL PDFDialog_createInstance( const Reference< XMultiServiceFactory > & rSMgr) 
-    throw( Exception )
+Reference< XInterface > SAL_CALL PDFDialog_createInstance( const Reference< XMultiServiceFactory > & rSMgr)
 {
 	return (cppu::OWeakObject*) new PDFDialog( rSMgr );
 }
@@ -101,16 +97,14 @@ PDFDialog::~PDFDialog()
 
 // -----------------------------------------------------------------------------
 
-Sequence< sal_Int8 > SAL_CALL PDFDialog::getImplementationId() 
-    throw(RuntimeException)
+Sequence< sal_Int8 > SAL_CALL PDFDialog::getImplementationId()
 {
     return PDFDialog_getImplementationId();
 }
 
 // -----------------------------------------------------------------------------
 
-OUString SAL_CALL PDFDialog::getImplementationName() 
-	throw (RuntimeException)
+OUString SAL_CALL PDFDialog::getImplementationName()
 {
 	return PDFDialog_getImplementationName();
 }
@@ -118,7 +112,6 @@ OUString SAL_CALL PDFDialog::getImplementationName()
 // -----------------------------------------------------------------------------
 
 Sequence< OUString > SAL_CALL PDFDialog::getSupportedServiceNames()
-    throw (RuntimeException)
 {
     return PDFDialog_getSupportedServiceNames();
 }
@@ -149,8 +142,7 @@ void PDFDialog::executedDialog( sal_Int16 nExecutionResult )
 
 // -----------------------------------------------------------------------------
 
-Reference< XPropertySetInfo > SAL_CALL PDFDialog::getPropertySetInfo() 
-    throw(RuntimeException)
+Reference< XPropertySetInfo > SAL_CALL PDFDialog::getPropertySetInfo()
 {
 	Reference< XPropertySetInfo >  xInfo( createPropertySetInfo( getInfoHelper() ) );
 	return xInfo;
@@ -173,13 +165,12 @@ Reference< XPropertySetInfo > SAL_CALL PDFDialog::getPropertySetInfo()
 // -----------------------------------------------------------------------------
 
 Sequence< PropertyValue > SAL_CALL PDFDialog::getPropertyValues()
-    throw ( RuntimeException )
 {
     sal_Int32 i, nCount;
 
     for( i = 0, nCount = maMediaDescriptor.getLength(); i < nCount; i++ )
 	{
-		if( maMediaDescriptor[ i ].Name.equalsAscii( "FilterData" ) ) 
+		if( maMediaDescriptor[ i ].Name.equalsAscii( "FilterData" ) )
 			break;
 	}
 
@@ -188,20 +179,19 @@ Sequence< PropertyValue > SAL_CALL PDFDialog::getPropertyValues()
 
 	maMediaDescriptor[ i ].Name = String( RTL_CONSTASCII_USTRINGPARAM( "FilterData" ) );
 	maMediaDescriptor[ i ].Value <<= maFilterData;
-    
+
     return maMediaDescriptor;
 }
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL PDFDialog::setPropertyValues( const Sequence< PropertyValue >& rProps ) 
-    throw ( UnknownPropertyException, PropertyVetoException, IllegalArgumentException, WrappedTargetException, RuntimeException )
+void SAL_CALL PDFDialog::setPropertyValues( const Sequence< PropertyValue >& rProps )
 {
     maMediaDescriptor = rProps;
 
 	for( sal_Int32 i = 0, nCount = maMediaDescriptor.getLength(); i < nCount; i++ )
 	{
-		if( maMediaDescriptor[ i ].Name.equalsAscii( "FilterData" ) ) 
+		if( maMediaDescriptor[ i ].Name.equalsAscii( "FilterData" ) )
 		{
 			maMediaDescriptor[ i ].Value >>= maFilterData;
 			break;
@@ -211,8 +201,7 @@ void SAL_CALL PDFDialog::setPropertyValues( const Sequence< PropertyValue >& rPr
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL PDFDialog::setSourceDocument( const Reference< XComponent >& xDoc ) 
-    throw(IllegalArgumentException, RuntimeException)
+void SAL_CALL PDFDialog::setSourceDocument( const Reference< XComponent >& xDoc )
 {
     mxSrcDoc = xDoc;
 }

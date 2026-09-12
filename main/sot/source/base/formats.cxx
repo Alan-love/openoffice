@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -93,7 +93,7 @@ static SotAction_Impl __READONLY_DATA aEmptyArr[] =			              \
 		{ 0xffff, 0, 0 }                                                  \
 	};
 
-/*  */
+/* */
 #define EXCHG_DEST_DOC_OLEOBJ_ARRAY                                         \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_OLEOBJ_Def[] =        \
 	{                                                                       \
@@ -124,7 +124,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_OLEOBJ_Link[] =       \
 		{ 0xffff, 0, 0 }                                                          \
 	};
 
-/*  */
+/* */
 #define EXCHG_DEST_CHARTDOC_OLEOBJ_ARRAY                                    \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_CHARTDOC_OLEOBJ_Def[] =   \
 	{                                                                       \
@@ -155,7 +155,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_CHARTDOC_OLEOBJ_Link[] =  \
 		{ 0xffff, 0, 0 }                                                          \
 	};
 
-/*  */
+/* */
 #define EXCHG_DEST_DOC_TEXTFRAME_ARRAY                                      \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_TEXTFRAME_Def[] =     \
 	{                                                                       \
@@ -341,7 +341,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_TEXTFRAME_WEB_Link[] =    
 		{ 0xffff, 0, 0 }                                                          \
 	};
 
-/*  */
+/* */
 #define EXCHG_DEST_DOC_GRAPHOBJ_ARRAY                                       \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_GRAPHOBJ_Def[] =      \
 	{                                                                       \
@@ -404,7 +404,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_GRAPHOBJ_Link[] =     \
 		{ 0xffff, 0, 0 }                                                          \
 	};
 
-/*  */
+/* */
 #define EXCHG_DEST_DOC_LNKD_GRAPHOBJ_ARRAY                                  \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_LNKD_GRAPHOBJ_Def[] = \
 	{                                                                       \
@@ -467,7 +467,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_LNKD_GRAPHOBJ_Link[] =\
 		{ 0xffff, 0, 0 }                                                          \
 	};
 
-/*  */
+/* */
 #define EXCHG_DEST_DOC_GRAPH_W_IMAP_ARRAY                                   \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_GRAPH_W_IMAP_Def[] =  \
 	{                                                                       \
@@ -531,7 +531,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_GRAPH_W_IMAP_Link[] = \
 		{ 0xffff, 0, 0 }                                                          \
 	};
 
-/*  */
+/* */
 #define EXCHG_DEST_DOC_LNKD_GRAPH_W_IMAP_ARRAY                              \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_LNKD_GRAPH_W_IMAP_Def[] =\
 	{                                                                       \
@@ -596,7 +596,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_LNKD_GRAPH_W_IMAP_Link[] =
 	};
 
 
-/*  */
+/* */
 #define EXCHG_DEST_DOC_IMAPREGION_ARRAY                                     \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_IMAPREGION_Def[] =    \
 	{                                                                       \
@@ -616,7 +616,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_IMAPREGION_Copy[] =   \
 	};
 
 
-/*  */
+/* */
 #define EXCHG_DEST_DOC_DRAWOBJ_ARRAY                                        \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_DRAWOBJ_Def[] =       \
 	{                                                                       \
@@ -680,7 +680,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_DRAWOBJ_Link[] =      \
 	};
 
 
-/*  */
+/* */
 #define EXCHG_DEST_DOC_URLBUTTON_ARRAY                                      \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_URLBUTTON_Def[] =     \
 	{                                                                       \
@@ -719,7 +719,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_URLBUTTON_Copy[] =    \
 	};
 
 
-/*  */
+/* */
 #define EXCHG_DEST_DOC_URLFIELD_ARRAY                                       \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_URLFIELD_Def[] =      \
 	{                                                                       \
@@ -743,7 +743,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_URLFIELD_Link[] =     \
 		{ 0xffff, 0, 0 }                                                          \
 	};
 
-/*  */
+/* */
 #define EXCHG_DEST_DOC_GROUPOBJ_ARRAY                                       \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_GROUPOBJ_Def[] =      \
 	{                                                                       \
@@ -807,7 +807,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_DOC_GROUPOBJ_Link[] =     \
 	};
 
 
-/*  */
+/* */
 #define EXCHG_DEST_SWDOC_FREE_AREA_ARRAY                                    \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_SWDOC_FREE_AREA_Def[] =   \
 	{                                                                       \
@@ -994,7 +994,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_SWDOC_FREE_AREA_WEB_Link[] =  
 	};
 
 
-/*  */
+/* */
 #define EXCHG_DEST_SCDOC_FREE_AREA_ARRAY                                    \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_SCDOC_FREE_AREA_Def[] =   \
 	{                                                                       \
@@ -1090,7 +1090,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_SCDOC_FREE_AREA_Link[] =  \
 	};
 
 
-/*  */
+/* */
 #define EXCHG_DEST_SDDOC_FREE_AREA_ARRAY                                    \
 static SotAction_Impl __READONLY_DATA aEXCHG_DEST_SDDOC_FREE_AREA_Def[] =   \
 	{                                                                       \
@@ -1180,7 +1180,7 @@ static SotAction_Impl __READONLY_DATA aEXCHG_DEST_SDDOC_FREE_AREA_Link[] =  \
 	};
 
 
-/*  */
+/* */
 
 #define IMPL_DATA_ARRAY_1				                                  \
 EXCHG_EMPYT_ARRAY                                                         \
@@ -1551,7 +1551,7 @@ sal_uInt16 SotExchange::GetExchangeAction( const DataFlavorExVector& rDataFlavor
                         rFormat, nOnlyTestFormat, pxTransferable );
                     if ( nUserAction )
                         return nUserAction;
-                }        
+                }
                 rDefaultAction = (EXCHG_IN_ACTION_LINK & nSourceOptions);
                 if( rDefaultAction )
                 {
@@ -1668,7 +1668,7 @@ sal_uInt16 SotExchange::IsChart(  const SvGlobalName& rName )
 	sal_uInt16 nRet=0;
 //	if ( rName == SvGlobalName( SO3_SCH_CLASSID_8 ) )
 //		nRet = SOFFICE_FILEFORMAT_8;
-//	else 
+//	else
 	if ( rName == SvGlobalName( SO3_SCH_CLASSID_60 ) )
 		nRet = SOFFICE_FILEFORMAT_60;
 	else if ( rName == SvGlobalName( SO3_SCH_CLASSID_50 ) )
@@ -1698,4 +1698,3 @@ sal_uInt16 SotExchange::IsMath(  const SvGlobalName& rName )
 
 	return nRet;
 }
-

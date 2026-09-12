@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -128,7 +128,7 @@ public:
 	}
 
 	// interface XEventListener
-    virtual void SAL_CALL disposing( const EventObject& /*Source*/ ) throw( RuntimeException )
+    virtual void SAL_CALL disposing( const EventObject& /*Source*/ )
     {
         m_bClosed = true;
     }
@@ -299,7 +299,7 @@ void OApplicationController::openDirectSQLDialog()
 	openDialog( SERVICE_SDB_DIRECTSQLDIALOG );
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OApplicationController::propertyChange( const PropertyChangeEvent& evt ) throw (RuntimeException)
+void SAL_CALL OApplicationController::propertyChange( const PropertyChangeEvent& evt )
 {
 	::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
 	::osl::MutexGuard aGuard( getMutex() );
@@ -348,7 +348,7 @@ void SAL_CALL OApplicationController::propertyChange( const PropertyChangeEvent&
 }
 
 // -----------------------------------------------------------------------------
-Reference< XDataSource > SAL_CALL OApplicationController::getDataSource() throw (RuntimeException)
+Reference< XDataSource > SAL_CALL OApplicationController::getDataSource()
 {
 	::osl::MutexGuard aGuard( getMutex() );
     Reference< XDataSource > xDataSource( m_xDataSource, UNO_QUERY );
@@ -356,7 +356,7 @@ Reference< XDataSource > SAL_CALL OApplicationController::getDataSource() throw 
 }
 
 // -----------------------------------------------------------------------------
-Reference< XWindow > SAL_CALL OApplicationController::getApplicationMainWindow() throw (RuntimeException)
+Reference< XWindow > SAL_CALL OApplicationController::getApplicationMainWindow()
 {
 	::osl::MutexGuard aGuard( getMutex() );
     Reference< XFrame > xFrame( getFrame(), UNO_QUERY_THROW );
@@ -365,28 +365,28 @@ Reference< XWindow > SAL_CALL OApplicationController::getApplicationMainWindow()
 }
 
 // -----------------------------------------------------------------------------
-Sequence< Reference< XComponent > > SAL_CALL OApplicationController::getSubComponents() throw (RuntimeException)
+Sequence< Reference< XComponent > > SAL_CALL OApplicationController::getSubComponents()
 {
 	::osl::MutexGuard aGuard( getMutex() );
     return m_pSubComponentManager->getSubComponents();
 }
 
 // -----------------------------------------------------------------------------
-Reference< XConnection > SAL_CALL OApplicationController::getActiveConnection() throw (RuntimeException)
+Reference< XConnection > SAL_CALL OApplicationController::getActiveConnection()
 {
 	::osl::MutexGuard aGuard( getMutex() );
     return m_xDataSourceConnection.getTyped();
 }
 
 // -----------------------------------------------------------------------------
-::sal_Bool SAL_CALL OApplicationController::isConnected(  ) throw (RuntimeException)
+::sal_Bool SAL_CALL OApplicationController::isConnected(  )
 {
 	::osl::MutexGuard aGuard( getMutex() );
     return m_xDataSourceConnection.is();
 }
 
 // -----------------------------------------------------------------------------
-void SAL_CALL OApplicationController::connect(  ) throw (SQLException, RuntimeException)
+void SAL_CALL OApplicationController::connect(  )
 {
 	::vos::OGuard aSolarGuard(Application::GetSolarMutex());
 	::osl::MutexGuard aGuard( getMutex() );
@@ -406,7 +406,7 @@ void SAL_CALL OApplicationController::connect(  ) throw (SQLException, RuntimeEx
 }
 
 // -----------------------------------------------------------------------------
-beans::Pair< ::sal_Int32, ::rtl::OUString > SAL_CALL OApplicationController::identifySubComponent( const Reference< XComponent >& i_rSubComponent ) throw (IllegalArgumentException, RuntimeException)
+beans::Pair< ::sal_Int32, ::rtl::OUString > SAL_CALL OApplicationController::identifySubComponent( const Reference< XComponent >& i_rSubComponent )
 {
 	::osl::MutexGuard aGuard( getMutex() );
 
@@ -425,7 +425,7 @@ beans::Pair< ::sal_Int32, ::rtl::OUString > SAL_CALL OApplicationController::ide
 }
 
 // -----------------------------------------------------------------------------
-::sal_Bool SAL_CALL OApplicationController::closeSubComponents(  ) throw (RuntimeException)
+::sal_Bool SAL_CALL OApplicationController::closeSubComponents(  )
 {
 	::vos::OGuard aSolarGuard(Application::GetSolarMutex());
 	::osl::MutexGuard aGuard( getMutex() );
@@ -503,14 +503,14 @@ void OApplicationController::impl_validateObjectTypeAndName_throw( const sal_Int
 
 // -----------------------------------------------------------------------------
 Reference< XComponent > SAL_CALL OApplicationController::loadComponent( ::sal_Int32 _ObjectType,
-    const ::rtl::OUString& _ObjectName, ::sal_Bool _ForEditing ) throw (IllegalArgumentException, NoSuchElementException, SQLException, RuntimeException)
+    const ::rtl::OUString& _ObjectName, ::sal_Bool _ForEditing )
 {
     return loadComponentWithArguments( _ObjectType, _ObjectName, _ForEditing, Sequence< PropertyValue >() );
 }
 
 // -----------------------------------------------------------------------------
 Reference< XComponent > SAL_CALL OApplicationController::loadComponentWithArguments( ::sal_Int32 _ObjectType,
-    const ::rtl::OUString& _ObjectName, ::sal_Bool _ForEditing, const Sequence< PropertyValue >& _Arguments ) throw (IllegalArgumentException, NoSuchElementException, SQLException, RuntimeException)
+    const ::rtl::OUString& _ObjectName, ::sal_Bool _ForEditing, const Sequence< PropertyValue >& _Arguments )
 {
 	::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
 	::osl::MutexGuard aGuard( getMutex() );
@@ -529,13 +529,13 @@ Reference< XComponent > SAL_CALL OApplicationController::loadComponentWithArgume
 }
 
 // -----------------------------------------------------------------------------
-Reference< XComponent > SAL_CALL OApplicationController::createComponent( ::sal_Int32 i_nObjectType, Reference< XComponent >& o_DocumentDefinition  ) throw (IllegalArgumentException, SQLException, RuntimeException)
+Reference< XComponent > SAL_CALL OApplicationController::createComponent( ::sal_Int32 i_nObjectType, Reference< XComponent >& o_DocumentDefinition  )
 {
     return createComponentWithArguments( i_nObjectType, Sequence< PropertyValue >(), o_DocumentDefinition );
 }
 
 // -----------------------------------------------------------------------------
-Reference< XComponent > SAL_CALL OApplicationController::createComponentWithArguments( ::sal_Int32 i_nObjectType, const Sequence< PropertyValue >& i_rArguments, Reference< XComponent >& o_DocumentDefinition ) throw (IllegalArgumentException, SQLException, RuntimeException)
+Reference< XComponent > SAL_CALL OApplicationController::createComponentWithArguments( ::sal_Int32 i_nObjectType, const Sequence< PropertyValue >& i_rArguments, Reference< XComponent >& o_DocumentDefinition )
 {
 	::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
 	::osl::MutexGuard aGuard( getMutex() );
@@ -552,14 +552,14 @@ Reference< XComponent > SAL_CALL OApplicationController::createComponentWithArgu
 }
 
 // -----------------------------------------------------------------------------
-void SAL_CALL OApplicationController::registerContextMenuInterceptor( const Reference< XContextMenuInterceptor >& _Interceptor ) throw (RuntimeException)
+void SAL_CALL OApplicationController::registerContextMenuInterceptor( const Reference< XContextMenuInterceptor >& _Interceptor )
 {
     if ( _Interceptor.is() )
         m_aContextMenuInterceptors.addInterface( _Interceptor );
 }
 
 // -----------------------------------------------------------------------------
-void SAL_CALL OApplicationController::releaseContextMenuInterceptor( const Reference< XContextMenuInterceptor >& _Interceptor ) throw (RuntimeException)
+void SAL_CALL OApplicationController::releaseContextMenuInterceptor( const Reference< XContextMenuInterceptor >& _Interceptor )
 {
     m_aContextMenuInterceptors.removeInterface( _Interceptor );
 }
@@ -802,7 +802,7 @@ void OApplicationController::doAction(sal_uInt16 _nId ,ElementOpenMode _eOpenMod
 	// special handling for mail, if more than one document is selected attach them all
 	if ( _eOpenMode == E_OPEN_FOR_MAIL )
 	{
-        
+
 		::std::vector< ::std::pair< ::rtl::OUString ,Reference< XModel > > >::iterator componentIter = aCompoments.begin();
 		::std::vector< ::std::pair< ::rtl::OUString ,Reference< XModel > > >::iterator componentEnd = aCompoments.end();
         ::rtl::OUString aDocTypeString;

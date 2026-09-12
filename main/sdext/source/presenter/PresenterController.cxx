@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -220,7 +220,7 @@ PresenterController::~PresenterController (void)
 void PresenterController::disposing (void)
 {
     maInstances.erase(mxController->getFrame());
- 
+
     if (mxMainWindow.is())
     {
         mxMainWindow->removeKeyListener(this);
@@ -237,7 +237,7 @@ void PresenterController::disposing (void)
     mpWindowManager = NULL;
     if (xWindowManagerComponent.is())
         xWindowManagerComponent->dispose();
-    
+
     if (mxController.is())
     {
         Reference<frame::XFrame> xFrame (mxController->getFrame());
@@ -289,7 +289,7 @@ void PresenterController::UpdateCurrentSlide (const sal_Int32 nOffset)
     GetSlides(nOffset);
     UpdatePaneTitles();
     UpdateViews();
-    
+
     // Update the accessibility object.
     if (IsAccessibilityActive())
     {
@@ -404,7 +404,7 @@ void PresenterController::UpdatePaneTitles (void)
     for (iPane=mpPaneContainer->maPanes.begin(); iPane!=mpPaneContainer->maPanes.end(); ++iPane)
     {
         OSL_ASSERT((*iPane).get() != NULL);
-        
+
         OUString sTemplate (IsAccessibilityActive()
             ? (*iPane)->msAccessibleTitleTemplate
             : (*iPane)->msTitleTemplate);
@@ -647,7 +647,7 @@ void PresenterController::DispatchUnoCommand (const OUString& rsCommand) const
 
     util::URL aURL;
     aURL.Complete = rsCommand;
-    mxUrlTransformer->parseStrict(aURL); 
+    mxUrlTransformer->parseStrict(aURL);
 
     Reference<frame::XDispatch> xDispatch (GetDispatch(aURL));
     if ( ! xDispatch.is())
@@ -663,7 +663,7 @@ Reference<css::frame::XDispatch> PresenterController::GetDispatch (const util::U
 {
     if ( ! mxController.is())
         return NULL;
-    
+
     Reference<frame::XDispatchProvider> xDispatchProvider (mxController->getFrame(), UNO_QUERY);
     if ( ! xDispatchProvider.is())
         return NULL;
@@ -812,14 +812,13 @@ void PresenterController::RequestViews (
 
 void SAL_CALL PresenterController::notifyConfigurationChange (
     const ConfigurationChangeEvent& rEvent)
-    throw (RuntimeException)
 {
     ThrowIfDisposed();
 
     sal_Int32 nType (0);
     if ( ! (rEvent.UserData >>= nType))
         return;
-    
+
     switch (nType)
     {
         case ResourceActivationEventType:
@@ -836,7 +835,7 @@ void SAL_CALL PresenterController::notifyConfigurationChange (
                 {
                     PresenterPaneContainer::SharedPaneDescriptor pDescriptor (
                         mpPaneContainer->FindPaneId(xPane->getResourceId()));
-                                
+
                     // When there is a call out anchor location set then tell the
                     // window about it.
                     if (pDescriptor->mbHasCalloutAnchor)
@@ -898,7 +897,6 @@ void SAL_CALL PresenterController::notifyConfigurationChange (
 
 void SAL_CALL PresenterController::disposing (
     const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     if (rEvent.Source == mxController)
         mxController = NULL;
@@ -917,7 +915,6 @@ void SAL_CALL PresenterController::disposing (
 
 void SAL_CALL PresenterController::frameAction (
     const frame::FrameActionEvent& rEvent)
-    throw (RuntimeException)
 {
     if (rEvent.Action == frame::FrameAction_FRAME_ACTIVATED)
     {
@@ -932,7 +929,6 @@ void SAL_CALL PresenterController::frameAction (
 //----- XKeyListener ----------------------------------------------------------
 
 void SAL_CALL PresenterController::keyPressed (const awt::KeyEvent& rEvent)
-    throw (RuntimeException)
 {
     // Tell all views about the unhandled key event.
     PresenterPaneContainer::PaneList::const_iterator iPane;
@@ -951,7 +947,6 @@ void SAL_CALL PresenterController::keyPressed (const awt::KeyEvent& rEvent)
 
 
 void SAL_CALL PresenterController::keyReleased (const awt::KeyEvent& rEvent)
-    throw (RuntimeException)
 {
     if (rEvent.Source != mxMainWindow)
         return;
@@ -1155,7 +1150,6 @@ void PresenterController::HandleNumericKeyPress (
 //----- XFocusListener --------------------------------------------------------
 
 void SAL_CALL PresenterController::focusGained (const css::awt::FocusEvent& rEvent)
-    throw (css::uno::RuntimeException)
 {
     (void)rEvent;
 }
@@ -1164,7 +1158,6 @@ void SAL_CALL PresenterController::focusGained (const css::awt::FocusEvent& rEve
 
 
 void SAL_CALL PresenterController::focusLost (const css::awt::FocusEvent& rEvent)
-    throw (css::uno::RuntimeException)
 {
     (void)rEvent;
 }
@@ -1175,7 +1168,6 @@ void SAL_CALL PresenterController::focusLost (const css::awt::FocusEvent& rEvent
 //----- XMouseListener --------------------------------------------------------
 
 void SAL_CALL PresenterController::mousePressed (const css::awt::MouseEvent& rEvent)
-    throw (css::uno::RuntimeException)
 {
     (void)rEvent;
     if (mxMainWindow.is())
@@ -1186,25 +1178,22 @@ void SAL_CALL PresenterController::mousePressed (const css::awt::MouseEvent& rEv
 
 
 void SAL_CALL PresenterController::mouseReleased (const css::awt::MouseEvent& rEvent)
-    throw (css::uno::RuntimeException)
 {
     (void)rEvent;
 }
-    
+
 
 
 
 void SAL_CALL PresenterController::mouseEntered (const css::awt::MouseEvent& rEvent)
-    throw (css::uno::RuntimeException)
 {
     (void)rEvent;
 }
-    
+
 
 
 
 void SAL_CALL PresenterController::mouseExited (const css::awt::MouseEvent& rEvent)
-    throw (css::uno::RuntimeException)
 {
     (void)rEvent;
 }
@@ -1213,9 +1202,8 @@ void SAL_CALL PresenterController::mouseExited (const css::awt::MouseEvent& rEve
 
 
 //----- XMouseMotionListener --------------------------------------------------
-    
+
 void SAL_CALL PresenterController::mouseMoved (const css::awt::MouseEvent& rEvent)
-    throw (css::uno::RuntimeException)
 {
     (void)rEvent;
 }
@@ -1224,7 +1212,6 @@ void SAL_CALL PresenterController::mouseMoved (const css::awt::MouseEvent& rEven
 
 
 void SAL_CALL PresenterController::mouseDragged (const css::awt::MouseEvent& rEvent)
-    throw (css::uno::RuntimeException)
 {
     (void)rEvent;
 }
@@ -1293,7 +1280,7 @@ void PresenterController::LoadTheme (const Reference<XPane>& rxPane)
 double PresenterController::GetSlideAspectRatio (void) const
 {
     double nSlideAspectRatio (28.0/21.0);
-    
+
     try
     {
         if (mxController.is())
@@ -1358,7 +1345,6 @@ void PresenterController::UpdatePendingSlideNumber (const sal_Int32 nPendingSlid
 
 
 void PresenterController::ThrowIfDisposed (void) const
-    throw (::com::sun::star::lang::DisposedException)
 {
 	if (rBHelper.bDisposed || rBHelper.bInDispose)
 	{
@@ -1371,4 +1357,3 @@ void PresenterController::ThrowIfDisposed (void) const
 
 
 } } // end of namespace ::sdext::presenter
-

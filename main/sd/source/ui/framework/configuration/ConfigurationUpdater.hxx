@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -67,7 +67,7 @@ public:
     void SetControllerManager(
         const css::uno::Reference<
             css::drawing::framework::XControllerManager>& rxControllerManager);
-    
+
     /** Request an update of the current configuration so that it looks like
         the given requested configuration.  It checks whether an update of
         the current configuration can be done.  Calls UpdateConfiguration()
@@ -86,7 +86,7 @@ public:
         made.
     */
     ::boost::shared_ptr<ConfigurationUpdaterLock> GetLock (void);
-    
+
 private:
     /** A reference to the XControllerManager is kept so that
         UpdateConfiguration() has access to the other sub controllers.
@@ -112,19 +112,19 @@ private:
         css::drawing::framework::XConfiguration> mxRequestedConfiguration;
 
     /** This flag is set to </sal_True> when an update of the current
-        configurtion was requested (because the last request in the queue
-        was processed) but could not be exected because the
+        configuration was requested (because the last request in the queue
+        was processed) but could not be executed because the
         ConfigurationController was locked.  A call to UpdateConfiguration()
         resets the flag to </sal_False>.
     */
     bool mbUpdatePending;
-    
+
     /** This flag is set to </sal_True> while the UpdateConfiguration() method
         is running.  It is used to prevent reentrance problems with this
         method.
     */
     bool mbUpdateBeingProcessed;
-    
+
     /** The ConfigurationController is locked when this count has a value
         larger then zero.  If the controller is locked then updates of the
         current configuration are not made.
@@ -132,7 +132,7 @@ private:
     sal_Int32 mnLockCount;
 
     /** This timer is used to check from time to time whether the requested
-        configuration and the current configuration are identcal and request
+        configuration and the current configuration are identical and request
         an update when they are not.
         This is used to overcome problems with resources that become
         available asynchronously.
@@ -168,7 +168,7 @@ private:
         ::std::vector<css::uno::Reference<css::drawing::framework::XResourceId> >&
             rResourcesToDeactivate);
 
-    /** Remove from the requested configration all pure anchors that have no
+    /** Remove from the requested configuration all pure anchors that have no
         child.  Requested but not yet activated anchors can not be removed
         because without the actual resource the 'pureness' of an anchor can
         not be determined.
@@ -182,7 +182,7 @@ private:
 
     /** This method sets the mbUpdateBeingProcessed member that is used to
         prevent reentrance problems.  This method allows function objects
-        easyly and safely to modify the variable.
+        easily and safely to modify the variable.
     */
     void SetUpdateBeingProcessed (bool bValue);
 

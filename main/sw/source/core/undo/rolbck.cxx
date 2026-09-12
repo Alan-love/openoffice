@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -287,7 +287,7 @@ SwHistorySetTxtFld::SwHistorySetTxtFld( SwTxtFld* pTxtFld, sal_uLong nNodePos )
 
 String SwHistorySetTxtFld::GetDescription() const
 {
-    return m_pFld->GetField()->GetDescription();;
+    return m_pFld->GetField()->GetDescription();
 }
 
 SwHistorySetTxtFld::~SwHistorySetTxtFld()
@@ -1014,7 +1014,7 @@ void SwHistoryChangeCharFmt::SetInDoc(SwDoc * pDoc, bool )
 }
 // <- #i27615#
 
-/*  */
+/* */
 
 
 SwHistory::SwHistory( sal_uInt16 nInitSz, sal_uInt16 nGrowSz )
@@ -1039,8 +1039,8 @@ SwHistory::~SwHistory()
 |*
 *************************************************************************/
 
-void SwHistory::Add( 
-    const SfxPoolItem* pOldValue, 
+void SwHistory::Add(
+    const SfxPoolItem* pOldValue,
     const SfxPoolItem* pNewValue,
     sal_uLong nNodeIdx)
 {
@@ -1058,8 +1058,8 @@ void SwHistory::Add(
 
     //UUUU To be able to include the DrawingLayer FillItems something more
     // general has to be done to check if an Item is default than to check
-    // if it's pointzer equals that in Writer's global PoolDefaults (held in 
-    // aAttrTab and used to fill the pool defaults in Writer - looks as if 
+    // if it's pointzer equals that in Writer's global PoolDefaults (held in
+    // aAttrTab and used to fill the pool defaults in Writer - looks as if
     // Writer is *older* than the SfxItemPool ?). I checked the possibility to
     // get the SfxItemPool here (works), but decided to use the SfxPoolItem's
     // global tooling aka IsDefaultItem(const SfxPoolItem*) for now
@@ -1295,7 +1295,7 @@ void SwHistory::CopyFmtAttr(
     {
         SfxItemIter aIter(rSet);
 
-        do 
+        do
         {
             if(!IsInvalidItem(aIter.GetCurItem()))
             {
@@ -1413,10 +1413,10 @@ void SwRegHistory::Modify( const SfxPoolItem* pOld, const SfxPoolItem* pNew )
             {
                 // const SfxItemPool& rPool = static_cast< const SwUpdateAttr* >(pNew)->GetSfxItemPool();
 
-                m_pHistory->Add( 
+                m_pHistory->Add(
                     // rPool,
-                    pOld, 
-                    pNew, 
+                    pOld,
+                    pNew,
                     m_nNodeIndex);
             }
             else
@@ -1551,4 +1551,3 @@ void SwRegHistory::_MakeSetWhichIds()
 		}
 	}
 }
-

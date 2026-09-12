@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -123,7 +123,7 @@ namespace basprov
     // XBrowseNode
     // -----------------------------------------------------------------------------
 
-    ::rtl::OUString BasicMethodNodeImpl::getName(  ) throw (RuntimeException)
+    ::rtl::OUString BasicMethodNodeImpl::getName(  )
     {
         ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -136,16 +136,16 @@ namespace basprov
 
     // -----------------------------------------------------------------------------
 
-    Sequence< Reference< browse::XBrowseNode > > BasicMethodNodeImpl::getChildNodes(  ) throw (RuntimeException)
+    Sequence< Reference< browse::XBrowseNode > > BasicMethodNodeImpl::getChildNodes(  )
     {
         ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
-        return Sequence< Reference< browse::XBrowseNode > >(); 
+        return Sequence< Reference< browse::XBrowseNode > >();
     }
 
     // -----------------------------------------------------------------------------
 
-    sal_Bool BasicMethodNodeImpl::hasChildNodes(  ) throw (RuntimeException)
+    sal_Bool BasicMethodNodeImpl::hasChildNodes(  )
     {
         ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -154,7 +154,7 @@ namespace basprov
 
     // -----------------------------------------------------------------------------
 
-    sal_Int16 BasicMethodNodeImpl::getType(  ) throw (RuntimeException)
+    sal_Int16 BasicMethodNodeImpl::getType(  )
     {
         ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -185,7 +185,7 @@ namespace basprov
     // XPropertySet
     // -----------------------------------------------------------------------------
 
-    Reference< XPropertySetInfo > BasicMethodNodeImpl::getPropertySetInfo(  ) throw (RuntimeException)
+    Reference< XPropertySetInfo > BasicMethodNodeImpl::getPropertySetInfo(  )
     {
         Reference< XPropertySetInfo > xInfo( createPropertySetInfo( getInfoHelper() ) );
         return xInfo;
@@ -195,17 +195,15 @@ namespace basprov
     // XInvocation
     // -----------------------------------------------------------------------------
 
-    Reference< XIntrospectionAccess > BasicMethodNodeImpl::getIntrospection(  ) throw (RuntimeException)
+    Reference< XIntrospectionAccess > BasicMethodNodeImpl::getIntrospection(  )
     {
         return Reference< XIntrospectionAccess >();
     }
 
     // -----------------------------------------------------------------------------
 
-    Any BasicMethodNodeImpl::invoke( const ::rtl::OUString& aFunctionName, const Sequence< Any >& aParams, 
-        Sequence< sal_Int16 >& aOutParamIndex, Sequence< Any >& aOutParam ) 
-        throw (IllegalArgumentException, script::CannotConvertException, 
-               reflection::InvocationTargetException, RuntimeException)
+    Any BasicMethodNodeImpl::invoke( const ::rtl::OUString& aFunctionName, const Sequence< Any >& aParams,
+        Sequence< sal_Int16 >& aOutParamIndex, Sequence< Any >& aOutParam )
     {
 		(void)aParams;
 		(void)aOutParamIndex;
@@ -237,7 +235,7 @@ namespace basprov
                                 break;
                             }
                         }
-                    }                  
+                    }
                 }
             }
 
@@ -260,7 +258,7 @@ namespace basprov
 
                 if ( xSMgr.is() )
                 {
-                    Reference< frame::XDesktop > xDesktop( xSMgr->createInstanceWithContext( 
+                    Reference< frame::XDesktop > xDesktop( xSMgr->createInstanceWithContext(
                         ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ) ), m_xContext ), UNO_QUERY );
 
                     if ( xDesktop.is() )
@@ -269,7 +267,7 @@ namespace basprov
 
                         if ( xProv.is() )
                         {
-                            Reference< frame::XDispatchHelper > xHelper( xSMgr->createInstanceWithContext( 
+                            Reference< frame::XDispatchHelper > xHelper( xSMgr->createInstanceWithContext(
                                 ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ) ), m_xContext ), UNO_QUERY );
 
                             if ( xHelper.is() )
@@ -304,9 +302,7 @@ namespace basprov
 
     // -----------------------------------------------------------------------------
 
-    void BasicMethodNodeImpl::setValue( const ::rtl::OUString& aPropertyName, const Any& aValue ) 
-        throw (UnknownPropertyException, script::CannotConvertException, 
-               reflection::InvocationTargetException, RuntimeException)
+    void BasicMethodNodeImpl::setValue( const ::rtl::OUString& aPropertyName, const Any& aValue )
     {
 		(void)aPropertyName;
 		(void)aValue;
@@ -318,7 +314,7 @@ namespace basprov
 
     // -----------------------------------------------------------------------------
 
-    Any BasicMethodNodeImpl::getValue( const ::rtl::OUString& aPropertyName ) throw (UnknownPropertyException, RuntimeException)
+    Any BasicMethodNodeImpl::getValue( const ::rtl::OUString& aPropertyName )
     {
 		(void)aPropertyName;
 
@@ -329,7 +325,7 @@ namespace basprov
 
     // -----------------------------------------------------------------------------
 
-    sal_Bool BasicMethodNodeImpl::hasMethod( const ::rtl::OUString& aName ) throw (RuntimeException)
+    sal_Bool BasicMethodNodeImpl::hasMethod( const ::rtl::OUString& aName )
     {
         sal_Bool bReturn = sal_False;
         if ( aName == BASPROV_PROPERTY_EDITABLE )
@@ -340,7 +336,7 @@ namespace basprov
 
     // -----------------------------------------------------------------------------
 
-    sal_Bool BasicMethodNodeImpl::hasProperty( const ::rtl::OUString& aName ) throw (RuntimeException)
+    sal_Bool BasicMethodNodeImpl::hasProperty( const ::rtl::OUString& aName )
     {
 		(void)aName;
 

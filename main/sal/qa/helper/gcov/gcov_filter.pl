@@ -1,9 +1,7 @@
 #!/usr/bin/perl -w
-# 
-# $Id$
 #
 # *************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -11,27 +9,26 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 # *************************************************************
 
 # GCOV_FILTER
 #
 # Helper to filter the gcov output.
 # Handle a compare between the hole gcov output and a given select list of exported functions.
-# 
+#
 # Q: Why perl?
 # A: regexp ;-)
 #
-
 
 use strict;
 use File::Basename;
@@ -167,7 +164,7 @@ if ($showallfunc)
 }
 
 # back to current directory
-# this chdir was for a before chdir (in $startdir creation) but due to the fact, 
+# this chdir was for a before chdir (in $startdir creation) but due to the fact,
 # that the get_PRJ_from_makefile_mk works but the after concat of strings not, this
 # chdir is also remarked.
 # chdir $cwd;
@@ -308,7 +305,7 @@ sub read_gcov_function_file($)
     my $line = "";
     open(INPUT_HANDLE, $file)
         or die("ERROR: cannot open $file!\n");
-    
+
     while ($line = <INPUT_HANDLE>)
     {
         chomp($line);
@@ -350,9 +347,9 @@ sub read_gcov_function_file($)
 }
 
 # gcov format since gcc 3.3.6
-# 100.00% von 3 Zeilen in function helloworld ausgeführt
-# 100.00% von 5 Zeilen in function main ausgeführt
-# 100.00% von 8 Zeilen in file tmp.c ausgeführt
+# 100.00% von 3 Zeilen in function helloworld ausgefÃ¼hrt
+# 100.00% von 5 Zeilen in function main ausgefÃ¼hrt
+# 100.00% von 8 Zeilen in file tmp.c ausgefÃ¼hrt
 sub read_gcov_function_file_old_gcc_3($)
 {
     local *INPUT_HANDLE;
@@ -360,7 +357,7 @@ sub read_gcov_function_file_old_gcc_3($)
     my $line = "";
     open(INPUT_HANDLE, $file)
         or die("ERROR: cannot open $file!\n");
-    
+
     while ($line = <INPUT_HANDLE>)
     {
         chomp($line);
@@ -444,4 +441,3 @@ Usage: $tool_name [OPTIONS] INPUTFILE
 END_OF_USAGE
     ;
 }
-

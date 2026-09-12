@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartview.hxx"
 #include "VDataSeries.hxx"
 #include "ObjectIdentifier.hxx"
 #include "macros.hxx"
@@ -311,7 +311,7 @@ void VDataSeries::doSortByXValues()
         //do sort
         std::stable_sort( aTmp.begin(), aTmp.end(), lcl_LessXOfPoint() );
 
-        //fill the sorted points back to the mambers
+        //fill the sorted points back to the members
         m_aValues_X.Doubles.realloc( m_nPointCount );
         m_aValues_Y.Doubles.realloc( m_nPointCount );
 
@@ -543,7 +543,7 @@ double VDataSeries::getBubble_Size( sal_Int32 index ) const
 
 bool VDataSeries::hasExplicitNumberFormat( sal_Int32 nPointIndex, bool bForPercentage ) const
 {
-    rtl::OUString aPropName( bForPercentage ? C2U( "PercentageNumberFormat" ) : C2U( "NumberFormat" ) ); 
+    rtl::OUString aPropName( bForPercentage ? C2U( "PercentageNumberFormat" ) : C2U( "NumberFormat" ) );
     bool bHasNumberFormat = false;
     uno::Reference< beans::XPropertySet > xPointProp( this->getPropertiesOfPoint( nPointIndex ));
     sal_Int32 nNumberFormat = -1;
@@ -553,7 +553,7 @@ bool VDataSeries::hasExplicitNumberFormat( sal_Int32 nPointIndex, bool bForPerce
 }
 sal_Int32 VDataSeries::getExplicitNumberFormat( sal_Int32 nPointIndex, bool bForPercentage ) const
 {
-    rtl::OUString aPropName( bForPercentage ? C2U( "PercentageNumberFormat" ) : C2U( "NumberFormat" ) ); 
+    rtl::OUString aPropName( bForPercentage ? C2U( "PercentageNumberFormat" ) : C2U( "NumberFormat" ) );
     sal_Int32 nNumberFormat = -1;
     uno::Reference< beans::XPropertySet > xPointProp( this->getPropertiesOfPoint( nPointIndex ));
     if( xPointProp.is() )
@@ -640,7 +640,7 @@ double VDataSeries::getMinimumofAllDifferentYValues( sal_Int32 index ) const
         double fY_Max = getY_Max( index );
         double fY_First = getY_First( index );
         double fY_Last = getY_Last( index );
-        
+
         if(fMin>fY_First)
             fMin=fY_First;
         if(fMin>fY_Last)
@@ -676,7 +676,7 @@ double VDataSeries::getMaximumofAllDifferentYValues( sal_Int32 index ) const
         double fY_Max = getY_Max( index );
         double fY_First = getY_First( index );
         double fY_Last = getY_Last( index );
-        
+
         if(fMax<fY_First)
             fMax=fY_First;
         if(fMax<fY_Last)

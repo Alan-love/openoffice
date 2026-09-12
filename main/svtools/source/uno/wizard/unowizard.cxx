@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -172,7 +172,7 @@ namespace svt { namespace uno
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL Wizard::initialize( const Sequence< Any >& i_Arguments ) throw (Exception, RuntimeException)
+    void SAL_CALL Wizard::initialize( const Sequence< Any >& i_Arguments )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
         if ( m_bInitialized )
@@ -244,13 +244,13 @@ namespace svt { namespace uno
     }
 
     //--------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL Wizard::getImplementationName_static() throw(RuntimeException)
+    ::rtl::OUString SAL_CALL Wizard::getImplementationName_static()
     {
         return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.comp.svtools.uno.Wizard" ) );
     }
-    
+
     //--------------------------------------------------------------------
-    Sequence< ::rtl::OUString > SAL_CALL Wizard::getSupportedServiceNames_static() throw(RuntimeException)
+    Sequence< ::rtl::OUString > SAL_CALL Wizard::getSupportedServiceNames_static()
     {
         Sequence< ::rtl::OUString > aServices(1);
         aServices[0] = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.ui.dialogs.Wizard" ) );
@@ -258,19 +258,19 @@ namespace svt { namespace uno
     }
 
     //--------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL Wizard::getImplementationName() throw(RuntimeException)
+    ::rtl::OUString SAL_CALL Wizard::getImplementationName()
     {
         return getImplementationName_static();
     }
-    
+
     //--------------------------------------------------------------------
-    Sequence< ::rtl::OUString > SAL_CALL Wizard::getSupportedServiceNames() throw(RuntimeException)
+    Sequence< ::rtl::OUString > SAL_CALL Wizard::getSupportedServiceNames()
     {
         return getSupportedServiceNames_static();
     }
 
     //--------------------------------------------------------------------
-	Reference< XPropertySetInfo > SAL_CALL Wizard::getPropertySetInfo() throw(RuntimeException)
+	Reference< XPropertySetInfo > SAL_CALL Wizard::getPropertySetInfo()
     {
 	    return createPropertySetInfo( getInfoHelper() );
     }
@@ -290,7 +290,7 @@ namespace svt { namespace uno
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL Wizard::getHelpURL() throw (RuntimeException)
+    ::rtl::OUString SAL_CALL Wizard::getHelpURL()
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -302,7 +302,7 @@ namespace svt { namespace uno
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL Wizard::setHelpURL( const ::rtl::OUString& i_HelpURL ) throw (RuntimeException)
+    void SAL_CALL Wizard::setHelpURL( const ::rtl::OUString& i_HelpURL )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -314,7 +314,7 @@ namespace svt { namespace uno
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    Reference< XWindow > SAL_CALL Wizard::getDialogWindow() throw (RuntimeException)
+    Reference< XWindow > SAL_CALL Wizard::getDialogWindow()
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -324,7 +324,7 @@ namespace svt { namespace uno
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL Wizard::enableButton( ::sal_Int16 i_WizardButton, ::sal_Bool i_Enable ) throw (RuntimeException)
+    void SAL_CALL Wizard::enableButton( ::sal_Int16 i_WizardButton, ::sal_Bool i_Enable )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -334,9 +334,9 @@ namespace svt { namespace uno
 
         pWizardImpl->enableButtons( lcl_convertWizardButtonToWZB( i_WizardButton ), i_Enable );
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL Wizard::setDefaultButton( ::sal_Int16 i_WizardButton ) throw (RuntimeException)
+    void SAL_CALL Wizard::setDefaultButton( ::sal_Int16 i_WizardButton )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -346,9 +346,9 @@ namespace svt { namespace uno
 
         pWizardImpl->defaultButton( lcl_convertWizardButtonToWZB( i_WizardButton ) );
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    sal_Bool SAL_CALL Wizard::travelNext(  ) throw (RuntimeException)
+    sal_Bool SAL_CALL Wizard::travelNext(  )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -358,9 +358,9 @@ namespace svt { namespace uno
 
         return pWizardImpl->travelNext();
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    sal_Bool SAL_CALL Wizard::travelPrevious(  ) throw (RuntimeException)
+    sal_Bool SAL_CALL Wizard::travelPrevious(  )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -370,9 +370,9 @@ namespace svt { namespace uno
 
         return pWizardImpl->travelPrevious();
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL Wizard::enablePage( ::sal_Int16 i_PageID, ::sal_Bool i_Enable ) throw (NoSuchElementException, InvalidStateException, RuntimeException)
+    void SAL_CALL Wizard::enablePage( ::sal_Int16 i_PageID, ::sal_Bool i_Enable )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -390,7 +390,7 @@ namespace svt { namespace uno
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL Wizard::updateTravelUI(  ) throw (RuntimeException)
+    void SAL_CALL Wizard::updateTravelUI(  )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -402,7 +402,7 @@ namespace svt { namespace uno
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    ::sal_Bool SAL_CALL Wizard::advanceTo( ::sal_Int16 i_PageId ) throw (RuntimeException)
+    ::sal_Bool SAL_CALL Wizard::advanceTo( ::sal_Int16 i_PageId )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -412,9 +412,9 @@ namespace svt { namespace uno
 
         return pWizardImpl->advanceTo( i_PageId );
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    ::sal_Bool SAL_CALL Wizard::goBackTo( ::sal_Int16 i_PageId ) throw (RuntimeException)
+    ::sal_Bool SAL_CALL Wizard::goBackTo( ::sal_Int16 i_PageId )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -424,9 +424,9 @@ namespace svt { namespace uno
 
         return pWizardImpl->goBackTo( i_PageId );
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    Reference< XWizardPage > SAL_CALL Wizard::getCurrentPage(  ) throw (RuntimeException)
+    Reference< XWizardPage > SAL_CALL Wizard::getCurrentPage(  )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -438,7 +438,7 @@ namespace svt { namespace uno
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL Wizard::activatePath( ::sal_Int16 i_PathIndex, ::sal_Bool i_Final ) throw (NoSuchElementException, InvalidStateException, RuntimeException)
+    void SAL_CALL Wizard::activatePath( ::sal_Int16 i_PathIndex, ::sal_Bool i_Final )
     {
         ::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         ::osl::MutexGuard aGuard( m_aMutex );
@@ -453,14 +453,14 @@ namespace svt { namespace uno
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL Wizard::setTitle( const ::rtl::OUString& i_Title ) throw (RuntimeException)
+    void SAL_CALL Wizard::setTitle( const ::rtl::OUString& i_Title )
     {
         // simply disambiguate
         Wizard_Base::OGenericUnoDialog::setTitle( i_Title );
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    ::sal_Int16 SAL_CALL Wizard::execute(  ) throw (RuntimeException)
+    ::sal_Int16 SAL_CALL Wizard::execute(  )
     {
         return Wizard_Base::OGenericUnoDialog::execute();
     }

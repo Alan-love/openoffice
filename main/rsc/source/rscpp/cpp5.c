@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -109,7 +109,7 @@ register int	op;
 #define	isbinary(op)	(op >= FIRST_BINOP && op <= LAST_BINOP)
 #define	isunary(op)	(op >= FIRST_UNOP  && op <= LAST_UNOP)
 #endif
-
+
 /*
  * The following definitions are used to specify basic variable sizes.
  */
@@ -153,7 +153,7 @@ register int	op;
 #ifndef	S_PFPTR
 #define S_PFPTR		(sizeof (int (*)()))
 #endif
-
+
 typedef struct types {
     short	type;			/* This is the bit if		*/
     char	*name;			/* this is the token word	*/
@@ -198,7 +198,7 @@ SIZES size_table[] = {
     { T_FPTR,	0,		S_PFPTR		},	/* int (*()) 	*/
     { 0,	0,		0		},	/* End of table	*/
 };
-
+
 
 void InitCpp5()
 {
@@ -376,7 +376,7 @@ again:
 	    }					/* op1 switch end	*/
 	}					/* Stack unwind loop	*/
 }
-
+
 FILE_LOCAL int
 evallex(int skip)
 /*
@@ -494,7 +494,7 @@ again:  do {					/* Collect the token	*/
 	}
 	return (t);
 }
-
+
 FILE_LOCAL int
 dosizeof()
 /*
@@ -642,7 +642,7 @@ evalnum(int c)
 	    if (isascii(c) && isupper(c1))
 		c1 = tolower(c1);
 #ifdef EBCDIC
-	    if (c1 <= 'f') 
+	    if (c1 <= 'f')
 #else
 	    if (c1 >= 'a')
 #endif
@@ -659,7 +659,7 @@ evalnum(int c)
 	unget();
 	return (value);
 }
-
+
 FILE_LOCAL int
 evalchar(int skip)
 /*
@@ -765,7 +765,7 @@ evalchar(int skip)
 	instring = FALSE;
 	return (value);
 }
-
+
 FILE_LOCAL int *
 evaleval(int* valp, int op, int skip)
 /*
@@ -903,7 +903,7 @@ evaleval(int* valp, int op, int skip)
 	*valp++ = v1;
 	return (valp);
 }
-
+
 #ifdef	DEBUG_EVAL
 dumpstack(opstack, opp, value, valp)
 OPTAB		opstack[NEXP];	/* Operand stack		*/
@@ -922,4 +922,3 @@ register int	*valp;		/* -> value vector		*/
 	}
 }
 #endif
-

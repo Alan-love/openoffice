@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -81,7 +81,7 @@ Sequence<Type> OFileControlModel::_getTypes()
 
 // XServiceInfo
 //------------------------------------------------------------------------------
-StringSequence	OFileControlModel::getSupportedServiceNames() throw(RuntimeException)
+StringSequence	OFileControlModel::getSupportedServiceNames()
 {
 	StringSequence aSupported = OControlModel::getSupportedServiceNames();
 	aSupported.realloc(aSupported.getLength() + 1);
@@ -127,7 +127,7 @@ OFileControlModel::~OFileControlModel()
 IMPLEMENT_DEFAULT_CLONING( OFileControlModel )
 
 //------------------------------------------------------------------------------
-Any SAL_CALL OFileControlModel::queryAggregation(const Type& _rType) throw (RuntimeException)
+Any SAL_CALL OFileControlModel::queryAggregation(const Type& _rType)
 {
 	Any aReturn = OControlModel::queryAggregation(_rType);
 	if (!aReturn.hasValue())
@@ -172,7 +172,7 @@ void OFileControlModel::getFastPropertyValue(Any& rValue, sal_Int32 nHandle) con
 }
 
 //------------------------------------------------------------------------------
-void OFileControlModel::setFastPropertyValue_NoBroadcast(sal_Int32 nHandle, const Any& rValue) throw ( ::com::sun::star::uno::Exception)
+void OFileControlModel::setFastPropertyValue_NoBroadcast(sal_Int32 nHandle, const Any& rValue)
 {
 	switch (nHandle)
 	{
@@ -187,7 +187,6 @@ void OFileControlModel::setFastPropertyValue_NoBroadcast(sal_Int32 nHandle, cons
 
 //------------------------------------------------------------------------------
 sal_Bool OFileControlModel::convertFastPropertyValue(Any& rConvertedValue, Any& rOldValue, sal_Int32 nHandle, const Any& rValue)
-							throw( IllegalArgumentException )
 {
 	switch (nHandle)
 	{
@@ -208,13 +207,13 @@ void OFileControlModel::describeFixedProperties( Sequence< Property >& _rProps )
 }
 
 //------------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OFileControlModel::getServiceName() throw ( ::com::sun::star::uno::RuntimeException)
+::rtl::OUString SAL_CALL OFileControlModel::getServiceName()
 {
 	return FRM_COMPONENT_FILECONTROL;	// old (non-sun) name for compatibility !
 }
 
 //------------------------------------------------------------------------------
-void OFileControlModel::write(const Reference<stario::XObjectOutputStream>& _rxOutStream) throw ( ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException)
+void OFileControlModel::write(const Reference<stario::XObjectOutputStream>& _rxOutStream)
 {
 	OControlModel::write(_rxOutStream);
 
@@ -228,7 +227,7 @@ void OFileControlModel::write(const Reference<stario::XObjectOutputStream>& _rxO
 }
 
 //------------------------------------------------------------------------------
-void OFileControlModel::read(const Reference<stario::XObjectInputStream>& _rxInStream) throw ( ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException)
+void OFileControlModel::read(const Reference<stario::XObjectInputStream>& _rxInStream)
 {
 	OControlModel::read(_rxInStream);
 	::osl::MutexGuard aGuard(m_aMutex);
@@ -254,7 +253,7 @@ void OFileControlModel::read(const Reference<stario::XObjectInputStream>& _rxInS
 }
 
 //-----------------------------------------------------------------------------
-void SAL_CALL OFileControlModel::reset() throw ( ::com::sun::star::uno::RuntimeException)
+void SAL_CALL OFileControlModel::reset()
 {
 	::cppu::OInterfaceIteratorHelper aIter(m_aResetListeners);
 	EventObject aEvt(static_cast<XWeak*>(this));
@@ -274,13 +273,13 @@ void SAL_CALL OFileControlModel::reset() throw ( ::com::sun::star::uno::RuntimeE
 }
 
 //-----------------------------------------------------------------------------
-void OFileControlModel::addResetListener(const Reference<XResetListener>& _rxListener) throw ( ::com::sun::star::uno::RuntimeException)
+void OFileControlModel::addResetListener(const Reference<XResetListener>& _rxListener)
 {
 	m_aResetListeners.addInterface(_rxListener);
 }
 
 //-----------------------------------------------------------------------------
-void OFileControlModel::removeResetListener(const Reference<XResetListener>& _rxListener) throw ( ::com::sun::star::uno::RuntimeException)
+void OFileControlModel::removeResetListener(const Reference<XResetListener>& _rxListener)
 {
 	m_aResetListeners.removeInterface(_rxListener);
 }
@@ -300,4 +299,3 @@ void OFileControlModel::_reset()
 //.........................................................................
 }	// namespace frm
 //.........................................................................
-

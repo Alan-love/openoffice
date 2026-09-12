@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_adabas.hxx"
 #include <unotools/tempfile.hxx>
 #include "adabas/BDriver.hxx"
 #include "adabas/BConnection.hxx"
@@ -244,12 +244,12 @@ void ODriver::disposing()
 
 // static ServiceInfo
 //------------------------------------------------------------------------------
-rtl::OUString ODriver::getImplementationName_Static(  ) throw(RuntimeException)
+rtl::OUString ODriver::getImplementationName_Static(  )
 {
     return ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.comp.sdbcx.adabas.ODriver"));
 }
 //------------------------------------------------------------------------------
-Sequence< ::rtl::OUString > ODriver::getSupportedServiceNames_Static(  ) throw (RuntimeException)
+Sequence< ::rtl::OUString > ODriver::getSupportedServiceNames_Static(  )
 {
 	Sequence< ::rtl::OUString > aSNS( 2 );
     aSNS[0] = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.sdbc.Driver"));
@@ -257,13 +257,13 @@ Sequence< ::rtl::OUString > ODriver::getSupportedServiceNames_Static(  ) throw (
 	return aSNS;
 }
 //------------------------------------------------------------------
-::rtl::OUString SAL_CALL ODriver::getImplementationName(  ) throw(RuntimeException)
+::rtl::OUString SAL_CALL ODriver::getImplementationName(  )
 {
 	return getImplementationName_Static();
 }
 
 //------------------------------------------------------------------
-sal_Bool SAL_CALL ODriver::supportsService( const ::rtl::OUString& _rServiceName ) throw(RuntimeException)
+sal_Bool SAL_CALL ODriver::supportsService( const ::rtl::OUString& _rServiceName )
 {
 	const Sequence< ::rtl::OUString > aSupported(getSupportedServiceNames());
 	const ::rtl::OUString* pSupported = aSupported.getConstArray();
@@ -274,12 +274,12 @@ sal_Bool SAL_CALL ODriver::supportsService( const ::rtl::OUString& _rServiceName
 	return pSupported != pEnd;
 }
 //------------------------------------------------------------------
-Sequence< ::rtl::OUString > SAL_CALL ODriver::getSupportedServiceNames(  ) throw(RuntimeException)
+Sequence< ::rtl::OUString > SAL_CALL ODriver::getSupportedServiceNames(  )
 {
 	return getSupportedServiceNames_Static();
 }
 //------------------------------------------------------------------
-Any SAL_CALL ODriver::queryInterface( const Type & rType ) throw(RuntimeException)
+Any SAL_CALL ODriver::queryInterface( const Type & rType )
 {
 	Any aRet = ::cppu::queryInterface(rType, static_cast<XDataDefinitionSupplier*>(this));
     if ( !aRet.hasValue() )
@@ -287,12 +287,12 @@ Any SAL_CALL ODriver::queryInterface( const Type & rType ) throw(RuntimeExceptio
 	return aRet.hasValue() ? aRet : ODriver_BASE2::queryInterface(rType);
 }
 //------------------------------------------------------------------
-Reference< XInterface >  SAL_CALL ODriver_CreateInstance(const Reference< ::com::sun::star::lang::XMultiServiceFactory >& _rxFac) throw( Exception )
+Reference< XInterface >  SAL_CALL ODriver_CreateInstance(const Reference< ::com::sun::star::lang::XMultiServiceFactory >& _rxFac)
 {
 	return *(new ODriver(_rxFac));
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL ODriver::disposing( const EventObject& Source ) throw(RuntimeException)
+void SAL_CALL ODriver::disposing( const EventObject& Source )
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 
@@ -315,7 +315,7 @@ void SAL_CALL ODriver::disposing( const EventObject& Source ) throw(RuntimeExcep
 	}
 }
 // --------------------------------------------------------------------------------
-Reference< XConnection > SAL_CALL ODriver::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info ) throw(SQLException, RuntimeException)
+Reference< XConnection > SAL_CALL ODriver::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info )
 {
 	if ( ! acceptsURL(url) )
 		return NULL;
@@ -385,12 +385,11 @@ sal_Bool ODriver::getDBName(const ::rtl::OUString& _rName,::rtl::OUString& sDBNa
 }
 // --------------------------------------------------------------------------------
 sal_Bool SAL_CALL ODriver::acceptsURL( const ::rtl::OUString& url )
-		throw(SQLException, RuntimeException)
 {
 	return (!url.compareTo(::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("sdbc:adabas:")),12));
 }
 // --------------------------------------------------------------------------------
-Sequence< DriverPropertyInfo > SAL_CALL ODriver::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& /*info*/) throw(SQLException, RuntimeException)
+Sequence< DriverPropertyInfo > SAL_CALL ODriver::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& /*info*/)
 {
 	if ( acceptsURL(url) )
 	{
@@ -440,18 +439,18 @@ Sequence< DriverPropertyInfo > SAL_CALL ODriver::getPropertyInfo( const ::rtl::O
 	return Sequence< DriverPropertyInfo >();
 }
 // --------------------------------------------------------------------------------
-sal_Int32 SAL_CALL ODriver::getMajorVersion(  ) throw(RuntimeException)
+sal_Int32 SAL_CALL ODriver::getMajorVersion(  )
 {
 	return 1;
 }
 // --------------------------------------------------------------------------------
-sal_Int32 SAL_CALL ODriver::getMinorVersion(  ) throw(RuntimeException)
+sal_Int32 SAL_CALL ODriver::getMinorVersion(  )
 {
 	return 0;
 }
 // -----------------------------------------------------------------------------
 // XCreateCatalog
-void SAL_CALL ODriver::createCatalog( const Sequence< PropertyValue >& info ) throw(SQLException, ElementExistException, RuntimeException)
+void SAL_CALL ODriver::createCatalog( const Sequence< PropertyValue >& info )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if (ODriver_BASE::rBHelper.bDisposed)
@@ -496,7 +495,7 @@ void SAL_CALL ODriver::createCatalog( const Sequence< PropertyValue >& info ) th
 }
 // -----------------------------------------------------------------------------
 // XDropCatalog
-void SAL_CALL ODriver::dropCatalog( const ::rtl::OUString& /*catalogName*/, const Sequence< PropertyValue >& /*info*/ ) throw(SQLException, NoSuchElementException, RuntimeException)
+void SAL_CALL ODriver::dropCatalog( const ::rtl::OUString& /*catalogName*/, const Sequence< PropertyValue >& /*info*/ )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if (ODriver_BASE::rBHelper.bDisposed)
@@ -532,7 +531,7 @@ SQLHANDLE ODriver::EnvironmentHandle(::rtl::OUString &_rPath)
 }
 // --------------------------------------------------------------------------------
 // XDataDefinitionSupplier
-Reference< XTablesSupplier > SAL_CALL ODriver::getDataDefinitionByConnection( const Reference< ::com::sun::star::sdbc::XConnection >& connection ) throw(::com::sun::star::sdbc::SQLException, RuntimeException)
+Reference< XTablesSupplier > SAL_CALL ODriver::getDataDefinitionByConnection( const Reference< ::com::sun::star::sdbc::XConnection >& connection )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if (ODriver_BASE::rBHelper.bDisposed)
@@ -562,7 +561,7 @@ Reference< XTablesSupplier > SAL_CALL ODriver::getDataDefinitionByConnection( co
 }
 
 // --------------------------------------------------------------------------------
-Reference< XTablesSupplier > SAL_CALL ODriver::getDataDefinitionByURL( const ::rtl::OUString& url, const Sequence< PropertyValue >& info ) throw(::com::sun::star::sdbc::SQLException, RuntimeException)
+Reference< XTablesSupplier > SAL_CALL ODriver::getDataDefinitionByURL( const ::rtl::OUString& url, const Sequence< PropertyValue >& info )
 {
 	if ( ! acceptsURL(url) )
     {
@@ -593,7 +592,7 @@ oslGenericFunction ODriver::getOdbcFunction(sal_Int32 _nIndex) const
 	switch(_nIndex)
 	{
 		case ODBC3SQLAllocHandle:
-			pFunction = (oslGenericFunction)pODBC3SQLAllocHandle;;
+			pFunction = (oslGenericFunction)pODBC3SQLAllocHandle;
 			break;
 		case ODBC3SQLConnect:
 			pFunction = (oslGenericFunction)pODBC3SQLConnect;
@@ -1216,7 +1215,7 @@ void ODriver::XUTIL(const ::rtl::OUString& _rParam,
 
 	OProcess aApp(sCommandFile ,m_sDbWorkURL);
 #if OSL_DEBUG_LEVEL > 0
-	OProcess::TProcessError eError = 
+	OProcess::TProcessError eError =
 #endif
         aApp.execute( (OProcess::TProcessOption)(OProcess::TOption_Hidden | OProcess::TOption_Wait));
     OSL_ENSURE( eError == OProcess::E_None, "ODriver::XUTIL: calling the executable failed!" );
@@ -1256,7 +1255,7 @@ void ODriver::LoadBatch(const ::rtl::OUString& sDBName,
 						<< _rUSR
 						<< ","
 						<< _rPWD;
-						
+
 		if ( !isKernelVersion(CURRENT_DB_VERSION) )
 			(*pFileStream) << " -S adabas -b ";
 		else
@@ -1273,7 +1272,7 @@ void ODriver::LoadBatch(const ::rtl::OUString& sDBName,
 
 	OProcess aApp(sCommandFile ,m_sDbWorkURL);
 #if OSL_DEBUG_LEVEL > 0
-	OProcess::TProcessError eError = 
+	OProcess::TProcessError eError =
 #endif
         aApp.execute( (OProcess::TProcessOption)(OProcess::TOption_Hidden | OProcess::TOption_Wait));
     OSL_ENSURE( eError == OProcess::E_None, "ODriver::LoadBatch: calling the executable failed!" );
@@ -1670,7 +1669,7 @@ void ODriver::installSystemTables(	const TDatabaseStruct& _aInfo)
 	XUTIL(::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("DIAGNOSE TRIGGER OFF")),_aInfo.sDBName,_aInfo.sControlUser,_aInfo.sControlPassword);
 	//	xload -d %_DBNAME% -u %_SYSDBA_USER%,%_SYSDBA_PWD% -S NATIVE -b %m_sDbRoot%\env\DBS.ins %_DOMAINPWD%
 	{
-		sTemp2 = m_sDbRootURL	
+		sTemp2 = m_sDbRootURL
 								+ ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("env"))
 								+ m_sDelimit
 								+ ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("DBS.ins"));
@@ -1684,7 +1683,7 @@ void ODriver::installSystemTables(	const TDatabaseStruct& _aInfo)
 	}
 	//	xload -d %_DBNAME% -u DOMAIN,%_DOMAINPWD% -S NATIVE -b %m_sDbRoot%\env\XDD.ins
 	{
-		sTemp2 = m_sDbRootURL	
+		sTemp2 = m_sDbRootURL
 								+ ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("env"))
 								+ m_sDelimit
 								+ ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("XDD.ins"));
@@ -1696,7 +1695,7 @@ void ODriver::installSystemTables(	const TDatabaseStruct& _aInfo)
 	}
 	//	xload -d %_DBNAME% -u %_SYSDBA_USER%,%_SYSDBA_PWD% -S NATIVE -b %m_sDbRoot%\env\QP.ins
 	{
-		sTemp2 = m_sDbRootURL	
+		sTemp2 = m_sDbRootURL
 								+ ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("env"))
 								+ m_sDelimit
 								+ ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("QP.ins"));
@@ -1707,7 +1706,7 @@ void ODriver::installSystemTables(	const TDatabaseStruct& _aInfo)
 	}
 	//	xload  -d %_DBNAME% -u DOMAIN,%_DOMAINPWD% -S NATIVE -b %m_sDbRoot%\env\SPROC.ins
 	{
-		sTemp2 = m_sDbRootURL	
+		sTemp2 = m_sDbRootURL
 								+ ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("env"))
 								+ m_sDelimit
 								+ ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("SPROC.ins"));
@@ -1745,7 +1744,7 @@ void ODriver::installSystemTables(	const TDatabaseStruct& _aInfo)
 
 		if ( isKernelVersion(ADABAS_KERNEL_11) )
 			(*pFileStream) << "-i all";
-		(*pFileStream)	
+		(*pFileStream)
 #if (OSL_DEBUG_LEVEL > 1) || defined(DBG_UTIL)
 					<< " >> /tmp/kstart.log"
 #else
@@ -1768,10 +1767,10 @@ void ODriver::installSystemTables(	const TDatabaseStruct& _aInfo)
 // -----------------------------------------------------------------------------
 void ODriver::convertOldVersion(const ::rtl::OUString& sDBName,const TDatabaseStruct& _rDbInfo)
 {
-	// first we have to check if this databse is a old version and we have to update the system tables
+	// first we have to check if this database is a old version and we have to update the system tables
 	if ( !isVersion(sDBName,CURRENT_DB_VERSION) && isKernelVersion(CURRENT_DB_VERSION) )
 	{
-		if (	!_rDbInfo.sControlUser.getLength() 
+		if (	!_rDbInfo.sControlUser.getLength()
 			||	!_rDbInfo.sControlPassword.getLength())
 		{
             ::connectivity::SharedResources aResources;
@@ -1802,7 +1801,7 @@ void ODriver::convertOldVersion(const ::rtl::OUString& sDBName,const TDatabaseSt
 					}
 				}
 			}
-			
+
 			UCBContentHelper::Kill(sCommandFile);
 		}
 	}
@@ -1812,7 +1811,3 @@ void ODriver::convertOldVersion(const ::rtl::OUString& sDBName,const TDatabaseSt
 	} // namespace adabas
 }// namespace connectivity
 // -----------------------------------------------------------------------------
-
-
-
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,7 +49,7 @@ OOO_DLLPUBLIC_CHARTTOOLS	LifeTimeManager( ::com::sun::star::lang::XComponent* pC
 OOO_DLLPUBLIC_CHARTTOOLS	virtual ~LifeTimeManager();
 
 OOO_DLLPUBLIC_CHARTTOOLS	bool    	impl_isDisposed( bool bAssert=true );
-OOO_DLLPUBLIC_CHARTTOOLS	sal_Bool	dispose() throw(::com::sun::star::uno::RuntimeException);
+OOO_DLLPUBLIC_CHARTTOOLS	sal_Bool	dispose();
 
 public:
 	::cppu::OMultiTypeInterfaceContainerHelper		m_aListenerContainer;
@@ -102,15 +102,12 @@ OOO_DLLPUBLIC_CHARTTOOLS	CloseableLifeTimeManager( ::com::sun::star::util::XClos
 OOO_DLLPUBLIC_CHARTTOOLS	virtual ~CloseableLifeTimeManager();
 
 OOO_DLLPUBLIC_CHARTTOOLS	bool    	impl_isDisposedOrClosed( bool bAssert=true );
-OOO_DLLPUBLIC_CHARTTOOLS	sal_Bool	g_close_startTryClose(sal_Bool bDeliverOwnership)
-					throw ( ::com::sun::star::uno::Exception );
-OOO_DLLPUBLIC_CHARTTOOLS	sal_Bool	g_close_isNeedToCancelLongLastingCalls( sal_Bool bDeliverOwnership, ::com::sun::star::util::CloseVetoException& ex )
-					throw ( ::com::sun::star::util::CloseVetoException );
+OOO_DLLPUBLIC_CHARTTOOLS	sal_Bool	g_close_startTryClose(sal_Bool bDeliverOwnership);
+OOO_DLLPUBLIC_CHARTTOOLS	sal_Bool	g_close_isNeedToCancelLongLastingCalls( sal_Bool bDeliverOwnership, ::com::sun::star::util::CloseVetoException& ex );
 OOO_DLLPUBLIC_CHARTTOOLS	void		g_close_endTryClose(sal_Bool bDeliverOwnership, sal_Bool bMyVeto );
 OOO_DLLPUBLIC_CHARTTOOLS	void		g_close_endTryClose_doClose();
 OOO_DLLPUBLIC_CHARTTOOLS	sal_Bool	g_addCloseListener( const ::com::sun::star::uno::Reference<
-					::com::sun::star::util::XCloseListener > & xListener )
-					throw(::com::sun::star::uno::RuntimeException);
+					::com::sun::star::util::XCloseListener > & xListener );
 
 protected:
 	virtual sal_Bool	impl_canStartApiCall();

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,19 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
- 
+
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_file.hxx"
@@ -483,9 +483,6 @@ shell::associate( const rtl::OUString& aUnqPath,
                   const rtl::OUString& PropertyName,
                   const uno::Any& DefaultValue,
                   const sal_Int16 Attributes )
-    throw( beans::PropertyExistException,
-           beans::IllegalTypeException,
-           uno::RuntimeException )
 {
     MyProperty newProperty( false,
                             PropertyName,
@@ -525,9 +522,6 @@ shell::associate( const rtl::OUString& aUnqPath,
 void SAL_CALL
 shell::deassociate( const rtl::OUString& aUnqPath,
             const rtl::OUString& PropertyName )
-  throw( beans::UnknownPropertyException,
-     beans::NotRemoveableException,
-     uno::RuntimeException )
 {
     MyProperty oldProperty( PropertyName );
 
@@ -1911,6 +1905,23 @@ shell::write( sal_Int32 CommandId,
         }
     } while( nReadBytes == nRequestedBytes );
 
+    // Force the data onto the physical medium before success is reported.
+    // Closing alone only flushes osl's own buffer into the OS page cache; the
+    // file system journals the new file size but not the data, so a crash or
+    // power loss between here and the next writeback leaves a file of the
+    // right length containing nothing but zeros (i126990).
+    if( bSuccess )
+    {
+        err = aFile.sync();
+        if( err != osl::FileBase::E_None )
+        {
+            installError( CommandId,
+                          TASKHANDLING_FILEIOERROR_FOR_WRITE,
+                          err );
+            bSuccess = sal_False;
+        }
+    }
+
     err = aFile.close();
     if( err != osl::FileBase::E_None  )
     {
@@ -2050,12 +2061,12 @@ shell::copy_recursive( const rtl::OUString& srcUnqPath,
 
                 rtl::OUString newDstUnqPath = dstUnqPath;
                 rtl::OUString tit;
-                if( aFileStatus.isValid( FileStatusMask_FileName ) )              
+                if( aFileStatus.isValid( FileStatusMask_FileName ) )
                     tit = rtl::Uri::encode( aFileStatus.getFileName(),
                                           rtl_UriCharClassPchar,
                                           rtl_UriEncodeIgnoreEscapes,
                                           RTL_TEXTENCODING_UTF8 );
-                
+
                 if( newDstUnqPath.lastIndexOf( sal_Unicode('/') ) != newDstUnqPath.getLength()-1 )
                     newDstUnqPath += rtl::OUString::createFromAscii( "/" );
 
@@ -3044,7 +3055,7 @@ uno::Sequence< ucb::ContentInfo > shell::queryCreatableContentsInfo()
 
 /*******************************************************************************/
 /*                                                                             */
-/*                 some misceancellous static functions                        */
+/*                 some miscellaneous static functions                         */
 /*                                                                             */
 /*******************************************************************************/
 

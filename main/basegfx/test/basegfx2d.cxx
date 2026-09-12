@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -164,9 +164,9 @@ TEST_F(b2dsvgdimpex,impex)
 	// The import/export of aPath1 does not reproduce aExport again. This is
 	// correct since aPath1 contains a segment with non-used control points
 	// which gets exported now correctly as 'l' and also a point (#4, index 3)
-	// with C2 continuity which produces a 's' staement now.
+	// with C2 continuity which produces a 's' statement now.
 	//
-	// The old SVGexport identified nun-used ControlVectors erraneously as bezier segments
+	// The old SVGexport identified nun-used ControlVectors erroneously as bezier segments
 	// because the 2nd vector at the start point was used, even when added
 	// with start point was identical to end point. Exactly for that reason
 	// i reworked the B2DPolygon to use prev, next control points.
@@ -264,7 +264,7 @@ TEST_F(b2dpolyrange, check)
     B2DPolyRange aRange;
     aRange.appendElement(B2DRange(0,0,1,1),ORIENTATION_POSITIVE);
     aRange.appendElement(B2DRange(2,2,3,3),ORIENTATION_POSITIVE);
-        
+
     ASSERT_TRUE(aRange.count() == 2) << "simple poly range - count";
     ASSERT_TRUE(aRange.getElement(0).head == B2DRange(0,0,1,1)) << "simple poly range - first element";
     ASSERT_TRUE(aRange.getElement(1).head == B2DRange(2,2,3,3)) << "simple poly range - second element";
@@ -1154,4 +1154,3 @@ TEST_F(bcolor, ciexyzTest)
 // -----------------------------------------------------------------------------
 
 } // namespace basegfx2d
-

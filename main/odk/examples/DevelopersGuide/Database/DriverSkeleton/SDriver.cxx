@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -35,14 +35,14 @@ namespace connectivity
 	namespace skeleton
 	{
 		//------------------------------------------------------------------
-		::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >  SAL_CALL SkeletonDriver_CreateInstance(const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory >& _rxFactory) throw( ::com::sun::star::uno::Exception )
+		::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >  SAL_CALL SkeletonDriver_CreateInstance(const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory >& _rxFactory)
 		{
 			return *(new SkeletonDriver());
 		}
 	}
 }
 // --------------------------------------------------------------------------------
-SkeletonDriver::SkeletonDriver() 
+SkeletonDriver::SkeletonDriver()
 	: ODriver_BASE(m_aMutex)
 {
 }
@@ -50,7 +50,7 @@ SkeletonDriver::SkeletonDriver()
 void SkeletonDriver::disposing()
 {
 	::osl::MutexGuard aGuard(m_aMutex);
-	
+
 	// when driver will be destroied so all our connections have to be destroied as well
 	for (OWeakRefArray::iterator i = m_xConnections.begin(); m_xConnections.end() != i; ++i)
 	{
@@ -65,16 +65,16 @@ void SkeletonDriver::disposing()
 
 // static ServiceInfo
 //------------------------------------------------------------------------------
-rtl::OUString SkeletonDriver::getImplementationName_Static(  ) throw(RuntimeException)
+rtl::OUString SkeletonDriver::getImplementationName_Static(  )
 {
 	return rtl::OUString::createFromAscii("com.sun.star.comp.sdbc.SkeletonDriver");
 		// this name is referenced in the configuration and in the skeleton.xml
 		// Please take care when changing it.
 }
 //------------------------------------------------------------------------------
-Sequence< ::rtl::OUString > SkeletonDriver::getSupportedServiceNames_Static(  ) throw (RuntimeException)
+Sequence< ::rtl::OUString > SkeletonDriver::getSupportedServiceNames_Static(  )
 {
-	// which service is supported 
+	// which service is supported
 	// for more information @see com.sun.star.sdbc.Driver
 	Sequence< ::rtl::OUString > aSNS( 1 );
 	aSNS[0] = ::rtl::OUString::createFromAscii("com.sun.star.sdbc.Driver");
@@ -82,13 +82,13 @@ Sequence< ::rtl::OUString > SkeletonDriver::getSupportedServiceNames_Static(  ) 
 }
 
 //------------------------------------------------------------------
-::rtl::OUString SAL_CALL SkeletonDriver::getImplementationName(  ) throw(RuntimeException)
+::rtl::OUString SAL_CALL SkeletonDriver::getImplementationName(  )
 {
 	return getImplementationName_Static();
 }
 
 //------------------------------------------------------------------
-sal_Bool SAL_CALL SkeletonDriver::supportsService( const ::rtl::OUString& _rServiceName ) throw(RuntimeException)
+sal_Bool SAL_CALL SkeletonDriver::supportsService( const ::rtl::OUString& _rServiceName )
 {
 	Sequence< ::rtl::OUString > aSupported(getSupportedServiceNames());
 	const ::rtl::OUString* pSupported = aSupported.getConstArray();
@@ -100,43 +100,42 @@ sal_Bool SAL_CALL SkeletonDriver::supportsService( const ::rtl::OUString& _rServ
 }
 
 //------------------------------------------------------------------
-Sequence< ::rtl::OUString > SAL_CALL SkeletonDriver::getSupportedServiceNames(  ) throw(RuntimeException)
+Sequence< ::rtl::OUString > SAL_CALL SkeletonDriver::getSupportedServiceNames(  )
 {
 	return getSupportedServiceNames_Static();
 }
 
 // --------------------------------------------------------------------------------
-Reference< XConnection > SAL_CALL SkeletonDriver::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info ) throw(SQLException, RuntimeException)
+Reference< XConnection > SAL_CALL SkeletonDriver::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info )
 {
 	// create a new connection with the given properties and append it to our vector
 	OConnection* pCon = new OConnection(this);
 	Reference< XConnection > xCon = pCon;	// important here because otherwise the connection could be deleted inside (refcount goes -> 0)
 	pCon->construct(url,info);				// late constructor call which can throw exception and allows a correct dtor call when so
 	m_xConnections.push_back(WeakReferenceHelper(*pCon));
-	
+
 	return xCon;
 }
 // --------------------------------------------------------------------------------
-sal_Bool SAL_CALL SkeletonDriver::acceptsURL( const ::rtl::OUString& url ) 
-		throw(SQLException, RuntimeException)
+sal_Bool SAL_CALL SkeletonDriver::acceptsURL( const ::rtl::OUString& url )
 {
 	// here we have to look if we support this url format
 	// change the URL format to your needs, but please aware that the first on who accepts the URl wins.
 	return (!url.compareTo(::rtl::OUString::createFromAscii("sdbc:skeleton:"),14));
 }
 // --------------------------------------------------------------------------------
-Sequence< DriverPropertyInfo > SAL_CALL SkeletonDriver::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& info ) throw(SQLException, RuntimeException)
+Sequence< DriverPropertyInfo > SAL_CALL SkeletonDriver::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& info )
 {
-	// if you have somthing special to say, return it here :-)
+	// if you have something special to say, return it here :-)
 	return Sequence< DriverPropertyInfo >();
 }
 // --------------------------------------------------------------------------------
-sal_Int32 SAL_CALL SkeletonDriver::getMajorVersion(  ) throw(RuntimeException)
+sal_Int32 SAL_CALL SkeletonDriver::getMajorVersion(  )
 {
 	return 0; // depends on you
 }
 // --------------------------------------------------------------------------------
-sal_Int32 SAL_CALL SkeletonDriver::getMinorVersion(  ) throw(RuntimeException)
+sal_Int32 SAL_CALL SkeletonDriver::getMinorVersion(  )
 {
 	return 1; // depends on you
 }
@@ -186,14 +185,13 @@ void release(oslInterlockedCount& _refCount,
 		osl_incrementInterlockedCount( &_refCount );
 }
 
-void checkDisposed(sal_Bool _bThrow) throw ( DisposedException )
+void checkDisposed(sal_Bool _bThrow)
 {
 	if (_bThrow)
 		throw DisposedException();
-		
+
 }
 //.........................................................................
 	}
 }
 //.........................................................................
-

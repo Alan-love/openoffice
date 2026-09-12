@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -64,13 +64,13 @@ ScVbaWSFunction::ScVbaWSFunction( const uno::Reference< XHelperInterface >& xPar
 }
 
 uno::Reference< beans::XIntrospectionAccess >
-ScVbaWSFunction::getIntrospection(void)  throw(uno::RuntimeException)
+ScVbaWSFunction::getIntrospection(void)
 {
 	return uno::Reference<beans::XIntrospectionAccess>();
 }
 
 uno::Any SAL_CALL
-ScVbaWSFunction::invoke(const rtl::OUString& FunctionName, const uno::Sequence< uno::Any >& Params, uno::Sequence< sal_Int16 >& /*OutParamIndex*/, uno::Sequence< uno::Any >& /*OutParam*/) throw(lang::IllegalArgumentException, script::CannotConvertException, reflection::InvocationTargetException, uno::RuntimeException)
+ScVbaWSFunction::invoke(const rtl::OUString& FunctionName, const uno::Sequence< uno::Any >& Params, uno::Sequence< sal_Int16 >& /*OutParamIndex*/, uno::Sequence< uno::Any >& /*OutParam*/)
 {
     // create copy of parameters, replace Excel range objects with UNO range objects
     uno::Sequence< uno::Any > aParamTemp( Params );
@@ -170,7 +170,7 @@ ScVbaWSFunction::invoke(const rtl::OUString& FunctionName, const uno::Sequence< 
 	// MATCH function should alwayse return a double value, but currently if the first argument is XCellRange, MATCH function returns an array instead of a double value. Don't know why?
 	// To fix this issue in safe, current solution is to convert this array to a double value just for MATCH function.
 	String aUpper( FunctionName );
-	ScCompiler aCompiler( NULL, ScAddress() ); 
+	ScCompiler aCompiler( NULL, ScAddress() );
 	OpCode eOp = aCompiler.GetEnglishOpCode( aUpper.ToUpperAscii() );
 	if( eOp == ocMatch )
 	{
@@ -189,27 +189,27 @@ ScVbaWSFunction::invoke(const rtl::OUString& FunctionName, const uno::Sequence< 
 }
 
 void SAL_CALL
-ScVbaWSFunction::setValue(const rtl::OUString& /*PropertyName*/, const uno::Any& /*Value*/) throw(beans::UnknownPropertyException, script::CannotConvertException, reflection::InvocationTargetException, uno::RuntimeException)
+ScVbaWSFunction::setValue(const rtl::OUString& /*PropertyName*/, const uno::Any& /*Value*/)
 {
 	throw beans::UnknownPropertyException();
 }
 
 uno::Any SAL_CALL
-ScVbaWSFunction::getValue(const rtl::OUString& /*PropertyName*/) throw(beans::UnknownPropertyException, uno::RuntimeException)
+ScVbaWSFunction::getValue(const rtl::OUString& /*PropertyName*/)
 {
 	throw beans::UnknownPropertyException();
 }
 
 sal_Bool SAL_CALL
-ScVbaWSFunction::hasMethod(const rtl::OUString& Name)  throw(uno::RuntimeException)
+ScVbaWSFunction::hasMethod(const rtl::OUString& Name)
 {
 	sal_Bool bIsFound = sal_False;
-	try 
+	try
 	{
 	// the function name contained in the com.sun.star.sheet.FunctionDescription service is alwayse localized.
 		// but the function name used in WorksheetFunction is a programmatic name (seems English).
 		// So m_xNameAccess->hasByName( Name ) may fail to find name when a function name has a localized name.
-		ScCompiler aCompiler( NULL, ScAddress() ); 
+		ScCompiler aCompiler( NULL, ScAddress() );
 		if( aCompiler.IsEnglishSymbol( Name ) )
 			bIsFound = sal_True;
 	}
@@ -221,28 +221,28 @@ ScVbaWSFunction::hasMethod(const rtl::OUString& Name)  throw(uno::RuntimeExcepti
 }
 
 sal_Bool SAL_CALL
-ScVbaWSFunction::hasProperty(const rtl::OUString& /*Name*/)  throw(uno::RuntimeException)
+ScVbaWSFunction::hasProperty(const rtl::OUString& /*Name*/)
 {
 	 return sal_False;
 }
 
-::rtl::OUString SAL_CALL 
-ScVbaWSFunction::getExactName( const ::rtl::OUString& aApproximateName ) throw (css::uno::RuntimeException)
+::rtl::OUString SAL_CALL
+ScVbaWSFunction::getExactName( const ::rtl::OUString& aApproximateName )
 {
 	rtl::OUString sName = aApproximateName.toAsciiUpperCase();
 	if ( !hasMethod( sName ) )
 		return rtl::OUString();
-	return sName; 
+	return sName;
 }
 
-rtl::OUString& 
+rtl::OUString&
 ScVbaWSFunction::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("ScVbaWSFunction") );
 	return sImplName;
 }
 
-uno::Sequence< rtl::OUString > 
+uno::Sequence< rtl::OUString >
 ScVbaWSFunction::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > aServiceNames;

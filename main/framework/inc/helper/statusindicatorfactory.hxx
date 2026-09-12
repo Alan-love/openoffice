@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -105,7 +105,7 @@ struct IndicatorInfo
         /** @short  initialize new instance of this class
 
             @param  xIndicator
-                    the new child indiactor of our factory.
+                    the new child indicator of our factory.
 
             @param  sText
                     its initial text.
@@ -244,19 +244,15 @@ class StatusIndicatorFactory : public  css::lang::XTypeProvider
 
         //---------------------------------------
         // XInitialization
-        virtual void SAL_CALL initialize(const css::uno::Sequence< css::uno::Any >& lArguments)
-            throw(css::uno::Exception       ,
-                  css::uno::RuntimeException);
+        virtual void SAL_CALL initialize(const css::uno::Sequence< css::uno::Any >& lArguments);
 
         //---------------------------------------
         // XStatusIndicatorFactory
-	    virtual css::uno::Reference< css::task::XStatusIndicator > SAL_CALL createStatusIndicator()
-            throw(css::uno::RuntimeException);
+	    virtual css::uno::Reference< css::task::XStatusIndicator > SAL_CALL createStatusIndicator();
 
         //---------------------------------------
         // XUpdatable
-        virtual void SAL_CALL update()
-            throw(css::uno::RuntimeException);
+        virtual void SAL_CALL update();
 
         //---------------------------------------
         // similar (XStatusIndicator)
@@ -292,7 +288,7 @@ class StatusIndicatorFactory : public  css::lang::XTypeProvider
             @descr  By default we show the parent window automatically
                     if this progress is used.
                     If that isn't a valid operation, the user of this
-                    progress can suppress this feature by initializaing
+                    progress can suppress this feature by initializing
                     us with a special parameter.
 
             @seealso    initialize()
@@ -312,7 +308,7 @@ class StatusIndicatorFactory : public  css::lang::XTypeProvider
                     layouted by the frame and provided as an uno interface.
          */
         void impl_showProgress();
-        
+
         /** @short  hides the internal used progress.
             @descr  This factory does not paint the progress itself.
                     It uses helper for that. They can be vcl based or

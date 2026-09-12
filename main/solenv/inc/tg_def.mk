@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -46,6 +46,15 @@ $(DEF$(TNR)EXPORTFILE) : $(SHL$(TNR)OBJS) $(SHL$(TNR)LIBS)
 
 $(DEF$(TNR)EXPORTFILE) : $(SHL$(TNR)VERSIONMAP)
 	$(COMMAND_ECHO)$(TYPE) $< | $(AWK) -f $(SOLARENV)/bin/getcsym.awk > $@
+.IF "$(COM)"!="GCC"
+# Wildcards in a version script are a GCC concept -- the GCC branch below
+# pulls them out into a .symbols-regexp and matches them against the real
+# objects.  MSVC has no equivalent, and asking link.exe to export a literal
+# "_ZTI*" fails with LNK2001, so drop those lines here.  Match "*" alone:
+# every MSVC-mangled C++ name begins with "?", so "[*?]" would drop the lot.
+	$(COMMAND_ECHO)-$(GREP) -v "[*]" $@ > $@.nowild
+	$(COMMAND_ECHO)$(RENAME) $@.nowild $@
+.ENDIF
 .IF "$(COM)"=="GCC"
 	$(COMMAND_ECHO)-$(GREP) -v "\*\|?" $@ | $(SED) -e 's@#.*@@' > $@.exported-symbols
 	$(COMMAND_ECHO)-$(GREP) "\*\|?" $@ > $@.symbols-regexp
@@ -108,7 +117,7 @@ $(DEF$(TNR)TARGETN) .PHONY :
 .ELSE
 .IF "$(SHL$(TNR)USE_EXPORTS)"==""
 	@-$(RMHACK$(TNR)) $(MISC)/$(SHL$(TNR)TARGET).exp
-	@$(LIBMGR) -EXTRACT:/ /OUT:$(MISC)/$(SHL$(TNR)TARGET).exp $(SLB)/$(DEFLIB$(TNR)NAME).lib
+	@$(SOLARENV)/bin/extract-linker-member.sh $(SLB)/$(DEFLIB$(TNR)NAME).lib $(MISC)/$(SHL$(TNR)TARGET).exp
 	@$(LDUMP2) -N $(EXPORT_ALL_SWITCH) -F $(MISC)/$(SHL$(TNR)TARGET).flt $(MISC)/$(SHL$(TNR)TARGET).exp			   >>$@.tmpfile
 	$(COMMAND_ECHO)$(RMHACK$(TNR)) $(MISC)/$(SHL$(TNR)TARGET).exp
 .ELSE			# "$(SHL$(TNR)USE_EXPORTS)"==""
@@ -309,4 +318,3 @@ $(DEF$(TNR)TARGETN): \
 # Anweisungen fuer das Linken
 # unroll end
 #######################################################
-

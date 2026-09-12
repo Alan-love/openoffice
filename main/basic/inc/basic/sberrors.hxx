@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -534,7 +534,7 @@ typedef sal_uIntPtr SbError;
 #define	SbERR_UNDEF_PROC			962	// Procedure xxx undefined
 #define	SbERR_UNDEF_LABEL			963 // Label xxx undefined
 #define	SbERR_UNDEF_TYPE			964	// Unknown user defined type xxx
-#define	SbERR_BAD_EXIT				965	// Exit XXX expexted
+#define	SbERR_BAD_EXIT				965	// Exit XXX expected
 #define	SbERR_BAD_BLOCK				966	// Unterminated statement block: missing XX
 #define	SbERR_BAD_BRACKETS			967	// Parentheses do not match
 #define	SbERR_BAD_DECLARATION		968	// Symbol xx defined differently

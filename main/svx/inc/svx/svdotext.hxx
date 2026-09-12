@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 #ifndef _SVDOTEXT_HXX
 #define _SVDOTEXT_HXX
@@ -144,9 +142,9 @@ protected:
 
 private:
 	// This method is only allowed for sdr::properties::TextProperties
-	SVX_DLLPRIVATE SdrOutliner* GetTextEditOutliner() const 
-	{ 
-		return pEdtOutl; 
+	SVX_DLLPRIVATE SdrOutliner* GetTextEditOutliner() const
+	{
+		return pEdtOutl;
 	}
 
 	// This method is only allowed for sdr::properties::TextProperties
@@ -229,7 +227,7 @@ protected:
 	sal_Bool						bTextSizeDirty : 1;
 
 	// #101684#
-	sal_Bool						mbInEditMode : 1;	// Is this text obejct in edit mode?
+	sal_Bool						mbInEditMode : 1;	// Is this text object in edit mode?
 
 	// Fuer Objekt mit freier Groesse im Draw (Mengentext). Das Flag wird vom
 	// der App beim Create gesetzt.
@@ -257,11 +255,11 @@ private:
 	// #101029#: Extracted from ImpGetDrawOutliner()
     SVX_DLLPRIVATE void ImpInitDrawOutliner( SdrOutliner& rOutl ) const;
 	// #101029#: Extracted from Paint()
-    SVX_DLLPRIVATE void ImpSetupDrawOutlinerForPaint( FASTBOOL 		bContourFrame, 
-                                       SdrOutliner& 	rOutliner, 
-                                       Rectangle& 		rTextRect, 
-                                       Rectangle& 		rAnchorRect, 
-                                       Rectangle& 		rPaintRect, 
+    SVX_DLLPRIVATE void ImpSetupDrawOutlinerForPaint( FASTBOOL 		bContourFrame,
+                                       SdrOutliner& 	rOutliner,
+                                       Rectangle& 		rTextRect,
+                                       Rectangle& 		rAnchorRect,
+                                       Rectangle& 		rPaintRect,
                                        Fraction& 		aFitXKorreg ) const;
 	SVX_DLLPRIVATE SdrObject* ImpConvertContainedTextToSdrPathObjs(bool bToPoly) const;
 	SVX_DLLPRIVATE void ImpLinkAnmeldung();
@@ -397,7 +395,7 @@ public:
 	// Feststellen, ob TextFontwork
 	virtual FASTBOOL IsFontwork() const;
 
-	// Soll die Fontwork-Kontour versteckt werden?
+	// Soll die Fontwork-Kontur versteckt werden?
 	FASTBOOL IsHideContour() const;
 
 	// Textfluss innerhalb Kontur
@@ -443,7 +441,7 @@ public:
 
 	virtual sal_uInt32 GetHdlCount() const;
 	virtual SdrHdl* GetHdl(sal_uInt32 nHdlNum) const;
-	
+
     // special drag methods
     virtual bool hasSpecialDrag() const;
 	virtual bool applySpecialDrag(SdrDragStat& rDrag);
@@ -572,19 +570,19 @@ public:
 	//////////////////////////////////////////////////////////////////////////////
 	// text primitive decomposition helpers
 	void impDecomposeContourTextPrimitive(
-		drawinglayer::primitive2d::Primitive2DSequence& rTarget, 
+		drawinglayer::primitive2d::Primitive2DSequence& rTarget,
 		const drawinglayer::primitive2d::SdrContourTextPrimitive2D& rSdrContourTextPrimitive,
 		const drawinglayer::geometry::ViewInformation2D& aViewInformation) const;
 	void impDecomposePathTextPrimitive(
-		drawinglayer::primitive2d::Primitive2DSequence& rTarget, 
+		drawinglayer::primitive2d::Primitive2DSequence& rTarget,
 		const drawinglayer::primitive2d::SdrPathTextPrimitive2D& rSdrPathTextPrimitive,
 		const drawinglayer::geometry::ViewInformation2D& aViewInformation) const;
 	void impDecomposeBlockTextPrimitive(
-		drawinglayer::primitive2d::Primitive2DSequence& rTarget, 
+		drawinglayer::primitive2d::Primitive2DSequence& rTarget,
 		const drawinglayer::primitive2d::SdrBlockTextPrimitive2D& rSdrBlockTextPrimitive,
 		const drawinglayer::geometry::ViewInformation2D& aViewInformation) const;
 	void impDecomposeStretchTextPrimitive(
-		drawinglayer::primitive2d::Primitive2DSequence& rTarget, 
+		drawinglayer::primitive2d::Primitive2DSequence& rTarget,
 		const drawinglayer::primitive2d::SdrStretchTextPrimitive2D& rSdrStretchTextPrimitive,
 		const drawinglayer::geometry::ViewInformation2D& aViewInformation) const;
 
@@ -609,3 +607,4 @@ public:
 
 #endif //_SVDOTEXT_HXX
 
+/* vim: set noet sw=4 ts=4: */

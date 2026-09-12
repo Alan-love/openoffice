@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -138,7 +138,7 @@ const Graphic ImpLoadLinkedGraphic( const String aFileName, const String aFilter
 
 		com::sun::star::uno::Sequence< com::sun::star::beans::PropertyValue > aFilterData( 1 );
 
-		// Room for improvment:
+		// Room for improvement:
 		// As this is a linked graphic the GfxLink is not needed if saving/loading our own format.
 		// But this link is required by some filters to access the native graphic (pdf export/ms export),
 		// there we should create a new service to provide this data if needed
@@ -147,7 +147,7 @@ const Graphic ImpLoadLinkedGraphic( const String aFileName, const String aFilter
 
         // #123042# for e.g SVG the path is needed, so hand it over here. I have no real idea
         // what consequences this may have; maybe this is not handed over by purpose here. Not
-        // handing it over means that any GraphicFormat that internallv needs a path as base
+        // handing it over means that any GraphicFormat that internally needs a path as base
         // to interpret included links may fail.
         // Alternatively the path may be set at the result after this call when it is known
         // that it is a SVG graphic, but only because no one yet tried to interpret it.
@@ -195,7 +195,7 @@ protected:
 
     /**	Called after the thread is terminated via the terminate
     	method.  Used to kill the thread by calling delete on this.
-    */	
+    */
     virtual void SAL_CALL onTerminated(void);
 
 private:
@@ -232,7 +232,12 @@ void SAL_CALL SdrGraphicUpdater::onTerminated(void)
 
 void SAL_CALL SdrGraphicUpdater::run(void)
 {
-	Graphic aGraphic( ImpLoadLinkedGraphic( maFileName, maFilterName ) );
+	sfx2::LinkManager *linkMgr = mrGraphicLink.GetLinkManager();
+	Graphic aGraphic;
+	if ( (linkMgr == NULL) ||
+		 ( !linkMgr->urlIsVendor( maFileName ) && ( linkMgr->GetUserAllowsLinkUpdate(NULL) ) ) ) {
+		aGraphic = ImpLoadLinkedGraphic( maFileName, maFilterName );
+	}
 	vos::OGuard aSolarGuard( Application::GetSolarMutex() );
 	if ( !mbIsTerminated )
 	{
@@ -416,7 +421,7 @@ SdrGrafObj::SdrGrafObj()
     mpReplacementGraphic = 0;
 	pGraphic->SetSwapStreamHdl( LINK( this, SdrGrafObj, ImpSwapHdl ), getCacheTimeInMs() );
     onGraphicChanged();
-	
+
     // #i118485# Shear allowed and possible now
     bNoShear = false;
 
@@ -813,14 +818,15 @@ sal_uInt16 SdrGrafObj::GetObjIdentifier() const
 
 /* The graphic of the GraphicLink will be loaded. If it is called with
    bAsynchron = true then the graphic will be set later via DataChanged
-*/ 
+*/
 sal_Bool SdrGrafObj::ImpUpdateGraphicLink( sal_Bool bAsynchron ) const
 {
     sal_Bool bRet = sal_False;
     if( pGraphicLink )
 	{
         sfx2::LinkManager *linkMgr = pGraphicLink->GetLinkManager();
-        if ((linkMgr == NULL) || (linkMgr->GetUserAllowsLinkUpdate(NULL))) {
+        if ( (linkMgr == NULL) ||
+             ( !linkMgr->urlIsVendor( aFileName ) && ( linkMgr->GetUserAllowsLinkUpdate(NULL) ) ) ) {
             if ( bAsynchron )
                 pGraphicLink->UpdateAsynchron();
             else
@@ -1250,7 +1256,7 @@ SdrObject* SdrGrafObj::DoConvertToPolyObj(sal_Bool bBezier, bool bAddText) const
         // Embedded Svg
         // There is currently no helper to create SdrObjects from primitives (even if I'm thinking
         // about writing one for some time). To get the roundtrip to SdrObjects it is necessary to
-        // use the old converter path over the MetaFile mechanism. Create Metafile from Svg 
+        // use the old converter path over the MetaFile mechanism. Create Metafile from Svg
         // primitives here pretty directly
         aMtf = getMetafileFromEmbeddedSvg();
         aGraphicType = GRAPHIC_GDIMETAFILE;
@@ -1275,13 +1281,13 @@ SdrObject* SdrGrafObj::DoConvertToPolyObj(sal_Bool bBezier, bool bAddText) const
                         // copy transformation
                 	GeoStat aGeoStat(GetGeoStat());
 
-	                if(aGeoStat.nShearWink) 
+	                if(aGeoStat.nShearWink)
                     {
                         aGeoStat.RecalcTan();
                         pGrp->NbcShear(aRect.TopLeft(), aGeoStat.nShearWink, aGeoStat.nTan, false);
                     }
 
-	                if(aGeoStat.nDrehWink) 
+	                if(aGeoStat.nDrehWink)
                     {
 	                    aGeoStat.RecalcSinCos();
                         pGrp->NbcRotate(aRect.TopLeft(), aGeoStat.nDrehWink, aGeoStat.nSin, aGeoStat.nCos);
@@ -1291,7 +1297,7 @@ SdrObject* SdrGrafObj::DoConvertToPolyObj(sal_Bool bBezier, bool bAddText) const
                 pRetval = pGrp;
 				pGrp->NbcSetLayer(GetLayer());
 				pGrp->SetModel(GetModel());
-                
+
                 if(bAddText)
                 {
 				    pRetval = ImpConvertAddText(pRetval, bBezier);
@@ -1535,7 +1541,7 @@ IMPL_LINK( SdrGrafObj, ImpSwapHdl, GraphicObject*, pO )
 					Graphic aGraphic;
 
                     com::sun::star::uno::Sequence< com::sun::star::beans::PropertyValue >* pFilterData = NULL;
-                    
+
 					if(mbInsidePaint && !GetViewContact().HasViewObjectContacts(true))
                     {
                         pFilterData = new com::sun::star::uno::Sequence< com::sun::star::beans::PropertyValue >( 3 );
@@ -1776,21 +1782,21 @@ void SdrGrafObj::addCropHandles(SdrHdlList& rTarget) const
 
     basegfx::B2DPoint aPos;
 
-    aPos = aMatrix * basegfx::B2DPoint(0.0, 0.0); 
+    aPos = aMatrix * basegfx::B2DPoint(0.0, 0.0);
     rTarget.AddHdl(new SdrCropHdl(Point(basegfx::fround(aPos.getX()), basegfx::fround(aPos.getY())), HDL_UPLFT, fShearX, fRotate));
-    aPos = aMatrix * basegfx::B2DPoint(0.5, 0.0); 
+    aPos = aMatrix * basegfx::B2DPoint(0.5, 0.0);
     rTarget.AddHdl(new SdrCropHdl(Point(basegfx::fround(aPos.getX()), basegfx::fround(aPos.getY())), HDL_UPPER, fShearX, fRotate));
-    aPos = aMatrix * basegfx::B2DPoint(1.0, 0.0); 
+    aPos = aMatrix * basegfx::B2DPoint(1.0, 0.0);
     rTarget.AddHdl(new SdrCropHdl(Point(basegfx::fround(aPos.getX()), basegfx::fround(aPos.getY())), HDL_UPRGT, fShearX, fRotate));
-    aPos = aMatrix * basegfx::B2DPoint(0.0, 0.5); 
+    aPos = aMatrix * basegfx::B2DPoint(0.0, 0.5);
     rTarget.AddHdl(new SdrCropHdl(Point(basegfx::fround(aPos.getX()), basegfx::fround(aPos.getY())), HDL_LEFT , fShearX, fRotate));
-    aPos = aMatrix * basegfx::B2DPoint(1.0, 0.5); 
+    aPos = aMatrix * basegfx::B2DPoint(1.0, 0.5);
     rTarget.AddHdl(new SdrCropHdl(Point(basegfx::fround(aPos.getX()), basegfx::fround(aPos.getY())), HDL_RIGHT, fShearX, fRotate));
-    aPos = aMatrix * basegfx::B2DPoint(0.0, 1.0); 
+    aPos = aMatrix * basegfx::B2DPoint(0.0, 1.0);
     rTarget.AddHdl(new SdrCropHdl(Point(basegfx::fround(aPos.getX()), basegfx::fround(aPos.getY())), HDL_LWLFT, fShearX, fRotate));
-    aPos = aMatrix * basegfx::B2DPoint(0.5, 1.0); 
+    aPos = aMatrix * basegfx::B2DPoint(0.5, 1.0);
     rTarget.AddHdl(new SdrCropHdl(Point(basegfx::fround(aPos.getX()), basegfx::fround(aPos.getY())), HDL_LOWER, fShearX, fRotate));
-    aPos = aMatrix * basegfx::B2DPoint(1.0, 1.0); 
+    aPos = aMatrix * basegfx::B2DPoint(1.0, 1.0);
     rTarget.AddHdl(new SdrCropHdl(Point(basegfx::fround(aPos.getX()), basegfx::fround(aPos.getY())), HDL_LWRGT, fShearX, fRotate));
 }
 

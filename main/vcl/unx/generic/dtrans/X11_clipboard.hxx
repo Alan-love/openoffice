@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -77,53 +77,44 @@ namespace x11 {
 		/*
 		 *	XInitialization
 		 */
-		virtual void SAL_CALL initialize( const Sequence< Any >& arguments ) throw(  ::com::sun::star::uno::Exception );
+		virtual void SAL_CALL initialize( const Sequence< Any >& arguments );
 
 		/*
 		 * XServiceInfo
 		 */
 
-		virtual ::rtl::OUString SAL_CALL getImplementationName(	 )
-			throw(RuntimeException);
+		virtual ::rtl::OUString SAL_CALL getImplementationName(	 );
 
-		virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName ) 
-			throw(RuntimeException);
+		virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName );
 
-		virtual Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  ) 
-			throw(RuntimeException);
+		virtual Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  );
 
 		/*
 		 * XClipboard
 		 */
 
-		virtual com::sun::star::uno::Reference< ::com::sun::star::datatransfer::XTransferable > SAL_CALL getContents() 
-			throw(RuntimeException);
+		virtual com::sun::star::uno::Reference< ::com::sun::star::datatransfer::XTransferable > SAL_CALL getContents();
 
-		virtual void SAL_CALL setContents( 
-			const com::sun::star::uno::Reference< ::com::sun::star::datatransfer::XTransferable >& xTrans, 
-			const com::sun::star::uno::Reference< ::com::sun::star::datatransfer::clipboard::XClipboardOwner >& xClipboardOwner ) 
-			throw(RuntimeException);
+		virtual void SAL_CALL setContents(
+			const com::sun::star::uno::Reference< ::com::sun::star::datatransfer::XTransferable >& xTrans,
+			const com::sun::star::uno::Reference< ::com::sun::star::datatransfer::clipboard::XClipboardOwner >& xClipboardOwner );
 
-		virtual ::rtl::OUString SAL_CALL getName() 
-			throw(RuntimeException);	   
+		virtual ::rtl::OUString SAL_CALL getName();
 
 		/*
 		 * XClipboardEx
 		 */
 
-		virtual sal_Int8 SAL_CALL getRenderingCapabilities()
-			throw(RuntimeException);
+		virtual sal_Int8 SAL_CALL getRenderingCapabilities();
 
 		/*
 		 * XClipboardNotifier
 		 */
-		virtual void SAL_CALL addClipboardListener( 
-			const com::sun::star::uno::Reference< ::com::sun::star::datatransfer::clipboard::XClipboardListener >& listener ) 
-			throw(RuntimeException);
+		virtual void SAL_CALL addClipboardListener(
+			const com::sun::star::uno::Reference< ::com::sun::star::datatransfer::clipboard::XClipboardListener >& listener );
 
-		virtual void SAL_CALL removeClipboardListener( 
-			const com::sun::star::uno::Reference< ::com::sun::star::datatransfer::clipboard::XClipboardListener >& listener ) 
-			throw(RuntimeException);	 
+		virtual void SAL_CALL removeClipboardListener(
+			const com::sun::star::uno::Reference< ::com::sun::star::datatransfer::clipboard::XClipboardListener >& listener );
 
 		/*
 		 *	SelectionAdaptor
@@ -137,7 +128,7 @@ namespace x11 {
 // ------------------------------------------------------------------------
 
 	Sequence< ::rtl::OUString > SAL_CALL X11Clipboard_getSupportedServiceNames();
-	com::sun::star::uno::Reference< XInterface > SAL_CALL X11Clipboard_createInstance( 
+	com::sun::star::uno::Reference< XInterface > SAL_CALL X11Clipboard_createInstance(
 		const com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > & xMultiServiceFactory);
 
 // ------------------------------------------------------------------------

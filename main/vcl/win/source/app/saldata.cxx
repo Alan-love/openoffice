@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -114,16 +114,16 @@ int ImplSalWICompareAscii( const wchar_t* pStr1, const char* pStr2 )
 
 // =======================================================================
 
-LONG ImplSetWindowLong( HWND hWnd, int nIndex, DWORD dwNewLong )
+LONG_PTR ImplSetWindowLong( HWND hWnd, int nIndex, LONG_PTR newLong )
 {
-	return SetWindowLongW( hWnd, nIndex, dwNewLong );
+	return SetWindowLongPtrW( hWnd, nIndex, newLong );
 }
 
 // -----------------------------------------------------------------------
 
-LONG ImplGetWindowLong( HWND hWnd, int nIndex )
+LONG_PTR ImplGetWindowLong( HWND hWnd, int nIndex )
 {
-	return GetWindowLongW( hWnd, nIndex );
+	return GetWindowLongPtrW( hWnd, nIndex );
 }
 
 // -----------------------------------------------------------------------
@@ -135,10 +135,14 @@ BOOL ImplPostMessage( HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam )
 
 // -----------------------------------------------------------------------
 
-BOOL ImplSendMessage( HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam )
+/* MUST return LRESULT (LONG_PTR), not BOOL: WinSalInstance::CreateFrame /
+ * CreateObject route the new SalFrame / SalObject pointer back as the
+ * SAL_MSG_CREATE* message result (an LRESULT).  Truncating that to 32-bit BOOL
+ * loses the high pointer bits on Win64 -> the caller derefs a truncated frame
+ * (AV in SalFrame::SetCallback during InitVCL/splash). */
+LRESULT ImplSendMessage( HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam )
 {
-	BOOL bRet = SendMessageW( hWnd, nMsg, wParam, lParam );
-    return bRet;
+	return SendMessageW( hWnd, nMsg, wParam, lParam );
 }
 
 // -----------------------------------------------------------------------
@@ -161,4 +165,3 @@ LONG ImplDispatchMessage( CONST MSG *lpMsg )
 {
 	return DispatchMessageW( lpMsg );
 }
-

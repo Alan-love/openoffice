@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -28,7 +28,12 @@
 
 #include <algorithm>
 
+#include <com/sun/star/uno/Reference.hxx>
+#include <com/sun/star/document/XLinkAuthorizer.hpp>
+#include <com/sun/star/frame/XDesktop.hpp>
+#include <com/sun/star/lang/XMultiServiceFactory.hpp>
 #include <tools/vcompat.hxx>
+#include <ucbhelper/contentbroker.hxx>
 #include <unotools/ucbstreamhelper.hxx>
 #include <unotools/localfilehelper.hxx>
 #include <unotools/tempfile.hxx>
@@ -43,6 +48,8 @@
 // --> OD 2010-01-04 #i105243#
 #include <vcl/pdfextoutdevdata.hxx>
 // <--
+
+using namespace ::com::sun::star;
 
 // -----------
 // - Defines -
@@ -969,10 +976,10 @@ Graphic GraphicObject::GetTransformedGraphic( const Size& rDestSize, const MapMo
         if( aMapGraph == MAP_PIXEL )
         {
             // crops are in 1/100th mm -> to aMapGraph -> to MAP_PIXEL
-            aCropLeftTop = Application::GetDefaultDevice()->LogicToPixel( 
-                Size(rAttr.GetLeftCrop(), rAttr.GetTopCrop()), 
+            aCropLeftTop = Application::GetDefaultDevice()->LogicToPixel(
+                Size(rAttr.GetLeftCrop(), rAttr.GetTopCrop()),
                 aMap100);
-            aCropRightBottom = Application::GetDefaultDevice()->LogicToPixel( 
+            aCropRightBottom = Application::GetDefaultDevice()->LogicToPixel(
                 Size(rAttr.GetRightCrop(), rAttr.GetBottomCrop()),
                 aMap100);
         }
@@ -983,7 +990,7 @@ Graphic GraphicObject::GetTransformedGraphic( const Size& rDestSize, const MapMo
                 Size(rAttr.GetLeftCrop(), rAttr.GetTopCrop()),
                 aMap100,
                 aMapGraph);
-            aCropRightBottom = OutputDevice::LogicToLogic( 
+            aCropRightBottom = OutputDevice::LogicToLogic(
                 Size(rAttr.GetRightCrop(), rAttr.GetBottomCrop()),
                 aMap100,
                 aMapGraph);
@@ -1042,31 +1049,31 @@ Graphic GraphicObject::GetTransformedGraphic( const Size& rDestSize, const MapMo
             if( aMapGraph == MAP_PIXEL )
             {
                 // crops are in 1/100th mm -> to MAP_PIXEL
-                aCropLeftTop = Application::GetDefaultDevice()->LogicToPixel( 
+                aCropLeftTop = Application::GetDefaultDevice()->LogicToPixel(
                     Size(rAttr.GetLeftCrop(), rAttr.GetTopCrop()),
                     aMap100);
-                aCropRightBottom = Application::GetDefaultDevice()->LogicToPixel( 
+                aCropRightBottom = Application::GetDefaultDevice()->LogicToPixel(
                     Size(rAttr.GetRightCrop(), rAttr.GetBottomCrop()),
                     aMap100);
             }
             else
             {
                 // crops are in GraphicObject units -> to MAP_PIXEL
-                aCropLeftTop = Application::GetDefaultDevice()->LogicToPixel( 
+                aCropLeftTop = Application::GetDefaultDevice()->LogicToPixel(
                     Size(rAttr.GetLeftCrop(), rAttr.GetTopCrop()),
                     aMapGraph);
-                aCropRightBottom = Application::GetDefaultDevice()->LogicToPixel( 
+                aCropRightBottom = Application::GetDefaultDevice()->LogicToPixel(
                     Size(rAttr.GetRightCrop(), rAttr.GetBottomCrop()),
                     aMapGraph);
             }
 
             // convert from prefmapmode to pixel
             Size aSrcSizePixel(
-                Application::GetDefaultDevice()->LogicToPixel( 
+                Application::GetDefaultDevice()->LogicToPixel(
                     aSrcSize,
                     aMapGraph));
 
-            if(rAttr.IsCropped() 
+            if(rAttr.IsCropped()
                 && (aSrcSizePixel.Width() != aBitmapEx.GetSizePixel().Width() || aSrcSizePixel.Height() != aBitmapEx.GetSizePixel().Height())
                 && aSrcSizePixel.Width())
             {
@@ -1440,6 +1447,33 @@ GraphicObject GraphicObject::CreateGraphicObjectFromURL( const ::rtl::OUString &
 		Graphic		aGraphic;
 		if ( aURL.Len() )
 		{
+			/* We must obtain authorization from the current document, and we
+			   need a ServiceManager to access it. Because utl::UcbStreamHelper
+			   relies on the ::ucbhelper::ContentBroker instance, we will
+			   use its ServiceManager. */
+			::ucbhelper::ContentBroker* pBroker = ::ucbhelper::ContentBroker::get();
+			if ( pBroker ) {
+				uno::Reference< lang::XMultiServiceFactory > xFactory = pBroker->getServiceManager();
+				uno::Any desktop( xFactory->createInstance( ::rtl::OUString::createFromAscii( "com.sun.star.frame.Desktop" ) ) );
+				uno::Reference< com::sun::star::frame::XDesktop > xDesktop( desktop, uno::UNO_QUERY );
+				if ( xDesktop.is() ) {
+					uno::Reference< ::com::sun::star::frame::XFrame > xFrame = xDesktop->getCurrentFrame();
+					if ( xFrame.is() ) {
+						uno::Reference< ::com::sun::star::frame::XController > xController = xFrame->getController();
+						if ( xController.is() ) {
+							uno::Reference< ::com::sun::star::frame::XModel > xModel = xController->getModel();
+							if ( xModel.is() ) {
+								uno::Reference< com::sun::star::document::XLinkAuthorizer > xLinkAuthorizer( xModel, uno::UNO_QUERY);
+								if ( xLinkAuthorizer.is() ) {
+									if ( !xLinkAuthorizer->authorizeLinks( aURL ) )
+										return GraphicObject( aGraphic );
+								}
+							}
+						}
+					}
+				}
+			}
+
 			SvStream*	pStream = utl::UcbStreamHelper::CreateStream( aURL, STREAM_READ );
 			if( pStream )
 				GraphicConverter::Import( *pStream, aGraphic );
@@ -1454,9 +1488,9 @@ GraphicObject GraphicObject::CreateGraphicObjectFromURL( const ::rtl::OUString &
 basegfx::B2DVector GraphicObject::calculateCropScaling(
     double fWidth,
     double fHeight,
-    double fLeftCrop, 
-    double fTopCrop, 
-    double fRightCrop, 
+    double fLeftCrop,
+    double fTopCrop,
+    double fRightCrop,
     double fBottomCrop) const
 {
     const MapMode aMapMode100thmm(MAP_100TH_MM);

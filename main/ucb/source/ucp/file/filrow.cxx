@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -57,7 +57,7 @@ sal_Bool convert( shell* pShell,
 						"PropertyValueSet::getTypeConverter() - "
 						"Service 'com.sun.star.script.Converter' n/a!" );*/
 		}
-		
+
 		try
 		{
 			if( rValue.hasValue() )
@@ -115,7 +115,6 @@ XRow_impl::release(
 uno::Any SAL_CALL
 XRow_impl::queryInterface(
 			  const uno::Type& rType )
-  throw( uno::RuntimeException )
 {
   uno::Any aRet = cppu::queryInterface( rType,
                     SAL_STATIC_CAST( lang::XTypeProvider*,this),
@@ -132,8 +131,6 @@ XTYPEPROVIDER_IMPL_2( XRow_impl,
 sal_Bool SAL_CALL
 XRow_impl::wasNull(
 		   void )
-  throw( sdbc::SQLException,
-	 uno::RuntimeException)
 {
   return m_nWasNull;
 }
@@ -142,8 +139,6 @@ XRow_impl::wasNull(
 rtl::OUString SAL_CALL
 XRow_impl::getString(
 		     sal_Int32 columnIndex )
-  throw( sdbc::SQLException,
-	 uno::RuntimeException)
 {
   if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
     throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -156,8 +151,6 @@ XRow_impl::getString(
 sal_Bool SAL_CALL
 XRow_impl::getBoolean(
 	sal_Int32 columnIndex )
-	throw( sdbc::SQLException,
-		   uno::RuntimeException)
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -171,8 +164,6 @@ XRow_impl::getBoolean(
 sal_Int8 SAL_CALL
 XRow_impl::getByte(
 	sal_Int32 columnIndex )
-	throw( sdbc::SQLException,
-		   uno::RuntimeException)
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -185,8 +176,6 @@ XRow_impl::getByte(
 sal_Int16 SAL_CALL
 XRow_impl::getShort(
 	sal_Int32 columnIndex )
-	throw( sdbc::SQLException,
-		   uno::RuntimeException)
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -200,8 +189,6 @@ XRow_impl::getShort(
 sal_Int32 SAL_CALL
 XRow_impl::getInt(
 		  sal_Int32 columnIndex )
-	throw( sdbc::SQLException,
-		   uno::RuntimeException)
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -214,8 +201,6 @@ XRow_impl::getInt(
 sal_Int64 SAL_CALL
 XRow_impl::getLong(
 		   sal_Int32 columnIndex )
-  throw( sdbc::SQLException,
-	 uno::RuntimeException)
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -228,8 +213,6 @@ XRow_impl::getLong(
 float SAL_CALL
 XRow_impl::getFloat(
 	sal_Int32 columnIndex )
-	throw( sdbc::SQLException,
-		   uno::RuntimeException)
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -240,10 +223,8 @@ XRow_impl::getFloat(
 }
 
 double SAL_CALL
-XRow_impl::getDouble( 
-	sal_Int32 columnIndex ) 
-	throw( sdbc::SQLException, 
-		   uno::RuntimeException)
+XRow_impl::getDouble(
+	sal_Int32 columnIndex )
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -256,8 +237,6 @@ XRow_impl::getDouble(
 uno::Sequence< sal_Int8 > SAL_CALL
 XRow_impl::getBytes(
 	sal_Int32 columnIndex )
-	throw( sdbc::SQLException, 
-		   uno::RuntimeException)
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -268,10 +247,8 @@ XRow_impl::getBytes(
 }
 
 util::Date SAL_CALL
-XRow_impl::getDate( 
+XRow_impl::getDate(
 	sal_Int32 columnIndex )
-	throw( sdbc::SQLException, 
-		   uno::RuntimeException)
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -283,9 +260,7 @@ XRow_impl::getDate(
 
 util::Time SAL_CALL
 XRow_impl::getTime(
-	sal_Int32 columnIndex ) 
-  throw( sdbc::SQLException, 
-		 uno::RuntimeException)
+	sal_Int32 columnIndex )
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -296,10 +271,8 @@ XRow_impl::getTime(
 }
 
 util::DateTime SAL_CALL
-XRow_impl::getTimestamp( 
-			sal_Int32 columnIndex ) 
-  throw( sdbc::SQLException, 
-	 uno::RuntimeException)
+XRow_impl::getTimestamp(
+			sal_Int32 columnIndex )
 {
   if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
     throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -311,10 +284,8 @@ XRow_impl::getTimestamp(
 
 
 uno::Reference< io::XInputStream > SAL_CALL
-XRow_impl::getBinaryStream( 
+XRow_impl::getBinaryStream(
 			   sal_Int32 columnIndex )
-  throw( sdbc::SQLException, 
-	 uno::RuntimeException)
 {
   if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
     throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -326,10 +297,8 @@ XRow_impl::getBinaryStream(
 
 
 uno::Reference< io::XInputStream > SAL_CALL
-XRow_impl::getCharacterStream( 
+XRow_impl::getCharacterStream(
 			      sal_Int32 columnIndex )
-	throw( sdbc::SQLException, 
-		   uno::RuntimeException)
 {
   if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 	  throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -341,11 +310,9 @@ XRow_impl::getCharacterStream(
 
 
 uno::Any SAL_CALL
-XRow_impl::getObject( 
-	sal_Int32 columnIndex, 
+XRow_impl::getObject(
+	sal_Int32 columnIndex,
 	const uno::Reference< container::XNameAccess >& )
-	throw( sdbc::SQLException, 
-		   uno::RuntimeException)
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -356,10 +323,8 @@ XRow_impl::getObject(
 }
 
 uno::Reference< sdbc::XRef > SAL_CALL
-XRow_impl::getRef( 
-	sal_Int32 columnIndex ) 
-	throw( sdbc::SQLException, 
-		   uno::RuntimeException)
+XRow_impl::getRef(
+	sal_Int32 columnIndex )
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -373,10 +338,8 @@ XRow_impl::getRef(
 }
 
 uno::Reference< sdbc::XBlob > SAL_CALL
-XRow_impl::getBlob( 
+XRow_impl::getBlob(
 		   sal_Int32 columnIndex )
-  throw( sdbc::SQLException, 
-	 uno::RuntimeException)
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -390,10 +353,8 @@ XRow_impl::getBlob(
 }
 
 uno::Reference< sdbc::XClob > SAL_CALL
-XRow_impl::getClob( 
-		   sal_Int32 columnIndex ) 
-  throw( sdbc::SQLException, 
-	 uno::RuntimeException)
+XRow_impl::getClob(
+		   sal_Int32 columnIndex )
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );
@@ -408,10 +369,8 @@ XRow_impl::getClob(
 
 
 uno::Reference< sdbc::XArray > SAL_CALL
-XRow_impl::getArray( 
-	sal_Int32 columnIndex ) 
-	throw( sdbc::SQLException, 
-		   uno::RuntimeException)
+XRow_impl::getArray(
+	sal_Int32 columnIndex )
 {
 	if( columnIndex < 1 || columnIndex > m_aValueMap.getLength() )
 		throw sdbc::SQLException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( OSL_LOG_PREFIX ) ), uno::Reference< uno::XInterface >(), ::rtl::OUString(), 0, uno::Any() );

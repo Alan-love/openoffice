@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -71,10 +71,10 @@ namespace toolkit
 		*/
 		void Init(
 			const ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible >& _rxCreator
-		)	SAL_THROW( ( ::com::sun::star::uno::Exception ) );
+		);
 
 		// OCommonAccessibleComponent overridables
-		virtual ::com::sun::star::awt::Rectangle SAL_CALL implGetBounds(  ) throw (::com::sun::star::uno::RuntimeException);
+		virtual ::com::sun::star::awt::Rectangle SAL_CALL implGetBounds(  );
 
 	public:
 		/** creates an accessible context for an uno control
@@ -92,34 +92,34 @@ namespace toolkit
 		DECLARE_XTYPEPROVIDER( )
 
 		// XAccessibleContext
-		virtual sal_Int32 SAL_CALL getAccessibleChildCount(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL getAccessibleChild( sal_Int32 i ) throw (::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL getAccessibleParent(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual sal_Int16 SAL_CALL getAccessibleRole(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::rtl::OUString SAL_CALL getAccessibleDescription(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::rtl::OUString SAL_CALL getAccessibleName(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessibleRelationSet > SAL_CALL getAccessibleRelationSet(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessibleStateSet > SAL_CALL getAccessibleStateSet(  ) throw (::com::sun::star::uno::RuntimeException);
+		virtual sal_Int32 SAL_CALL getAccessibleChildCount(  );
+		virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL getAccessibleChild( sal_Int32 i );
+		virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL getAccessibleParent(  );
+		virtual sal_Int16 SAL_CALL getAccessibleRole(  );
+		virtual ::rtl::OUString SAL_CALL getAccessibleDescription(  );
+		virtual ::rtl::OUString SAL_CALL getAccessibleName(  );
+		virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessibleRelationSet > SAL_CALL getAccessibleRelationSet(  );
+		virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessibleStateSet > SAL_CALL getAccessibleStateSet(  );
 
 		// XAccessibleComponent
-		virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL getAccessibleAtPoint( const ::com::sun::star::awt::Point& aPoint ) throw (::com::sun::star::uno::RuntimeException);
-		virtual void SAL_CALL grabFocus(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::uno::Any SAL_CALL getAccessibleKeyBinding(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual sal_Int32 SAL_CALL getForeground(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual sal_Int32 SAL_CALL getBackground(  ) throw (::com::sun::star::uno::RuntimeException);
+		virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL getAccessibleAtPoint( const ::com::sun::star::awt::Point& aPoint );
+		virtual void SAL_CALL grabFocus(  );
+		virtual ::com::sun::star::uno::Any SAL_CALL getAccessibleKeyBinding(  );
+		virtual sal_Int32 SAL_CALL getForeground(  );
+		virtual sal_Int32 SAL_CALL getBackground(  );
 
 		// XEventListener
         using comphelper::OAccessibleContextHelper::disposing;
-		virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source ) throw (::com::sun::star::uno::RuntimeException);
+		virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source );
 
 	private:
 		// retrieves the value of a string property from the model, if the property is present
 		::rtl::OUString	getModelStringProperty( const sal_Char* _pPropertyName ) SAL_THROW( ( ) );
 
 		// starts listening at the control model (currently for disposal only)
-		void startModelListening( ) SAL_THROW( ( ::com::sun::star::uno::Exception ) );
+		void startModelListening( );
 		// stops listening at the control model
-		void stopModelListening( ) SAL_THROW( ( ::com::sun::star::uno::Exception ) );
+		void stopModelListening( );
 
 		Window*	implGetWindow( ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow >* _pxUNOWindow = NULL ) const;
 	};
@@ -129,4 +129,3 @@ namespace toolkit
 //........................................................................
 
 #endif // TOOLKIT_ACCESSIBLE_CONTROL_CONTEXT_HXX
-

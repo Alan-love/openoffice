@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -82,90 +82,72 @@ public:
 
     void SetActiveState (const bool bIsActive);
 
-    
+
     // lang::XEventListener
 
-    virtual void SAL_CALL 
-        disposing (const css::lang::EventObject& rEventObject)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL
+        disposing (const css::lang::EventObject& rEventObject);
 
 
     // XWindowListener
-    
-    virtual void SAL_CALL windowResized (const css::awt::WindowEvent& rEvent)
-        throw (css::uno::RuntimeException);
 
-    virtual void SAL_CALL windowMoved (const css::awt::WindowEvent& rEvent)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL windowResized (const css::awt::WindowEvent& rEvent);
 
-    virtual void SAL_CALL windowShown (const css::lang::EventObject& rEvent)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL windowMoved (const css::awt::WindowEvent& rEvent);
 
-    virtual void SAL_CALL windowHidden (const css::lang::EventObject& rEvent)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL windowShown (const css::lang::EventObject& rEvent);
+
+    virtual void SAL_CALL windowHidden (const css::lang::EventObject& rEvent);
 
 
     // XPaintListener
 
-    virtual void SAL_CALL windowPaint (const css::awt::PaintEvent& rEvent)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL windowPaint (const css::awt::PaintEvent& rEvent);
 
 
     // XMouseListener
 
-    virtual void SAL_CALL mousePressed (const css::awt::MouseEvent& rEvent)
-        throw(css::uno::RuntimeException);
+    virtual void SAL_CALL mousePressed (const css::awt::MouseEvent& rEvent);
 
-    virtual void SAL_CALL mouseReleased (const css::awt::MouseEvent& rEvent)
-        throw(css::uno::RuntimeException);
+    virtual void SAL_CALL mouseReleased (const css::awt::MouseEvent& rEvent);
 
-    virtual void SAL_CALL mouseEntered (const css::awt::MouseEvent& rEvent)
-        throw(css::uno::RuntimeException);
+    virtual void SAL_CALL mouseEntered (const css::awt::MouseEvent& rEvent);
 
-    virtual void SAL_CALL mouseExited (const css::awt::MouseEvent& rEvent)
-        throw(css::uno::RuntimeException);
+    virtual void SAL_CALL mouseExited (const css::awt::MouseEvent& rEvent);
 
 
     // XMouseMotionListener
-    
-    virtual void SAL_CALL mouseMoved (const css::awt::MouseEvent& rEvent)
-        throw (css::uno::RuntimeException);
-    
-    virtual void SAL_CALL mouseDragged (const css::awt::MouseEvent& rEvent)
-        throw (css::uno::RuntimeException);
+
+    virtual void SAL_CALL mouseMoved (const css::awt::MouseEvent& rEvent);
+
+    virtual void SAL_CALL mouseDragged (const css::awt::MouseEvent& rEvent);
 
 
     // XResourceId
 
-    virtual css::uno::Reference<css::drawing::framework::XResourceId> SAL_CALL getResourceId (void)
-        throw (css::uno::RuntimeException);
+    virtual css::uno::Reference<css::drawing::framework::XResourceId> SAL_CALL getResourceId (void);
 
-    virtual sal_Bool SAL_CALL isAnchorOnly (void)
-        throw (com::sun::star::uno::RuntimeException);
+    virtual sal_Bool SAL_CALL isAnchorOnly (void);
 
 
     // XPropertyChangeListener
 
     virtual void SAL_CALL propertyChange (
-        const css::beans::PropertyChangeEvent& rEvent)
-        throw(css::uno::RuntimeException);
+        const css::beans::PropertyChangeEvent& rEvent);
 
-    
+
     // XSlidePreviewCacheListener
-    
+
     virtual void SAL_CALL notifyPreviewCreation (
-        sal_Int32 nSlideIndex)
-        throw(css::uno::RuntimeException);
+        sal_Int32 nSlideIndex);
 
 
     // XDrawView
 
     virtual void SAL_CALL setCurrentPage (
-        const css::uno::Reference<css::drawing::XDrawPage>& rxSlide)
-        throw (css::uno::RuntimeException);
+        const css::uno::Reference<css::drawing::XDrawPage>& rxSlide);
 
-    virtual css::uno::Reference<css::drawing::XDrawPage> SAL_CALL getCurrentPage (void)
-        throw (css::uno::RuntimeException);
+    virtual css::uno::Reference<css::drawing::XDrawPage> SAL_CALL getCurrentPage (void);
 
 private:
     css::uno::Reference<css::uno::XComponentContext> mxComponentContext;
@@ -220,8 +202,7 @@ private:
     /** This method throws a DisposedException when the object has already been
         disposed.
     */
-    void ThrowIfDisposed (void)
-        throw (css::lang::DisposedException);
+    void ThrowIfDisposed (void);
 };
 
 } } // end of namespace ::sdext::presenter

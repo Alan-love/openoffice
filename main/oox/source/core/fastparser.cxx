@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -70,7 +70,7 @@ InputStreamCloseGuard::~InputStreamCloseGuard()
 
 // ============================================================================
 
-FastParser::FastParser( const Reference< XComponentContext >& rxContext ) throw( RuntimeException ) :
+FastParser::FastParser( const Reference< XComponentContext >& rxContext ) :
     mrNamespaceMap( StaticNamespaceMap::get() )
 {
     // create a fast parser instance
@@ -85,7 +85,7 @@ FastParser::~FastParser()
 {
 }
 
-void FastParser::registerNamespace( sal_Int32 nNamespaceId ) throw( IllegalArgumentException, RuntimeException )
+void FastParser::registerNamespace( sal_Int32 nNamespaceId )
 {
     if( !mxParser.is() )
         throw RuntimeException();
@@ -97,14 +97,14 @@ void FastParser::registerNamespace( sal_Int32 nNamespaceId ) throw( IllegalArgum
     mxParser->registerNamespace( *pNamespaceUrl, nNamespaceId );
 }
 
-void FastParser::setDocumentHandler( const Reference< XFastDocumentHandler >& rxDocHandler ) throw( RuntimeException )
+void FastParser::setDocumentHandler( const Reference< XFastDocumentHandler >& rxDocHandler )
 {
     if( !mxParser.is() )
         throw RuntimeException();
     mxParser->setFastDocumentHandler( rxDocHandler );
 }
 
-void FastParser::parseStream( const InputSource& rInputSource, bool bCloseStream ) throw( SAXException, IOException, RuntimeException )
+void FastParser::parseStream( const InputSource& rInputSource, bool bCloseStream )
 {
     // guard closing the input stream also when exceptions are thrown
     InputStreamCloseGuard aGuard( rInputSource.aInputStream, bCloseStream );
@@ -113,7 +113,7 @@ void FastParser::parseStream( const InputSource& rInputSource, bool bCloseStream
     mxParser->parseStream( rInputSource );
 }
 
-void FastParser::parseStream( const Reference< XInputStream >& rxInStream, const OUString& rStreamName, bool bCloseStream ) throw( SAXException, IOException, RuntimeException )
+void FastParser::parseStream( const Reference< XInputStream >& rxInStream, const OUString& rStreamName, bool bCloseStream )
 {
     InputSource aInputSource;
     aInputSource.sSystemId = rStreamName;
@@ -121,7 +121,7 @@ void FastParser::parseStream( const Reference< XInputStream >& rxInStream, const
     parseStream( aInputSource, bCloseStream );
 }
 
-void FastParser::parseStream( StorageBase& rStorage, const OUString& rStreamName, bool bCloseStream ) throw( SAXException, IOException, RuntimeException )
+void FastParser::parseStream( StorageBase& rStorage, const OUString& rStreamName, bool bCloseStream )
 {
     parseStream( rStorage.openInputStream( rStreamName ), rStreamName, bCloseStream );
 }

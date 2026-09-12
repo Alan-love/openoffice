@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -216,7 +216,7 @@ LineInfo DXFTransform::Transform(const DXFLineInfo& aDXFLineInfo) const
 	aLineInfo.SetDotCount( static_cast< sal_uInt16 >( aDXFLineInfo.nDotCount ) );
 	aLineInfo.SetDotLen( (sal_Int32) (aDXFLineInfo.fDotLen * scale + 0.5) );
 	aLineInfo.SetDistance( (sal_Int32) (aDXFLineInfo.fDistance * scale + 0.5) );
-	
+
 	if ( aLineInfo.GetDashCount() > 0 && aLineInfo.GetDashLen() == 0 )
 		aLineInfo.SetDashLen(1);
 
@@ -245,6 +245,16 @@ double DXFTransform::CalcRotAngle() const
 
 sal_Bool DXFTransform::Mirror() const
 {
-	if (aMZ.SProd(aMX*aMY)<0) return sal_True; else return sal_False;
+	// True when this transform reverses orientation *in the projected XY plane* —
+	// the plane the 2D metafile is actually drawn in. Arc rendering uses this to
+	// choose the sweep direction handed to DrawArc.
+	//
+	// The 3D handedness aMZ.(aMX x aMY) is the wrong test here: a negative-Z
+	// extrusion feeds the Arbitrary Axis Algorithm a 180-degrees rotation about Y
+	// (a proper rotation), which flips the in-plane orientation yet leaves the 3D
+	// determinant sign unchanged (the flipped aMZ.z masks it). That drew arcs with
+	// negative-Z extrusion as their complement (e.g. a quarter arc as three
+	// quarters — issue 16564). Use the sign of the 2D projected determinant, which
+	// is what actually governs clockwise vs counter-clockwise on the page.
+	if (aMX.fx*aMY.fy - aMX.fy*aMY.fx < 0) return sal_True; else return sal_False;
 }
-

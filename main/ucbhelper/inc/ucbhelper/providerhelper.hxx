@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -123,23 +123,23 @@ protected:
       * content provider. It should be called directly after creating a new
       * content instance. The provider can reuse a registered instance upon
       * subsedent requests for content instances with an idententifier
-      * of a registered instance. 
-      * Note that the provider does not hold a hard reference on the 
-      * registered instance. If last external reference is gone, the provider 
+      * of a registered instance.
+      * Note that the provider does not hold a hard reference on the
+      * registered instance. If last external reference is gone, the provider
       * will remove the instance from its inventory of known instances.
       * Nothing will happen in case an already registered instance shall
       * be registered more than once.
 	  *
 	  * @param  the content instance that is to be registered.
      */
-    void registerNewContent( 
-        const com::sun::star::uno::Reference< 
+    void registerNewContent(
+        const com::sun::star::uno::Reference<
             ::com::sun::star::ucb::XContent > & xContent );
 
 public:
 
 	//////////////////////////////////////////////////////////////////////
-	// Contsruction/Destruction
+	// Construction/Destruction
 	//////////////////////////////////////////////////////////////////////
 
 	ContentProviderImplHelper(
@@ -164,14 +164,11 @@ public:
 	//////////////////////////////////////////////////////////////////////
 
     virtual ::rtl::OUString SAL_CALL
-	getImplementationName()
-		throw( ::com::sun::star::uno::RuntimeException ) = 0;
+	getImplementationName() = 0;
     virtual sal_Bool SAL_CALL
-	supportsService( const ::rtl::OUString& ServiceName )
-		throw( ::com::sun::star::uno::RuntimeException );
+	supportsService( const ::rtl::OUString& ServiceName );
     virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL
-	getSupportedServiceNames()
-		throw( ::com::sun::star::uno::RuntimeException ) = 0;
+	getSupportedServiceNames() = 0;
 
 	//////////////////////////////////////////////////////////////////////
 	// XContentProvider
@@ -191,15 +188,12 @@ public:
 	virtual ::com::sun::star::uno::Reference<
 				::com::sun::star::ucb::XContent > SAL_CALL
 	queryContent( const ::com::sun::star::uno::Reference<
-					::com::sun::star::ucb::XContentIdentifier >& Identifier )
-		throw( ::com::sun::star::ucb::IllegalIdentifierException,
-			   ::com::sun::star::uno::RuntimeException ) = 0;
+					::com::sun::star::ucb::XContentIdentifier >& Identifier ) = 0;
     virtual sal_Int32 SAL_CALL
 	compareContentIds( const ::com::sun::star::uno::Reference<
 							::com::sun::star::ucb::XContentIdentifier >& Id1,
 					   const ::com::sun::star::uno::Reference<
-					   		::com::sun::star::ucb::XContentIdentifier >& Id2 )
-		throw( ::com::sun::star::uno::RuntimeException );
+					   		::com::sun::star::ucb::XContentIdentifier >& Id2 );
 
 	//////////////////////////////////////////////////////////////////////
 	// Non-interface methods.

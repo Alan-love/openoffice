@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -178,7 +178,7 @@ Oxt_Handler::~Oxt_Handler()
                 Playing of sound is asynchron every time.
 
     @attention  We must hold us alive by ourself ... because we use async. vcl sound player ... but playing is started
-                in async interface call "dispatch()" too. And caller forget us imediatly. But then our uno ref count
+                in async interface call "dispatch()" too. And caller forget us immediately. But then our uno ref count
                 will decreased to 0 and will die. The only solution is to use own reference to our implementation.
                 But we do it for really started jobs only and release it during call back of vcl.
 
@@ -195,7 +195,6 @@ Oxt_Handler::~Oxt_Handler()
 void SAL_CALL Oxt_Handler::dispatchWithNotification( const css::util::URL& aURL,
                                                      const css::uno::Sequence< css::beans::PropertyValue >&            /*lArguments*/,
                                                      const css::uno::Reference< css::frame::XDispatchResultListener >& xListener )
-    throw( css::uno::RuntimeException )
 {
     // SAFE {
     ResetableGuard aLock( m_aLock );
@@ -203,7 +202,7 @@ void SAL_CALL Oxt_Handler::dispatchWithNotification( const css::util::URL& aURL,
     rtl::OUString sServiceName = UNISTRING( "com.sun.star.deployment.ui.PackageManagerDialog" );
     css::uno::Sequence< css::uno::Any > lParams(1);
     lParams[0] <<= aURL.Main;
-    
+
     css::uno::Reference< css::uno::XInterface > xService;
 
     xService = m_xFactory->createInstanceWithArguments( sServiceName, lParams );
@@ -235,7 +234,6 @@ void SAL_CALL Oxt_Handler::dispatchWithNotification( const css::util::URL& aURL,
 
 void SAL_CALL Oxt_Handler::dispatch( const css::util::URL&                                  aURL       ,
                                      const css::uno::Sequence< css::beans::PropertyValue >& lArguments )
-    throw( css::uno::RuntimeException )
 {
     dispatchWithNotification( aURL, lArguments, css::uno::Reference< css::frame::XDispatchResultListener >() );
 }
@@ -265,7 +263,6 @@ void SAL_CALL Oxt_Handler::dispatch( const css::util::URL&                      
     @threadsafe yes
 *//*-*************************************************************************************************************/
 ::rtl::OUString SAL_CALL Oxt_Handler::detect( css::uno::Sequence< css::beans::PropertyValue >& lDescriptor )
-    throw( css::uno::RuntimeException )
 {
     // Our default is "nothing". So we can return it, if detection failed or fily type is really unknown.
     ::rtl::OUString sTypeName;

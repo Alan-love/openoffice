@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -54,7 +54,7 @@ import com.sun.star.lang.EventObject;
 *  <li> <code>'XTextComponent.onlyNumbers'</code> (of type <code>Object</code>):
 *  needed for checking if component can contain only numeric values </li>
 * </ul><p>
-* Test is <b> NOT </b> multithread compilant. <p>
+* Test is <b> NOT </b> multithread compliant. <p>
 * @see com.sun.star.awt.XTextComponent
 */
 public class _XTextComponent extends MultiMethodTest {
@@ -167,7 +167,7 @@ public class _XTextComponent extends MultiMethodTest {
         String itext = num ? "6" :  "insert" ;
         log.println("Setting text to : '" + text + "'") ;
         oObj.setText(text);
-        log.println("Iserting text to (0,1) : '" + itext + "'") ;
+        log.println("Inserting text to (0,1) : '" + itext + "'") ;
         oObj.insertText(new Selection(0,1), itext);
         log.println("getText() returns: " + oObj.getText());
         tRes.tested("insertText()", oObj.getText().equals
@@ -184,12 +184,12 @@ public class _XTextComponent extends MultiMethodTest {
         oObj.setText(text);
         oObj.setSelection(new Selection(0,3));
         boolean result = oObj.getSelectedText().equals(text);
-        
+
         if (! result) {
             System.out.println("Getting '"+oObj.getSelectedText()+"'");
             System.out.println("Expected '"+text+"'");
         }
-        
+
         tRes.tested("getSelectedText()",result);
     }
 
@@ -263,4 +263,3 @@ public class _XTextComponent extends MultiMethodTest {
     }
 
 }
-

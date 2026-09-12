@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -243,7 +243,7 @@ bool Binding::isValid()
         isValid_DataType() &&
         maMIP.isConstraint() &&
         ( ! maMIP.isRequired() ||
-             ( maBindingExpression.hasValue() && 
+             ( maBindingExpression.hasValue() &&
                maBindingExpression.getString().getLength() > 0 ) );
 }
 
@@ -287,7 +287,7 @@ OUString Binding::explainInvalid()
         if( sReason.getLength() == 0 )
         {
             // no explanation given by data type? Then give generic message
-            sReason = getResource( RID_STR_XFORMS_INVALID_VALUE, 
+            sReason = getResource( RID_STR_XFORMS_INVALID_VALUE,
                                    maMIP.getTypeName() );
         }
     }
@@ -295,7 +295,7 @@ OUString Binding::explainInvalid()
     {
         sReason = maMIP.getConstraintExplanation();
     }
-    else if( maMIP.isRequired() && maBindingExpression.hasValue() && 
+    else if( maMIP.isRequired() && maBindingExpression.hasValue() &&
         ( maBindingExpression.getString().getLength() == 0 )  )
     {
         sReason = getResource( RID_STR_XFORMS_REQUIRED );
@@ -337,7 +337,7 @@ Binding::IntSequence_t Binding::getUnoTunnelID()
 Binding* SAL_CALL Binding::getBinding( const Reference<XPropertySet>& xPropertySet )
 {
     Reference<XUnoTunnel> xTunnel( xPropertySet, UNO_QUERY );
-    return xTunnel.is() 
+    return xTunnel.is()
         ? reinterpret_cast<Binding*>( xTunnel->getSomething(getUnoTunnelID()))
         : NULL;
 }
@@ -490,14 +490,12 @@ bool Binding::getExternalData() const
 
 
 void Binding::checkLive()
-    throw( RuntimeException )
 {
     if( ! isLive() )
         throw RuntimeException( EXCEPT("Binding not initialized") );
 }
 
 void Binding::checkModel()
-    throw( RuntimeException )
 {
     if( ! mxModel.is() )
         throw RuntimeException( EXCEPT("Binding has no Model") );
@@ -517,7 +515,7 @@ Model* Binding::getModelImpl() const
 Model* Binding::getModelImpl( const Model_t& xModel ) const
 {
     Reference<XUnoTunnel> xTunnel( xModel, UNO_QUERY );
-    Model* pModel = xTunnel.is() 
+    Model* pModel = xTunnel.is()
         ? reinterpret_cast<Model*>(
             xTunnel->getSomething( Model::getUnoTunnelID() ) )
         : NULL;
@@ -534,13 +532,13 @@ void lcl_addListenerToNode( Reference<XNode> xNode,
                                    xListener, false );
         xTarget->addEventListener( OUSTRING("DOMCharacterDataModified"),
                                    xListener, true );
-        xTarget->addEventListener( OUSTRING("DOMAttrModified"), 
+        xTarget->addEventListener( OUSTRING("DOMAttrModified"),
                                    xListener, false );
-        xTarget->addEventListener( OUSTRING("DOMAttrModified"), 
+        xTarget->addEventListener( OUSTRING("DOMAttrModified"),
                                    xListener, true );
-        xTarget->addEventListener( OUSTRING("DOMAttrModified"), 
+        xTarget->addEventListener( OUSTRING("DOMAttrModified"),
                                    xListener, true );
-        xTarget->addEventListener( OUSTRING("xforms-generic"), 
+        xTarget->addEventListener( OUSTRING("xforms-generic"),
                                    xListener, true );
     }
 }
@@ -555,11 +553,11 @@ void lcl_removeListenerFromNode( Reference<XNode> xNode,
                                       xListener, false );
         xTarget->removeEventListener( OUSTRING("DOMCharacterDataModified"),
                                       xListener, true );
-        xTarget->removeEventListener( OUSTRING("DOMAttrModified"), 
+        xTarget->removeEventListener( OUSTRING("DOMAttrModified"),
                                       xListener, false );
-        xTarget->removeEventListener( OUSTRING("DOMAttrModified"), 
+        xTarget->removeEventListener( OUSTRING("DOMAttrModified"),
                                       xListener, true );
-        xTarget->removeEventListener( OUSTRING("xforms-generic"), 
+        xTarget->removeEventListener( OUSTRING("xforms-generic"),
                                       xListener, true );
     }
 }
@@ -580,7 +578,7 @@ void lcl_removeListenerFromNode( Reference<XNode> xNode,
         OSL_ENSURE( aIter->is(), "no node?" );
 
         // create proper evaluation context for this MIP
-        aVector.push_back( EvaluationContext( *aIter, getModel(), 
+        aVector.push_back( EvaluationContext( *aIter, getModel(),
                                               getBindingNamespaces(),
                                               nCount, aNodes.size() ) );
     }
@@ -609,16 +607,16 @@ void Binding::bind( bool bForceRebind )
     if( ! maBindingExpression.getNode().is() )
     {
         // 1b) create node (if valid element name)
-        if( isValidQName( maBindingExpression.getExpression(), 
+        if( isValidQName( maBindingExpression.getExpression(),
                           aContext.mxNamespaces ) )
         {
-            aContext.mxContextNode->appendChild( 
-                Reference<XNode>( 
-                    aContext.mxContextNode->getOwnerDocument()->createElement( 
+            aContext.mxContextNode->appendChild(
+                Reference<XNode>(
+                    aContext.mxContextNode->getOwnerDocument()->createElement(
                         maBindingExpression.getExpression() ),
                     UNO_QUERY ) );
             maBindingExpression.evaluate( aContext );
-            OSL_ENSURE( maBindingExpression.getNode().is(), 
+            OSL_ENSURE( maBindingExpression.getNode().is(),
                         "we should bind to the newly inserted node!" );
         }
     }
@@ -638,8 +636,8 @@ void Binding::bind( bool bForceRebind )
                  aIter++ )
                 maEventNodes.push_back( *aIter );
         else
-            maEventNodes.push_back( 
-                Reference<XNode>( aContext.mxContextNode->getOwnerDocument(), 
+            maEventNodes.push_back(
+                Reference<XNode>( aContext.mxContextNode->getOwnerDocument(),
                                   UNO_QUERY_THROW ) );
         for( PathExpression::NodeVector_t::iterator aIter2 = maEventNodes.begin();
              aIter2 != maEventNodes.end();
@@ -739,13 +737,13 @@ void Binding::valueModified()
     // control will query once the value has changed)
     Reference<XInterface> xSource = static_cast<XPropertySet*>( this );
     ::std::for_each( maModifyListeners.begin(),
-              maModifyListeners.end(), 
+              maModifyListeners.end(),
               ::std::bind2nd( ::std::ptr_fun( lcl_modified ), xSource ) );
     ::std::for_each( maListEntryListeners.begin(),
-              maListEntryListeners.end(), 
+              maListEntryListeners.end(),
               ::std::bind2nd( ::std::ptr_fun( lcl_listentry ), xSource ) );
     ::std::for_each( maValidityListeners.begin(),
-              maValidityListeners.end(), 
+              maValidityListeners.end(),
               ::std::bind2nd( ::std::ptr_fun( lcl_validate ), xSource ) );
 
 	// now distribute MIPs to childs
@@ -832,7 +830,7 @@ Binding::XDataType_t Binding::getDataType()
     OSL_ENSURE( getModel().is(), "need model" );
     OSL_ENSURE( getModel()->getDataTypeRepository().is(), "need types" );
 
-    Reference<XDataTypeRepository> xRepository( 
+    Reference<XDataTypeRepository> xRepository(
         getModel()->getDataTypeRepository(), UNO_QUERY );
     OUString sTypeName = maMIP.getTypeName();
 
@@ -966,7 +964,7 @@ void Binding::_setNamespaces( const XNameContainer_t& rNamespaces,
                               bool bBinding )
 {
     Model* pModel = getModelImpl();
-    XNameContainer_t xModelNamespaces = ( pModel != NULL ) 
+    XNameContainer_t xModelNamespaces = ( pModel != NULL )
                                             ? pModel->getNamespaces()
                                             : NULL;
     OSL_ENSURE( ( pModel != NULL ) == xModelNamespaces.is(), "no model nmsp?");
@@ -987,10 +985,10 @@ void Binding::_setNamespaces( const XNameContainer_t& rNamespaces,
 
         // determine whether the namespace should go into model's or
         // into binding's namespaces
-        bool bLocal = 
+        bool bLocal =
             ! xModelNamespaces.is()
             || mxNamespaces->hasByName( rName )
-            || ( bBinding 
+            || ( bBinding
                  && xModelNamespaces.is()
                  && xModelNamespaces->hasByName( rName ) );
 
@@ -1046,21 +1044,17 @@ void Binding::_checkBindingID()
 // XValueBinding
 //
 
-Binding::Sequence_Type_t Binding::getSupportedValueTypes() 
-    throw( RuntimeException )
+Binding::Sequence_Type_t Binding::getSupportedValueTypes()
 {
     return Convert::get().getTypes();
 }
 
-sal_Bool Binding::supportsType( const Type_t& rType ) 
-    throw( RuntimeException )
+sal_Bool Binding::supportsType( const Type_t& rType )
 {
     return Convert::get().hasType( rType );
 }
 
 Binding::Any_t Binding::getValue( const Type_t& rType )
-    throw( IncompatibleTypesException, 
-           RuntimeException )
 {
     // first, check for model
     checkLive();
@@ -1076,19 +1070,15 @@ Binding::Any_t Binding::getValue( const Type_t& rType )
 			Convert &rConvert = Convert::get();
 			result = rConvert.toAny(pathExpr,rType);
 		}
-    
-//		return maBindingExpression.hasValue() 
+
+//		return maBindingExpression.hasValue()
   //      ? Convert::get().toAny( maBindingExpression.getString(), rType )
     //    : Any();
 
 		return result;
 }
 
-void Binding::setValue( const Any_t& aValue ) 
-    throw( IncompatibleTypesException, 
-           InvalidBindingStateException, 
-           NoSupportException, 
-           RuntimeException )
+void Binding::setValue( const Any_t& aValue )
 {
     // first, check for model
     checkLive();
@@ -1120,7 +1110,6 @@ void Binding::setValue( const Any_t& aValue )
 //
 
 sal_Int32 Binding::getListEntryCount()
-    throw( RuntimeException )
 {
     // first, check for model
     checkLive();
@@ -1155,8 +1144,6 @@ OUString lcl_getString( const Reference<XNode>& xNode )
 }
 
 OUString Binding::getListEntry( sal_Int32 nPosition )
-    throw( IndexOutOfBoundsException,
-           RuntimeException )
 {
     // first, check for model
     checkLive();
@@ -1169,7 +1156,6 @@ OUString Binding::getListEntry( sal_Int32 nPosition )
 }
 
 Sequence<OUString> Binding::getAllListEntries()
-    throw( RuntimeException )
 {
     // first, check for model
     checkLive();
@@ -1187,35 +1173,30 @@ Sequence<OUString> Binding::getAllListEntries()
 }
 
 void Binding::addListEntryListener( const XListEntryListener_t& xListener )
-    throw( NullPointerException,
-           RuntimeException )
 {
     OSL_ENSURE( xListener.is(), "need listener!" );
-    if( ::std::find( maListEntryListeners.begin(), 
-              maListEntryListeners.end(), 
+    if( ::std::find( maListEntryListeners.begin(),
+              maListEntryListeners.end(),
               xListener)
         == maListEntryListeners.end() )
         maListEntryListeners.push_back( xListener );
 }
 
 void Binding::removeListEntryListener( const XListEntryListener_t& xListener )
-    throw( NullPointerException,
-           RuntimeException )
 {
-    XListEntryListeners_t::iterator aIter = 
-        ::std::find( maListEntryListeners.begin(), maListEntryListeners.end(), 
+    XListEntryListeners_t::iterator aIter =
+        ::std::find( maListEntryListeners.begin(), maListEntryListeners.end(),
               xListener );
     if( aIter != maListEntryListeners.end() )
         maListEntryListeners.erase( aIter );
 }
 
 
-// 
+//
 // XValidator
 //
 
 sal_Bool Binding::isValid( const Any_t& )
-    throw( RuntimeException )
 {
     // first, check for model
     checkLive();
@@ -1226,7 +1207,6 @@ sal_Bool Binding::isValid( const Any_t& )
 
 rtl::OUString Binding::explainInvalid(
     const Any_t& /*Value*/ )
-    throw( RuntimeException )
 {
     // first, check for model
     checkLive();
@@ -1237,8 +1217,6 @@ rtl::OUString Binding::explainInvalid(
 
 void Binding::addValidityConstraintListener(
     const XValidityConstraintListener_t& xListener )
-    throw( NullPointerException,
-           RuntimeException )
 {
     OSL_ENSURE( xListener.is(), "need listener!" );
     if( ::std::find(maValidityListeners.begin(), maValidityListeners.end(), xListener)
@@ -1248,11 +1226,9 @@ void Binding::addValidityConstraintListener(
 
 void Binding::removeValidityConstraintListener(
     const XValidityConstraintListener_t& xListener )
-    throw( NullPointerException,
-           RuntimeException )
 {
-    XValidityConstraintListeners_t::iterator aIter = 
-        ::std::find( maValidityListeners.begin(), maValidityListeners.end(), 
+    XValidityConstraintListeners_t::iterator aIter =
+        ::std::find( maValidityListeners.begin(), maValidityListeners.end(),
               xListener );
     if( aIter != maValidityListeners.end() )
         maValidityListeners.erase( aIter );
@@ -1260,12 +1236,11 @@ void Binding::removeValidityConstraintListener(
 
 
 
-// 
+//
 // xml::dom::event::XEventListener
 //
 
 void Binding::handleEvent( const XEvent_t& xEvent )
-    throw( RuntimeException )
 {
 	OUString sType(xEvent->getType());
 	//OUString sEventMIPChanged(RTL_CONSTASCII_USTRINGPARAM("xforms-generic"));
@@ -1273,7 +1248,7 @@ void Binding::handleEvent( const XEvent_t& xEvent )
 	if(!sType.compareToAscii("xforms-generic")) {
 
 		// the modification of the 'mnDeferModifyNotifications'-member
-		// is necessary to prevent infinite notication looping.
+		// is necessary to prevent infinite notification looping.
 		// This can happened in case the binding which caused
 		// the notification chain is listening to those events
 		// as well...
@@ -1298,7 +1273,6 @@ void Binding::handleEvent( const XEvent_t& xEvent )
 //
 
 sal_Int64 Binding::getSomething( const IntSequence_t& xId )
-    throw( RuntimeException )
 {
     return reinterpret_cast<sal_Int64>( ( xId == getUnoTunnelID() ) ? this : NULL );
 }
@@ -1308,7 +1282,6 @@ sal_Int64 Binding::getSomething( const IntSequence_t& xId )
 //
 
 Binding::XCloneable_t SAL_CALL Binding::createClone()
-    throw( RuntimeException )
 {
     Reference< XPropertySet > xClone;
 
@@ -1362,9 +1335,8 @@ void Binding::initializePropertySet()
     initializePropertyValueCache( HANDLE_ExternalData );
 }
 
-void Binding::addModifyListener( 
+void Binding::addModifyListener(
     const XModifyListener_t& xListener )
-    throw( RuntimeException )
 {
     OSL_ENSURE( xListener.is(), "need listener!" );
     if( ::std::find( maModifyListeners.begin(), maModifyListeners.end(), xListener )
@@ -1379,9 +1351,8 @@ void Binding::addModifyListener(
 
 void Binding::removeModifyListener(
     const XModifyListener_t& xListener )
-    throw( RuntimeException )
 {
-    ModifyListeners_t::iterator aIter = 
+    ModifyListeners_t::iterator aIter =
         ::std::find( maModifyListeners.begin(), maModifyListeners.end(), xListener );
     if( aIter != maModifyListeners.end() )
         maModifyListeners.erase( aIter );
@@ -1391,13 +1362,11 @@ void Binding::removeModifyListener(
 
 
 rtl::OUString Binding::getName()
-    throw( RuntimeException )
 {
     return getBindingID();
 }
 
 void SAL_CALL Binding::setName( const rtl::OUString& rName )
-    throw( RuntimeException )
 {
     // use the XPropertySet methods, so the change in the name is notified to the
     // property listeners

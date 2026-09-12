@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -161,7 +161,7 @@ class MenuDispatcher   :   // interfaces
 		*//*-*****************************************************************************************************/
 
 		virtual void SAL_CALL dispatch(	const	css::util::URL&										aURL			,
-										const	css::uno::Sequence< css::beans::PropertyValue >&	seqProperties	) throw( css::uno::RuntimeException );
+										const	css::uno::Sequence< css::beans::PropertyValue >&	seqProperties	);
 
 		/*-****************************************************************************************************//**
 			@short      add listener for state events
@@ -178,7 +178,7 @@ class MenuDispatcher   :   // interfaces
 		*//*-*****************************************************************************************************/
 
 		virtual void SAL_CALL addStatusListener(	const	css::uno::Reference< css::frame::XStatusListener >&	xControl,
-													const	css::util::URL&										aURL	) throw( css::uno::RuntimeException );
+													const	css::util::URL&										aURL	);
 
 		/*-****************************************************************************************************//**
 			@short      remove listener for state events
@@ -195,14 +195,14 @@ class MenuDispatcher   :   // interfaces
 		*//*-*****************************************************************************************************/
 
     	virtual void SAL_CALL removeStatusListener(	const	css::uno::Reference< css::frame::XStatusListener >&	xControl,
-													const	css::util::URL&										aURL	) throw( css::uno::RuntimeException );
+													const	css::util::URL&										aURL	);
 
 
 		//---------------------------------------------------------------------------------------------------------
 		//	 XFrameActionListener
 		//---------------------------------------------------------------------------------------------------------
 
-		virtual void SAL_CALL frameAction( const css::frame::FrameActionEvent& aEvent ) throw ( css::uno::RuntimeException );
+		virtual void SAL_CALL frameAction( const css::frame::FrameActionEvent& aEvent );
 
 		//---------------------------------------------------------------------------------------------------------
 		//	 XEventListener
@@ -210,7 +210,7 @@ class MenuDispatcher   :   // interfaces
 
 		/*-****************************************************************************************************//**
 			@short		dispose current instance
-			@descr		If service helper isn't required any longer call this method to release all used ressources.
+			@descr		If service helper isn't required any longer call this method to release all used resources.
 
 			@seealso	-
 
@@ -220,7 +220,7 @@ class MenuDispatcher   :   // interfaces
 			@onerror	-
 		*//*-*****************************************************************************************************/
 
-		void SAL_CALL disposing( const EVENTOBJECT& aEvent ) throw( css::uno::RuntimeException );
+		void SAL_CALL disposing( const EVENTOBJECT& aEvent );
 
 	//-------------------------------------------------------------------------------------------------------------
 	//	protected methods
@@ -286,7 +286,7 @@ class MenuDispatcher   :   // interfaces
 	//-------------------------------------------------------------------------------------------------------------
 
 		/*-****************************************************************************************************//**
-			@short		debug-method to check incoming parameter of some other mehods of this class
+			@short		debug-method to check incoming parameter of some other methods of this class
 			@descr		The following methods are used to check parameters for other methods
 						of this class. The return value is used directly for an ASSERT(...).
 

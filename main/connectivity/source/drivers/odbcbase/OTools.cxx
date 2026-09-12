@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_odbcbase.hxx"
 #include "odbc/OTools.hxx"
 #include "odbc/OFunctions.hxx"
 #include <com/sun/star/sdbc/DataType.hpp>
@@ -49,7 +49,7 @@ void OTools::getValue(	OConnection* _pConnection,
 						sal_Bool &_bWasNull,
 						const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >& _xInterface,
 						void* _pValue,
-						SQLLEN _nSize) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException)
+						SQLLEN _nSize)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "odbc", "Ocke.Janssen@sun.com", "OTools::getValue" );
 	SQLLEN pcbValue = SQL_NULL_DATA;
@@ -75,7 +75,6 @@ void OTools::bindParameter(	OConnection* _pConnection,
 							const void* _pValue,
 							const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >& _xInterface,
 							rtl_TextEncoding _nTextEncoding)
-							 throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "odbc", "Ocke.Janssen@sun.com", "OTools::bindParameter" );
 	SQLRETURN nRetcode;
@@ -154,7 +153,7 @@ void OTools::bindData(	SQLSMALLINT _nOdbcType,
 			*pLen = sizeof(sal_Int64);
 			_nColumnSize = *pLen;
 			break;
-		
+
 		case SQL_NUMERIC:
 			if(_bUseWChar)
 			{
@@ -256,7 +255,7 @@ void OTools::bindValue(	OConnection* _pConnection,
 						SQLLEN *pLen,
 						const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >& _xInterface,
 						rtl_TextEncoding _nTextEncoding,
-						sal_Bool _bUseOldTimeDate) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException)
+						sal_Bool _bUseOldTimeDate)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "odbc", "Ocke.Janssen@sun.com", "OTools::bindValue" );
 	SQLRETURN nRetcode;
@@ -412,7 +411,7 @@ void OTools::ThrowException(OConnection* _pConnection,
 							SQLSMALLINT _nHandleType,
 							const Reference< XInterface >& _xInterface,
 							sal_Bool _bNoFound,
-							rtl_TextEncoding _nTextEncoding) throw(SQLException)
+							rtl_TextEncoding _nTextEncoding)
 {
 	switch(_rRetCode)
 	{
@@ -472,7 +471,7 @@ Sequence<sal_Int8> OTools::getBytesValue(OConnection* _pConnection,
 										 sal_Int32 columnIndex,
 										 SQLSMALLINT _fSqlType,
 										 sal_Bool &_bWasNull,
-										 const Reference< XInterface >& _xInterface) throw(SQLException, RuntimeException)
+										 const Reference< XInterface >& _xInterface)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "odbc", "Ocke.Janssen@sun.com", "OTools::getBytesValue" );
 	char aCharArray[2048];
@@ -535,7 +534,7 @@ Sequence<sal_Int8> OTools::getBytesValue(OConnection* _pConnection,
 									   SQLSMALLINT _fSqlType,
 									   sal_Bool &_bWasNull,
 									   const Reference< XInterface >& _xInterface,
-									   rtl_TextEncoding _nTextEncoding) throw(SQLException, RuntimeException)
+									   rtl_TextEncoding _nTextEncoding)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "odbc", "Ocke.Janssen@sun.com", "OTools::getStringValue" );
 	::rtl::OUStringBuffer aData;
@@ -664,7 +663,7 @@ void OTools::GetInfo(OConnection* _pConnection,
 					 SQLUSMALLINT _nInfo,
 					 ::rtl::OUString &_rValue,
 					 const Reference< XInterface >& _xInterface,
-					 rtl_TextEncoding _nTextEncoding) throw(SQLException, RuntimeException)
+					 rtl_TextEncoding _nTextEncoding)
 {
 	char aValue[512];
 	SQLSMALLINT nValueLen=0;
@@ -679,7 +678,7 @@ void OTools::GetInfo(OConnection* _pConnection,
 					 SQLHANDLE _aConnectionHandle,
 					 SQLUSMALLINT _nInfo,
 					 sal_Int32 &_rValue,
-					 const Reference< XInterface >& _xInterface) throw(SQLException, RuntimeException)
+					 const Reference< XInterface >& _xInterface)
 {
 	SQLSMALLINT nValueLen;
 	_rValue = 0;	// in case the driver uses only 16 of the 32 bits (as it does, for example, for SQL_CATALOG_LOCATION)
@@ -692,7 +691,7 @@ void OTools::GetInfo(OConnection* _pConnection,
 					 SQLHANDLE _aConnectionHandle,
 					 SQLUSMALLINT _nInfo,
 					 SQLUINTEGER &_rValue,
-					 const Reference< XInterface >& _xInterface) throw(SQLException, RuntimeException)
+					 const Reference< XInterface >& _xInterface)
 {
 	SQLSMALLINT nValueLen;
 	_rValue = 0;	// in case the driver uses only 16 of the 32 bits (as it does, for example, for SQL_CATALOG_LOCATION)
@@ -705,7 +704,7 @@ void OTools::GetInfo(OConnection* _pConnection,
 					 SQLHANDLE _aConnectionHandle,
 					 SQLUSMALLINT _nInfo,
 					 SQLUSMALLINT &_rValue,
-					 const Reference< XInterface >& _xInterface) throw(SQLException, RuntimeException)
+					 const Reference< XInterface >& _xInterface)
 {
 	SQLSMALLINT nValueLen;
 	_rValue = 0;	// in case the driver uses only 16 of the 32 bits (as it does, for example, for SQL_CATALOG_LOCATION)
@@ -718,7 +717,7 @@ void OTools::GetInfo(OConnection* _pConnection,
 					 SQLHANDLE _aConnectionHandle,
 					 SQLUSMALLINT _nInfo,
 					 sal_Bool &_rValue,
-					 const Reference< XInterface >& _xInterface) throw(SQLException, RuntimeException)
+					 const Reference< XInterface >& _xInterface)
 {
 	SQLSMALLINT nValueLen;
 	OTools::ThrowException(_pConnection,
@@ -886,7 +885,7 @@ void OTools::getBindTypes(sal_Bool _bUseWChar,
 		case SQL_BIGINT:			fCType		= SQL_C_SBIGINT;
 									fSqlType	= SQL_BIGINT; break;
 		case SQL_FLOAT:				fCType		= SQL_C_FLOAT;
-									fSqlType	= SQL_FLOAT; break;			
+									fSqlType	= SQL_FLOAT; break;
 		case SQL_REAL:				fCType		= SQL_C_DOUBLE;
 									fSqlType	= SQL_REAL; break;
 		case SQL_DOUBLE:			fCType		= SQL_C_DOUBLE;
@@ -938,5 +937,3 @@ void OTools::getBindTypes(sal_Bool _bUseWChar,
 										fSqlType	= SQL_LONGVARBINARY; break;
 	}
 }
-
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -64,7 +64,7 @@ class DicList :
 	LinguOptions	aOpt;
 
 	::cppu::OInterfaceContainerHelper 		aEvtListeners;
-    
+
     typedef std::vector< ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionary > >   DictionaryVec_t;
     DictionaryVec_t                          aDicList;
 
@@ -103,30 +103,30 @@ public:
 	virtual ~DicList();
 
 	// XDictionaryList
-    virtual ::sal_Int16 SAL_CALL getCount(  ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionary > > SAL_CALL getDictionaries(  ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionary > SAL_CALL getDictionaryByName( const ::rtl::OUString& aDictionaryName ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::sal_Bool SAL_CALL addDictionary( const ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionary >& xDictionary ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::sal_Bool SAL_CALL removeDictionary( const ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionary >& xDictionary ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::sal_Bool SAL_CALL addDictionaryListEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionaryListEventListener >& xListener, ::sal_Bool bReceiveVerbose ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::sal_Bool SAL_CALL removeDictionaryListEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionaryListEventListener >& xListener ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::sal_Int16 SAL_CALL beginCollectEvents(  ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::sal_Int16 SAL_CALL endCollectEvents(  ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::sal_Int16 SAL_CALL flushEvents(  ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionary > SAL_CALL createDictionary( const ::rtl::OUString& aName, const ::com::sun::star::lang::Locale& aLocale, ::com::sun::star::linguistic2::DictionaryType eDicType, const ::rtl::OUString& aURL ) throw (::com::sun::star::uno::RuntimeException);
+    virtual ::sal_Int16 SAL_CALL getCount(  );
+    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionary > > SAL_CALL getDictionaries(  );
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionary > SAL_CALL getDictionaryByName( const ::rtl::OUString& aDictionaryName );
+    virtual ::sal_Bool SAL_CALL addDictionary( const ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionary >& xDictionary );
+    virtual ::sal_Bool SAL_CALL removeDictionary( const ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionary >& xDictionary );
+    virtual ::sal_Bool SAL_CALL addDictionaryListEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionaryListEventListener >& xListener, ::sal_Bool bReceiveVerbose );
+    virtual ::sal_Bool SAL_CALL removeDictionaryListEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionaryListEventListener >& xListener );
+    virtual ::sal_Int16 SAL_CALL beginCollectEvents(  );
+    virtual ::sal_Int16 SAL_CALL endCollectEvents(  );
+    virtual ::sal_Int16 SAL_CALL flushEvents(  );
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionary > SAL_CALL createDictionary( const ::rtl::OUString& aName, const ::com::sun::star::lang::Locale& aLocale, ::com::sun::star::linguistic2::DictionaryType eDicType, const ::rtl::OUString& aURL );
 
 	// XSearchableDictionaryList
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionaryEntry > SAL_CALL queryDictionaryEntry( const ::rtl::OUString& aWord, const ::com::sun::star::lang::Locale& aLocale, sal_Bool bSearchPosDics, sal_Bool bSpellEntry ) throw(::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::linguistic2::XDictionaryEntry > SAL_CALL queryDictionaryEntry( const ::rtl::OUString& aWord, const ::com::sun::star::lang::Locale& aLocale, sal_Bool bSearchPosDics, sal_Bool bSpellEntry );
 
 	// XComponent
-    virtual void SAL_CALL dispose() throw(::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL addEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& xListener ) throw(::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL removeEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& aListener ) throw(::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL dispose();
+    virtual void SAL_CALL addEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& xListener );
+    virtual void SAL_CALL removeEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& aListener );
 
 	// XServiceInfo
-    virtual ::rtl::OUString SAL_CALL getImplementationName() throw(::com::sun::star::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName ) throw(::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames() throw(::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getImplementationName();
+    virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName );
+    virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames();
 
 
     static inline ::rtl::OUString getImplementationName_Static() throw();
@@ -144,4 +144,3 @@ inline ::rtl::OUString DicList::getImplementationName_Static() throw()
 ///////////////////////////////////////////////////////////////////////////
 
 #endif
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -48,7 +48,7 @@ using namespace ::com::sun::star::lang;
 using namespace ::com::sun::star::util;
 
 //------------------------------------------------------------------
-InterfaceRef SAL_CALL OHiddenModel_CreateInstance(const Reference<XMultiServiceFactory>& _rxFactory) throw (RuntimeException)
+InterfaceRef SAL_CALL OHiddenModel_CreateInstance(const Reference<XMultiServiceFactory>& _rxFactory)
 {
 	return *(new OHiddenModel(_rxFactory));
 }
@@ -92,7 +92,7 @@ void OHiddenModel::getFastPropertyValue(Any& _rValue, sal_Int32 _nHandle) const
 }
 
 //------------------------------------------------------------------------------
-void OHiddenModel::setFastPropertyValue_NoBroadcast(sal_Int32 _nHandle, const Any& _rValue) throw (com::sun::star::uno::Exception)
+void OHiddenModel::setFastPropertyValue_NoBroadcast(sal_Int32 _nHandle, const Any& _rValue)
 {
 	switch (_nHandle)
 	{
@@ -108,7 +108,6 @@ void OHiddenModel::setFastPropertyValue_NoBroadcast(sal_Int32 _nHandle, const An
 //------------------------------------------------------------------------------
 sal_Bool OHiddenModel::convertFastPropertyValue(
 			Any& _rConvertedValue, Any& _rOldValue, sal_Int32 _nHandle, const Any& _rValue)
-			throw (IllegalArgumentException)
 {
 	sal_Bool bModified(sal_False);
 	switch (_nHandle)
@@ -136,7 +135,7 @@ void OHiddenModel::describeFixedProperties( Sequence< Property >& _rProps ) cons
 
 // XServiceInfo
 //------------------------------------------------------------------------------
-StringSequence SAL_CALL	OHiddenModel::getSupportedServiceNames() throw(::com::sun::star::uno::RuntimeException)
+StringSequence SAL_CALL	OHiddenModel::getSupportedServiceNames()
 {
 	StringSequence aSupported( 2 );
 	aSupported[ 0 ] = FRM_SUN_COMPONENT_HIDDENCONTROL;
@@ -145,14 +144,13 @@ StringSequence SAL_CALL	OHiddenModel::getSupportedServiceNames() throw(::com::su
 }
 
 //------------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OHiddenModel::getServiceName() throw(RuntimeException)
+::rtl::OUString SAL_CALL OHiddenModel::getServiceName()
 {
 	return FRM_COMPONENT_HIDDEN;	// old (non-sun) name for compatibility !
 }
 
 //------------------------------------------------------------------------------
 void SAL_CALL OHiddenModel::write(const Reference<XObjectOutputStream>& _rxOutStream)
-	throw(IOException, RuntimeException)
 {
 	// Version
 	_rxOutStream->writeShort(0x0002);
@@ -164,7 +162,7 @@ void SAL_CALL OHiddenModel::write(const Reference<XObjectOutputStream>& _rxOutSt
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL OHiddenModel::read(const Reference<XObjectInputStream>& _rxInStream) throw(IOException, RuntimeException)
+void SAL_CALL OHiddenModel::read(const Reference<XObjectInputStream>& _rxInStream)
 {
 	// Version
 	sal_uInt16 nVersion = _rxInStream->readShort();
@@ -183,4 +181,3 @@ void SAL_CALL OHiddenModel::read(const Reference<XObjectInputStream>& _rxInStrea
 //.........................................................................
 }
 //.........................................................................
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -180,7 +180,7 @@ namespace svt
 		};
 
 		//-----------------------------------------------------------------
-		void lcl_throwIllegalArgumentException( ) SAL_THROW( (IllegalArgumentException) )
+		void lcl_throwIllegalArgumentException( )
 		{
 			throw IllegalArgumentException();
 			// TODO: error message in the exception
@@ -252,7 +252,7 @@ namespace svt
 	}
 
 	//---------------------------------------------------------------------
-	Control* OControlAccess::implGetControl( const ::rtl::OUString& _rControlName, sal_Int16* _pId, sal_Int32* _pPropertyMask ) const SAL_THROW( (IllegalArgumentException) )
+	Control* OControlAccess::implGetControl( const ::rtl::OUString& _rControlName, sal_Int16* _pId, sal_Int32* _pPropertyMask ) const
 	{
 		Control* pControl = NULL;
 
@@ -437,7 +437,7 @@ namespace svt
 					case LISTBOX_FILTER:
 						if ( ControlActions::GET_SELECTED_ITEM == _nControlAction )
 						{
-							aRet <<= ::rtl::OUString( m_pFilePickerController->getCurFilter() );;
+							aRet <<= ::rtl::OUString( m_pFilePickerController->getCurFilter() );
 						}
 						else
 						{
@@ -637,7 +637,7 @@ namespace svt
 					{
 						static_cast< ListBox* >( _pControl )->InsertEntry( *pItem );
 					}
-							
+
 				}
 				else if ( !_bIgnoreIllegalArgument )
 				{
@@ -782,4 +782,3 @@ namespace svt
 //.........................................................................
 }	// namespace svt
 //.........................................................................
-

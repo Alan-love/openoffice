@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 
 #include "XMLFilter.hxx"
 #include "macros.hxx"
@@ -258,7 +258,6 @@ XMLFilter::~XMLFilter()
 // ____ XFilter ____
 sal_Bool SAL_CALL XMLFilter::filter(
     const Sequence< beans::PropertyValue >& aDescriptor )
-    throw (uno::RuntimeException)
 {
     bool bResult = false;
 
@@ -297,7 +296,6 @@ sal_Bool SAL_CALL XMLFilter::filter(
 }
 
 void SAL_CALL XMLFilter::cancel()
-    throw (uno::RuntimeException)
 {
     // if mutex is locked set "cancel state"
     // note: is currently ignored in filter-method
@@ -310,8 +308,6 @@ void SAL_CALL XMLFilter::cancel()
 // ____ XImporter ____
 void SAL_CALL XMLFilter::setTargetDocument(
     const Reference< lang::XComponent >& Document )
-    throw (lang::IllegalArgumentException,
-           uno::RuntimeException)
 {
     MutexGuard aGuard( m_aMutex );
     OSL_ENSURE( ! m_xSourceDoc.is(), "Setting target doc while source doc is set" );
@@ -323,8 +319,6 @@ void SAL_CALL XMLFilter::setTargetDocument(
 // ____ XExporter ____
 void SAL_CALL XMLFilter::setSourceDocument(
     const Reference< lang::XComponent >& Document )
-    throw (lang::IllegalArgumentException,
-           uno::RuntimeException)
 {
     MutexGuard aGuard( m_aMutex );
     OSL_ENSURE( ! m_xTargetDoc.is(), "Setting source doc while target doc is set" );

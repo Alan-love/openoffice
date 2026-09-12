@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--***********************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -8,16 +8,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  ***********************************************************-->
 
 
@@ -47,8 +47,9 @@
 	xmlns:xt="http://www.jclark.com/xt"
 	xmlns:common="http://exslt.org/common"
 	xmlns:xalan="http://xml.apache.org/xalan"
+	xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2"
 	xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:c="urn:schemas-microsoft-com:office:component:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x2="http://schemas.microsoft.com/office/excel/2003/xml" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	exclude-result-prefixes="chart config dc dom dr3d draw fo form math meta number office ooo oooc ooow script style svg table text xlink xt common xalan">
+	exclude-result-prefixes="chart config dc dom dr3d draw fo form math meta number office ooo oooc ooow script style svg table text xlink xt common xalan of">
 
 
 	<!-- Mapping @table:formula to @ss:Formula translating the expression syntax -->
@@ -85,8 +86,18 @@
 			<xsl:when test="$expression != ''">
 				<xsl:choose>
 					<!-- OASIS Open Document XML formular expressions  -->
+					<xsl:when test="starts-with($expression,'of:')">
+						<!-- ODF >= 1.2: giving out the '=', which will be removed with 'of:=' to enable recursive string parsing  -->
+						<xsl:text>=</xsl:text>
+						<xsl:call-template name="function-parameter-mapping">
+							<xsl:with-param name="rowPos" select="$rowPos" />
+							<xsl:with-param name="columnPos" select="$columnPos" />
+							<!-- 1) remove 'of:=' prefix and exchange ';' with ',' -->
+							<xsl:with-param name="expression" select="translate(substring($expression,5),';',',')"/>
+						</xsl:call-template>
+					</xsl:when>
 					<xsl:when test="starts-with($expression,'oooc:')">
-						<!-- giving out the '=', which will be removed with 'oooc:=' to enable recursive string parsing  -->
+						<!-- ODF < 1.2: giving out the '=', which will be removed with 'oooc:=' to enable recursive string parsing  -->
 						<xsl:text>=</xsl:text>
 						<xsl:call-template name="function-parameter-mapping">
 							<xsl:with-param name="rowPos" select="$rowPos" />
@@ -205,7 +216,7 @@
 	</xsl:template>
 
 	<!-- Each parameter of the argumentlist have to be determined.
-	Due to the low level string functionlity in XSLT it becomes a clumsy task -->
+	Due to the low level string functionality in XSLT it becomes a clumsy task -->
 	<xsl:template name="find-parameters">
 		<!-- used for mapping of row/column reference  -->
 		<xsl:param name="rowPos" /> <!-- the position in row (vertical of cell) -->

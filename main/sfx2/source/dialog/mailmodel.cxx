@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -107,12 +107,10 @@ public:
         virtual ~PrepareListener_Impl();
 
         // css.frame.XStatusListener
-        virtual void SAL_CALL statusChanged(const css::frame::FeatureStateEvent& aEvent)
-          throw(css::uno::RuntimeException);
+        virtual void SAL_CALL statusChanged(const css::frame::FeatureStateEvent& aEvent);
 
         // css.lang.XEventListener
-        virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent)
-          throw(css::uno::RuntimeException);
+        virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent);
 
         bool IsSet() const {return m_bState;}
 };
@@ -120,7 +118,7 @@ public:
 /*-- 25.08.2010 14:32:49---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-PrepareListener_Impl::PrepareListener_Impl() : 
+PrepareListener_Impl::PrepareListener_Impl() :
     m_bState( false )
 {
 }
@@ -133,9 +131,9 @@ PrepareListener_Impl::~PrepareListener_Impl()
 /*-- 25.08.2010 14:32:51---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-void PrepareListener_Impl::statusChanged(const css::frame::FeatureStateEvent& rEvent) throw(css::uno::RuntimeException)
+void PrepareListener_Impl::statusChanged(const css::frame::FeatureStateEvent& rEvent)
 {
-    if( rEvent.IsEnabled ) 
+    if( rEvent.IsEnabled )
         rEvent.State >>= m_bState;
     else
         m_bState = sal_False;
@@ -143,7 +141,7 @@ void PrepareListener_Impl::statusChanged(const css::frame::FeatureStateEvent& rE
 /*-- 25.08.2010 14:32:52---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-void PrepareListener_Impl::disposing(const css::lang::EventObject& /*rEvent*/) throw(css::uno::RuntimeException)
+void PrepareListener_Impl::disposing(const css::lang::EventObject& /*rEvent*/)
 {
 }
 
@@ -636,7 +634,7 @@ SfxMailModel::SaveResult SfxMailModel::SaveDocumentAsFormat(
                 {
                 }
             }
-            
+
             if ( bModified || !bHasLocation || bStoreTo || bNeedsPreparation )
             {
                 // Document is modified, is newly created or should be stored in a special format
@@ -661,7 +659,7 @@ SfxMailModel::SaveResult SfxMailModel::SaveDocumentAsFormat(
                         }
                     }
 
-                    //check if this is the pdf otput filter (i#64555)
+                    //check if this is the pdf output filter (i#64555)
                     if( bSendAsPDF )
                     {
                         SaveResult eShowPDFFilterDialog = ShowFilterOptionsDialog(

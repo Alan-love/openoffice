@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -61,12 +61,12 @@ namespace dbaui
 	{
 	}
 	// -----------------------------------------------------------------------------
-	::rtl::OUString SAL_CALL OJoinDesignViewAccess::getImplementationName() throw(RuntimeException)
+	::rtl::OUString SAL_CALL OJoinDesignViewAccess::getImplementationName()
 	{
 		return getImplementationName_Static();
 	}
 	// -----------------------------------------------------------------------------
-	::rtl::OUString OJoinDesignViewAccess::getImplementationName_Static(void) throw( RuntimeException )
+	::rtl::OUString OJoinDesignViewAccess::getImplementationName_Static(void)
 	{
 		return ::rtl::OUString::createFromAscii("org.openoffice.comp.dbu.JoinViewAccessibility");
 	}
@@ -78,7 +78,7 @@ namespace dbaui
     }
 	// -----------------------------------------------------------------------------
 	// XAccessibleContext
-	sal_Int32 SAL_CALL OJoinDesignViewAccess::getAccessibleChildCount(  ) throw (RuntimeException)
+	sal_Int32 SAL_CALL OJoinDesignViewAccess::getAccessibleChildCount(  )
 	{
 		// TODO may be this will change to only visible windows
 		// this is the same assumption mt implements
@@ -89,7 +89,7 @@ namespace dbaui
 		return nChildCount;
 	}
 	// -----------------------------------------------------------------------------
-	Reference< XAccessible > SAL_CALL OJoinDesignViewAccess::getAccessibleChild( sal_Int32 i ) throw (IndexOutOfBoundsException,RuntimeException)
+	Reference< XAccessible > SAL_CALL OJoinDesignViewAccess::getAccessibleChild( sal_Int32 i )
 	{
 		Reference< XAccessible > aRet;
 		::osl::MutexGuard aGuard( m_aMutex  );
@@ -117,12 +117,12 @@ namespace dbaui
 		return m_pTableView && !m_pTableView->getDesignView()->getController().isReadOnly();
 	}
 	// -----------------------------------------------------------------------------
-	sal_Int16 SAL_CALL OJoinDesignViewAccess::getAccessibleRole(  ) throw (RuntimeException)
+	sal_Int16 SAL_CALL OJoinDesignViewAccess::getAccessibleRole(  )
 	{
 		return AccessibleRole::VIEW_PORT;
 	}
 	// -----------------------------------------------------------------------------
-	Reference< XAccessibleContext > SAL_CALL OJoinDesignViewAccess::getAccessibleContext(  ) throw (::com::sun::star::uno::RuntimeException)
+	Reference< XAccessibleContext > SAL_CALL OJoinDesignViewAccess::getAccessibleContext(  )
 	{
 		return this;
 	}
@@ -138,4 +138,3 @@ namespace dbaui
 }
 
 // -----------------------------------------------------------------------------
-

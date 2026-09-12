@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -87,7 +87,7 @@ ________________________________________________________________________________
 //	implementation of XInterface::queryInterface() without any other interfaces!
 //*****************************************************************************************************************
 #define	PRIVATE_DEFINE_XINTERFACE_QUERYINTERFACE_PURE( CLASS, BASECLASS )																					\
-	::com::sun::star::uno::Any SAL_CALL CLASS::queryInterface( const ::com::sun::star::uno::Type& aType ) throw( ::com::sun::star::uno::RuntimeException )	\
+	::com::sun::star::uno::Any SAL_CALL CLASS::queryInterface( const ::com::sun::star::uno::Type& aType )	\
 	{																																						\
 		/* Attention: Don't use mutex or guard in this method!!! Is a method of XInterface.	*/																\
 		/* I have no own supported interfaces ...											*/																\
@@ -100,7 +100,7 @@ ________________________________________________________________________________
 //	implementation of XInterface::queryInterface() with max. 12 other interfaces!
 //*****************************************************************************************************************
 #define	PRIVATE_DEFINE_XINTERFACE_QUERYINTERFACE( CLASS, BASECLASS, INTERFACES )																			\
-	::com::sun::star::uno::Any SAL_CALL CLASS::queryInterface( const ::com::sun::star::uno::Type& aType ) throw( ::com::sun::star::uno::RuntimeException )	\
+	::com::sun::star::uno::Any SAL_CALL CLASS::queryInterface( const ::com::sun::star::uno::Type& aType )	\
 	{																																						\
 		/* Attention: Don't use mutex or guard in this method!!! Is a method of XInterface.	*/																\
 		/* Ask for my own supported interfaces ...											*/																\
@@ -121,7 +121,7 @@ ________________________________________________________________________________
 //	implementation of XInterface::queryInterface() with more then 12 other interfaces!
 //*****************************************************************************************************************
 #define	PRIVATE_DEFINE_XINTERFACE_QUERYINTERFACE_LARGE( CLASS, BASECLASS, INTERFACES_FIRST, INTERFACES_SECOND )												\
-	::com::sun::star::uno::Any SAL_CALL CLASS::queryInterface( const ::com::sun::star::uno::Type& aType ) throw( ::com::sun::star::uno::RuntimeException )	\
+	::com::sun::star::uno::Any SAL_CALL CLASS::queryInterface( const ::com::sun::star::uno::Type& aType )	\
 	{																																						\
 		/* Attention: Don't use mutex or guard in this method!!! Is a method of XInterface.	*/																\
 		/* Ask for my own supported interfaces ...											*/																\
@@ -166,7 +166,7 @@ ________________________________________________________________________________
 /*
 #ifdef ENABLE_SERVICEDEBUG
 	#define	PRIVATE_DEFINE_INTERFACE_1( INTERFACE1 )	 \
-		static_cast< XSPECIALDEBUGINTERFACE##* >( this ), \																																		       
+		static_cast< XSPECIALDEBUGINTERFACE##* >( this ), \
 		INTERFACE1
 #else
 */
@@ -233,7 +233,7 @@ ________________________________________________________________________________
 //	declaration of XInterface
 //*****************************************************************************************************************
 #define FWK_DECLARE_XINTERFACE																						   												\
-	virtual ::com::sun::star::uno::Any  SAL_CALL queryInterface( const ::com::sun::star::uno::Type& aType	) throw( ::com::sun::star::uno::RuntimeException );	\
+	virtual ::com::sun::star::uno::Any  SAL_CALL queryInterface( const ::com::sun::star::uno::Type& aType	);	\
     virtual void						SAL_CALL acquire       (											) throw();	\
 	virtual void						SAL_CALL release       (											) throw();
 
@@ -666,7 +666,7 @@ ________________________________________________________________________________
 																				)									\
 										)																			\
 									)
-                                    
+
 //  implementation of XInterface with 22 additional interfaces for queryInterface()
 #define DEFINE_XINTERFACE_22( CLASS, BASECLASS, INTERFACE1, INTERFACE2, INTERFACE3, INTERFACE4, INTERFACE5, INTERFACE6, INTERFACE7, INTERFACE8, INTERFACE9, INTERFACE10, INTERFACE11, INTERFACE12, INTERFACE13, INTERFACE14, INTERFACE15, INTERFACE16, INTERFACE17, INTERFACE18, INTERFACE19, INTERFACE20, INTERFACE21, INTERFACE22 ) \
 	PRIVATE_DEFINE_XINTERFACE_LARGE	(	CLASS,																		\
@@ -698,7 +698,7 @@ ________________________________________________________________________________
 																				)									\
 										)																			\
 									)
-                                    
+
 }		//	namespace framework
 
 #endif	//	#ifndef __FRAMEWORK_MACROS_XINTERFACE_HXX_

@@ -19,12 +19,11 @@
  *
  *************************************************************/
 
-
-
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_comphelper.hxx"
 #include <com/sun/star/container/XChild.hpp>
 #include <com/sun/star/container/XNameAccess.hpp>
+#include <com/sun/star/document/XLinkAuthorizer.hpp>
 #include <com/sun/star/embed/XEmbedObjectCreator.hpp>
 #include <com/sun/star/embed/XLinkCreator.hpp>
 #include <com/sun/star/embed/XEmbedPersist.hpp>
@@ -530,7 +529,7 @@ sal_Bool EmbeddedObjectContainer::StoreEmbeddedObject( const uno::Reference < em
 				xPersist->storeToEntry( pImpl->mxStorage, rName, aSeq, aSeq );
 			else
 			{
-				// TODO/LATER: possible optimisation, don't store immediately
+				// TODO/LATER: possible optimization, don't store immediately
 				//xPersist->setPersistentEntry( pImpl->mxStorage, rName, embed::EntryInitModes::ENTRY_NO_INIT, aSeq, aSeq );
 				xPersist->storeAsEntry( pImpl->mxStorage, rName, aSeq, aSeq );
 				xPersist->saveCompleted( sal_True );
@@ -671,7 +670,19 @@ uno::Reference < embed::XEmbeddedObject > EmbeddedObjectContainer::InsertEmbedde
 				::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.embed.EmbeddedObjectCreator")) ), uno::UNO_QUERY );
 		uno::Sequence< beans::PropertyValue > aObjDescr( 1 );
 		aObjDescr[0].Name = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Parent" ) );
-		aObjDescr[0].Value <<= pImpl->m_xModel.get();
+		uno::Any model( pImpl->m_xModel.get() );
+		aObjDescr[0].Value <<= model;
+		// The call to XLinkCreator::createInstanceLink() will open the link.
+		// We must request for authorization now. And we need the URL for that.
+		::rtl::OUString aURL;
+		for ( sal_Int32 i = 0; i < aMedium.getLength(); i++ )
+			if ( aMedium[i].Name.equalsAscii( "URL" ) )
+				aMedium[i].Value >>= aURL;
+		uno::Reference< com::sun::star::document::XLinkAuthorizer > xLinkAuthorizer( model, uno::UNO_QUERY );
+		if ( xLinkAuthorizer.is() ) {
+			if ( !xLinkAuthorizer->authorizeLinks( aURL ) )
+				throw uno::RuntimeException();
+		}
 		xObj = uno::Reference < embed::XEmbeddedObject >( xFactory->createInstanceLink(
 				pImpl->mxStorage, rNewName, aMedium, aObjDescr ), uno::UNO_QUERY );
 
@@ -717,7 +728,7 @@ sal_Bool EmbeddedObjectContainer::CopyEmbeddedObject( EmbeddedObjectContainer& r
 	RTL_LOGFILE_CONTEXT( aLog, "comphelper (mv76033) comphelper::EmbeddedObjectContainer::CopyEmbeddedObject" );
 
 	OSL_ENSURE( sal_False,
-				"This method is depricated! Use EmbeddedObjectContainer::CopyAndGetEmbeddedObject() to copy object!\n" );
+				"This method is deprecated! Use EmbeddedObjectContainer::CopyAndGetEmbeddedObject() to copy object!\n" );
 
 	// get the object name before(!) it is assigned to a new storage
 	::rtl::OUString aOrigName;
@@ -1482,7 +1493,7 @@ sal_Bool EmbeddedObjectContainer::StoreAsChildren(sal_Bool _bOasisFormat,sal_Boo
 	{
 		try
 		{
-			// the substorage still can not be locked by the embedded object conteiner
+			// the substorage still can not be locked by the embedded object container
 			::rtl::OUString aObjReplElement( RTL_CONSTASCII_USTRINGPARAM( "ObjectReplacements" ) );
 			if ( _xStorage->hasByName( aObjReplElement ) && _xStorage->isStorageElement( aObjReplElement ) )
 				_xStorage->removeElement( aObjReplElement );
@@ -1706,3 +1717,5 @@ void EmbeddedObjectContainer::setUserAllowsLinkUpdate(bool bNew)
 }
 
 }
+
+/* vim: set noet sw=4 ts=4: */

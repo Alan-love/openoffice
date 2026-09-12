@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -78,6 +78,10 @@ CFLAGSCXX +=-AI$(BIN)
 # in CLR meta-data - use of this type may lead to a runtime exception":
 .IF "$(COMEX)"=="10"
 CFLAGSCXX += -clr:noAssembly -wd4339
+.ELIF "$(COMEX)"=="14"
+# /clr:oldSyntax -- Managed Extensions for C++ -- was removed after VS2015.
+# These sources are C++/CLI now, so plain /clr.
+CFLAGSCXX += -clr -LN -wd4339 -wd4715
 .ELSE
 CFLAGSCXX += -clr:oldSyntax -LN -wd4339 -wd4715
 .ENDIF
@@ -112,7 +116,7 @@ CLIMAKER_CONFIG = $(BIN)$/climaker.exe.config
 
 ALLTAR: \
     $(CLIMAKER_CONFIG)
-    
+
 
 
 #Create the config file that is used with the policy assembly
@@ -127,7 +131,3 @@ $(OBJFILES): $(BIN)$/cli_basetypes.dll
 
 
 .ENDIF
-
-
-
-

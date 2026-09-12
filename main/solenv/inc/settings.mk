@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,22 +7,21 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
-
 
 MKFILENAME:=SETTINGS.MK
 
-# smaller/greater arithmetic's like ".IF 400<=200" are an OOo extension to
+# smaller/greater arithmetic's like ".IF 400<=200" are an AOO extension to
 # the initial dmake 4.1PL0 (unfortunately called 4.10) version and are
 # tested implicitly by the construction below.
 .IF $(MAKEVERSION:s/-cvs//:s/.//)<=410
@@ -32,7 +31,7 @@ force_dmake_to_error
 
 .INCLUDE .IGNORE : ooo_vendor.mk
 
-# --- common tool makros --------------------------------------
+# --- common tool macros --------------------------------------
 
 .IF "$(USE_PCH)"!=""
 ENABLE_PCH=TRUE
@@ -62,7 +61,7 @@ WRONG_SOURCEVERSION
 .ENDIF          # "$(UPDATER)"!="" || "$(CWS_WORK_STAMP)"!=""
 
 # Force creation of $(SOLARVERSION)/$(INPATH)/inc$(UPDMINOREXT)/
-# $(UPD)minor.mk could be empty as it's contents were already included from minor.mk
+# $(UPD)minor.mk could be empty as its contents were already included from minor.mk
 .INCLUDE : $(SOLARVERSION)/$(INPATH)/inc$(UPDMINOREXT)/$(UPD)minor.mk
 
 .IF "$(BSCLIENT)"=="TRUE"
@@ -150,6 +149,17 @@ JAVACPS=-classpath
 JAVARESPONSE=
 .ENDIF
 .ENDIF
+
+# Tree-wide Java bytecode floor: compile all Java to a fixed source/target level
+# so artifacts run on the minimum supported JRE (Java 8) regardless of how new
+# the build JDK is. Without this, building on a modern JDK (e.g. 21) emits
+# bytecode that will not load on Java 8. gcj does not accept -source/-target,
+# so skip it there. Can be overridden by setting JAVA_TARGET_FLAG in the env.
+.IF "$(JAVA_TARGET_FLAG)"==""
+.IF "$(JAVACISGCJ)"!="yes"
+JAVA_TARGET_FLAG=-source 1.8 -target 1.8
+.ENDIF			# "$(JAVACISGCJ)"!="yes"
+.ENDIF			# "$(JAVA_TARGET_FLAG)"==""
 
 JAVAFLAGS+=$(JAVA_TARGET_FLAG)
 
@@ -279,7 +289,7 @@ PROFILE=
 # can be set on the command line. we shouldn't delete them!
 #profile=
 
-# reset as setting those manually is no lonjger supported
+# reset as setting those manually is no longer supported
 DBGUTIL=
 dbgutil=
 
@@ -451,7 +461,7 @@ ENVRCLINKFLAGS*=$(envrclinkflags)
 
 L10N-framework=$(L10N_framework)
 
-# --- Parameter Einstellungen ueberpruefen und umsetzen ------------
+# --- Parameter Einstellungen überpruefen und umsetzen ------------
 
 # profile immer mit product
 .IF "$(profile)"!=""
@@ -503,9 +513,7 @@ OPTIMIZE=
 .ENDIF
 
 ######################################################
-#
-# sprachabh. einstellungen
-#
+# sprachabhängige Einstellungen
 ######################################################
 
 .INCLUDE : lang.mk
@@ -622,7 +630,7 @@ $(posix_PWD)/$(LOCAL_COMMON_OUT)/inc/%world.mk :
 
 .INCLUDE .IGNORE : office.mk
 
-# Misc-Pfad
+# Misc Path
 .IF "$(UNR)"!=""
 MISCX=$(OUT)/umisc
 MISC=$(OUT)/umisc
@@ -642,7 +650,7 @@ IDLPACKAGE=$(PRJNAME)
 IDLPACKAGENAME=$(PRJNAME)
 .ENDIF
 
-# Objekt-Pfad
+# Object Path
 OBJ=$(OUT)/obj
 SLO=$(OUT)/slo
 ROBJ=$(ROUT)/obj
@@ -655,10 +663,10 @@ PAR=$(OUT)/par
 LB=$(OUT)/lib
 SLB=$(OUT)/slb
 
-# wir haben ein ucr verzeichnis
+# wir haben ein ucr Verzeichnis
 UCR=$(OUT)/ucr
 
-# $(L) nur noch pfad ins solver\upd\...\lib
+# $(L) nur noch Pfad ins solver\upd\...\lib
 #L:={$(LB);$(SLB);$(ILIB)}
 L=$(SOLARLIBDIR)
 
@@ -668,8 +676,8 @@ ENVPRJ:=$(PRJ)
 .EXPORT : PRJ ENVPRJ
 
 # Class-Path for java-classes
-# obwohl der generierte Bytecode plattformunabhg. sein sollte
-# generieren wir ihn ersteinmal ins abhaengige Verzeichnis
+# obwohl der generierte Bytecode plattformunabhängig sein sollte
+# generieren wir ihn ersteinmal ins abhängige Verzeichnis
 CLASSDIR=$(OUT)/class
 CLASSPATH!:=.$(PATH_SEPERATOR)$(CLASSDIR)$(PATH_SEPERATOR)$(CLASSPATH)
 STARJAR=java -classpath $(CLASSPATH)$(PATH_SEPERATOR)$(SOLARENV)/bin/jtools.jar com.sun.star.tool.starjar.StarJar
@@ -689,7 +697,7 @@ CLASSPATH!:=$(CLASSPATH:s/tkt/no/)
 # configuration files
 PROCESSOUT*:=$(MISC)
 
-# Makros fuer die Librarynamen des Solar
+# Makros für die Librarynamen des Solar
 .INCLUDE : libs.mk
 
 .IF "$(GUI)"=="WNT" || "$(GUI)"=="OS2"
@@ -712,7 +720,7 @@ SHELLLIB=gdi32.lib shell32.lib advapi32.lib comdlg32.lib
 .ENDIF
 .ENDIF
 
-# BIN-Pfad
+# BIN Path
 .IF "$(UNR)"!=""
 BIN=$(OUT)/ubin
 .ELSE
@@ -721,7 +729,7 @@ BIN=$(OUT)/bin
 # pointing to misc in common output tree if exists
 COMMONBIN=$(LOCAL_COMMON_OUT)/bin
 
-# Include-Pfad
+# Include Path
 # still without -I here s.a. target.mk INCLUDE
 INC=$(PRJ)/inc
 INCPCH=$(PRJ)/inc/pch
@@ -758,7 +766,7 @@ RES=$(OUT)/res
 BIN=$(PRJ)/$(OUTPATH).xl/bin
 .ENDIF
 
-# damit gezielt Abhaengigkeiten auf s: angegeben werden koennen
+# damit gezielt Abhängigkeiten auf s: angegeben werden können
 
 .IF "$(common_build)"!=""
 SOLARIDLDIR=$(SOLARVERSION)/common$(PROEXT)/idl$(UPDMINOREXT)
@@ -810,7 +818,7 @@ ALT_L10N_MODULE*=$(SOLARSRC)$/l10n_so
 .INCLUDE .IGNORE: $(L10N_MODULE)/$(COMMON_OUTDIR)$(PROEXT)/inc/localization_present.mk
 .INCLUDE .IGNORE: $(ALT_L10N_MODULE)/$(COMMON_OUTDIR)$(PROEXT)/inc/localization_present.mk
 
-# check for localizations not hosted in l10n module. if a file exists there
+# check for localization not hosted in l10n module. if a file exists there
 # it won't in l10n
 .IF "$(ALT_LOCALIZATION_FOUND)"!=""
 TRYALTSDF:=$(ALT_L10N_MODULE)$/$(COMMON_OUTDIR)$(PROEXT)$/misc/sdf$/$(PRJNAME)$/$(PATH_IN_MODULE)$/localize.sdf
@@ -866,6 +874,14 @@ SCPDEFS+=-DUDK_MAJOR=$(UDK_MAJOR)
 
 SCPDEFS+=-U$(COMID) -DCOMID=$(COMID) -DCOMNAME=$(COMNAME) -D_$(COMID)
 SCPDEFS+=-DCCNUMVER=$(CCNUMVER)
+
+# The installer lists the CLI assemblies, and they only exist when the CLI
+# binding was built.  configure sets DISABLE_CLI when the compiler cannot
+# build it; without this the .scp files still name the files and the build
+# stops at the very last module with "File not found: cli_uno.dll".
+.IF "$(DISABLE_CLI)"!=""
+SCPDEFS+=-DDISABLE_CLI
+.ENDIF
 # extend library path for OS/2 gcc/wlink
 .IF "$(GUI)"=="OS2"
 LIB:=$(LB);$(SLB);$(ILIB)
@@ -938,7 +954,7 @@ MKDEPFLAGS+=$(MKDEPLOCAL)
 #.ENDIF
 
 BISON*=bison
-YACCFLAGS*=-d 
+YACCFLAGS*=-d
 
 SVIDL=$(AUGMENT_LIBRARY_PATH) $(SOLARBINDIR)/svidl
 
@@ -996,9 +1012,9 @@ RSCDEFS+= -DDEBUG
 XPIDL=xpidl
 XPIDL_LINK=xpt_link
 
-# alle bisher verwendeten Linker benutzen + um LIBs auf der naechsten Zeile
+# alle bisher verwendeten Linker benutzen + um LIBs auf der nächsten Zeile
 # weiter zu schreiben, wenn es da eine Ausnahme geben sollte, muss
-# LINKEXTENDLINE compilerabhaengig definiert werden
+# LINKEXTENDLINE compilerabhängig definiert werden
 LINKEXTENDLINE=+
 
 LNT=$(DEVROOT)/lint/lint
@@ -1030,7 +1046,7 @@ AUGMENT_LIBRARY_PATH_LOCAL = : && \
     $(OOO_LIBRARY_PATH_VAR)=$(normpath, $(PWD)/$(DLLDEST)):$(normpath, $(SOLARSHAREDBIN))$${{$(OOO_LIBRARY_PATH_VAR):+:$${{$(OOO_LIBRARY_PATH_VAR)}}}}
 .END
 
-# remove if .Net 2003 support has expired 
+# remove if .Net 2003 support has expired
 .IF "$(debug)"!=""
 .IF "$(OS)$(COM)$(CPU)" == "WNTMSCI"
 .IF "$(COMEX)" == "10"
@@ -1115,7 +1131,7 @@ RSCDEFS+=-DDBG_UTIL
 
 .IF "$(product)"!=""
 CDEFS+= -DPRODUCT -DNDEBUG
-RSCDEFS+= -DPRODUCT 
+RSCDEFS+= -DPRODUCT
 RSCDEFS+= -DNDEBUG
 .ENDIF
 

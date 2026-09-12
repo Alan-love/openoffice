@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -132,7 +132,7 @@ Listener::Listener (
         {
             StartListening(*pMainViewShell);
         }
-    
+
         Link aLink (LINK(this, Listener, EventMultiplexerCallback));
         mpBase->GetEventMultiplexer()->AddEventListener(
             aLink,
@@ -216,13 +216,13 @@ void Listener::ReleaseListeners (void)
 void Listener::ConnectToController (void)
 {
     ViewShell* pShell = mrSlideSorter.GetViewShell();
-    
+
     // Register at the controller of the main view shell (if we are that not
     // ourself).
     if (pShell==NULL || ! pShell->IsMainViewShell())
     {
         Reference<frame::XController> xController (mrSlideSorter.GetXController());
-        
+
         // Listen to changes of certain properties.
         Reference<beans::XPropertySet> xSet (xController, UNO_QUERY);
         if (xSet.is())
@@ -273,10 +273,10 @@ void Listener::DisconnectFromController (void)
             if (xSet.is())
             {
                 xSet->removePropertyChangeListener (
-                    String::CreateFromAscii("CurrentPage"), 
+                    String::CreateFromAscii("CurrentPage"),
                     this);
                 xSet->removePropertyChangeListener (
-                    String::CreateFromAscii("IsMasterPageMode"), 
+                    String::CreateFromAscii("IsMasterPageMode"),
                     this);
             }
 
@@ -383,11 +383,11 @@ IMPL_LINK(Listener, EventMultiplexerCallback, ::sd::tools::EventMultiplexerEvent
         }
         break;
 
-        
+
         case tools::EventMultiplexerEvent::EID_MAIN_VIEW_ADDED:
             mbIsMainViewChangePending = true;
             break;
-        
+
         case tools::EventMultiplexerEvent::EID_CONFIGURATION_UPDATED:
             if (mbIsMainViewChangePending && mpBase != NULL)
             {
@@ -409,17 +409,17 @@ IMPL_LINK(Listener, EventMultiplexerCallback, ::sd::tools::EventMultiplexerEvent
         }
         break;
 
-        
+
         case tools::EventMultiplexerEvent::EID_CONTROLLER_DETACHED:
             DisconnectFromController();
             break;
-            
+
         case tools::EventMultiplexerEvent::EID_SHAPE_CHANGED:
         case tools::EventMultiplexerEvent::EID_SHAPE_INSERTED:
         case tools::EventMultiplexerEvent::EID_SHAPE_REMOVED:
             HandleShapeModification(static_cast<const SdrPage*>(pEvent->mpUserData));
             break;
-            
+
         case tools::EventMultiplexerEvent::EID_END_TEXT_EDIT:
             if (pEvent->mpUserData != NULL)
             {
@@ -442,11 +442,10 @@ IMPL_LINK(Listener, EventMultiplexerCallback, ::sd::tools::EventMultiplexerEvent
 
 void SAL_CALL Listener::disposing (
     const lang::EventObject& rEventObject)
-    throw (RuntimeException)
 {
     if ((mbListeningToDocument || mbListeningToUNODocument)
         && mrSlideSorter.GetModel().GetDocument()!=NULL
-        && rEventObject.Source 
+        && rEventObject.Source
            == mrSlideSorter.GetModel().GetDocument()->getUnoModel())
     {
         mbListeningToDocument = false;
@@ -469,7 +468,6 @@ void SAL_CALL Listener::disposing (
 
 void SAL_CALL Listener::notifyEvent (
     const document::EventObject& )
-    throw (RuntimeException)
 {
 }
 
@@ -480,7 +478,6 @@ void SAL_CALL Listener::notifyEvent (
 
 void SAL_CALL Listener::propertyChange (
     const PropertyChangeEvent& rEvent)
-    throw (RuntimeException)
 {
     ThrowIfDisposed();
 
@@ -529,7 +526,6 @@ void SAL_CALL Listener::propertyChange (
 //===== frame::XFrameActionListener  ==========================================
 
 void SAL_CALL Listener::frameAction (const frame::FrameActionEvent& rEvent)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     switch (rEvent.Action)
     {
@@ -557,7 +553,6 @@ void SAL_CALL Listener::frameAction (const frame::FrameActionEvent& rEvent)
 
 void SAL_CALL Listener::notifyEvent (
     const AccessibleEventObject& )
-    throw (RuntimeException)
 {
 }
 
@@ -628,7 +623,7 @@ void Listener::HandleModelChange (const SdrPage* pPage)
         // the cache to cope with this.  Doing this on demand would be a
         // nice optimization.
         cache::PageCacheManager::Instance()->InvalidateAllPreviewBitmaps(pDocument->getUnoModel());
-        
+
         mrController.HandleModelChange();
     }
 }
@@ -680,7 +675,6 @@ void Listener::HandleShapeModification (const SdrPage* pPage)
 
 
 void Listener::ThrowIfDisposed (void)
-    throw (::com::sun::star::lang::DisposedException)
 {
 	if (rBHelper.bDisposed || rBHelper.bInDispose)
 	{

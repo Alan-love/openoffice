@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -25,7 +25,7 @@
 #include "precompiled_svx.hxx"
 #include <com/sun/star/container/XIdentifierContainer.hpp>
 #include <com/sun/star/container/XIndexContainer.hpp>
-#ifndef _COM_SUN_STAR_DRAWING_GLUEPOINT2_HDL_ 
+#ifndef _COM_SUN_STAR_DRAWING_GLUEPOINT2_HDL_
 #include <com/sun/star/drawing/GluePoint2.hpp>
 #endif
 
@@ -52,33 +52,33 @@ public:
 	virtual	~SvxUnoGluePointAccess() throw();
 
 	// XIdentifierContainer
-    virtual sal_Int32 SAL_CALL insert( const uno::Any& aElement ) throw (lang::IllegalArgumentException, lang::WrappedTargetException, uno::RuntimeException);
-    virtual void SAL_CALL removeByIdentifier( sal_Int32 Identifier ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException);
+    virtual sal_Int32 SAL_CALL insert( const uno::Any& aElement );
+    virtual void SAL_CALL removeByIdentifier( sal_Int32 Identifier );
 
 	// XIdentifierReplace
-    virtual void SAL_CALL replaceByIdentifer( sal_Int32 Identifier, const uno::Any& aElement ) throw (lang::IllegalArgumentException, container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException);
+    virtual void SAL_CALL replaceByIdentifer( sal_Int32 Identifier, const uno::Any& aElement );
 
 	// XIdentifierReplace
-    virtual uno::Any SAL_CALL getByIdentifier( sal_Int32 Identifier ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException);
-    virtual uno::Sequence< sal_Int32 > SAL_CALL getIdentifiers(  ) throw (uno::RuntimeException);
+    virtual uno::Any SAL_CALL getByIdentifier( sal_Int32 Identifier );
+    virtual uno::Sequence< sal_Int32 > SAL_CALL getIdentifiers(  );
 
 	/* deprecated */
 	// XIndexContainer
-    virtual void SAL_CALL insertByIndex( sal_Int32 Index, const uno::Any& Element ) throw(lang::IllegalArgumentException, lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException);
-    virtual void SAL_CALL removeByIndex( sal_Int32 Index ) throw(lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException);
+    virtual void SAL_CALL insertByIndex( sal_Int32 Index, const uno::Any& Element );
+    virtual void SAL_CALL removeByIndex( sal_Int32 Index );
 
 	/* deprecated */
 	// XIndexReplace
-    virtual void SAL_CALL replaceByIndex( sal_Int32 Index, const uno::Any& Element ) throw(lang::IllegalArgumentException, lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException);
+    virtual void SAL_CALL replaceByIndex( sal_Int32 Index, const uno::Any& Element );
 
 	/* deprecated */
 	// XIndexAccess
-    virtual sal_Int32 SAL_CALL getCount(  ) throw(uno::RuntimeException);
-    virtual uno::Any SAL_CALL getByIndex( sal_Int32 Index ) throw(lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException);
+    virtual sal_Int32 SAL_CALL getCount(  );
+    virtual uno::Any SAL_CALL getByIndex( sal_Int32 Index );
 
 	// XElementAccess
-    virtual uno::Type SAL_CALL getElementType(  ) throw( uno::RuntimeException);
-    virtual sal_Bool SAL_CALL hasElements(  ) throw( uno::RuntimeException);
+    virtual uno::Type SAL_CALL getElementType(  );
+    virtual sal_Bool SAL_CALL hasElements(  );
 };
 
 static void convert( const SdrGluePoint& rSdrGlue, drawing::GluePoint2& rUnoGlue ) throw()
@@ -219,7 +219,7 @@ SvxUnoGluePointAccess::~SvxUnoGluePointAccess() throw()
 }
 
 // XIdentifierContainer
-sal_Int32 SAL_CALL SvxUnoGluePointAccess::insert( const uno::Any& aElement ) throw (lang::IllegalArgumentException, lang::WrappedTargetException, uno::RuntimeException)
+sal_Int32 SAL_CALL SvxUnoGluePointAccess::insert( const uno::Any& aElement )
 {
 	if( mpObject.is() )
 	{
@@ -249,7 +249,7 @@ sal_Int32 SAL_CALL SvxUnoGluePointAccess::insert( const uno::Any& aElement ) thr
 	return -1;
 }
 
-void SAL_CALL SvxUnoGluePointAccess::removeByIdentifier( sal_Int32 Identifier ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
+void SAL_CALL SvxUnoGluePointAccess::removeByIdentifier( sal_Int32 Identifier )
 {
 	if( mpObject.is() && ( Identifier >= NON_USER_DEFINED_GLUE_POINTS ))
 	{
@@ -264,7 +264,7 @@ void SAL_CALL SvxUnoGluePointAccess::removeByIdentifier( sal_Int32 Identifier ) 
 			if( (*pList)[i].GetId() == nId )
 			{
 				pList->Delete( i );
-				
+
 				// only repaint, no objectchange
 				mpObject->ActionChanged();
 				// mpObject->BroadcastObjectChange();
@@ -278,7 +278,7 @@ void SAL_CALL SvxUnoGluePointAccess::removeByIdentifier( sal_Int32 Identifier ) 
 }
 
 // XIdentifierReplace
-void SAL_CALL SvxUnoGluePointAccess::replaceByIdentifer( sal_Int32 Identifier, const uno::Any& aElement ) throw (lang::IllegalArgumentException, container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
+void SAL_CALL SvxUnoGluePointAccess::replaceByIdentifer( sal_Int32 Identifier, const uno::Any& aElement )
 {
 	if( mpObject.is() && mpObject->IsNode() )
 	{
@@ -303,7 +303,7 @@ void SAL_CALL SvxUnoGluePointAccess::replaceByIdentifer( sal_Int32 Identifier, c
 				mpObject->ActionChanged();
 				// mpObject->BroadcastObjectChange();
 
-				return;					
+				return;
 			}
 		}
 
@@ -312,7 +312,7 @@ void SAL_CALL SvxUnoGluePointAccess::replaceByIdentifer( sal_Int32 Identifier, c
 }
 
 // XIdentifierAccess
-uno::Any SAL_CALL SvxUnoGluePointAccess::getByIdentifier( sal_Int32 Identifier ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
+uno::Any SAL_CALL SvxUnoGluePointAccess::getByIdentifier( sal_Int32 Identifier )
 {
 	if( mpObject.is() && mpObject->IsNode() )
 	{
@@ -329,7 +329,7 @@ uno::Any SAL_CALL SvxUnoGluePointAccess::getByIdentifier( sal_Int32 Identifier )
 		{
 			const sal_uInt16 nId = (sal_uInt16)( Identifier - NON_USER_DEFINED_GLUE_POINTS ) + 1;
 
-			const SdrGluePointList* pList = mpObject->GetGluePointList();		
+			const SdrGluePointList* pList = mpObject->GetGluePointList();
 			const sal_uInt16 nCount = pList ? pList->GetCount() : 0;
 			for( sal_uInt16 i = 0; i < nCount; i++ )
 			{
@@ -352,10 +352,10 @@ uno::Any SAL_CALL SvxUnoGluePointAccess::getByIdentifier( sal_Int32 Identifier )
 	throw lang::IndexOutOfBoundsException();
 }
 
-uno::Sequence< sal_Int32 > SAL_CALL SvxUnoGluePointAccess::getIdentifiers() throw (uno::RuntimeException)
+uno::Sequence< sal_Int32 > SAL_CALL SvxUnoGluePointAccess::getIdentifiers()
 {
     if( mpObject.is() )
-    { 
+    {
 	    const SdrGluePointList* pList = mpObject->GetGluePointList();
 	    const sal_uInt16 nCount = pList ? pList->GetCount() : 0;
 
@@ -363,7 +363,7 @@ uno::Sequence< sal_Int32 > SAL_CALL SvxUnoGluePointAccess::getIdentifiers() thro
 
 	    uno::Sequence< sal_Int32 > aIdSequence( nCount + NON_USER_DEFINED_GLUE_POINTS );
 	    sal_Int32 *pIdentifier = aIdSequence.getArray();
-    	
+
 	    for( i = 0; i < NON_USER_DEFINED_GLUE_POINTS; i++ )
 		    *pIdentifier++ = (sal_Int32)i;
 
@@ -383,8 +383,6 @@ uno::Sequence< sal_Int32 > SAL_CALL SvxUnoGluePointAccess::getIdentifiers() thro
 
 // XIndexContainer
 void SAL_CALL SvxUnoGluePointAccess::insertByIndex( sal_Int32, const uno::Any& Element )
-	throw(lang::IllegalArgumentException, lang::IndexOutOfBoundsException,
-			lang::WrappedTargetException, uno::RuntimeException)
 {
 	if( mpObject.is() )
 	{
@@ -398,7 +396,7 @@ void SAL_CALL SvxUnoGluePointAccess::insertByIndex( sal_Int32, const uno::Any& E
 			{
 				convert( aUnoGlue, aSdrGlue );
 				pList->Insert( aSdrGlue );
-				
+
 				// only repaint, no objectchange
 				mpObject->ActionChanged();
 				// mpObject->BroadcastObjectChange();
@@ -414,7 +412,6 @@ void SAL_CALL SvxUnoGluePointAccess::insertByIndex( sal_Int32, const uno::Any& E
 }
 
 void SAL_CALL SvxUnoGluePointAccess::removeByIndex( sal_Int32 Index )
-	throw(lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
 {
 	if( mpObject.is() )
 	{
@@ -425,7 +422,7 @@ void SAL_CALL SvxUnoGluePointAccess::removeByIndex( sal_Int32 Index )
 			if( Index >= 0 && Index < pList->GetCount() )
 			{
 				pList->Delete( (sal_uInt16)Index );
-				
+
 				// only repaint, no objectchange
 				mpObject->ActionChanged();
 				// mpObject->BroadcastObjectChange();
@@ -440,8 +437,6 @@ void SAL_CALL SvxUnoGluePointAccess::removeByIndex( sal_Int32 Index )
 
 // XIndexReplace
 void SAL_CALL SvxUnoGluePointAccess::replaceByIndex( sal_Int32 Index, const uno::Any& Element )
-	throw(lang::IllegalArgumentException, lang::IndexOutOfBoundsException, lang::WrappedTargetException,
-	uno::RuntimeException)
 {
 	drawing::GluePoint2 aUnoGlue;
 	if(!(Element >>= aUnoGlue))
@@ -467,7 +462,6 @@ void SAL_CALL SvxUnoGluePointAccess::replaceByIndex( sal_Int32 Index, const uno:
 
 // XIndexAccess
 sal_Int32 SAL_CALL SvxUnoGluePointAccess::getCount()
-	throw(uno::RuntimeException)
 {
 	sal_Int32 nCount = 0;
 	if( mpObject.is() )
@@ -488,7 +482,6 @@ sal_Int32 SAL_CALL SvxUnoGluePointAccess::getCount()
 }
 
 uno::Any SAL_CALL SvxUnoGluePointAccess::getByIndex( sal_Int32 Index )
-	throw(lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
 {
 	if( Index >= 0 && mpObject.is() && mpObject->IsNode() )
 	{
@@ -524,13 +517,11 @@ uno::Any SAL_CALL SvxUnoGluePointAccess::getByIndex( sal_Int32 Index )
 
 // XElementAccess
 uno::Type SAL_CALL SvxUnoGluePointAccess::getElementType()
-	throw( uno::RuntimeException)
 {
 	return ::getCppuType((const struct drawing::GluePoint2*)0);
 }
 
 sal_Bool SAL_CALL SvxUnoGluePointAccess::hasElements()
-	throw( uno::RuntimeException)
 {
 	return mpObject.is() && mpObject->IsNode();
 }

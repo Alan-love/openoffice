@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -67,8 +67,7 @@ class TestComponent: public cppu::WeakImplHelper1<lang::XServiceInfo>
 public:
 	static uno::Reference<uno::XInterface> create(
 		uno::Reference<uno::XComponentContext> const & xCtx
-    )
-	SAL_THROW((uno::Exception));
+    );
 
 
 	static uno::Sequence<rtl::OUString> SAL_CALL getSupportedServiceNames_Static();
@@ -76,16 +75,14 @@ public:
 	explicit TestComponent(uno::Reference<uno::XComponentContext> const & xCtx);
 	virtual ~TestComponent();
 
-	uno::Any SAL_CALL queryInterface(uno::Type const & rType ) throw (::com::sun::star::uno::RuntimeException);
+	uno::Any SAL_CALL queryInterface(uno::Type const & rType );
 	void SAL_CALL release() throw ();
 	void SAL_CALL acquire() throw ();
-	
+
 	// lang::XServiceInfo
-	virtual rtl::OUString SAL_CALL getImplementationName() throw (uno::RuntimeException);
-	virtual sal_Bool SAL_CALL supportsService(rtl::OUString const & ServiceName)
-		throw (uno::RuntimeException);
-	virtual uno::Sequence<rtl::OUString> SAL_CALL getSupportedServiceNames() 
-		throw (uno::RuntimeException);
+	virtual rtl::OUString SAL_CALL getImplementationName();
+	virtual sal_Bool SAL_CALL supportsService(rtl::OUString const & ServiceName);
+	virtual uno::Sequence<rtl::OUString> SAL_CALL getSupportedServiceNames();
 
 protected:
 	uno::Reference<uno::XComponentContext> m_xComponentContext;
@@ -95,7 +92,6 @@ protected:
 uno::Reference<uno::XInterface> SAL_CALL TestComponent::create(
 	uno::Reference<uno::XComponentContext> const & xCtx
 )
-	SAL_THROW((uno::Exception))
 {
 	try
 	{
@@ -128,29 +124,27 @@ TestComponent::~TestComponent()
 	LOG_LIFECYCLE_TestComponent_emit(fprintf(stderr, "LIFE: %s -> %p\n", "TestComponent::~TestComponent", this));
 }
 
-rtl::OUString SAL_CALL TestComponent::getImplementationName() 
-	throw (uno::RuntimeException)
+rtl::OUString SAL_CALL TestComponent::getImplementationName()
 {
 	return m_implName;
 }
 
-void SAL_CALL TestComponent::acquire() throw () 
+void SAL_CALL TestComponent::acquire() throw ()
 {
- 	cppu::WeakImplHelper1<lang::XServiceInfo>::acquire(); 
-} 
+ 	cppu::WeakImplHelper1<lang::XServiceInfo>::acquire();
+}
 
-void SAL_CALL TestComponent::release() throw () 
+void SAL_CALL TestComponent::release() throw ()
 {
-	cppu::WeakImplHelper1<lang::XServiceInfo>::release(); 
-} 
+	cppu::WeakImplHelper1<lang::XServiceInfo>::release();
+}
 
-uno::Any SAL_CALL TestComponent::queryInterface(uno::Type const & rType ) throw (::com::sun::star::uno::RuntimeException)
+uno::Any SAL_CALL TestComponent::queryInterface(uno::Type const & rType )
 {
-	return cppu::WeakImplHelper1<lang::XServiceInfo>::queryInterface(rType); 
+	return cppu::WeakImplHelper1<lang::XServiceInfo>::queryInterface(rType);
 }
 
 sal_Bool SAL_CALL TestComponent::supportsService(rtl::OUString const & ServiceName)
-	throw (uno::RuntimeException)
 {
 	uno::Sequence<rtl::OUString> serviceNames = getSupportedServiceNames_Static();
 
@@ -163,14 +157,13 @@ sal_Bool SAL_CALL TestComponent::supportsService(rtl::OUString const & ServiceNa
 	return false;
 }
 
-uno::Sequence<rtl::OUString> SAL_CALL TestComponent::getSupportedServiceNames() 
-	throw (uno::RuntimeException)
+uno::Sequence<rtl::OUString> SAL_CALL TestComponent::getSupportedServiceNames()
 {
 	return getSupportedServiceNames_Static();
 }
 
 extern "C" sal_Bool SAL_CALL component_writeInfo(
-	void * /*serviceManager*/, 
+	void * /*serviceManager*/,
 	void * /*registryKey*/
 )
 {
@@ -180,8 +173,8 @@ extern "C" sal_Bool SAL_CALL component_writeInfo(
 }
 
 extern "C" SAL_DLLPUBLIC_EXPORT void * SAL_CALL component_getFactory(
-	char const * pImplName, 
-	void       * /*serviceManager*/, 
+	char const * pImplName,
+	void       * /*serviceManager*/,
 	void       * /*registryKey*/
 )
 {
@@ -208,7 +201,7 @@ extern "C" SAL_DLLPUBLIC_EXPORT void * SAL_CALL component_getFactory(
 }
 
 extern "C" SAL_DLLPUBLIC_EXPORT  void SAL_CALL component_getImplementationEnvironmentExt(
-	sal_Char        const ** envTypeName, 
+	sal_Char        const ** envTypeName,
 	uno_Environment       ** /*ppEnv*/,
 	sal_Char        const  * pImplName,
 	uno_Environment        * /*pSrcEnv*/
@@ -222,7 +215,7 @@ extern "C" SAL_DLLPUBLIC_EXPORT  void SAL_CALL component_getImplementationEnviro
         purpose = rtl::OUStringToOString(cppu::EnvDcp::getPurpose(uImplName), RTL_TEXTENCODING_ASCII_US);
     }
 
-    if (!purpose.getLength()) 
+    if (!purpose.getLength())
     {
         char * pPurpose = getenv("TestComponent.uno");
         if (pPurpose)

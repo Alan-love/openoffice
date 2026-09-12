@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -132,7 +132,7 @@ Reference< XInterface > SAL_CALL Test_Manager_Impl_CreateInstance_Impl()
 // Test_Manager_Impl_CreateInstance()
 //
 Reference < XInterface > SAL_CALL Test_Manager_Impl_CreateInstance(
-	const Reference< XMultiServiceFactory > & /*rSMgr*/ ) throw (Exception)
+	const Reference< XMultiServiceFactory > & /*rSMgr*/ )
 {
 	Reference < XInterface >  xService = (XWeak *)(OWeakObject *)new Test_Manager_Impl( );
 
@@ -202,7 +202,7 @@ extern "C" void SAL_CALL test_ServiceManager()
  	OUString atUModule2 = OUString(
         RTL_CONSTASCII_USTRINGPARAM(
             SAL_DLLPREFIX "testsmgr_component" SAL_DLLEXTENSION ) );
-    
+
 	// expand shared library name
 	OString  atModule2( OUStringToOString(atUModule2, RTL_TEXTENCODING_ASCII_US) );
 
@@ -258,7 +258,7 @@ extern "C" void SAL_CALL test_ServiceManager()
 
 		// getImplementations() check
  		Sequence<OUString> seqImpl = xInst->getImplementations(OUString::createFromAscii("com.sun.star.loader.SharedLibrary"), atUModule2);
-		TEST_ENSHURE( seqImpl.getLength() == 1, "count of implementantions is wrong" );
+		TEST_ENSHURE( seqImpl.getLength() == 1, "count of implementations is wrong" );
 		TEST_ENSHURE( seqImpl.getConstArray()[0] == OUString::createFromAscii("com.sun.star.DummyService.V10"), "implementation name is not equal" );
 
 
@@ -350,7 +350,7 @@ extern "C" void SAL_CALL test_ServiceManager()
 		TEST_ENSHURE( xFact.is(), "Service com::sun::star.test.TestManager1 not found" );
 
 		Reference< XInterface > xTest1 = xFact->createInstance();
-		TEST_ENSHURE( nInstanceCount == 1, "wrong service instanciated" );
+		TEST_ENSHURE( nInstanceCount == 1, "wrong service instantiated" );
 
 		// TestManager2
 		xProv = xSMgr->queryServiceProvider( L"com::sun::star.test.TestManager2");
@@ -358,7 +358,7 @@ extern "C" void SAL_CALL test_ServiceManager()
 		TEST_ENSHURE( xFact.is(), "Service com::sun::star.test.TestManager2 not found" );
 
 		Reference < XInterface > xTest2 = xFact->createInstance();
-		TEST_ENSHURE( nInstanceCount == 2, "wrong service instanciated" );
+		TEST_ENSHURE( nInstanceCount == 2, "wrong service instantiated" );
 
 		xTest1 = Reference< XInterface >();
 		xTest2 = Reference< XInterface >();
@@ -463,6 +463,3 @@ void * SAL_CALL component_getFactory(
 	return pRet;
 }
 }
-
-
-

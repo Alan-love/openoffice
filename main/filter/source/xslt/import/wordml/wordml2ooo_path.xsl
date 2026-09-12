@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--***********************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -8,16 +8,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  ***********************************************************-->
 
 
@@ -585,9 +585,9 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    <!-- 
+    <!--
     **Template vmlpath2enhancedpath**
-    The template is resposible for converting the vml-path to enhanced-path, because the svg:path 
+    The template is responsible for converting the vml-path to enhanced-path, because the svg:path
     can't support command a now.(But heard that will be supported in OOo3.0)
     And the 2nd reason of using an enhanced-path is that enhanced-path have a perfect mapping to
     vmlpath.(You will find out that often, we even don't need to change the parameters).
@@ -983,7 +983,7 @@
             <!--The following is 6 command which deal with arcs:
                 ae   ->T    	al -> U
                 at   -> A		ar  -> B
-				wa -> W 	wr  ->V 
+				wa -> W 	wr  ->V
 			  These pairs of commands have shown the perfect mapping from vml-path to enhanced-path-->
             <xsl:when test="$command = 'ae' ">
                 <!-- arc on the screen with the start and end angles -->
@@ -1439,7 +1439,7 @@
                         </xsl:call-template>
                     </xsl:when>
                     <xsl:when test="string-length(translate($curr-char ,  '+-' ,'') ) = 0  and string-length($number) &gt; 0">
-                        <!-- finsh it with +/- -->
+                        <!-- finish it with +/- -->
                         <xsl:call-template name="format-number-pos">
                             <xsl:with-param name="number" select="$number"/>
                             <xsl:with-param name="position" select="$position"/>
@@ -1465,7 +1465,7 @@
                 <xsl:variable name="curr-char" select="substring($vml-path, $position , 1)"/>
                 <xsl:choose>
                     <xsl:when test="string-length(translate($curr-char ,  'mlcxetrvnfsawqyb' ,'')) = 0 ">
-                        <!-- "MmZzLlHhVvCcSsQqTtAa" are all possiable  command chars -->
+                        <!-- "MmZzLlHhVvCcSsQqTtAa" are all possible command chars -->
                         <xsl:value-of select="concat( $curr-char , ':'  , $position +1)"/>
                     </xsl:when>
                     <xsl:when test="string-length(translate($curr-char ,  '+-.0123456789@' ,'')) = 0 ">
@@ -1497,7 +1497,7 @@
 		we here implictly think the command is the last-command
         All of the command of vml is listed as following:
         __Basic commands:__
-		m		l		c		x		e		t		r		v		nf		ns		ae		al		at		ar		wa		wr		qx		qy		qb	
+		m		l		c		x		e		t		r		v		nf		ns		ae		al		at		ar		wa		wr		qx		qy		qb
 		__Edit behavior extensions commands__
 		ha 	hb	hc	hd	he	hf	hg	hh	hi
 

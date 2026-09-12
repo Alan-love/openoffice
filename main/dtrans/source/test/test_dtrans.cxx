@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -107,7 +107,7 @@ public:
 	// XClipboardOwner
 	//--------------------------------------------------------------------
 
-	virtual void SAL_CALL lostOwnership( const Reference< XClipboard >& xClipboard, const Reference< XTransferable >& xTrans ) throw(RuntimeException);
+	virtual void SAL_CALL lostOwnership( const Reference< XClipboard >& xClipboard, const Reference< XTransferable >& xTrans );
 
 	sal_uInt32 receivedLostOwnerships() { return m_nReceivedLostOwnerships; };
 	Reference< XClipboard >    lostOwnershipClipboardValue() { return m_xClipboard; }
@@ -127,12 +127,11 @@ ClipboardOwner::ClipboardOwner():
 //	lostOwnership
 //------------------------------------------------------------------------
 
-void SAL_CALL ClipboardOwner::lostOwnership( const Reference< XClipboard >& xClipboard, const Reference< XTransferable >& xTrans ) 
-	throw(RuntimeException)
+void SAL_CALL ClipboardOwner::lostOwnership( const Reference< XClipboard >& xClipboard, const Reference< XTransferable >& xTrans )
 {
 	m_nReceivedLostOwnerships++;
 	m_xClipboard = xClipboard;
-	m_xTransferable = xTrans; 
+	m_xTransferable = xTrans;
 }
 
 //------------------------------------------------------------------------
@@ -153,14 +152,14 @@ public:
 	// XClipboardOwner
 	//--------------------------------------------------------------------
 
-	virtual void SAL_CALL changedContents( const ClipboardEvent& event ) throw(RuntimeException);
+	virtual void SAL_CALL changedContents( const ClipboardEvent& event );
 
 	//--------------------------------------------------------------------
 	// XEventListener
 	//--------------------------------------------------------------------
-	
-	virtual void SAL_CALL disposing( const EventObject& event ) throw(RuntimeException);
-	
+
+	virtual void SAL_CALL disposing( const EventObject& event );
+
 	sal_uInt32 receivedChangedContentsEvents() { return m_nReceivedChangedContentsEvents; };
 	Reference< XClipboard >    changedContentsEventClipboardValue() { return m_xClipboard; }
 	Reference< XTransferable > changedContentsEventTransferableValue() { return m_xTransferable; };
@@ -180,11 +179,10 @@ ClipboardListener::ClipboardListener():
 //------------------------------------------------------------------------
 
 void SAL_CALL ClipboardListener::changedContents( const ClipboardEvent& event )
-	throw(RuntimeException)
 {
 	m_nReceivedChangedContentsEvents++;
 	m_xClipboard = Reference< XClipboard > (event.Source, UNO_QUERY);
-	m_xTransferable = event.Contents; 
+	m_xTransferable = event.Contents;
 }
 
 //------------------------------------------------------------------------
@@ -192,7 +190,6 @@ void SAL_CALL ClipboardListener::changedContents( const ClipboardEvent& event )
 //------------------------------------------------------------------------
 
 void SAL_CALL ClipboardListener::disposing( const EventObject& event )
-	throw(RuntimeException)
 {
 }
 
@@ -202,26 +199,26 @@ void SAL_CALL ClipboardListener::disposing( const EventObject& event )
 
 class StringTransferable : public WeakImplHelper2< XClipboardOwner, XTransferable >
 {
-public:	
+public:
 	StringTransferable( );
-		
+
 	//--------------------------------------------------------------------
 	// XTransferable
 	//--------------------------------------------------------------------
 
-	virtual Any SAL_CALL getTransferData( const DataFlavor& aFlavor ) throw(UnsupportedFlavorException, IOException, RuntimeException);
-    virtual Sequence< DataFlavor > SAL_CALL getTransferDataFlavors(  ) throw(RuntimeException);
-	virtual sal_Bool SAL_CALL isDataFlavorSupported( const DataFlavor& aFlavor ) throw(RuntimeException);
-	
+	virtual Any SAL_CALL getTransferData( const DataFlavor& aFlavor );
+    virtual Sequence< DataFlavor > SAL_CALL getTransferDataFlavors(  );
+	virtual sal_Bool SAL_CALL isDataFlavorSupported( const DataFlavor& aFlavor );
+
 	//--------------------------------------------------------------------
 	// XClipboardOwner
 	//--------------------------------------------------------------------
 
-	virtual void SAL_CALL lostOwnership( const Reference< XClipboard >& xClipboard, const Reference< XTransferable >& xTrans ) throw(RuntimeException);
+	virtual void SAL_CALL lostOwnership( const Reference< XClipboard >& xClipboard, const Reference< XTransferable >& xTrans );
 
 	sal_Bool receivedLostOwnership() { return m_receivedLostOwnership; };
 	void clearReceivedLostOwnership() { m_receivedLostOwnership = sal_False; };
-	
+
 private:
 	Sequence< DataFlavor > m_seqDFlv;
 	OUString               m_Data;
@@ -238,28 +235,27 @@ StringTransferable::StringTransferable( ) :
 	m_Data( OUString::createFromAscii("clipboard test content") )
 {
 	DataFlavor df;
-	
+
 	/*
 	df.MimeType = L"text/plain; charset=unicode";
 	df.DataType = getCppuType( ( OUString* )0 );
 
 	m_seqDFlv[0] = df;
 	*/
-	
+
 	//df.MimeType = L"text/plain; charset=windows1252";
 	df.MimeType = OUString::createFromAscii( "text/html" );
 	df.DataType = getCppuType( ( Sequence< sal_Int8 >* )0 );
 
-	m_seqDFlv[0] = df;	
+	m_seqDFlv[0] = df;
 }
 
 //------------------------------------------------------------------------
 //	getTransferData
 //------------------------------------------------------------------------
 
-Any SAL_CALL StringTransferable::getTransferData( const DataFlavor& aFlavor ) 
-	throw(UnsupportedFlavorException, IOException, RuntimeException)
-{	
+Any SAL_CALL StringTransferable::getTransferData( const DataFlavor& aFlavor )
+{
 	Any anyData;
 
 	/*if ( aFlavor == m_seqDFlv[0] )
@@ -287,8 +283,7 @@ Any SAL_CALL StringTransferable::getTransferData( const DataFlavor& aFlavor )
 //	getTransferDataFlavors
 //------------------------------------------------------------------------
 
-Sequence< DataFlavor > SAL_CALL StringTransferable::getTransferDataFlavors(  ) 
-	throw(RuntimeException)
+Sequence< DataFlavor > SAL_CALL StringTransferable::getTransferDataFlavors(  )
 {
 	return m_seqDFlv;
 }
@@ -297,8 +292,7 @@ Sequence< DataFlavor > SAL_CALL StringTransferable::getTransferDataFlavors(  )
 //	isDataFlavorSupported
 //------------------------------------------------------------------------
 
-sal_Bool SAL_CALL StringTransferable::isDataFlavorSupported( const DataFlavor& aFlavor ) 
-	throw(RuntimeException)
+sal_Bool SAL_CALL StringTransferable::isDataFlavorSupported( const DataFlavor& aFlavor )
 {
 	sal_Int32 nLength = m_seqDFlv.getLength( );
 	sal_Bool bRet     = sal_False;
@@ -319,8 +313,7 @@ sal_Bool SAL_CALL StringTransferable::isDataFlavorSupported( const DataFlavor& a
 //	lostOwnership
 //------------------------------------------------------------------------
 
-void SAL_CALL StringTransferable::lostOwnership( const Reference< XClipboard >& xClipboard, const Reference< XTransferable >& xTrans ) 
-	throw(RuntimeException)
+void SAL_CALL StringTransferable::lostOwnership( const Reference< XClipboard >& xClipboard, const Reference< XTransferable >& xTrans )
 {
 	m_receivedLostOwnership = sal_True;
 }
@@ -360,8 +353,8 @@ int SAL_CALL main( int argc, const char* argv[] )
 	// create service manager
 	//------------------------------------------------------------------
 	Reference< XMultiServiceFactory > xServiceManager;
-	
-	try 
+
+	try
 	{
 		xServiceManager = createRegistryServiceFactory( aRegistry, sal_True );
 		ENSURE( xServiceManager.is(), "*** ERROR *** service manager could not be created." );
@@ -372,8 +365,8 @@ int SAL_CALL main( int argc, const char* argv[] )
 
 		Sequence< Any > arguments(1);
 		arguments[0] = makeAny( OUString::createFromAscii( "generic" ) );
-		
-		Reference< XClipboard > xClipboard( xServiceManager->createInstanceWithArguments( 
+
+		Reference< XClipboard > xClipboard( xServiceManager->createInstanceWithArguments(
 			OUString::createFromAscii( "com.sun.star.datatransfer.clipboard.GenericClipboard" ),
 			arguments ), UNO_QUERY );
 
@@ -395,7 +388,7 @@ int SAL_CALL main( int argc, const char* argv[] )
 		Reference< XTransferable > xContents = new StringTransferable();
 		Reference< XClipboardOwner > xOwner  = new ClipboardOwner();
 		ClipboardOwner *pOwner = (ClipboardOwner *) xOwner.get();
-		
+
 		TEST( "initial contents (none): ", xClipboard->getContents().is() == sal_False );
 
 		PERFORM( "update on contents with clipboard owner: ", xClipboard->setContents( xContents, xOwner ) );
@@ -408,7 +401,7 @@ int SAL_CALL main( int argc, const char* argv[] )
 			TEST( "if received changedContents notification for correct clipboard: ", pListener->changedContentsEventClipboardValue() == xClipboard );
 			TEST( "if received changedContents notification for correct clipboard: ", pListener->changedContentsEventTransferableValue() == xContents );
 		}
-		
+
 		PERFORM( "update on contents without data (clear): ", xClipboard->setContents( Reference< XTransferable >(), Reference< XClipboardOwner >() ) );
 		TEST( "if received lostOwnership message(s): ", pOwner->receivedLostOwnerships() > 0 );
 		TEST( "if received exactly 1 lostOwnership message: ", pOwner->receivedLostOwnerships() == 1 );
@@ -426,7 +419,7 @@ int SAL_CALL main( int argc, const char* argv[] )
 
 		PERFORM( "update on contents without clipboard owner: ", xClipboard->setContents( xContents, Reference< XClipboardOwner >() ) );
 		TEST( "that no further lostOwnership messages were received: ", pOwner->receivedLostOwnerships() == 1 );
-		TEST( "current clipboard contents: ", xContents == xClipboard->getContents() );		
+		TEST( "current clipboard contents: ", xContents == xClipboard->getContents() );
 
 		if( xClipboardNotifier.is() )
 		{
@@ -452,8 +445,8 @@ int SAL_CALL main( int argc, const char* argv[] )
 		//--------------------------------------------------------------
 		// create an instance of ClipboardManager service
 		//--------------------------------------------------------------
-		
-		Reference< XClipboardManager > xClipboardManager( xServiceManager->createInstance( 
+
+		Reference< XClipboardManager > xClipboardManager( xServiceManager->createInstance(
 			OUString::createFromAscii( "com.sun.star.datatransfer.clipboard.ClipboardManager" ) ), UNO_QUERY );
 
 		ENSURE( xClipboardManager.is(), "*** ERROR *** clipboard manager service could not be created." );
@@ -496,13 +489,11 @@ int SAL_CALL main( int argc, const char* argv[] )
 	Reference< XComponent > xComponent( xServiceManager, UNO_QUERY );
 
 	ENSURE( xComponent.is(), "*** ERROR *** service manager does not support XComponent." );
-	
+
 	// Dispose and clear factory
 	xComponent->dispose();
 	xServiceManager.clear();
 
 	fprintf( stderr, "Done.\n" );
-	return 0;	
+	return 0;
 }
-
-

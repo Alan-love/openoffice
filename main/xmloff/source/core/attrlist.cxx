@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -77,7 +77,7 @@ struct SvXMLAttributeList_Impl
 
 
 
-sal_Int16 SAL_CALL SvXMLAttributeList::getLength(void) throw( ::com::sun::star::uno::RuntimeException )
+sal_Int16 SAL_CALL SvXMLAttributeList::getLength(void)
 {
 	return sal::static_int_cast< sal_Int16 >(m_pImpl->vecAttribute.size());
 }
@@ -89,7 +89,7 @@ SvXMLAttributeList::SvXMLAttributeList( const SvXMLAttributeList &r ) :
 {
 }
 
-SvXMLAttributeList::SvXMLAttributeList( const uno::Reference< 
+SvXMLAttributeList::SvXMLAttributeList( const uno::Reference<
 		xml::sax::XAttributeList> & rAttrList )
     : sType( GetXMLToken(XML_CDATA) )
 {
@@ -104,28 +104,28 @@ SvXMLAttributeList::SvXMLAttributeList( const uno::Reference<
 		AppendAttributeList( rAttrList );
 }
 
-OUString SAL_CALL SvXMLAttributeList::getNameByIndex(sal_Int16 i) throw( ::com::sun::star::uno::RuntimeException )
+OUString SAL_CALL SvXMLAttributeList::getNameByIndex(sal_Int16 i)
 {
     return ( static_cast< SvXMLAttributeList_Impl::size_type >( i ) < m_pImpl->vecAttribute.size() ) ? m_pImpl->vecAttribute[i].sName : OUString();
 }
 
 
-OUString SAL_CALL SvXMLAttributeList::getTypeByIndex(sal_Int16) throw( ::com::sun::star::uno::RuntimeException )
+OUString SAL_CALL SvXMLAttributeList::getTypeByIndex(sal_Int16)
 {
     return sType;
 }
 
-OUString SAL_CALL  SvXMLAttributeList::getValueByIndex(sal_Int16 i) throw( ::com::sun::star::uno::RuntimeException )
+OUString SAL_CALL  SvXMLAttributeList::getValueByIndex(sal_Int16 i)
 {
     return ( static_cast< SvXMLAttributeList_Impl::size_type >( i ) < m_pImpl->vecAttribute.size() ) ? m_pImpl->vecAttribute[i].sValue : OUString();
 }
 
-OUString SAL_CALL SvXMLAttributeList::getTypeByName( const OUString& ) throw( ::com::sun::star::uno::RuntimeException )
+OUString SAL_CALL SvXMLAttributeList::getTypeByName( const OUString& )
 {
     return sType;
 }
 
-OUString SAL_CALL SvXMLAttributeList::getValueByName(const OUString& sName) throw( ::com::sun::star::uno::RuntimeException )
+OUString SAL_CALL SvXMLAttributeList::getValueByName(const OUString& sName)
 {
 	::std::vector<struct SvXMLTagAttribute_Impl>::iterator ii = m_pImpl->vecAttribute.begin();
 
@@ -138,7 +138,7 @@ OUString SAL_CALL SvXMLAttributeList::getValueByName(const OUString& sName) thro
 }
 
 
-uno::Reference< ::com::sun::star::util::XCloneable >  SvXMLAttributeList::createClone() throw( ::com::sun::star::uno::RuntimeException )
+uno::Reference< ::com::sun::star::util::XCloneable >  SvXMLAttributeList::createClone()
 {
 	uno::Reference< ::com::sun::star::util::XCloneable >  r = new SvXMLAttributeList( *this );
 	return r;
@@ -200,7 +200,7 @@ void SvXMLAttributeList::AppendAttributeList( const uno::Reference< ::com::sun::
 	OSL_ASSERT( r.is() );
 
 	sal_Int16 nMax = r->getLength();
-	SvXMLAttributeList_Impl::size_type nTotalSize = 
+	SvXMLAttributeList_Impl::size_type nTotalSize =
 		m_pImpl->vecAttribute.size() + nMax;
 	m_pImpl->vecAttribute.reserve( nTotalSize );
 
@@ -219,10 +219,10 @@ void SvXMLAttributeList::AppendAttributeList( const uno::Reference< ::com::sun::
 	OSL_ASSERT( nTotalSize == (SvXMLAttributeList_Impl::size_type)getLength());
 }
 
-void SvXMLAttributeList::SetValueByIndex( sal_Int16 i, 
+void SvXMLAttributeList::SetValueByIndex( sal_Int16 i,
 		const ::rtl::OUString& rValue )
 {
-	if( static_cast< SvXMLAttributeList_Impl::size_type >( i ) 
+	if( static_cast< SvXMLAttributeList_Impl::size_type >( i )
 			< m_pImpl->vecAttribute.size() )
 	{
 		m_pImpl->vecAttribute[i].sValue = rValue;
@@ -231,15 +231,15 @@ void SvXMLAttributeList::SetValueByIndex( sal_Int16 i,
 
 void SvXMLAttributeList::RemoveAttributeByIndex( sal_Int16 i )
 {
-    if( static_cast< SvXMLAttributeList_Impl::size_type >( i ) 
+    if( static_cast< SvXMLAttributeList_Impl::size_type >( i )
 			< m_pImpl->vecAttribute.size() )
 		m_pImpl->vecAttribute.erase( m_pImpl->vecAttribute.begin() + i );
 }
 
-void SvXMLAttributeList::RenameAttributeByIndex( sal_Int16 i, 
+void SvXMLAttributeList::RenameAttributeByIndex( sal_Int16 i,
 												 const OUString& rNewName )
 {
-	if( static_cast< SvXMLAttributeList_Impl::size_type >( i ) 
+	if( static_cast< SvXMLAttributeList_Impl::size_type >( i )
 			< m_pImpl->vecAttribute.size() )
 	{
 		m_pImpl->vecAttribute[i].sName = rNewName;
@@ -248,10 +248,10 @@ void SvXMLAttributeList::RenameAttributeByIndex( sal_Int16 i,
 
 sal_Int16 SvXMLAttributeList::GetIndexByName( const OUString& rName ) const
 {
-	::std::vector<struct SvXMLTagAttribute_Impl>::iterator ii = 
+	::std::vector<struct SvXMLTagAttribute_Impl>::iterator ii =
 		m_pImpl->vecAttribute.begin();
-	
-	for( sal_Int16 nIndex=0; ii!=m_pImpl->vecAttribute.end(); ++ii, ++nIndex ) 
+
+	for( sal_Int16 nIndex=0; ii!=m_pImpl->vecAttribute.end(); ++ii, ++nIndex )
 	{
 		if( (*ii).sName == rName )
 		{
@@ -283,7 +283,7 @@ SvXMLAttributeList* SvXMLAttributeList::getImplementation( uno::Reference< uno::
 	uno::Reference< lang::XUnoTunnel > xUT( xInt, uno::UNO_QUERY );
 	if( xUT.is() )
 	{
-		return 
+		return
 			reinterpret_cast<SvXMLAttributeList*>(
 				sal::static_int_cast<sal_IntPtr>(
 					xUT->getSomething( SvXMLAttributeList::getUnoTunnelId())));
@@ -294,7 +294,6 @@ SvXMLAttributeList* SvXMLAttributeList::getImplementation( uno::Reference< uno::
 
 // XUnoTunnel
 sal_Int64 SAL_CALL SvXMLAttributeList::getSomething( const uno::Sequence< sal_Int8 >& rId )
-	throw( uno::RuntimeException )
 {
 	if( rId.getLength() == 16 && 0 == rtl_compareMemory( getUnoTunnelId().getConstArray(),
 														 rId.getConstArray(), 16 ) )
@@ -303,5 +302,3 @@ sal_Int64 SAL_CALL SvXMLAttributeList::getSomething( const uno::Sequence< sal_In
 	}
 	return 0;
 }
-
-

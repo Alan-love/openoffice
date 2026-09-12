@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -117,7 +117,7 @@ class SessionListener :   // interfaces
 
         sal_Bool m_bAllowUserInteractionOnQuit;
         sal_Bool m_bTerminated;
- 
+
 
         // in case of synchronous call the caller should do saveDone() call himself!
         void StoreSession( sal_Bool bAsync );
@@ -131,7 +131,7 @@ class SessionListener :   // interfaces
         // XInterface, XTypeProvider, XServiceInfo
 
         FWK_DECLARE_XINTERFACE
-        FWK_DECLARE_XTYPEPROVIDER    
+        FWK_DECLARE_XTYPEPROVIDER
         DECLARE_XSERVICEINFO
 
         #ifdef ENABLE_AUTODOC_FIX
@@ -152,31 +152,25 @@ class SessionListener :   // interfaces
 
         virtual ~SessionListener();
 
-        virtual void SAL_CALL disposing(const com::sun::star::lang::EventObject&) throw (css::uno::RuntimeException);
+        virtual void SAL_CALL disposing(const com::sun::star::lang::EventObject&);
 
 
         // XInitialization
-        virtual void SAL_CALL initialize(const css::uno::Sequence< css::uno::Any  >& args) throw (css::uno::RuntimeException);
+        virtual void SAL_CALL initialize(const css::uno::Sequence< css::uno::Any  >& args);
 
         // XSessionManagerListener
-        virtual void SAL_CALL doSave( sal_Bool bShutdown, sal_Bool bCancelable ) 
-            throw (css::uno::RuntimeException);
-        virtual void SAL_CALL approveInteraction( sal_Bool bInteractionGranted )
-            throw (css::uno::RuntimeException);
-       virtual void SAL_CALL shutdownCanceled()
-            throw (css::uno::RuntimeException);
-       virtual sal_Bool SAL_CALL doRestore()
-            throw (css::uno::RuntimeException);
+        virtual void SAL_CALL doSave( sal_Bool bShutdown, sal_Bool bCancelable );
+        virtual void SAL_CALL approveInteraction( sal_Bool bInteractionGranted );
+       virtual void SAL_CALL shutdownCanceled();
+       virtual sal_Bool SAL_CALL doRestore();
 
         // XSessionManagerListener2
-        virtual void SAL_CALL doQuit()
-            throw (::com::sun::star::uno::RuntimeException);
+        virtual void SAL_CALL doQuit();
 
        // XStatusListener
-       virtual void SAL_CALL statusChanged(const com::sun::star::frame::FeatureStateEvent& event) 
-           throw (css::uno::RuntimeException);
+       virtual void SAL_CALL statusChanged(const com::sun::star::frame::FeatureStateEvent& event);
 
-        void doSaveImpl( sal_Bool bShutdown, sal_Bool bCancelable ) throw (css::uno::RuntimeException);
+        void doSaveImpl( sal_Bool bShutdown, sal_Bool bCancelable );
 };
 
 } // namespace framework

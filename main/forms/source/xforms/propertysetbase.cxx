@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -81,7 +81,7 @@ cppu::IPropertyArrayHelper& SAL_CALL PropertySetBase::getInfoHelper()
     return *m_pProperties;
 }
 
-Reference< XPropertySetInfo > SAL_CALL PropertySetBase::getPropertySetInfo(  ) throw(RuntimeException)
+Reference< XPropertySetInfo > SAL_CALL PropertySetBase::getPropertySetInfo(  )
 {
 	return cppu::OPropertySetHelper::createPropertySetInfo( getInfoHelper() );
 }
@@ -153,13 +153,12 @@ PropertyAccessorBase& PropertySetBase::locatePropertyHandler( sal_Int32 nHandle 
     DBG_ASSERT( aPropertyPos != m_aAccessors.end() && aPropertyPos->second.get(),
         "PropertySetBase::locatePropertyHandler: accessor map is corrupted!" );
         // neither should this be called for handles where there is no accessor, nor should a
-        // NULL accssor be in the map
+        // NULL accessor be in the map
     return *aPropertyPos->second;
 }
 
 sal_Bool SAL_CALL PropertySetBase::convertFastPropertyValue( Any& rConvertedValue, Any& rOldValue, sal_Int32 nHandle,
 	const Any& rValue )
-    throw (IllegalArgumentException)
 {
     PropertyAccessorBase& rAccessor = locatePropertyHandler( nHandle );
     if ( !rAccessor.approveValue( rValue ) )
@@ -175,7 +174,6 @@ sal_Bool SAL_CALL PropertySetBase::convertFastPropertyValue( Any& rConvertedValu
 }
 
 void SAL_CALL PropertySetBase::setFastPropertyValue_NoBroadcast( sal_Int32 nHandle, const Any& rValue )
-    throw (Exception)
 {
     PropertyAccessorBase& rAccessor = locatePropertyHandler( nHandle );
     rAccessor.setValue( rValue );

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -82,8 +82,7 @@ public:
 //    virtual ~TestDataSink();
 
     // XInterface methods
-    virtual Any SAL_CALL queryInterface( const Type & rType )
-        throw( RuntimeException );
+    virtual Any SAL_CALL queryInterface( const Type & rType );
     virtual void SAL_CALL acquire()
         throw ();
     virtual void SAL_CALL release()
@@ -91,10 +90,8 @@ public:
 
     // XActiveDataSink methods.
     virtual void SAL_CALL setInputStream(
-                                const uno::Reference< XInputStream >& aStream )
-        throw( RuntimeException );
-    virtual uno::Reference< XInputStream > SAL_CALL getInputStream()
-        throw( RuntimeException );
+                                const uno::Reference< XInputStream >& aStream );
+    virtual uno::Reference< XInputStream > SAL_CALL getInputStream();
 };
 
 //=========================================================================
@@ -216,7 +213,6 @@ public:
 
 // virtual
 Any SAL_CALL TestDataSink::queryInterface( const Type & rType )
-    throw( RuntimeException )
 {
     Any aRet = cppu::queryInterface(
                         rType,
@@ -244,7 +240,6 @@ void SAL_CALL TestDataSink::release()
 // virtual
 void SAL_CALL TestDataSink::setInputStream(
                                 const uno::Reference< XInputStream >& aStream )
-    throw( RuntimeException )
 {
     m_xStream = aStream;
 }
@@ -252,7 +247,6 @@ void SAL_CALL TestDataSink::setInputStream(
 //=========================================================================
 // virtual
 uno::Reference< XInputStream > SAL_CALL TestDataSink::getInputStream()
-    throw( RuntimeException )
 {
     return m_xStream;
 }
@@ -1193,4 +1187,3 @@ void MyApp::Main()
 //=========================================================================
 
 MyApp aMyApp;
-

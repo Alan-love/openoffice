@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #include "precompiled_sfx2.hxx"
@@ -72,7 +72,6 @@ SidebarPanel::~SidebarPanel (void)
 
 
 void SAL_CALL SidebarPanel::disposing (const css::lang::EventObject& rEventObject)
-    throw(cssu::RuntimeException)
 {
     (void)rEventObject;
 }
@@ -93,19 +92,18 @@ void SAL_CALL SidebarPanel::disposing (void)
 
 
 cssu::Reference<css::rendering::XCanvas> SAL_CALL SidebarPanel::getCanvas (void)
-    throw (cssu::RuntimeException)
 {
     if ( ! mxCanvas.is())
     {
         Sequence<Any> aArg (5);
-        
+
         // common: first any is VCL pointer to window (for VCL canvas)
         aArg[0] = makeAny(reinterpret_cast<sal_Int64>(mpPanel));
         aArg[1] = Any();
         aArg[2] = makeAny(::com::sun::star::awt::Rectangle());
         aArg[3] = makeAny(sal_False);
         aArg[4] = makeAny(mpPanel->GetComponentInterface());
-        
+
         const ::comphelper::ComponentContext aComponentContext (::comphelper::getProcessServiceFactory());
         mxCanvas = Reference<rendering::XCanvas>(
             aComponentContext.createComponentWithArguments(
@@ -122,10 +120,9 @@ cssu::Reference<css::rendering::XCanvas> SAL_CALL SidebarPanel::getCanvas (void)
 
 
 awt::Point SAL_CALL SidebarPanel::getPositionOnScreen (void)
-    throw (cssu::RuntimeException)
 {
     awt::Point aAwtPoint;
-    
+
     if (mpPanel != NULL)
     {
         ::vos::OGuard aGuard (Application::GetSolarMutex());
@@ -144,7 +141,6 @@ awt::Point SAL_CALL SidebarPanel::getPositionOnScreen (void)
 
 
 Reference<beans::XPropertySet> SAL_CALL SidebarPanel::getThemeProperties (void)
-    throw (RuntimeException)
 {
     return Theme::GetPropertySet();
 }
@@ -161,7 +157,7 @@ IMPL_LINK(SidebarPanel, HandleWindowEvent, VclWindowEvent*, pEvent)
             case SFX_HINT_DYING:
                 dispose();
                 break;
-                
+
             default:
                 break;
         }

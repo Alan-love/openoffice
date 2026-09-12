@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -60,23 +60,17 @@ public:
 
 	// XHyphenatedWord
     virtual ::rtl::OUString SAL_CALL
-		getWord()
-			throw(::com::sun::star::uno::RuntimeException);
+		getWord();
     virtual ::com::sun::star::lang::Locale SAL_CALL
-		getLocale()
-			throw(::com::sun::star::uno::RuntimeException);
+		getLocale();
     virtual sal_Int16 SAL_CALL
-		getHyphenationPos()
-			throw(::com::sun::star::uno::RuntimeException);
+		getHyphenationPos();
     virtual ::rtl::OUString SAL_CALL
-		getHyphenatedWord()
-			throw(::com::sun::star::uno::RuntimeException);
+		getHyphenatedWord();
     virtual sal_Int16 SAL_CALL
-		getHyphenPos()
-			throw(::com::sun::star::uno::RuntimeException);
+		getHyphenPos();
     virtual sal_Bool SAL_CALL
-		isAlternativeSpelling()
-			throw(::com::sun::star::uno::RuntimeException);
+		isAlternativeSpelling();
 
     ::rtl::OUString GetWord()           { return aWord; }
     ::rtl::OUString GetHyphenatedWord() { return aHyphenatedWord; }
@@ -115,17 +109,13 @@ public:
 
 	// XPossibleHyphens
     virtual ::rtl::OUString SAL_CALL
-		getWord()
-			throw(::com::sun::star::uno::RuntimeException);
+		getWord();
     virtual ::com::sun::star::lang::Locale SAL_CALL
-		getLocale()
-			throw(::com::sun::star::uno::RuntimeException);
+		getLocale();
     virtual ::rtl::OUString SAL_CALL
-		getPossibleHyphens()
-			throw(::com::sun::star::uno::RuntimeException);
+		getPossibleHyphens();
     virtual ::com::sun::star::uno::Sequence< sal_Int16 > SAL_CALL
-		getHyphenationPositions()
-			throw(::com::sun::star::uno::RuntimeException);
+		getHyphenationPositions();
 
     ::rtl::OUString GetWord()       { return aWord; }
     sal_Int16           GetLanguage()   { return nLanguage; }
@@ -144,4 +134,3 @@ public:
 } // namespace linguistic
 
 #endif
-

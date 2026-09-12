@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -116,8 +116,6 @@ sal_Bool KillFile_Impl( const ::rtl::OUString& aURL, const uno::Reference< lang:
 //-----------------------------------------------
 ::rtl::OUString GetNewFilledTempFile_Impl( const uno::Reference< io::XInputStream >& xInStream,
 									  const uno::Reference< lang::XMultiServiceFactory >& xFactory )
-		throw ( io::IOException,
-				uno::RuntimeException )
 {
 	OSL_ENSURE( xInStream.is() && xFactory.is(), "Wrong parameters are provided!\n" );
 
@@ -171,7 +169,6 @@ sal_Bool KillFile_Impl( const ::rtl::OUString& aURL, const uno::Reference< lang:
 }
 #ifdef WNT
 ::rtl::OUString GetNewFilledTempFile_Impl( const uno::Reference< embed::XOptimizedStorage >& xParentStorage, const ::rtl::OUString& aEntryName, const uno::Reference< lang::XMultiServiceFactory >& xFactory )
-	throw( io::IOException, uno::RuntimeException )
 {
 	::rtl::OUString aResult;
 
@@ -279,7 +276,6 @@ void VerbExecutionController::UnlockNotification()
 
 //-----------------------------------------------
 uno::Reference< io::XStream > OleEmbeddedObject::GetNewFilledTempStream_Impl( const uno::Reference< io::XInputStream >& xInStream )
-		throw( io::IOException )
 {
 	OSL_ENSURE( xInStream.is(), "Wrong parameter is provided!\n" );
 
@@ -301,7 +297,6 @@ uno::Reference< io::XStream > OleEmbeddedObject::GetNewFilledTempStream_Impl( co
 
 //------------------------------------------------------
 uno::Reference< io::XStream > OleEmbeddedObject::TryToGetAcceptableFormat_Impl( const uno::Reference< io::XStream >& xStream )
-		throw ( uno::Exception )
 {
 	// TODO/LATER: Actually this should be done by a centralized component ( may be a graphical filter )
 	if ( !m_xFactory.is() )
@@ -406,7 +401,7 @@ uno::Reference< io::XStream > OleEmbeddedObject::TryToGetAcceptableFormat_Impl( 
 //			pBuffer[7] = 0;
 //			pBuffer[8] = 0;
 //			pBuffer[9] = 0;
-//			
+//
 //			// width of the picture
 //			pBuffer[10] = abs( aSizeToSet.Width ) % 0x100;
 //			pBuffer[11] = ( abs( aSizeToSet.Width ) / 0x100 ) % 0x100;
@@ -425,7 +420,7 @@ uno::Reference< io::XStream > OleEmbeddedObject::TryToGetAcceptableFormat_Impl( 
 //
 //			xResultOut->writeBytes( aHeader );
 //		}
-		
+
 		xSeek->seek( nHeaderOffset ); // header size for these formats
 		::comphelper::OStorageHelper::CopyInputToOutput( xInStream, xResultOut );
 		xResultOut->closeOutput();
@@ -441,7 +436,6 @@ uno::Reference< io::XStream > OleEmbeddedObject::TryToGetAcceptableFormat_Impl( 
 //------------------------------------------------------
 void OleEmbeddedObject::InsertVisualCache_Impl( const uno::Reference< io::XStream >& xTargetStream,
 												const uno::Reference< io::XStream >& xCachedVisualRepresentation )
-		throw ( uno::Exception )
 {
 	OSL_ENSURE( xTargetStream.is() && xCachedVisualRepresentation.is(), "Invalid arguments!\n" );
 
@@ -530,7 +524,7 @@ void OleEmbeddedObject::InsertVisualCache_Impl( const uno::Reference< io::XStrea
 		// write width
 		for ( nIndex = 0; nIndex < 4; nIndex++ )
 		{
-			aData[nIndex] = (sal_Int8)( aSize.Width % 0x100 ); 
+			aData[nIndex] = (sal_Int8)( aSize.Width % 0x100 );
 			aSize.Width /= 0x100;
 		}
 		xTempOutStream->writeBytes( aData );
@@ -538,11 +532,11 @@ void OleEmbeddedObject::InsertVisualCache_Impl( const uno::Reference< io::XStrea
 		// write height
 		for ( nIndex = 0; nIndex < 4; nIndex++ )
 		{
-			aData[nIndex] = (sal_Int8)( aSize.Height % 0x100 ); 
+			aData[nIndex] = (sal_Int8)( aSize.Height % 0x100 );
 			aSize.Height /= 0x100;
 		}
 		xTempOutStream->writeBytes( aData );
-		
+
 		// write garbage, it will be overwritten by the size
 		xTempOutStream->writeBytes( aData );
 
@@ -561,7 +555,7 @@ void OleEmbeddedObject::InsertVisualCache_Impl( const uno::Reference< io::XStrea
 		}
 		for ( sal_Int32 nInd = 0; nInd < 4; nInd++ )
 		{
-			aData[nInd] = (sal_Int8)( ( (sal_uInt64) nLength ) % 0x100 ); 
+			aData[nInd] = (sal_Int8)( ( (sal_uInt64) nLength ) % 0x100 );
 			nLength /= 0x100;
 		}
 		xTempSeek->seek( 36 );
@@ -592,7 +586,6 @@ void OleEmbeddedObject::InsertVisualCache_Impl( const uno::Reference< io::XStrea
 
 //------------------------------------------------------
 void OleEmbeddedObject::RemoveVisualCache_Impl( const uno::Reference< io::XStream >& xTargetStream )
-		throw ( uno::Exception )
 {
 	OSL_ENSURE( xTargetStream.is(), "Invalid argument!\n" );
 	if ( !xTargetStream.is() )
@@ -644,7 +637,7 @@ sal_Bool OleEmbeddedObject::HasVisReplInStream()
 			RTL_LOGFILE_CONTEXT( aLog, "embeddedobj (mv76033) OleEmbeddedObject::HasVisualReplInStream, analyzing" );
 
 			uno::Reference< io::XInputStream > xStream;
-			
+
 			OSL_ENSURE( !m_pOleComponent || m_aTempURL.getLength(), "The temporary file must exist if there is a component!\n" );
 			if ( m_aTempURL.getLength() )
 			{
@@ -697,7 +690,7 @@ sal_Bool OleEmbeddedObject::HasVisReplInStream()
 				}
 
 				SetVisReplInStream( bExists );
-			}	
+			}
 		}
 	}
 
@@ -826,7 +819,7 @@ uno::Reference< io::XStream > OleEmbeddedObject::TryToRetrieveCachedVisualRepres
 									}
 #endif
 								}
-	
+
 								xResult = TryToRetrieveCachedVisualRepresentation_Impl( xStream, sal_False );
 							}
 						}
@@ -1028,7 +1021,7 @@ void OleEmbeddedObject::OnClosed_Impl()
 			uno::Reference< io::XInputStream > xInStream = m_xObjectStream->getInputStream();
 			if ( !xInStream.is() )
 				throw io::IOException(); // TODO: access denied
-	
+
 			m_aTempURL = GetNewFilledTempFile_Impl( xInStream, m_xFactory );
 		}
 	}
@@ -1111,7 +1104,6 @@ uno::Reference< io::XOutputStream > OleEmbeddedObject::GetStreamForSaving()
 
 //----------------------------------------------
 void OleEmbeddedObject::StoreObjectToStream( uno::Reference< io::XOutputStream > xOutStream )
-	throw ( uno::Exception )
 {
 	// this method should be used only on windows
 	if ( m_pOleComponent )
@@ -1160,7 +1152,6 @@ void OleEmbeddedObject::StoreToLocation_Impl(
 							const uno::Sequence< beans::PropertyValue >& /*lArguments*/,
 							const uno::Sequence< beans::PropertyValue >& lObjArgs,
 							sal_Bool bSaveAs )
-		throw ( uno::Exception )
 {
 	// TODO: use lObjArgs
 	// TODO: exchange StoreVisualReplacement by SO file format version?
@@ -1270,7 +1261,7 @@ void OleEmbeddedObject::StoreToLocation_Impl(
 			// and there is no need to cache it even if it is thrown away because the object
 			// is not changed by StoreTo action
 
-			uno::Reference< io::XStream > xTmpCVRepresentation = 
+			uno::Reference< io::XStream > xTmpCVRepresentation =
 						TryToRetrieveCachedVisualRepresentation_Impl( xTargetStream );
 
 			// the locally retrieved representation is always preferable
@@ -1373,11 +1364,6 @@ void SAL_CALL OleEmbeddedObject::setPersistentEntry(
 					sal_Int32 nEntryConnectionMode,
 					const uno::Sequence< beans::PropertyValue >& lArguments,
 					const uno::Sequence< beans::PropertyValue >& lObjArgs )
-		throw ( lang::IllegalArgumentException,
-				embed::WrongStateException,
-				io::IOException,
-				uno::Exception,
-				uno::RuntimeException )
 {
 	RTL_LOGFILE_CONTEXT( aLog, "embeddedobj (mv76033) OleEmbeddedObject::setPersistentEntry" );
 
@@ -1582,11 +1568,6 @@ void SAL_CALL OleEmbeddedObject::storeToEntry( const uno::Reference< embed::XSto
 							const ::rtl::OUString& sEntName,
 							const uno::Sequence< beans::PropertyValue >& lArguments,
 							const uno::Sequence< beans::PropertyValue >& lObjArgs )
-		throw ( lang::IllegalArgumentException,
-				embed::WrongStateException,
-				io::IOException,
-				uno::Exception,
-				uno::RuntimeException )
 {
 	RTL_LOGFILE_CONTEXT( aLog, "embeddedobj (mv76033) OleEmbeddedObject::storeToEntry" );
 
@@ -1616,11 +1597,6 @@ void SAL_CALL OleEmbeddedObject::storeAsEntry( const uno::Reference< embed::XSto
 							const ::rtl::OUString& sEntName,
 							const uno::Sequence< beans::PropertyValue >& lArguments,
 							const uno::Sequence< beans::PropertyValue >& lObjArgs )
-		throw ( lang::IllegalArgumentException,
-				embed::WrongStateException,
-				io::IOException,
-				uno::Exception,
-				uno::RuntimeException )
 {
 	RTL_LOGFILE_CONTEXT( aLog, "embeddedobj (mv76033) OleEmbeddedObject::storeAsEntry" );
 
@@ -1647,9 +1623,6 @@ void SAL_CALL OleEmbeddedObject::storeAsEntry( const uno::Reference< embed::XSto
 
 //------------------------------------------------------
 void SAL_CALL OleEmbeddedObject::saveCompleted( sal_Bool bUseNew )
-		throw ( embed::WrongStateException,
-				uno::Exception,
-				uno::RuntimeException )
 {
 	RTL_LOGFILE_CONTEXT( aLog, "embeddedobj (mv76033) OleEmbeddedObject::saveCompleted" );
 
@@ -1748,8 +1721,6 @@ void SAL_CALL OleEmbeddedObject::saveCompleted( sal_Bool bUseNew )
 
 //------------------------------------------------------
 sal_Bool SAL_CALL OleEmbeddedObject::hasEntry()
-		throw ( embed::WrongStateException,
-				uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XEmbedPersist > xWrappedObject( m_xWrappedObject, uno::UNO_QUERY );
@@ -1777,8 +1748,6 @@ sal_Bool SAL_CALL OleEmbeddedObject::hasEntry()
 
 //------------------------------------------------------
 ::rtl::OUString SAL_CALL OleEmbeddedObject::getEntryName()
-		throw ( embed::WrongStateException,
-				uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XEmbedPersist > xWrappedObject( m_xWrappedObject, uno::UNO_QUERY );
@@ -1811,10 +1780,6 @@ sal_Bool SAL_CALL OleEmbeddedObject::hasEntry()
 
 //------------------------------------------------------
 void SAL_CALL OleEmbeddedObject::storeOwn()
-		throw ( embed::WrongStateException,
-				io::IOException,
-				uno::Exception,
-				uno::RuntimeException )
 {
 	RTL_LOGFILE_CONTEXT( aLog, "embeddedobj (mv76033) OleEmbeddedObject::storeOwn" );
 
@@ -1945,8 +1910,6 @@ void SAL_CALL OleEmbeddedObject::storeOwn()
 
 //------------------------------------------------------
 sal_Bool SAL_CALL OleEmbeddedObject::isReadonly()
-		throw ( embed::WrongStateException,
-				uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XEmbedPersist > xWrappedObject( m_xWrappedObject, uno::UNO_QUERY );
@@ -1980,11 +1943,6 @@ sal_Bool SAL_CALL OleEmbeddedObject::isReadonly()
 void SAL_CALL OleEmbeddedObject::reload(
 				const uno::Sequence< beans::PropertyValue >& lArguments,
 				const uno::Sequence< beans::PropertyValue >& lObjArgs )
-		throw ( lang::IllegalArgumentException,
-				embed::WrongStateException,
-				io::IOException,
-				uno::Exception,
-				uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XEmbedPersist > xWrappedObject( m_xWrappedObject, uno::UNO_QUERY );
@@ -2023,11 +1981,6 @@ void SAL_CALL OleEmbeddedObject::reload(
 //------------------------------------------------------
 void SAL_CALL OleEmbeddedObject::breakLink( const uno::Reference< embed::XStorage >& xStorage,
 												const ::rtl::OUString& sEntName )
-		throw ( lang::IllegalArgumentException,
-				embed::WrongStateException,
-				io::IOException,
-				uno::Exception,
-				uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XLinkageSupport > xWrappedObject( m_xWrappedObject, uno::UNO_QUERY );
@@ -2142,8 +2095,6 @@ void SAL_CALL OleEmbeddedObject::breakLink( const uno::Reference< embed::XStorag
 
 //------------------------------------------------------
 sal_Bool SAL_CALL  OleEmbeddedObject::isLink()
-		throw ( embed::WrongStateException,
-				uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XLinkageSupport > xWrappedObject( m_xWrappedObject, uno::UNO_QUERY );
@@ -2163,9 +2114,6 @@ sal_Bool SAL_CALL  OleEmbeddedObject::isLink()
 
 //------------------------------------------------------
 ::rtl::OUString SAL_CALL OleEmbeddedObject::getLinkURL()
-		throw ( embed::WrongStateException,
-				uno::Exception,
-				uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XLinkageSupport > xWrappedObject( m_xWrappedObject, uno::UNO_QUERY );
@@ -2194,4 +2142,3 @@ sal_Bool SAL_CALL  OleEmbeddedObject::isLink()
 
 	return m_aLinkURL;
 }
-

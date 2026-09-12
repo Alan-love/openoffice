@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -649,7 +649,7 @@ void lcl_FillHFParam( ScPrintHFParam& rParam, const SfxItemSet* pHFSet )
 		rParam.nRight = nTmp < 0 ? 0 : sal_uInt16(nTmp);
 		rParam.pBorder	= (const SvxBoxItem*)   &pHFSet->Get(ATTR_BORDER);
 		rParam.pBack	= (const SvxBrushItem*) &pHFSet->Get(ATTR_BACKGROUND);
-		rParam.pShadow	= (const SvxShadowItem*)&pHFSet->Get(ATTR_SHADOW);;
+		rParam.pShadow	= (const SvxShadowItem*)&pHFSet->Get(ATTR_SHADOW);
 
 //	jetzt doch wieder schon im Dialog:
 //		rParam.nHeight += rParam.nDistance;				// nicht mehr im Dialog ???
@@ -2852,7 +2852,7 @@ void ScPrintFunc::CalcZoom( sal_uInt16 nRangeNo )						// Zoom berechnen
                 if (nZoom == 100)
                     // If it fits at 100 %, it's good enough for me.
                     break;
-                
+
                 nLastFitZoom = nZoom;
                 nZoom = (nLastNonFitZoom + nZoom) / 2;
 
@@ -2894,7 +2894,7 @@ void ScPrintFunc::CalcZoom( sal_uInt16 nRangeNo )						// Zoom berechnen
                 if (nZoom == 100)
                     // If it fits at 100 %, it's good enough for me.
                     break;
-                
+
                 nLastFitZoom = nZoom;
                 nZoom = (nLastNonFitZoom + nZoom) / 2;
 
@@ -3122,7 +3122,7 @@ void ScPrintFunc::CalcPages()               // berechnet aPageRect und Seiten au
 
         SCROW nLastRow = -1;
         if (!pDoc->RowHidden(nRow, nPrintTab, NULL, &nLastRow))
-        {    
+        {
             bVisRow = true;
             nLastVisibleRow = nLastRow;
         }
@@ -3167,8 +3167,3 @@ ScJobSetup::ScJobSetup( SfxPrinter* pPrinter )
 		aUserMapMode = pPrinter->GetMapMode();
 	}
 };
-
-
-
-
-

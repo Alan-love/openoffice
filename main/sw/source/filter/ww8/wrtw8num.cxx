@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -24,7 +24,6 @@
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_sw.hxx"
 
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil -*- */
 
 #include <hintids.hxx>
 #include <vcl/font.hxx>
@@ -275,18 +274,18 @@ void WW8AttributeOutput::NumberingLevel( sal_uInt8 /*nLevel*/,
     sal_uInt8 nAlign;
     switch ( eAdjust )
     {
-    case SVX_ADJUST_CENTER: 
-        nAlign = 1; 
+    case SVX_ADJUST_CENTER:
+        nAlign = 1;
         break;
-    case SVX_ADJUST_RIGHT: 
-        nAlign = 2; 
+    case SVX_ADJUST_RIGHT:
+        nAlign = 2;
         break;
     default:
-        nAlign = 0; 
+        nAlign = 0;
         break;
     }
     *m_rWW8Export.pTableStrm << nAlign;
-    
+
     // Write the rgbxchNums[9], positions of placeholders for paragraph
     // numbers in the text
     m_rWW8Export.pTableStrm->Write( pNumLvlPos, WW8ListManager::nMaxLevel );
@@ -331,7 +330,7 @@ void WW8AttributeOutput::NumberingLevel( sal_uInt8 /*nLevel*/,
 			m_rWW8Export.InsUInt16(0x4888);
 			m_rWW8Export.InsUInt16(1);
 		}
-	}			
+	}
 
         m_rWW8Export.pO = pOldpO;
     }
@@ -568,7 +567,7 @@ void MSWordExportBase::AbstractNumberingDefinitions()
                     nIndentAt, nFirstLineIndex, nListTabPos,
                     sNumStr,
                     rFmt.GetNumberingType()==SVX_NUM_BITMAP ? rFmt.GetBrush():0);//Start for i120928,export graphic bullet,2012.9.25
-		
+
             delete pPseudoFont;
         }
         AttrOutput().EndAbstractNumbering();
@@ -629,7 +628,7 @@ void WW8Export::OutListNamesTab()
     pFib->lcbSttbListNames = pTableStrm->Tell() - pFib->fcSttbListNames;
 }
 
-/*  */
+/* */
 
 // old WW95-Code
 
@@ -826,7 +825,7 @@ void MSWordExportBase::SubstituteBullet( String& rNumStr,
      else
      {
         /*
-        Well we don't have an available substition, and we're
+        Well we don't have an available substitution, and we're
         in our private area, so give up and show a standard
         bullet symbol
         */

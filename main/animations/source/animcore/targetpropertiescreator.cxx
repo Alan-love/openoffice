@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -62,7 +62,7 @@ namespace animcore
                                     public TargetPropertiesCreator_Base
     {
     public:
-        static uno::Reference< uno::XInterface > SAL_CALL createInstance( const uno::Reference< uno::XComponentContext >& xContext ) throw ( uno::Exception )
+        static uno::Reference< uno::XInterface > SAL_CALL createInstance( const uno::Reference< uno::XComponentContext >& xContext )
         {
             return uno::Reference< uno::XInterface >( static_cast<cppu::OWeakObject*>(new TargetPropertiesCreator( xContext )) );
         }
@@ -71,15 +71,15 @@ namespace animcore
         virtual void SAL_CALL disposing();
 
         // XTargetPropertiesCreator
-        virtual uno::Sequence< animations::TargetProperties > SAL_CALL createInitialTargetProperties( const uno::Reference< animations::XAnimationNode >& rootNode ) throw (uno::RuntimeException);
+        virtual uno::Sequence< animations::TargetProperties > SAL_CALL createInitialTargetProperties( const uno::Reference< animations::XAnimationNode >& rootNode );
 
         // XServiceInfo
-        virtual ::rtl::OUString SAL_CALL getImplementationName() throw( uno::RuntimeException );
-        virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName ) throw( uno::RuntimeException );
-        virtual uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames()  throw( uno::RuntimeException );
+        virtual ::rtl::OUString SAL_CALL getImplementationName();
+        virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName );
+        virtual uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames();
 
         // XServiceName
-        virtual ::rtl::OUString SAL_CALL getServiceName(  ) throw (uno::RuntimeException);
+        virtual ::rtl::OUString SAL_CALL getServiceName(  );
 
     protected:
         ~TargetPropertiesCreator(); // we're a ref-counted UNO class. _We_ destroy ourselves.
@@ -94,11 +94,11 @@ namespace animcore
 
 	// --------------------------------------------------------------------
 
-    uno::Reference< uno::XInterface > SAL_CALL createInstance_TargetPropertiesCreator( const uno::Reference< uno::XComponentContext > & rSMgr ) throw (uno::Exception)
+    uno::Reference< uno::XInterface > SAL_CALL createInstance_TargetPropertiesCreator( const uno::Reference< uno::XComponentContext > & rSMgr )
     {
         return TargetPropertiesCreator::createInstance( rSMgr );
     }
-    
+
     ::rtl::OUString getImplementationName_TargetPropertiesCreator()
     {
         return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM ( IMPLEMENTATION_NAME ) );
@@ -117,7 +117,7 @@ namespace animcore
     {
         // Vector containing all properties for a given shape
         typedef ::std::vector< beans::NamedValue > VectorOfNamedValues;
-        
+
         /** The hash map key
 
         	This key contains both XShape reference and a paragraph
@@ -156,7 +156,7 @@ namespace animcore
 		// x = (x & 0x00F000F0) << 4) | (x >> 4) & 0x00F000F0 | x & 0xF00FF00F;
 		// x = (x & 0x0C0C0C0C) << 2) | (x >> 2) & 0x0C0C0C0C | x & 0xC3C3C3C3;
 		// x = (x & 0x22222222) << 1) | (x >> 1) & 0x22222222 | x & 0x99999999;
-		// 
+		//
 		// Costs about 17 cycles on a RISC machine with infinite
 		// instruction level parallelism (~42 basic
 		// instructions). Thus I truly doubt this pays off...
@@ -216,12 +216,12 @@ namespace animcore
                                         "animcore: NodeFunctor::operator(): no target on ITERATE node" );
                             return;
                         }
-                
+
                         xTargetShape.set( xIterNode->getTarget(),
                                           uno::UNO_QUERY );
 
                         if( !xTargetShape.is() )
-                        {                            
+                        {
                             ::com::sun::star::presentation::ParagraphTarget aTarget;
 
                             // no shape provided. Maybe a ParagraphTarget?
@@ -232,7 +232,7 @@ namespace animcore
                                             "target information" );
                                 return;
                             }
-                        
+
                             xTargetShape = aTarget.Shape;
                             nParagraphIndex = aTarget.Paragraph;
 
@@ -252,10 +252,10 @@ namespace animcore
                         NodeFunctor aFunctor( mrShapeHash,
                                               xTargetShape,
                                               nParagraphIndex );
-                        if( !::anim::for_each_childNode( xNode, 
+                        if( !::anim::for_each_childNode( xNode,
                                                          aFunctor ) )
                         {
-                            OSL_ENSURE( false, 
+                            OSL_ENSURE( false,
                                         "AnimCore: NodeFunctor::operator(): child node iteration failed, "
                                         "or extraneous container nodes encountered" );
                         }
@@ -283,9 +283,9 @@ namespace animcore
                     case animations::AnimationNodeType::SET:
                     {
                         // evaluate set node content
-                        uno::Reference< animations::XAnimate > xAnimateNode( xNode, 
+                        uno::Reference< animations::XAnimate > xAnimateNode( xNode,
                                                                              uno::UNO_QUERY );
-                        
+
                         if( !xAnimateNode.is() )
                             break; // invalid node
 
@@ -312,26 +312,26 @@ namespace animcore
                                 // not a pure shape target - maybe a
                                 // ParagraphTarget?
                                 presentation::ParagraphTarget aUnoTarget;
-                                
+
                                 if( !(xAnimateNode->getTarget() >>= aUnoTarget) )
                                 {
                                     OSL_ENSURE( false,
                                                 "AnimCore: NodeFunctor::operator(): unknown target type encountered" );
                                     break;
                                 }
-                                
+
                                 aTarget.mxRef = aUnoTarget.Shape;
                                 aTarget.mnParagraphIndex = aUnoTarget.Paragraph;
                             }
                         }
-                        
+
                         if( !aTarget.mxRef.is() )
                         {
                             OSL_ENSURE( false,
                                         "AnimCore: NodeFunctor::operator(): Found target, but XShape is NULL" );
                             break; // invalid target XShape
                         }
-                            
+
                         // check whether we already have an entry for
                         // this target (we only take the first set
                         // effect for every shape)
@@ -356,7 +356,7 @@ namespace animcore
                                 ::rtl::OUString aString;
                                 if( (aAny >>= aString) )
                                 {
-                                    // we also take the strings "true" and "false", 
+                                    // we also take the strings "true" and "false",
                                     // as well as "on" and "off" here
                                     if( aString.equalsIgnoreAsciiCaseAscii("true") ||
                                         aString.equalsIgnoreAsciiCaseAscii("on") )
@@ -381,10 +381,10 @@ namespace animcore
 				}
 						    // target is set the 'visible' value,
 							// so we should record the opposite value
-				mrShapeHash.insert( 
-                                    XShapeHash::value_type( 
+				mrShapeHash.insert(
+                                    XShapeHash::value_type(
                                         aTarget,
-                                        VectorOfNamedValues( 
+                                        VectorOfNamedValues(
                                             1,
                                             beans::NamedValue(
                                                 //xAnimateNode->getAttributeName(),
@@ -422,16 +422,16 @@ namespace animcore
 
     // XTargetPropertiesCreator
     uno::Sequence< animations::TargetProperties > SAL_CALL TargetPropertiesCreator::createInitialTargetProperties
-    	( 
-            const uno::Reference< animations::XAnimationNode >& xRootNode 
-        ) throw (uno::RuntimeException)
+    	(
+            const uno::Reference< animations::XAnimationNode >& xRootNode
+        )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
 
         // scan all nodes for visibility changes, and record first
         // 'visibility=true' for each shape
         XShapeHash aShapeHash( 101 );
- 
+
         NodeFunctor aFunctor( aShapeHash );
 
         // TODO(F1): Maybe limit functor application to main sequence
@@ -455,18 +455,18 @@ namespace animcore
         {
             animations::TargetProperties& rCurrProps( aRes[ nCurrIndex++ ] );
 
-            if( aCurr->first.mnParagraphIndex == -1 )    
-            {            
+            if( aCurr->first.mnParagraphIndex == -1 )
+            {
                 rCurrProps.Target = uno::makeAny( aCurr->first.mxRef );
             }
             else
             {
-                rCurrProps.Target = uno::makeAny( 
+                rCurrProps.Target = uno::makeAny(
                     presentation::ParagraphTarget(
                         aCurr->first.mxRef,
                         aCurr->first.mnParagraphIndex ) );
             }
-                
+
             rCurrProps.Properties = ::comphelper::containerToSequence( aCurr->second );
 
             ++aCurr;
@@ -476,26 +476,26 @@ namespace animcore
     }
 
     // XServiceInfo
-    ::rtl::OUString SAL_CALL TargetPropertiesCreator::getImplementationName() throw( uno::RuntimeException )
+    ::rtl::OUString SAL_CALL TargetPropertiesCreator::getImplementationName()
     {
         return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( IMPLEMENTATION_NAME ) );
     }
 
-    sal_Bool SAL_CALL TargetPropertiesCreator::supportsService( const ::rtl::OUString& ServiceName ) throw( uno::RuntimeException )
+    sal_Bool SAL_CALL TargetPropertiesCreator::supportsService( const ::rtl::OUString& ServiceName )
     {
         return ServiceName.equalsIgnoreAsciiCaseAscii( SERVICE_NAME );
     }
 
-    uno::Sequence< ::rtl::OUString > SAL_CALL TargetPropertiesCreator::getSupportedServiceNames()  throw( uno::RuntimeException )
+    uno::Sequence< ::rtl::OUString > SAL_CALL TargetPropertiesCreator::getSupportedServiceNames()
     {
         uno::Sequence< ::rtl::OUString > aRet(1);
         aRet[0] = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM ( SERVICE_NAME ) );
-        
+
         return aRet;
     }
 
     // XServiceName
-    ::rtl::OUString SAL_CALL TargetPropertiesCreator::getServiceName(  ) throw (uno::RuntimeException)
+    ::rtl::OUString SAL_CALL TargetPropertiesCreator::getServiceName(  )
     {
         return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( SERVICE_NAME ) );
     }

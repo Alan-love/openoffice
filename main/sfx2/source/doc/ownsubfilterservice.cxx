@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -82,7 +82,6 @@ uno::Reference< lang::XSingleServiceFactory > SAL_CALL OwnSubFilterService::impl
 
 //-------------------------------------------------------------------------
 sal_Bool SAL_CALL OwnSubFilterService::filter( const uno::Sequence< beans::PropertyValue >& aDescriptor )
-	throw (uno::RuntimeException)
 {
 	if ( !m_pObjectShell )
 		throw uno::RuntimeException();
@@ -92,7 +91,6 @@ sal_Bool SAL_CALL OwnSubFilterService::filter( const uno::Sequence< beans::Prope
 
 //-------------------------------------------------------------------------
 void SAL_CALL OwnSubFilterService::cancel()
-	throw (uno::RuntimeException)
 {
 	// not implemented
 }
@@ -102,7 +100,6 @@ void SAL_CALL OwnSubFilterService::cancel()
 
 //-------------------------------------------------------------------------
 void SAL_CALL OwnSubFilterService::initialize( const uno::Sequence< uno::Any >& aArguments )
-	throw (uno::Exception, uno::RuntimeException)
 {
 	if ( !m_xFactory.is() )
 		throw uno::RuntimeException();
@@ -132,14 +129,12 @@ void SAL_CALL OwnSubFilterService::initialize( const uno::Sequence< uno::Any >& 
 
 //-------------------------------------------------------------------------
 ::rtl::OUString SAL_CALL OwnSubFilterService::getImplementationName()
-	throw ( uno::RuntimeException )
 {
 	return impl_getStaticImplementationName();
 }
 
 //-------------------------------------------------------------------------
 sal_Bool SAL_CALL OwnSubFilterService::supportsService( const ::rtl::OUString& ServiceName )
-	throw ( uno::RuntimeException )
 {
 	uno::Sequence< ::rtl::OUString > aSeq = impl_getStaticSupportedServiceNames();
 
@@ -152,10 +147,8 @@ sal_Bool SAL_CALL OwnSubFilterService::supportsService( const ::rtl::OUString& S
 
 //-------------------------------------------------------------------------
 uno::Sequence< ::rtl::OUString > SAL_CALL OwnSubFilterService::getSupportedServiceNames()
-	throw ( uno::RuntimeException )
 {
 	return impl_getStaticSupportedServiceNames();
 }
 
 } // namespace sfx2
-

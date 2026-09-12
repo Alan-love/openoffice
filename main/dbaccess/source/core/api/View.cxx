@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -98,7 +98,7 @@ namespace dbaccess
     IMPLEMENT_FORWARD_REFCOUNT( View, View_Base )
     IMPLEMENT_GET_IMPLEMENTATION_ID( View )
     // -------------------------------------------------------------------------
-    Any SAL_CALL View::queryInterface( const Type & _rType ) throw(RuntimeException)
+    Any SAL_CALL View::queryInterface( const Type & _rType )
     {
 	    if(_rType == getCppuType( (Reference<XAlterView>*)0) && !m_xViewAccess.is() )
 		    return Any();
@@ -108,13 +108,13 @@ namespace dbaccess
 		return aReturn;
     }
     // -------------------------------------------------------------------------
-    Sequence< Type > SAL_CALL View::getTypes(  ) throw(RuntimeException)
+    Sequence< Type > SAL_CALL View::getTypes(  )
     {
 	    Type aAlterType = getCppuType( (Reference<XAlterView>*)0);
 
 	    Sequence< Type > aTypes( ::comphelper::concatSequences(View_Base::getTypes(),View_IBASE::getTypes()) );
 	    ::std::vector<Type> aOwnTypes;
-	    aOwnTypes.reserve(aTypes.getLength());	
+	    aOwnTypes.reserve(aTypes.getLength());
 
 	    const Type* pIter = aTypes.getConstArray();
 	    const Type* pEnd = pIter + aTypes.getLength();
@@ -123,13 +123,13 @@ namespace dbaccess
 		    if( (*pIter != aAlterType || m_xViewAccess.is()) )
 			    aOwnTypes.push_back(*pIter);
 	    }
-    	
+
 	    Type* pTypes = aOwnTypes.empty() ? 0 : &aOwnTypes[0];
 	    return Sequence< Type >(pTypes, aOwnTypes.size());
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL View::alterCommand( const ::rtl::OUString& _rNewCommand ) throw (SQLException, RuntimeException)
+    void SAL_CALL View::alterCommand( const ::rtl::OUString& _rNewCommand )
     {
         OSL_ENSURE(m_xViewAccess.is(),"Illegal call to AlterView!");
         m_xViewAccess->alterCommand(this,_rNewCommand);

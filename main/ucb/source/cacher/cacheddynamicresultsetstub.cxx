@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -86,7 +86,6 @@ XINTERFACE_COMMON_IMPL( CachedDynamicResultSetStub )
 
 Any SAL_CALL CachedDynamicResultSetStub
 	::queryInterface( const Type&  rType )
-	throw ( RuntimeException )
 {
 	//list all interfaces inclusive baseclasses of interfaces
 
@@ -181,7 +180,6 @@ ONE_INSTANCE_SERVICE_FACTORY_IMPL( CachedDynamicResultSetStubFactory );
 Reference< XDynamicResultSet > SAL_CALL CachedDynamicResultSetStubFactory
 	::createCachedDynamicResultSetStub(
 			const Reference< XDynamicResultSet > & Source )
-			throw( RuntimeException )
 {
 	Reference< XDynamicResultSet > xRet;
 	xRet = new CachedDynamicResultSetStub( Source, m_xSMgr );
@@ -196,9 +194,6 @@ void SAL_CALL CachedDynamicResultSetStubFactory
 			, const Sequence< NumberedSortingInfo > & SortingInfo
 			, const Reference< XAnyCompareFactory > & CompareFactory
 			)
-			throw (  ListenerAlreadySetException
-			, AlreadyInitializedException
-			, RuntimeException )
 {
 	OSL_ENSURE( Source.is(), "a Source is needed" );
 	OSL_ENSURE( TargetCache.is(), "a TargetCache is needed" );
@@ -238,4 +233,3 @@ void SAL_CALL CachedDynamicResultSetStubFactory
 
 	xTarget->setSource( xStub );
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -256,7 +256,7 @@ void SwView_Impl::Invalidate()
 void SwView_Impl::AddTransferable(SwTransferable& rTransferable)
 {
     //prevent removing of the non-referenced SwTransferable
-    rTransferable.m_refCount++;;
+    rTransferable.m_refCount++;
     {
         xTransferable = Reference<XUnoTunnel> (&rTransferable);
     }
@@ -287,7 +287,7 @@ SwScannerEventListener::~SwScannerEventListener()
 {
 }
 
-void SAL_CALL SwScannerEventListener::disposing( const EventObject& rEventObject) throw(uno::RuntimeException)
+void SAL_CALL SwScannerEventListener::disposing( const EventObject& rEventObject)
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
 #if defined WNT || defined UNX
@@ -303,12 +303,10 @@ SwClipboardChangeListener::~SwClipboardChangeListener()
 }
 
 void SAL_CALL SwClipboardChangeListener::disposing( const EventObject& /*rEventObject*/ )
-	throw ( RuntimeException )
 {
 }
 
 void SAL_CALL SwClipboardChangeListener::changedContents( const CLIP_NMSPC::ClipboardEvent& rEventObject )
-	throw ( RuntimeException )
 
 {
     const ::vos::OGuard aGuard( Application::GetSolarMutex() );
@@ -337,5 +335,3 @@ void SwClipboardChangeListener::AddRemoveListener( sal_Bool bAdd )
 {
 	pView->AddRemoveClipboardListener( Reference< XClipboardListener >( this ), bAdd );
 }
-
-

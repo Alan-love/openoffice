@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -33,6 +33,7 @@
 
 #define PLATFORM_ALL                "all"
 #define PLATFORM_WIN_X86            "windows_x86"
+#define PLATFORM_WIN_X86_64         "windows_x86_64"
 #define PLATFORM_LINUX_X86          "linux_x86"
 #define PLATFORM_LINUX_X86_64       "linux_x86_64"
 #define PLATFORM_KFREEBSD_X86       "kfreebsd_x86"
@@ -80,7 +81,7 @@ namespace css = ::com::sun::star;
 
 namespace dp_misc
 {
-namespace 
+namespace
 {
     struct StrOperatingSystem :
         public rtl::StaticWithInit<const OUString, StrOperatingSystem> {
@@ -116,7 +117,7 @@ namespace
 
     bool checkOSandCPU(OUString const & os, OUString const & cpu)
     {
-        return os.equals(StrOperatingSystem::get()) 
+        return os.equals(StrOperatingSystem::get())
             && cpu.equals(StrCPU::get());
     }
 
@@ -127,44 +128,46 @@ namespace
             ret = true;
         else if (token.equals(OUSTR(PLATFORM_WIN_X86)))
             ret = checkOSandCPU(OUSTR("Windows"), OUSTR("x86"));
+        else if (token.equals(OUSTR(PLATFORM_WIN_X86_64)))
+            ret = checkOSandCPU(OUSTR("Windows"), OUSTR("X86_64"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_X86)))
             ret = checkOSandCPU(OUSTR("Linux"), OUSTR("x86"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_X86_64)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("X86_64"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("X86_64"));
         else if (token.equals(OUSTR(PLATFORM_KFREEBSD_X86)))
             ret = checkOSandCPU(OUSTR("kFreeBSD"), OUSTR("x86"));
         else if (token.equals(OUSTR(PLATFORM_KFREEBSD_X86_64)))
-            ret = checkOSandCPU(OUSTR("kFreeBSD"), OUSTR("X86_64"));  
+            ret = checkOSandCPU(OUSTR("kFreeBSD"), OUSTR("X86_64"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_SPARC)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("SPARC"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("SPARC"));
         else if (token.equals(OUSTR(PLATFORM_FREEBSD_POWERPC)))
-            ret = checkOSandCPU(OUSTR("FreeBSD"), OUSTR("PowerPC"));  
+            ret = checkOSandCPU(OUSTR("FreeBSD"), OUSTR("PowerPC"));
         else if (token.equals(OUSTR(PLATFORM_FREEBSD_POWERPC64)))
-            ret = checkOSandCPU(OUSTR("FreeBSD"), OUSTR("PowerPC64"));  
+            ret = checkOSandCPU(OUSTR("FreeBSD"), OUSTR("PowerPC64"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_POWERPC)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("PowerPC"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("PowerPC"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_POWERPC64)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("PowerPC_64"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("PowerPC_64"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_ARM_EABI)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("ARM_EABI"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("ARM_EABI"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_ARM_OABI)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("ARM_OABI"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("ARM_OABI"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_MIPS_EL)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("MIPS_EL"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("MIPS_EL"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_MIPS_EB)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("MIPS_EB"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("MIPS_EB"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_IA64)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("IA64"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("IA64"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_M68K)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("M68K"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("M68K"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_S390)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("S390"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("S390"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_S390x)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("S390x"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("S390x"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_HPPA)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("HPPA"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("HPPA"));
         else if (token.equals(OUSTR(PLATFORM_LINUX_ALPHA)))
-            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("ALPHA"));  
+            ret = checkOSandCPU(OUSTR("Linux"), OUSTR("ALPHA"));
         else if (token.equals(OUSTR(PLATFORM_SOLARIS_SPARC)))
             ret = checkOSandCPU(OUSTR("Solaris"), OUSTR("SPARC"));
         else if (token.equals(OUSTR(PLATFORM_SOLARIS_SPARC64)))
@@ -188,7 +191,7 @@ namespace
         else
         {
             OSL_ENSURE(0, "Extension Manager: The extension supports an unknown platform. "
-            "Check the platform element in the descripion.xml");
+            "Check the platform element in the description.xml");
             ret = false;
         }
         return ret;
@@ -237,4 +240,3 @@ bool hasValidPlatform( css::uno::Sequence<OUString> const & platformStrings)
 }
 
 }
-

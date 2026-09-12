@@ -1,5 +1,5 @@
 ###############################################################
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 ###############################################################
 
 
@@ -142,10 +142,32 @@ $(call gb_LinkTarget_set_include,$(1),\
 	$$(INCLUDE) \
 	$(LIBXML_CFLAGS) \
 )
-$(call gb_LinkTarget_add_libs,$(1),$(LIBXML_LIBS))
+
+# Some system libxml2 builds report -licuuc in their link flags because
+# libxml2 itself was built against ICU. That ICU dependency is already
+# satisfied inside libxml2's own dylib; forwarding -licuuc to consumers
+# makes them link this tree's bundled (OOO-layer) ICU directly, which
+# breaks URE-layer consumers on macOS (see macosx-change-install-names.pl,
+# which has no rule for a URE library depending on an OOO one).
+$(call gb_LinkTarget_add_libs,$(1),$(filter-out -licuuc,$(LIBXML_LIBS)))
 endef
 
 else # !SYSTEM_LIBXML
+
+ifeq ($(OS),MACOSX)
+
+# Bundled libxml2 builds as a static archive on macOS (main/libxml2/makefile.mk),
+# not a dylib, so it can't be a PLAINLIB like the else-branch below. A static
+# archive carries no transitive deps, so its own libxml-2.0.pc's Libs.private
+# must be added explicitly. It is built --without-iconv, so no -liconv here.
+define gb_LinkTarget__use_libxml2
+$(call gb_LinkTarget_add_libs,$(1),\
+	$(OUTDIR)/lib/libxml2.a \
+	-lpthread -lm \
+)
+endef
+
+else # !MACOSX
 
 $(eval $(call gb_Helper_register_libraries,PLAINLIBS_URE, \
 	xml2 \
@@ -156,6 +178,8 @@ $(call gb_LinkTarget_add_linked_libs,$(1),\
 	xml2 \
 )
 endef
+
+endif # MACOSX
 
 endif # SYSTEM_LIBXML
 
@@ -172,6 +196,19 @@ endef
 
 else # !SYSTEM_LIBXSLT
 
+ifeq ($(OS),MACOSX)
+
+# Bundled libxslt/libexslt build as static archives on macOS (see
+# main/libxslt/makefile.mk); link by absolute path, same as libxml2 above.
+define gb_LinkTarget__use_libxslt
+$(call gb_LinkTarget_add_libs,$(1),\
+	$(OUTDIR)/lib/libxslt.a \
+	$(OUTDIR)/lib/libexslt.a \
+)
+endef
+
+else # !MACOSX
+
 $(eval $(call gb_Helper_register_libraries,PLAINLIBS_OOO, \
 	xslt \
 ))
@@ -181,6 +218,8 @@ $(call gb_LinkTarget_add_linked_libs,$(1),\
 	xslt \
 )
 endef
+
+endif # MACOSX
 
 endif # SYSTEM_LIBXSLT
 
@@ -288,15 +327,31 @@ endif # SYSTEM_GRAPHITE
 ifeq ($(SYSTEM_ICU),YES)
 
 define gb_LinkTarget__use_icudata
+$(call gb_LinkTarget_set_include,$(1),\
+	$$(INCLUDE) \
+	$(ICU_CFLAGS) \
+)
 $(call gb_LinkTarget_add_libs,$(1),-licudata)
 endef
 define gb_LinkTarget__use_icui18n
+$(call gb_LinkTarget_set_include,$(1),\
+	$$(INCLUDE) \
+	$(ICU_CFLAGS) \
+)
 $(call gb_LinkTarget_add_libs,$(1),-licui18n)
 endef
 define gb_LinkTarget__use_icule
+$(call gb_LinkTarget_set_include,$(1),\
+	$$(INCLUDE) \
+	$(ICU_CFLAGS) \
+)
 $(call gb_LinkTarget_add_libs,$(1),-licule)
 endef
 define gb_LinkTarget__use_icuuc
+$(call gb_LinkTarget_set_include,$(1),\
+	$$(INCLUDE) \
+	$(ICU_CFLAGS) \
+)
 $(call gb_LinkTarget_add_libs,$(1),-licuuc)
 endef
 

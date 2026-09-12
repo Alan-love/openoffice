@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -34,6 +34,11 @@
 
 // just to go with calling convention of windows
 #define SQL_API __stdcall
+// On Win64, we need additional types predefined:
+#if _WIN64
+typedef long long INT64;
+typedef unsigned long long UINT64;
+#endif
 #include <odbc/sqlext.h>
 #undef SQL_API
 #define SQL_API __stdcall
@@ -167,5 +172,3 @@
 #endif
 
 #endif // _CONNECTIVITY_OFUNCTIONDEFS_HXX_
-
-

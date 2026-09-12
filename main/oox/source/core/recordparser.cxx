@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -51,14 +51,14 @@ public:
     inline explicit         Locator( RecordParser* pParser ) : mpParser( pParser ) {}
 
     void                    dispose();
-    void                    checkDispose() throw( RuntimeException );
+    void                    checkDispose();
 
     // com.sun.star.sax.XLocator interface
 
-    virtual sal_Int32 SAL_CALL getColumnNumber() throw( RuntimeException );
-    virtual sal_Int32 SAL_CALL getLineNumber() throw( RuntimeException );
-    virtual OUString SAL_CALL getPublicId() throw( RuntimeException );
-    virtual OUString SAL_CALL getSystemId() throw( RuntimeException );
+    virtual sal_Int32 SAL_CALL getColumnNumber();
+    virtual sal_Int32 SAL_CALL getLineNumber();
+    virtual OUString SAL_CALL getPublicId();
+    virtual OUString SAL_CALL getSystemId();
 
 private:
     RecordParser*           mpParser;
@@ -71,29 +71,29 @@ void Locator::dispose()
     mpParser = 0;
 }
 
-void Locator::checkDispose() throw( RuntimeException )
+void Locator::checkDispose()
 {
     if( !mpParser )
         throw DisposedException();
 }
 
-sal_Int32 SAL_CALL Locator::getColumnNumber() throw( RuntimeException )
+sal_Int32 SAL_CALL Locator::getColumnNumber()
 {
     return -1;
 }
 
-sal_Int32 SAL_CALL Locator::getLineNumber() throw( RuntimeException )
+sal_Int32 SAL_CALL Locator::getLineNumber()
 {
     return -1;
 }
 
-OUString SAL_CALL Locator::getPublicId() throw( RuntimeException )
+OUString SAL_CALL Locator::getPublicId()
 {
     checkDispose();
     return mpParser->getInputSource().maPublicId;
 }
 
-OUString SAL_CALL Locator::getSystemId() throw( RuntimeException )
+OUString SAL_CALL Locator::getSystemId()
 {
     checkDispose();
     return mpParser->getInputSource().maSystemId;
@@ -248,7 +248,7 @@ void RecordParser::setFragmentHandler( const ::rtl::Reference< FragmentHandler >
     }
 }
 
-void RecordParser::parseStream( const RecordInputSource& rInputSource ) throw( SAXException, IOException, RuntimeException )
+void RecordParser::parseStream( const RecordInputSource& rInputSource )
 {
     maSource = rInputSource;
 

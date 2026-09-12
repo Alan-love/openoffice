@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -35,7 +35,7 @@
 #include <svtools/miscopt.hxx>
 #include <toolkit/helper/vclunohelper.hxx>
 #include <vcl/toolbox.hxx>
-//shizhobo 
+//shizhobo
 #include <com/sun/star/beans/PropertyAttribute.hpp>
 const int TOOLBARCONTROLLER_PROPHANDLE_SUPPORTSVISIABLE  = 1;
 const int TOOLBARCONTROLLER_PROPCOUNT               = 1;
@@ -57,7 +57,7 @@ namespace svt
 {
 
 ToolboxController::ToolboxController(
-    
+
     const Reference< XMultiServiceFactory >& rServiceManager,
     const Reference< XFrame >& xFrame,
     const ::rtl::OUString& aCommandURL ) :
@@ -140,7 +140,6 @@ Reference< XLayoutManager > ToolboxController::getLayoutManager() const
 
 // XInterface
 Any SAL_CALL ToolboxController::queryInterface( const Type& rType )
-throw ( RuntimeException )
 {
 	Any a = ::cppu::queryInterface(
 				rType ,
@@ -157,7 +156,7 @@ throw ( RuntimeException )
 			,static_cast<XMultiPropertySet*>(this)
 			,static_cast<XFastPropertySet*>(this));
 		if (!a.hasValue())
-			return OWeakObject::queryInterface( rType );	
+			return OWeakObject::queryInterface( rType );
 	}
 	return a;
 }
@@ -173,10 +172,9 @@ void SAL_CALL ToolboxController::release() throw ()
 }
 
 void SAL_CALL ToolboxController::initialize( const Sequence< Any >& aArguments )
-throw ( Exception, RuntimeException )
 {
     bool bInitialized( true );
-    
+
     {
         vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
 
@@ -190,7 +188,7 @@ throw ( Exception, RuntimeException )
     {
         vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
         m_bInitialized = sal_True;
-        //shizhoubo add 
+        //shizhoubo add
         m_bSupportVisiable = sal_False;
         PropertyValue aPropValue;
         for ( int i = 0; i < aArguments.getLength(); i++ )
@@ -229,21 +227,19 @@ throw ( Exception, RuntimeException )
 }
 
 void SAL_CALL ToolboxController::update()
-throw ( RuntimeException )
-{ 
+{
     {
         vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
         if ( m_bDisposed )
             throw DisposedException();
     }
-   
+
     // Bind all registered listeners to their dispatch objects
     bindListener();
 }
 
 // XComponent
 void SAL_CALL ToolboxController::dispose()
-throw (::com::sun::star::uno::RuntimeException)
 {
     Reference< XComponent > xThis( static_cast< OWeakObject* >(this), UNO_QUERY );
 
@@ -284,20 +280,17 @@ throw (::com::sun::star::uno::RuntimeException)
 }
 
 void SAL_CALL ToolboxController::addEventListener( const Reference< XEventListener >& xListener )
-throw ( RuntimeException )
 {
     m_aListenerContainer.addInterface( ::getCppuType( ( const Reference< XEventListener >* ) NULL ), xListener );
 }
 
 void SAL_CALL ToolboxController::removeEventListener( const Reference< XEventListener >& aListener )
-throw ( RuntimeException )
 {
     m_aListenerContainer.removeInterface( ::getCppuType( ( const Reference< XEventListener >* ) NULL ), aListener );
 }
 
 // XEventListener
 void SAL_CALL ToolboxController::disposing( const EventObject& Source )
-throw ( RuntimeException )
 {
     Reference< XInterface > xSource( Source.Source );
 
@@ -323,14 +316,12 @@ throw ( RuntimeException )
 
 // XStatusListener
 void SAL_CALL ToolboxController::statusChanged( const FeatureStateEvent& )
-throw ( RuntimeException )
 {
     // must be implemented by sub class
 }
 
 // XToolbarController
 void SAL_CALL ToolboxController::execute( sal_Int16 KeyModifier )
-throw (::com::sun::star::uno::RuntimeException)
 {
     Reference< XDispatch >       xDispatch;
     ::rtl::OUString                     aCommandURL;
@@ -377,23 +368,19 @@ throw (::com::sun::star::uno::RuntimeException)
 }
 
 void SAL_CALL ToolboxController::click()
-throw (::com::sun::star::uno::RuntimeException)
 {
 }
 
 void SAL_CALL ToolboxController::doubleClick()
-throw (::com::sun::star::uno::RuntimeException)
 {
 }
 
 Reference< XWindow > SAL_CALL ToolboxController::createPopupWindow()
-throw (::com::sun::star::uno::RuntimeException)
 {
     return Reference< XWindow >();
 }
 
 Reference< XWindow > SAL_CALL ToolboxController::createItemWindow( const Reference< XWindow >& )
-throw (::com::sun::star::uno::RuntimeException)
 {
     return Reference< XWindow >();
 }
@@ -719,7 +706,7 @@ void ToolboxController::dispatchCommand( const OUString& sCommandURL, const Sequ
     try
     {
 	    Reference< XDispatchProvider > xDispatchProvider( m_xFrame, UNO_QUERY_THROW );
-        URL aURL;       
+        URL aURL;
         aURL.Complete = sCommandURL;
         getURLTransformer()->parseStrict( aURL );
 
@@ -739,7 +726,7 @@ void ToolboxController::dispatchCommand( const OUString& sCommandURL, const Sequ
 //
 //-------------------------------------------------------------------------
 // XPropertySet by shizhoubo
-com::sun::star::uno::Reference< com::sun::star::beans::XPropertySetInfo >  SAL_CALL ToolboxController::getPropertySetInfo() throw(::com::sun::star::uno::RuntimeException)
+com::sun::star::uno::Reference< com::sun::star::beans::XPropertySetInfo >  SAL_CALL ToolboxController::getPropertySetInfo()
 {
 	Reference<XPropertySetInfo>  xInfo( createPropertySetInfo( getInfoHelper() ) );
 	return xInfo;
@@ -766,7 +753,7 @@ void ToolboxController::setSupportVisiableProperty(sal_Bool bValue)
 sal_Bool SAL_CALL ToolboxController::convertFastPropertyValue( com::sun::star::uno::Any&    aConvertedValue ,
                                              com::sun::star::uno::Any&        aOldValue       ,
                                              sal_Int32                        nHandle         ,
-                                             const com::sun::star::uno::Any&  aValue          ) throw( com::sun::star::lang::IllegalArgumentException )
+                                             const com::sun::star::uno::Any&  aValue          )
 {
 	switch (nHandle)
 	{
@@ -789,11 +776,10 @@ sal_Bool SAL_CALL ToolboxController::convertFastPropertyValue( com::sun::star::u
 void SAL_CALL ToolboxController::setFastPropertyValue_NoBroadcast(
     sal_Int32                       nHandle,
     const com::sun::star::uno::Any& aValue )
-throw( com::sun::star::uno::Exception)
 {
     OPropertyContainer::setFastPropertyValue_NoBroadcast(nHandle, aValue);
     if (TOOLBARCONTROLLER_PROPHANDLE_SUPPORTSVISIABLE == nHandle)
-    {   
+    {
         sal_Bool rValue(sal_False);
         if (( aValue >>= rValue ) && m_bInitialized)
             this->setSupportVisiableProperty( rValue );

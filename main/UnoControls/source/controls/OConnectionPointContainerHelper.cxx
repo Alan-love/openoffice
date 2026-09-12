@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -66,7 +66,7 @@ OConnectionPointContainerHelper::~OConnectionPointContainerHelper()
 //	XInterface
 //____________________________________________________________________________________________________________
 
-Any SAL_CALL OConnectionPointContainerHelper::queryInterface( const Type& aType ) throw( RuntimeException )
+Any SAL_CALL OConnectionPointContainerHelper::queryInterface( const Type& aType )
 {
 	// Attention:
 	//	Don't use mutex or guard in this method!!! Is a method of XInterface.
@@ -117,7 +117,7 @@ void SAL_CALL OConnectionPointContainerHelper::release() throw()
 //	XConnectionPointContainer
 //______________________________________________________________________________________________________________
 
-Sequence< Type > SAL_CALL OConnectionPointContainerHelper::getConnectionPointTypes() throw( RuntimeException )
+Sequence< Type > SAL_CALL OConnectionPointContainerHelper::getConnectionPointTypes()
 {
 	// Container is threadsafe himself !
 	return m_aMultiTypeContainer.getContainedTypes();
@@ -127,7 +127,7 @@ Sequence< Type > SAL_CALL OConnectionPointContainerHelper::getConnectionPointTyp
 //	XConnectionPointContainer
 //______________________________________________________________________________________________________________
 
-Reference< XConnectionPoint > SAL_CALL OConnectionPointContainerHelper::queryConnectionPoint( const Type& aType ) throw( RuntimeException )
+Reference< XConnectionPoint > SAL_CALL OConnectionPointContainerHelper::queryConnectionPoint( const Type& aType )
 {
 	// Set default return value, if method failed.
 	Reference< XConnectionPoint > xConnectionPoint = Reference< XConnectionPoint >();
@@ -151,7 +151,7 @@ Reference< XConnectionPoint > SAL_CALL OConnectionPointContainerHelper::queryCon
 //______________________________________________________________________________________________________________
 
 void SAL_CALL OConnectionPointContainerHelper::advise(	const	Type&	   					aType		,
-														const	Reference< XInterface >&	xListener	) throw( RuntimeException )
+														const	Reference< XInterface >&	xListener	)
 {
 	// Container is threadsafe himself !
 	m_aMultiTypeContainer.addInterface( aType, xListener );
@@ -162,7 +162,7 @@ void SAL_CALL OConnectionPointContainerHelper::advise(	const	Type&	   					aType
 //______________________________________________________________________________________________________________
 
 void SAL_CALL OConnectionPointContainerHelper::unadvise(	const	Type&	   					aType		,
-															const	Reference< XInterface >&	xListener	) throw( RuntimeException )
+															const	Reference< XInterface >&	xListener	)
 {
 	// Container is threadsafe himself !
 	m_aMultiTypeContainer.removeInterface( aType, xListener );

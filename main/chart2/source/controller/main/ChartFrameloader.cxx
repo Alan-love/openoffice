@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartcontroller.hxx"
 #include "ChartFrameloader.hxx"
 #include "servicenames.hxx"
 #include "MediaDescriptorHelper.hxx"
@@ -83,7 +83,6 @@ APPHELPER_XSERVICEINFO_IMPL(ChartFrameLoader,CHART_FRAMELOADER_SERVICE_IMPLEMENT
 	sal_Bool SAL_CALL ChartFrameLoader
 ::load( const uno::Sequence< beans::PropertyValue >& rMediaDescriptor
 		, const uno::Reference<frame::XFrame >& xFrame )
-		throw (uno::RuntimeException)
 {
 	//@todo ? need to add as terminate listener to desktop?
 
@@ -123,7 +122,7 @@ APPHELPER_XSERVICEINFO_IMPL(ChartFrameLoader,CHART_FRAMELOADER_SERVICE_IMPLEMENT
 			, uno::UNO_QUERY );
 
 		//!!!it is a special characteristic of the example application
-		//that the controller simultaniously provides the XWindow controller functionality
+		//that the controller simultaneously provides the XWindow controller functionality
 		xComponentWindow =
 					  uno::Reference< awt::XWindow >( xController, uno::UNO_QUERY );
 
@@ -191,7 +190,7 @@ APPHELPER_XSERVICEINFO_IMPL(ChartFrameLoader,CHART_FRAMELOADER_SERVICE_IMPLEMENT
 }
 
 	void SAL_CALL ChartFrameLoader
-::cancel() throw (uno::RuntimeException)
+::cancel()
 {
 	m_oCancelFinished.reset();
 	m_bCancelRequired = sal_True;

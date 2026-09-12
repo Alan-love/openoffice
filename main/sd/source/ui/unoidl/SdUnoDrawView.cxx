@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -136,7 +136,7 @@ Reference<drawing::XLayer> SdUnoDrawView::getActiveLayer (void) throw ()
         SdDrawDocument* pSdModel = pModel->GetDoc();
         if (pSdModel == NULL)
             break;
-        
+
         // From the model get the current SdrLayer object via the layer admin.
         SdrLayerAdmin& rLayerAdmin = pSdModel->GetLayerAdmin ();
         SdrLayer* pLayer = rLayerAdmin.GetLayer (mrView.GetActiveLayer(), sal_True);
@@ -189,7 +189,6 @@ void SdUnoDrawView::setActiveLayer (const Reference<drawing::XLayer>& rxLayer) t
 
 
 sal_Bool SAL_CALL SdUnoDrawView::select( const Any& aSelection )
-	throw(lang::IllegalArgumentException, RuntimeException)
 {
     bool bOk = true;
 
@@ -213,7 +212,7 @@ sal_Bool SAL_CALL SdUnoDrawView::select( const Any& aSelection )
         {
             bOk = false;
         }
-    }	
+    }
     else
     {
         Reference< drawing::XShapes > xShapes;
@@ -287,7 +286,6 @@ sal_Bool SAL_CALL SdUnoDrawView::select( const Any& aSelection )
 //----------------------------------------------------------------------
 
 Any SAL_CALL SdUnoDrawView::getSelection()
-	throw(RuntimeException)
 {
 	Any aAny;
 
@@ -307,18 +305,18 @@ Any SAL_CALL SdUnoDrawView::getSelection()
                 SdrMark *pMark = rMarkList.GetMark(nNum);
                 if(pMark==NULL)
                     continue;
-		        
+
                 SdrObject *pObj = pMark->GetMarkedSdrObj();
                 if(pObj==NULL || pObj->GetPage() == NULL)
                     continue;
 
                 Reference< drawing::XDrawPage > xPage( pObj->GetPage()->getUnoPage(), UNO_QUERY);
-		        
+
                 if(!xPage.is())
                     continue;
 
                 SvxDrawPage* pDrawPage = SvxDrawPage::getImplementation( xPage );
-		        
+
                 if(pDrawPage==NULL)
                     continue;
 
@@ -339,17 +337,15 @@ Any SAL_CALL SdUnoDrawView::getSelection()
 
 void SAL_CALL SdUnoDrawView::addSelectionChangeListener (
     const css::uno::Reference<css::view::XSelectionChangeListener>& rxListener)
-    throw(css::uno::RuntimeException)
 {
     (void)rxListener;
 }
-    
+
 
 
 
 void SAL_CALL SdUnoDrawView::removeSelectionChangeListener (
     const css::uno::Reference<css::view::XSelectionChangeListener>& rxListener)
-    throw(css::uno::RuntimeException)
 {
     (void)rxListener;
 }
@@ -358,13 +354,8 @@ void SAL_CALL SdUnoDrawView::removeSelectionChangeListener (
 
 
 void SdUnoDrawView::setFastPropertyValue (
-	sal_Int32 nHandle, 
+	sal_Int32 nHandle,
         const Any& rValue)
-    throw(css::beans::UnknownPropertyException,
-        css::beans::PropertyVetoException,
-        css::lang::IllegalArgumentException,
-        css::lang::WrappedTargetException,
-        css::uno::RuntimeException)
 {
 	switch( nHandle )
 	{
@@ -429,9 +420,6 @@ void SdUnoDrawView::setFastPropertyValue (
 
 Any SAL_CALL SdUnoDrawView::getFastPropertyValue (
     sal_Int32 nHandle)
-    throw(css::beans::UnknownPropertyException,
-        css::lang::WrappedTargetException,
-        css::uno::RuntimeException)
 {
     Any aValue;
 	switch( nHandle )
@@ -481,7 +469,6 @@ Any SAL_CALL SdUnoDrawView::getFastPropertyValue (
 
 void SAL_CALL SdUnoDrawView::setCurrentPage (
     const Reference< drawing::XDrawPage >& xPage )
-	throw(RuntimeException)
 {
     SvxDrawPage* pDrawPage = SvxDrawPage::getImplementation( xPage );
     SdrPage *pSdrPage = pDrawPage ? pDrawPage->GetSdrPage() : NULL;
@@ -501,13 +488,12 @@ void SAL_CALL SdUnoDrawView::setCurrentPage (
 //----------------------------------------------------------------------
 
 Reference< drawing::XDrawPage > SAL_CALL SdUnoDrawView::getCurrentPage()
-	throw(RuntimeException)
 {
 	Reference< drawing::XDrawPage >  xPage;
 
     SdrPageView *pPV = mrView.GetSdrPageView();
     SdrPage* pPage = pPV ? pPV->GetPage() : NULL;
-    
+
     if(pPage)
         xPage = Reference< drawing::XDrawPage >::query( pPage->getUnoPage() );
 
@@ -574,12 +560,12 @@ void SdUnoDrawView::SetZoomType ( sal_Int16 nType )
                 case com::sun::star::view::DocumentZoomType::OPTIMAL:
                     eZoomType = SVX_ZOOM_OPTIMAL;
                     break;
-                        
+
                 case com::sun::star::view::DocumentZoomType::PAGE_WIDTH:
                 case com::sun::star::view::DocumentZoomType::PAGE_WIDTH_EXACT:
                     eZoomType = SVX_ZOOM_PAGEWIDTH;
                     break;
-                        
+
                 case com::sun::star::view::DocumentZoomType::ENTIRE_PAGE:
                     eZoomType = SVX_ZOOM_WHOLEPAGE;
                     break;
@@ -620,17 +606,17 @@ Any SdUnoDrawView::getDrawViewMode() const
 }
 
 // XServiceInfo
-OUString SAL_CALL SdUnoDrawView::getImplementationName(  ) throw (RuntimeException)
+OUString SAL_CALL SdUnoDrawView::getImplementationName(  )
 {
 	return OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.comp.sd.SdUnoDrawView") );
 }
 
-sal_Bool SAL_CALL SdUnoDrawView::supportsService( const OUString& ServiceName ) throw (RuntimeException)
+sal_Bool SAL_CALL SdUnoDrawView::supportsService( const OUString& ServiceName )
 {
 	return comphelper::ServiceInfoHelper::supportsService( ServiceName, getSupportedServiceNames() );
 }
 
-Sequence< OUString > SAL_CALL SdUnoDrawView::getSupportedServiceNames(  ) throw (RuntimeException)
+Sequence< OUString > SAL_CALL SdUnoDrawView::getSupportedServiceNames(  )
 {
 	OUString aSN( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.drawing.DrawingDocumentDrawView") );
 	uno::Sequence< OUString > aSeq( &aSN, 1 );
@@ -638,4 +624,3 @@ Sequence< OUString > SAL_CALL SdUnoDrawView::getSupportedServiceNames(  ) throw 
 }
 
 } // end of namespace sd
-

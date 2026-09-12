@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -166,7 +166,6 @@ UUIInteractionHelper::handlerequest(
 bool
 UUIInteractionHelper::handleRequest(
     uno::Reference< task::XInteractionRequest > const & rRequest)
-    SAL_THROW((uno::RuntimeException))
 {
     Application* pApp = 0;
     if(
@@ -209,7 +208,6 @@ UUIInteractionHelper::getstringfromrequest(
 beans::Optional< rtl::OUString >
 UUIInteractionHelper::getStringFromRequest_impl(
     uno::Reference< task::XInteractionRequest > const & rRequest)
-    SAL_THROW((uno::RuntimeException))
 {
     bool bSuccess = false;
     rtl::OUString aMessage;
@@ -227,7 +225,6 @@ UUIInteractionHelper::getStringFromRequest_impl(
 beans::Optional< rtl::OUString >
 UUIInteractionHelper::getStringFromRequest(
     uno::Reference< task::XInteractionRequest > const & rRequest)
-    SAL_THROW((uno::RuntimeException))
 {
     Application* pApp = 0;
     if(
@@ -318,7 +315,6 @@ UUIInteractionHelper::isInformationalErrorMessageRequest(
 bool
 UUIInteractionHelper::tryOtherInteractionHandler(
     uno::Reference< task::XInteractionRequest > const & rRequest)
-    SAL_THROW((uno::RuntimeException))
 {
     InteractionHandlerDataList dataList;
     getInteractionHandlerList(dataList);
@@ -447,7 +443,6 @@ UUIInteractionHelper::handleRequest_impl(
     bool bObtainErrorStringOnly,
     bool & bHasErrorString,
     rtl::OUString & rErrorString)
-    SAL_THROW((uno::RuntimeException))
 {
     try
     {
@@ -957,7 +952,6 @@ UUIInteractionHelper::handleRequest_impl(
 void
 UUIInteractionHelper::getInteractionHandlerList(
     InteractionHandlerDataList &rdataList)
-    SAL_THROW((uno::RuntimeException))
 {
     try
     {
@@ -971,7 +965,7 @@ UUIInteractionHelper::getInteractionHandlerList(
             throw uno::RuntimeException(
                 rtl::OUString(
                     RTL_CONSTASCII_USTRINGPARAM(
-                        "unable to instanciate config provider service")),
+                        "unable to instantiate config provider service")),
                 uno::Reference< uno::XInterface >());
 
         rtl::OUStringBuffer aFullPath;
@@ -995,7 +989,7 @@ UUIInteractionHelper::getInteractionHandlerList(
             throw uno::RuntimeException(
                 rtl::OUString(
                     RTL_CONSTASCII_USTRINGPARAM(
-                        "unable to instanciate config access")),
+                        "unable to instantiate config access")),
                 uno::Reference< uno::XInterface >());
 
         uno::Reference< container::XNameAccess > xNameAccess(
@@ -1122,7 +1116,6 @@ UUIInteractionHelper::getContextProperty()
 
 uno::Reference< task::XInteractionHandler >
 UUIInteractionHelper::getInteractionHandler()
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Reference< task::XInteractionHandler > xIH;
     try
@@ -1141,7 +1134,7 @@ UUIInteractionHelper::getInteractionHandler()
         throw uno::RuntimeException(
             rtl::OUString(
                 RTL_CONSTASCII_USTRINGPARAM(
-                    "unable to instanciate Interaction Handler service")),
+                    "unable to instantiate Interaction Handler service")),
             uno::Reference< uno::XInterface >());
     return xIH;
 }
@@ -1154,7 +1147,6 @@ executeMessageBox(
     rtl::OUString const & rTitle,
     rtl::OUString const & rMessage,
     WinBits nButtonMask )
-    SAL_THROW((uno::RuntimeException))
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -1208,7 +1200,6 @@ UUIInteractionHelper::handleNameClashResolveRequest(
     ucb::NameClashResolveRequest const & rRequest,
     uno::Sequence< uno::Reference<
         task::XInteractionContinuation > > const & rContinuations)
-  SAL_THROW((uno::RuntimeException))
 {
     OSL_ENSURE(
         rRequest.TargetFolderURL.getLength() > 0,
@@ -1268,7 +1259,6 @@ UUIInteractionHelper::handleGenericErrorRequest(
     bool bObtainErrorStringOnly,
     bool & bHasErrorString,
     rtl::OUString & rErrorString)
-    SAL_THROW((uno::RuntimeException))
 {
     if (bObtainErrorStringOnly)
     {
@@ -1346,7 +1336,6 @@ UUIInteractionHelper::handleMacroConfirmRequest(
     const uno::Sequence< security::DocumentSignatureInformation > aSignInfo,
     uno::Sequence< uno::Reference< task::XInteractionContinuation > > const &
         rContinuations )
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Reference< task::XInteractionAbort > xAbort;
     uno::Reference< task::XInteractionApprove > xApprove;
@@ -1386,7 +1375,6 @@ UUIInteractionHelper::handleFutureDocumentVersionUpdateRequest(
     const task::FutureDocumentVersionProductUpdateRequest& _rRequest,
     uno::Sequence< uno::Reference< task::XInteractionContinuation > > const &
         rContinuations )
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Reference< task::XInteractionAbort > xAbort;
     uno::Reference< task::XInteractionApprove > xApprove;
@@ -1461,7 +1449,6 @@ UUIInteractionHelper::handleBrokenPackageRequest(
     bool bObtainErrorStringOnly,
     bool & bHasErrorString,
     rtl::OUString & rErrorString)
-    SAL_THROW((uno::RuntimeException))
 {
     if (bObtainErrorStringOnly)
     {

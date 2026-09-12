@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 /* system headers */
 #include "system.h"
@@ -41,17 +39,25 @@
 
 typedef struct _oslSignalHandlerImpl
 {
-	oslSignalHandlerFunction      Handler;
-	void*			        	  pData;
-	struct _oslSignalHandlerImpl* pNext;	
+	oslSignalHandlerFunction	  Handler;
+	void*						  pData;
+	struct _oslSignalHandlerImpl* pNext;
 } oslSignalHandlerImpl;
 
 static sal_Bool				  bErrorReportingEnabled = sal_True;
-static sal_Bool  			  bInitSignal = sal_False;
+static sal_Bool				  bInitSignal = sal_False;
 static oslMutex 			  SignalListMutex;
 static oslSignalHandlerImpl*  SignalList;
 
 static long WINAPI SignalHandlerFunction(LPEXCEPTION_POINTERS lpEP);
+
+static _invalid_parameter_handler pPreviousInvalidParameterHandler = NULL;
+static void InvalidParameterHandlerFunction(
+	const wchar_t* expression,
+	const wchar_t* function,
+	const wchar_t* file,
+	unsigned int line,
+	uintptr_t pReserved );
 
 static sal_Bool InitSignal(void)
 {
@@ -60,6 +66,10 @@ static sal_Bool InitSignal(void)
 	SignalListMutex = osl_createMutex();
 
 	SetUnhandledExceptionFilter(SignalHandlerFunction);
+	if ( pPreviousInvalidParameterHandler == NULL )
+	{
+		pPreviousInvalidParameterHandler = _set_invalid_parameter_handler( InvalidParameterHandlerFunction );
+	}
 
 	hFaultRep = LoadLibrary( "faultrep.dll" );
 	if ( hFaultRep )
@@ -80,6 +90,11 @@ static sal_Bool DeInitSignal(void)
 {
 	SetUnhandledExceptionFilter(NULL);
 
+	if ( pPreviousInvalidParameterHandler )
+	{
+		_set_invalid_parameter_handler( pPreviousInvalidParameterHandler );
+		pPreviousInvalidParameterHandler = NULL;
+	}
 	osl_destroyMutex(SignalListMutex);
 
 	return sal_False;
@@ -113,7 +128,7 @@ static BOOL ReportCrash( LPEXCEPTION_POINTERS lpEP )
 	BOOL	fSuccess = FALSE;
 	BOOL	fAutoReport = FALSE;
 	TCHAR	szBuffer[1024];
-    ::osl::LongPathBuffer< sal_Char > aPath( MAX_LONG_PATH );
+	::osl::LongPathBuffer< sal_Char > aPath( MAX_LONG_PATH );
 	LPTSTR	lpFilePart;
 	PROCESS_INFORMATION	ProcessInfo;
 	STARTUPINFO	StartupInfo;
@@ -126,18 +141,18 @@ static BOOL ReportCrash( LPEXCEPTION_POINTERS lpEP )
 
 	for ( argi = 1; argi < __argc; argi++ )
 	{
-		if ( 
-			0 == stricmp( __argv[argi], "-nocrashreport" ) || 
+		if (
+			0 == stricmp( __argv[argi], "-nocrashreport" ) ||
 			0 == stricmp( __argv[argi], "/nocrashreport" )
 			)
 			return FALSE;
 		else if (
-			0 == stricmp( __argv[argi], "-autocrashreport" ) || 
+			0 == stricmp( __argv[argi], "-autocrashreport" ) ||
 			0 == stricmp( __argv[argi], "/autocrashreport" )
 			)
 			fAutoReport = TRUE;
 		else if (
-			0 == strnicmp( __argv[argi], REPORTENV_PARAM, strlen(REPORTENV_PARAM) ) || 
+			0 == strnicmp( __argv[argi], REPORTENV_PARAM, strlen(REPORTENV_PARAM) ) ||
 			0 == strnicmp( __argv[argi], REPORTENV_PARAM2, strlen(REPORTENV_PARAM2) )
 			)
 		{
@@ -152,7 +167,7 @@ static BOOL ReportCrash( LPEXCEPTION_POINTERS lpEP )
 				size_t variable_len = delim - envparam;
 				const char *value = delim + 1;
 				size_t value_len = strlen(envparam) - variable_len - 1;
-				
+
 				if ( '\"' == *value )
 				{
 					const char *quote;
@@ -173,7 +188,7 @@ static BOOL ReportCrash( LPEXCEPTION_POINTERS lpEP )
 				memcpy( lpValue, value, value_len );
 				lpValue[value_len] = 0;
 
-				SetEnvironmentVariable( lpVariable, lpValue ); 
+				SetEnvironmentVariable( lpVariable, lpValue );
 			}
 		}
 	}
@@ -184,34 +199,34 @@ static BOOL ReportCrash( LPEXCEPTION_POINTERS lpEP )
 		StartupInfo.cb = sizeof(StartupInfo.cb);
 
 
-		sntprintf( szBuffer, elementsof(szBuffer), 
-			_T("%s -p %u -excp 0x%p -t %u%s"), 
-			static_cast<sal_Char*>( aPath ), 
-			GetCurrentProcessId(), 
-			lpEP, 
+		sntprintf( szBuffer, elementsof(szBuffer),
+			_T("%s -p %u -excp 0x%p -t %u%s"),
+			static_cast<sal_Char*>( aPath ),
+			GetCurrentProcessId(),
+			lpEP,
 			GetCurrentThreadId(),
 			fAutoReport ? _T(" -noui -send") : _T(" -noui") );
 
-		if ( 
-			CreateProcess( 
-				NULL, 
-				szBuffer, 
-				NULL, 
-				NULL, 
-				FALSE, 
+		if (
+			CreateProcess(
+				NULL,
+				szBuffer,
+				NULL,
+				NULL,
+				FALSE,
 #ifdef UNICODE
-				CREATE_UNICODE_ENVIRONMENT, 
+				CREATE_UNICODE_ENVIRONMENT,
 #else
 				0,
 #endif
-				NULL, NULL, &StartupInfo, &ProcessInfo ) 
+				NULL, NULL, &StartupInfo, &ProcessInfo )
 			)
 		{
 			DWORD	dwExitCode;
 
 			WaitForSingleObject( ProcessInfo.hProcess, INFINITE );
 			if ( GetExitCodeProcess( ProcessInfo.hProcess, &dwExitCode ) && 0 == dwExitCode )
-			
+
 			fSuccess = TRUE;
 
 		}
@@ -233,12 +248,12 @@ static BOOL WINAPI IsWin95A(void)
 
 	if ( GetVersionEx( &ovi ) )
 		/* See MSDN January 2000 documentation of GetVersionEx */
-		return	(ovi.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS) && 
-				(ovi.dwMajorVersion <= 4) && 
-				(ovi.dwMinorVersion == 0) && 
+		return	(ovi.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS) &&
+				(ovi.dwMajorVersion <= 4) &&
+				(ovi.dwMinorVersion == 0) &&
 				(ovi.dwBuildNumber == 0x040003B6);
 
-	/* Something wrent wrong. So assume we have an older operating prior Win95 */
+	/* Something went wrong. So assume we have an older operating prior Win95 */
 
 	return TRUE;
 }
@@ -258,33 +273,33 @@ static long WINAPI SignalHandlerFunction(LPEXCEPTION_POINTERS lpEP)
 
 	switch (lpEP->ExceptionRecord->ExceptionCode)
 	{
-        /* Transform unhandled exceptions into access violations.
+		/* Transform unhandled exceptions into access violations.
 		   Microsoft C++ compiler (add more for other compilers if necessary).
 		 */
-    	case EXCEPTION_MSC_CPP_EXCEPTION:
-		case EXCEPTION_ACCESS_VIOLATION: 
+		case EXCEPTION_MSC_CPP_EXCEPTION:
+		case EXCEPTION_ACCESS_VIOLATION:
 			Info.Signal = osl_Signal_AccessViolation;
 			bRaiseCrashReporter = sal_True;
-			break; 
+			break;
 
-		case EXCEPTION_INT_DIVIDE_BY_ZERO: 
+		case EXCEPTION_INT_DIVIDE_BY_ZERO:
 			Info.Signal = osl_Signal_IntegerDivideByZero;
 			bRaiseCrashReporter = sal_True;
-			break; 
+			break;
 
-		case EXCEPTION_FLT_DIVIDE_BY_ZERO: 
+		case EXCEPTION_FLT_DIVIDE_BY_ZERO:
 			Info.Signal = osl_Signal_FloatDivideByZero;
 			bRaiseCrashReporter = sal_True;
-			break; 
+			break;
 
-		case EXCEPTION_BREAKPOINT: 
+		case EXCEPTION_BREAKPOINT:
 			Info.Signal = osl_Signal_DebugBreak;
-			break; 
-			
+			break;
+
 		default:
 			Info.Signal = osl_Signal_System;
 			bRaiseCrashReporter = sal_True;
-			break; 
+			break;
 	}
 
 	if ( !bNested )
@@ -315,11 +330,41 @@ static long WINAPI SignalHandlerFunction(LPEXCEPTION_POINTERS lpEP)
 			SetErrorMode(SEM_NOGPFAULTERRORBOX);
 			exit(255);
 			break;
-        default:
-            break;
+		default:
+			break;
 	}
 
 	return (EXCEPTION_CONTINUE_EXECUTION);
+}
+
+static void InvalidParameterHandlerFunction(
+	const wchar_t* expression,
+	const wchar_t* function,
+	const wchar_t* file,
+	unsigned int line,
+	uintptr_t pReserved )
+{
+	oslSignalInfo	Info;
+
+	fwprintf(stderr, L"Invalid parameter detected in function %s.\n"
+			 L"File: %s\n"
+			 L"Line: %u\n"
+			 L"Expression: %s\n"
+			 L"pReserved: %p\n", function, file, line, expression, pReserved);
+
+	Info.Signal = osl_Signal_AccessViolation;
+	Info.UserSignal = 0;
+	Info.UserData = NULL;
+	if ( ReportCrash( NULL ) || IsWin95A() )
+	{
+		CallSignalHandler(&Info);
+		abort(); // Equivalent of osl_Signal_ActAbortApp
+	} else {
+		// Equivalent of osl_Signal_ActKillApp
+		SetErrorMode(SEM_NOGPFAULTERRORBOX);
+		exit(255);
+	}
+	// We will never reach this point
 }
 
 /*****************************************************************************/
@@ -337,12 +382,12 @@ oslSignalHandler SAL_CALL osl_addSignalHandler(oslSignalHandlerFunction Handler,
 	pHandler = reinterpret_cast< oslSignalHandlerImpl* >( calloc( 1, sizeof(oslSignalHandlerImpl) ) );
 
 	if (pHandler != NULL)
-	{	
+	{
 		pHandler->Handler = Handler;
 		pHandler->pData   = pData;
 
 		osl_acquireMutex(SignalListMutex);
-	
+
 		pHandler->pNext = SignalList;
 		SignalList      = pHandler;
 
@@ -392,7 +437,7 @@ sal_Bool SAL_CALL osl_removeSignalHandler(oslSignalHandler Handler)
 		pPrevious = pHandler;
 		pHandler  = pHandler->pNext;
 	}
-			
+
 	osl_releaseMutex(SignalListMutex);
 
 	return (sal_False);
@@ -416,7 +461,7 @@ oslSignalAction SAL_CALL osl_raiseSignal(sal_Int32 UserSignal, void* UserData)
 	Info.UserData   = UserData;
 
 	Action = CallSignalHandler(&Info);
-			
+
 	osl_releaseMutex(SignalListMutex);
 
 	return (Action);
@@ -475,3 +520,5 @@ sal_Bool SAL_CALL osl_setErrorReporting( sal_Bool bEnable )
 
 	return bOld;
 }
+
+/* vim: set noet sw=4 ts=4: */

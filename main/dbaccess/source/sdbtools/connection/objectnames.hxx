@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -71,11 +71,11 @@ namespace sdbtools
         );
 
         // XObjectNames
-        virtual ::rtl::OUString SAL_CALL suggestName( ::sal_Int32 CommandType, const ::rtl::OUString& BaseName ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-        virtual ::rtl::OUString SAL_CALL convertToSQLName( const ::rtl::OUString& Name ) throw (::com::sun::star::uno::RuntimeException);
-        virtual ::sal_Bool SAL_CALL isNameUsed( ::sal_Int32 CommandType, const ::rtl::OUString& Name ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-        virtual ::sal_Bool SAL_CALL isNameValid( ::sal_Int32 CommandType, const ::rtl::OUString& Name ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL checkNameForCreate( ::sal_Int32 CommandType, const ::rtl::OUString& Name ) throw (::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
+        virtual ::rtl::OUString SAL_CALL suggestName( ::sal_Int32 CommandType, const ::rtl::OUString& BaseName );
+        virtual ::rtl::OUString SAL_CALL convertToSQLName( const ::rtl::OUString& Name );
+        virtual ::sal_Bool SAL_CALL isNameUsed( ::sal_Int32 CommandType, const ::rtl::OUString& Name );
+        virtual ::sal_Bool SAL_CALL isNameValid( ::sal_Int32 CommandType, const ::rtl::OUString& Name );
+        virtual void SAL_CALL checkNameForCreate( ::sal_Int32 CommandType, const ::rtl::OUString& Name );
 
     protected:
         virtual ~ObjectNames();
@@ -91,4 +91,3 @@ namespace sdbtools
 //........................................................................
 
 #endif // DBACCESS_SOURCE_SDBTOOLS_INC_OBJECTNAMES_HXX
-

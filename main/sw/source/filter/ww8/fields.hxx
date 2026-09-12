@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,32 +7,31 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil -*- */
 /// @HTML
 #ifndef WW_FIELDS_HXX
 #define WW_FIELDS_HXX
 
 namespace ww
 {
-    enum eField 
+    enum eField
     {
         eNONE = 0,
         eUNKNOWN = 1,
-        ePOSSIBLEBOOKMARK = 2, 
+        ePOSSIBLEBOOKMARK = 2,
         eREF = 3,
         eXE = 4,
         eFOOTREF = 5,
@@ -127,9 +126,9 @@ namespace ww
         eGREETINGLINE = 94,
         eSHAPE = 95
     };
-    
+
     /** Find the English Field Name from a winword index
-     
+
         See OpenOffice.org issue 12831
         (http://www.openoffice.org/issues/show_bug.cgi?id=12831) and MS
         Knowledge Base article 268717

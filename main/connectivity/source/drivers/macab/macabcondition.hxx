@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -66,7 +66,7 @@ class MacabConditionColumn : public MacabCondition
 	public:
 		MacabConditionColumn(
 			const MacabHeader *header,
-			const ::rtl::OUString &sColumnName) throw(::com::sun::star::sdbc::SQLException);
+			const ::rtl::OUString &sColumnName);
 		virtual sal_Bool isAlwaysTrue() const;
 		virtual sal_Bool isAlwaysFalse() const;
 };
@@ -76,7 +76,7 @@ class MacabConditionNull : public MacabConditionColumn
 	public:
 		MacabConditionNull(
 			const MacabHeader *header,
-			const ::rtl::OUString &sColumnName) throw(::com::sun::star::sdbc::SQLException);
+			const ::rtl::OUString &sColumnName);
 		virtual sal_Bool eval(const MacabRecord *aRecord) const;
 };
 // -----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ class MacabConditionNotNull : public MacabConditionColumn
 	public:
 		MacabConditionNotNull(
 			const MacabHeader *header,
-			const ::rtl::OUString &sColumnName) throw(::com::sun::star::sdbc::SQLException);
+			const ::rtl::OUString &sColumnName);
 		virtual sal_Bool eval(const MacabRecord *aRecord) const;
 };
 // -----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ class MacabConditionCompare : public MacabConditionColumn
 		MacabConditionCompare(
 			const MacabHeader *header,
 			const ::rtl::OUString &sColumnName,
-			const ::rtl::OUString &sMatchString) throw(::com::sun::star::sdbc::SQLException);
+			const ::rtl::OUString &sMatchString);
 };
 // -----------------------------------------------------------------------------
 class MacabConditionEqual : public MacabConditionCompare
@@ -107,7 +107,7 @@ class MacabConditionEqual : public MacabConditionCompare
 		MacabConditionEqual(
 			const MacabHeader *header,
 			const ::rtl::OUString &sColumnName,
-			const ::rtl::OUString &sMatchString) throw(::com::sun::star::sdbc::SQLException);
+			const ::rtl::OUString &sMatchString);
 		virtual sal_Bool eval(const MacabRecord *aRecord) const;
 };
 // -----------------------------------------------------------------------------
@@ -117,7 +117,7 @@ class MacabConditionDifferent : public MacabConditionCompare
 		MacabConditionDifferent(
 			const MacabHeader *header,
 			const ::rtl::OUString &sColumnName,
-			const ::rtl::OUString &sMatchString) throw(::com::sun::star::sdbc::SQLException);
+			const ::rtl::OUString &sMatchString);
 		virtual sal_Bool eval(const MacabRecord *aRecord) const;
 };
 // -----------------------------------------------------------------------------
@@ -127,7 +127,7 @@ class MacabConditionSimilar : public MacabConditionCompare
 		MacabConditionSimilar(
 			const MacabHeader *header,
 			const ::rtl::OUString &sColumnName,
-			const ::rtl::OUString &sMatchString) throw(::com::sun::star::sdbc::SQLException);
+			const ::rtl::OUString &sMatchString);
 		virtual sal_Bool eval(const MacabRecord *aRecord) const;
 };
 // -----------------------------------------------------------------------------

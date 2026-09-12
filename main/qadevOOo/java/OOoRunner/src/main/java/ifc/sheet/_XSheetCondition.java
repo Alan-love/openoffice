@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -54,7 +54,7 @@ public class _XSheetCondition extends MultiMethodTest {
 
     /**
     * Test calls the method, checks and stores returned value. <p>
-    * Has <b> OK </b> status if returned vakue isn't null. <p>
+    * Has <b> OK </b> status if returned value isn't null. <p>
     */
     public void _getFormula1() {
         Formula1 = oObj.getFormula1();
@@ -63,7 +63,7 @@ public class _XSheetCondition extends MultiMethodTest {
 
     /**
     * Test calls the method, checks and stores returned value. <p>
-    * Has <b> OK </b> status if returned vakue isn't null. <p>
+    * Has <b> OK </b> status if returned value isn't null. <p>
     */
     public void _getFormula2() {
         Formula2 = oObj.getFormula2();
@@ -72,7 +72,7 @@ public class _XSheetCondition extends MultiMethodTest {
 
     /**
     * Test calls the method, checks and stores returned value. <p>
-    * Has <b> OK </b> status if returned vakue isn't null. <p>
+    * Has <b> OK </b> status if returned value isn't null. <p>
     */
     public void _getOperator() {
         Operator = oObj.getOperator();
@@ -81,7 +81,7 @@ public class _XSheetCondition extends MultiMethodTest {
 
     /**
     * Test calls the method, checks and stores returned value. <p>
-    * Has <b> OK </b> status if returned vakue isn't null. <p>
+    * Has <b> OK </b> status if returned value isn't null. <p>
     */
     public void _getSourcePosition() {
         SourcePosition = oObj.getSourcePosition();
@@ -151,4 +151,3 @@ public class _XSheetCondition extends MultiMethodTest {
     }
 
 }  // finish class _XSheetCondition
-

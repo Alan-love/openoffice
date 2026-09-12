@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -45,7 +45,6 @@ Seekable::~Seekable( void )
 }
 
 void SAL_CALL Seekable::truncate( void )
-    throw( io::IOException, uno::RuntimeException )
 {
     if (!mpStream)
         throw io::NotConnectedException();
@@ -53,14 +52,13 @@ void SAL_CALL Seekable::truncate( void )
     if (!g_seekable_can_truncate(mpStream))
         throw io::IOException(rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("Truncate unsupported")),
             static_cast< cppu::OWeakObject * >(this));
-    
+
     GError *pError=NULL;
     if (!g_seekable_truncate(mpStream, 0, NULL, &pError))
         convertToException(pError, static_cast< cppu::OWeakObject * >(this));
 }
 
 void SAL_CALL Seekable::seek( sal_Int64 location )
-    throw( lang::IllegalArgumentException, io::IOException, uno::RuntimeException )
 {
     if (!mpStream)
         throw io::NotConnectedException();
@@ -74,7 +72,7 @@ void SAL_CALL Seekable::seek( sal_Int64 location )
         convertToException(pError, static_cast< cppu::OWeakObject * >(this));
 }
 
-sal_Int64 SAL_CALL Seekable::getPosition() throw( io::IOException, uno::RuntimeException )
+sal_Int64 SAL_CALL Seekable::getPosition()
 {
     if (!mpStream)
         throw io::NotConnectedException();
@@ -82,7 +80,7 @@ sal_Int64 SAL_CALL Seekable::getPosition() throw( io::IOException, uno::RuntimeE
     return g_seekable_tell(mpStream);
 }
 
-sal_Int64 SAL_CALL Seekable::getLength() throw( io::IOException, uno::RuntimeException )
+sal_Int64 SAL_CALL Seekable::getLength()
 {
     if (!mpStream)
         throw io::NotConnectedException();
@@ -90,8 +88,8 @@ sal_Int64 SAL_CALL Seekable::getLength() throw( io::IOException, uno::RuntimeExc
     bool bOk = false;
     sal_uInt64 nSize = 0;
 
-    GFileInfo* pInfo = G_IS_FILE_INPUT_STREAM(mpStream) 
-        ? g_file_input_stream_query_info(G_FILE_INPUT_STREAM(mpStream), const_cast<char*>(G_FILE_ATTRIBUTE_STANDARD_SIZE), NULL, NULL) 
+    GFileInfo* pInfo = G_IS_FILE_INPUT_STREAM(mpStream)
+        ? g_file_input_stream_query_info(G_FILE_INPUT_STREAM(mpStream), const_cast<char*>(G_FILE_ATTRIBUTE_STANDARD_SIZE), NULL, NULL)
         : g_file_output_stream_query_info(G_FILE_OUTPUT_STREAM(mpStream), const_cast<char*>(G_FILE_ATTRIBUTE_STANDARD_SIZE), NULL, NULL);
 
     if (pInfo)
@@ -122,7 +120,7 @@ sal_Int64 SAL_CALL Seekable::getLength() throw( io::IOException, uno::RuntimeExc
     return nSize;
 }
 
-uno::Any Seekable::queryInterface( const uno::Type &type ) throw( uno::RuntimeException )
+uno::Any Seekable::queryInterface( const uno::Type &type )
 {
     uno::Any aRet = ::cppu::queryInterface ( type,
         static_cast< XSeekable * >( this ) );

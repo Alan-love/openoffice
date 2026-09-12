@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -171,7 +171,7 @@ namespace dbaccess
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL DocumentEvents::replaceByName( const ::rtl::OUString& _Name, const Any& _Element ) throw (IllegalArgumentException, NoSuchElementException, WrappedTargetException, RuntimeException)
+    void SAL_CALL DocumentEvents::replaceByName( const ::rtl::OUString& _Name, const Any& _Element )
     {
         ::osl::MutexGuard aGuard( m_pData->rMutex );
 
@@ -203,9 +203,9 @@ namespace dbaccess
 
         elementPos->second = aEventDescriptor;
     }
-    
+
     //--------------------------------------------------------------------
-    Any SAL_CALL DocumentEvents::getByName( const ::rtl::OUString& _Name ) throw (NoSuchElementException, WrappedTargetException, RuntimeException)
+    Any SAL_CALL DocumentEvents::getByName( const ::rtl::OUString& _Name )
     {
         ::osl::MutexGuard aGuard( m_pData->rMutex );
 
@@ -219,9 +219,9 @@ namespace dbaccess
             aReturn <<= rEventDesc;
         return aReturn;
     }
-    
+
     //--------------------------------------------------------------------
-    Sequence< ::rtl::OUString > SAL_CALL DocumentEvents::getElementNames(  ) throw (RuntimeException)
+    Sequence< ::rtl::OUString > SAL_CALL DocumentEvents::getElementNames(  )
     {
         ::osl::MutexGuard aGuard( m_pData->rMutex );
 
@@ -234,23 +234,23 @@ namespace dbaccess
         );
         return aNames;
     }
-    
+
     //--------------------------------------------------------------------
-    ::sal_Bool SAL_CALL DocumentEvents::hasByName( const ::rtl::OUString& _Name ) throw (RuntimeException)
+    ::sal_Bool SAL_CALL DocumentEvents::hasByName( const ::rtl::OUString& _Name )
     {
         ::osl::MutexGuard aGuard( m_pData->rMutex );
 
         return m_pData->rEventsData.find( _Name ) != m_pData->rEventsData.end();
     }
-    
+
     //--------------------------------------------------------------------
-    Type SAL_CALL DocumentEvents::getElementType(  ) throw (RuntimeException)
+    Type SAL_CALL DocumentEvents::getElementType(  )
     {
         return ::cppu::UnoType< Sequence< PropertyValue > >::get();
     }
-    
+
     //--------------------------------------------------------------------
-    ::sal_Bool SAL_CALL DocumentEvents::hasElements(  ) throw (RuntimeException)
+    ::sal_Bool SAL_CALL DocumentEvents::hasElements(  )
     {
         ::osl::MutexGuard aGuard( m_pData->rMutex );
         return !m_pData->rEventsData.empty();

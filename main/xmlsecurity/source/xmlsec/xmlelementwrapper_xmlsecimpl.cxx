@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -42,8 +42,7 @@ XMLElementWrapper_XmlSecImpl::XMLElementWrapper_XmlSecImpl(const xmlNodePtr pNod
 
 
 /* XUnoTunnel */
-cssu::Sequence< sal_Int8 > XMLElementWrapper_XmlSecImpl::getUnoTunnelImplementationId( void ) 
-	throw (cssu::RuntimeException)
+cssu::Sequence< sal_Int8 > XMLElementWrapper_XmlSecImpl::getUnoTunnelImplementationId( void )
 {
 	static ::cppu::OImplementationId* pId = 0;
 	if (! pId)
@@ -59,7 +58,6 @@ cssu::Sequence< sal_Int8 > XMLElementWrapper_XmlSecImpl::getUnoTunnelImplementat
 }
 
 sal_Int64 SAL_CALL XMLElementWrapper_XmlSecImpl::getSomething( const cssu::Sequence< sal_Int8 >& aIdentifier )
-	throw (cssu::RuntimeException)
 {
 	if (aIdentifier.getLength() == 16 &&
 		0 == rtl_compareMemory(
@@ -77,19 +75,16 @@ sal_Int64 SAL_CALL XMLElementWrapper_XmlSecImpl::getSomething( const cssu::Seque
 
 
 rtl::OUString XMLElementWrapper_XmlSecImpl_getImplementationName ()
-	throw (cssu::RuntimeException)
 {
 	return rtl::OUString ( RTL_CONSTASCII_USTRINGPARAM ( IMPLEMENTATION_NAME ) );
 }
 
-sal_Bool SAL_CALL XMLElementWrapper_XmlSecImpl_supportsService( const rtl::OUString& ServiceName ) 
-	throw (cssu::RuntimeException)
+sal_Bool SAL_CALL XMLElementWrapper_XmlSecImpl_supportsService( const rtl::OUString& ServiceName )
 {
 	return ServiceName.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM ( SERVICE_NAME ));
 }
 
-cssu::Sequence< rtl::OUString > SAL_CALL XMLElementWrapper_XmlSecImpl_getSupportedServiceNames(  ) 
-	throw (cssu::RuntimeException)
+cssu::Sequence< rtl::OUString > SAL_CALL XMLElementWrapper_XmlSecImpl_getSupportedServiceNames(  )
 {
 	cssu::Sequence < rtl::OUString > aRet(1);
 	rtl::OUString* pArray = aRet.getArray();
@@ -101,24 +96,20 @@ cssu::Sequence< rtl::OUString > SAL_CALL XMLElementWrapper_XmlSecImpl_getSupport
 cssu::Reference< cssu::XInterface > SAL_CALL
 	XMLElementWrapper_XmlSecImpl_createInstance(
 		const cssu::Reference< cssl::XMultiServiceFactory > &)
-	throw( cssu::Exception )
 {
 	return (cppu::OWeakObject*) new XMLElementWrapper_XmlSecImpl(NULL);
 }
 
 /* XServiceInfo */
-rtl::OUString SAL_CALL XMLElementWrapper_XmlSecImpl::getImplementationName(  ) 
-	throw (cssu::RuntimeException)
+rtl::OUString SAL_CALL XMLElementWrapper_XmlSecImpl::getImplementationName(  )
 {
 	return XMLElementWrapper_XmlSecImpl_getImplementationName();
 }
-sal_Bool SAL_CALL XMLElementWrapper_XmlSecImpl::supportsService( const rtl::OUString& rServiceName ) 
-	throw (cssu::RuntimeException)
+sal_Bool SAL_CALL XMLElementWrapper_XmlSecImpl::supportsService( const rtl::OUString& rServiceName )
 {
 	return XMLElementWrapper_XmlSecImpl_supportsService( rServiceName );
 }
-cssu::Sequence< rtl::OUString > SAL_CALL XMLElementWrapper_XmlSecImpl::getSupportedServiceNames(  ) 
-	throw (cssu::RuntimeException)
+cssu::Sequence< rtl::OUString > SAL_CALL XMLElementWrapper_XmlSecImpl::getSupportedServiceNames(  )
 {
 	return XMLElementWrapper_XmlSecImpl_getSupportedServiceNames();
 }
@@ -180,4 +171,3 @@ void XMLElementWrapper_XmlSecImpl::setNativeElement(const xmlNodePtr pNode)
 {
 	m_pElement = pNode;
 }
-

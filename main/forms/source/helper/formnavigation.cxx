@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -65,7 +65,7 @@ namespace frm
     }
 
     //------------------------------------------------------------------
-    void SAL_CALL OFormNavigationHelper::dispose( ) throw( RuntimeException )
+    void SAL_CALL OFormNavigationHelper::dispose( )
     {
         m_pFeatureInterception->dispose();
         disconnectDispatchers();
@@ -90,21 +90,21 @@ namespace frm
     }
 
     //------------------------------------------------------------------
-    void SAL_CALL OFormNavigationHelper::registerDispatchProviderInterceptor( const Reference< XDispatchProviderInterceptor >& _rxInterceptor ) throw (RuntimeException)
+    void SAL_CALL OFormNavigationHelper::registerDispatchProviderInterceptor( const Reference< XDispatchProviderInterceptor >& _rxInterceptor )
     {
         m_pFeatureInterception->registerDispatchProviderInterceptor( _rxInterceptor );
         interceptorsChanged();
     }
 
     //------------------------------------------------------------------
-    void SAL_CALL OFormNavigationHelper::releaseDispatchProviderInterceptor( const Reference< XDispatchProviderInterceptor >& _rxInterceptor ) throw (RuntimeException)
+    void SAL_CALL OFormNavigationHelper::releaseDispatchProviderInterceptor( const Reference< XDispatchProviderInterceptor >& _rxInterceptor )
     {
         m_pFeatureInterception->releaseDispatchProviderInterceptor( _rxInterceptor );
         interceptorsChanged();
     }
 
     //------------------------------------------------------------------
-    void SAL_CALL OFormNavigationHelper::statusChanged( const FeatureStateEvent& _rState ) throw (RuntimeException)
+    void SAL_CALL OFormNavigationHelper::statusChanged( const FeatureStateEvent& _rState )
     {
         for (   FeatureMap::iterator aFeature = m_aSupportedFeatures.begin();
                 aFeature != m_aSupportedFeatures.end();
@@ -132,7 +132,7 @@ namespace frm
     }
 
     //------------------------------------------------------------------
-    void SAL_CALL OFormNavigationHelper::disposing( const EventObject& _rSource ) throw (RuntimeException)
+    void SAL_CALL OFormNavigationHelper::disposing( const EventObject& _rSource )
     {
         // was it one of our external dispatchers?
 	    if ( m_nConnectedFeatures )
@@ -246,7 +246,7 @@ namespace frm
 	        {
 		        if ( aFeature->second.xDispatcher.is() )
 			        aFeature->second.xDispatcher->removeStatusListener( static_cast< XStatusListener* >( this ), aFeature->second.aURL );
-            
+
                 aFeature->second.xDispatcher = NULL;
                 aFeature->second.bCachedState = sal_False;
                 aFeature->second.aCachedAdditionalState.clear();

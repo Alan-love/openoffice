@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -39,21 +39,20 @@
 class UnoControlTabPageModel :	public ControlModelContainerBase
 								//public TabPageModel
 {
-protected:	
+protected:
 	::com::sun::star::uno::Any			ImplGetDefaultValue( sal_uInt16 nPropId ) const;
 	::cppu::IPropertyArrayHelper&		SAL_CALL getInfoHelper();
 public:
 	UnoControlTabPageModel( ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > const & i_factory);
-    
+
 	// ::com::sun::star::io::XPersistObject
-    ::rtl::OUString SAL_CALL getServiceName() throw(::com::sun::star::uno::RuntimeException);
+    ::rtl::OUString SAL_CALL getServiceName();
 
 	// ::com::sun::star::beans::XMultiPropertySet
-	::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL getPropertySetInfo(  ) throw(::com::sun::star::uno::RuntimeException);
+	::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL getPropertySetInfo(  );
     // XInitialization
-	virtual void SAL_CALL initialize (const com::sun::star::uno::Sequence<com::sun::star::uno::Any>& rArguments)
-			throw (com::sun::star::uno::Exception, com::sun::star::uno::RuntimeException);
-	
+	virtual void SAL_CALL initialize (const com::sun::star::uno::Sequence<com::sun::star::uno::Any>& rArguments);
+
 	// XServiceInfo
 	DECLIMPL_SERVICEINFO_DERIVED( UnoControlTabPageModel, ControlModelContainerBase, szServiceName_UnoControlTabPageModel )
 
@@ -76,15 +75,15 @@ public:
 	~UnoControlTabPage();
 	::rtl::OUString				GetComponentServiceName();
 
-    void SAL_CALL createPeer( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XToolkit >& Toolkit, const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer >& Parent ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source ) throw(::com::sun::star::uno::RuntimeException);
-    void SAL_CALL dispose() throw(::com::sun::star::uno::RuntimeException);
+    void SAL_CALL createPeer( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XToolkit >& Toolkit, const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer >& Parent );
+    void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source );
+    void SAL_CALL dispose();
 
      // ::com::sun::star::awt::XWindowListener
-    virtual void SAL_CALL windowResized( const ::com::sun::star::awt::WindowEvent& e ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL windowMoved( const ::com::sun::star::awt::WindowEvent& e ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL windowShown( const ::com::sun::star::lang::EventObject& e ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL windowHidden( const ::com::sun::star::lang::EventObject& e ) throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL windowResized( const ::com::sun::star::awt::WindowEvent& e );
+    virtual void SAL_CALL windowMoved( const ::com::sun::star::awt::WindowEvent& e );
+    virtual void SAL_CALL windowShown( const ::com::sun::star::lang::EventObject& e );
+    virtual void SAL_CALL windowHidden( const ::com::sun::star::lang::EventObject& e );
 	// ::com::sun::star::lang::XServiceInfo
 	DECLIMPL_SERVICEINFO( UnoControlTabPage, szServiceName_UnoControlTabPage)
 };

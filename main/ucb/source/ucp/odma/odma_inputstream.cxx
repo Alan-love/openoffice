@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -41,11 +41,11 @@ class OActiveDataStreamer : public ::cppu::WeakImplHelper1< io::XActiveDataStrea
 	uno::Reference< io::XStream > m_xStream;
 public:
 	OActiveDataStreamer(){}
-	virtual void SAL_CALL setStream( const uno::Reference< io::XStream >& _rStream ) throw (uno::RuntimeException)
+	virtual void SAL_CALL setStream( const uno::Reference< io::XStream >& _rStream )
 	{
 		m_xStream = _rStream;
 	}
-    virtual uno::Reference< io::XStream > SAL_CALL getStream(  ) throw (uno::RuntimeException)
+    virtual uno::Reference< io::XStream > SAL_CALL getStream(  )
 	{
 		return m_xStream;
 	}
@@ -80,7 +80,7 @@ OOdmaStream::~OOdmaStream()
     }
 }
 // -----------------------------------------------------------------------------
-uno::Reference< io::XInputStream > SAL_CALL OOdmaStream::getInputStream(  ) throw( uno::RuntimeException)
+uno::Reference< io::XInputStream > SAL_CALL OOdmaStream::getInputStream(  )
 {
 	{
 		osl::MutexGuard aGuard( m_aMutex );
@@ -89,7 +89,7 @@ uno::Reference< io::XInputStream > SAL_CALL OOdmaStream::getInputStream(  ) thro
 	return uno::Reference< io::XInputStream >( this );
 }
 // -----------------------------------------------------------------------------
-uno::Reference< io::XOutputStream > SAL_CALL OOdmaStream::getOutputStream(  ) throw( uno::RuntimeException )
+uno::Reference< io::XOutputStream > SAL_CALL OOdmaStream::getOutputStream(  )
 {
 	{
 		osl::MutexGuard aGuard( m_aMutex );
@@ -98,57 +98,38 @@ uno::Reference< io::XOutputStream > SAL_CALL OOdmaStream::getOutputStream(  ) th
 	return uno::Reference< io::XOutputStream >( this );
 }
 // -----------------------------------------------------------------------------
-sal_Int32 SAL_CALL OOdmaStream::readBytes( uno::Sequence< sal_Int8 >& aData, sal_Int32 nBytesToRead ) 
-	throw( io::NotConnectedException,
-		   io::BufferSizeExceededException,
-		   io::IOException,
-		   uno::RuntimeException)
+sal_Int32 SAL_CALL OOdmaStream::readBytes( uno::Sequence< sal_Int8 >& aData, sal_Int32 nBytesToRead )
 {
 	ensureInputStream();
-	
+
 	return m_xInput->readBytes(aData,nBytesToRead);
 }
 // -----------------------------------------------------------------------------
 sal_Int32 SAL_CALL OOdmaStream::readSomeBytes( uno::Sequence< sal_Int8 >& aData,sal_Int32 nMaxBytesToRead )
-	throw( io::NotConnectedException,
-		   io::BufferSizeExceededException,
-		   io::IOException,
-		   uno::RuntimeException)
 {
 	return readBytes( aData,nMaxBytesToRead );
 }
 // -----------------------------------------------------------------------------
 void SAL_CALL OOdmaStream::skipBytes( sal_Int32 nBytesToSkip )
-	throw( io::NotConnectedException,
-		   io::BufferSizeExceededException,
-		   io::IOException,
-		   uno::RuntimeException )
 {
 	ensureInputStream();
 	m_xInput->skipBytes(nBytesToSkip );
 }
 // -----------------------------------------------------------------------------
 sal_Int32 SAL_CALL OOdmaStream::available()
-	throw( io::NotConnectedException,
-		   io::IOException,
-		   uno::RuntimeException)
 {
 	ensureInputStream();
 	return m_xInput->available();
 }
 // -----------------------------------------------------------------------------
 void SAL_CALL OOdmaStream::writeBytes( const uno::Sequence< sal_Int8 >& aData )
-	throw( io::NotConnectedException,
-		   io::BufferSizeExceededException,
-		   io::IOException,
-		   uno::RuntimeException)
 {
 	ensureOutputStream();
 	m_xOutput->writeBytes(aData);
 	m_bModified = sal_True;
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OOdmaStream::closeStream() throw( io::NotConnectedException,io::IOException,uno::RuntimeException )
+void SAL_CALL OOdmaStream::closeStream()
 {
 	if( m_xInput.is() )
 	{
@@ -167,40 +148,30 @@ void SAL_CALL OOdmaStream::closeStream() throw( io::NotConnectedException,io::IO
 }
 // -----------------------------------------------------------------------------
 void SAL_CALL OOdmaStream::closeInput()
-	throw( io::NotConnectedException,
-		   io::IOException,
-		   uno::RuntimeException )
 {
 	osl::MutexGuard aGuard( m_aMutex );
 	m_bInputStreamCalled = sal_False;
-	
+
 	if( ! m_bOutputStreamCalled )
 		closeStream();
 }
 // -----------------------------------------------------------------------------
 void SAL_CALL OOdmaStream::closeOutput()
-	throw( io::NotConnectedException,
-		   io::IOException,
-		   uno::RuntimeException )
 {
 	osl::MutexGuard aGuard( m_aMutex );
 	m_bOutputStreamCalled = sal_False;
-	
+
 	if( ! m_bInputStreamCalled )
 		closeStream();
 }
 // -----------------------------------------------------------------------------
 void SAL_CALL OOdmaStream::flush()
-	throw( io::NotConnectedException,
-		   io::BufferSizeExceededException,
-		   io::IOException,
-		   uno::RuntimeException )
 {
 	ensureOutputStream();
 	m_xOutput->flush();
 }
 // -----------------------------------------------------------------------------
-void OOdmaStream::ensureInputStream() throw( io::IOException )
+void OOdmaStream::ensureInputStream()
 {
 	try
 	{
@@ -217,7 +188,7 @@ void OOdmaStream::ensureInputStream() throw( io::IOException )
 		throw io::IOException();
 }
 // -----------------------------------------------------------------------------
-void OOdmaStream::ensureOutputStream() throw( io::IOException )
+void OOdmaStream::ensureOutputStream()
 {
 	try
 	{
@@ -246,8 +217,6 @@ void OOdmaStream::ensureOutputStream() throw( io::IOException )
 // -----------------------------------------------------------------------------
 // XTruncate
 void SAL_CALL OOdmaStream::truncate( void )
-	throw( io::IOException,
-		   uno::RuntimeException )
 {
 	if(m_xTruncate.is())
 		m_xTruncate->truncate();
@@ -255,9 +224,6 @@ void SAL_CALL OOdmaStream::truncate( void )
 // -----------------------------------------------------------------------------
 // XSeekable
 void SAL_CALL OOdmaStream::seek(sal_Int64 location )
-	throw( lang::IllegalArgumentException,
-		   io::IOException,
-		   uno::RuntimeException )
 {
 	ensureInputStream();
 	if(m_xInputSeek.is())
@@ -265,16 +231,12 @@ void SAL_CALL OOdmaStream::seek(sal_Int64 location )
 }
 // -----------------------------------------------------------------------------
 sal_Int64 SAL_CALL OOdmaStream::getPosition()
-	throw( io::IOException,
-		   uno::RuntimeException )
 {
 	ensureInputStream();
 	return m_xInputSeek.is() ? m_xInputSeek->getPosition() : sal_Int64(0);
 }
 // -----------------------------------------------------------------------------
 sal_Int64 SAL_CALL OOdmaStream::getLength()
-	throw( io::IOException,
-		   uno::RuntimeException )
 {
 	ensureInputStream();
 	return m_xInputSeek.is() ? m_xInputSeek->getLength() : sal_Int64(0);

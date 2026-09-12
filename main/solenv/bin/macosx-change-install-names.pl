@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -33,6 +33,14 @@ sub action($$$)
          'app/SDK/URELIB' => '@executable_path',
          'app/BRAND/URELIB' => '@executable_path',
          'app/BRAND/OOO' => '@executable_path',
+         # BRANDBIN: the executable is the bundle launcher in Contents/MacOS,
+         # while the libraries are installed in Contents/program.
+         'app/BRANDBIN/URELIB' => '@executable_path/../program',
+         'app/BRANDBIN/OOO' => '@executable_path/../program',
+         # gbuild calls its SDK and build-tool executable layers SDKBIN and NONEBIN.
+         'app/SDKBIN/URELIB' => '@executable_path',
+         'app/NONEBIN/URELIB' => '@__VIA_LIBRARY_PATH__',
+         'app/NONEBIN/OOO' => '@__VIA_LIBRARY_PATH__',
          'app/NONE/URELIB' => '@__VIA_LIBRARY_PATH__',
          'app/NONE/OOO' => '@__VIA_LIBRARY_PATH__',
          'app/NONE/NONE' => '@__VIA_LIBRARY_PATH__',
@@ -40,8 +48,12 @@ sub action($$$)
          'shl/OOO/URELIB' => '@loader_path',
          'shl/OOO/OOO' => '@loader_path',
          'shl/LOADER/LOADER' => '@loader_path',
-         'shl/OXT/URELIB' => '@executable_path',
-         'shl/BOXT/URELIB' => '@executable_path',
+         # Extension libraries can live inside the installation or in an
+         # extension directory, so they cannot use @loader_path; the office
+         # libraries are always in Contents/program, one level up from the
+         # launcher in Contents/MacOS and from the helper binaries themselves.
+         'shl/OXT/URELIB' => '@executable_path/../program',
+         'shl/BOXT/URELIB' => '@executable_path/../program',
          'shl/BOXT/OOO' => '@loader_path',
          'shl/NONE/URELIB' => '@__VIA_LIBRARY_PATH__',
          'shl/NONE/OOO' => '@__VIA_LIBRARY_PATH__',
@@ -74,7 +86,7 @@ sub action($$$)
 }
 
 @ARGV == 3 || @ARGV >= 2 && $ARGV[0] eq "extshl" or die
-  'Usage: app|shl|extshl UREBIN|URELIB|OOO|SDK|BRAND|OXT|BOXT|NONE|LOADER <filepath>*';
+  'Usage: app|shl|extshl UREBIN|URELIB|OOO|SDK|BRAND|BRANDBIN|OXT|BOXT|NONE|LOADER <filepath>*';
 $type = shift @ARGV;
 $loc = shift @ARGV;
 if ($type eq "SharedLibrary")

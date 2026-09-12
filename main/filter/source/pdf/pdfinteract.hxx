@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -47,41 +47,36 @@ private:
 
 protected:
 	// XServiceInfo
-    virtual OUString SAL_CALL getImplementationName() throw(RuntimeException);
-    virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName ) throw(RuntimeException);
-    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames()  throw(RuntimeException);
-    
+    virtual OUString SAL_CALL getImplementationName();
+    virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName );
+    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames();
+
     // XIniteractionHandler
-    virtual void SAL_CALL handle( const Reference< task::XInteractionRequest >& ) throw(RuntimeException);
+    virtual void SAL_CALL handle( const Reference< task::XInteractionRequest >& );
 
     // XIniteractionHandler2
-    virtual sal_Bool SAL_CALL handleInteractionRequest( const Reference< task::XInteractionRequest >& ) throw(RuntimeException);
+    virtual sal_Bool SAL_CALL handleInteractionRequest( const Reference< task::XInteractionRequest >& );
 public:
-	
+
 				PDFInteractionHandler( const Reference< XMultiServiceFactory >& rxMSF );
 	virtual		~PDFInteractionHandler();
 };
 
 // -----------------------------------------------------------------------------
 
-OUString PDFInteractionHandler_getImplementationName ()
-	throw ( RuntimeException );
+OUString PDFInteractionHandler_getImplementationName ();
 
 // -----------------------------------------------------------------------------
 
-sal_Bool SAL_CALL PDFInteractionHandler_supportsService( const OUString& ServiceName ) 
-	throw ( RuntimeException );
+sal_Bool SAL_CALL PDFInteractionHandler_supportsService( const OUString& ServiceName );
 
 // -----------------------------------------------------------------------------
 
-Sequence< OUString > SAL_CALL PDFInteractionHandler_getSupportedServiceNames(  ) 
-	throw ( RuntimeException );
+Sequence< OUString > SAL_CALL PDFInteractionHandler_getSupportedServiceNames(  );
 
 // -----------------------------------------------------------------------------
 
 Reference< XInterface >
-SAL_CALL PDFInteractionHandler_createInstance( const Reference< XMultiServiceFactory > & rSMgr)
-	throw ( Exception );
+SAL_CALL PDFInteractionHandler_createInstance( const Reference< XMultiServiceFactory > & rSMgr);
 
 #endif // PDFINTERACT_HXX
-

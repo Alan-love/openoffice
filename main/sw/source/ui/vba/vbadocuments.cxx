@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -63,7 +63,7 @@ getDocument( uno::Reference< uno::XComponentContext >& xContext, const uno::Refe
 	uno::Reference< frame::XModel > xModel( xDoc, uno::UNO_QUERY );
 	if( !xModel.is() )
 		return uno::Any();
-	
+
 	SwVbaDocument *pWb = new SwVbaDocument(  uno::Reference< XHelperInterface >( aApplication, uno::UNO_QUERY_THROW ), xContext, xModel );
 	return uno::Any( uno::Reference< word::XDocument > (pWb) );
 }
@@ -72,10 +72,10 @@ class DocumentEnumImpl : public EnumerationHelperImpl
 {
 	uno::Any m_aApplication;
 public:
-	DocumentEnumImpl( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext >& xContext, const uno::Reference< container::XEnumeration >& xEnumeration, const uno::Any& aApplication ) throw ( uno::RuntimeException ) : EnumerationHelperImpl( xParent, xContext, xEnumeration ), m_aApplication( aApplication ) {}
+	DocumentEnumImpl( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext >& xContext, const uno::Reference< container::XEnumeration >& xEnumeration, const uno::Any& aApplication ) : EnumerationHelperImpl( xParent, xContext, xEnumeration ), m_aApplication( aApplication ) {}
 
-	virtual uno::Any SAL_CALL nextElement(  ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException) 
-	{ 
+	virtual uno::Any SAL_CALL nextElement(  )
+	{
 		uno::Reference< text::XTextDocument > xDoc( m_xEnumeration->nextElement(), uno::UNO_QUERY_THROW );
 		return getDocument( m_xContext, xDoc, m_aApplication );
 	}
@@ -86,15 +86,15 @@ SwVbaDocuments::SwVbaDocuments( const uno::Reference< XHelperInterface >& xParen
 }
 // XEnumerationAccess
 uno::Type
-SwVbaDocuments::getElementType() throw (uno::RuntimeException)
+SwVbaDocuments::getElementType()
 {
 	return word::XDocument::static_type(0);
 }
 uno::Reference< container::XEnumeration >
-SwVbaDocuments::createEnumeration() throw (uno::RuntimeException)
+SwVbaDocuments::createEnumeration()
 {
 	// #FIXME its possible the DocumentEnumImpl here doens't reflect
-	// the state of this object ( although it should ) would be 
+	// the state of this object ( although it should ) would be
 	// safer to create an enumeration based on this objects state
 	// rather than one effectively based of the desktop component
     uno::Reference< container::XEnumerationAccess > xEnumerationAccess( m_xIndexAccess, uno::UNO_QUERY_THROW );
@@ -109,7 +109,7 @@ SwVbaDocuments::createCollectionObject( const uno::Any& aSource )
 }
 
 uno::Any SAL_CALL
-SwVbaDocuments::Add( const uno::Any& Template, const uno::Any& /*NewTemplate*/, const uno::Any& /*DocumentType*/, const uno::Any& /*Visible*/ ) throw (uno::RuntimeException)
+SwVbaDocuments::Add( const uno::Any& Template, const uno::Any& /*NewTemplate*/, const uno::Any& /*DocumentType*/, const uno::Any& /*Visible*/ )
 {
     rtl::OUString sFileName;
     if( Template.hasValue() && ( Template >>= sFileName ) )
@@ -125,14 +125,14 @@ SwVbaDocuments::Add( const uno::Any& Template, const uno::Any& /*NewTemplate*/, 
 
 // #TODO# #FIXME# can any of the unused params below be used?
 void SAL_CALL
-SwVbaDocuments::Close( const uno::Any& /*SaveChanges*/, const uno::Any& /*OriginalFormat*/, const uno::Any& /*RouteDocument*/ ) throw (uno::RuntimeException)
+SwVbaDocuments::Close( const uno::Any& /*SaveChanges*/, const uno::Any& /*OriginalFormat*/, const uno::Any& /*RouteDocument*/ )
 {
     closeDocuments();
 }
 
 // #TODO# #FIXME# can any of the unused params below be used?
 uno::Any SAL_CALL
-SwVbaDocuments::Open( const ::rtl::OUString& Filename, const uno::Any& /*ConfirmConversions*/, const uno::Any& ReadOnly, const uno::Any& /*AddToRecentFiles*/, const uno::Any& /*PasswordDocument*/, const uno::Any& /*PasswordTemplate*/, const uno::Any& /*Revert*/, const uno::Any& /*WritePasswordDocument*/, const uno::Any& /*WritePasswordTemplate*/, const uno::Any& /*Format*/, const uno::Any& /*Encoding*/, const uno::Any& /*Visible*/, const uno::Any& /*OpenAndRepair*/, const uno::Any& /*DocumentDirection*/, const uno::Any& /*NoEncodingDialog*/, const uno::Any& /*XMLTransform*/ ) throw (uno::RuntimeException)
+SwVbaDocuments::Open( const ::rtl::OUString& Filename, const uno::Any& /*ConfirmConversions*/, const uno::Any& ReadOnly, const uno::Any& /*AddToRecentFiles*/, const uno::Any& /*PasswordDocument*/, const uno::Any& /*PasswordTemplate*/, const uno::Any& /*Revert*/, const uno::Any& /*WritePasswordDocument*/, const uno::Any& /*WritePasswordTemplate*/, const uno::Any& /*Format*/, const uno::Any& /*Encoding*/, const uno::Any& /*Visible*/, const uno::Any& /*OpenAndRepair*/, const uno::Any& /*DocumentDirection*/, const uno::Any& /*NoEncodingDialog*/, const uno::Any& /*XMLTransform*/ )
 {
 	// we need to detect if this is a URL, if not then assume its a file path
     rtl::OUString aURL;
@@ -161,7 +161,7 @@ SwVbaDocuments::getServiceImplName()
 	return sImplName;
 }
 
-uno::Sequence<rtl::OUString> 
+uno::Sequence<rtl::OUString>
 SwVbaDocuments::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > sNames;

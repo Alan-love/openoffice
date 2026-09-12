@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -40,7 +40,7 @@ using namespace ::ooo::vba;
 
 // ============================================================================
 
-ScDocShell* GetDocShellFromRange( const uno::Reference< uno::XInterface >& xRange ) throw ( uno::RuntimeException )
+ScDocShell* GetDocShellFromRange( const uno::Reference< uno::XInterface >& xRange )
 {
     ScCellRangesBase* pScCellRangesBase = ScCellRangesBase::getImplementation( xRange );
     if ( !pScCellRangesBase )
@@ -50,7 +50,7 @@ ScDocShell* GetDocShellFromRange( const uno::Reference< uno::XInterface >& xRang
     return pScCellRangesBase->GetDocShell();
 }
 
-ScDocument* GetDocumentFromRange( const uno::Reference< uno::XInterface >& xRange ) throw ( uno::RuntimeException )
+ScDocument* GetDocumentFromRange( const uno::Reference< uno::XInterface >& xRange )
 {
         ScDocShell* pDocShell = GetDocShellFromRange( xRange );
         if ( !pDocShell )
@@ -87,7 +87,7 @@ class PasteCellsWarningReseter
 {
 private:
 	bool bInitialWarningState;
-	static uno::Reference< beans::XPropertySet > getGlobalSheetSettings() throw ( uno::RuntimeException )
+	static uno::Reference< beans::XPropertySet > getGlobalSheetSettings()
 	{
 		static uno::Reference< beans::XPropertySet > xTmpProps( ::comphelper::getProcessServiceFactory(), uno::UNO_QUERY_THROW );
 		static uno::Reference<uno::XComponentContext > xContext( xTmpProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "DefaultContext" ))), uno::UNO_QUERY_THROW );
@@ -97,19 +97,19 @@ private:
 		return xProps;
 	}
 
-	bool getReplaceCellsWarning() throw ( uno::RuntimeException )
+	bool getReplaceCellsWarning()
 	{
 		sal_Bool res = sal_False;
 		getGlobalSheetSettings()->getPropertyValue( REPLACE_CELLS_WARNING ) >>= res;
 		return ( res == sal_True );
 	}
 
-	void setReplaceCellsWarning( bool bState ) throw ( uno::RuntimeException )
+	void setReplaceCellsWarning( bool bState )
 	{
 		getGlobalSheetSettings()->setPropertyValue( REPLACE_CELLS_WARNING, uno::makeAny( bState ) );
 	}
 public:
-	PasteCellsWarningReseter() throw ( uno::RuntimeException )
+	PasteCellsWarningReseter()
 	{
 		bInitialWarningState = getReplaceCellsWarning();
 		if ( bInitialWarningState )
@@ -157,7 +157,7 @@ implnCopy( const uno::Reference< frame::XModel>& xModel )
     }
 }
 
-void 
+void
 implnCut( const uno::Reference< frame::XModel>& xModel )
 {
 	ScTabViewShell* pViewShell =  getBestViewShell( xModel );
@@ -181,19 +181,19 @@ void implnPasteSpecial( const uno::Reference< frame::XModel>& xModel, sal_uInt16
 	ScTabViewShell* pTabViewShell = getBestViewShell( xModel );
 	if ( pTabViewShell )
 	{
-		ScViewData* pView = pTabViewShell->GetViewData();	
+		ScViewData* pView = pTabViewShell->GetViewData();
 		Window* pWin = ( pView != NULL ) ? pView->GetActiveWin() : NULL;
 		if ( pView && pWin )
 		{
 			if ( bAsLink && bOtherDoc )
 				pTabViewShell->PasteFromSystem(0);//SOT_FORMATSTR_ID_LINK
-			else 
+			else
 			{
 				ScTransferObj* pOwnClip = ScTransferObj::GetOwnClipboard( pWin );
-				ScDocument* pDoc = NULL; 
+				ScDocument* pDoc = NULL;
 				if ( pOwnClip )
                 {
-					pDoc = pOwnClip->GetDocument();	
+					pDoc = pOwnClip->GetDocument();
                     pOwnClip->SetUseInApi( false );     // don't use in Insert after it was pasted once
                 }
 				pTabViewShell->PasteFromClip( nFlags, pDoc,
@@ -206,8 +206,8 @@ void implnPasteSpecial( const uno::Reference< frame::XModel>& xModel, sal_uInt16
 
 }
 
-ScDocShell* 
-getDocShell( const css::uno::Reference< css::frame::XModel>& xModel ) 
+ScDocShell*
+getDocShell( const css::uno::Reference< css::frame::XModel>& xModel )
 {
 	uno::Reference< uno::XInterface > xIf( xModel, uno::UNO_QUERY_THROW );
 	ScModelObj* pModel = dynamic_cast< ScModelObj* >( xIf.get() );
@@ -218,7 +218,7 @@ getDocShell( const css::uno::Reference< css::frame::XModel>& xModel )
 
 }
 
-ScTabViewShell* 
+ScTabViewShell*
 getBestViewShell( const css::uno::Reference< css::frame::XModel>& xModel )
 {
 	ScDocShell* pDocShell = getDocShell( xModel );
@@ -227,24 +227,24 @@ getBestViewShell( const css::uno::Reference< css::frame::XModel>& xModel )
 	return NULL;
 }
 
-ScTabViewShell* 
+ScTabViewShell*
 getCurrentBestViewShell(  const uno::Reference< uno::XComponentContext >& xContext )
-{ 
+{
 	uno::Reference< frame::XModel > xModel = getCurrentExcelDoc( xContext );
 	return getBestViewShell( xModel );
 }
 
-SfxViewFrame* 
+SfxViewFrame*
 getViewFrame( const uno::Reference< frame::XModel >& xModel )
 {
-	ScTabViewShell* pViewShell = getBestViewShell( xModel );	
+	ScTabViewShell* pViewShell = getBestViewShell( xModel );
 	if ( pViewShell )
 		return pViewShell->GetViewFrame();
 	return NULL;
 }
 
 uno::Reference< XHelperInterface >
-getUnoSheetModuleObj( const uno::Reference< sheet::XSpreadsheet >& xSheet ) throw ( uno::RuntimeException )
+getUnoSheetModuleObj( const uno::Reference< sheet::XSpreadsheet >& xSheet )
 {
     uno::Reference< beans::XPropertySet > xProps( xSheet, uno::UNO_QUERY_THROW );
     rtl::OUString sCodeName;
@@ -258,15 +258,15 @@ getUnoSheetModuleObj( const uno::Reference< sheet::XSpreadsheet >& xSheet ) thro
 }
 
 uno::Reference< XHelperInterface >
-getUnoSheetModuleObj( const uno::Reference< table::XCellRange >& xRange ) throw ( uno::RuntimeException )
+getUnoSheetModuleObj( const uno::Reference< table::XCellRange >& xRange )
 {
     uno::Reference< sheet::XSheetCellRange > xSheetRange( xRange, uno::UNO_QUERY_THROW );
     uno::Reference< sheet::XSpreadsheet > xSheet( xSheetRange->getSpreadsheet(), uno::UNO_SET_THROW );
     return getUnoSheetModuleObj( xSheet );
 }
 
-uno::Reference< XHelperInterface > 
-getUnoSheetModuleObj( const uno::Reference< sheet::XSheetCellRangeContainer >& xRanges ) throw ( uno::RuntimeException )
+uno::Reference< XHelperInterface >
+getUnoSheetModuleObj( const uno::Reference< sheet::XSheetCellRangeContainer >& xRanges )
 {
     uno::Reference< container::XEnumerationAccess > xEnumAccess( xRanges, uno::UNO_QUERY_THROW );
     uno::Reference< container::XEnumeration > xEnum = xEnumAccess->createEnumeration();
@@ -275,7 +275,7 @@ getUnoSheetModuleObj( const uno::Reference< sheet::XSheetCellRangeContainer >& x
 }
 
 uno::Reference< XHelperInterface >
-getUnoSheetModuleObj( const uno::Reference< table::XCell >& xCell ) throw ( uno::RuntimeException )
+getUnoSheetModuleObj( const uno::Reference< table::XCell >& xCell )
 {
     uno::Reference< sheet::XSheetCellRange > xSheetRange( xCell, uno::UNO_QUERY_THROW );
     uno::Reference< sheet::XSpreadsheet > xSheet( xSheetRange->getSpreadsheet(), uno::UNO_SET_THROW );
@@ -283,7 +283,7 @@ getUnoSheetModuleObj( const uno::Reference< table::XCell >& xCell ) throw ( uno:
 }
 
 uno::Reference< XHelperInterface >
-getUnoSheetModuleObj( const uno::Reference< frame::XModel >& xModel, SCTAB nTab ) throw ( uno::RuntimeException )
+getUnoSheetModuleObj( const uno::Reference< frame::XModel >& xModel, SCTAB nTab )
 {
     uno::Reference< sheet::XSpreadsheetDocument > xDoc( xModel, uno::UNO_QUERY_THROW );
     uno::Reference< container::XIndexAccess > xSheets( xDoc->getSheets(), uno::UNO_QUERY_THROW );

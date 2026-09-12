@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -51,7 +51,7 @@ using namespace ::com::sun::star::util;
 //==================================================================
 
 //------------------------------------------------------------------
-InterfaceRef SAL_CALL OGroupBoxModel_CreateInstance(const Reference<starlang::XMultiServiceFactory>& _rxFactory) throw (RuntimeException)
+InterfaceRef SAL_CALL OGroupBoxModel_CreateInstance(const Reference<starlang::XMultiServiceFactory>& _rxFactory)
 {
 	return *(new OGroupBoxModel(_rxFactory));
 }
@@ -75,7 +75,7 @@ OGroupBoxModel::OGroupBoxModel( const OGroupBoxModel* _pOriginal, const Referenc
 
 // XServiceInfo
 //------------------------------------------------------------------------------
-StringSequence SAL_CALL	OGroupBoxModel::getSupportedServiceNames() throw(RuntimeException)
+StringSequence SAL_CALL	OGroupBoxModel::getSupportedServiceNames()
 {
 	StringSequence aSupported = OControlModel::getSupportedServiceNames();
 	aSupported.realloc(aSupported.getLength() + 1);
@@ -103,14 +103,13 @@ void OGroupBoxModel::describeAggregateProperties( Sequence< Property >& _rAggreg
 }
 
 //------------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OGroupBoxModel::getServiceName() throw(RuntimeException)
+::rtl::OUString SAL_CALL OGroupBoxModel::getServiceName()
 {
 	return FRM_COMPONENT_GROUPBOX;	// old (non-sun) name for compatibility !
 }
 
 //------------------------------------------------------------------------------
 void SAL_CALL OGroupBoxModel::write(const Reference< XObjectOutputStream>& _rxOutStream)
-	throw(IOException, RuntimeException)
 {
 	OControlModel::write(_rxOutStream);
 
@@ -120,7 +119,7 @@ void SAL_CALL OGroupBoxModel::write(const Reference< XObjectOutputStream>& _rxOu
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL OGroupBoxModel::read(const Reference< XObjectInputStream>& _rxInStream) throw(IOException, RuntimeException)
+void SAL_CALL OGroupBoxModel::read(const Reference< XObjectInputStream>& _rxInStream)
 {
 	OControlModel::read( _rxInStream );
 
@@ -143,7 +142,7 @@ void SAL_CALL OGroupBoxModel::read(const Reference< XObjectInputStream>& _rxInSt
 //==================================================================
 
 //------------------------------------------------------------------
-InterfaceRef SAL_CALL OGroupBoxControl_CreateInstance(const Reference<starlang::XMultiServiceFactory>& _rxFactory) throw (RuntimeException)
+InterfaceRef SAL_CALL OGroupBoxControl_CreateInstance(const Reference<starlang::XMultiServiceFactory>& _rxFactory)
 {
 	return *(new OGroupBoxControl(_rxFactory));
 }
@@ -155,7 +154,7 @@ OGroupBoxControl::OGroupBoxControl(const Reference<starlang::XMultiServiceFactor
 }
 
 //------------------------------------------------------------------------------
-StringSequence SAL_CALL	OGroupBoxControl::getSupportedServiceNames() throw(RuntimeException)
+StringSequence SAL_CALL	OGroupBoxControl::getSupportedServiceNames()
 {
 	StringSequence aSupported = OControl::getSupportedServiceNames();
 	aSupported.realloc(aSupported.getLength() + 1);
@@ -168,4 +167,3 @@ StringSequence SAL_CALL	OGroupBoxControl::getSupportedServiceNames() throw(Runti
 //.........................................................................
 }
 //.........................................................................
-

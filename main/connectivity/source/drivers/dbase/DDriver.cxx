@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_dbase.hxx"
 #include "dbase/DDriver.hxx"
 #include "dbase/DConnection.hxx"
 #include <com/sun/star/lang/DisposedException.hpp>
@@ -40,24 +40,24 @@ using namespace ::com::sun::star::lang;
 
 // static ServiceInfo
 //------------------------------------------------------------------------------
-rtl::OUString ODriver::getImplementationName_Static(  ) throw(RuntimeException)
+rtl::OUString ODriver::getImplementationName_Static(  )
 {
 	return rtl::OUString::createFromAscii("com.sun.star.comp.sdbc.dbase.ODriver");
 }
 
 //------------------------------------------------------------------
-::rtl::OUString SAL_CALL ODriver::getImplementationName(  ) throw(RuntimeException)
+::rtl::OUString SAL_CALL ODriver::getImplementationName(  )
 {
 	return getImplementationName_Static();
 }
 
 //------------------------------------------------------------------
-::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >  SAL_CALL connectivity::dbase::ODriver_CreateInstance(const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory >& _rxFactory) throw( ::com::sun::star::uno::Exception )
+::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >  SAL_CALL connectivity::dbase::ODriver_CreateInstance(const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory >& _rxFactory)
 {
 	return *(new ODriver(_rxFactory));
 }
 // --------------------------------------------------------------------------------
-Reference< XConnection > SAL_CALL ODriver::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info ) throw(SQLException, RuntimeException)
+Reference< XConnection > SAL_CALL ODriver::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if (ODriver_BASE::rBHelper.bDisposed)
@@ -74,12 +74,12 @@ Reference< XConnection > SAL_CALL ODriver::connect( const ::rtl::OUString& url, 
 	return xCon;
 }
 // --------------------------------------------------------------------------------
-sal_Bool SAL_CALL ODriver::acceptsURL( const ::rtl::OUString& url ) throw(SQLException, RuntimeException)
+sal_Bool SAL_CALL ODriver::acceptsURL( const ::rtl::OUString& url )
 {
 	return !url.compareTo(::rtl::OUString::createFromAscii("sdbc:dbase:"),11);
 }
 // -----------------------------------------------------------------------------
-Sequence< DriverPropertyInfo > SAL_CALL ODriver::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& /*info*/ ) throw(SQLException, RuntimeException)
+Sequence< DriverPropertyInfo > SAL_CALL ODriver::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& /*info*/ )
 {
 	if ( acceptsURL(url) )
 	{
@@ -110,7 +110,7 @@ Sequence< DriverPropertyInfo > SAL_CALL ODriver::getPropertyInfo( const ::rtl::O
 				,::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("0"))
 				,aBoolean)
 				);
-		return Sequence< DriverPropertyInfo >(&(aDriverInfo[0]),aDriverInfo.size()); 
+		return Sequence< DriverPropertyInfo >(&(aDriverInfo[0]),aDriverInfo.size());
 	}
 
 	SharedResources aResources;
@@ -119,5 +119,3 @@ Sequence< DriverPropertyInfo > SAL_CALL ODriver::getPropertyInfo( const ::rtl::O
 	return Sequence< DriverPropertyInfo >();
 }
 // -----------------------------------------------------------------------------
-
-

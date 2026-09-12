@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -46,7 +46,7 @@
 #endif
 #ifndef _COM_SUN_STAR_ACCESSIBILITY_ACCESSIBLEROLE_HPP_
 #include <com/sun/star/accessibility/AccessibleRole.hpp>
-#endif												 
+#endif
 #ifndef _COM_SUN_STAR_ACCESSIBILITY_ACCESSIBLERELATIONTYPE_HPP_
 #include <com/sun/star/accessibility/AccessibleRelationType.hpp>
 #endif
@@ -74,7 +74,7 @@ namespace dbaui
 	using namespace ::com::sun::star;
 
 	OTableWindowAccess::OTableWindowAccess(OTableWindow* _pTable)
-		:VCLXAccessibleComponent(_pTable->GetComponentInterface().is() ? _pTable->GetWindowPeer() : NULL) 
+		:VCLXAccessibleComponent(_pTable->GetComponentInterface().is() ? _pTable->GetWindowPeer() : NULL)
 		,m_pTable(_pTable)
 	{
 	}
@@ -96,29 +96,29 @@ namespace dbaui
         VCLXAccessibleComponent::ProcessWindowEvent( rVclWindowEvent );
 	}
 	// -----------------------------------------------------------------------------
-	Any SAL_CALL OTableWindowAccess::queryInterface( const Type& aType ) throw (RuntimeException)
+	Any SAL_CALL OTableWindowAccess::queryInterface( const Type& aType )
 	{
 		Any aRet(VCLXAccessibleComponent::queryInterface( aType ));
 		return aRet.hasValue() ? aRet : OTableWindowAccess_BASE::queryInterface( aType );
 	}
 	// -----------------------------------------------------------------------------
-	Sequence< Type > SAL_CALL OTableWindowAccess::getTypes(  ) throw (RuntimeException)
+	Sequence< Type > SAL_CALL OTableWindowAccess::getTypes(  )
 	{
 		return ::comphelper::concatSequences(VCLXAccessibleComponent::getTypes(),OTableWindowAccess_BASE::getTypes());
 	}
 	// -----------------------------------------------------------------------------
-	::rtl::OUString SAL_CALL OTableWindowAccess::getImplementationName() throw(RuntimeException)
+	::rtl::OUString SAL_CALL OTableWindowAccess::getImplementationName()
 	{
 		return getImplementationName_Static();
 	}
 	// -----------------------------------------------------------------------------
-	Sequence< ::rtl::OUString > SAL_CALL OTableWindowAccess::getSupportedServiceNames() throw(RuntimeException)
+	Sequence< ::rtl::OUString > SAL_CALL OTableWindowAccess::getSupportedServiceNames()
 	{
 		return getSupportedServiceNames_Static();
 	}
 	// -----------------------------------------------------------------------------
 	// XServiceInfo - static methods
-	Sequence< ::rtl::OUString > OTableWindowAccess::getSupportedServiceNames_Static(void) throw( RuntimeException )
+	Sequence< ::rtl::OUString > OTableWindowAccess::getSupportedServiceNames_Static(void)
 	{
 		Sequence< ::rtl::OUString > aSupported(2);
 		aSupported[0] = ::rtl::OUString::createFromAscii("com.sun.star.accessibility.Accessible");
@@ -126,13 +126,13 @@ namespace dbaui
 		return aSupported;
 	}
 	// -----------------------------------------------------------------------------
-	::rtl::OUString OTableWindowAccess::getImplementationName_Static(void) throw( RuntimeException )
+	::rtl::OUString OTableWindowAccess::getImplementationName_Static(void)
 	{
 		return ::rtl::OUString::createFromAscii("org.openoffice.comp.dbu.TableWindowAccessibility");
 	}
 	// -----------------------------------------------------------------------------
 	// XAccessibleContext
-    sal_Int32 SAL_CALL OTableWindowAccess::getAccessibleChildCount(  ) throw (RuntimeException)
+    sal_Int32 SAL_CALL OTableWindowAccess::getAccessibleChildCount(  )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
         sal_Int32 nCount = 0;
@@ -146,7 +146,7 @@ namespace dbaui
 		return nCount;
 	}
     // -----------------------------------------------------------------------------
-    Reference< XAccessible > SAL_CALL OTableWindowAccess::getAccessibleChild( sal_Int32 i ) throw (IndexOutOfBoundsException,RuntimeException)
+    Reference< XAccessible > SAL_CALL OTableWindowAccess::getAccessibleChild( sal_Int32 i )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
         Reference< XAccessible > aRet;
@@ -171,7 +171,7 @@ namespace dbaui
         return aRet;
     }
 	// -----------------------------------------------------------------------------
-	sal_Int32 SAL_CALL OTableWindowAccess::getAccessibleIndexInParent(  ) throw (RuntimeException)
+	sal_Int32 SAL_CALL OTableWindowAccess::getAccessibleIndexInParent(  )
 	{
 		::osl::MutexGuard aGuard( m_aMutex  );
 		sal_Int32 nIndex = -1;
@@ -188,19 +188,19 @@ namespace dbaui
 		return nIndex;
 	}
 	// -----------------------------------------------------------------------------
-	sal_Int16 SAL_CALL OTableWindowAccess::getAccessibleRole(  ) throw (RuntimeException)
+	sal_Int16 SAL_CALL OTableWindowAccess::getAccessibleRole(  )
 	{
 		return AccessibleRole::PANEL; // ? or may be an AccessibleRole::WINDOW
 	}
 	// -----------------------------------------------------------------------------
-	Reference< XAccessibleRelationSet > SAL_CALL OTableWindowAccess::getAccessibleRelationSet(  ) throw (RuntimeException)
+	Reference< XAccessibleRelationSet > SAL_CALL OTableWindowAccess::getAccessibleRelationSet(  )
 	{
 		::osl::MutexGuard aGuard( m_aMutex  );
 		return this;
 	}
 	// -----------------------------------------------------------------------------
 	// XAccessibleComponent
-	Reference< XAccessible > SAL_CALL OTableWindowAccess::getAccessibleAtPoint( const awt::Point& _aPoint ) throw (RuntimeException)
+	Reference< XAccessible > SAL_CALL OTableWindowAccess::getAccessibleAtPoint( const awt::Point& _aPoint )
 	{
 		::osl::MutexGuard aGuard( m_aMutex  );
 		Reference< XAccessible > aRet;
@@ -229,16 +229,16 @@ namespace dbaui
 			}
 		}
 		return xReturn;
-	}	
+	}
 	// -----------------------------------------------------------------------------
 
-	sal_Int32 SAL_CALL OTableWindowAccess::getRelationCount(  ) throw (RuntimeException)
+	sal_Int32 SAL_CALL OTableWindowAccess::getRelationCount(  )
 	{
 		::osl::MutexGuard aGuard( m_aMutex  );
 		return m_pTable ? m_pTable->getTableView()->getConnectionCount(m_pTable) : sal_Int32(0);
 	}
 	// -----------------------------------------------------------------------------
-	AccessibleRelation SAL_CALL OTableWindowAccess::getRelation( sal_Int32 nIndex ) throw (IndexOutOfBoundsException, RuntimeException)
+	AccessibleRelation SAL_CALL OTableWindowAccess::getRelation( sal_Int32 nIndex )
 	{
 		::osl::MutexGuard aGuard( m_aMutex  );
 		if( nIndex < 0 || nIndex >= getRelationCount() )
@@ -256,28 +256,28 @@ namespace dbaui
 		return aRet;
 	}
 	// -----------------------------------------------------------------------------
-	sal_Bool SAL_CALL OTableWindowAccess::containsRelation( sal_Int16 aRelationType ) throw (RuntimeException)
+	sal_Bool SAL_CALL OTableWindowAccess::containsRelation( sal_Int16 aRelationType )
 	{
 		::osl::MutexGuard aGuard( m_aMutex  );
-		return		AccessibleRelationType::CONTROLLER_FOR == aRelationType 
+		return		AccessibleRelationType::CONTROLLER_FOR == aRelationType
 				&&	m_pTable && m_pTable->getTableView()->ExistsAConn(m_pTable);
 	}
 	// -----------------------------------------------------------------------------
-	AccessibleRelation SAL_CALL OTableWindowAccess::getRelationByType( sal_Int16 aRelationType ) throw (RuntimeException)
+	AccessibleRelation SAL_CALL OTableWindowAccess::getRelationByType( sal_Int16 aRelationType )
 	{
 		::osl::MutexGuard aGuard( m_aMutex  );
 		if( AccessibleRelationType::CONTROLLER_FOR == aRelationType && m_pTable)
 		{
 			OJoinTableView* pView = m_pTable->getTableView();
 			const ::std::vector<OTableConnection*>* pConnectionList = pView->getTableConnections();
-			
+
 			::std::vector<OTableConnection*>::const_iterator aIter = pView->getTableConnections(m_pTable);
             ::std::vector<OTableConnection*>::const_iterator aEnd = pConnectionList->end();
 			::std::vector< Reference<XInterface> > aRelations;
 			aRelations.reserve(5); // just guessing
 			for (; aIter != aEnd ; ++aIter )
 				aRelations.push_back(getParentChild(aIter - pConnectionList->begin()));
-			
+
 			Reference<XInterface> *pRelations = aRelations.empty() ? 0 : &aRelations[0];
 			Sequence< Reference<XInterface> > aSeq(pRelations, aRelations.size());
 			return AccessibleRelation(AccessibleRelationType::CONTROLLER_FOR,aSeq);
@@ -290,12 +290,12 @@ namespace dbaui
 		return m_pTable && !m_pTable->getTableView()->getDesignView()->getController().isReadOnly();
 	}
 	// -----------------------------------------------------------------------------
-	::rtl::OUString SAL_CALL OTableWindowAccess::getTitledBorderText(  ) throw (RuntimeException)
+	::rtl::OUString SAL_CALL OTableWindowAccess::getTitledBorderText(  )
 	{
 		return getAccessibleName(  );
 	}
 	// -----------------------------------------------------------------------------
-	::rtl::OUString SAL_CALL OTableWindowAccess::getAccessibleName(  ) throw (RuntimeException)
+	::rtl::OUString SAL_CALL OTableWindowAccess::getAccessibleName(  )
 	{
 		::osl::MutexGuard aGuard( m_aMutex  );
 		::rtl::OUString sAccessibleName;
@@ -304,7 +304,7 @@ namespace dbaui
 		return sAccessibleName;
 	}
 	// -----------------------------------------------------------------------------
-	Reference< XAccessibleContext > SAL_CALL OTableWindowAccess::getAccessibleContext(  ) throw (::com::sun::star::uno::RuntimeException)
+	Reference< XAccessibleContext > SAL_CALL OTableWindowAccess::getAccessibleContext(  )
 	{
 		return this;
 	}
@@ -312,4 +312,3 @@ namespace dbaui
 
 }
 // -----------------------------------------------------------------------------
-

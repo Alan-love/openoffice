@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -69,13 +69,13 @@ DragSourceHelper::DragGestureListener::~DragGestureListener()
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DragSourceHelper::DragGestureListener::disposing( const EventObject& ) throw( RuntimeException )
+void SAL_CALL DragSourceHelper::DragGestureListener::disposing( const EventObject& )
 {
 }
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DragSourceHelper::DragGestureListener::dragGestureRecognized( const DragGestureEvent& rDGE ) throw( RuntimeException )
+void SAL_CALL DragSourceHelper::DragGestureListener::dragGestureRecognized( const DragGestureEvent& rDGE )
 {
 	const ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -130,13 +130,13 @@ DropTargetHelper::DropTargetListener::~DropTargetListener()
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DropTargetHelper::DropTargetListener::disposing( const EventObject& ) throw( RuntimeException )
+void SAL_CALL DropTargetHelper::DropTargetListener::disposing( const EventObject& )
 {
 }
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DropTargetHelper::DropTargetListener::drop( const DropTargetDropEvent& rDTDE ) throw( RuntimeException )
+void SAL_CALL DropTargetHelper::DropTargetListener::drop( const DropTargetDropEvent& rDTDE )
 {
 	const ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -187,7 +187,7 @@ void SAL_CALL DropTargetHelper::DropTargetListener::drop( const DropTargetDropEv
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DropTargetHelper::DropTargetListener::dragEnter( const DropTargetDragEnterEvent& rDTDEE ) throw( RuntimeException )
+void SAL_CALL DropTargetHelper::DropTargetListener::dragEnter( const DropTargetDragEnterEvent& rDTDEE )
 {
 	const ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -204,7 +204,7 @@ void SAL_CALL DropTargetHelper::DropTargetListener::dragEnter( const DropTargetD
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DropTargetHelper::DropTargetListener::dragOver( const DropTargetDragEvent& rDTDE ) throw( RuntimeException )
+void SAL_CALL DropTargetHelper::DropTargetListener::dragOver( const DropTargetDragEvent& rDTDE )
 {
 	const ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -230,7 +230,7 @@ void SAL_CALL DropTargetHelper::DropTargetListener::dragOver( const DropTargetDr
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DropTargetHelper::DropTargetListener::dragExit( const DropTargetEvent& ) throw( RuntimeException )
+void SAL_CALL DropTargetHelper::DropTargetListener::dragExit( const DropTargetEvent& )
 {
 	const ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -254,7 +254,7 @@ void SAL_CALL DropTargetHelper::DropTargetListener::dragExit( const DropTargetEv
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL DropTargetHelper::DropTargetListener::dropActionChanged( const DropTargetDragEvent& ) throw( RuntimeException )
+void SAL_CALL DropTargetHelper::DropTargetListener::dropActionChanged( const DropTargetDragEvent& )
 {
 }
 

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -99,7 +99,6 @@ sal_Int32 SAL_CALL
 */
 uno::Reference<XAccessible> SAL_CALL
     AccessiblePageShape::getAccessibleChild( sal_Int32 )
-    throw (::com::sun::star::uno::RuntimeException)
 {
     throw lang::IndexOutOfBoundsException (
         ::rtl::OUString::createFromAscii ("page shape has no children"),
@@ -112,7 +111,6 @@ uno::Reference<XAccessible> SAL_CALL
 //=====  XAccessibleComponent  ================================================
 
 awt::Rectangle SAL_CALL AccessiblePageShape::getBounds (void)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     ThrowIfDisposed ();
 
@@ -184,7 +182,6 @@ awt::Rectangle SAL_CALL AccessiblePageShape::getBounds (void)
 
 
 sal_Int32 SAL_CALL AccessiblePageShape::getForeground (void)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     ThrowIfDisposed ();
     sal_Int32 nColor (0x0ffffffL);
@@ -209,11 +206,10 @@ sal_Int32 SAL_CALL AccessiblePageShape::getForeground (void)
 
 
 
-/** Extract the background color from the Background property of eithe the
+/** Extract the background color from the Background property of either the
     draw page or its master page.
 */
 sal_Int32 SAL_CALL AccessiblePageShape::getBackground (void)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     ThrowIfDisposed ();
     sal_Int32 nColor (0x01020ffL);
@@ -268,7 +264,6 @@ sal_Int32 SAL_CALL AccessiblePageShape::getBackground (void)
 
 ::rtl::OUString SAL_CALL
     AccessiblePageShape::getImplementationName (void)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     ThrowIfDisposed ();
 	return ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("AccessiblePageShape"));
@@ -279,7 +274,6 @@ sal_Int32 SAL_CALL AccessiblePageShape::getBackground (void)
 
 ::com::sun::star::uno::Sequence< ::rtl::OUString> SAL_CALL
     AccessiblePageShape::getSupportedServiceNames (void)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     ThrowIfDisposed ();
     return AccessibleShape::getSupportedServiceNames();
@@ -292,7 +286,6 @@ sal_Int32 SAL_CALL AccessiblePageShape::getBackground (void)
 
 void SAL_CALL
     AccessiblePageShape::disposing (const ::com::sun::star::lang::EventObject& aEvent)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     ThrowIfDisposed ();
     AccessibleShape::disposing (aEvent);
@@ -304,7 +297,6 @@ void SAL_CALL
 //=====  XComponent  ==========================================================
 
 void AccessiblePageShape::dispose (void)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     OSL_TRACE ("AccessiblePageShape::dispose");
 
@@ -327,7 +319,6 @@ void AccessiblePageShape::dispose (void)
 
 ::rtl::OUString
     AccessiblePageShape::CreateAccessibleBaseName (void)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     return ::rtl::OUString (RTL_CONSTASCII_USTRINGPARAM("PageShape"));
 }
@@ -337,7 +328,6 @@ void AccessiblePageShape::dispose (void)
 
 ::rtl::OUString
     AccessiblePageShape::CreateAccessibleName (void)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     Reference<beans::XPropertySet> xPageProperties (mxPage, UNO_QUERY);
 
@@ -353,7 +343,7 @@ void AccessiblePageShape::dispose (void)
     catch (beans::UnknownPropertyException&)
     {
     }
-    
+
     return CreateAccessibleBaseName()+A2S(": ")+sCurrentSlideName;
 }
 
@@ -362,12 +352,9 @@ void AccessiblePageShape::dispose (void)
 
 ::rtl::OUString
     AccessiblePageShape::CreateAccessibleDescription (void)
-    throw (::com::sun::star::uno::RuntimeException)
 {
     return ::rtl::OUString (RTL_CONSTASCII_USTRINGPARAM("Page Shape"));
 }
 
 
 } // end of namespace accessibility
-
-

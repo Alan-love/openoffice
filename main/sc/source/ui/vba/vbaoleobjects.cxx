@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -39,7 +39,7 @@ class IndexAccessWrapper : public XIndexAccess_BASE
 typedef std::vector< uno::Reference< drawing::XControlShape > > OLEObjects;
 	OLEObjects vObjects;
 public:
-        IndexAccessWrapper(  const uno::Reference< container::XIndexAccess >& xIndexAccess ) 
+        IndexAccessWrapper(  const uno::Reference< container::XIndexAccess >& xIndexAccess )
 	{
 		sal_Int32 nLen = xIndexAccess->getCount();
 		for ( sal_Int32 index = 0; index < nLen; ++index )
@@ -50,25 +50,25 @@ public:
 		}
 	}
 
-	virtual ::sal_Int32 SAL_CALL getCount() throw (uno::RuntimeException)
+	virtual ::sal_Int32 SAL_CALL getCount()
 	{
 		return vObjects.size();
 	}
 
-	virtual uno::Any SAL_CALL getByIndex( ::sal_Int32 Index ) throw (lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
+	virtual uno::Any SAL_CALL getByIndex( ::sal_Int32 Index )
 	{
 		if ( Index < 0 || Index >= getCount() )
 			throw lang::IndexOutOfBoundsException();
-		return uno::makeAny( vObjects[ Index ] ); 
+		return uno::makeAny( vObjects[ Index ] );
 	}
 
 	    // Methods XElementAcess
-        virtual uno::Type SAL_CALL getElementType() throw (uno::RuntimeException)
+        virtual uno::Type SAL_CALL getElementType()
         {
             return drawing::XControlShape::static_type(0);
         }
 
-        virtual ::sal_Bool SAL_CALL hasElements() throw (uno::RuntimeException)
+        virtual ::sal_Bool SAL_CALL hasElements()
         {
             return ( getCount() > 0 );
         }
@@ -85,12 +85,12 @@ class EnumWrapper : public EnumerationHelper_BASE
 public:
         EnumWrapper(  const uno::Reference< XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext >& xContext, uno::Reference< container::XIndexAccess >& xIndexAccess ) :  m_xParent( xParent ), m_xContext( xContext), m_xIndexAccess( xIndexAccess ), nIndex( 0 ) {}
 
-        virtual ::sal_Bool SAL_CALL hasMoreElements(  ) throw (uno::RuntimeException)
+        virtual ::sal_Bool SAL_CALL hasMoreElements(  )
         {
                 return ( nIndex < m_xIndexAccess->getCount() );
         }
 
-        virtual uno::Any SAL_CALL nextElement(  ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
+        virtual uno::Any SAL_CALL nextElement(  )
         {
                 if ( nIndex < m_xIndexAccess->getCount() )
 		{
@@ -112,7 +112,7 @@ ScVbaOLEObjects::ScVbaOLEObjects( const uno::Reference< XHelperInterface >& xPar
 {
 }
 uno::Reference< container::XEnumeration >
-ScVbaOLEObjects::createEnumeration() throw (uno::RuntimeException)
+ScVbaOLEObjects::createEnumeration()
 {
     return new EnumWrapper( getParent(), mxContext, m_xIndexAccess );
 }
@@ -130,7 +130,7 @@ ScVbaOLEObjects::createCollectionObject( const css::uno::Any& aSource )
 }
 
 uno::Any
-ScVbaOLEObjects::getItemByStringIndex( const rtl::OUString& sIndex ) throw (uno::RuntimeException)
+ScVbaOLEObjects::getItemByStringIndex( const rtl::OUString& sIndex )
 {
     try
     {
@@ -157,18 +157,18 @@ ScVbaOLEObjects::getItemByStringIndex( const rtl::OUString& sIndex ) throw (uno:
 }
 
 uno::Type
-ScVbaOLEObjects::getElementType() throw (uno::RuntimeException)
+ScVbaOLEObjects::getElementType()
 {
     return ooo::vba::excel::XOLEObject::static_type(0);
 }
-rtl::OUString& 
+rtl::OUString&
 ScVbaOLEObjects::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("ScVbaOLEObjects") );
 	return sImplName;
 }
 
-uno::Sequence< rtl::OUString > 
+uno::Sequence< rtl::OUString >
 ScVbaOLEObjects::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > aServiceNames;

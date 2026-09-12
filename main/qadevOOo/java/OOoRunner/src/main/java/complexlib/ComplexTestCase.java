@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -50,12 +50,12 @@ public abstract class ComplexTestCase extends Assurance implements ComplexTest
     protected int m_nThreadTimeOut = 0;
     /** Continue a test even if it did fail **/
     // public static final boolean CONTINUE = true;
-    
+
     /** End a test if it did fail **/
     public static final boolean BREAK = true;
 
     private boolean m_bBeforeCalled;
-    
+
     /**
      * is called before the real test starts
      */
@@ -93,7 +93,7 @@ public abstract class ComplexTestCase extends Assurance implements ComplexTest
                 t.printStackTrace((PrintWriter) log);
             }
         }
-        
+
     }
 
     /** Description entry **/
@@ -151,13 +151,13 @@ public abstract class ComplexTestCase extends Assurance implements ComplexTest
 
                 try
                 {
-                    // some tests are very dynamic in its exceution time so that
-                    // a threadTimeOut fials. In this cases the logging mechanisim
+                    // some tests are very dynamic in its execution time so that
+                    // a threadTimeOut fails. In this cases the logging mechanism
                     // is a useful way to detect that a office respective a test
                     // is running and not death.
                     // But way ThreadTimeOut?
-                    // There exeitsts a complex test which uses no office. Therefore
-                    // a logging mechanisim to detect a stalled test.
+                    // There exists a complex test which uses no office. Therefore
+                    // a logging mechanism to detect a stalled test.
                     int lastPing = -1;
                     int newPing = 0;
 

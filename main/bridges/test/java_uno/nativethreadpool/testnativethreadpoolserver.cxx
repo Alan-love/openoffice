@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -62,12 +62,12 @@ public:
 private:
     virtual ~Server() {}
 
-    virtual sal_Int32 SAL_CALL get() throw (css::uno::RuntimeException);
+    virtual sal_Int32 SAL_CALL get();
 
     css::uno::Reference< css::uno::XComponentContext > context;
 };
 
-sal_Int32 Server::get() throw (css::uno::RuntimeException) {
+sal_Int32 Server::get() {
     css::uno::Reference< css::lang::XMultiComponentFactory > factory(
         context->getServiceManager());
     if (!factory.is()) {
@@ -106,7 +106,6 @@ sal_Int32 Server::get() throw (css::uno::RuntimeException) {
 
 css::uno::Reference< css::uno::XInterface > SAL_CALL create(
     css::uno::Reference< css::uno::XComponentContext > const & context)
-    SAL_THROW((css::uno::Exception))
 {
     return static_cast< cppu::OWeakObject * >(new Server(context));
 }

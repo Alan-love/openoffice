@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_charttools.hxx"
 
 #include "AxisHelper.hxx"
 #include "DiagramHelper.hxx"
@@ -256,7 +256,7 @@ sal_Int32 AxisHelper::getExplicitNumberFormatKeyForAxis(
 
                             if( nDimensionIndex == 1 )
                             {
-                                //only take those series into accoutn that are attached to this axis
+                                //only take those series into account that are attached to this axis
                                 sal_Int32 nAttachedAxisIndex = DataSeriesHelper::getAttachedAxisIndex(xDataSeries);
                                 if( nAttachedAxisIndex != nAxisIndex )
                                     continue;
@@ -270,7 +270,7 @@ sal_Int32 AxisHelper::getExplicitNumberFormatKeyForAxis(
                                 ScaleData aData = xAxis->getScaleData();
                                 xLabeledSeq = aData.Categories;
                             }
-                            
+
                             if( xLabeledSeq.is() )
                             {
                                 Reference< data::XDataSequence > xSeq( xLabeledSeq->getValues());
@@ -875,7 +875,7 @@ Sequence< Reference< beans::XPropertySet > > AxisHelper::getAllGrids( const Refe
         if( xGridProperties.is() )
             aGridVector.push_back( xGridProperties );
 
-        Sequence< Reference< beans::XPropertySet > > aSubGrids( xAxis->getSubGridProperties() );;
+        Sequence< Reference< beans::XPropertySet > > aSubGrids( xAxis->getSubGridProperties() );
         sal_Int32 nSubGrid = 0;
         for( nSubGrid = 0; nSubGrid < aSubGrids.getLength(); ++nSubGrid )
         {

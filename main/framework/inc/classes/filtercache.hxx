@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -302,39 +302,30 @@ class FilterCache   :   private ThreadHelpBase
 
         sal_Bool addFilter    ( const ::rtl::OUString&                                 sName       ,
                                 const css::uno::Sequence< css::beans::PropertyValue >& lProperties ,
-                                      sal_Bool                                         bException  ) throw(css::container::ElementExistException  ,
-                                                                                                           css::registry::InvalidRegistryException);
+                                      sal_Bool                                         bException  );
         sal_Bool replaceFilter( const ::rtl::OUString&                                 sName       ,
                                 const css::uno::Sequence< css::beans::PropertyValue >& lProperties ,
-                                      sal_Bool                                         bException  ) throw(css::container::NoSuchElementException  ,
-                                                                                                           css::registry::InvalidRegistryException);
+                                      sal_Bool                                         bException  );
         sal_Bool removeFilter ( const ::rtl::OUString&                                 sName       ,
-                                      sal_Bool                                         bException  ) throw(css::container::NoSuchElementException  ,
-                                                                                                           css::registry::InvalidRegistryException);
+                                      sal_Bool                                         bException  );
 
         sal_Bool addType      ( const ::rtl::OUString&                                 sName       ,
                                 const css::uno::Sequence< css::beans::PropertyValue >& lProperties ,
-                                      sal_Bool                                         bException  ) throw(css::container::ElementExistException  ,
-                                                                                                           css::registry::InvalidRegistryException);
+                                      sal_Bool                                         bException  );
         sal_Bool replaceType  ( const ::rtl::OUString&                                 sName       ,
                                 const css::uno::Sequence< css::beans::PropertyValue >& lProperties ,
-                                      sal_Bool                                         bException  ) throw(css::container::NoSuchElementException  ,
-                                                                                                           css::registry::InvalidRegistryException);
+                                      sal_Bool                                         bException  );
         sal_Bool removeType   ( const ::rtl::OUString&                                 sName       ,
-                                      sal_Bool                                         bException  ) throw(css::container::NoSuchElementException  ,
-                                                                                                           css::registry::InvalidRegistryException);
+                                      sal_Bool                                         bException  );
 
         sal_Bool addDetector    ( const ::rtl::OUString&                                 sName       ,
                                   const css::uno::Sequence< css::beans::PropertyValue >& lProperties ,
-                                        sal_Bool                                         bException  ) throw(css::container::ElementExistException  ,
-                                                                                                             css::registry::InvalidRegistryException);
+                                        sal_Bool                                         bException  );
         sal_Bool replaceDetector( const ::rtl::OUString&                                 sName       ,
                                   const css::uno::Sequence< css::beans::PropertyValue >& lProperties ,
-                                        sal_Bool                                         bException  ) throw(css::container::NoSuchElementException  ,
-                                                                                                             css::registry::InvalidRegistryException);
+                                        sal_Bool                                         bException  );
         sal_Bool removeDetector ( const ::rtl::OUString&                                 sName       ,
-                                        sal_Bool                                         bException  ) throw(css::container::NoSuchElementException  ,
-                                                                                                             css::registry::InvalidRegistryException);
+                                        sal_Bool                                         bException  );
 
         sal_Bool validateAndRepair();
         sal_Bool validateAndRepairTypes();
@@ -360,7 +351,7 @@ class FilterCache   :   private ThreadHelpBase
 	//-------------------------------------------------------------------------------------------------------------
 
 		/*-****************************************************************************************************//**
-			@short		debug-method to check incoming parameter of some other mehods of this class
+			@short		debug-method to check incoming parameter of some other methods of this class
 			@descr		The following methods are used to check parameters for other methods
 						of this class. The return value is used directly for an ASSERT(...).
 

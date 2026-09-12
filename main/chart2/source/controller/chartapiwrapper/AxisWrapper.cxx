@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartcontroller.hxx"
 #include "AxisWrapper.hxx"
 #include "AxisHelper.hxx"
 #include "TitleHelper.hxx"
@@ -148,7 +148,7 @@ void lcl_AddPropertiesToVector(
                   ::getCppuType( reinterpret_cast< const double * >(0)),
                   beans::PropertyAttribute::BOUND
                   | beans::PropertyAttribute::MAYBEVOID ));
-    
+
     rOutProperties.push_back(
         Property( C2U( "AutoMax" ),
                   PROP_AXIS_AUTO_MAX,
@@ -231,7 +231,7 @@ void lcl_AddPropertiesToVector(
                   PROP_AXIS_CROSSOVER_VALUE,
                   ::getCppuType( reinterpret_cast< const double * >(0)),
                   beans::PropertyAttribute::MAYBEVOID ));
-    
+
 
     rOutProperties.push_back(
         Property( C2U( "Origin" ),
@@ -267,7 +267,7 @@ void lcl_AddPropertiesToVector(
                   PROP_AXIS_MARK_POSITION,
                   ::getCppuType( reinterpret_cast< const ::com::sun::star::chart::ChartAxisMarkPosition * >(0)),
                   beans::PropertyAttribute::MAYBEDEFAULT ));
-    
+
 
     //Properties for labels:
     rOutProperties.push_back(
@@ -400,7 +400,7 @@ AxisWrapper::~AxisWrapper()
 }
 
 // ____ chart::XAxis ____
-Reference< beans::XPropertySet > SAL_CALL AxisWrapper::getAxisTitle() throw (uno::RuntimeException)
+Reference< beans::XPropertySet > SAL_CALL AxisWrapper::getAxisTitle()
 {
     if( !m_xAxisTitle.is() )
     {
@@ -429,7 +429,7 @@ Reference< beans::XPropertySet > SAL_CALL AxisWrapper::getAxisTitle() throw (uno
     }
     return m_xAxisTitle;
 }
-Reference< beans::XPropertySet > SAL_CALL AxisWrapper::getMajorGrid() throw (uno::RuntimeException)
+Reference< beans::XPropertySet > SAL_CALL AxisWrapper::getMajorGrid()
 {
     if( !m_xMajorGrid.is() )
     {
@@ -452,7 +452,7 @@ Reference< beans::XPropertySet > SAL_CALL AxisWrapper::getMajorGrid() throw (uno
     }
     return m_xMajorGrid;
 }
-Reference< beans::XPropertySet > SAL_CALL AxisWrapper::getMinorGrid() throw (uno::RuntimeException)
+Reference< beans::XPropertySet > SAL_CALL AxisWrapper::getMinorGrid()
 {
     if( !m_xMinorGrid.is() )
     {
@@ -478,42 +478,35 @@ Reference< beans::XPropertySet > SAL_CALL AxisWrapper::getMinorGrid() throw (uno
 
 // ____ XShape ____
 awt::Point SAL_CALL AxisWrapper::getPosition()
-    throw (uno::RuntimeException)
 {
     awt::Point aResult( m_spChart2ModelContact->GetAxisPosition( this->getAxis() ) );
     return aResult;
 }
 
 void SAL_CALL AxisWrapper::setPosition( const awt::Point& /*aPosition*/ )
-    throw (uno::RuntimeException)
 {
     OSL_ENSURE( false, "trying to set position of Axis" );
 }
 
 awt::Size SAL_CALL AxisWrapper::getSize()
-    throw (uno::RuntimeException)
 {
     awt::Size aSize( m_spChart2ModelContact->GetAxisSize( this->getAxis() ) );
     return aSize;
 }
 
 void SAL_CALL AxisWrapper::setSize( const awt::Size& /*aSize*/ )
-    throw (beans::PropertyVetoException,
-           uno::RuntimeException)
 {
     OSL_ENSURE( false, "trying to set size of Axis" );
 }
 
 // ____ XShapeDescriptor (base of XShape) ____
 OUString SAL_CALL AxisWrapper::getShapeType()
-    throw (uno::RuntimeException)
 {
     return C2U( "com.sun.star.chart.ChartAxis" );
 }
 
 // ____ XNumberFormatsSupplier ____
 uno::Reference< beans::XPropertySet > SAL_CALL AxisWrapper::getNumberFormatSettings()
-    throw (uno::RuntimeException)
 {
     Reference< util::XNumberFormatsSupplier > xNumSuppl( m_spChart2ModelContact->getChartModel(), uno::UNO_QUERY );
     if( xNumSuppl.is() )
@@ -523,7 +516,6 @@ uno::Reference< beans::XPropertySet > SAL_CALL AxisWrapper::getNumberFormatSetti
 }
 
 uno::Reference< util::XNumberFormats > SAL_CALL AxisWrapper::getNumberFormats()
-    throw (uno::RuntimeException)
 {
     Reference< util::XNumberFormatsSupplier > xNumSuppl( m_spChart2ModelContact->getChartModel(), uno::UNO_QUERY );
     if( xNumSuppl.is() )
@@ -551,7 +543,6 @@ void AxisWrapper::getDimensionAndMainAxisBool( tAxisType eType, sal_Int32& rnDim
 
 // ____ XComponent ____
 void SAL_CALL AxisWrapper::dispose()
-    throw (uno::RuntimeException)
 {
     Reference< uno::XInterface > xSource( static_cast< ::cppu::OWeakObject* >( this ) );
     m_aEventListenerContainer.disposeAndClear( lang::EventObject( xSource ) );
@@ -559,20 +550,18 @@ void SAL_CALL AxisWrapper::dispose()
     DisposeHelper::DisposeAndClear( m_xAxisTitle );
     DisposeHelper::DisposeAndClear( m_xMajorGrid );
     DisposeHelper::DisposeAndClear( m_xMinorGrid );
-        
+
     clearWrappedPropertySet();
 }
 
 void SAL_CALL AxisWrapper::addEventListener(
     const Reference< lang::XEventListener >& xListener )
-    throw (uno::RuntimeException)
 {
 	m_aEventListenerContainer.addInterface( xListener );
 }
 
 void SAL_CALL AxisWrapper::removeEventListener(
     const Reference< lang::XEventListener >& aListener )
-    throw (uno::RuntimeException)
 {
 	m_aEventListenerContainer.removeInterface( aListener );
 }
@@ -645,7 +634,7 @@ const Sequence< beans::Property >& AxisWrapper::getPropertySequence()
 const std::vector< WrappedProperty* > AxisWrapper::createWrappedProperties()
 {
     ::std::vector< ::chart::WrappedProperty* > aWrappedProperties;
-    
+
     aWrappedProperties.push_back( new WrappedTextRotationProperty() );
     aWrappedProperties.push_back( new WrappedProperty( C2U( "Marks" ), C2U( "MajorTickmarks" ) ) );
     aWrappedProperties.push_back( new WrappedProperty( C2U( "HelpMarks" ), C2U( "MinorTickmarks" ) ) );
@@ -675,10 +664,10 @@ const std::vector< WrappedProperty* > AxisWrapper::createWrappedProperties()
     }
 
     WrappedScaleProperty::addWrappedProperties( aWrappedProperties, m_spChart2ModelContact );
-        
+
     WrappedCharacterHeightProperty::addWrappedProperties( aWrappedProperties, this );
     WrappedScaleTextProperties::addWrappedProperties( aWrappedProperties, m_spChart2ModelContact );
-    
+
     return aWrappedProperties;
 }
 

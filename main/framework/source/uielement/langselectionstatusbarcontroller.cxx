@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -102,7 +102,6 @@ LangSelectionStatusbarController::LangSelectionStatusbarController( const uno::R
 }
 
 void SAL_CALL LangSelectionStatusbarController::initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aArguments )
-throw (::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "LangSelectionStatusbarController::initialize" );
     vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
@@ -117,7 +116,6 @@ throw (::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException
 
 void LangSelectionStatusbarController::LangMenu(
     const ::com::sun::star::awt::Point& aPos )
-throw (::com::sun::star::uno::RuntimeException)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "LangSelectionStatusbarController::LangMenu" );
 	if (!m_bShowMenu)
@@ -133,7 +131,7 @@ throw (::com::sun::star::uno::RuntimeException)
 
     // get languages to be displayed in the menu
     std::set< OUString > aLangItems;
-    FillLangItems( aLangItems, aLanguageTable, m_xFrame, m_aLangGuessHelper, 
+    FillLangItems( aLangItems, aLanguageTable, m_xFrame, m_aLangGuessHelper,
             m_nScriptType, m_aCurLang, m_aKeyboardLang, m_aGuessedTextLang );
 
     //
@@ -262,7 +260,6 @@ void SAL_CALL LangSelectionStatusbarController::command(
     ::sal_Int32 nCommand,
     ::sal_Bool /*bMouseEvent*/,
     const ::com::sun::star::uno::Any& /*aData*/ )
-throw (::com::sun::star::uno::RuntimeException)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "LangSelectionStatusbarController::command" );
 	if ( nCommand & ::awt::Command::CONTEXTMENU )
@@ -273,7 +270,6 @@ throw (::com::sun::star::uno::RuntimeException)
 
 void SAL_CALL LangSelectionStatusbarController::click(
     const ::com::sun::star::awt::Point& aPos )
-throw (::com::sun::star::uno::RuntimeException)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "LangSelectionStatusbarController::click" );
     LangMenu( aPos );
@@ -281,7 +277,6 @@ throw (::com::sun::star::uno::RuntimeException)
 
 // XStatusListener
 void SAL_CALL LangSelectionStatusbarController::statusChanged( const FeatureStateEvent& Event )
-throw ( RuntimeException )
 {
     // This function will be called when observed data changes,
     // for example the selection or keyboard language.
@@ -334,4 +329,3 @@ throw ( RuntimeException )
 }
 
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,19 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
- 
+
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_sw.hxx"
@@ -264,7 +264,7 @@ void SwAccessibleContext::ChildrenScrolled( const SwFrm *pFrm,
 						//O is:	GetMap()->GetContextImpl( rLower.GetSdrObject(),
 						//						  this,
 						//						  SCROLLED_OUT == eAction ||
-						//						  SCROLLED_IN == eAction ); 
+						//						  SCROLLED_IN == eAction );
                         GetMap()->GetContextImpl( rLower.GetDrawObject(),
 												  this,
 												  sal_True );
@@ -597,20 +597,18 @@ SwAccessibleContext::~SwAccessibleContext()
 
 uno::Reference< XAccessibleContext > SAL_CALL
 	SwAccessibleContext::getAccessibleContext( void )
-        throw (uno::RuntimeException)
 {
 	uno::Reference < XAccessibleContext > xRet( this );
 	return xRet;
 }
 
 sal_Int32 SAL_CALL SwAccessibleContext::getAccessibleChildCount( void )
-        throw (uno::RuntimeException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
 	CHECK_FOR_DEFUNC( XAccessibleContext )
 	//Solution:Notify the frame is a document
-	if( nRole == AccessibleRole::DOCUMENT )		
+	if( nRole == AccessibleRole::DOCUMENT )
 		bIsAccDocUse = sal_True;
 
     return bDisposing ? 0 : GetChildCount( *(GetMap()) );
@@ -618,14 +616,13 @@ sal_Int32 SAL_CALL SwAccessibleContext::getAccessibleChildCount( void )
 
 uno::Reference< XAccessible> SAL_CALL
 	SwAccessibleContext::getAccessibleChild( sal_Int32 nIndex )
-        throw (uno::RuntimeException, lang::IndexOutOfBoundsException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
 	CHECK_FOR_DEFUNC( XAccessibleContext )
 
 	//Solution:Notify the frame is a document
-	if( nRole == AccessibleRole::DOCUMENT )		
+	if( nRole == AccessibleRole::DOCUMENT )
 		bIsAccDocUse = sal_True;
 
     const SwAccessibleChild aChild( GetChild( *(GetMap()), nIndex ) );
@@ -646,7 +643,7 @@ uno::Reference< XAccessible> SAL_CALL
 		//Solution:Send out accessible event when begin load.
 		if( bBeginDocumentLoad && nRole == AccessibleRole::DOCUMENT )
 		{
-			
+
 			FireStateChangedEvent( AccessibleStateType::FOCUSABLE,sal_True );
 			FireStateChangedEvent( AccessibleStateType::BUSY,sal_True );
 			if( !isIfAsynLoad )
@@ -657,7 +654,7 @@ uno::Reference< XAccessible> SAL_CALL
 				FireStateChangedEvent( AccessibleStateType::SHOWING,sal_True );
 			    FireStateChangedEvent( AccessibleStateType::BUSY,sal_False );
 				// MT: OFFSCREEN again?
-			    // FireStateChangedEvent( AccessibleStateType::OFFSCREEN,sal_False );	
+			    // FireStateChangedEvent( AccessibleStateType::OFFSCREEN,sal_False );
 			}
 			bBeginDocumentLoad = sal_False;
 		}
@@ -684,7 +681,6 @@ uno::Reference< XAccessible> SAL_CALL
 }
 
 uno::Reference< XAccessible> SAL_CALL SwAccessibleContext::getAccessibleParent (void)
-        throw (uno::RuntimeException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -709,7 +705,6 @@ uno::Reference< XAccessible> SAL_CALL SwAccessibleContext::getAccessibleParent (
 }
 
 sal_Int32 SAL_CALL SwAccessibleContext::getAccessibleIndexInParent (void)
-        throw (uno::RuntimeException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -732,27 +727,23 @@ sal_Int32 SAL_CALL SwAccessibleContext::getAccessibleIndexInParent (void)
 }
 
 sal_Int16 SAL_CALL SwAccessibleContext::getAccessibleRole (void)
-        throw (uno::RuntimeException)
 {
 	return nRole;
 }
 
 OUString SAL_CALL SwAccessibleContext::getAccessibleDescription (void)
-        throw (uno::RuntimeException)
 {
 	ASSERT( sal_False, "description needs to be overloaded" );
 	THROW_RUNTIME_EXCEPTION( XAccessibleContext, "internal error (method must be overloaded)" );
 }
 
 OUString SAL_CALL SwAccessibleContext::getAccessibleName (void)
-        throw (uno::RuntimeException)
 {
 	return sName;
 }
 
 uno::Reference< XAccessibleRelationSet> SAL_CALL
 	SwAccessibleContext::getAccessibleRelationSet (void)
-        throw (uno::RuntimeException)
 {
 	// by default there are no relations
 	uno::Reference< XAccessibleRelationSet> xRet( new utl::AccessibleRelationSetHelper() );
@@ -761,7 +752,6 @@ uno::Reference< XAccessibleRelationSet> SAL_CALL
 
 uno::Reference<XAccessibleStateSet> SAL_CALL
 	SwAccessibleContext::getAccessibleStateSet (void)
-        throw (uno::RuntimeException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -780,7 +770,6 @@ uno::Reference<XAccessibleStateSet> SAL_CALL
 }
 
 lang::Locale SAL_CALL SwAccessibleContext::getLocale (void)
-		throw (IllegalAccessibleComponentStateException, uno::RuntimeException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -790,7 +779,6 @@ lang::Locale SAL_CALL SwAccessibleContext::getLocale (void)
 
 void SAL_CALL SwAccessibleContext::addEventListener(
 			const uno::Reference< XAccessibleEventListener >& xListener )
-		throw (uno::RuntimeException)
 {
 	DBG_MSG( "accessible event listener added" )
 
@@ -805,7 +793,6 @@ void SAL_CALL SwAccessibleContext::addEventListener(
 
 void SAL_CALL SwAccessibleContext::removeEventListener(
 			const uno::Reference< XAccessibleEventListener >& xListener )
-		throw (uno::RuntimeException)
 {
 	DBG_MSG( "accessible event listener removed" )
 
@@ -839,7 +826,6 @@ static sal_Bool lcl_PointInRectangle(const awt::Point & aPoint,
 
 sal_Bool SAL_CALL SwAccessibleContext::containsPoint(
 			const awt::Point& aPoint )
-		throw (uno::RuntimeException)
 {
     awt::Rectangle aPixBounds = getBoundsImpl(sal_True);
     aPixBounds.X = 0;
@@ -850,7 +836,6 @@ sal_Bool SAL_CALL SwAccessibleContext::containsPoint(
 
 uno::Reference< XAccessible > SAL_CALL SwAccessibleContext::getAccessibleAtPoint(
 				const awt::Point& aPoint )
-		throw (uno::RuntimeException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -907,7 +892,6 @@ uno::Reference< XAccessible > SAL_CALL SwAccessibleContext::getAccessibleAtPoint
    false: Use absolute mode.
 */
 awt::Rectangle SAL_CALL SwAccessibleContext::getBoundsImpl(sal_Bool bRelative)
-		throw (uno::RuntimeException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -952,13 +936,11 @@ awt::Rectangle SAL_CALL SwAccessibleContext::getBoundsImpl(sal_Bool bRelative)
 
 
 awt::Rectangle SAL_CALL SwAccessibleContext::getBounds()
-		throw (uno::RuntimeException)
 {
     return getBoundsImpl(sal_True);
 }
 
 awt::Point SAL_CALL SwAccessibleContext::getLocation()
-    throw (uno::RuntimeException)
 {
     awt::Rectangle aRect = getBoundsImpl(sal_True);
     awt::Point aPoint(aRect.X, aRect.Y);
@@ -969,7 +951,6 @@ awt::Point SAL_CALL SwAccessibleContext::getLocation()
 
 
 awt::Point SAL_CALL SwAccessibleContext::getLocationOnScreen()
-		throw (uno::RuntimeException)
 {
     awt::Rectangle aRect = getBoundsImpl(sal_False);
 
@@ -984,7 +965,6 @@ awt::Point SAL_CALL SwAccessibleContext::getLocationOnScreen()
 
 
 awt::Size SAL_CALL SwAccessibleContext::getSize()
-		throw (uno::RuntimeException)
 {
     awt::Rectangle aRect = getBoundsImpl(sal_False);
 	awt::Size aSize( aRect.Width, aRect.Height );
@@ -993,7 +973,6 @@ awt::Size SAL_CALL SwAccessibleContext::getSize()
 }
 
 void SAL_CALL SwAccessibleContext::grabFocus()
-		throw (uno::RuntimeException)
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -1035,27 +1014,23 @@ void SAL_CALL SwAccessibleContext::grabFocus()
 
 
 uno::Any SAL_CALL SwAccessibleContext::getAccessibleKeyBinding()
-		throw (uno::RuntimeException)
 {
 	// There are no key bindings
 	return uno::Any();
 }
 
 sal_Int32 SAL_CALL SwAccessibleContext::getForeground()
-		throw (uno::RuntimeException)
 {
 	return COL_BLACK;
 }
 
 sal_Int32 SAL_CALL SwAccessibleContext::getBackground()
-		throw (uno::RuntimeException)
 {
 	return COL_WHITE;
 }
 
 
 OUString SAL_CALL SwAccessibleContext::getImplementationName()
-        throw( uno::RuntimeException )
 {
 	ASSERT( sal_False, "implementation name needs to be overloaded" );
 
@@ -1064,14 +1039,12 @@ OUString SAL_CALL SwAccessibleContext::getImplementationName()
 
 sal_Bool SAL_CALL
     SwAccessibleContext::supportsService (const ::rtl::OUString& )
-        throw (uno::RuntimeException)
 {
 	ASSERT( sal_False, "supports service needs to be overloaded" );
 	THROW_RUNTIME_EXCEPTION( lang::XServiceInfo, "supports service needs to be overloaded" )
 }
 
 uno::Sequence< OUString > SAL_CALL SwAccessibleContext::getSupportedServiceNames()
-		throw( uno::RuntimeException )
 {
 	ASSERT( sal_False, "supported services names needs to be overloaded" );
 	THROW_RUNTIME_EXCEPTION( lang::XServiceInfo, "supported services needs to be overloaded" )
@@ -1099,7 +1072,7 @@ void SwAccessibleContext::ScrolledInShape( const SdrObject* ,
 {
 	if(NULL == pAccImpl)
 	{
-		return ; 
+		return ;
 	}
 	AccessibleEventObject aEvent;
 	aEvent.EventId = AccessibleEventId::CHILD;

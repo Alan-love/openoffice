@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -74,7 +74,6 @@ ResourceFactoryManager::~ResourceFactoryManager (void)
 void ResourceFactoryManager::AddFactory (
     const OUString& rsURL,
     const Reference<XResourceFactory>& rxFactory)
-        throw (RuntimeException)
 {
     if ( ! rxFactory.is())
         throw lang::IllegalArgumentException();
@@ -111,7 +110,6 @@ void ResourceFactoryManager::AddFactory (
 
 void ResourceFactoryManager::RemoveFactoryForURL (
     const OUString& rsURL)
-    throw (RuntimeException)
 {
     if (rsURL.getLength() == 0)
         throw lang::IllegalArgumentException();
@@ -147,7 +145,6 @@ void ResourceFactoryManager::RemoveFactoryForURL (
 
 void ResourceFactoryManager::RemoveFactoryForReference(
     const Reference<XResourceFactory>& rxFactory)
-    throw (RuntimeException)
 {
     ::osl::MutexGuard aGuard (maMutex);
 
@@ -182,7 +179,6 @@ void ResourceFactoryManager::RemoveFactoryForReference(
 
 Reference<XResourceFactory> ResourceFactoryManager::GetFactory (
     const OUString& rsCompleteURL)
-    throw (RuntimeException)
 {
     OUString sURLBase (rsCompleteURL);
     if (mxURLTransformer.is())
@@ -204,7 +200,7 @@ Reference<XResourceFactory> ResourceFactoryManager::GetFactory (
             // requested view type.  Note that this can (and should) cause
             // intermediate calls to AddFactory().
             xModuleController->requestResource(sURLBase);
-        
+
             xFactory = FindFactory(sURLBase);
         }
     }
@@ -216,7 +212,6 @@ Reference<XResourceFactory> ResourceFactoryManager::GetFactory (
 
 
 Reference<XResourceFactory> ResourceFactoryManager::FindFactory (const OUString& rsURLBase)
-    throw (RuntimeException)
 {
     ::osl::MutexGuard aGuard (maMutex);
     FactoryMap::const_iterator iFactory (maFactoryMap.find(rsURLBase));

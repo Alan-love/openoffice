@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -32,67 +32,67 @@ using namespace ::ooo::vba;
 using namespace ::com::sun::star;
 
 
-SwVbaStyle::SwVbaStyle( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext > & xContext, const uno::Reference< beans::XPropertySet >& _xPropertySet ) throw ( script::BasicErrorException, uno::RuntimeException ) : SwVbaStyle_BASE( xParent, xContext ) , mxStyleProps( _xPropertySet )
+SwVbaStyle::SwVbaStyle( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext > & xContext, const uno::Reference< beans::XPropertySet >& _xPropertySet ) : SwVbaStyle_BASE( xParent, xContext ) , mxStyleProps( _xPropertySet )
 {
     mxStyle.set( _xPropertySet, uno::UNO_QUERY_THROW );
 }
 
-void SAL_CALL 
-SwVbaStyle::setName( const ::rtl::OUString& Name ) throw (uno::RuntimeException)
+void SAL_CALL
+SwVbaStyle::setName( const ::rtl::OUString& Name )
 {
 	mxStyle->setName(Name);
 }
 
-::rtl::OUString SAL_CALL 
-SwVbaStyle::getName() throw (uno::RuntimeException)
+::rtl::OUString SAL_CALL
+SwVbaStyle::getName()
 {
 	return mxStyle->getName();
 }
 
-sal_Int32 SwVbaStyle::getLanguageID( const uno::Reference< beans::XPropertySet >& xTCProps ) throw (uno::RuntimeException)
+sal_Int32 SwVbaStyle::getLanguageID( const uno::Reference< beans::XPropertySet >& xTCProps )
 {
     lang::Locale aLocale;
     xTCProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("CharLocale") ) ) >>= aLocale;
     return MsLangId::convertLocaleToLanguage( aLocale );
 }
 
-void SwVbaStyle::setLanguageID( const uno::Reference< beans::XPropertySet >& xTCProps, sal_Int32 _languageid ) throw (uno::RuntimeException)
+void SwVbaStyle::setLanguageID( const uno::Reference< beans::XPropertySet >& xTCProps, sal_Int32 _languageid )
 {
     lang::Locale aLocale = MsLangId::convertLanguageToLocale( static_cast<LanguageType>(_languageid) );
     xTCProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("CharLocale") ), uno::makeAny( aLocale ) ) ;
 }
 
-::sal_Int32 SAL_CALL SwVbaStyle::getLanguageID() throw (uno::RuntimeException)
+::sal_Int32 SAL_CALL SwVbaStyle::getLanguageID()
 {
     return getLanguageID( mxStyleProps );
 }
 
-void SAL_CALL SwVbaStyle::setLanguageID( ::sal_Int32 _languageid ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaStyle::setLanguageID( ::sal_Int32 _languageid )
 {
     setLanguageID( mxStyleProps, _languageid );
 }
 
-::sal_Int32 SAL_CALL SwVbaStyle::getType() throw (uno::RuntimeException)
+::sal_Int32 SAL_CALL SwVbaStyle::getType()
 {
     sal_Int32 nType = word::WdStyleType::wdStyleTypeParagraph;
     uno::Reference< lang::XServiceInfo > xServiceInfo( mxStyle, uno::UNO_QUERY_THROW );
     if( xServiceInfo->supportsService( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.style.ParagraphStyle") ) ) )
         nType = word::WdStyleType::wdStyleTypeParagraph;
-    else if( xServiceInfo->supportsService( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.style.CharacterStyle") ) ) )    
+    else if( xServiceInfo->supportsService( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.style.CharacterStyle") ) ) )
         nType = word::WdStyleType::wdStyleTypeCharacter;
-    else // if( xServiceInfo->supportsService( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.text.NumberingStyle") ) ) )    
+    else // if( xServiceInfo->supportsService( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.text.NumberingStyle") ) ) )
         nType = word::WdStyleType::wdStyleTypeList;
     return nType;
 }
 
 uno::Reference< word::XFont > SAL_CALL
-SwVbaStyle::getFont() throw ( uno::RuntimeException )
+SwVbaStyle::getFont()
 {
     VbaPalette aColors;
     return new SwVbaFont( mxParent, mxContext, aColors.getPalette(), mxStyleProps );
 }
 
-void SwVbaStyle::setStyle( const uno::Reference< beans::XPropertySet >& xTCProps, const uno::Reference< ooo::vba::word::XStyle >& xStyle )throw (uno::RuntimeException)
+void SwVbaStyle::setStyle( const uno::Reference< beans::XPropertySet >& xTCProps, const uno::Reference< ooo::vba::word::XStyle >& xStyle )
 {
     rtl::OUString aStyleType = getOOoStyleTypeFromMSWord( xStyle->getType() );
     xTCProps->setPropertyValue( aStyleType, uno::makeAny( xStyle->getName() ) );

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -57,6 +57,7 @@ private:
 	Color		aActLineColor;
 	Color		aActFillColor;
 	Font		aActFont;
+	sal_Bool	b3DText;		// draw TEXT projected into the 3D view (Draw3DTextEntity)
 
 	sal_uLong CountEntities(const DXFEntities & rEntities);
 
@@ -91,6 +92,8 @@ private:
 
 	void DrawTextEntity(const DXFTextEntity & rE, const DXFTransform & rTransform);
 
+	void Draw3DTextEntity(const DXFTextEntity & rE, const DXFTransform & rTransform);
+
 	void DrawInsertEntity(const DXFInsertEntity & rE, const DXFTransform & rTransform);
 
 	void DrawAttribEntity(const DXFAttribEntity & rE, const DXFTransform & rTransform);
@@ -104,6 +107,10 @@ private:
 	void DrawLWPolyLineEntity( const DXFLWPolyLineEntity & rE, const DXFTransform & rTransform );
 
 	void DrawHatchEntity( const DXFHatchEntity & rE, const DXFTransform & rTransform );
+
+	void DrawEllipseEntity( const DXFEllipseEntity & rE, const DXFTransform & rTransform );
+
+	void DrawSplineEntity( const DXFSplineEntity & rE, const DXFTransform & rTransform );
 
 	void DrawEntities(const DXFEntities & rEntities,
 					  const DXFTransform & rTransform,
@@ -120,5 +127,3 @@ public:
 
 
 #endif
-
-

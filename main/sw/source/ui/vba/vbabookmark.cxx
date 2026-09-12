@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -33,7 +33,7 @@ using namespace ::ooo::vba;
 using namespace ::com::sun::star;
 
 SwVbaBookmark::SwVbaBookmark( const uno::Reference< ooo::vba::XHelperInterface >& rParent, const uno::Reference< uno::XComponentContext >& rContext,
-    const css::uno::Reference< frame::XModel >& rModel, const rtl::OUString& rName ) throw ( css::uno::RuntimeException ) :
+    const css::uno::Reference< frame::XModel >& rModel, const rtl::OUString& rName ) :
     SwVbaBookmark_BASE( rParent, rContext ), mxModel( rModel ), maName( rName ), mbValid( sal_True )
 {
     uno::Reference< text::XBookmarksSupplier > xBookmarksSupplier( mxModel, uno::UNO_QUERY_THROW );
@@ -44,13 +44,13 @@ SwVbaBookmark::~SwVbaBookmark()
 {
 }
 
-void SwVbaBookmark::checkVality() throw ( uno::RuntimeException )
+void SwVbaBookmark::checkVality()
 {
     if( !mbValid )
         throw uno::RuntimeException( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("The bookmark is not valid" ) ), uno::Reference< uno::XInterface >() );
 }
 
-void SAL_CALL SwVbaBookmark::Delete() throw ( uno::RuntimeException )
+void SAL_CALL SwVbaBookmark::Delete()
 {
     checkVality();
     uno::Reference< text::XTextDocument > xTextDocument( mxModel, uno::UNO_QUERY_THROW );
@@ -58,25 +58,25 @@ void SAL_CALL SwVbaBookmark::Delete() throw ( uno::RuntimeException )
     mbValid = sal_False;
 }
 
-void SAL_CALL SwVbaBookmark::Select() throw ( uno::RuntimeException )
+void SAL_CALL SwVbaBookmark::Select()
 {
     checkVality();
     uno::Reference< text::XTextViewCursorSupplier > xViewCursorSupplier( mxModel->getCurrentController(), uno::UNO_QUERY_THROW );
     xViewCursorSupplier->getViewCursor()->gotoRange( mxBookmark->getAnchor(),sal_False );
 }
 
-rtl::OUString SAL_CALL SwVbaBookmark::getName() throw ( uno::RuntimeException )
+rtl::OUString SAL_CALL SwVbaBookmark::getName()
 {
     return maName;
 }
 
-void SAL_CALL SwVbaBookmark::setName( const rtl::OUString& _name ) throw ( uno::RuntimeException )
+void SAL_CALL SwVbaBookmark::setName( const rtl::OUString& _name )
 {
     uno::Reference< container::XNamed > xNamed( mxBookmark, uno::UNO_QUERY_THROW );
     xNamed->setName( _name );
 }
 
-uno::Any SAL_CALL SwVbaBookmark::Range() throw ( uno::RuntimeException )
+uno::Any SAL_CALL SwVbaBookmark::Range()
 {
     uno::Reference< text::XTextContent > xTextContent( mxBookmark, uno::UNO_QUERY_THROW );
     uno::Reference< text::XTextDocument > xTextDocument( mxModel, uno::UNO_QUERY_THROW );
@@ -84,14 +84,14 @@ uno::Any SAL_CALL SwVbaBookmark::Range() throw ( uno::RuntimeException )
     return uno::makeAny( uno::Reference< word::XRange>(  new SwVbaRange( this, mxContext, xTextDocument, xTextRange->getStart(), xTextRange->getEnd(), xTextRange->getText() ) ) );
 }
 
-rtl::OUString& 
+rtl::OUString&
 SwVbaBookmark::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("SwVbaBookmark") );
 	return sImplName;
 }
 
-uno::Sequence< rtl::OUString > 
+uno::Sequence< rtl::OUString >
 SwVbaBookmark::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > aServiceNames;
@@ -102,4 +102,3 @@ SwVbaBookmark::getServiceNames()
 	}
 	return aServiceNames;
 }
-

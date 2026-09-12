@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -70,7 +70,7 @@ namespace connectivity
 				);
 
 			//XInterface
-			virtual ::com::sun::star::uno::Any SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType ) throw(::com::sun::star::uno::RuntimeException);
+			virtual ::com::sun::star::uno::Any SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType );
 			virtual void SAL_CALL acquire() throw();
             virtual void SAL_CALL release() throw();
 			// ::cppu::OComponentHelper
@@ -88,7 +88,7 @@ namespace connectivity
 			virtual sal_Bool UpdateRow(OValueRefVector& rRow, OValueRefRow& pOrgRow,const ::com::sun::star::uno::Reference< ::com::sun::star::container::XIndexAccess>& _xCols);
 			virtual void addColumn(const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet>& descriptor);
 			virtual void dropColumn(sal_Int32 _nPos);
-			// refresh the header of file based tables to see changes done by someone 
+			// refresh the header of file based tables to see changes done by someone
 			virtual void refreshHeader();
 
 			::rtl::OUString SAL_CALL getName() throw() { return m_Name; }
@@ -97,10 +97,10 @@ namespace connectivity
 			sal_Bool isReadOnly() const { return !m_bWriteable; }
 				// m_pFileStream && !m_pFileStream->IsWritable(); }
 			// com::sun::star::lang::XUnoTunnel
-			virtual sal_Int64 SAL_CALL getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier ) throw(::com::sun::star::uno::RuntimeException);
+			virtual sal_Int64 SAL_CALL getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier );
 			static ::com::sun::star::uno::Sequence< sal_Int8 > getUnoTunnelImplementationId();
 
-			
+
 			sal_Int32 getFilePos() const { return m_nFilePos; }
 
 		public:
@@ -113,4 +113,3 @@ namespace connectivity
 	}
 }
 #endif // _CONNECTIVITY_FILE_TABLE_HXX_
-

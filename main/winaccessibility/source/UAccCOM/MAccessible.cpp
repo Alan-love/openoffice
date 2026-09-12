@@ -1,5 +1,5 @@
 /**************************************************************
-* 
+*
 * Licensed to the Apache Software Foundation (ASF) under one
 * or more contributor license agreements.  See the NOTICE file
 * distributed with this work for additional information
@@ -7,16 +7,16 @@
 * to you under the Apache License, Version 2.0 (the
 * "License"); you may not use this file except in compliance
 * with the License.  You may obtain a copy of the License at
-* 
+*
 *   http://www.apache.org/licenses/LICENSE-2.0
-* 
+*
 * Unless required by applicable law or agreed to in writing,
 * software distributed under the License is distributed on an
 * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 * KIND, either express or implied.  See the License for the
 * specific language governing permissions and limitations
 * under the License.
-* 
+*
 *************************************************************/
 
 #include "stdafx.h"
@@ -74,7 +74,7 @@ long IA2_STATES[] =
 };
 /*
 
-<=== map ===>  
+<=== map ===>
 
 */
 short UNO_STATES[] =
@@ -255,7 +255,7 @@ CMAccessible::~CMAccessible()
 }
 
 /**
-* Returns the Parent IAccessible interface pointer to AT. 
+* Returns the Parent IAccessible interface pointer to AT.
 * It should add reference, and the client should release the component.
 * It should return E_FAIL when the parent point is null.
 * @param	ppdispParent [in,out] used to return the parent interface point.
@@ -295,7 +295,7 @@ STDMETHODIMP CMAccessible::get_accParent(IDispatch **ppdispParent)
 }
 
 /**
-* Returns child count of current COM object. 
+* Returns child count of current COM object.
 * @param	pcountChildren [in,out] used to return the children count.
 * @return   S_OK if successful.
 */
@@ -326,7 +326,7 @@ STDMETHODIMP CMAccessible::get_accChildCount(long *pcountChildren)
 }
 
 /**
-* Returns child interface pointer for AT according to input child ID. 
+* Returns child interface pointer for AT according to input child ID.
 * @param	varChild, vt member of varChild must be VT_I4,and lVal member stores the child ID,
 * the child ID specify child index from 0 to children count, 0 stands for object self.
 * @param	ppdispChild, [in,out] use to return the child interface point.
@@ -364,7 +364,7 @@ STDMETHODIMP CMAccessible::get_accChild(VARIANT varChild, IDispatch **ppdispChil
 }
 
 /**
-* Returns the accessible name of the current COM object self or its one child to AT. 
+* Returns the accessible name of the current COM object self or its one child to AT.
 * @param	varChild, vt member of varChild must be VT_I4,and lVal member stores the child ID,
 * the child ID specify child index from 0 to children count, 0 stands for object self.
 * @param	pszName, [in,out] use to return the name of the proper object.
@@ -403,7 +403,7 @@ STDMETHODIMP CMAccessible::get_accName(VARIANT varChild, BSTR *pszName)
 }
 
 /**
-* Returns the accessible value of the current COM object self or its one child to AT. 
+* Returns the accessible value of the current COM object self or its one child to AT.
 * @param	varChild, vt member of varChild must be VT_I4,and lVal member stores the child ID,
 * the child ID specify child index from 0 to children count, 0 stands for object self.
 * @param	pszValue, [in,out] use to return the value of the proper object.
@@ -448,7 +448,7 @@ STDMETHODIMP CMAccessible::get_accValue(VARIANT varChild, BSTR *pszValue)
 }
 
 /**
-* Returns the accessible description of the current COM object self or its one child to AT. 
+* Returns the accessible description of the current COM object self or its one child to AT.
 * @param	varChild, vt member of varChild must be VT_I4,and lVal member stores the child ID,
 * the child ID specify child index from 0 to children count, 0 stands for object self.
 * @param	pszDescription, [in,out] use to return the description of the proper object.
@@ -487,7 +487,7 @@ STDMETHODIMP CMAccessible::get_accDescription(VARIANT varChild, BSTR *pszDescrip
 }
 
 /**
-* Returns the accessible role of the current COM object self or its one child to AT. 
+* Returns the accessible role of the current COM object self or its one child to AT.
 * @param	varChild, vt member of varChild must be VT_I4,and lVal member stores the child ID,
 * the child ID specify child index from 0 to children count, 0 stands for object self.
 * @param	pvarRole, [in,out] use to return the role of the proper object.
@@ -538,7 +538,7 @@ STDMETHODIMP CMAccessible::get_accRole(VARIANT varChild, VARIANT *pvarRole)
 }
 
 /**
-* Returns the accessible state of the current COM object self or its one child to AT. 
+* Returns the accessible state of the current COM object self or its one child to AT.
 * @param	varChild, vt member of varChild must be VT_I4,and lVal member stores the child ID,
 * the child ID specify child index from 0 to children count, 0 stands for object self.
 * @param	pvarState, [in,out] use to return the state of the proper object.
@@ -597,7 +597,7 @@ STDMETHODIMP CMAccessible::get_accState(VARIANT varChild, VARIANT *pvarState)
 }
 
 /**
-* Returns the accessible helpString of the current COM object self or its one child to AT. 
+* Returns the accessible helpString of the current COM object self or its one child to AT.
 * @param	varChild, vt member of varChild must be VT_I4,and lVal member stores the child ID,
 * the child ID specify child index from 0 to children count, 0 stands for object self.
 * @param	pszHelp, [in,out] use to return the helpString of the proper object.
@@ -609,7 +609,7 @@ STDMETHODIMP CMAccessible::get_accHelp(VARIANT, BSTR *)
 }
 
 /**
-* Returns the accessible HelpTopic of the current COM object self or its one child to AT. 
+* Returns the accessible HelpTopic of the current COM object self or its one child to AT.
 * @param	varChild, vt member of varChild must be VT_I4,and lVal member stores the child ID,
 * the child ID specify child index from 0 to children count, 0 stands for object self.
 * @param	pszHelpFile, [in,out] use to return the HelpTopic of the proper object.
@@ -641,7 +641,7 @@ static void GetMnemonicChar( const ::rtl::OUString& aStr, WCHAR* wStr)
 }
 
 /**
-* Returns the accessible keyboard shortcut of the current COM object self or its one child to AT. 
+* Returns the accessible keyboard shortcut of the current COM object self or its one child to AT.
 * @param	varChild, vt member of varChild must be VT_I4,and lVal member stores the child ID,
 * the child ID specify child index from 0 to children count, 0 stands for object self.
 * @param	pszKeyboardShortcut, [in,out] use to return the kbshortcut of the proper object.
@@ -704,7 +704,7 @@ STDMETHODIMP CMAccessible::get_accKeyboardShortcut(VARIANT varChild, BSTR *pszKe
 
 							m_pIParent->get_accRole(varChild, &varParentRole);
 
-							if( m_pIParent && varParentRole.lVal == ROLE_SYSTEM_COMBOBOX ) // edit in comoboBox
+							if( m_pIParent && varParentRole.lVal == ROLE_SYSTEM_COMBOBOX ) // edit in comboBox
 							{
 								m_pIParent->get_accKeyboardShortcut(varChild, pszKeyboardShortcut);
 								return S_OK;
@@ -796,7 +796,7 @@ STDMETHODIMP CMAccessible::get_accKeyboardShortcut(VARIANT varChild, BSTR *pszKe
 }
 
 /**
-* Returns the current focused child to AT. 
+* Returns the current focused child to AT.
 * @param	pvarChild, [in,out] vt member of pvarChild must be VT_I4,and lVal member stores the child ID,
 * the child ID specify child index from 0 to children count, 0 stands for object self.
 * @return   S_OK if successful and E_FAIL if failure.
@@ -833,7 +833,7 @@ STDMETHODIMP CMAccessible::get_accFocus(VARIANT *pvarChild)
 }
 
 /**
-* Returns the selection of the current COM object to AT. 
+* Returns the selection of the current COM object to AT.
 * @param	pvarChildren,[in,out]
 * if selection num is 0,return VT_EMPTY for vt,
 * if selection num is 1,return VT_I4 for vt,and child index for lVal
@@ -880,7 +880,7 @@ STDMETHODIMP CMAccessible::get_accSelection(VARIANT *pvarChildren)
 }
 
 /**
-* Returns the location of the current COM object self or its one child to AT. 
+* Returns the location of the current COM object self or its one child to AT.
 * @param	varChild, vt member of varChild must be VT_I4,and lVal member stores the child ID,
 * the child ID specify child index from 0 to children count, 0 stands for object self.
 * @param	pxLeft, [in,out] use to return the x-coordination of the proper object.
@@ -940,7 +940,7 @@ STDMETHODIMP CMAccessible::accLocation(long *pxLeft, long *pyTop, long *pcxWidth
 }
 
 /**
-* Returns the current focused child to AT. 
+* Returns the current focused child to AT.
 * @param	navDir, the direction flag of the navigation.
 * @param	varStart, the start child id of this navigation action.
 * @param	pvarEndUpAt, [in,out] the end up child of this navigation action.
@@ -1044,7 +1044,7 @@ STDMETHODIMP CMAccessible::accHitTest(long xLeft, long yTop, VARIANT *pvarChild)
 }
 
 /**
-* Get The other Interface from CMAccessible. 
+* Get The other Interface from CMAccessible.
 * @param	guidService, must be IID_IAccessible here.
 * @param	riid, the IID interface .
 * @return   S_OK if successful and S_FALSE if failure.
@@ -1057,7 +1057,7 @@ STDMETHODIMP CMAccessible::QueryService(REFGUID guidService, REFIID riid, void**
 }
 
 /**
-* Set the accessible name of the current COM object self or its one child from UNO. 
+* Set the accessible name of the current COM object self or its one child from UNO.
 * @param	varChild, vt member of varChild must be VT_I4,and lVal member stores the child ID,
 * the child ID specify child index from 0 to children count, 0 stands for object self.
 * @param	szName, the name used to set the name of the proper object.
@@ -1090,7 +1090,7 @@ STDMETHODIMP CMAccessible::put_accName(VARIANT varChild, BSTR szName)
 }
 
 /**
-* Set the accessible value of the current COM object self or its one child from UNO. 
+* Set the accessible value of the current COM object self or its one child from UNO.
 * @param	varChild, vt member of varChild must be VT_I4,and lVal member stores the child ID,
 * the child ID specify child index from 0 to children count, 0 stands for object self.
 * @param	szValue, the value used to set the value of the proper object.
@@ -1123,7 +1123,7 @@ STDMETHODIMP CMAccessible::put_accValue(VARIANT varChild, BSTR szValue)
 }
 
 /**
-* Set the accessible name of the current COM object self from UNO. 
+* Set the accessible name of the current COM object self from UNO.
 * @param	pszName, the name value used to set the name of the current object.
 * @return   S_OK if successful and E_FAIL if failure.
 */
@@ -1148,7 +1148,7 @@ STDMETHODIMP CMAccessible::Put_XAccName(const OLECHAR __RPC_FAR *pszName)
 }
 
 /**
-* Set the accessible role of the current COM object self from UNO. 
+* Set the accessible role of the current COM object self from UNO.
 * @param	pRole, the role value used to set the role of the current object.
 * @return   S_OK if successful and E_FAIL if failure.
 */
@@ -1159,7 +1159,7 @@ STDMETHODIMP CMAccessible::Put_XAccRole(unsigned short pRole)
 }
 
 /**
-* Add one state into the current state set for the current COM object from UNO. 
+* Add one state into the current state set for the current COM object from UNO.
 * @param	pXSate, the state used to set the name of the current object.
 * @return   S_OK if successful and E_FAIL if failure.
 */
@@ -1170,7 +1170,7 @@ STDMETHODIMP CMAccessible::DecreaseState(DWORD pXSate)
 }
 
 /**
-* Delete one state into the current state set for the current COM object from UNO. 
+* Delete one state into the current state set for the current COM object from UNO.
 * @param	pXSate, the state used to set the name of the current object.
 * @return   S_OK if successful and E_FAIL if failure.
 */
@@ -1181,7 +1181,7 @@ STDMETHODIMP CMAccessible::IncreaseState(DWORD pXSate)
 }
 
 /**
-* Set state into the current state set for the current COM object from UNO. 
+* Set state into the current state set for the current COM object from UNO.
 * @param	pXSate, the state used to set the name of the current object.
 * @return   S_OK if successful and E_FAIL if failure.
 */
@@ -1194,7 +1194,7 @@ STDMETHODIMP CMAccessible::SetState(DWORD pXSate)
 
 
 /**
-* Set the accessible description of the current COM object self from UNO. 
+* Set the accessible description of the current COM object self from UNO.
 * @param	pszDescription, the name used to set the description of the current object.
 * @return   S_OK if successful and E_FAIL if failure.
 */
@@ -1220,7 +1220,7 @@ STDMETHODIMP CMAccessible::Put_XAccDescription(const OLECHAR __RPC_FAR *pszDescr
 }
 
 /**
-* Set the accessible value of the current COM object self from UNO. 
+* Set the accessible value of the current COM object self from UNO.
 * @param	pszAccValue, the name used to set the value of the current object.
 * @return   S_OK if successful and E_FAIL if failure.
 */
@@ -1281,8 +1281,8 @@ STDMETHODIMP CMAccessible::Put_XAccFocus(long dChildID)
 		else
 		{
 			m_dFocusChildID = dChildID;
-			//traverse all ancestors to set the focused child ID so that when the get_accFocus is called on 
-			//any of the ancestors, this id can be used to get the IAccessible of focused object. 
+			//traverse all ancestors to set the focused child ID so that when the get_accFocus is called on
+			//any of the ancestors, this id can be used to get the IAccessible of focused object.
 			if(m_pIParent)
 			{
 				m_pIParent->Put_XAccFocus(dChildID);
@@ -1306,7 +1306,7 @@ STDMETHODIMP CMAccessible::Put_XAccLocation(const Location sLocation)
 }
 
 /**
-* Set accessible parent object for the current COM object if 
+* Set accessible parent object for the current COM object if
 * the current object is a child of some COM object
 * @param	pIParent, the parent of the current object.
 * @return   S_OK if successful and E_FAIL if failure.
@@ -1338,7 +1338,7 @@ STDMETHODIMP CMAccessible::Put_XAccChildID(long dChildID)
 * @param	pAgent, the AccObjectManagerAgent point.
 * @return   S_OK if successful and E_FAIL if failure.
 */
-STDMETHODIMP CMAccessible::Put_XAccAgent(long pAgent)
+STDMETHODIMP CMAccessible::Put_XAccAgent(LONG_PTR pAgent)
 {
 	g_pAgent = (AccObjectManagerAgent*)pAgent;
 	return S_OK;
@@ -1346,7 +1346,7 @@ STDMETHODIMP CMAccessible::Put_XAccAgent(long pAgent)
 
 /**
 * When a UNO control disposing, it disposes its listeners,
-* then notify AccObject in bridge management, then notify 
+* then notify AccObject in bridge management, then notify
 * COM that the XAccessible is invalid,so set pUNOInterface as NULL
 * @param	isDestroy, true is it need to be destroyed.
 * @return   S_OK if successful and E_FAIL if failure.
@@ -1393,12 +1393,12 @@ IMAccessible* CMAccessible::GetChildInterface(long dChildID)//for test
 
 		IAccessible* pChild = NULL;
 		Reference< XAccessible > pXChild = pRContext->getAccessibleChild(dChildID-1);
-		BOOL isGet = get_IAccessibleFromXAccessible((long)pXChild.get(),&pChild);
+		BOOL isGet = get_IAccessibleFromXAccessible((LONG_PTR)pXChild.get(),&pChild);
 
 		if(!isGet)
 		{
-			g_pAgent->InsertAccObj(pXChild.get(),pUNOInterface,(long)m_hwnd);
-			isGet = get_IAccessibleFromXAccessible((long)pXChild.get(),&pChild);
+			g_pAgent->InsertAccObj(pXChild.get(),pUNOInterface,m_hwnd);
+			isGet = get_IAccessibleFromXAccessible((LONG_PTR)pXChild.get(),&pChild);
 		}
 
 		if(isGet)
@@ -1463,7 +1463,7 @@ IMAccessible* CMAccessible::GetNavigateChildForDM(VARIANT varCur, short flags)
 		{
 			return NULL;
 		}
-		pCurChild->GetUNOInterface((long*)&pChildXAcc);
+		pCurChild->GetUNOInterface((LONG_PTR*)&pChildXAcc);
 		if(pChildXAcc==NULL)
 		{
 			return NULL;
@@ -1501,7 +1501,7 @@ IMAccessible* CMAccessible::GetNavigateChildForDM(VARIANT varCur, short flags)
 */
 
 /**
-* Return first child for parent container, process differently according 
+* Return first child for parent container, process differently according
 * to whether it is descendant manage
 * @param	varStart, the start child id of this navigation action.
 * @param	pvarEndUpAt, [in,out] the end up child of this navigation action.
@@ -1538,7 +1538,7 @@ HRESULT CMAccessible::GetFirstChild(VARIANT varStart,VARIANT* pvarEndUpAt)
 }
 
 /**
-* Return last child for parent container, process differently according 
+* Return last child for parent container, process differently according
 * to whether it is descendant manage
 * @param	varStart, the start child id of this navigation action.
 * @param	pvarEndUpAt, [in,out] the end up child of this navigation action.
@@ -1732,7 +1732,7 @@ STDMETHODIMP CMAccessible::get_relation( long relationIndex, IAccessibleRelation
 				if(SUCCEEDED(hr))
 				{
 					AccessibleRelation accRelation = pRrelationSet->getRelation(relationIndex);
-					wrapper->put_XSubInterface((long)&accRelation);
+					wrapper->put_XSubInterface((LONG_PTR)&accRelation);
 					wrapper->Release();
 					*relation = pRelation;
 					return S_OK;
@@ -1795,7 +1795,7 @@ STDMETHODIMP CMAccessible::get_relations( long, IAccessibleRelation __RPC_FAR *_
 				if(SUCCEEDED(hr))
 				{
 					AccessibleRelation accRelation = pRrelationSet->getRelation(i);
-					wrapper->put_XSubInterface((long)&accRelation);
+					wrapper->put_XSubInterface((LONG_PTR)&accRelation);
 					wrapper->Release();
 				}
 				(relation)[i] = pRelation;
@@ -2146,8 +2146,8 @@ XAccessibleContext* CMAccessible::GetContextByXAcc( XAccessible* pXAcc )
 }
 
 /**
-* Return the member variable m_pXAccessibleSelection, instead of 
-* get XAccessibleSelection according to XAccessibleContext because if so,it will 
+* Return the member variable m_pXAccessibleSelection, instead of
+* get XAccessibleSelection according to XAccessibleContext because if so,it will
 * depend on the UNO implementation code,so when COM is created, put XAccessibleSelection
 * by bridge management system
 * @return   XAccessibleSelection*, the selection of the current object.
@@ -2191,7 +2191,7 @@ HRESULT CMAccessible::SelectChild(XAccessible* pItem)
 }
 
 /**
-* Deselect one XAccessible item, for accSelect implimentation
+* Deselect one XAccessible item, for accSelect implementation
 * @param	pItem, the item should be deselected.
 * @return  S_OK if successful.
 */
@@ -2273,11 +2273,11 @@ HRESULT CMAccessible::DeSelectMultipleChildren( XAccessible** pItem,int size )
 * @param	pXAcc, the XAccessible object of current object.
 * @return  S_OK if successful.
 */
-STDMETHODIMP CMAccessible::SetXAccessible(long pXAcc)
+STDMETHODIMP CMAccessible::SetXAccessible(LONG_PTR pXAcc)
 {
 	pUNOInterface = (XAccessible*)pXAcc;
 	pRef = pUNOInterface;
-	m_pEnumVar->PutSelection(/*XAccessibleSelection*/(long)pUNOInterface);
+	m_pEnumVar->PutSelection(/*XAccessibleSelection*/(LONG_PTR)pUNOInterface);
 
 	pRContext = pUNOInterface->getAccessibleContext();
 	pRContextInterface = (XAccessibleContext*)pRContext.is();
@@ -2287,7 +2287,7 @@ STDMETHODIMP CMAccessible::SetXAccessible(long pXAcc)
 
 /**
 * accSelect method has many optional flags, needs to process comprehensively
-* Mozilla and Microsoft do not implement SELFLAG_EXTENDSELECTION flag. 
+* Mozilla and Microsoft do not implement SELFLAG_EXTENDSELECTION flag.
 * The implementation of this flag is a little trouble-shooting,so we also
 * do not implement it now
 * @param	flagsSelect, the selection flag of the select action.
@@ -2332,7 +2332,7 @@ STDMETHODIMP CMAccessible::accSelect(long flagsSelect, VARIANT varChild)
 
 	if( flagsSelect&SELFLAG_TAKEFOCUS )
 	{
-		long pTempUNO = 0;
+		LONG_PTR pTempUNO = 0;
 		pSelectAcc->GetUNOInterface( &pTempUNO);
 
 		if( pTempUNO == NULL )
@@ -2388,13 +2388,13 @@ STDMETHODIMP CMAccessible::accSelect(long flagsSelect, VARIANT varChild)
 * @param pXAcc, [in, out] the Uno interface of the current object.
 * @return S_OK if successful.
 */
-STDMETHODIMP CMAccessible::GetUNOInterface(long* pXAcc)
+STDMETHODIMP CMAccessible::GetUNOInterface(LONG_PTR* pXAcc)
 {
 	// #CHECK#
 	if(pXAcc == NULL)
 		return E_INVALIDARG;
 
-	*pXAcc = (long)pUNOInterface;
+	*pXAcc = (LONG_PTR)pUNOInterface;
 	return S_OK;
 }
 
@@ -2403,7 +2403,7 @@ STDMETHODIMP CMAccessible::GetUNOInterface(long* pXAcc)
 * @param pAction, the default action point of the current object.
 * @return S_OK if successful.
 */
-STDMETHODIMP CMAccessible::SetDefaultAction(long pAction)
+STDMETHODIMP CMAccessible::SetDefaultAction(LONG_PTR pAction)
 {
 	m_pXAction = (XAccessibleAction*)pAction;
 	return S_OK;
@@ -2595,7 +2595,7 @@ HRESULT WINAPI CMAccessible::SmartQI(void* pv, REFIID iid, void** ppvObject)
 					((IUnknown*)*ppvObject)->QueryInterface(IID_IUNOXWrapper, (void**)&wrapper);
 					if(wrapper)
 					{
-						wrapper->put_XInterface((long)pUNOInterface);
+						wrapper->put_XInterface((LONG_PTR)pUNOInterface);
 						wrapper->Release();
 					}
 					return S_OK;
@@ -2610,7 +2610,7 @@ HRESULT WINAPI CMAccessible::SmartQI(void* pv, REFIID iid, void** ppvObject)
 	LEAVE_PROTECTED_BLOCK
 }
 
-BOOL CMAccessible::get_IAccessibleFromXAccessible(long pXAcc, IAccessible **ppIA)
+BOOL CMAccessible::get_IAccessibleFromXAccessible(LONG_PTR pXAcc, IAccessible **ppIA)
 {
 
 	ENTER_PROTECTED_BLOCK
@@ -2963,12 +2963,12 @@ void CMAccessible::ConvertAnyToVariant(const ::com::sun::star::uno::Any &rAnyVal
 					if(pXAcc.is())
 					{
 						IAccessible* pIAcc = NULL;
-						get_IAccessibleFromXAccessible((long)pXAcc.get(), &pIAcc);
+						get_IAccessibleFromXAccessible((LONG_PTR)pXAcc.get(), &pIAcc);
 						if(pIAcc == NULL)
 						{
 							Reference< XAccessibleContext > pXAccContext = pXAcc->getAccessibleContext();
 							g_pAgent->InsertAccObj(pXAcc.get(),pXAccContext->getAccessibleParent().get());
-							get_IAccessibleFromXAccessible((long)pXAcc.get(), &pIAcc);
+							get_IAccessibleFromXAccessible((LONG_PTR)pXAcc.get(), &pIAcc);
 						}
 						if(pIAcc)
 						{
@@ -3272,4 +3272,3 @@ STDMETHODIMP CMAccessible::get_attributes(/*[out]*/ BSTR *pAttr)
 	}
 	LEAVE_PROTECTED_BLOCK
 }
-

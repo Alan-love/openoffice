@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,62 +7,41 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
-
-
-#include "setup_main.hxx"
+#include <stdio.h>
 
 //--------------------------------------------------------------------------
 
-#ifdef SetupAppX
- #undef SetupAppX
-#endif
-
-#ifdef Create_SetupAppX
- #undef Create_SetupAppX
-#endif
-
-#ifdef LanguageDataX
- #undef LanguageDataX
-#endif
-
-
-#ifdef UNICODE
- #define SetupAppX          SetupAppW
- #define Create_SetupAppX   Create_SetupAppW
- #define LanguageDataX      LanguageDataW
-#else
- #define SetupAppX          SetupAppA
- #define Create_SetupAppX   Create_SetupAppA
- #define LanguageDataX      LanguageDataA
-#endif
-
-//--------------------------------------------------------------------------
-
-struct LanguageDataX
+struct LanguageData
 {
     long    m_nLanguageID;
     LPTSTR  m_pTransform;
 
-     LanguageDataX( LPTSTR pData );
-    ~LanguageDataX();
+     LanguageData( LPTSTR pData );
+    ~LanguageData();
 };
 
 //--------------------------------------------------------------------------
 
-class SetupAppX : public SetupApp
+class SetupApp
 {
+    DWORD           m_nOSVersion;
+    DWORD           m_nMinorVersion;
+    boolean         m_bIsWin9x      : 1;
+    boolean         m_bNeedReboot   : 1;
+    boolean         m_bAdministrative : 1;
+
     HINSTANCE   m_hInst;
     HANDLE      m_hMapFile;
     LPTSTR      m_pAppTitle;
@@ -90,7 +69,7 @@ class SetupAppX : public SetupApp
 
     long            m_nLanguageID;
     long            m_nLanguageCount;
-    LanguageDataX** m_ppLanguageList;
+    LanguageData** m_ppLanguageList;
 
 private:
 
@@ -117,11 +96,12 @@ private:
     boolean     IsTerminalServerInstalled() const;
     void        AddFileToPatchList( TCHAR* pPath, TCHAR* pFile );
     boolean     IsPatchInstalled( TCHAR* pBaseDir, TCHAR* pFileName );
-    boolean     InstallRuntimes( TCHAR* pProductCode, TCHAR* pFileName );
+    boolean     InstallRuntimes( TCHAR* pFileName, bool bMatchesOwnArchitecture );
 
 public:
-                    SetupAppX();
-                   ~SetupAppX();
+    UINT            m_uiRet;
+                    SetupApp();
+    virtual        ~SetupApp();
 
     virtual boolean Initialize( HINSTANCE hInst );
     virtual boolean AlreadyRunning() const;
@@ -129,13 +109,25 @@ public:
     virtual boolean GetPatches();
     virtual boolean ChooseLanguage( long& rLanguage );
     virtual boolean CheckVersion();
+    virtual boolean CheckOSVersion();
     virtual boolean CheckForUpgrade();
     virtual boolean InstallRuntimes();
     virtual boolean Install( long nLanguage );
 
     virtual UINT    GetError() const;
     virtual void    DisplayError( UINT nErr ) const;
-    
+
+    void            SetError( UINT nErr ) { m_uiRet = nErr; }
+    boolean         IsWin9x() const { return m_bIsWin9x; }
+    DWORD           GetOSVersion() const { return m_nOSVersion; }
+    DWORD           GetMinorVersion() const { return m_nMinorVersion; }
+
+    boolean         IsAdminInstall() { return m_bAdministrative; }
+    void            SetAdminInstall( boolean bValue ) { m_bAdministrative = bValue; }
+
+    void            SetRebootNeeded( boolean bNeedReboot ) { m_bNeedReboot = bNeedReboot; }
+    boolean         NeedReboot() const { return m_bNeedReboot; }
+
     void            Log( LPCTSTR pMessage, LPCTSTR pText = NULL ) const;
 
     long            GetLanguageCount() const { return m_nLanguageCount; }

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -66,17 +66,17 @@ namespace connectivity
 			MacabConnection*						m_pConnection;	// The owning Connection object
 			MacabHeader*							m_pHeader;	// The header of the address book on which to run queries (provided by m_pConnection)
 			::com::sun::star::uno::WeakReference< ::com::sun::star::sdbc::XResultSet>    m_xResultSet;   // The last ResultSet created
-			
+
 
 		protected:
 			class MacabCondition *analyseWhereClause(
-				const OSQLParseNode *pParseNode) const throw(::com::sun::star::sdbc::SQLException);
+				const OSQLParseNode *pParseNode) const;
 			class MacabOrder *analyseOrderByClause(
-				const OSQLParseNode *pParseNode) const throw(::com::sun::star::sdbc::SQLException);
+				const OSQLParseNode *pParseNode) const;
 			::rtl::OUString getTableName( ) const;
-			void setMacabFields(class MacabResultSet *pResult) const throw(::com::sun::star::sdbc::SQLException);
-			void selectRecords(MacabResultSet *pResult) const throw(::com::sun::star::sdbc::SQLException);
-			void sortRecords(MacabResultSet *pResult) const throw(::com::sun::star::sdbc::SQLException);
+			void setMacabFields(class MacabResultSet *pResult) const;
+			void selectRecords(MacabResultSet *pResult) const;
+			void sortRecords(MacabResultSet *pResult) const;
 
 			// OPropertyArrayUsageHelper
 			virtual ::cppu::IPropertyArrayHelper* createArrayHelper() const;
@@ -87,16 +87,16 @@ namespace connectivity
 					::com::sun::star::uno::Any & rConvertedValue,
 					::com::sun::star::uno::Any & rOldValue,
 					sal_Int32 nHandle,
-					const ::com::sun::star::uno::Any& rValue) throw (::com::sun::star::lang::IllegalArgumentException);
+					const ::com::sun::star::uno::Any& rValue);
 			virtual void SAL_CALL setFastPropertyValue_NoBroadcast(
 					sal_Int32 nHandle,
-					const ::com::sun::star::uno::Any& rValue) throw (::com::sun::star::uno::Exception);
+					const ::com::sun::star::uno::Any& rValue);
 			virtual void SAL_CALL getFastPropertyValue(
 					::com::sun::star::uno::Any& rValue,
 					sal_Int32 nHandle) const;
 
-			virtual void resetParameters() const throw(::com::sun::star::sdbc::SQLException);
-			virtual void getNextParameter(::rtl::OUString &rParameter) const throw(::com::sun::star::sdbc::SQLException);
+			virtual void resetParameters() const;
+			virtual void getNextParameter(::rtl::OUString &rParameter) const;
 			virtual ~MacabCommonStatement();
 
 		public:
@@ -113,39 +113,39 @@ namespace connectivity
 			virtual void SAL_CALL acquire() throw();
 			virtual ::com::sun::star::uno::Any SAL_CALL queryInterface(
 					const ::com::sun::star::uno::Type & rType
-					) throw(::com::sun::star::uno::RuntimeException);
+					);
 
 			// XTypeProvider
 			virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL getTypes(
-					) throw(::com::sun::star::uno::RuntimeException);
+					);
 
 			// XPropertySet
 			virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL getPropertySetInfo(
-					) throw(::com::sun::star::uno::RuntimeException);
+					);
 
 			// XStatement
 			virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XResultSet > SAL_CALL executeQuery(
-					const ::rtl::OUString& sql ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
+					const ::rtl::OUString& sql );
 			virtual sal_Int32 SAL_CALL executeUpdate(
-					 const ::rtl::OUString& sql ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
+					 const ::rtl::OUString& sql );
 			virtual sal_Bool SAL_CALL execute(
-					const ::rtl::OUString& sql ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
+					const ::rtl::OUString& sql );
 			virtual ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XConnection > SAL_CALL getConnection(
-					) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
+					);
 
 			// XWarningsSupplier
 			virtual ::com::sun::star::uno::Any SAL_CALL getWarnings(
-					) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
+					);
 			virtual void SAL_CALL clearWarnings(
-					) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
+					);
 
 			// XCancellable
 			virtual void SAL_CALL cancel(
-					) throw(::com::sun::star::uno::RuntimeException);
+					);
 
 			// XCloseable
 			virtual void SAL_CALL close(
-					) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::uno::RuntimeException);
+					);
 
 			// other methods
 			inline MacabConnection* getOwnConnection() const { return m_pConnection; }

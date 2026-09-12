@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
- 
+
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_evoab2.hxx"
 #include "NDriver.hxx"
 #include "NConnection.hxx"
 #include <com/sun/star/lang/DisposedException.hpp>
@@ -65,13 +65,13 @@ OEvoabDriver::~OEvoabDriver()
 void OEvoabDriver::disposing()
 {
 	::osl::MutexGuard aGuard(m_aMutex);
-	
+
 	// when driver will be destroied so all our connections have to be destroied as well
 	for (OWeakRefArray::iterator i = m_xConnections.begin(); m_xConnections.end() != i; ++i)
 	{
 		Reference< XComponent > xComp(i->get(), UNO_QUERY);
 		if (xComp.is()) {
-		    try {	
+		    try {
 			xComp->dispose();
 			}
 		    catch (com::sun::star::lang::DisposedException e) {
@@ -87,7 +87,7 @@ void OEvoabDriver::disposing()
 
 // static ServiceInfo
 //------------------------------------------------------------------------------
-rtl::OUString OEvoabDriver::getImplementationName_Static(  ) throw(RuntimeException)
+rtl::OUString OEvoabDriver::getImplementationName_Static(  )
 {
 	return rtl::OUString::createFromAscii(EVOAB_DRIVER_IMPL_NAME);
 	// this name is referenced in the configuration and in the evoab.xml
@@ -95,21 +95,21 @@ rtl::OUString OEvoabDriver::getImplementationName_Static(  ) throw(RuntimeExcept
 }
 
 //------------------------------------------------------------------
-Sequence< ::rtl::OUString > OEvoabDriver::getSupportedServiceNames_Static(  ) throw (RuntimeException)
+Sequence< ::rtl::OUString > OEvoabDriver::getSupportedServiceNames_Static(  )
 {
-	// which service is supported 
+	// which service is supported
 	// for more information @see com.sun.star.sdbc.Driver
 	Sequence< ::rtl::OUString > aSNS( 1 );
 	aSNS[0] = ::rtl::OUString::createFromAscii("com.sun.star.sdbc.Driver");
 	return aSNS;
 }
 //------------------------------------------------------------------
-::rtl::OUString SAL_CALL OEvoabDriver::getImplementationName(  ) throw(RuntimeException)
+::rtl::OUString SAL_CALL OEvoabDriver::getImplementationName(  )
 {
 	return getImplementationName_Static();
 }
 //------------------------------------------------------------------
-sal_Bool SAL_CALL OEvoabDriver::supportsService( const ::rtl::OUString& _rServiceName ) throw(RuntimeException)
+sal_Bool SAL_CALL OEvoabDriver::supportsService( const ::rtl::OUString& _rServiceName )
 {
     Sequence< ::rtl::OUString > aSupported(getSupportedServiceNames());
 	const ::rtl::OUString* pSupported = aSupported.getConstArray();
@@ -120,42 +120,41 @@ sal_Bool SAL_CALL OEvoabDriver::supportsService( const ::rtl::OUString& _rServic
 	return pSupported != pEnd;
 }
 //------------------------------------------------------------------
-Sequence< ::rtl::OUString > SAL_CALL OEvoabDriver::getSupportedServiceNames(  ) throw(RuntimeException)
+Sequence< ::rtl::OUString > SAL_CALL OEvoabDriver::getSupportedServiceNames(  )
 {
 	return getSupportedServiceNames_Static();
 }
 
 //------------------------------------------------------------------
-::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >  SAL_CALL connectivity::evoab::OEvoabDriver_CreateInstance(const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory >& _rxFactory) throw( ::com::sun::star::uno::Exception )
+::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >  SAL_CALL connectivity::evoab::OEvoabDriver_CreateInstance(const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory >& _rxFactory)
 {
 	return *(new OEvoabDriver(_rxFactory));
 }
 // --------------------------------------------------------------------------------
-Reference< XConnection > SAL_CALL OEvoabDriver::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info ) throw(SQLException, RuntimeException)
+Reference< XConnection > SAL_CALL OEvoabDriver::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if (ODriver_BASE::rBHelper.bDisposed)
 		throw DisposedException();
-	
+
 	if ( ! acceptsURL(url) )
 		return NULL;
-	
+
 	OEvoabConnection* pCon = new OEvoabConnection( *this );
 	pCon->construct(url,info);
         Reference< XConnection > xCon = pCon;
         m_xConnections.push_back(WeakReferenceHelper(*pCon));
-	
+
 	return xCon;
 }
 // --------------------------------------------------------------------------------
 sal_Bool SAL_CALL OEvoabDriver::acceptsURL( const ::rtl::OUString& url )
-	throw(SQLException, RuntimeException)
 {
 	return acceptsURL_Stat(url);
 }
 
 // --------------------------------------------------------------------------------
-Sequence< DriverPropertyInfo > SAL_CALL OEvoabDriver::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& /*info*/ ) throw(SQLException, RuntimeException)
+Sequence< DriverPropertyInfo > SAL_CALL OEvoabDriver::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& /*info*/ )
 {
 	if ( ! acceptsURL(url) )
     {
@@ -164,17 +163,17 @@ Sequence< DriverPropertyInfo > SAL_CALL OEvoabDriver::getPropertyInfo( const ::r
 		::dbtools::throwGenericSQLException(sMessage ,*this);
     } // if ( ! acceptsURL(url) )
 
-	// if you have somthing special to say return it here :-)
+	// if you have something special to say return it here :-)
 	return Sequence< DriverPropertyInfo >();
 }
 
 // --------------------------------------------------------------------------------
-sal_Int32 SAL_CALL OEvoabDriver::getMajorVersion(  ) throw(RuntimeException)
+sal_Int32 SAL_CALL OEvoabDriver::getMajorVersion(  )
 {
 	return 1;
 }
 // --------------------------------------------------------------------------------
-sal_Int32 SAL_CALL OEvoabDriver::getMinorVersion(  ) throw(RuntimeException)
+sal_Int32 SAL_CALL OEvoabDriver::getMinorVersion(  )
 {
 	return 0;
 }

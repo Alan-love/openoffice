@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -52,14 +52,14 @@ ScAccessibleFilterTopWindow::~ScAccessibleFilterTopWindow()
 
 // XAccessibleContext
 
-sal_Int32 ScAccessibleFilterTopWindow::getAccessibleChildCount() throw (RuntimeException)
+sal_Int32 ScAccessibleFilterTopWindow::getAccessibleChildCount()
 {
     sal_Int32 nMenuCount = getMenuItemCount();
     return nMenuCount + 6;
 }
 
 Reference<XAccessible> ScAccessibleFilterTopWindow::getAccessibleChild(
-    sal_Int32 nIndex) throw (RuntimeException, IndexOutOfBoundsException)
+    sal_Int32 nIndex)
 {
     if (nIndex >= getAccessibleChildCount())
         throw IndexOutOfBoundsException();
@@ -67,7 +67,7 @@ Reference<XAccessible> ScAccessibleFilterTopWindow::getAccessibleChild(
     sal_Int32 nMenuCount = getMenuItemCount();
     if (nIndex < nMenuCount)
         return ScAccessibleFilterMenu::getAccessibleChild(nIndex);
-    
+
     nIndex -= nMenuCount;
     switch (nIndex)
     {
@@ -90,7 +90,7 @@ Reference<XAccessible> ScAccessibleFilterTopWindow::getAccessibleChild(
     return Reference<XAccessible>();
 }
 
-OUString ScAccessibleFilterTopWindow::getImplementationName() throw (RuntimeException)
+OUString ScAccessibleFilterTopWindow::getImplementationName()
 {
     return OUString::createFromAscii("ScAccessibleFilterTopWindow");
 }
@@ -103,16 +103,16 @@ void ScAccessibleFilterTopWindow::setAccessibleChild(
         case LISTBOX:
             mxAccListBox = rAccessible;
         break;
-        case TOGGLE_ALL: 
+        case TOGGLE_ALL:
             mxAccToggleAll = rAccessible;
         break;
-        case SINGLE_ON_BTN: 
+        case SINGLE_ON_BTN:
             mxAccSingleOnBtn = rAccessible;
         break;
-        case SINGLE_OFF_BTN: 
+        case SINGLE_OFF_BTN:
             mxAccSingleOffBtn = rAccessible;
         break;
-        case OK_BTN: 
+        case OK_BTN:
             mxAccOkBtn = rAccessible;
         break;
         case CANCEL_BTN:
@@ -120,4 +120,3 @@ void ScAccessibleFilterTopWindow::setAccessibleChild(
         break;
     }
 }
-

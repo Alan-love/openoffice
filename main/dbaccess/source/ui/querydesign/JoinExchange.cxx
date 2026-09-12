@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -32,7 +32,7 @@
 #ifndef _SVX_DBEXCH_HRC
 #include <svx/dbexch.hrc>
 #endif
-#ifndef _CPPUHELPER_TYPEPROVIDER_HXX_ 
+#ifndef _CPPUHELPER_TYPEPROVIDER_HXX_
 #include <cppuhelper/typeprovider.hxx>
 #endif
 #ifndef _SOT_FORMATS_HXX
@@ -128,7 +128,7 @@ namespace dbaui
 	}
 
 	//------------------------------------------------------------------------
-    sal_Int64 SAL_CALL OJoinExchObj::getSomething( const Sequence< sal_Int8 >& _rIdentifier ) throw(RuntimeException)
+    sal_Int64 SAL_CALL OJoinExchObj::getSomething( const Sequence< sal_Int8 >& _rIdentifier )
 	{
 		if (_rIdentifier.getLength() == 16 && 0 == rtl_compareMemory(getUnoTunnelImplementationId().getConstArray(),  _rIdentifier.getConstArray(), 16 ) )
 			return reinterpret_cast<sal_Int64>(this);
@@ -158,7 +158,7 @@ namespace dbaui
 	}
 
 	//------------------------------------------------------------------------
-	Any SAL_CALL OJoinExchObj::queryInterface( const Type& _rType ) throw(RuntimeException)
+	Any SAL_CALL OJoinExchObj::queryInterface( const Type& _rType )
 	{
 		Any aReturn = TransferableHelper::queryInterface(_rType);
 		if (!aReturn.hasValue())

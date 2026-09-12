@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -61,7 +61,7 @@ using namespace oletest;
 using namespace rtl;
 using namespace com::sun::star::uno;
 using namespace com::sun::star::lang;
-using namespace com::sun::star::beans; 
+using namespace com::sun::star::beans;
 using namespace com::sun::star::registry;
 using namespace com::sun::star::script;
 using namespace com::sun::star::reflection;
@@ -132,151 +132,150 @@ class OComponent : public WeakImplHelper7<
     Reference<XInvocation> m_attr_xinvocation;
 
 public:
-	OComponent( const Reference<XMultiServiceFactory> & rFactory ) : 
+	OComponent( const Reference<XMultiServiceFactory> & rFactory ) :
 	  m_rFactory( rFactory ), m_arrayConstructor(0) {}
 	~OComponent();
 public: // XTestSequence
-	virtual Sequence<sal_Int8> SAL_CALL methodByte(const Sequence< sal_Int8 >& aSeq) throw( RuntimeException );
-	virtual Sequence<float> SAL_CALL methodFloat(const Sequence< float >& aSeq) throw( RuntimeException );
-	virtual Sequence< double > SAL_CALL methodDouble(const Sequence< double >& aSeq) throw( RuntimeException);
-	virtual Sequence< sal_Bool > SAL_CALL methodBool(const Sequence< sal_Bool >& aSeq) throw( RuntimeException );
-	virtual Sequence< sal_Int16 > SAL_CALL methodShort(const Sequence< sal_Int16 >& aSeq) throw( RuntimeException );
-	virtual Sequence< sal_uInt16 > SAL_CALL methodUShort(const Sequence< sal_uInt16 >& aSeq) throw( RuntimeException );
-	virtual Sequence< sal_Int32 > SAL_CALL methodLong(const Sequence< sal_Int32 >& aSeq) throw( RuntimeException) ;
-	virtual Sequence< sal_uInt32 > SAL_CALL methodULong(const Sequence< sal_uInt32 >& aSeq) throw( RuntimeException );
-	virtual Sequence< OUString > SAL_CALL methodString(const Sequence< OUString >& aSeq) throw( RuntimeException );
-	virtual Sequence< sal_Unicode > SAL_CALL methodChar(const Sequence< sal_Unicode >& aSeq) throw( RuntimeException );
-	virtual Sequence< Any > SAL_CALL methodAny(const Sequence< Any >& aSeq) throw( RuntimeException );
-    virtual Sequence< Type > SAL_CALL methodType(const Sequence< Type >& aSeq) throw( RuntimeException );
-    virtual Sequence< Reference< XInterface > > SAL_CALL methodXInterface( const Sequence< Reference< XInterface > >& aSeq ) throw(RuntimeException) ;
-	virtual Sequence< Sequence< sal_Int32 > > SAL_CALL methodSequence(const Sequence< Sequence< sal_Int32 > >& aSeq) throw( RuntimeException );
-	virtual Sequence< Sequence< Sequence< sal_Int32 > > > SAL_CALL methodSequence2(const Sequence< Sequence< Sequence< sal_Int32 > > >& aSeq) throw( RuntimeException );
-    virtual Sequence< Reference<XEventListener> > SAL_CALL methodXEventListeners( const Sequence<Reference<XEventListener> >& aSeq) throw( RuntimeException);
-    virtual Sequence< Sequence<Reference<XEventListener > > > SAL_CALL methodXEventListenersMul( const Sequence<Sequence<Reference<XEventListener > > >& aSeq ) throw (RuntimeException);
-    
-    virtual Sequence< sal_Int8 > SAL_CALL getAttrByte(void) throw( RuntimeException );
-    virtual void SAL_CALL setAttrByte(const Sequence< sal_Int8 >& AttrByte_) throw( RuntimeException );
-    virtual Sequence< float > SAL_CALL getAttrFloat(void)  throw( RuntimeException) ;
-    virtual void SAL_CALL setAttrFloat(const Sequence< float >& AttrFloat_) throw( RuntimeException );
-    virtual Sequence< double > SAL_CALL getAttrDouble(void)  throw( RuntimeException) ;
-    virtual void SAL_CALL setAttrDouble(const Sequence< double >& AttrDouble_) throw( RuntimeException );
-    virtual Sequence< sal_Bool > SAL_CALL getAttrBool(void)  throw( RuntimeException );
-    virtual void SAL_CALL setAttrBool(const Sequence< sal_Bool >& AttrBool_) throw( RuntimeException );
-	virtual Sequence< sal_Int16 > SAL_CALL getAttrShort(void)  throw( RuntimeException );
-    virtual void SAL_CALL setAttrShort(const Sequence< sal_Int16 >& AttrShort_) throw( RuntimeException );
-    virtual Sequence< sal_uInt16 > SAL_CALL getAttrUShort(void)  throw( RuntimeException );
-    virtual void SAL_CALL setAttrUShort(const Sequence< sal_uInt16 >& AttrUShort_) throw( RuntimeException );
-    virtual Sequence< sal_Int32 > SAL_CALL getAttrLong(void)  throw( RuntimeException );
-    virtual void SAL_CALL setAttrLong(const Sequence< sal_Int32 >& AttrLong_) throw( RuntimeException );
-    virtual Sequence< sal_uInt32 > SAL_CALL getAttrULong(void)  throw( RuntimeException );
-    virtual void SAL_CALL setAttrULong(const Sequence< sal_uInt32 >& AttrULong_) throw( RuntimeException );
-    virtual Sequence< OUString > SAL_CALL getAttrString(void)  throw(RuntimeException );
-    virtual void SAL_CALL setAttrString(const Sequence< OUString >& AttrString_) throw( RuntimeException );
-    virtual Sequence< sal_Unicode > SAL_CALL getAttrChar(void)  throw( RuntimeException );
-    virtual void SAL_CALL setAttrChar(const Sequence< sal_Unicode >& AttrChar_) throw( RuntimeException );
-	virtual Sequence< Any > SAL_CALL getAttrAny(void)  throw( RuntimeException );
-    virtual void SAL_CALL setAttrAny(const Sequence< Any >& AttrAny_) throw( RuntimeException );
-	virtual Sequence< Type > SAL_CALL getAttrType(void)  throw( RuntimeException );
-    virtual void SAL_CALL setAttrType( const Sequence< Type >& _attrtype ) throw (RuntimeException);
-    virtual Sequence< Sequence< sal_Int32 > > SAL_CALL getAttrSequence(void) throw( RuntimeException );
-    virtual void SAL_CALL  setAttrSequence(const Sequence< Sequence< sal_Int32 > >& AttrSequence_) throw( RuntimeException );
-	virtual Sequence< Sequence< Sequence< sal_Int32 > > > SAL_CALL getAttrSequence2(void)  throw( RuntimeException );
-    virtual void SAL_CALL setAttrSequence2(const Sequence< Sequence< Sequence< sal_Int32 > > >& AttrSequence2_) throw ( RuntimeException );
-    virtual Sequence< Reference< XInterface > > SAL_CALL getAttrXInterface() throw(RuntimeException);
-	virtual void SAL_CALL setAttrXInterface( const Sequence< Reference< XInterface > >& _attrxinterface ) throw(RuntimeException);
+	virtual Sequence<sal_Int8> SAL_CALL methodByte(const Sequence< sal_Int8 >& aSeq);
+	virtual Sequence<float> SAL_CALL methodFloat(const Sequence< float >& aSeq);
+	virtual Sequence< double > SAL_CALL methodDouble(const Sequence< double >& aSeq);
+	virtual Sequence< sal_Bool > SAL_CALL methodBool(const Sequence< sal_Bool >& aSeq);
+	virtual Sequence< sal_Int16 > SAL_CALL methodShort(const Sequence< sal_Int16 >& aSeq);
+	virtual Sequence< sal_uInt16 > SAL_CALL methodUShort(const Sequence< sal_uInt16 >& aSeq);
+	virtual Sequence< sal_Int32 > SAL_CALL methodLong(const Sequence< sal_Int32 >& aSeq) ;
+	virtual Sequence< sal_uInt32 > SAL_CALL methodULong(const Sequence< sal_uInt32 >& aSeq);
+	virtual Sequence< OUString > SAL_CALL methodString(const Sequence< OUString >& aSeq);
+	virtual Sequence< sal_Unicode > SAL_CALL methodChar(const Sequence< sal_Unicode >& aSeq);
+	virtual Sequence< Any > SAL_CALL methodAny(const Sequence< Any >& aSeq);
+    virtual Sequence< Type > SAL_CALL methodType(const Sequence< Type >& aSeq);
+    virtual Sequence< Reference< XInterface > > SAL_CALL methodXInterface( const Sequence< Reference< XInterface > >& aSeq ) ;
+	virtual Sequence< Sequence< sal_Int32 > > SAL_CALL methodSequence(const Sequence< Sequence< sal_Int32 > >& aSeq);
+	virtual Sequence< Sequence< Sequence< sal_Int32 > > > SAL_CALL methodSequence2(const Sequence< Sequence< Sequence< sal_Int32 > > >& aSeq);
+    virtual Sequence< Reference<XEventListener> > SAL_CALL methodXEventListeners( const Sequence<Reference<XEventListener> >& aSeq);
+    virtual Sequence< Sequence<Reference<XEventListener > > > SAL_CALL methodXEventListenersMul( const Sequence<Sequence<Reference<XEventListener > > >& aSeq );
 
-    virtual ::sal_Int8 SAL_CALL getAByte() throw (RuntimeException);
-    virtual void SAL_CALL setAByte( ::sal_Int8 _abyte ) throw (RuntimeException);
-    virtual float SAL_CALL getAFloat() throw (RuntimeException);
-    virtual void SAL_CALL setAFloat( float _afloat ) throw (RuntimeException);
-    virtual double SAL_CALL getADouble() throw (RuntimeException);
-    virtual void SAL_CALL setADouble( double _adouble ) throw (RuntimeException);
-    virtual ::sal_Bool SAL_CALL getABool() throw (RuntimeException);
-    virtual void SAL_CALL setABool( ::sal_Bool _abool ) throw (RuntimeException);
-    virtual ::sal_Int16 SAL_CALL getAShort() throw (RuntimeException);
-    virtual void SAL_CALL setAShort( ::sal_Int16 _ashort ) throw (RuntimeException);
-    virtual ::sal_uInt16 SAL_CALL getAUShort() throw (RuntimeException);
-    virtual void SAL_CALL setAUShort( ::sal_uInt16 _aushort ) throw (RuntimeException);
-    virtual ::sal_Int32 SAL_CALL getALong() throw (RuntimeException);
-    virtual void SAL_CALL setALong( ::sal_Int32 _along ) throw (RuntimeException);
-    virtual ::sal_uInt32 SAL_CALL getAULong() throw (RuntimeException);
-    virtual void SAL_CALL setAULong( ::sal_uInt32 _aulong ) throw (RuntimeException);
-    virtual ::rtl::OUString SAL_CALL getAString() throw (RuntimeException);
-    virtual void SAL_CALL setAString( const ::rtl::OUString& _astring ) throw (RuntimeException);
-    virtual ::sal_Unicode SAL_CALL getAChar() throw (RuntimeException);
-    virtual void SAL_CALL setAChar( ::sal_Unicode _achar ) throw (RuntimeException);
-    virtual Any SAL_CALL getAAny() throw (RuntimeException);
-    virtual void SAL_CALL setAAny( const Any& _aany ) throw (RuntimeException);
-    virtual Type SAL_CALL getAType() throw (RuntimeException);
-    virtual void SAL_CALL setAType( const Type& _atype ) throw (RuntimeException);
-    virtual Reference< XInterface > SAL_CALL getAXInterface() throw (RuntimeException);
-    virtual void SAL_CALL setAXInterface( const Reference<XInterface >& _axinterface ) throw (RuntimeException);
-    virtual Reference<XInvocation > SAL_CALL getAXInvocation() throw (RuntimeException);
-    virtual void SAL_CALL setAXInvocation( const Reference< XInvocation >& _axinvocation ) throw (RuntimeException);
+    virtual Sequence< sal_Int8 > SAL_CALL getAttrByte(void);
+    virtual void SAL_CALL setAttrByte(const Sequence< sal_Int8 >& AttrByte_);
+    virtual Sequence< float > SAL_CALL getAttrFloat(void) ;
+    virtual void SAL_CALL setAttrFloat(const Sequence< float >& AttrFloat_);
+    virtual Sequence< double > SAL_CALL getAttrDouble(void) ;
+    virtual void SAL_CALL setAttrDouble(const Sequence< double >& AttrDouble_);
+    virtual Sequence< sal_Bool > SAL_CALL getAttrBool(void);
+    virtual void SAL_CALL setAttrBool(const Sequence< sal_Bool >& AttrBool_);
+	virtual Sequence< sal_Int16 > SAL_CALL getAttrShort(void);
+    virtual void SAL_CALL setAttrShort(const Sequence< sal_Int16 >& AttrShort_);
+    virtual Sequence< sal_uInt16 > SAL_CALL getAttrUShort(void);
+    virtual void SAL_CALL setAttrUShort(const Sequence< sal_uInt16 >& AttrUShort_);
+    virtual Sequence< sal_Int32 > SAL_CALL getAttrLong(void);
+    virtual void SAL_CALL setAttrLong(const Sequence< sal_Int32 >& AttrLong_);
+    virtual Sequence< sal_uInt32 > SAL_CALL getAttrULong(void);
+    virtual void SAL_CALL setAttrULong(const Sequence< sal_uInt32 >& AttrULong_);
+    virtual Sequence< OUString > SAL_CALL getAttrString(void);
+    virtual void SAL_CALL setAttrString(const Sequence< OUString >& AttrString_);
+    virtual Sequence< sal_Unicode > SAL_CALL getAttrChar(void);
+    virtual void SAL_CALL setAttrChar(const Sequence< sal_Unicode >& AttrChar_);
+	virtual Sequence< Any > SAL_CALL getAttrAny(void);
+    virtual void SAL_CALL setAttrAny(const Sequence< Any >& AttrAny_);
+	virtual Sequence< Type > SAL_CALL getAttrType(void);
+    virtual void SAL_CALL setAttrType( const Sequence< Type >& _attrtype );
+    virtual Sequence< Sequence< sal_Int32 > > SAL_CALL getAttrSequence(void);
+    virtual void SAL_CALL  setAttrSequence(const Sequence< Sequence< sal_Int32 > >& AttrSequence_);
+	virtual Sequence< Sequence< Sequence< sal_Int32 > > > SAL_CALL getAttrSequence2(void);
+    virtual void SAL_CALL setAttrSequence2(const Sequence< Sequence< Sequence< sal_Int32 > > >& AttrSequence2_);
+    virtual Sequence< Reference< XInterface > > SAL_CALL getAttrXInterface();
+	virtual void SAL_CALL setAttrXInterface( const Sequence< Reference< XInterface > >& _attrxinterface );
 
-    virtual void SAL_CALL testout_methodByte(sal_Int8& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodFloat(float& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodDouble(double& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodBool(sal_Bool& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodShort(sal_Int16& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodUShort(sal_uInt16& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodLong(sal_Int32& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodULong(sal_uInt32& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodHyper(sal_Int64& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodUHyper(sal_uInt64& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodString(OUString& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodChar(sal_Unicode& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodAny(Any& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodType(Type& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodSequence(Sequence< sal_Int32 >& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodSequence2(Sequence< Sequence< sal_Int32 > >& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodMulParams1(sal_Int32& rout1, sal_Int32& rout2) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodMulParams2(sal_Int32& rout1, sal_Int32& rout2, OUString& rout3) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodMulParams3(const OUString& sin, OUString& sout) throw( RuntimeException );
-    virtual void SAL_CALL testout_methodMulParams4( float in1, float& out1, sal_Int32 in2, sal_Int32& out2, sal_Int32 in3 ) throw(RuntimeException);
-    virtual void SAL_CALL testout_methodXInterface( Reference< XInterface >& rOut ) throw(RuntimeException);
+    virtual ::sal_Int8 SAL_CALL getAByte();
+    virtual void SAL_CALL setAByte( ::sal_Int8 _abyte );
+    virtual float SAL_CALL getAFloat();
+    virtual void SAL_CALL setAFloat( float _afloat );
+    virtual double SAL_CALL getADouble();
+    virtual void SAL_CALL setADouble( double _adouble );
+    virtual ::sal_Bool SAL_CALL getABool();
+    virtual void SAL_CALL setABool( ::sal_Bool _abool );
+    virtual ::sal_Int16 SAL_CALL getAShort();
+    virtual void SAL_CALL setAShort( ::sal_Int16 _ashort );
+    virtual ::sal_uInt16 SAL_CALL getAUShort();
+    virtual void SAL_CALL setAUShort( ::sal_uInt16 _aushort );
+    virtual ::sal_Int32 SAL_CALL getALong();
+    virtual void SAL_CALL setALong( ::sal_Int32 _along );
+    virtual ::sal_uInt32 SAL_CALL getAULong();
+    virtual void SAL_CALL setAULong( ::sal_uInt32 _aulong );
+    virtual ::rtl::OUString SAL_CALL getAString();
+    virtual void SAL_CALL setAString( const ::rtl::OUString& _astring );
+    virtual ::sal_Unicode SAL_CALL getAChar();
+    virtual void SAL_CALL setAChar( ::sal_Unicode _achar );
+    virtual Any SAL_CALL getAAny();
+    virtual void SAL_CALL setAAny( const Any& _aany );
+    virtual Type SAL_CALL getAType();
+    virtual void SAL_CALL setAType( const Type& _atype );
+    virtual Reference< XInterface > SAL_CALL getAXInterface();
+    virtual void SAL_CALL setAXInterface( const Reference<XInterface >& _axinterface );
+    virtual Reference<XInvocation > SAL_CALL getAXInvocation();
+    virtual void SAL_CALL setAXInvocation( const Reference< XInvocation >& _axinvocation );
 
-	virtual void SAL_CALL testinout_methodByte(sal_Int8& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodFloat(float& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodDouble(double& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodBool(sal_Bool& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodShort(sal_Int16& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodUShort(sal_uInt16& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodLong(sal_Int32& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodULong(sal_uInt32& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodHyper(sal_Int64& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodUHyper(sal_uInt64& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodString(OUString& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodChar(sal_Unicode& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodAny(Any& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodType(Type& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodSequence(Sequence< sal_Int32 >& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodSequence2(Sequence< Sequence< sal_Int32 > >& rOut) throw( RuntimeException );
-    virtual void SAL_CALL testinout_methodXInterface( Reference< XInvocation >& rOut ) throw(RuntimeException);
-	virtual void SAL_CALL testinout_methodXInterface2( Reference< XInterface > & rOut) throw( RuntimeException);
-    virtual Any SAL_CALL methodAnyTest1(const Any& rIn) throw( RuntimeException ) ;
-    virtual Any SAL_CALL getAttrAny2(void) throw( RuntimeException ) ;
-    virtual void SAL_CALL setAttrAny2(const Any& AttrAny2_) throw( RuntimeException ) ;
+    virtual void SAL_CALL testout_methodByte(sal_Int8& rOut);
+    virtual void SAL_CALL testout_methodFloat(float& rOut);
+    virtual void SAL_CALL testout_methodDouble(double& rOut);
+    virtual void SAL_CALL testout_methodBool(sal_Bool& rOut);
+    virtual void SAL_CALL testout_methodShort(sal_Int16& rOut);
+    virtual void SAL_CALL testout_methodUShort(sal_uInt16& rOut);
+    virtual void SAL_CALL testout_methodLong(sal_Int32& rOut);
+    virtual void SAL_CALL testout_methodULong(sal_uInt32& rOut);
+    virtual void SAL_CALL testout_methodHyper(sal_Int64& rOut);
+    virtual void SAL_CALL testout_methodUHyper(sal_uInt64& rOut);
+    virtual void SAL_CALL testout_methodString(OUString& rOut);
+    virtual void SAL_CALL testout_methodChar(sal_Unicode& rOut);
+    virtual void SAL_CALL testout_methodAny(Any& rOut);
+    virtual void SAL_CALL testout_methodType(Type& rOut);
+    virtual void SAL_CALL testout_methodSequence(Sequence< sal_Int32 >& rOut);
+    virtual void SAL_CALL testout_methodSequence2(Sequence< Sequence< sal_Int32 > >& rOut);
+    virtual void SAL_CALL testout_methodMulParams1(sal_Int32& rout1, sal_Int32& rout2);
+    virtual void SAL_CALL testout_methodMulParams2(sal_Int32& rout1, sal_Int32& rout2, OUString& rout3);
+    virtual void SAL_CALL testout_methodMulParams3(const OUString& sin, OUString& sout);
+    virtual void SAL_CALL testout_methodMulParams4( float in1, float& out1, sal_Int32 in2, sal_Int32& out2, sal_Int32 in3 );
+    virtual void SAL_CALL testout_methodXInterface( Reference< XInterface >& rOut );
+
+	virtual void SAL_CALL testinout_methodByte(sal_Int8& rOut);
+    virtual void SAL_CALL testinout_methodFloat(float& rOut);
+    virtual void SAL_CALL testinout_methodDouble(double& rOut);
+    virtual void SAL_CALL testinout_methodBool(sal_Bool& rOut);
+    virtual void SAL_CALL testinout_methodShort(sal_Int16& rOut);
+    virtual void SAL_CALL testinout_methodUShort(sal_uInt16& rOut);
+    virtual void SAL_CALL testinout_methodLong(sal_Int32& rOut);
+    virtual void SAL_CALL testinout_methodULong(sal_uInt32& rOut);
+    virtual void SAL_CALL testinout_methodHyper(sal_Int64& rOut);
+    virtual void SAL_CALL testinout_methodUHyper(sal_uInt64& rOut);
+    virtual void SAL_CALL testinout_methodString(OUString& rOut);
+    virtual void SAL_CALL testinout_methodChar(sal_Unicode& rOut);
+    virtual void SAL_CALL testinout_methodAny(Any& rOut);
+    virtual void SAL_CALL testinout_methodType(Type& rOut);
+    virtual void SAL_CALL testinout_methodSequence(Sequence< sal_Int32 >& rOut);
+    virtual void SAL_CALL testinout_methodSequence2(Sequence< Sequence< sal_Int32 > >& rOut);
+    virtual void SAL_CALL testinout_methodXInterface( Reference< XInvocation >& rOut );
+	virtual void SAL_CALL testinout_methodXInterface2( Reference< XInterface > & rOut);
+    virtual Any SAL_CALL methodAnyTest1(const Any& rIn) ;
+    virtual Any SAL_CALL getAttrAny2(void) ;
+    virtual void SAL_CALL setAttrAny2(const Any& AttrAny2_) ;
 
 
-	// XTestStruct 
-	virtual void SAL_CALL methodStruct(const Property& aProp) throw( RuntimeException );
+	// XTestStruct
+	virtual void SAL_CALL methodStruct(const Property& aProp);
 
-    virtual Property SAL_CALL retMethodStruct(void) throw( RuntimeException );
+    virtual Property SAL_CALL retMethodStruct(void);
 
-    virtual Property SAL_CALL  getAttrStruct(void) throw( RuntimeException );
-    virtual void SAL_CALL setAttrStruct(const Property& AttrStruct_) throw( RuntimeException );
-    virtual Property SAL_CALL methodStruct2( const Property& aProp ) throw (RuntimeException);
+    virtual Property SAL_CALL  getAttrStruct(void);
+    virtual void SAL_CALL setAttrStruct(const Property& AttrStruct_);
+    virtual Property SAL_CALL methodStruct2( const Property& aProp );
 
 	// XTestOther
-    virtual void SAL_CALL other_methodAnyIn(const Any& rAny) throw( RuntimeException );
-    virtual void SAL_CALL other_methodAnyOut(Any& rAny) throw( RuntimeException );
-    virtual Any SAL_CALL other_methodAnyRet(void) throw( RuntimeException );
-	virtual void SAL_CALL in_float( float val) throw ( RuntimeException);
-    virtual Any SAL_CALL other_methodAny( const Any& rAny, const OUString& typeInAny )
-        throw (RuntimeException);
+    virtual void SAL_CALL other_methodAnyIn(const Any& rAny);
+    virtual void SAL_CALL other_methodAnyOut(Any& rAny);
+    virtual Any SAL_CALL other_methodAnyRet(void);
+	virtual void SAL_CALL in_float( float val);
+    virtual Any SAL_CALL other_methodAny( const Any& rAny, const OUString& typeInAny );
 
-    
+
 	// XTestOutParameters ------------------------------------------------------------------------
 //     virtual void SAL_CALL out_test(sal_Int8 rIn) throw( RuntimeException );
 
@@ -300,36 +299,36 @@ public: // XTestSequence
 //     virtual void SAL_CALL out_methodMulParams3(const OUString& sin, OUString& sout) throw( RuntimeException );
 
 	// XTestInParameters
-    virtual sal_Int8 SAL_CALL in_methodByte( sal_Int8 rIn ) throw (RuntimeException);
-    virtual float SAL_CALL in_methodFloat( float rIn ) throw (RuntimeException);
-    virtual double SAL_CALL in_methodDouble( double rIn ) throw (RuntimeException);
-    virtual sal_Bool SAL_CALL in_methodBool( sal_Bool rIn ) throw (RuntimeException);
-    virtual sal_Int16 SAL_CALL in_methodShort( sal_Int16 rIn ) throw (RuntimeException);
-    virtual sal_uInt16 SAL_CALL in_methodUShort( sal_uInt16 rIn ) throw (RuntimeException);
-    virtual sal_Int32 SAL_CALL in_methodLong( sal_Int32 rIn ) throw (RuntimeException);
-    virtual sal_uInt32 SAL_CALL in_methodULong( sal_uInt32 rIn ) throw (RuntimeException);
-    virtual sal_Int64 SAL_CALL in_methodHyper( sal_Int64 rIn ) throw (RuntimeException);
-    virtual sal_uInt64 SAL_CALL in_methodUHyper( sal_uInt64 rIn ) throw (RuntimeException);
-    virtual OUString SAL_CALL in_methodString( const OUString& rIn ) throw (RuntimeException);
-    virtual sal_Unicode SAL_CALL in_methodChar( sal_Unicode rIn ) throw (RuntimeException);
-    virtual Any SAL_CALL in_methodAny( const Any& rIn ) throw (RuntimeException);
-    virtual Type SAL_CALL in_methodType( const Type& rIn ) throw (RuntimeException);
-    virtual Reference<XInterface> SAL_CALL in_methodXInterface( const Reference< XInterface >& rIn ) throw (RuntimeException);
-    virtual Reference<XInvocation > SAL_CALL in_methodInvocation( const Reference< XInvocation >& inv ) throw (RuntimeException);
-	virtual SimpleStruct SAL_CALL in_methodStruct( const SimpleStruct& aStruct ) throw (RuntimeException);
-    virtual void SAL_CALL in_methodAll( sal_Int8 b, float f, double d, sal_Bool boo, sal_Int16 sh, sal_uInt16 us, sal_Int32 l, sal_uInt32 ul, const OUString& s, sal_Unicode c, const Any& a, const Type& t, const Reference<XInvocation>& inv ) throw (RuntimeException);
-	
+    virtual sal_Int8 SAL_CALL in_methodByte( sal_Int8 rIn );
+    virtual float SAL_CALL in_methodFloat( float rIn );
+    virtual double SAL_CALL in_methodDouble( double rIn );
+    virtual sal_Bool SAL_CALL in_methodBool( sal_Bool rIn );
+    virtual sal_Int16 SAL_CALL in_methodShort( sal_Int16 rIn );
+    virtual sal_uInt16 SAL_CALL in_methodUShort( sal_uInt16 rIn );
+    virtual sal_Int32 SAL_CALL in_methodLong( sal_Int32 rIn );
+    virtual sal_uInt32 SAL_CALL in_methodULong( sal_uInt32 rIn );
+    virtual sal_Int64 SAL_CALL in_methodHyper( sal_Int64 rIn );
+    virtual sal_uInt64 SAL_CALL in_methodUHyper( sal_uInt64 rIn );
+    virtual OUString SAL_CALL in_methodString( const OUString& rIn );
+    virtual sal_Unicode SAL_CALL in_methodChar( sal_Unicode rIn );
+    virtual Any SAL_CALL in_methodAny( const Any& rIn );
+    virtual Type SAL_CALL in_methodType( const Type& rIn );
+    virtual Reference<XInterface> SAL_CALL in_methodXInterface( const Reference< XInterface >& rIn );
+    virtual Reference<XInvocation > SAL_CALL in_methodInvocation( const Reference< XInvocation >& inv );
+	virtual SimpleStruct SAL_CALL in_methodStruct( const SimpleStruct& aStruct );
+    virtual void SAL_CALL in_methodAll( sal_Int8 b, float f, double d, sal_Bool boo, sal_Int16 sh, sal_uInt16 us, sal_Int32 l, sal_uInt32 ul, const OUString& s, sal_Unicode c, const Any& a, const Type& t, const Reference<XInvocation>& inv );
+
 	// XTestInterfaces --------------------------------------------------------------------------
-    virtual void SAL_CALL testInterface(  const Reference< XCallback >& xCallback, sal_Int32 mode ) throw(RuntimeException);
-    virtual void SAL_CALL testInterface2(  const Reference< XSimple >& xSimple, sal_Int32 mode ) throw(RuntimeException);
+    virtual void SAL_CALL testInterface(  const Reference< XCallback >& xCallback, sal_Int32 mode );
+    virtual void SAL_CALL testInterface2(  const Reference< XSimple >& xSimple, sal_Int32 mode );
 	// XSimple --------------------------------------------------------------------------
-	void SAL_CALL func( const OUString &message) throw(::com::sun::star::uno::RuntimeException);
-	OUString SAL_CALL getName() throw(::com::sun::star::uno::RuntimeException);
+	void SAL_CALL func( const OUString &message);
+	OUString SAL_CALL getName();
 
     // XIdentity
-    virtual void SAL_CALL setObject( const Reference< XInterface >& val ) throw (RuntimeException);
-    virtual sal_Bool SAL_CALL isSame( const Reference< XInterface >& val ) throw (RuntimeException);
-    virtual Reference< XInterface > SAL_CALL getThis(  ) throw (RuntimeException);
+    virtual void SAL_CALL setObject( const Reference< XInterface >& val );
+    virtual sal_Bool SAL_CALL isSame( const Reference< XInterface >& val );
+    virtual Reference< XInterface > SAL_CALL getThis(  );
 };
 
 class EventListener: public WeakImplHelper1<XEventListener>
@@ -337,7 +336,7 @@ class EventListener: public WeakImplHelper1<XEventListener>
 public:
     EventListener::EventListener(): bCalled( sal_False)
         {}
-    virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source ) throw (RuntimeException);
+    virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source );
 
     sal_Bool bCalled;
 };
@@ -350,11 +349,11 @@ OComponent::~OComponent()
 
 // Funktions ==============================================================================
 
-Reference<XInterface> SAL_CALL OComponent_CreateInstance( const Reference<XMultiServiceFactory> & rSMgr ) throw(RuntimeException)
-{	
+Reference<XInterface> SAL_CALL OComponent_CreateInstance( const Reference<XMultiServiceFactory> & rSMgr )
+{
 //	Reference<XInterface> xService(static_cast<XWeak*>(new OComponent( rSMgr )), UNO_QUERY);
     OComponent* o= new OComponent( rSMgr );
-    Reference<XInterface> xService(static_cast<XIdentity*>(o), UNO_QUERY);    
+    Reference<XInterface> xService(static_cast<XIdentity*>(o), UNO_QUERY);
 	return xService;
 }
 
@@ -362,7 +361,7 @@ Sequence<OUString> OComponent_getSupportedServiceNames(void)
 {
 	Sequence<OUString> aRet(1);
 	aRet.getArray()[0] = SERVICE_NAME;//ODataInputStream_getImplementationName();
-	
+
 	return aRet;
 }
 
@@ -398,11 +397,11 @@ extern "C" void * SAL_CALL component_getFactory(
 		{
 			Reference<XMultiServiceFactory> xMulFac(
 				reinterpret_cast< XMultiServiceFactory*>(pServiceManager));
-			
-			Sequence<OUString> seqServiceNames;		
-			Reference<XSingleServiceFactory> xFactory = createOneInstanceFactory( xMulFac, SERVICE_NAME, 
+
+			Sequence<OUString> seqServiceNames;
+			Reference<XSingleServiceFactory> xFactory = createOneInstanceFactory( xMulFac, SERVICE_NAME,
 										OComponent_CreateInstance, seqServiceNames);
-				
+
 			if (xFactory.is())
 			{
 				xFactory->acquire();
@@ -421,23 +420,23 @@ extern "C" void SAL_CALL component_getImplementationEnvironment(
 
 
 // XTestSequence ============================================================================
-Sequence<sal_Int8> SAL_CALL OComponent::methodByte(const Sequence< sal_Int8 >& aSeq) throw( RuntimeException ) 
-{	
+Sequence<sal_Int8> SAL_CALL OComponent::methodByte(const Sequence< sal_Int8 >& aSeq)
+{
 	sal_Int8 _x;
 	for( sal_Int16 i= 0; i < aSeq.getLength(); i++){
 		_x= aSeq.getConstArray()[i];
 	}
 	return aSeq;
 }
-Sequence<float> SAL_CALL OComponent::methodFloat(const Sequence< float>& aSeq) throw( RuntimeException ) 
-{	
+Sequence<float> SAL_CALL OComponent::methodFloat(const Sequence< float>& aSeq)
+{
 	float _x;
 	for( sal_Int16 i= 0; i < aSeq.getLength(); i++){
 		_x= aSeq.getConstArray()[i];
 	}
 	return aSeq;
 }
-Sequence<double> SAL_CALL OComponent::methodDouble(const Sequence< double >& aSeq) throw( RuntimeException)
+Sequence<double> SAL_CALL OComponent::methodDouble(const Sequence< double >& aSeq)
 {
 	double _x;
 	for( sal_Int16 i= 0; i < aSeq.getLength(); i++){
@@ -445,7 +444,7 @@ Sequence<double> SAL_CALL OComponent::methodDouble(const Sequence< double >& aSe
 	}
 	return aSeq;
 }
-Sequence< sal_Bool > SAL_CALL OComponent::methodBool(const Sequence< sal_Bool >& aSeq) throw( RuntimeException)
+Sequence< sal_Bool > SAL_CALL OComponent::methodBool(const Sequence< sal_Bool >& aSeq)
 {
 	sal_Bool _x;
 	for( sal_Int16 i= 0; i < aSeq.getLength(); i++){
@@ -453,7 +452,7 @@ Sequence< sal_Bool > SAL_CALL OComponent::methodBool(const Sequence< sal_Bool >&
 	}
 	return aSeq;
 }
-Sequence< sal_Int16 > SAL_CALL OComponent::methodShort(const Sequence< sal_Int16 >& aSeq) throw( RuntimeException )
+Sequence< sal_Int16 > SAL_CALL OComponent::methodShort(const Sequence< sal_Int16 >& aSeq)
 {
 	sal_Int16 _x;
 	for( sal_Int16 i= 0; i < aSeq.getLength(); i++){
@@ -461,15 +460,15 @@ Sequence< sal_Int16 > SAL_CALL OComponent::methodShort(const Sequence< sal_Int16
 	}
 	return aSeq;
 }
-Sequence< sal_uInt16 > SAL_CALL OComponent::methodUShort(const Sequence< sal_uInt16 >& aSeq) throw( RuntimeException )
+Sequence< sal_uInt16 > SAL_CALL OComponent::methodUShort(const Sequence< sal_uInt16 >& aSeq)
 {
 	sal_uInt16 _x;
-	for( sal_Int16 i= 0; i < aSeq.getLength(); i++){  
+	for( sal_Int16 i= 0; i < aSeq.getLength(); i++){
 		_x= aSeq.getConstArray()[i];
 	}
 	return aSeq;
 }
-Sequence< sal_Int32 > SAL_CALL OComponent::methodLong(const Sequence< sal_Int32 >& aSeq) throw( RuntimeException) 
+Sequence< sal_Int32 > SAL_CALL OComponent::methodLong(const Sequence< sal_Int32 >& aSeq)
 {
 	sal_Int32 _x;
 	for( sal_Int16 i= 0; i < aSeq.getLength(); i++)  {
@@ -477,7 +476,7 @@ Sequence< sal_Int32 > SAL_CALL OComponent::methodLong(const Sequence< sal_Int32 
 	}
 	return aSeq;
 }
-Sequence< sal_uInt32 > SAL_CALL OComponent::methodULong(const Sequence< sal_uInt32 >& aSeq) throw( RuntimeException)  
+Sequence< sal_uInt32 > SAL_CALL OComponent::methodULong(const Sequence< sal_uInt32 >& aSeq)
 {
 	sal_uInt32 _x;
 	for( sal_Int16 i= 0; i < aSeq.getLength(); i++){
@@ -485,7 +484,7 @@ Sequence< sal_uInt32 > SAL_CALL OComponent::methodULong(const Sequence< sal_uInt
 	}
 	return aSeq;
 }
-Sequence< OUString > SAL_CALL OComponent::methodString(const Sequence< OUString >& aSeq) throw( RuntimeException) 
+Sequence< OUString > SAL_CALL OComponent::methodString(const Sequence< OUString >& aSeq)
 {
 	OUString _x;
 	for( sal_Int16 i= 0; i < aSeq.getLength(); i++) {
@@ -493,7 +492,7 @@ Sequence< OUString > SAL_CALL OComponent::methodString(const Sequence< OUString 
 	}
 	return aSeq;
 }
-Sequence< sal_Unicode > SAL_CALL OComponent::methodChar(const Sequence< sal_Unicode >& aSeq) throw( RuntimeException) 
+Sequence< sal_Unicode > SAL_CALL OComponent::methodChar(const Sequence< sal_Unicode >& aSeq)
 {
 	sal_Unicode _x;
 	for( sal_Int16 i= 0; i < aSeq.getLength(); i++){
@@ -501,7 +500,7 @@ Sequence< sal_Unicode > SAL_CALL OComponent::methodChar(const Sequence< sal_Unic
 	}
 	return aSeq;
 }
-Sequence< Any > SAL_CALL OComponent::methodAny(const Sequence< Any >& aSeq) throw( RuntimeException) 
+Sequence< Any > SAL_CALL OComponent::methodAny(const Sequence< Any >& aSeq)
 {
 	Any _x;
 	for( sal_Int16 i= 0; i < aSeq.getLength(); i++){
@@ -514,7 +513,7 @@ Sequence< Any > SAL_CALL OComponent::methodAny(const Sequence< Any >& aSeq) thro
 
 }
 
-Sequence< Type > SAL_CALL OComponent::methodType(const Sequence< Type >& aSeq) throw( RuntimeException )
+Sequence< Type > SAL_CALL OComponent::methodType(const Sequence< Type >& aSeq)
 {
 	Type _x;
 	for( sal_Int16 i= 0; i < aSeq.getLength(); i++){
@@ -524,7 +523,7 @@ Sequence< Type > SAL_CALL OComponent::methodType(const Sequence< Type >& aSeq) t
 }
 //Sequence< Reference< XInterface> > SAL_CALL methodXInterface ( const Sequence< Reference < XInterface> >& aSeq)
 //	throw (RuntimeException)
-Sequence< Reference< XInterface > > SAL_CALL OComponent::methodXInterface( const Sequence< Reference< XInterface > >& aSeq ) throw(RuntimeException)
+Sequence< Reference< XInterface > > SAL_CALL OComponent::methodXInterface( const Sequence< Reference< XInterface > >& aSeq )
 {
     for( sal_Int32 i= 0; i < aSeq.getLength(); i++)
     {
@@ -536,7 +535,7 @@ Sequence< Reference< XInterface > > SAL_CALL OComponent::methodXInterface( const
 	return aSeq;
 }
 
-Sequence< Sequence< sal_Int32 > > SAL_CALL OComponent::methodSequence(const Sequence< Sequence< sal_Int32 > >& aSeq) throw( RuntimeException) 
+Sequence< Sequence< sal_Int32 > > SAL_CALL OComponent::methodSequence(const Sequence< Sequence< sal_Int32 > >& aSeq)
 {
 	sal_Int32 value;
 	for( sal_Int16 i= 0; i < aSeq.getLength(); i++){
@@ -547,8 +546,7 @@ Sequence< Sequence< sal_Int32 > > SAL_CALL OComponent::methodSequence(const Sequ
 	}
 	return aSeq;
 }
-Sequence< Sequence< Sequence< sal_Int32 > > > SAL_CALL OComponent::methodSequence2(const Sequence< Sequence< Sequence< sal_Int32 > > >& aSeq) 
-	throw( RuntimeException )
+Sequence< Sequence< Sequence< sal_Int32 > > > SAL_CALL OComponent::methodSequence2(const Sequence< Sequence< Sequence< sal_Int32 > > >& aSeq)
 {
 	sal_Int32 value;
 	sal_Int32 len= aSeq.getLength();
@@ -567,25 +565,25 @@ Sequence< Sequence< Sequence< sal_Int32 > > > SAL_CALL OComponent::methodSequenc
 	return aSeq;
 }
 
-Sequence< Reference< XEventListener> > SAL_CALL OComponent::methodXEventListeners( const Sequence< Reference <XEventListener> >& aSeq) throw( RuntimeException)
+Sequence< Reference< XEventListener> > SAL_CALL OComponent::methodXEventListeners( const Sequence< Reference <XEventListener> >& aSeq)
 {
     Reference<XEventListener> listener;
     for( int i= 0; i < aSeq.getLength(); i++)
     {
         listener= aSeq[i];
-        
+
         listener->disposing( EventObject() );
     }
-    
+
     return aSeq;
 }
 
-Sequence< Sequence<Reference<XEventListener > > > SAL_CALL OComponent::methodXEventListenersMul( const Sequence<Sequence<Reference<XEventListener > > >& aSeq ) throw (RuntimeException)
+Sequence< Sequence<Reference<XEventListener > > > SAL_CALL OComponent::methodXEventListenersMul( const Sequence<Sequence<Reference<XEventListener > > >& aSeq )
 {
     Reference<XEventListener> listener;
     for( int i= 0; i < aSeq.getLength(); i++)
     {
-        Sequence<Reference<XEventListener> > seqInner= aSeq[i]; 
+        Sequence<Reference<XEventListener> > seqInner= aSeq[i];
         for( int j= 0; j < seqInner.getLength(); j++)
         {
             listener= seqInner[j];
@@ -597,121 +595,121 @@ Sequence< Sequence<Reference<XEventListener > > > SAL_CALL OComponent::methodXEv
 
 //---------------------------------------------------------------------------------------------
 
-Sequence< sal_Int8 > SAL_CALL OComponent::getAttrByte(void) throw( RuntimeException) 
+Sequence< sal_Int8 > SAL_CALL OComponent::getAttrByte(void)
 {
 	return m_seqByte;
 }
-void SAL_CALL OComponent::setAttrByte(const Sequence< sal_Int8 >& AttrByte_) throw( RuntimeException )
+void SAL_CALL OComponent::setAttrByte(const Sequence< sal_Int8 >& AttrByte_)
 {
 	m_seqByte= AttrByte_;
 }
-Sequence< float > SAL_CALL OComponent::getAttrFloat(void)  throw( RuntimeException )
+Sequence< float > SAL_CALL OComponent::getAttrFloat(void)
 {
 	return m_seqFloat;
 }
-void SAL_CALL OComponent::setAttrFloat(const Sequence< float >& AttrFloat_) throw( RuntimeException )
+void SAL_CALL OComponent::setAttrFloat(const Sequence< float >& AttrFloat_)
 {
 	m_seqFloat= AttrFloat_;
 }
 
-Sequence< double > SAL_CALL OComponent::getAttrDouble(void)  throw( RuntimeException )
+Sequence< double > SAL_CALL OComponent::getAttrDouble(void)
 {
 	return m_seqDouble;
 }
-void SAL_CALL OComponent::setAttrDouble(const Sequence< double >& AttrDouble_) throw( RuntimeException )
+void SAL_CALL OComponent::setAttrDouble(const Sequence< double >& AttrDouble_)
 {
 	m_seqDouble= AttrDouble_;
 }
 
-Sequence< sal_Bool > SAL_CALL OComponent::getAttrBool(void)  throw( RuntimeException) 
-{	
+Sequence< sal_Bool > SAL_CALL OComponent::getAttrBool(void)
+{
 	return m_seqBool;
 }
 
-void SAL_CALL OComponent::setAttrBool(const Sequence< sal_Bool >& AttrBool_) throw (RuntimeException )
+void SAL_CALL OComponent::setAttrBool(const Sequence< sal_Bool >& AttrBool_)
 {
 	m_seqBool= AttrBool_;
 }
 
-Sequence< sal_Int16 > SAL_CALL OComponent::getAttrShort(void)  throw( RuntimeException) 
+Sequence< sal_Int16 > SAL_CALL OComponent::getAttrShort(void)
 {
 	return m_seqShort;
 }
-void SAL_CALL OComponent::setAttrShort(const Sequence< sal_Int16 >& AttrShort_) throw( RuntimeException )
+void SAL_CALL OComponent::setAttrShort(const Sequence< sal_Int16 >& AttrShort_)
 {
 	m_seqShort= AttrShort_;
 }
 
-Sequence< sal_uInt16 > SAL_CALL OComponent::getAttrUShort(void) throw( RuntimeException )
+Sequence< sal_uInt16 > SAL_CALL OComponent::getAttrUShort(void)
 {
 	return m_seqUShort;
 }
-void SAL_CALL OComponent::setAttrUShort(const Sequence< sal_uInt16 >& AttrUShort_) throw( RuntimeException )
+void SAL_CALL OComponent::setAttrUShort(const Sequence< sal_uInt16 >& AttrUShort_)
 {
 	m_seqUShort= AttrUShort_;
 }
 
-Sequence< sal_Int32 > SAL_CALL OComponent::getAttrLong(void)  throw( RuntimeException) 
+Sequence< sal_Int32 > SAL_CALL OComponent::getAttrLong(void)
 {
 	return m_seqLong;
 }
-void SAL_CALL OComponent::setAttrLong(const Sequence< sal_Int32 >& AttrLong_) throw( RuntimeException )
+void SAL_CALL OComponent::setAttrLong(const Sequence< sal_Int32 >& AttrLong_)
 {
 	m_seqLong= AttrLong_;
 }
 
-Sequence< sal_uInt32 > SAL_CALL OComponent::getAttrULong(void)  throw( RuntimeException )
+Sequence< sal_uInt32 > SAL_CALL OComponent::getAttrULong(void)
 {
 	return m_seqULong;
 }
-void SAL_CALL OComponent::setAttrULong(const Sequence< sal_uInt32 >& AttrULong_) throw( RuntimeException )
+void SAL_CALL OComponent::setAttrULong(const Sequence< sal_uInt32 >& AttrULong_)
 {
 	m_seqULong= AttrULong_;
 }
 
-Sequence< OUString > SAL_CALL OComponent::getAttrString(void)  throw( RuntimeException )
+Sequence< OUString > SAL_CALL OComponent::getAttrString(void)
 {
 	return m_seqString;
 }
-void SAL_CALL OComponent::setAttrString(const Sequence< OUString >& AttrString_) throw( RuntimeException )
+void SAL_CALL OComponent::setAttrString(const Sequence< OUString >& AttrString_)
 {
 	m_seqString= AttrString_;
 }
 
-Sequence< sal_Unicode > SAL_CALL OComponent::getAttrChar(void)  throw( RuntimeException )
+Sequence< sal_Unicode > SAL_CALL OComponent::getAttrChar(void)
 {
 	return m_seqChar;
 }
-void SAL_CALL OComponent::setAttrChar(const Sequence< sal_Unicode >& AttrChar_) throw( RuntimeException) 
+void SAL_CALL OComponent::setAttrChar(const Sequence< sal_Unicode >& AttrChar_)
 {
 	m_seqChar= AttrChar_;
 }
 
-Sequence< Any > SAL_CALL OComponent::getAttrAny(void) throw( RuntimeException) 
+Sequence< Any > SAL_CALL OComponent::getAttrAny(void)
 {
 	return m_seqAny;
 }
-void SAL_CALL OComponent::setAttrAny(const Sequence< Any >& AttrAny_) throw( RuntimeException )
+void SAL_CALL OComponent::setAttrAny(const Sequence< Any >& AttrAny_)
 {
 	m_seqAny= AttrAny_;
 }
 
-Sequence< Type > SAL_CALL OComponent::getAttrType(void)  throw( RuntimeException )
+Sequence< Type > SAL_CALL OComponent::getAttrType(void)
 {
     return m_seqType;
 }
 
-void SAL_CALL OComponent::setAttrType( const Sequence< Type >& AttrType_) throw( RuntimeException )
+void SAL_CALL OComponent::setAttrType( const Sequence< Type >& AttrType_)
 {
     m_seqType = AttrType_;
 }
 
 
-Sequence< Sequence< sal_Int32 > > SAL_CALL OComponent::getAttrSequence(void)  throw( RuntimeException) 
+Sequence< Sequence< sal_Int32 > > SAL_CALL OComponent::getAttrSequence(void)
 {
 	return m_seq1;
 }
-void SAL_CALL OComponent::setAttrSequence(const Sequence< Sequence< sal_Int32 > >& AttrSequence) throw(RuntimeException )
+void SAL_CALL OComponent::setAttrSequence(const Sequence< Sequence< sal_Int32 > >& AttrSequence)
 {
 	sal_Int32 x= 0;
 	for( sal_Int32 i=0; i < AttrSequence.getLength(); i++)
@@ -727,234 +725,233 @@ void SAL_CALL OComponent::setAttrSequence(const Sequence< Sequence< sal_Int32 > 
 	m_seq1= AttrSequence;
 }
 
-Sequence< Sequence< Sequence< sal_Int32 > > > SAL_CALL OComponent::getAttrSequence2(void)  throw( RuntimeException )
+Sequence< Sequence< Sequence< sal_Int32 > > > SAL_CALL OComponent::getAttrSequence2(void)
 {
 	return m_seq2;
 }
-void SAL_CALL OComponent::setAttrSequence2(const Sequence< Sequence< Sequence< sal_Int32 > > >& AttrSequence2_) 
-	throw( RuntimeException )
+void SAL_CALL OComponent::setAttrSequence2(const Sequence< Sequence< Sequence< sal_Int32 > > >& AttrSequence2_)
 {
 	m_seq2= AttrSequence2_;
 }
 
-Sequence< Reference< XInterface > > SAL_CALL OComponent::getAttrXInterface() throw(RuntimeException)
+Sequence< Reference< XInterface > > SAL_CALL OComponent::getAttrXInterface()
 {
 	return m_seqxInterface;
 }
-void SAL_CALL OComponent::setAttrXInterface( const Sequence< Reference< XInterface > >& _attrxinterface ) throw(RuntimeException)
+void SAL_CALL OComponent::setAttrXInterface( const Sequence< Reference< XInterface > >& _attrxinterface )
 {
 	m_seqxInterface= _attrxinterface;
 }
 
 // ----------------------------------------------------------------------------
 
-::sal_Int8 SAL_CALL OComponent::getAByte() throw (RuntimeException)
+::sal_Int8 SAL_CALL OComponent::getAByte()
 {
     return m_attr_int8;
 }
 
-void SAL_CALL OComponent::setAByte( ::sal_Int8 _abyte ) throw (RuntimeException)
+void SAL_CALL OComponent::setAByte( ::sal_Int8 _abyte )
 {
     m_attr_int8 = _abyte;
 }
 
-float SAL_CALL OComponent::getAFloat() throw (RuntimeException)
+float SAL_CALL OComponent::getAFloat()
 {
     return m_attr_float;
 }
 
-void SAL_CALL OComponent::setAFloat( float _afloat ) throw (RuntimeException)
+void SAL_CALL OComponent::setAFloat( float _afloat )
 {
     m_attr_float = _afloat;
 }
-    
-double SAL_CALL OComponent::getADouble() throw (RuntimeException)
+
+double SAL_CALL OComponent::getADouble()
 {
     return m_attr_double;
 }
 
-void SAL_CALL OComponent::setADouble( double _adouble ) throw (RuntimeException)
+void SAL_CALL OComponent::setADouble( double _adouble )
 {
     m_attr_double = _adouble;
 }
 
-::sal_Bool SAL_CALL OComponent::getABool() throw (RuntimeException)
+::sal_Bool SAL_CALL OComponent::getABool()
 {
     return m_attr_bool;
 }
 
-void SAL_CALL OComponent::setABool( ::sal_Bool _abool ) throw (RuntimeException)
+void SAL_CALL OComponent::setABool( ::sal_Bool _abool )
 {
     m_attr_bool = _abool;
 }
 
-::sal_Int16 SAL_CALL OComponent::getAShort() throw (RuntimeException)
+::sal_Int16 SAL_CALL OComponent::getAShort()
 {
     return m_attr_int16;
 }
 
-void SAL_CALL OComponent::setAShort( ::sal_Int16 _ashort ) throw (RuntimeException)
+void SAL_CALL OComponent::setAShort( ::sal_Int16 _ashort )
 {
     m_attr_int16 = _ashort;
 }
 
-::sal_uInt16 SAL_CALL OComponent::getAUShort() throw (RuntimeException)
+::sal_uInt16 SAL_CALL OComponent::getAUShort()
 {
     return m_attr_uint16;
 }
 
-void SAL_CALL OComponent::setAUShort( ::sal_uInt16 _aushort ) throw (RuntimeException)
+void SAL_CALL OComponent::setAUShort( ::sal_uInt16 _aushort )
 {
     m_attr_uint16 = _aushort;
 }
 
-::sal_Int32 SAL_CALL OComponent::getALong() throw (RuntimeException)
+::sal_Int32 SAL_CALL OComponent::getALong()
 {
     return m_attr_int32;
 }
 
-void SAL_CALL OComponent::setALong( ::sal_Int32 _along ) throw (RuntimeException)
+void SAL_CALL OComponent::setALong( ::sal_Int32 _along )
 {
     m_attr_int32 = _along;
 }
 
-::sal_uInt32 SAL_CALL OComponent::getAULong() throw (RuntimeException)
+::sal_uInt32 SAL_CALL OComponent::getAULong()
 {
-    return m_attr_uint32;;
+    return m_attr_uint32;
 }
 
-void SAL_CALL OComponent::setAULong( ::sal_uInt32 _aulong ) throw (RuntimeException)
+void SAL_CALL OComponent::setAULong( ::sal_uInt32 _aulong )
 {
     m_attr_uint32 = _aulong;
 }
 
-::rtl::OUString SAL_CALL OComponent::getAString() throw (RuntimeException)
+::rtl::OUString SAL_CALL OComponent::getAString()
 {
     return m_attr_string;
 }
 
-void SAL_CALL OComponent::setAString( const ::rtl::OUString& _astring ) throw (RuntimeException)
+void SAL_CALL OComponent::setAString( const ::rtl::OUString& _astring )
 {
     m_attr_string = _astring;
 }
 
-::sal_Unicode SAL_CALL OComponent::getAChar() throw (RuntimeException)
+::sal_Unicode SAL_CALL OComponent::getAChar()
 {
     return m_attr_char;
 }
 
-void SAL_CALL OComponent::setAChar( ::sal_Unicode _achar ) throw (RuntimeException)
+void SAL_CALL OComponent::setAChar( ::sal_Unicode _achar )
 {
     m_attr_char = _achar;
 }
 
-Any SAL_CALL OComponent::getAAny() throw (RuntimeException)
+Any SAL_CALL OComponent::getAAny()
 {
     return m_attr_any;
 }
 
-void SAL_CALL OComponent::setAAny( const Any& _aany ) throw (RuntimeException)
+void SAL_CALL OComponent::setAAny( const Any& _aany )
 {
     m_attr_any = _aany;
 }
 
-Type SAL_CALL OComponent::getAType() throw (RuntimeException)
+Type SAL_CALL OComponent::getAType()
 {
     return m_attr_type;
 }
 
-void SAL_CALL OComponent::setAType( const Type& _atype ) throw (RuntimeException)
+void SAL_CALL OComponent::setAType( const Type& _atype )
 {
     m_attr_type = _atype;
 }
 
-Reference< XInterface > SAL_CALL OComponent::getAXInterface() throw (RuntimeException)
+Reference< XInterface > SAL_CALL OComponent::getAXInterface()
 {
     return m_attr_xinterface;
 }
 
-void SAL_CALL OComponent::setAXInterface( const Reference<XInterface >& _axinterface ) throw (RuntimeException)
+void SAL_CALL OComponent::setAXInterface( const Reference<XInterface >& _axinterface )
 {
     m_attr_xinterface = _axinterface;
 }
 
-Reference<XInvocation > SAL_CALL OComponent::getAXInvocation() throw (RuntimeException)
+Reference<XInvocation > SAL_CALL OComponent::getAXInvocation()
 {
     return m_attr_xinvocation;
 }
 
-void SAL_CALL OComponent::setAXInvocation( const Reference< XInvocation >& _axinvocation ) throw (RuntimeException)
+void SAL_CALL OComponent::setAXInvocation( const Reference< XInvocation >& _axinvocation )
 {
     m_attr_xinvocation = _axinvocation;
 }
 //-----------------------------------------------------------------------------------
-void SAL_CALL OComponent::testout_methodByte(sal_Int8& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodByte(sal_Int8& rOut)
 {
 	rOut= m_int8;
 }
-void SAL_CALL OComponent::testout_methodFloat(float& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodFloat(float& rOut)
 {
 	rOut= m_float;
 }
-void SAL_CALL OComponent::testout_methodDouble(double& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodDouble(double& rOut)
 {
 	rOut= m_double;
 }
 
-void SAL_CALL OComponent::testout_methodBool(sal_Bool& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodBool(sal_Bool& rOut)
 {
 	rOut= m_bool;
 }
-void SAL_CALL OComponent::testout_methodShort(sal_Int16& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodShort(sal_Int16& rOut)
 {
 	rOut= m_int16;
 }
-void SAL_CALL OComponent::testout_methodUShort(sal_uInt16& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodUShort(sal_uInt16& rOut)
 {
 	rOut= m_uint16;
 }
-void SAL_CALL OComponent::testout_methodLong(sal_Int32& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodLong(sal_Int32& rOut)
 {
 	rOut = m_int32;
 }
-void SAL_CALL OComponent::testout_methodULong(sal_uInt32& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodULong(sal_uInt32& rOut)
 {
 	rOut= m_uint32;
 }
-void SAL_CALL OComponent::testout_methodHyper(sal_Int64& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodHyper(sal_Int64& rOut)
 {
     rOut = m_int64;
 }
 
-void SAL_CALL OComponent::testout_methodUHyper(sal_uInt64& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodUHyper(sal_uInt64& rOut)
 {
     rOut = m_uint64;
 }
 
-void SAL_CALL OComponent::testout_methodString(OUString& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodString(OUString& rOut)
 {
 	rOut= m_string;
 }
-void SAL_CALL OComponent::testout_methodChar(sal_Unicode& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodChar(sal_Unicode& rOut)
 {
 	rOut= m_char;
 }
-void SAL_CALL OComponent::testout_methodAny(Any& rOut) throw( RuntimeException) 
+void SAL_CALL OComponent::testout_methodAny(Any& rOut)
 {
 	rOut = m_any;
 }
 
-void SAL_CALL OComponent::testout_methodType(Type& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodType(Type& rOut)
 {
     rOut = m_type;
 }
 
-void SAL_CALL OComponent::testout_methodSequence(Sequence< sal_Int32 >& rOut) throw( RuntimeException) 
+void SAL_CALL OComponent::testout_methodSequence(Sequence< sal_Int32 >& rOut)
 {
 	rOut.realloc(10);
 	for( sal_Int16 i= 0; i < rOut.getLength(); i++) rOut.getArray()[i]= i;
 }
-void SAL_CALL OComponent::testout_methodSequence2(Sequence< Sequence< sal_Int32 > >& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodSequence2(Sequence< Sequence< sal_Int32 > >& rOut)
 {
 	rOut.realloc( 10);
 	for( sal_Int16 i= 0; i < rOut.getLength(); i++){
@@ -965,28 +962,28 @@ void SAL_CALL OComponent::testout_methodSequence2(Sequence< Sequence< sal_Int32 
 		}
 	}
 }
-void SAL_CALL OComponent::testout_methodMulParams1(sal_Int32& rout1, sal_Int32& rout2) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodMulParams1(sal_Int32& rout1, sal_Int32& rout2)
 {
 	rout1= 999;
 	rout2= 1111;
 }
-void SAL_CALL OComponent::testout_methodMulParams2(sal_Int32& rout1, sal_Int32& rout2, OUString& rout3) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodMulParams2(sal_Int32& rout1, sal_Int32& rout2, OUString& rout3)
 {
 	rout1= 1111;
 	rout2= 1222;
 	rout3= L" another string";
 }
-void SAL_CALL OComponent::testout_methodMulParams3(const OUString&, OUString& sout) throw( RuntimeException )
+void SAL_CALL OComponent::testout_methodMulParams3(const OUString&, OUString& sout)
 {
 	sout= L"Out Hallo!";
 }
-void SAL_CALL OComponent::testout_methodMulParams4( float in1, float& out1, sal_Int32 in2, sal_Int32& out2, sal_Int32 ) throw(RuntimeException)
+void SAL_CALL OComponent::testout_methodMulParams4( float in1, float& out1, sal_Int32 in2, sal_Int32& out2, sal_Int32 )
 {
 	out1= in1 + 1;
 	out2= in2 + 1;
 }
 
-void SAL_CALL OComponent::testout_methodXInterface( Reference< XInterface >& rOut ) throw(RuntimeException)
+void SAL_CALL OComponent::testout_methodXInterface( Reference< XInterface >& rOut )
 {
     rOut = m_xinterface;
 // 	OUString string( L"Property Any");
@@ -995,82 +992,81 @@ void SAL_CALL OComponent::testout_methodXInterface( Reference< XInterface >& rOu
 }
 
 // XTestInParameters ------------------------------------------------------------
-sal_Int8 SAL_CALL OComponent::in_methodByte( sal_Int8 rIn ) throw (RuntimeException)
+sal_Int8 SAL_CALL OComponent::in_methodByte( sal_Int8 rIn )
 {
     m_int8 = rIn;
 	return rIn;
 }
-float SAL_CALL OComponent::in_methodFloat( float rIn ) throw (RuntimeException)
+float SAL_CALL OComponent::in_methodFloat( float rIn )
 {
     m_float = rIn;
 	return rIn;
 }
-double SAL_CALL OComponent::in_methodDouble( double rIn ) throw (RuntimeException)
+double SAL_CALL OComponent::in_methodDouble( double rIn )
 {
     m_double = rIn;
 	return rIn;
 }
-sal_Bool SAL_CALL OComponent::in_methodBool( sal_Bool rIn ) throw (RuntimeException)
+sal_Bool SAL_CALL OComponent::in_methodBool( sal_Bool rIn )
 {
     m_bool = rIn;
 	return rIn;
 }
-sal_Int16 SAL_CALL OComponent::in_methodShort( sal_Int16 rIn ) throw (RuntimeException)
+sal_Int16 SAL_CALL OComponent::in_methodShort( sal_Int16 rIn )
 {
     m_int16 = rIn;
 	return rIn;
-}	
-sal_uInt16 SAL_CALL OComponent::in_methodUShort( sal_uInt16 rIn ) throw (RuntimeException)
+}
+sal_uInt16 SAL_CALL OComponent::in_methodUShort( sal_uInt16 rIn )
 {
     m_uint16 = rIn;
 	return rIn;
 }
-sal_Int32 SAL_CALL OComponent::in_methodLong( sal_Int32 rIn ) throw (RuntimeException)
+sal_Int32 SAL_CALL OComponent::in_methodLong( sal_Int32 rIn )
 {
     m_int32 = rIn;
 	return rIn;
 }
-sal_uInt32 SAL_CALL OComponent::in_methodULong( sal_uInt32 rIn ) throw (RuntimeException)
+sal_uInt32 SAL_CALL OComponent::in_methodULong( sal_uInt32 rIn )
 {
     m_uint32 = rIn;
 	return rIn;
 }
-sal_Int64 SAL_CALL OComponent::in_methodHyper( sal_Int64 rIn ) throw (RuntimeException)
+sal_Int64 SAL_CALL OComponent::in_methodHyper( sal_Int64 rIn )
 {
     m_int64 = rIn;
     return rIn;
 }
 
-sal_uInt64 SAL_CALL OComponent::in_methodUHyper( sal_uInt64 rIn ) throw (RuntimeException)
+sal_uInt64 SAL_CALL OComponent::in_methodUHyper( sal_uInt64 rIn )
 {
     m_uint64 = rIn;
     return rIn;
 }
 
-OUString SAL_CALL OComponent::in_methodString( const OUString& rIn ) throw (RuntimeException)
+OUString SAL_CALL OComponent::in_methodString( const OUString& rIn )
 {
     m_string = rIn;
 	return rIn;
 }
-sal_Unicode SAL_CALL OComponent::in_methodChar( sal_Unicode rIn ) throw (RuntimeException)
+sal_Unicode SAL_CALL OComponent::in_methodChar( sal_Unicode rIn )
 {
     m_char = rIn;
 	return rIn;
 }
-Any SAL_CALL OComponent::in_methodAny( const Any& rIn ) throw (RuntimeException)
+Any SAL_CALL OComponent::in_methodAny( const Any& rIn )
 {
     m_any = rIn;
 	return rIn;
 }
 
-Type SAL_CALL OComponent::in_methodType( const Type& rIn ) throw (RuntimeException)
+Type SAL_CALL OComponent::in_methodType( const Type& rIn )
 {
     m_type = rIn;
 	return rIn;
 }
 
 Reference<XInvocation > SAL_CALL OComponent::in_methodInvocation( const Reference< XInvocation >& inv )
-		throw (RuntimeException)
 {
 	//We expect the invocation results from a conversion of VBasicEventListener.VBEventListener
 //which implements XEventListener
@@ -1092,14 +1088,13 @@ Reference<XInvocation > SAL_CALL OComponent::in_methodInvocation( const Referenc
 	}
 	return inv;
 }
-Reference<XInterface> SAL_CALL OComponent::in_methodXInterface( const Reference<XInterface >& rIn ) throw (RuntimeException)
+Reference<XInterface> SAL_CALL OComponent::in_methodXInterface( const Reference<XInterface >& rIn )
 {
     m_xinterface = rIn;
     return rIn;
 }
 
 SimpleStruct SAL_CALL OComponent::in_methodStruct( const SimpleStruct& aStruct )
-		throw (RuntimeException)
 {
 	SimpleStruct& s= const_cast<SimpleStruct&>(aStruct);
 	s.message= s.message + OUString(RTL_CONSTASCII_USTRINGPARAM(
@@ -1109,93 +1104,93 @@ SimpleStruct SAL_CALL OComponent::in_methodStruct( const SimpleStruct& aStruct )
 void SAL_CALL OComponent::in_methodAll(
     sal_Int8, float, double, sal_Bool, sal_Int16, sal_uInt16,
     sal_Int32, sal_uInt32, const OUString&, sal_Unicode,
-    const Any&, const Type&, const Reference<XInvocation>&) throw (RuntimeException)
+    const Any&, const Type&, const Reference<XInvocation>&)
 {
 }
 
 // INOUT -----------------------------------------------------------------------------------
-void SAL_CALL OComponent::testinout_methodByte(sal_Int8& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testinout_methodByte(sal_Int8& rOut)
 {
     sal_Int8 tmp = rOut;
 	rOut = m_int8;
     m_int8 = tmp;
 }
-void SAL_CALL OComponent::testinout_methodFloat(float& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testinout_methodFloat(float& rOut)
 {
     float tmp = rOut;
     rOut = m_float;
     m_float = tmp;
 }
 
-void SAL_CALL OComponent::testinout_methodDouble(double& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testinout_methodDouble(double& rOut)
 {
 	double tmp = rOut;
     rOut = m_double;
     m_double = tmp;
 }
-void SAL_CALL OComponent::testinout_methodBool(sal_Bool& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testinout_methodBool(sal_Bool& rOut)
 {
     sal_Bool tmp = rOut;
     rOut = m_bool;
     m_bool = tmp;
 }
-void SAL_CALL OComponent::testinout_methodShort(sal_Int16& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testinout_methodShort(sal_Int16& rOut)
 {
 	sal_Int16 tmp= rOut;
     rOut = m_int16;
     m_int16 = tmp;
 }
-void SAL_CALL OComponent::testinout_methodUShort(sal_uInt16& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testinout_methodUShort(sal_uInt16& rOut)
 {
     sal_uInt16 tmp = rOut;
     rOut = m_uint16;
     m_uint16 = tmp;
 }
-void SAL_CALL OComponent::testinout_methodLong(sal_Int32& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testinout_methodLong(sal_Int32& rOut)
 {
     sal_Int32 tmp = rOut;
     rOut = m_int32;
     m_int32 = tmp;
 }
-void SAL_CALL OComponent::testinout_methodULong(sal_uInt32& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testinout_methodULong(sal_uInt32& rOut)
 {
     sal_uInt32 tmp = rOut;
     rOut = m_uint32;
     m_uint32 = tmp;
 }
-void SAL_CALL OComponent::testinout_methodHyper(sal_Int64& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testinout_methodHyper(sal_Int64& rOut)
 {
     sal_Int64 tmp = rOut;
     rOut = m_int64;
     m_int64 = tmp;
 }
 
-void SAL_CALL OComponent::testinout_methodUHyper(sal_uInt64& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testinout_methodUHyper(sal_uInt64& rOut)
 {
     sal_uInt64 tmp = rOut;
     rOut = m_uint64;
     m_uint64 = tmp;
 }
 
-void SAL_CALL OComponent::testinout_methodString(OUString& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testinout_methodString(OUString& rOut)
 {
     OUString tmp = rOut;
     rOut = m_string;
     m_string = tmp;
 }
-void SAL_CALL OComponent::testinout_methodChar(sal_Unicode& rOut) throw( RuntimeException) 
+void SAL_CALL OComponent::testinout_methodChar(sal_Unicode& rOut)
 {
     sal_Unicode tmp = rOut;
     rOut = m_char;
     m_char = tmp;
 }
-void SAL_CALL OComponent::testinout_methodAny(Any& rOut) throw( RuntimeException) 
+void SAL_CALL OComponent::testinout_methodAny(Any& rOut)
 {
     Any tmp = rOut;
     rOut = m_any;
     m_any = tmp;
 }
-void SAL_CALL OComponent::testinout_methodType(Type& rOut) throw( RuntimeException) 
+void SAL_CALL OComponent::testinout_methodType(Type& rOut)
 {
     Type tmp = rOut;
     rOut = m_type;
@@ -1203,16 +1198,16 @@ void SAL_CALL OComponent::testinout_methodType(Type& rOut) throw( RuntimeExcepti
 }
 
 
-void SAL_CALL OComponent::testinout_methodSequence(Sequence< sal_Int32 >& rOut) throw( RuntimeException) 
+void SAL_CALL OComponent::testinout_methodSequence(Sequence< sal_Int32 >& rOut)
 {
-    
+
 	sal_Int32* arr= rOut.getArray();
 	for ( sal_Int32 i=0; i < rOut.getLength(); i++)
 	{
 		rOut.getArray()[i] += 1;
 	}
 }
-void SAL_CALL OComponent::testinout_methodSequence2(Sequence< Sequence< sal_Int32 > >& rOut) throw( RuntimeException )
+void SAL_CALL OComponent::testinout_methodSequence2(Sequence< Sequence< sal_Int32 > >& rOut)
 {
 	for( sal_Int32 i=0; i < rOut.getLength(); i++)
 	{
@@ -1226,7 +1221,7 @@ void SAL_CALL OComponent::testinout_methodSequence2(Sequence< Sequence< sal_Int3
 }
 
 // The parameter should implement XInvocation and a Property "value"
-void SAL_CALL OComponent::testinout_methodXInterface( Reference< XInvocation >& rOut ) throw(RuntimeException)
+void SAL_CALL OComponent::testinout_methodXInterface( Reference< XInvocation >& rOut )
 {
 		Any any;
 		any= rOut->getValue( OUString( L"value"));
@@ -1241,7 +1236,7 @@ void SAL_CALL OComponent::testinout_methodXInterface( Reference< XInvocation >& 
 
 }
 
-void SAL_CALL OComponent::testinout_methodXInterface2( Reference< XInterface > & rOut) throw( RuntimeException)
+void SAL_CALL OComponent::testinout_methodXInterface2( Reference< XInterface > & rOut)
 {
     Reference<XInterface> tmp = rOut;
     rOut = m_xinterface;
@@ -1252,21 +1247,21 @@ void SAL_CALL OComponent::testinout_methodXInterface2( Reference< XInterface > &
 // 		Any any= xTest->getAttrAny2();
 // 		OUString _s;
 // 		any >>= _s;
-// 		OUString string= _s + OUString((L" this string was written in the UNO component to the inout pararmeter"));
-// 		any <<= string;	   
+// 		OUString string= _s + OUString((L" this string was written in the UNO component to the inout parameter"));
+// 		any <<= string;
 // 		xTest->setAttrAny2( any);
 // 	}
-	
+
 }
-Any SAL_CALL OComponent::methodAnyTest1(const Any& rIn) throw( RuntimeException ) 
+Any SAL_CALL OComponent::methodAnyTest1(const Any& rIn)
 {
 	return rIn;
 }
-Any SAL_CALL OComponent::getAttrAny2(void)  throw( RuntimeException ) 
+Any SAL_CALL OComponent::getAttrAny2(void)
 {
 	return m_any;
 }
-void SAL_CALL OComponent::setAttrAny2(const Any& AttrAny2_) throw( RuntimeException ) 
+void SAL_CALL OComponent::setAttrAny2(const Any& AttrAny2_)
 {
 	m_any= AttrAny2_;
 }
@@ -1275,7 +1270,7 @@ void SAL_CALL OComponent::setAttrAny2(const Any& AttrAny2_) throw( RuntimeExcept
 
 // XTestStruct =======================================================================================
 
-void SAL_CALL OComponent::methodStruct(const Property& aProp) throw( RuntimeException )
+void SAL_CALL OComponent::methodStruct(const Property& aProp)
 {
 	char buff[1024];
 	buff[0]= 0;
@@ -1284,7 +1279,7 @@ void SAL_CALL OComponent::methodStruct(const Property& aProp) throw( RuntimeExce
 	MessageBox( NULL, A2T(buff), _T("OleTest: methodStruct"), MB_OK);
 }
 
-Property SAL_CALL OComponent::retMethodStruct(void) throw( RuntimeException )
+Property SAL_CALL OComponent::retMethodStruct(void)
 {
 	Property a(L"OleTest_Property", 255, getCppuType( (Reference<XInterface>*)0), PropertyAttribute::MAYBEVOID |
 		PropertyAttribute::BOUND | PropertyAttribute::CONSTRAINED |
@@ -1293,7 +1288,7 @@ Property SAL_CALL OComponent::retMethodStruct(void) throw( RuntimeException )
 	return a;
 }
 
-Property SAL_CALL OComponent::getAttrStruct(void) throw( RuntimeException) 
+Property SAL_CALL OComponent::getAttrStruct(void)
 {
 	Property a(L"OleTest_Property", 255, getCppuType( (Reference<XInterface>*)0), PropertyAttribute::MAYBEVOID |
 		PropertyAttribute::BOUND | PropertyAttribute::CONSTRAINED |
@@ -1303,7 +1298,7 @@ Property SAL_CALL OComponent::getAttrStruct(void) throw( RuntimeException)
 
 }
 
-void SAL_CALL OComponent::setAttrStruct(const Property& AttrStruct_) throw( RuntimeException )
+void SAL_CALL OComponent::setAttrStruct(const Property& AttrStruct_)
 {
 	char buff[1024];
 	buff[0]= 0;
@@ -1312,27 +1307,27 @@ void SAL_CALL OComponent::setAttrStruct(const Property& AttrStruct_) throw( Runt
 //	MessageBox( NULL, A2T(buff), _T("OleTest: setAttrStruct"), MB_OK);
 }
 
-Property SAL_CALL OComponent::methodStruct2( const Property& aProp ) throw (RuntimeException)
+Property SAL_CALL OComponent::methodStruct2( const Property& aProp )
 {
     return aProp;
 }
 
 // XTestOther ==================================================================================
-void SAL_CALL OComponent::other_methodAnyIn(const Any& ) throw( RuntimeException )
+void SAL_CALL OComponent::other_methodAnyIn(const Any& )
 {
 }
-void SAL_CALL OComponent::other_methodAnyOut(Any& rAny) throw( RuntimeException )
+void SAL_CALL OComponent::other_methodAnyOut(Any& rAny)
 {
 	rAny <<= OUString(L"Ein Any");
 }
 
-Any SAL_CALL OComponent::other_methodAnyRet(void) throw(RuntimeException )
+Any SAL_CALL OComponent::other_methodAnyRet(void)
 {
 	Any a;
 	a <<= OUString(L"Ein Any");
 	return a;
 }
-void SAL_CALL OComponent::in_float( float val) throw ( RuntimeException)
+void SAL_CALL OComponent::in_float( float val)
 {
 	USES_CONVERSION;
 	char buff[256];
@@ -1340,7 +1335,6 @@ void SAL_CALL OComponent::in_float( float val) throw ( RuntimeException)
 	MessageBox( NULL, A2T(buff), _T("OleTest"), MB_OK);
 }
 Any SAL_CALL OComponent::other_methodAny( const Any& rAny, const OUString& typeInAny )
-        throw (RuntimeException)
 {
     Type expectedType;
 	typelib_TypeDescription	* pDesc= NULL;
@@ -1352,12 +1346,12 @@ Any SAL_CALL OComponent::other_methodAny( const Any& rAny, const OUString& typeI
 	}
     if (rAny.getValueType() != expectedType)
         throw RuntimeException();
-    
+
     return rAny;
 }
 
 // XTestOutParameters ============================================================================
-// void SAL_CALL OComponent::out_test(sal_Int8 rIn) throw( RuntimeException ) 
+// void SAL_CALL OComponent::out_test(sal_Int8 rIn) throw( RuntimeException )
 // {
 // }
 
@@ -1374,19 +1368,19 @@ Any SAL_CALL OComponent::other_methodAny( const Any& rAny, const OUString& typeI
 // {
 // 	rOut= 3.14;
 // }
-// void SAL_CALL OComponent::out_methodBool(sal_Bool& rOut) throw( RuntimeException ) 
+// void SAL_CALL OComponent::out_methodBool(sal_Bool& rOut) throw( RuntimeException )
 // {
 // 	rOut= sal_True;
 // }
-// void SAL_CALL OComponent::out_methodShort(sal_Int16& rOut) throw( RuntimeException ) 
+// void SAL_CALL OComponent::out_methodShort(sal_Int16& rOut) throw( RuntimeException )
 // {
 // 	rOut= -100;
 // }
-// void SAL_CALL OComponent::out_methodUShort(sal_uInt16& rOut) throw( RuntimeException ) 
+// void SAL_CALL OComponent::out_methodUShort(sal_uInt16& rOut) throw( RuntimeException )
 // {
 // 	rOut= 100;
 // }
-// void SAL_CALL OComponent::out_methodLong(sal_Int32& rOut) throw( RuntimeException ) 
+// void SAL_CALL OComponent::out_methodLong(sal_Int32& rOut) throw( RuntimeException )
 // {
 // 	rOut= -100;
 // }
@@ -1397,18 +1391,18 @@ Any SAL_CALL OComponent::other_methodAny( const Any& rAny, const OUString& typeI
 // }
 // void SAL_CALL OComponent::out_methodHyper(sal_Int64& rOut) throw( RuntimeException )
 // {
-    
+
 // }
 
 // void SAL_CALL OComponent::out_methodUHyper(sal_uInt64& rOut) throw( RuntimeException )
 // {
 // }
 
-// void SAL_CALL OComponent::out_methodString(OUString& rOut) throw( RuntimeException ) 
+// void SAL_CALL OComponent::out_methodString(OUString& rOut) throw( RuntimeException )
 // {
 // 	rOut= L"I'm a string";
 // }
-// void SAL_CALL OComponent::out_methodChar(sal_Unicode& rOut) throw( RuntimeException ) 
+// void SAL_CALL OComponent::out_methodChar(sal_Unicode& rOut) throw( RuntimeException )
 // {
 // 	rOut= 'A';
 // }
@@ -1445,7 +1439,7 @@ Any SAL_CALL OComponent::other_methodAny( const Any& rAny, const OUString& typeI
 // }
 
 // XTestInterfaces -------------------------------------------------------------------------------------
-void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallback, sal_Int32 mode ) throw(RuntimeException)
+void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallback, sal_Int32 mode )
 {
 	USES_CONVERSION;
 	sal_Int32 i=0;
@@ -1591,7 +1585,7 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
 			aFloat, aDouble,
 			aByte,
 			aShort, aLong);
-			
+
 			MessageBox( NULL, _T("XCallback::outValuesAll returned"), _T("OleTest::testInterface"), MB_OK);
 			break;
 		}
@@ -1643,7 +1637,7 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
 				// a Struct should now contain a different message
 				MessageBox( NULL, W2T(aStruct.message), _T("OleTest in out parameter"), MB_OK);
 			}
-		
+
 		}
 		break;
 		}
@@ -1680,7 +1674,7 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
 
 				}
 			}
-		
+
 		break;
 		}
 	case 104:
@@ -1811,10 +1805,10 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
 		sal_Int16 aShort= 0xff;
 		sal_Int32 aLong= 0xffe;
 
-		xCallback->inoutValuesAll( aXSimple, aStruct, aEnum, aSeq, 
-			aAny, aBool, aChar, aString,  aFloat, aDouble, 
+		xCallback->inoutValuesAll( aXSimple, aStruct, aEnum, aSeq,
+			aAny, aBool, aChar, aString,  aFloat, aDouble,
 			aByte, aShort,  aLong );
-		
+
 		aXSimple->func(L"XSimple called from OleTest");
 		MessageBox( NULL, W2T(aStruct.message), _T("OleTest"), MB_OK);
 
@@ -1852,7 +1846,7 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
         const int LISTENERS= 3;
         Reference<XEventListener> arListeners[LISTENERS];
         EventObject arEvents[LISTENERS];
-        
+
         for( int i= 0; i < LISTENERS; i++)
         {
             Reference<XInterface> aList= static_cast<XWeak*>( new EventListener());
@@ -1863,7 +1857,7 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
                                        Sequence<EventObject>(arEvents, LISTENERS));
         break;
     }
-		
+
 	// ############################################################################
 	// Call a COM object that has not been passed as parameter to a UNO component and
 	// hence no type information are available in the COM wrapper
@@ -1871,7 +1865,7 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
 	case 300:
 		{
 			Reference<XInterface> xIntFact = m_rFactory->createInstance(L"com.sun.star.bridge.oleautomation.Factory");
-			
+
 			Reference<XMultiServiceFactory> oleFact(xIntFact, UNO_QUERY);
 
 			Reference<XInterface> xIntCallback= oleFact->createInstance(L"XCallback_Impl.Callback");
@@ -1910,7 +1904,7 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
 					OUString _s;
 					seqAny[i] >>= _s;
 				}
-				
+
 				Any _any= *(Any*)seqOutParams[4].getValue();
 				sal_Bool _bool= *(sal_Bool*)seqOutParams[5].getValue();
 				sal_Unicode _char= *( sal_Unicode*) seqOutParams[6].getValue();
@@ -1930,7 +1924,7 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
 		// in / out parameter
 		{
 			Reference<XInterface> xIntFact = m_rFactory->createInstance(L"com.sun.star.bridge.oleautomation.Factory");
-			
+
 			Reference<XMultiServiceFactory> oleFact(xIntFact, UNO_QUERY);
 
 			Reference<XInterface> xIntCallback= oleFact->createInstance(L"XCallback_Impl.Callback");
@@ -1966,7 +1960,7 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
 			arSeqAny[0] <<= OUString( L"string 0");
 			arSeqAny[1] <<= OUString( L"string 1");
 			arSeqAny[2] <<= OUString( L"string 2");
-			
+
 			arAny[3] <<=  Sequence< Any >( arAny, 3);
 
 			OUString str(L" Ein Any param");
@@ -1985,9 +1979,9 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
 			arAny[11] <<= _short;
 			sal_Int32 _long= -1;
 			arAny[12] <<= _long;
-//			
+//
 			Sequence<Any> params( arAny, 13);
-			
+
 			xInv->invoke( OUString( L"inoutValuesAll"), params, seqIndizes, seqOutParams);
 
 			if( seqOutParams.getLength() == 12)
@@ -2005,7 +1999,7 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
 					OUString _s;
 					seqAny[i] >>= _s;
 				}
-				
+
 				Any _any= *(Any*)seqOutParams[4].getValue();
 				sal_Bool _bool= *(sal_Bool*)seqOutParams[5].getValue();
 				sal_Unicode _char= *( sal_Unicode*) seqOutParams[6].getValue();
@@ -2027,7 +2021,7 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
 		{
 			Reference<XInterface> xIntFact = m_rFactory->createInstance(
 				L"com.sun.star.bridge.oleautomation.Factory");
-			
+
 			Reference<XMultiServiceFactory> oleFact(xIntFact, UNO_QUERY);
 
 			Reference<XInterface> xIntCallback= oleFact->createInstance(L"XCallback_Impl.Callback");
@@ -2063,12 +2057,12 @@ void SAL_CALL OComponent::testInterface(  const Reference< XCallback >& xCallbac
 
 }
 
-void SAL_CALL OComponent::setObject( const Reference< XInterface >& val ) throw (RuntimeException)
+void SAL_CALL OComponent::setObject( const Reference< XInterface >& val )
 {
     m_xIntIdentity= val;
 }
 
-sal_Bool SAL_CALL OComponent::isSame( const Reference< XInterface >& val ) throw (RuntimeException)
+sal_Bool SAL_CALL OComponent::isSame( const Reference< XInterface >& val )
 {
     if( m_xIntIdentity == val)
         return sal_True;
@@ -2076,31 +2070,31 @@ sal_Bool SAL_CALL OComponent::isSame( const Reference< XInterface >& val ) throw
         return sal_False;
 }
 
-Reference< XInterface > SAL_CALL OComponent::getThis(  ) throw (RuntimeException)
+Reference< XInterface > SAL_CALL OComponent::getThis(  )
 {
 //    return Reference<XInterface>(static_cast<XIdentity*>(this), UNO_QUERY);
 	Reference<XInterface> ret(static_cast<XIdentity*>(this), UNO_QUERY);
 	return ret;
 }
 
-void SAL_CALL EventListener::disposing( const ::com::sun::star::lang::EventObject& ) throw (RuntimeException)
+void SAL_CALL EventListener::disposing( const ::com::sun::star::lang::EventObject& )
 {
     bCalled= sal_True;
 }
 
 // XSimple --------------------------------------------------------------------------
-void SAL_CALL OComponent::func( const OUString &message)throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL OComponent::func( const OUString &message)
 {
 	USES_CONVERSION;
 
 	MessageBox( NULL, W2T( message.getStr()), _T("OleTest: XSimple::func"), MB_OK);
 }
 // XSimple --------------------------------------------------------------------------
-OUString SAL_CALL OComponent::getName()throw(::com::sun::star::uno::RuntimeException)
+OUString SAL_CALL OComponent::getName()
 {
 	return L"XSimple";
 }
-void SAL_CALL OComponent::testInterface2(  const Reference< XSimple >& xSimple, sal_Int32 mode ) throw(RuntimeException)
+void SAL_CALL OComponent::testInterface2(  const Reference< XSimple >& xSimple, sal_Int32 mode )
 {
 	switch( mode)
 	{

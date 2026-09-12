@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -44,7 +44,7 @@ static Mapping mapping_0130[] = {{0, 1, {0x0069, 0, 0}},{0, 1, {0x0130, 0, 0}}};
 #define langIs(lang) (aLocale.Language.compareToAscii(lang) == 0)
 
 // only check simple case, there is more complicated case need to be checked.
-#define type_i(ch) ((ch) == 0x0069 || (ch) == 0x006a) 
+#define type_i(ch) ((ch) == 0x0069 || (ch) == 0x006a)
 
 #define cased_letter(ch) (CaseMappingIndex[(ch)>>8] >= 0 && (CaseMappingValue[(CaseMappingIndex[(ch)>>8] << 8) + ((ch)&0xff)].type & CasedLetter))
 
@@ -52,7 +52,7 @@ static Mapping mapping_0130[] = {{0, 1, {0x0069, 0, 0}},{0, 1, {0x0130, 0, 0}}};
 // whenever there are more accents above.
 #define accent_above(ch) (((ch) >= 0x0300 && (ch) <= 0x0314) || ((ch) >= 0x033D && (ch) <= 0x0344) || (ch) == 0x0346 || ((ch) >= 0x034A && (ch) <= 0x034C))
 
-Mapping& casefolding::getConditionalValue(const sal_Unicode* str, sal_Int32 pos, sal_Int32 len, Locale& aLocale, sal_uInt8 nMappingType) throw (RuntimeException)
+Mapping& casefolding::getConditionalValue(const sal_Unicode* str, sal_Int32 pos, sal_Int32 len, Locale& aLocale, sal_uInt8 nMappingType)
 {
         switch(str[pos]) {
         case 0x03a3:
@@ -69,7 +69,7 @@ Mapping& casefolding::getConditionalValue(const sal_Unicode* str, sal_Int32 pos,
             return (langIs("tr") || langIs("az")) ? mapping_0130[0] : mapping_0130[1];
         case 0x0069:
             return (langIs("tr") || langIs("az")) ? mapping_0069[0] : mapping_0069[1];
-        case 0x0049: return langIs("lt") && pos > len && accent_above(str[pos+1]) ? mapping_0049[0] : 
+        case 0x0049: return langIs("lt") && pos > len && accent_above(str[pos+1]) ? mapping_0049[0] :
                     (langIs("tr") || langIs("az")) ? mapping_0049[1] : mapping_0049[2];
         case 0x004a: return langIs("lt") && pos > len && accent_above(str[pos+1]) ? mapping_004a[0] : mapping_004a[1];
         case 0x012e: return langIs("lt") && pos > len && accent_above(str[pos+1]) ? mapping_012e[0] : mapping_012e[1];
@@ -81,7 +81,7 @@ Mapping& casefolding::getConditionalValue(const sal_Unicode* str, sal_Int32 pos,
         throw RuntimeException();
 }
 
-Mapping& casefolding::getValue(const sal_Unicode* str, sal_Int32 pos, sal_Int32 len, Locale& aLocale, sal_uInt8 nMappingType) throw (RuntimeException)
+Mapping& casefolding::getValue(const sal_Unicode* str, sal_Int32 pos, sal_Int32 len, Locale& aLocale, sal_uInt8 nMappingType)
 {
         static Mapping dummy = { 0, 1, { 0, 0, 0 } };
         sal_Int16 address = CaseMappingIndex[str[pos] >> 8] << 8;
@@ -122,7 +122,7 @@ is_ja_voice_sound_mark(sal_Unicode& current, sal_Unicode next)
         return c != 0;
 }
 
-sal_Unicode casefolding::getNextChar(const sal_Unicode *str, sal_Int32& idx, sal_Int32 len, MappingElement& e, Locale& aLocale, sal_uInt8 nMappingType, TransliterationModules moduleLoaded) throw (RuntimeException)
+sal_Unicode casefolding::getNextChar(const sal_Unicode *str, sal_Int32& idx, sal_Int32 len, MappingElement& e, Locale& aLocale, sal_uInt8 nMappingType, TransliterationModules moduleLoaded)
 {
         if( idx >= len )
         {
@@ -160,4 +160,3 @@ sal_Unicode casefolding::getNextChar(const sal_Unicode *str, sal_Int32& idx, sal
 }
 
 } } } }
-

@@ -334,14 +334,12 @@ public:
 		m_prevContext( context ) {}
 
 	// XCurrentContext
-	virtual com::sun::star::uno::Any SAL_CALL getValueByName( const rtl::OUString& Name )
-		throw (com::sun::star::uno::RuntimeException);
+	virtual com::sun::star::uno::Any SAL_CALL getValueByName( const rtl::OUString& Name );
 private:
 	com::sun::star::uno::Reference< com::sun::star::uno::XCurrentContext > m_prevContext;
 };
 
 com::sun::star::uno::Any AccessBridgeCurrentContext::getValueByName( const rtl::OUString & Name )
-	throw (com::sun::star::uno::RuntimeException)
 {
 	com::sun::star::uno::Any ret;
 	if( Name.equalsAscii( "java-vm.interaction-handler" ) )
@@ -412,7 +410,7 @@ void AccessBridgehandleExistingWindow(Window * pWindow, bool bShow)
 
 		if ( xAccessible.is() && g_acc_manager1 )
 		{
-			g_acc_manager1->handleWindowOpened( (long)(xAccessible.get()));
+			g_acc_manager1->handleWindowOpened( (sal_Int64)(xAccessible.get()));
 		}
 	}
 }

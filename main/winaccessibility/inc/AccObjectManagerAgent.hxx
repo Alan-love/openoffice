@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #ifndef __ACCOBJECTMANAGERAGENT_HXX
@@ -48,7 +48,7 @@ public:
 
     virtual unsigned char InsertAccObj( com::sun::star::accessibility::XAccessible* pXAcc,
                                         com::sun::star::accessibility::XAccessible* pParentXAcc,
-                                        long pWnd=0);
+                                        void* pWnd=0);
     virtual void GetIAccessibleFromResID(long childID,IMAccessible**);
     virtual unsigned char GetIAccessibleFromXAccessible(com::sun::star::accessibility::XAccessible* pXAcc, IAccessible** ppIA);
 
@@ -58,7 +58,7 @@ public:
     unsigned char NotifyAccEvent( short pEvent = 0, com::sun::star::accessibility::XAccessible* pXAcc = 0 );
 
     unsigned char InsertChildrenAccObj( com::sun::star::accessibility::XAccessible* pXAcc,
-                                        long pWnd=0);
+                                        void* pWnd=0);
     void DeleteChildrenAccObj( com::sun::star::accessibility::XAccessible* pXAcc );
 
     void  DecreaseState( com::sun::star::accessibility::XAccessible* pXAcc,unsigned short pState );
@@ -85,7 +85,7 @@ public:
     short GetParentRole(com::sun::star::accessibility::XAccessible* pXAcc );
     unsigned short IsContainer(com::sun::star::accessibility::XAccessible* pXAcc);
 
-    void SaveTopWindowHandle(long hWnd, com::sun::star::accessibility::XAccessible* pXAcc);
+    void SaveTopWindowHandle(void* hwnd, com::sun::star::accessibility::XAccessible* pXAcc);
 
     void UpdateChildState(com::sun::star::accessibility::XAccessible* pXAcc);
 

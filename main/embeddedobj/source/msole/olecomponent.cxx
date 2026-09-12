@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -169,7 +169,7 @@ sal_Bool ConvertBufferToFormat( void* pBuf,
 								const ::rtl::OUString& aFormatShortName,
 								uno::Any& aResult );
 
-::rtl::OUString GetNewTempFileURL_Impl( const uno::Reference< lang::XMultiServiceFactory >& xFactory ) throw( io::IOException );
+::rtl::OUString GetNewTempFileURL_Impl( const uno::Reference< lang::XMultiServiceFactory >& xFactory );
 
 typedef ::std::vector< FORMATETC* > FormatEtcList;
 
@@ -561,7 +561,7 @@ void OleComponent::CreateNewIStorage_Impl()
 
 	// write the stream to the temporary file
 	::rtl::OUString aTempURL;
-	
+
 	OSL_ENSURE( m_pUnoOleObject, "Unexpected object absence!" );
 	if ( m_pUnoOleObject )
 		aTempURL = m_pUnoOleObject->CreateTempURLEmpty_Impl();
@@ -1192,7 +1192,7 @@ awt::Size OleComponent::GetExtent( sal_Int64 nAspect )
 							// do nothing
 							break;
 					}
-					
+
 					sal_Int64 nX = ( (sal_Int64)abs( pMF->xExt ) ) * nMult / nDiv;
 					sal_Int64 nY = ( (sal_Int64)abs( pMF->yExt ) ) * nMult / nDiv;
 					if (  nX < SAL_MAX_INT32 && nY < SAL_MAX_INT32 )
@@ -1416,7 +1416,7 @@ void OleComponent::OnViewChange_Impl( sal_uInt32 dwAspect )
 
 	if ( xLockObject.is() )
 	{
-		uno::Reference < awt::XRequestCallback > xRequestCallback( 
+		uno::Reference < awt::XRequestCallback > xRequestCallback(
 			m_xFactory->createInstance(
 			 ::rtl::OUString::createFromAscii("com.sun.star.awt.AsyncCallback") ),
 			 uno::UNO_QUERY );
@@ -1437,7 +1437,7 @@ void OleComponent::OnClose_Impl()
 
 	if ( xLockObject.is() )
 	{
-		uno::Reference < awt::XRequestCallback > xRequestCallback( 
+		uno::Reference < awt::XRequestCallback > xRequestCallback(
 			m_xFactory->createInstance(
 			 ::rtl::OUString::createFromAscii("com.sun.star.awt.AsyncCallback") ),
 			 uno::UNO_QUERY );
@@ -1448,8 +1448,6 @@ void OleComponent::OnClose_Impl()
 // XCloseable
 //----------------------------------------------
 void SAL_CALL OleComponent::close( sal_Bool bDeliverOwnership )
-	throw ( util::CloseVetoException,
-			uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_bDisposed )
@@ -1502,7 +1500,6 @@ void SAL_CALL OleComponent::close( sal_Bool bDeliverOwnership )
 
 //----------------------------------------------
 void SAL_CALL OleComponent::addCloseListener( const uno::Reference< util::XCloseListener >& xListener )
-	throw ( uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_bDisposed )
@@ -1516,7 +1513,6 @@ void SAL_CALL OleComponent::addCloseListener( const uno::Reference< util::XClose
 
 //----------------------------------------------
 void SAL_CALL OleComponent::removeCloseListener( const uno::Reference< util::XCloseListener >& xListener )
-	throw ( uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_bDisposed )
@@ -1530,9 +1526,6 @@ void SAL_CALL OleComponent::removeCloseListener( const uno::Reference< util::XCl
 // XTransferable
 //----------------------------------------------
 uno::Any SAL_CALL OleComponent::getTransferData( const datatransfer::DataFlavor& aFlavor )
-	throw ( datatransfer::UnsupportedFlavorException,
-			io::IOException,
-			uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_bDisposed )
@@ -1591,7 +1584,7 @@ uno::Any SAL_CALL OleComponent::getTransferData( const datatransfer::DataFlavor&
 				}
 			}
 		}
-		
+
 		// If the replacement could not be retrieved, the cached representaion should be used
 		// currently it is not necessary to retrieve it here, so it is implemented in the object itself
 	}
@@ -1636,7 +1629,6 @@ uno::Any SAL_CALL OleComponent::getTransferData( const datatransfer::DataFlavor&
 
 //----------------------------------------------
 uno::Sequence< datatransfer::DataFlavor > SAL_CALL OleComponent::getTransferDataFlavors()
-	throw ( uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_bDisposed )
@@ -1652,7 +1644,6 @@ uno::Sequence< datatransfer::DataFlavor > SAL_CALL OleComponent::getTransferData
 
 //----------------------------------------------
 sal_Bool SAL_CALL OleComponent::isDataFlavorSupported( const datatransfer::DataFlavor& aFlavor )
-	throw ( uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_bDisposed )
@@ -1673,7 +1664,7 @@ sal_Bool SAL_CALL OleComponent::isDataFlavorSupported( const datatransfer::DataF
 	return sal_False;
 }
 
-void SAL_CALL OleComponent::dispose() throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL OleComponent::dispose()
 {
     try
     {
@@ -1685,7 +1676,6 @@ void SAL_CALL OleComponent::dispose() throw (::com::sun::star::uno::RuntimeExcep
 }
 
 void SAL_CALL OleComponent::addEventListener( const uno::Reference< lang::XEventListener >& xListener )
-	throw ( uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_bDisposed )
@@ -1699,7 +1689,6 @@ void SAL_CALL OleComponent::addEventListener( const uno::Reference< lang::XEvent
 
 //----------------------------------------------
 void SAL_CALL OleComponent::removeEventListener( const uno::Reference< lang::XEventListener >& xListener )
-	throw ( uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_bDisposed )
@@ -1710,7 +1699,7 @@ void SAL_CALL OleComponent::removeEventListener( const uno::Reference< lang::XEv
 												xListener );
 }
 
-sal_Int64 SAL_CALL OleComponent::getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier ) throw(::com::sun::star::uno::RuntimeException)
+sal_Int64 SAL_CALL OleComponent::getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier )
 {
     try
     {
@@ -1743,13 +1732,12 @@ sal_Int64 SAL_CALL OleComponent::getSomething( const ::com::sun::star::uno::Sequ
     return 0;
 }
 
-sal_Bool SAL_CALL OleComponent::isModified() throw (::com::sun::star::uno::RuntimeException)
+sal_Bool SAL_CALL OleComponent::isModified()
 {
     return m_bModified;
 }
 
 void SAL_CALL OleComponent::setModified( sal_Bool bModified )
-        throw (::com::sun::star::beans::PropertyVetoException, ::com::sun::star::uno::RuntimeException)
 {
     m_bModified = bModified;
 
@@ -1776,7 +1764,7 @@ void SAL_CALL OleComponent::setModified( sal_Bool bModified )
 	}
 }
 
-void SAL_CALL OleComponent::addModifyListener( const com::sun::star::uno::Reference < com::sun::star::util::XModifyListener >& xListener ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL OleComponent::addModifyListener( const com::sun::star::uno::Reference < com::sun::star::util::XModifyListener >& xListener )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_bDisposed )
@@ -1788,7 +1776,7 @@ void SAL_CALL OleComponent::addModifyListener( const com::sun::star::uno::Refere
     m_pInterfaceContainer->addInterface( ::getCppuType( ( const uno::Reference< util::XModifyListener >* )0 ), xListener );
 }
 
-void SAL_CALL OleComponent::removeModifyListener( const com::sun::star::uno::Reference < com::sun::star::util::XModifyListener >& xListener) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL OleComponent::removeModifyListener( const com::sun::star::uno::Reference < com::sun::star::util::XModifyListener >& xListener)
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_bDisposed )
@@ -1798,4 +1786,3 @@ void SAL_CALL OleComponent::removeModifyListener( const com::sun::star::uno::Ref
         m_pInterfaceContainer->removeInterface( ::getCppuType( ( const uno::Reference< util::XModifyListener >* )0 ),
 												xListener );
 }
-

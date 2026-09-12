@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -120,12 +120,12 @@ public:
 
 #ifdef XML_CORE_API
 	// #110680#
-	SwXMLImport( 
+	SwXMLImport(
 		const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > xServiceFactory,
-		SwDoc& rDoc, 
-		const SwPaM& rPaM, 
+		SwDoc& rDoc,
+		const SwPaM& rPaM,
 		sal_Bool bLoadDoc,
-		sal_Bool bInsertMode, 
+		sal_Bool bInsertMode,
 		sal_uInt16 nStyleFamMask,
 		const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XModel > & rModel,
 		const ::com::sun::star::uno::Reference< ::com::sun::star::document::XGraphicObjectResolver > &,
@@ -135,21 +135,18 @@ public:
 	~SwXMLImport() throw();
 
 	// ::com::sun::star::xml::sax::XDocumentHandler
-	virtual void SAL_CALL startDocument(void)
-		throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
-	virtual void SAL_CALL endDocument(void)
-		throw( ::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException );
+	virtual void SAL_CALL startDocument(void);
+	virtual void SAL_CALL endDocument(void);
 
 	// XUnoTunnel
 	static const ::com::sun::star::uno::Sequence< sal_Int8 > & getUnoTunnelId() throw();
-    virtual sal_Int64 SAL_CALL getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier ) throw(::com::sun::star::uno::RuntimeException);
+    virtual sal_Int64 SAL_CALL getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier );
 
 	// XInitialization
-    virtual void SAL_CALL initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aArguments ) throw(::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aArguments );
 
     // XServiceInfo (override parent method)
-    ::rtl::OUString SAL_CALL getImplementationName()
-        throw( ::com::sun::star::uno::RuntimeException );
+    ::rtl::OUString SAL_CALL getImplementationName();
 
 	void					InsertStyles( sal_Bool bAuto );
 	void					FinishStyles();
@@ -235,8 +232,8 @@ inline       SvXMLImportItemMapper& SwXMLImport::GetTableItemMapper()
 
 inline void SwXMLImport::SetProgressValue( sal_Int32 nValue )
 {
-	if ( bShowProgress ) 
-		GetProgressBarHelper()->SetValue(nValue); 
+	if ( bShowProgress )
+		GetProgressBarHelper()->SetValue(nValue);
 }
 
 #endif	//  _XMLIMP_HXX

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -77,14 +77,14 @@ namespace accessibility {
 
     <p>This class implements three kinds of listeners:
     <ol><li>The property change listener is not used directly but exists as
-    convenience for derived classes.  May be moved to those classes 
+    convenience for derived classes.  May be moved to those classes
     instead.</li>
     <li>As window listener it waits for changes of the window geometry and
     forwards those as view forwarder changes.</li>
     <li>As focus listener it keeps track of the focus to give this class and
     derived classes the opportunity to set and remove the focus to/from
     shapes.</li>
-    </ol> 
+    </ol>
     </p>
 */
 class AccessibleDocumentViewBase
@@ -141,150 +141,125 @@ public:
         windowResized... methods it will be sufficient in most cases just to
         overload this method.
      */
-    virtual void ViewForwarderChanged (ChangeType aChangeType, 
+    virtual void ViewForwarderChanged (ChangeType aChangeType,
         const IAccessibleViewForwarder* pViewForwarder);
 
     //=====  XAccessibleContext  ==============================================
 
     virtual ::com::sun::star::uno::Reference<
         ::com::sun::star::accessibility::XAccessible> SAL_CALL
-        getAccessibleParent (void)
-        throw (::com::sun::star::uno::RuntimeException);
+        getAccessibleParent (void);
 
     /** This implementation returns either 1 or 0 depending on whether there
         is an active accessible OLE object or not.
     */
     virtual sal_Int32 SAL_CALL
-        getAccessibleChildCount (void)
-        throw (::com::sun::star::uno::RuntimeException);
+        getAccessibleChildCount (void);
 
     /** This implementation either returns the active accessible OLE object
         if it exists and the given index is 0 or throws an exception.
     */
     virtual ::com::sun::star::uno::Reference<
         ::com::sun::star::accessibility::XAccessible> SAL_CALL
-        getAccessibleChild (sal_Int32 nIndex)
-        throw (::com::sun::star::uno::RuntimeException,
-            ::com::sun::star::lang::IndexOutOfBoundsException);
+        getAccessibleChild (sal_Int32 nIndex);
 
 
     //=====  XAccessibleComponent  ============================================
 
-    virtual ::com::sun::star::uno::Reference< 
-        ::com::sun::star::accessibility::XAccessible > SAL_CALL 
-        getAccessibleAtPoint (const ::com::sun::star::awt::Point& aPoint) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Reference<
+        ::com::sun::star::accessibility::XAccessible > SAL_CALL
+        getAccessibleAtPoint (const ::com::sun::star::awt::Point& aPoint);
 
-    virtual ::com::sun::star::awt::Rectangle SAL_CALL getBounds (void)
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::awt::Rectangle SAL_CALL getBounds (void);
 
-    virtual ::com::sun::star::awt::Point SAL_CALL getLocation (void) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::awt::Point SAL_CALL getLocation (void);
 
-    virtual ::com::sun::star::awt::Point SAL_CALL getLocationOnScreen (void) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::awt::Point SAL_CALL getLocationOnScreen (void);
 
-    virtual ::com::sun::star::awt::Size SAL_CALL getSize (void) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::awt::Size SAL_CALL getSize (void);
 
 
     //=====  XInterface  ======================================================
-    
+
     virtual com::sun::star::uno::Any SAL_CALL
-        queryInterface (const com::sun::star::uno::Type & rType)
-        throw (::com::sun::star::uno::RuntimeException);
-        
+        queryInterface (const com::sun::star::uno::Type & rType);
+
     virtual void SAL_CALL
-        acquire (void) 
+        acquire (void)
         throw ();
-        
+
     virtual void SAL_CALL
         release (void)
         throw ();
-        
-        
+
+
     //=====  XServiceInfo  ====================================================
-    
+
     /**	Returns an identifier for the implementation of this object.
     */
     virtual ::rtl::OUString SAL_CALL
-    	getImplementationName (void)
-	    throw (::com::sun::star::uno::RuntimeException);
+    	getImplementationName (void);
 
     virtual ::com::sun::star::uno::Sequence< ::rtl::OUString> SAL_CALL
-        getSupportedServiceNames (void)
-        throw (::com::sun::star::uno::RuntimeException);
+        getSupportedServiceNames (void);
 
 
     //=====  XTypeProvider  ===================================================
-    
+
     virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type> SAL_CALL
-        getTypes (void)
-        throw (::com::sun::star::uno::RuntimeException);
+        getTypes (void);
 
 
     //=====  lang::XEventListener  ============================================
 
     virtual void SAL_CALL
-        disposing (const ::com::sun::star::lang::EventObject& rEventObject)
-        throw (::com::sun::star::uno::RuntimeException);
+        disposing (const ::com::sun::star::lang::EventObject& rEventObject);
 
 
     //=====  XPropertyChangeListener  =========================================
 
 	virtual void SAL_CALL
-		propertyChange (const ::com::sun::star::beans::PropertyChangeEvent& rEventObject)
-        throw (::com::sun::star::uno::RuntimeException);
+		propertyChange (const ::com::sun::star::beans::PropertyChangeEvent& rEventObject);
 
 
     //=====  XWindowListener  =================================================
 
-    virtual void SAL_CALL 
-        windowResized (const ::com::sun::star::awt::WindowEvent& e) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL
+        windowResized (const ::com::sun::star::awt::WindowEvent& e);
 
-    virtual void SAL_CALL 
-        windowMoved (const ::com::sun::star::awt::WindowEvent& e) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL
+        windowMoved (const ::com::sun::star::awt::WindowEvent& e);
 
-    virtual void SAL_CALL 
-        windowShown (const ::com::sun::star::lang::EventObject& e) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL
+        windowShown (const ::com::sun::star::lang::EventObject& e);
 
-    virtual void SAL_CALL 
-        windowHidden (const ::com::sun::star::lang::EventObject& e) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL
+        windowHidden (const ::com::sun::star::lang::EventObject& e);
 
     //=====  XFocusListener  =================================================
 
-	virtual void SAL_CALL focusGained (const ::com::sun::star::awt::FocusEvent& e)
-        throw (::com::sun::star::uno::RuntimeException); 
-	virtual void SAL_CALL focusLost (const ::com::sun::star::awt::FocusEvent& e)
-        throw (::com::sun::star::uno::RuntimeException); 
+	virtual void SAL_CALL focusGained (const ::com::sun::star::awt::FocusEvent& e);
+	virtual void SAL_CALL focusLost (const ::com::sun::star::awt::FocusEvent& e);
 	//----------------------------xAttribute----------------------------
-	virtual com::sun::star::uno::Any SAL_CALL getExtendedAttributes() 
-		throw (::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::uno::RuntimeException) ;
+	virtual com::sun::star::uno::Any SAL_CALL getExtendedAttributes() ;
 	 ::sd::ViewShell* mpViewShell;
 private:
 
     // return the member maMutex;
-    virtual ::osl::Mutex& 
+    virtual ::osl::Mutex&
         implGetMutex();
-    
+
 	// return ourself as context in default case
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessibleContext > 
-        implGetAccessibleContext() 
-        throw ( ::com::sun::star::uno::RuntimeException );
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessibleContext >
+        implGetAccessibleContext();
 
     // return sal_False in default case
-	virtual sal_Bool 
-        implIsSelected( sal_Int32 nAccessibleChildIndex ) 
-        throw (::com::sun::star::uno::RuntimeException);
+	virtual sal_Bool
+        implIsSelected( sal_Int32 nAccessibleChildIndex );
 
     // return nothing in default case
     virtual void
-        implSelect( sal_Int32 nAccessibleChildIndex, sal_Bool bSelect ) 
-        throw (::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::uno::RuntimeException);
+        implSelect( sal_Int32 nAccessibleChildIndex, sal_Bool bSelect );
 
 protected:
     /// The core window that is made accessible.
@@ -299,7 +274,7 @@ protected:
          mxController;
 
     /// Model of the document.
-    ::com::sun::star::uno::Reference < ::com::sun::star::frame::XModel> 
+    ::com::sun::star::uno::Reference < ::com::sun::star::frame::XModel>
         mxModel;
 
     // Bundle of information that is passed down the shape tree.
@@ -312,7 +287,7 @@ protected:
         <member>SetAccessibleOLEObject</member> method.
     */
     ::com::sun::star::uno::Reference <
-        ::com::sun::star::accessibility::XAccessible> 
+        ::com::sun::star::accessibility::XAccessible>
         mxAccessibleOLEObject;
 
     Link maWindowLink;
@@ -328,8 +303,7 @@ protected:
            A name string.
     */
     virtual ::rtl::OUString
-    	CreateAccessibleName ()
-        throw (::com::sun::star::uno::RuntimeException);
+    	CreateAccessibleName ();
 
     /**	Create a description string.  The current description is not
         modified and, therefore, no events are send.  This method is usually
@@ -339,14 +313,13 @@ protected:
            A description string.
     */
     virtual ::rtl::OUString
-    	CreateAccessibleDescription ()
-        throw (::com::sun::star::uno::RuntimeException);
+    	CreateAccessibleDescription ();
 
     /** This method is called when (after) the frame containing this
         document has been activated.  Can be used to send FOCUSED state
         changes for the currently selected element.
 
-        Note: Currently used as a substitute for FocusGained.  Should be 
+        Note: Currently used as a substitute for FocusGained.  Should be
         renamed in the future.
     */
     virtual void Activated (void);
@@ -355,7 +328,7 @@ protected:
         this document has been deactivated.  Can be used to send FOCUSED
         state changes for the currently selected element.
 
-        Note: Currently used as a substitute for FocusLost.  Should be 
+        Note: Currently used as a substitute for FocusLost.  Should be
         renamed in the future.
     */
     virtual void Deactivated (void);
@@ -375,16 +348,13 @@ protected:
         ::com::sun::star::accessibility::XAccessible>& xOLEObject);
 	//=====  XAccessibleGetAccFromXShape  ============================================
 	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >
-		SAL_CALL get_AccFlowTo(const ::com::sun::star::uno::Any& rAny, sal_Int32 nType)
-		throw ( ::com::sun::star::uno::RuntimeException );
+		SAL_CALL get_AccFlowTo(const ::com::sun::star::uno::Any& rAny, sal_Int32 nType);
 
 public:
 	virtual void SwitchViewActivated (void) { Activated(); }
-	 virtual sal_Int32 SAL_CALL getForeground(  ) 
-        throw (::com::sun::star::uno::RuntimeException);
+	 virtual sal_Int32 SAL_CALL getForeground(  );
 
-    virtual sal_Int32 SAL_CALL getBackground(  ) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual sal_Int32 SAL_CALL getBackground(  );
     virtual void impl_dispose (void);
 };
 

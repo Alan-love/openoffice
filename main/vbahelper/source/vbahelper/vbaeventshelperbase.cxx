@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -59,7 +59,6 @@ VbaEventsHelperBase::~VbaEventsHelperBase()
 }
 
 sal_Bool SAL_CALL VbaEventsHelperBase::hasVbaEventHandler( sal_Int32 nEventId, const uno::Sequence< uno::Any >& rArgs )
-        throw (lang::IllegalArgumentException, uno::RuntimeException)
 {
     // getEventHandlerInfo() throws, if unknown event dentifier has been passed
     const EventHandlerInfo& rInfo = getEventHandlerInfo( nEventId );
@@ -68,19 +67,18 @@ sal_Bool SAL_CALL VbaEventsHelperBase::hasVbaEventHandler( sal_Int32 nEventId, c
 }
 
 sal_Bool SAL_CALL VbaEventsHelperBase::processVbaEvent( sal_Int32 nEventId, const uno::Sequence< uno::Any >& rArgs )
-        throw (lang::IllegalArgumentException, util::VetoException, uno::RuntimeException)
 {
     /*  Derived classes may add new event identifiers to be processed while
         processing the original event. All unprocessed events are collected in
         a queue. First element in the queue is the next event to be processed. */
     EventQueue aEventQueue;
     aEventQueue.push_back( EventQueueEntry( nEventId, rArgs ) );
-    
+
     /*  bCancel will contain the current Cancel value. It is possible that
         multiple events will try to modify the Cancel value. Every event
         handler receives the Cancel value of the previous event handler. */
     bool bCancel = false;
-    
+
     /*  bExecuted will change to true if at least one event handler has been
         found and executed. */
     bool bExecuted = false;
@@ -145,14 +143,14 @@ sal_Bool SAL_CALL VbaEventsHelperBase::processVbaEvent( sal_Int32 nEventId, cons
     return bExecuted;
 }
 
-void SAL_CALL VbaEventsHelperBase::notifyEvent( const document::EventObject& rEvent ) throw (uno::RuntimeException)
+void SAL_CALL VbaEventsHelperBase::notifyEvent( const document::EventObject& rEvent )
 {
     OSL_TRACE( "VbaEventsHelperBase::notifyEvent( \"%s\" )", ::rtl::OUStringToOString( rEvent.EventName, RTL_TEXTENCODING_UTF8 ).getStr() );
     if( rEvent.EventName == GlobalEventConfig::GetEventName( STR_EVENT_CLOSEDOC ) )
         stopListening();
 }
 
-void SAL_CALL VbaEventsHelperBase::changesOccurred( const util::ChangesEvent& rEvent ) throw (uno::RuntimeException)
+void SAL_CALL VbaEventsHelperBase::changesOccurred( const util::ChangesEvent& rEvent )
 {
     // make sure the VBA library exists
     try
@@ -190,7 +188,7 @@ void SAL_CALL VbaEventsHelperBase::changesOccurred( const util::ChangesEvent& rE
     }
 }
 
-void SAL_CALL VbaEventsHelperBase::disposing( const lang::EventObject& rEvent ) throw (uno::RuntimeException)
+void SAL_CALL VbaEventsHelperBase::disposing( const lang::EventObject& rEvent )
 {
     uno::Reference< frame::XModel > xSender( rEvent.Source, uno::UNO_QUERY );
     if( xSender.is() )
@@ -249,7 +247,7 @@ void VbaEventsHelperBase::stopListening()
 }
 
 const VbaEventsHelperBase::EventHandlerInfo& VbaEventsHelperBase::getEventHandlerInfo(
-        sal_Int32 nEventId ) const throw (lang::IllegalArgumentException)
+        sal_Int32 nEventId ) const
 {
     EventHandlerInfoMap::const_iterator aIt = maEventInfos.find( nEventId );
     if( aIt == maEventInfos.end() )
@@ -258,7 +256,7 @@ const VbaEventsHelperBase::EventHandlerInfo& VbaEventsHelperBase::getEventHandle
 }
 
 OUString VbaEventsHelperBase::getEventHandlerPath( const EventHandlerInfo& rInfo,
-        const uno::Sequence< uno::Any >& rArgs ) throw (lang::IllegalArgumentException, uno::RuntimeException)
+        const uno::Sequence< uno::Any >& rArgs )
 {
     OUString aModuleName;
     switch( rInfo.mnModuleType )
@@ -285,7 +283,7 @@ OUString VbaEventsHelperBase::getEventHandlerPath( const EventHandlerInfo& rInfo
     return rPathMap[ rInfo.mnEventId ];
 }
 
-void VbaEventsHelperBase::ensureVBALibrary() throw (uno::RuntimeException)
+void VbaEventsHelperBase::ensureVBALibrary()
 {
     if( !mxModuleInfos.is() ) try
     {
@@ -308,7 +306,7 @@ void VbaEventsHelperBase::ensureVBALibrary() throw (uno::RuntimeException)
     }
 }
 
-sal_Int32 VbaEventsHelperBase::getModuleType( const OUString& rModuleName ) throw (uno::RuntimeException)
+sal_Int32 VbaEventsHelperBase::getModuleType( const OUString& rModuleName )
 {
     // make sure the VBA library exists
     ensureVBALibrary();
@@ -328,7 +326,7 @@ sal_Int32 VbaEventsHelperBase::getModuleType( const OUString& rModuleName ) thro
     throw uno::RuntimeException();
 }
 
-VbaEventsHelperBase::ModulePathMap& VbaEventsHelperBase::updateModulePathMap( const ::rtl::OUString& rModuleName ) throw (uno::RuntimeException)
+VbaEventsHelperBase::ModulePathMap& VbaEventsHelperBase::updateModulePathMap( const ::rtl::OUString& rModuleName )
 {
     // get type of the specified module (throws on error)
     sal_Int32 nModuleType = getModuleType( rModuleName );

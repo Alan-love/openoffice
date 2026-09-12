@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -60,7 +60,12 @@ ssl_param=--with-ssl
 .ELSE
 ssl_param=--with-ssl=$(OUTDIR)
 curl_CFLAGS+=-I$(SOLARINCDIR)$/external
+# -z origin/-rpath $ORIGIN are Linux/ELF idioms; Apple's ld rejects both.
+.IF "$(OS)"!="MACOSX"
 curl_LDFLAGS+=-L$(SOLARLIBDIR) -Wl,-z,origin -Wl,-rpath,\\\$$\$$ORIGIN
+.ELSE
+curl_LDFLAGS+=-L$(SOLARLIBDIR)
+.ENDIF
 PATCH_FILES+= curl-bundled_openssl.patch
 .ENDIF
 
@@ -73,7 +78,12 @@ BUILD_DIR=$(CONFIGURE_DIR)$/lib
 BUILD_ACTION=$(GNUMAKE)
 BUILD_FLAGS+= -j$(EXTMAXPROCESS)
 
+.IF "$(OS)"=="MACOSX"
+# libtool names macOS dylibs libcurl.<major>.dylib, not libcurl.dylib.<major>.
+OUT2LIB=$(BUILD_DIR)$/.libs$/libcurl.*.dylib
+.ELSE
 OUT2LIB=$(BUILD_DIR)$/.libs$/libcurl$(DLLPOST).4
+.ENDIF
 .ENDIF			# "$(GUI)"=="UNX"
 
 
@@ -119,11 +129,25 @@ BUILD_ACTION=CC="cl.exe" nmake -f Makefile.vc mode=dll VC=9 DEBUG=yes EXCFLAGS=$
 .ENDIF
 
 .IF "$(CPUNAME)"=="INTEL"
+
+.IF "$(debug)"==""
 OUT2BIN=$(BUILD_DIR)$/../builds/libcurl-vc9-X86-release-dll-ssl-dll-zlib-dll-ipv6-sspi/bin/libcurl.dll
 OUT2LIB=$(BUILD_DIR)$/../builds/libcurl-vc9-X86-release-dll-ssl-dll-zlib-dll-ipv6-sspi/lib/libcurl.lib
+.ELSE
+OUT2BIN=$(BUILD_DIR)$/../builds/libcurl-vc9-X86-debug-dll-ssl-dll-zlib-dll-ipv6-sspi/bin/libcurl_debug.dll
+OUT2LIB=$(BUILD_DIR)$/../builds/libcurl-vc9-X86-debug-dll-ssl-dll-zlib-dll-ipv6-sspi/lib/libcurl_debug.lib
+.ENDIF
+
 .ELIF "$(CPUNAME)"=="X86_64"
+
+.IF "$(debug)"==""
 OUT2BIN=$(BUILD_DIR)$/../builds/libcurl-vc9-X64-release-dll-ssl-dll-zlib-dll-ipv6-sspi/bin/libcurl.dll
 OUT2LIB=$(BUILD_DIR)$/../builds/libcurl-vc9-X64-release-dll-ssl-dll-zlib-dll-ipv6-sspi/lib/libcurl.lib
+.ELSE
+OUT2BIN=$(BUILD_DIR)$/../builds/libcurl-vc9-X64-debug-dll-ssl-dll-zlib-dll-ipv6-sspi/bin/libcurl_debug.dll
+OUT2LIB=$(BUILD_DIR)$/../builds/libcurl-vc9-X64-debug-dll-ssl-dll-zlib-dll-ipv6-sspi/lib/libcurl_debug.lib
+.ENDIF
+
 .ENDIF
 
 .ENDIF

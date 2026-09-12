@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -39,26 +39,26 @@ class PagesImpl : public PagesImpl_Base
 	sal_Int32 mnPages;
 public:
 	PagesImpl( sal_Int32 nPages ) : mnPages( nPages ) {}
-	virtual ::sal_Int32 SAL_CALL getCount() throw (uno::RuntimeException) { return mnPages; }
-	virtual uno::Any SAL_CALL getByIndex( ::sal_Int32 Index ) throw (lang::IndexOutOfBoundsException, lang::WrappedTargetException, ::uno::RuntimeException)
+	virtual ::sal_Int32 SAL_CALL getCount() { return mnPages; }
+	virtual uno::Any SAL_CALL getByIndex( ::sal_Int32 Index )
 	{
 		if ( Index < 0 || Index > mnPages )
 			throw lang::IndexOutOfBoundsException();
 		return uno::makeAny( uno::Reference< uno::XInterface >() );
 	}
 	// XElementAccess
-	virtual uno::Type SAL_CALL getElementType() throw (uno::RuntimeException)
+	virtual uno::Type SAL_CALL getElementType()
 	{
 		// no Pages object yet #FIXME
 		//return msforms::XPage::static_type(0);
 		return uno::XInterface::static_type(0);
 	}
-	virtual ::sal_Bool SAL_CALL hasElements( ) throw (uno::RuntimeException)
+	virtual ::sal_Bool SAL_CALL hasElements( )
 	{
 		return ( mnPages > 0 );
 	}
 };
-uno::Reference< container::XIndexAccess > 
+uno::Reference< container::XIndexAccess >
 ScVbaMultiPage::getPages( sal_Int32 nPages )
 {
 	return new PagesImpl( nPages );
@@ -79,16 +79,16 @@ ScVbaMultiPage::ScVbaMultiPage(
 }
 
 // Attributes
-sal_Int32 SAL_CALL 
-ScVbaMultiPage::getValue() throw (css::uno::RuntimeException)
+sal_Int32 SAL_CALL
+ScVbaMultiPage::getValue()
 {
     sal_Int32 nValue = 0;
     m_xProps->getPropertyValue( SVALUE ) >>= nValue;
     return nValue;
 }
 
-void SAL_CALL 
-ScVbaMultiPage::setValue( const sal_Int32 _value ) throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL
+ScVbaMultiPage::setValue( const sal_Int32 _value )
 {
     // track change in dialog ( dialog value is 1 based, 0 is a special value )
     m_xProps->setPropertyValue( SVALUE, uno::makeAny( _value ) );
@@ -96,15 +96,15 @@ ScVbaMultiPage::setValue( const sal_Int32 _value ) throw (::com::sun::star::uno:
 }
 
 
-rtl::OUString& 
+rtl::OUString&
 ScVbaMultiPage::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("ScVbaMultiPage") );
 	return sImplName;
 }
 
-uno::Any SAL_CALL 
-ScVbaMultiPage::Pages( const uno::Any& index ) throw (uno::RuntimeException)
+uno::Any SAL_CALL
+ScVbaMultiPage::Pages( const uno::Any& index )
 {
 	sal_Int32 nValue = 0;
 	m_xProps->getPropertyValue( SVALUEMAX ) >>= nValue;
@@ -114,7 +114,7 @@ ScVbaMultiPage::Pages( const uno::Any& index ) throw (uno::RuntimeException)
 	return xColl->Item( uno::makeAny( index ), uno::Any() );
 }
 
-uno::Sequence< rtl::OUString > 
+uno::Sequence< rtl::OUString >
 ScVbaMultiPage::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > aServiceNames;

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -59,32 +59,27 @@ public:
 
 protected:
     // ____ OPropertySet ____
-    virtual ::com::sun::star::uno::Any GetDefaultValue( sal_Int32 nHandle ) const
-        throw(::com::sun::star::beans::UnknownPropertyException);
+    virtual ::com::sun::star::uno::Any GetDefaultValue( sal_Int32 nHandle ) const;
     virtual ::cppu::IPropertyArrayHelper & SAL_CALL getInfoHelper();
 
     // ____ XPropertySet ____
     virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL
-        getPropertySetInfo()
-        throw (::com::sun::star::uno::RuntimeException);
+        getPropertySetInfo();
 
     // ____ XChartTypeTemplate ____
     virtual sal_Bool SAL_CALL matchesTemplate(
         const ::com::sun::star::uno::Reference<
             ::com::sun::star::chart2::XDiagram >& xDiagram,
-        sal_Bool bAdaptProperties )
-        throw (::com::sun::star::uno::RuntimeException);
+        sal_Bool bAdaptProperties );
     virtual ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XChartType > SAL_CALL
         getChartTypeForNewSeries( const ::com::sun::star::uno::Sequence<
             ::com::sun::star::uno::Reference<
-                ::com::sun::star::chart2::XChartType > >& aFormerlyUsedChartTypes )
-        throw (::com::sun::star::uno::RuntimeException);
+                ::com::sun::star::chart2::XChartType > >& aFormerlyUsedChartTypes );
     virtual void SAL_CALL applyStyle(
         const ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDataSeries >& xSeries,
         ::sal_Int32 nChartTypeGroupIndex,
         ::sal_Int32 nSeriesIndex,
-        ::sal_Int32 nSeriesCount )
-        throw (::com::sun::star::uno::RuntimeException);
+        ::sal_Int32 nSeriesCount );
 
     // ____ ChartTypeTemplate ____
     virtual ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XChartType >

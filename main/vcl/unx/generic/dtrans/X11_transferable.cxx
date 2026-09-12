@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_vcl.hxx"
@@ -64,7 +62,6 @@ X11Transferable::~X11Transferable()
 //==================================================================================================
 
 Any SAL_CALL X11Transferable::getTransferData( const DataFlavor& rFlavor )
-    throw(UnsupportedFlavorException, IOException, RuntimeException)
 {
 	Any aRet;
 	Sequence< sal_Int8 > aData;
@@ -97,7 +94,6 @@ Any SAL_CALL X11Transferable::getTransferData( const DataFlavor& rFlavor )
 //==================================================================================================
 
 Sequence< DataFlavor > SAL_CALL X11Transferable::getTransferDataFlavors()
-    throw(RuntimeException)
 {
 	Sequence< DataFlavor > aFlavorList;
 	bool bSuccess = m_rManager.getPasteDataTypes( m_aSelection ? m_aSelection : XA_PRIMARY, aFlavorList );
@@ -110,7 +106,6 @@ Sequence< DataFlavor > SAL_CALL X11Transferable::getTransferDataFlavors()
 //==================================================================================================
 
 sal_Bool SAL_CALL X11Transferable::isDataFlavorSupported( const DataFlavor& aFlavor )
-    throw(RuntimeException)
 {
 	if( aFlavor.DataType != getCppuType( (Sequence< sal_Int8 >*)0 ) )
 	{
@@ -128,3 +123,4 @@ sal_Bool SAL_CALL X11Transferable::isDataFlavorSupported( const DataFlavor& aFla
 	return sal_False;
 }
 
+/* vim: set noet sw=4 ts=4: */

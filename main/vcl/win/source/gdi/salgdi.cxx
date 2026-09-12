@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -622,7 +622,7 @@ void ImplClearHDCCache( SalData* pData )
 // Make sure pWinPointAry and pWinFlagAry are big enough
 void ImplPreparePolyDraw( bool						bCloseFigures,
                           sal_uLong 					nPoly,
-                          const sal_uLong* 				pPoints,
+                          const sal_uInt32* 				pPoints,
                           const SalPoint* const* 	pPtAry,
                           const BYTE* const* 		pFlgAry,
                           POINT* 					pWinPointAry,
@@ -633,9 +633,9 @@ void ImplPreparePolyDraw( bool						bCloseFigures,
     {
         const POINT* pCurrPoint = reinterpret_cast<const POINT*>( *pPtAry++ );
         const BYTE* pCurrFlag = *pFlgAry++;
-        const sal_uLong nCurrPoints = *pPoints++;
+        const sal_uInt32 nCurrPoints = *pPoints++;
         const bool bHaveFlagArray( pCurrFlag );
-        sal_uLong nCurrPoint;
+        sal_uInt32 nCurrPoint;
 
         if( nCurrPoints )
         {
@@ -888,12 +888,12 @@ bool WinSalGraphics::setClipRegion( const Region& i_rClip )
         // #122149# check the comment above to know that this may lead to potentioal repaint
         // problems. It may be solved (if needed) by scaling the polygon by one in X
         // and Y. Currently the workaround to only use it if really unavoidable will
-        // solve most cases. When someone is really using polygon-based Regions he 
+        // solve most cases. When someone is really using polygon-based Regions he
         // should know what he is doing.
         // Added code to do that scaling to check if it works, testing it.
         const basegfx::B2DPolyPolygon aPolyPolygon( i_rClip.GetAsB2DPolyPolygon() );
         const sal_uInt32 nCount(aPolyPolygon.count());
-    
+
         if( nCount )
         {
             std::vector< POINT > aPolyPoints;
@@ -913,7 +913,7 @@ bool WinSalGraphics::setClipRegion( const Region& i_rClip )
             {
                 const basegfx::B2DPolygon aPoly(
                     basegfx::tools::adaptiveSubdivideByDistance(
-                        aPolyPolygon.getB2DPolygon(a), 
+                        aPolyPolygon.getB2DPolygon(a),
                         1));
                 const sal_uInt32 nPoints(aPoly.count());
                 aPolyCounts[a] = nPoints;
@@ -934,7 +934,7 @@ bool WinSalGraphics::setClipRegion( const Region& i_rClip )
                     aPolyPoints.push_back( aPOINT );
                 }
             }
-            
+
             mhRegion = CreatePolyPolygonRgn( &aPolyPoints[0], &aPolyCounts[0], nCount, ALTERNATE );
         }
 	}
@@ -1033,18 +1033,18 @@ bool WinSalGraphics::setClipRegion( const Region& i_rClip )
         {
             ULONG nSize = mpClipRgnData->rdh.nRgnSize+sizeof(RGNDATAHEADER);
             mhRegion = ExtCreateRegion( NULL, nSize, mpClipRgnData );
-    
+
             // if ExtCreateRegion(...) is not supported
             if( !mhRegion )
             {
                 RGNDATAHEADER* pHeader = (RGNDATAHEADER*) mpClipRgnData;
-    
+
                 if( pHeader->nCount )
                 {
                     RECT* pRect = (RECT*) mpClipRgnData->Buffer;
                     mhRegion = CreateRectRgn( pRect->left, pRect->top, pRect->right, pRect->bottom );
                     pRect++;
-    
+
                     for( ULONG n = 1; n < pHeader->nCount; n++, pRect++ )
                     {
                         HRGN hRgn = CreateRectRgn( pRect->left, pRect->top, pRect->right, pRect->bottom );
@@ -1053,7 +1053,7 @@ bool WinSalGraphics::setClipRegion( const Region& i_rClip )
                     }
                 }
             }
-    
+
             if ( mpClipRgnData != mpStdClipRgnData )
                 delete [] mpClipRgnData;
         }
@@ -1601,7 +1601,7 @@ sal_Bool WinSalGraphics::drawPolyPolygonBezier( sal_uInt32 nPoly, const sal_uInt
 				"WinSalGraphics::DrawPolyPolygonBezier(): POINT != SalPoint" );
 
     sal_uLong nCurrPoly, nTotalPoints;
-    const sal_uLong* pCurrPoints = pPoints;
+    const sal_uInt32* pCurrPoints = pPoints;
     for( nCurrPoly=0, nTotalPoints=0; nCurrPoly<nPoly; ++nCurrPoly )
         nTotalPoints += *pCurrPoints++;
 

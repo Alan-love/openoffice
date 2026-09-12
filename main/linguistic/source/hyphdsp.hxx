@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -81,7 +81,7 @@ class HyphenatorDispatcher :
 
 	com::sun::star::uno::Reference<
 		::com::sun::star::linguistic2::XHyphenatedWord>
-            buildHyphWord( const rtl::OUString rOrigWord, 
+            buildHyphWord( const rtl::OUString rOrigWord,
                 const ::com::sun::star::uno::Reference<
 					::com::sun::star::linguistic2::XDictionaryEntry> &xEntry,
 				sal_Int16 nLang, sal_Int16 nMaxLeading );
@@ -99,11 +99,9 @@ public:
 	// XSupportedLocales
     virtual ::com::sun::star::uno::Sequence<
 			::com::sun::star::lang::Locale > SAL_CALL
-		getLocales()
-			throw(::com::sun::star::uno::RuntimeException);
+		getLocales();
     virtual sal_Bool SAL_CALL
-		hasLocale( const ::com::sun::star::lang::Locale& aLocale )
-			throw(::com::sun::star::uno::RuntimeException);
+		hasLocale( const ::com::sun::star::lang::Locale& aLocale );
 
 	// XHyphenator
     virtual ::com::sun::star::uno::Reference<
@@ -111,25 +109,19 @@ public:
 		hyphenate( const ::rtl::OUString& aWord,
 				const ::com::sun::star::lang::Locale& aLocale,
 				sal_Int16 nMaxLeading,
-				const ::com::sun::star::beans::PropertyValues& aProperties )
-			throw(::com::sun::star::lang::IllegalArgumentException,
-				  ::com::sun::star::uno::RuntimeException);
+				const ::com::sun::star::beans::PropertyValues& aProperties );
     virtual ::com::sun::star::uno::Reference<
 			::com::sun::star::linguistic2::XHyphenatedWord > SAL_CALL
 		queryAlternativeSpelling( const ::rtl::OUString& aWord,
 				const ::com::sun::star::lang::Locale& aLocale,
 				sal_Int16 nIndex,
-				const ::com::sun::star::beans::PropertyValues& aProperties )
-			throw(::com::sun::star::lang::IllegalArgumentException,
-				  ::com::sun::star::uno::RuntimeException);
+				const ::com::sun::star::beans::PropertyValues& aProperties );
     virtual ::com::sun::star::uno::Reference<
 			::com::sun::star::linguistic2::XPossibleHyphens > SAL_CALL
 		createPossibleHyphens(
 				const ::rtl::OUString& aWord,
 				const ::com::sun::star::lang::Locale& aLocale,
-				const ::com::sun::star::beans::PropertyValues& aProperties )
-			throw(::com::sun::star::lang::IllegalArgumentException,
-				  ::com::sun::star::uno::RuntimeException);
+				const ::com::sun::star::beans::PropertyValues& aProperties );
 
 	// LinguDispatcher
 	virtual void
@@ -147,7 +139,7 @@ inline ::com::sun::star::uno::Reference<
 	::com::sun::star::beans::XPropertySet >
 		HyphenatorDispatcher::GetPropSet()
 {
-	return xPropSet.is() ? 
+	return xPropSet.is() ?
 				xPropSet : xPropSet = ::linguistic::GetLinguProperties();
 }
 
@@ -156,7 +148,7 @@ inline ::com::sun::star::uno::Reference<
 	::com::sun::star::linguistic2::XSearchableDictionaryList >
 		HyphenatorDispatcher::GetDicList()
 {
-	return xDicList.is() ? 
+	return xDicList.is() ?
 				xDicList : xDicList = ::linguistic::GetSearchableDictionaryList();
 }
 
@@ -165,4 +157,3 @@ inline ::com::sun::star::uno::Reference<
 
 
 #endif
-

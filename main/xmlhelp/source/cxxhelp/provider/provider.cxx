@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -114,7 +114,6 @@ XTYPEPROVIDER_IMPL_5( ContentProvider,
 //=========================================================================
 
 rtl::OUString SAL_CALL ContentProvider::getImplementationName()
-	throw( uno::RuntimeException )
 {
 	return getImplementationName_Static();
 }
@@ -126,7 +125,6 @@ rtl::OUString ContentProvider::getImplementationName_Static()
 
 sal_Bool SAL_CALL
 ContentProvider::supportsService(const rtl::OUString& ServiceName )
-	throw( uno::RuntimeException )
 {
 	uno::Sequence< rtl::OUString > aSNL = getSupportedServiceNames();
 	const rtl::OUString* pArray = aSNL.getArray();
@@ -141,7 +139,6 @@ ContentProvider::supportsService(const rtl::OUString& ServiceName )
 
 uno::Sequence< rtl::OUString > SAL_CALL
 ContentProvider::getSupportedServiceNames()
-	throw( uno::RuntimeException )
 {
 	return getSupportedServiceNames_Static();
 }
@@ -149,7 +146,6 @@ ContentProvider::getSupportedServiceNames()
 static uno::Reference< uno::XInterface > SAL_CALL
 ContentProvider_CreateInstance(
  	    const uno::Reference< lang::XMultiServiceFactory> & rSMgr )
-	throw( uno::Exception )
 {
     lang::XServiceInfo * pX = static_cast< lang::XServiceInfo * >(
         new ContentProvider( rSMgr ) );
@@ -188,7 +184,6 @@ ONE_INSTANCE_SERVICE_FACTORY_IMPL( ContentProvider );
 uno::Reference< ucb::XContent > SAL_CALL
 ContentProvider::queryContent(
         const uno::Reference< ucb::XContentIdentifier >& xCanonicId )
-    throw( ucb::IllegalIdentifierException, uno::RuntimeException )
 {
     if ( !xCanonicId->getContentProviderScheme()
              .equalsIgnoreAsciiCase( m_aScheme ) )
@@ -231,7 +226,6 @@ ContentProvider::queryContent(
 
 void SAL_CALL
 ContentProvider::dispose()
-	throw ( uno::RuntimeException)
 {
 	if(m_xContainer.is())
 	{
@@ -242,7 +236,6 @@ ContentProvider::dispose()
 
 void SAL_CALL
 ContentProvider::elementReplaced(const container::ContainerEvent& Event)
-	throw (uno::RuntimeException)
 {
 	if(!m_pDatabases)
 		return;

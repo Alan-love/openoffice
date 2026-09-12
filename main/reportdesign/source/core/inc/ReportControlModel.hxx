@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -91,7 +91,7 @@ namespace reportdesign
 		OReportComponentProperties							aComponent;
 		OFormatProperties									aFormatProperties;
         ::com::sun::star::container::XContainer*            m_pOwner;
-        ::std::vector< ::com::sun::star::uno::Reference< ::com::sun::star::report::XFormatCondition> > 
+        ::std::vector< ::com::sun::star::uno::Reference< ::com::sun::star::report::XFormatCondition> >
                                                             m_aFormatConditions;
         osl::Mutex&                                         m_rMutex;
 		::rtl::OUString										aDataField;
@@ -109,25 +109,24 @@ namespace reportdesign
 		{}
 
         // XContainer
-		void addContainerListener( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XContainerListener >& xListener ) throw (::com::sun::star::uno::RuntimeException);
-		void removeContainerListener( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XContainerListener >& xListener ) throw (::com::sun::star::uno::RuntimeException);
+		void addContainerListener( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XContainerListener >& xListener );
+		void removeContainerListener( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XContainerListener >& xListener );
 
 		// XElementAccess
-		::sal_Bool hasElements(  ) throw (::com::sun::star::uno::RuntimeException);
+		::sal_Bool hasElements(  );
 
 		// XIndexReplace
-		void replaceByIndex( ::sal_Int32 Index, const ::com::sun::star::uno::Any& Element ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
+		void replaceByIndex( ::sal_Int32 Index, const ::com::sun::star::uno::Any& Element );
 
 		// XIndexContainer
-		void insertByIndex( ::sal_Int32 Index, const ::com::sun::star::uno::Any& Element ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
-		void removeByIndex( ::sal_Int32 Index ) throw (::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
+		void insertByIndex( ::sal_Int32 Index, const ::com::sun::star::uno::Any& Element );
+		void removeByIndex( ::sal_Int32 Index );
 
 		// XIndexAccess
-		::sal_Int32 getCount(  ) throw (::com::sun::star::uno::RuntimeException);
-		::com::sun::star::uno::Any getByIndex( ::sal_Int32 Index ) throw (::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
+		::sal_Int32 getCount(  );
+		::com::sun::star::uno::Any getByIndex( ::sal_Int32 Index );
 
         static bool isInterfaceForbidden(const ::com::sun::star::uno::Type& _rType);
 	};
 }
 #endif // RPT_REPORTCONTROLMODEL_HXX
-

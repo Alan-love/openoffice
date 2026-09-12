@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartcontroller.hxx"
 #include "ChartController.hxx"
 #include "servicenames.hxx"
 #include "ResId.hxx"
@@ -358,10 +358,9 @@ APPHELPER_XSERVICEINFO_IMPL(ChartController,CHART_CONTROLLER_SERVICE_IMPLEMENTAT
 
 		void SAL_CALL ChartController
 ::attachFrame( const uno::Reference<frame::XFrame>& xFrame )
-		throw(uno::RuntimeException)
 {
     ::vos::OGuard aGuard( Application::GetSolarMutex());
-	
+
 	if( impl_isDisposedOrSuspended() ) //@todo? allow attaching the frame while suspended?
 		return; //behave passive if already disposed or suspended
 
@@ -407,7 +406,7 @@ APPHELPER_XSERVICEINFO_IMPL(ChartController,CHART_CONTROLLER_SERVICE_IMPLEMENTAT
 	}
 	{
         awt::Size aPageSize( ChartModelHelper::getPageSize(getModel()) );
-        
+
 		// calls to VCL
 		::vos::OGuard aSolarGuard( Application::GetSolarMutex());
 		m_pChartWindow = new ChartWindow(this,pParent,pParent?pParent->GetStyle():0);
@@ -464,7 +463,6 @@ APPHELPER_XSERVICEINFO_IMPL(ChartController,CHART_CONTROLLER_SERVICE_IMPLEMENTAT
 
 //XModeChangeListener
 void SAL_CALL ChartController::modeChanged( const util::ModeChangeEvent& rEvent )
-    throw ( uno::RuntimeException )
 {
     //adjust controller to view status changes
 
@@ -530,7 +528,6 @@ void SAL_CALL ChartController::modeChanged( const util::ModeChangeEvent& rEvent 
 
 		sal_Bool SAL_CALL ChartController
 ::attachModel( const uno::Reference< frame::XModel > & xModel )
-		throw(uno::RuntimeException)
 {
     impl_invalidateAccessible();
 
@@ -626,7 +623,7 @@ void SAL_CALL ChartController::modeChanged( const util::ModeChangeEvent& rEvent 
 }
 
 		uno::Reference< frame::XFrame > SAL_CALL ChartController
-::getFrame()	throw(uno::RuntimeException)
+::getFrame()
 {
 	//provides access to owner frame of this controller
 	//return the frame containing this controller
@@ -635,7 +632,7 @@ void SAL_CALL ChartController::modeChanged( const util::ModeChangeEvent& rEvent 
 }
 
 		uno::Reference< frame::XModel > SAL_CALL ChartController
-::getModel()	throw(uno::RuntimeException)
+::getModel()
 {
 	//provides access to currently attached model
 	//returns the currently attached model
@@ -649,7 +646,7 @@ void SAL_CALL ChartController::modeChanged( const util::ModeChangeEvent& rEvent 
 }
 
 		uno::Any SAL_CALL ChartController
-::getViewData() throw(uno::RuntimeException)
+::getViewData()
 {
 	//provides access to current view status
 	//set of data that can be used to restore the current view status at later time
@@ -668,7 +665,6 @@ void SAL_CALL ChartController::modeChanged( const util::ModeChangeEvent& rEvent 
 
 		void SAL_CALL ChartController
 ::restoreViewData( const uno::Any& /* Value */ )
-		throw(uno::RuntimeException)
 {
 	//restores the view status using the data gotten from a previous call to XController::getViewData()
 
@@ -681,7 +677,6 @@ void SAL_CALL ChartController::modeChanged( const util::ModeChangeEvent& rEvent 
 
 		sal_Bool SAL_CALL ChartController
 ::suspend( sal_Bool bSuspend )
-		throw(uno::RuntimeException)
 {
 	//is called to prepare the controller for closing the view
 	//bSuspend==true: force the controller to suspend his work
@@ -758,7 +753,7 @@ void ChartController::impl_deleteDrawViewController()
 //-----------------------------------------------------------------
 
 		void SAL_CALL ChartController
-::dispose() throw(uno::RuntimeException)
+::dispose()
 {
     try
     {
@@ -861,7 +856,6 @@ void ChartController::impl_deleteDrawViewController()
 
 		void SAL_CALL ChartController
 ::addEventListener( const uno::Reference<lang::XEventListener>& xListener )
-		throw(uno::RuntimeException)
 {
 	::vos::OGuard aGuard( Application::GetSolarMutex());
 	if( impl_isDisposedOrSuspended() )//@todo? allow adding of listeners in suspend mode?
@@ -874,7 +868,6 @@ void ChartController::impl_deleteDrawViewController()
 		void SAL_CALL ChartController
 ::removeEventListener( const uno::Reference<
 		lang::XEventListener>& xListener )
-		throw(uno::RuntimeException)
 {
 	::vos::OGuard aGuard( Application::GetSolarMutex());
     if( m_aLifeTimeManager.impl_isDisposed(false) )
@@ -890,7 +883,6 @@ void ChartController::impl_deleteDrawViewController()
 //-----------------------------------------------------------------
 		void SAL_CALL ChartController
 ::queryClosing( const lang::EventObject& rSource, sal_Bool bGetsOwnership )
-		throw(util::CloseVetoException, uno::RuntimeException)
 {
 	//do not use the m_aControllerMutex here because this call is not allowed to block
 
@@ -922,9 +914,8 @@ void ChartController::impl_deleteDrawViewController()
 
 		void SAL_CALL ChartController
 ::notifyClosing( const lang::EventObject& rSource )
-		throw(uno::RuntimeException)
 {
-	//Listener should deregister himself and relaese all references to the closing object.
+	//Listener should deregister himself and release all references to the closing object.
 
 	TheModelRef aModelRef( m_aModel, m_aModelMutex);
     if( impl_releaseThisModel( rSource.Source ) )
@@ -972,7 +963,6 @@ bool ChartController::impl_releaseThisModel( const uno::Reference< uno::XInterfa
 //-----------------------------------------------------------------
 		void SAL_CALL ChartController
 ::disposing( const lang::EventObject& rSource )
-		throw(uno::RuntimeException)
 {
     if( !impl_releaseThisModel( rSource.Source ))
     {
@@ -982,7 +972,6 @@ bool ChartController::impl_releaseThisModel( const uno::Reference< uno::XInterfa
 }
 
 void SAL_CALL ChartController::layoutEvent( const lang::EventObject& aSource, ::sal_Int16 eLayoutEvent, const uno::Any& /* aInfo */ )
-    throw (uno::RuntimeException)
 {
     if( eLayoutEvent == frame::LayoutManagerEvents::MERGEDMENUBAR )
     {
@@ -1062,7 +1051,6 @@ bool lcl_isFormatObjectCommand( const rtl::OString& aCommand )
 ::queryDispatch( const util::URL& rURL
 		, const rtl::OUString& rTargetFrameName
 		, sal_Int32 /* nSearchFlags */)
-		throw(uno::RuntimeException)
 {
 	if ( !m_aLifeTimeManager.impl_isDisposed() && getModel().is() )
 	{
@@ -1076,7 +1064,6 @@ bool lcl_isFormatObjectCommand( const rtl::OString& aCommand )
 		uno::Sequence<uno::Reference<frame::XDispatch > >	ChartController
 ::queryDispatches( const uno::Sequence<
 		frame::DispatchDescriptor>& xDescripts)
-		throw(uno::RuntimeException)
 {
 	if ( !m_aLifeTimeManager.impl_isDisposed() )
 	{
@@ -1092,7 +1079,6 @@ bool lcl_isFormatObjectCommand( const rtl::OString& aCommand )
 	void SAL_CALL ChartController
 ::dispatch( const util::URL& rURL
 			, const uno::Sequence< beans::PropertyValue >& rArgs )
-			throw (uno::RuntimeException)
 {
     //@todo avoid OString (see Mathias mail on bug #104387#)
 	rtl::OString aCommand( rtl::OUStringToOString( rURL.Path, RTL_TEXTENCODING_ASCII_US ) );
@@ -1276,7 +1262,6 @@ bool lcl_isFormatObjectCommand( const rtl::OString& aCommand )
 	void SAL_CALL ChartController
 ::addStatusListener( const uno::Reference<frame::XStatusListener >& /* xControl */
 			, const util::URL& /* aURL */ )
-			throw (uno::RuntimeException)
 {
 //     // TODO: add listener by URL !
 // 	::vos::OGuard aGuard( Application::GetSolarMutex());
@@ -1290,7 +1275,6 @@ bool lcl_isFormatObjectCommand( const rtl::OString& aCommand )
 	void SAL_CALL ChartController
 ::removeStatusListener( const uno::Reference<frame::XStatusListener >& /* xControl */
 			, const util::URL& /* aURL */ )
-			throw (uno::RuntimeException)
 {
 //     // TODO: remove listener by URL !
 // 	::vos::OGuard aGuard( Application::GetSolarMutex());
@@ -1307,7 +1291,6 @@ bool lcl_isFormatObjectCommand( const rtl::OString& aCommand )
 		void SAL_CALL ChartController
 ::registerContextMenuInterceptor( const uno::Reference<
 		ui::XContextMenuInterceptor > & /* xInterceptor */)
-		throw(uno::RuntimeException)
 {
 	//@todo
 }
@@ -1315,7 +1298,6 @@ bool lcl_isFormatObjectCommand( const rtl::OString& aCommand )
 		void SAL_CALL ChartController
 ::releaseContextMenuInterceptor( const uno::Reference<
 		ui::XContextMenuInterceptor > & /* xInterceptor */)
-		throw(uno::RuntimeException)
 {
 	//@todo
 }
@@ -1397,8 +1379,6 @@ void SAL_CALL ChartController::executeDispatch_MoveSeries( sal_Bool bForward )
 // ____ XMultiServiceFactory ____
 uno::Reference< uno::XInterface > SAL_CALL
     ChartController::createInstance( const ::rtl::OUString& aServiceSpecifier )
-    throw (uno::Exception,
-           uno::RuntimeException)
 {
     uno::Reference< uno::XInterface > xResult;
 
@@ -1410,8 +1390,6 @@ uno::Reference< uno::XInterface > SAL_CALL
 uno::Reference< uno::XInterface > SAL_CALL
     ChartController::createInstanceWithArguments( const ::rtl::OUString& ServiceSpecifier,
                                  const uno::Sequence< uno::Any >& /* Arguments */ )
-    throw (uno::Exception,
-           uno::RuntimeException)
 {
     // ignore Arguments
     return createInstance( ServiceSpecifier );
@@ -1419,7 +1397,6 @@ uno::Reference< uno::XInterface > SAL_CALL
 
 uno::Sequence< ::rtl::OUString > SAL_CALL
     ChartController::getAvailableServiceNames()
-    throw (uno::RuntimeException)
 {
     static uno::Sequence< ::rtl::OUString > aServiceNames;
 
@@ -1434,12 +1411,11 @@ uno::Sequence< ::rtl::OUString > SAL_CALL
 
 // ____ XModifyListener ____
 void SAL_CALL ChartController::modified( const lang::EventObject& /* aEvent */ )
-    throw (uno::RuntimeException)
 {
     // the source can also be a subobject of the ChartModel
     // @todo: change the source in ChartModel to always be the model itself ?
 //     if( getModel() == aEvent.Source )
-    
+
 
     //todo? update menu states ?
 }
@@ -1563,7 +1539,7 @@ void ChartController::impl_initializeAccessible( const uno::Reference< lang::XIn
         ( C2U("InsertMenuLegend") )   ( C2U("InsertLegend") )         ( C2U("DeleteLegend") )
         ( C2U("InsertMenuDataLabels") )
         ( C2U("InsertMenuAxes") )     ( C2U("InsertRemoveAxes") )         ( C2U("InsertMenuGrids") )
-        ( C2U("InsertSymbol") )       
+        ( C2U("InsertSymbol") )
         ( C2U("InsertTrendlineEquation") )  ( C2U("InsertTrendlineEquationAndR2") )
         ( C2U("InsertR2Value") )      ( C2U("DeleteR2Value") )
         ( C2U("InsertMenuTrendlines") )  ( C2U("InsertTrendline") )
@@ -1592,7 +1568,7 @@ void ChartController::impl_initializeAccessible( const uno::Reference< lang::XIn
         //context menu - format objects entries
         ( C2U("FormatWall") )        ( C2U("FormatFloor") )         ( C2U("FormatChartArea") )
         ( C2U("FormatLegend") )
-        
+
         ( C2U("FormatAxis") )           ( C2U("FormatTitle") )
         ( C2U("FormatDataSeries") )     ( C2U("FormatDataPoint") )
         ( C2U("ResetAllDataPoints") )   ( C2U("ResetDataPoint") )

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -196,7 +196,7 @@ class SbiProcDef : public SbiSymDef {	// Prozedur-Definition (aus Basic):
 	String maPropName;				// Property name if property procedure (!= proc name)
 	sal_Bool   bCdecl  : 1;				// sal_True: CDECL angegeben
 	sal_Bool   bPublic : 1;				// sal_True: proc ist PUBLIC
-	sal_Bool   mbProcDecl : 1;			// sal_True: instanciated by SbiParser::ProcDecl
+	sal_Bool   mbProcDecl : 1;			// sal_True: instantiated by SbiParser::ProcDecl
 public:
 	SbiProcDef( SbiParser*, const String&, sal_Bool bProcDecl=false );
 	virtual ~SbiProcDef();
@@ -246,4 +246,3 @@ public:
 
 
 #endif
-

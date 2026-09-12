@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -91,19 +91,14 @@ public:
     virtual void SAL_CALL release() throw ();
 
     virtual com::sun::star::uno::Reference< com::sun::star::uno::XInterface >
-    SAL_CALL getParent()
-        throw (com::sun::star::uno::RuntimeException);
+    SAL_CALL getParent();
 
     virtual void SAL_CALL setParent(
         com::sun::star::uno::Reference< com::sun::star::uno::XInterface >
-            const &)
-        throw (
-            com::sun::star::lang::NoSupportException,
-            com::sun::star::uno::RuntimeException);
+            const &);
 
     virtual sal_Int64 SAL_CALL getSomething(
-        com::sun::star::uno::Sequence< sal_Int8 > const & aIdentifier)
-        throw (com::sun::star::uno::RuntimeException);
+        com::sun::star::uno::Sequence< sal_Int8 > const & aIdentifier);
 
     void bind(
         rtl::Reference< RootAccess > const & root,
@@ -136,8 +131,7 @@ private:
         std::vector< rtl::OUString > * services);
 
     virtual com::sun::star::uno::Any SAL_CALL queryInterface(
-        com::sun::star::uno::Type const & aType)
-        throw (com::sun::star::uno::RuntimeException);
+        com::sun::star::uno::Type const & aType);
 
     rtl::Reference< RootAccess > root_;
     rtl::Reference< Access > parent_; // null iff free node

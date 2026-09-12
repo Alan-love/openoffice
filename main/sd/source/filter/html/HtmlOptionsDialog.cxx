@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -77,29 +77,23 @@ public:
     virtual void SAL_CALL release() throw();
 
 	// XInitialization
-    virtual void SAL_CALL initialize( const Sequence< Any > & aArguments ) throw ( Exception, RuntimeException );
+    virtual void SAL_CALL initialize( const Sequence< Any > & aArguments );
 
 	// XServiceInfo
-    virtual ::rtl::OUString SAL_CALL getImplementationName() throw ( RuntimeException );
-    virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName ) throw ( RuntimeException );
-    virtual Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames() throw ( RuntimeException );
+    virtual ::rtl::OUString SAL_CALL getImplementationName();
+    virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName );
+    virtual Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames();
 
 	// XPropertyAccess
-    virtual Sequence< PropertyValue > SAL_CALL getPropertyValues() throw ( RuntimeException );
-    virtual void SAL_CALL setPropertyValues( const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue > & aProps )
-        throw ( ::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::beans::PropertyVetoException,
-                ::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::WrappedTargetException,
-                ::com::sun::star::uno::RuntimeException );
+    virtual Sequence< PropertyValue > SAL_CALL getPropertyValues();
+    virtual void SAL_CALL setPropertyValues( const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue > & aProps );
 
 	// XExecuteDialog
-    virtual sal_Int16 SAL_CALL execute()
-        throw ( com::sun::star::uno::RuntimeException );
-    virtual void SAL_CALL setTitle( const ::rtl::OUString& aTitle )
-        throw ( ::com::sun::star::uno::RuntimeException );
+    virtual sal_Int16 SAL_CALL execute();
+    virtual void SAL_CALL setTitle( const ::rtl::OUString& aTitle );
 
 	// XExporter
-    virtual void SAL_CALL setSourceDocument( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent >& xDoc )
-		throw ( ::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException );
+    virtual void SAL_CALL setSourceDocument( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XComponent >& xDoc );
 
 };
 
@@ -115,19 +109,16 @@ Reference< XInterface >
 }
 
 ::rtl::OUString SdHtmlOptionsDialog_getImplementationName()
-	throw( RuntimeException )
 {
     return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.comp.draw.SdHtmlOptionsDialog" ) );
 }
 #define SERVICE_NAME "com.sun.star.ui.dialog.FilterOptionsDialog"
 sal_Bool SAL_CALL SdHtmlOptionsDialog_supportsService( const ::rtl::OUString& ServiceName )
-	throw( RuntimeException )
 {
     return ServiceName.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM( SERVICE_NAME ) );
 }
 
 Sequence< ::rtl::OUString > SAL_CALL SdHtmlOptionsDialog_getSupportedServiceNames()
-	throw( RuntimeException )
 {
     Sequence< ::rtl::OUString > aRet(1);
     ::rtl::OUString* pArray = aRet.getArray();
@@ -166,23 +157,19 @@ void SAL_CALL SdHtmlOptionsDialog::release() throw()
 
 // XInitialization
 void SAL_CALL SdHtmlOptionsDialog::initialize( const Sequence< Any > & )
-	throw ( Exception, RuntimeException )
 {
 }
 
 // XServiceInfo
 ::rtl::OUString SAL_CALL SdHtmlOptionsDialog::getImplementationName()
-	throw( RuntimeException )
 {
 	return SdHtmlOptionsDialog_getImplementationName();
 }
 sal_Bool SAL_CALL SdHtmlOptionsDialog::supportsService( const ::rtl::OUString& rServiceName )
-	throw( RuntimeException )
 {
     return SdHtmlOptionsDialog_supportsService( rServiceName );
 }
 Sequence< ::rtl::OUString > SAL_CALL SdHtmlOptionsDialog::getSupportedServiceNames()
-	throw ( RuntimeException )
 {
     return SdHtmlOptionsDialog_getSupportedServiceNames();
 }
@@ -190,7 +177,6 @@ Sequence< ::rtl::OUString > SAL_CALL SdHtmlOptionsDialog::getSupportedServiceNam
 
 // XPropertyAccess
 Sequence< PropertyValue > SdHtmlOptionsDialog::getPropertyValues()
-        throw ( RuntimeException )
 {
 	sal_Int32 i, nCount;
 	for ( i = 0, nCount = maMediaDescriptor.getLength(); i < nCount; i++ )
@@ -208,9 +194,6 @@ Sequence< PropertyValue > SdHtmlOptionsDialog::getPropertyValues()
 }
 
 void SdHtmlOptionsDialog::setPropertyValues( const Sequence< PropertyValue > & aProps )
-        throw ( UnknownPropertyException, PropertyVetoException,
-                IllegalArgumentException, WrappedTargetException,
-                RuntimeException )
 {
     maMediaDescriptor = aProps;
 
@@ -227,13 +210,11 @@ void SdHtmlOptionsDialog::setPropertyValues( const Sequence< PropertyValue > & a
 
 // XExecutableDialog
 void SdHtmlOptionsDialog::setTitle( const ::rtl::OUString& aTitle )
-    throw ( RuntimeException )
 {
     aDialogTitle = aTitle;
 }
 
 sal_Int16 SdHtmlOptionsDialog::execute()
-	throw ( RuntimeException )
 {
 	sal_Int16 nRet = ExecutableDialogResults::CANCEL;
 
@@ -260,7 +241,6 @@ sal_Int16 SdHtmlOptionsDialog::execute()
 
 // XEmporter
 void SdHtmlOptionsDialog::setSourceDocument( const Reference< XComponent >& xDoc )
-		throw ( IllegalArgumentException, RuntimeException )
 {
 	// try to set the corresponding metric unit
 	String aConfigPath;

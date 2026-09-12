@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -104,12 +104,12 @@ namespace dbaui
     class OViewController : public OQueryController
     {
         //------------------------------------------------------------------------------
-        virtual ::rtl::OUString SAL_CALL getImplementationName() throw( RuntimeException )
+        virtual ::rtl::OUString SAL_CALL getImplementationName()
         {
 	        return getImplementationName_Static();
         }
         //-------------------------------------------------------------------------
-        virtual Sequence< ::rtl::OUString> SAL_CALL getSupportedServiceNames() throw(RuntimeException)
+        virtual Sequence< ::rtl::OUString> SAL_CALL getSupportedServiceNames()
         {
 	        return getSupportedServiceNames_Static();
         }
@@ -117,11 +117,11 @@ namespace dbaui
         OViewController(const Reference< XMultiServiceFactory >& _rM) : OQueryController(_rM){}
 
         // need by registration
-	    static ::rtl::OUString getImplementationName_Static() throw( RuntimeException )
+	    static ::rtl::OUString getImplementationName_Static()
         {
 	        return ::rtl::OUString::createFromAscii("org.openoffice.comp.dbu.OViewDesign");
         }
-	    static Sequence< ::rtl::OUString > getSupportedServiceNames_Static(void) throw( RuntimeException )
+	    static Sequence< ::rtl::OUString > getSupportedServiceNames_Static(void)
         {
             Sequence< ::rtl::OUString> aSupported(1);
 	        aSupported.getArray()[0] = ::rtl::OUString::createFromAscii("com.sun.star.sdb.ViewDesign");
@@ -290,25 +290,25 @@ namespace
 }
 
 //------------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OQueryController::getImplementationName() throw( RuntimeException )
+::rtl::OUString SAL_CALL OQueryController::getImplementationName()
 {
 	return getImplementationName_Static();
 }
 
 //------------------------------------------------------------------------------
-::rtl::OUString OQueryController::getImplementationName_Static() throw( RuntimeException )
+::rtl::OUString OQueryController::getImplementationName_Static()
 {
 	return ::rtl::OUString::createFromAscii("org.openoffice.comp.dbu.OQueryDesign");
 }
 //------------------------------------------------------------------------------
-Sequence< ::rtl::OUString> OQueryController::getSupportedServiceNames_Static(void) throw( RuntimeException )
+Sequence< ::rtl::OUString> OQueryController::getSupportedServiceNames_Static(void)
 {
 	Sequence< ::rtl::OUString> aSupported(1);
 	aSupported.getArray()[0] = ::rtl::OUString::createFromAscii("com.sun.star.sdb.QueryDesign");
 	return aSupported;
 }
 //-------------------------------------------------------------------------
-Sequence< ::rtl::OUString> SAL_CALL OQueryController::getSupportedServiceNames() throw(RuntimeException)
+Sequence< ::rtl::OUString> SAL_CALL OQueryController::getSupportedServiceNames()
 {
 	return getSupportedServiceNames_Static();
 }
@@ -361,20 +361,20 @@ IMPLEMENT_FORWARD_XINTERFACE2( OQueryController, OJoinController, OQueryControll
 IMPLEMENT_FORWARD_XTYPEPROVIDER2( OQueryController, OJoinController, OQueryController_PBase )
 
 //-------------------------------------------------------------------------
-Reference< XPropertySetInfo > SAL_CALL OQueryController::getPropertySetInfo() throw(RuntimeException)
+Reference< XPropertySetInfo > SAL_CALL OQueryController::getPropertySetInfo()
 {
 	Reference< XPropertySetInfo > xInfo( createPropertySetInfo( getInfoHelper() ) );
 	return xInfo;
 }
 
 //-------------------------------------------------------------------------
-sal_Bool SAL_CALL OQueryController::convertFastPropertyValue( Any& o_rConvertedValue, Any& o_rOldValue, sal_Int32 i_nHandle, const Any& i_rValue ) throw (IllegalArgumentException)
+sal_Bool SAL_CALL OQueryController::convertFastPropertyValue( Any& o_rConvertedValue, Any& o_rOldValue, sal_Int32 i_nHandle, const Any& i_rValue )
 {
     return OPropertyContainer::convertFastPropertyValue( o_rConvertedValue, o_rOldValue, i_nHandle, i_rValue );
 }
 
 //-------------------------------------------------------------------------
-void SAL_CALL OQueryController::setFastPropertyValue_NoBroadcast( sal_Int32 i_nHandle, const Any& i_rValue ) throw ( Exception )
+void SAL_CALL OQueryController::setFastPropertyValue_NoBroadcast( sal_Int32 i_nHandle, const Any& i_rValue )
 {
     OPropertyContainer::setFastPropertyValue_NoBroadcast( i_nHandle, i_rValue );
 }
@@ -778,7 +778,7 @@ void OQueryController::Execute(sal_uInt16 _nId, const Sequence< PropertyValue >&
                             ::rtl::OUString sTemp;
                             pNode->parseNodeToStr(sTemp,getConnection());
                             getContainer()->setStatement(sTemp);
-                            
+
 						}
 					}
 
@@ -1032,7 +1032,7 @@ void OQueryController::impl_initialize()
                 impl_showAutoSQLViewError( aError.get() );
             }
         }
-        
+
 		ClearUndoManager();
 
 		if  (  ( m_bGraphicalDesign )
@@ -1153,7 +1153,7 @@ void OQueryController::impl_onModifyChanged()
 	InvalidateFeature(ID_BROWSER_QUERY_EXECUTE);
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OQueryController::disposing( const EventObject& Source ) throw(RuntimeException)
+void SAL_CALL OQueryController::disposing( const EventObject& Source )
 {
 	::vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -1555,7 +1555,7 @@ bool OQueryController::doSaveAsDoc(sal_Bool _bSaveAs)
 
 		setModified( sal_False );
         bSuccess = true;
-        
+
 	}
 	catch( const SQLException& )
 	{
@@ -1841,7 +1841,7 @@ bool OQueryController::allowQueries() const
 }
 
 // -----------------------------------------------------------------------------
-Any SAL_CALL OQueryController::getViewData() throw( RuntimeException )
+Any SAL_CALL OQueryController::getViewData()
 {
 	::osl::MutexGuard aGuard( getMutex() );
 
@@ -1853,7 +1853,7 @@ Any SAL_CALL OQueryController::getViewData() throw( RuntimeException )
 	return makeAny( aViewSettings.getPropertyValues() );
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OQueryController::restoreViewData(const Any& /*Data*/) throw( RuntimeException )
+void SAL_CALL OQueryController::restoreViewData(const Any& /*Data*/)
 {
     // TODO
 }
@@ -1861,4 +1861,3 @@ void SAL_CALL OQueryController::restoreViewData(const Any& /*Data*/) throw( Runt
 // -----------------------------------------------------------------------------
 } // namespace dbaui
 // -----------------------------------------------------------------------------
-

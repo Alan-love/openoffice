@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -46,10 +46,10 @@ using ::rtl::OUString ;
 using ::com::sun::star::xml::crypto::XSecurityEnvironment ;
 using ::com::sun::star::xml::crypto::XXMLSecurityContext ;
 
-XMLSecurityContext_MSCryptImpl :: XMLSecurityContext_MSCryptImpl( const Reference< XMultiServiceFactory >& aFactory ) 
+XMLSecurityContext_MSCryptImpl :: XMLSecurityContext_MSCryptImpl( const Reference< XMultiServiceFactory >& aFactory )
 	://m_pKeysMngr( NULL ) ,
 	 m_xServiceManager( aFactory ),
-	 m_xSecurityEnvironment( NULL ) 
+	 m_xSecurityEnvironment( NULL )
 {
 	//Init xmlsec library
 	if( xmlSecInit() < 0 ) {
@@ -79,13 +79,12 @@ XMLSecurityContext_MSCryptImpl :: ~XMLSecurityContext_MSCryptImpl() {
 //i39448 : new methods
 sal_Int32 SAL_CALL XMLSecurityContext_MSCryptImpl::addSecurityEnvironment(
 	const ::com::sun::star::uno::Reference< ::com::sun::star::xml::crypto::XSecurityEnvironment >& aSecurityEnvironment)
-	throw (::com::sun::star::security::SecurityInfrastructureException, ::com::sun::star::uno::RuntimeException)
 {
 	if( !aSecurityEnvironment.is() )
 	{
 		throw RuntimeException() ;
 	}
-	
+
 	m_xSecurityEnvironment = aSecurityEnvironment;
 
 	return 0;
@@ -93,14 +92,12 @@ sal_Int32 SAL_CALL XMLSecurityContext_MSCryptImpl::addSecurityEnvironment(
 
 
 sal_Int32 SAL_CALL XMLSecurityContext_MSCryptImpl::getSecurityEnvironmentNumber(  )
-	throw (::com::sun::star::uno::RuntimeException)
 {
 	return 1;
 }
-	
+
 ::com::sun::star::uno::Reference< ::com::sun::star::xml::crypto::XSecurityEnvironment > SAL_CALL
 	XMLSecurityContext_MSCryptImpl::getSecurityEnvironmentByIndex( sal_Int32 index )
-	throw (::com::sun::star::uno::RuntimeException)
 {
 	if (index == 0)
 	{
@@ -109,29 +106,26 @@ sal_Int32 SAL_CALL XMLSecurityContext_MSCryptImpl::getSecurityEnvironmentNumber(
 	else
 		throw RuntimeException() ;
 }
-	
-::com::sun::star::uno::Reference< ::com::sun::star::xml::crypto::XSecurityEnvironment > SAL_CALL 
-	XMLSecurityContext_MSCryptImpl::getSecurityEnvironment(  ) 
-	throw (::com::sun::star::uno::RuntimeException)
+
+::com::sun::star::uno::Reference< ::com::sun::star::xml::crypto::XSecurityEnvironment > SAL_CALL
+	XMLSecurityContext_MSCryptImpl::getSecurityEnvironment(  )
 {
 	return m_xSecurityEnvironment;
 }
 
 sal_Int32 SAL_CALL XMLSecurityContext_MSCryptImpl::getDefaultSecurityEnvironmentIndex(  )
-	throw (::com::sun::star::uno::RuntimeException)
 {
 	return 0;
 }
 
 void SAL_CALL XMLSecurityContext_MSCryptImpl::setDefaultSecurityEnvironmentIndex( sal_Int32 /*nDefaultEnvIndex*/ )
-	throw (::com::sun::star::uno::RuntimeException)
 {
 	//dummy
 }
 
 #if 0
 /* XXMLSecurityContext */
-void SAL_CALL XMLSecurityContext_MSCryptImpl :: setSecurityEnvironment( const Reference< XSecurityEnvironment >& aSecurityEnvironment ) throw( com::sun::star::security::SecurityInfrastructureException ) {
+void SAL_CALL XMLSecurityContext_MSCryptImpl :: setSecurityEnvironment( const Reference< XSecurityEnvironment >& aSecurityEnvironment ) {
 	HCERTSTORE hkeyStore ;
 	HCERTSTORE hCertStore ;
 	HCRYPTKEY symKey ;
@@ -242,25 +236,24 @@ void SAL_CALL XMLSecurityContext_MSCryptImpl :: setSecurityEnvironment( const Re
 }
 
 /* XXMLSecurityContext */
-Reference< XSecurityEnvironment > SAL_CALL XMLSecurityContext_MSCryptImpl :: getSecurityEnvironment() 
-	throw (RuntimeException)
+Reference< XSecurityEnvironment > SAL_CALL XMLSecurityContext_MSCryptImpl :: getSecurityEnvironment()
 {
 	return	m_xSecurityEnvironment ;
 }
 #endif
 
 /* XInitialization */
-void SAL_CALL XMLSecurityContext_MSCryptImpl :: initialize( const Sequence< Any >& /*aArguments*/ ) throw( Exception, RuntimeException ) {
+void SAL_CALL XMLSecurityContext_MSCryptImpl :: initialize( const Sequence< Any >& /*aArguments*/ ) {
 	// TBD
 } ;
 
 /* XServiceInfo */
-OUString SAL_CALL XMLSecurityContext_MSCryptImpl :: getImplementationName() throw( RuntimeException ) {
+OUString SAL_CALL XMLSecurityContext_MSCryptImpl :: getImplementationName() {
 	return impl_getImplementationName() ;
 }
 
 /* XServiceInfo */
-sal_Bool SAL_CALL XMLSecurityContext_MSCryptImpl :: supportsService( const OUString& serviceName) throw( RuntimeException ) {
+sal_Bool SAL_CALL XMLSecurityContext_MSCryptImpl :: supportsService( const OUString& serviceName) {
 	Sequence< OUString > seqServiceNames = getSupportedServiceNames() ;
 	const OUString* pArray = seqServiceNames.getConstArray() ;
 	for( sal_Int32 i = 0 ; i < seqServiceNames.getLength() ; i ++ ) {
@@ -271,7 +264,7 @@ sal_Bool SAL_CALL XMLSecurityContext_MSCryptImpl :: supportsService( const OUStr
 }
 
 /* XServiceInfo */
-Sequence< OUString > SAL_CALL XMLSecurityContext_MSCryptImpl :: getSupportedServiceNames() throw( RuntimeException ) {
+Sequence< OUString > SAL_CALL XMLSecurityContext_MSCryptImpl :: getSupportedServiceNames() {
 	return impl_getSupportedServiceNames() ;
 }
 
@@ -283,12 +276,12 @@ Sequence< OUString > XMLSecurityContext_MSCryptImpl :: impl_getSupportedServiceN
 	return seqServiceNames ;
 }
 
-OUString XMLSecurityContext_MSCryptImpl :: impl_getImplementationName() throw( RuntimeException ) {
+OUString XMLSecurityContext_MSCryptImpl :: impl_getImplementationName() {
 	return OUString::createFromAscii( "com.sun.star.xml.security.bridge.xmlsec.XMLSecurityContext_MSCryptImpl" ) ;
 }
 
 //Helper for registry
-Reference< XInterface > SAL_CALL XMLSecurityContext_MSCryptImpl :: impl_createInstance( const Reference< XMultiServiceFactory >& aServiceManager ) throw( RuntimeException ) {
+Reference< XInterface > SAL_CALL XMLSecurityContext_MSCryptImpl :: impl_createInstance( const Reference< XMultiServiceFactory >& aServiceManager ) {
 	return Reference< XInterface >( *new XMLSecurityContext_MSCryptImpl( aServiceManager ) ) ;
 }
 
@@ -301,10 +294,9 @@ Reference< XSingleServiceFactory > XMLSecurityContext_MSCryptImpl :: impl_create
 
 #if 0
 /* XUnoTunnel */
-sal_Int64 SAL_CALL XMLSecurityContext_MSCryptImpl :: getSomething( const Sequence< sal_Int8 >& aIdentifier ) 
-throw (RuntimeException)
+sal_Int64 SAL_CALL XMLSecurityContext_MSCryptImpl :: getSomething( const Sequence< sal_Int8 >& aIdentifier )
 {
-	if( aIdentifier.getLength() == 16 && 0 == rtl_compareMemory( getUnoTunnelId().getConstArray(), aIdentifier.getConstArray(), 16 ) ) { 
+	if( aIdentifier.getLength() == 16 && 0 == rtl_compareMemory( getUnoTunnelId().getConstArray(), aIdentifier.getConstArray(), 16 ) ) {
 		return ( sal_Int64 )this ;
 	}
 	return 0 ;
@@ -334,8 +326,7 @@ XMLSecurityContext_MSCryptImpl* XMLSecurityContext_MSCryptImpl :: getImplementat
 }
 
 /* Native methods */
-xmlSecKeysMngrPtr XMLSecurityContext_MSCryptImpl :: keysManager() throw( Exception, RuntimeException ) {
+xmlSecKeysMngrPtr XMLSecurityContext_MSCryptImpl :: keysManager() {
 	return m_pKeysMngr ;
 }
 #endif
-

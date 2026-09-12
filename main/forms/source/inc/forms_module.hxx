@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -208,8 +208,8 @@ namespace FORMS_MODULE_NAMESPACE
     //= OMultiInstanceAutoRegistration or OOneInstanceAutoRegistration
     //==========================================================================
     #define DECLARE_SERVICE_REGISTRATION( classname ) \
-        virtual ::rtl::OUString SAL_CALL getImplementationName(  ) throw (::com::sun::star::uno::RuntimeException); \
-        virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  ) throw (::com::sun::star::uno::RuntimeException); \
+        virtual ::rtl::OUString SAL_CALL getImplementationName(  ); \
+        virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  ); \
         \
         static  ::rtl::OUString SAL_CALL getImplementationName_Static(); \
         static  ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames_Static(); \
@@ -220,10 +220,10 @@ namespace FORMS_MODULE_NAMESPACE
 
     #define IMPLEMENT_SERVICE_REGISTRATION_BASE( classname, baseclass ) \
         \
-        ::rtl::OUString SAL_CALL classname::getImplementationName(  ) throw ( RuntimeException ) \
+        ::rtl::OUString SAL_CALL classname::getImplementationName(  ) \
         { return getImplementationName_Static(); } \
         \
-        Sequence< ::rtl::OUString > SAL_CALL classname::getSupportedServiceNames(  ) throw (RuntimeException) \
+        Sequence< ::rtl::OUString > SAL_CALL classname::getSupportedServiceNames(  ) \
         { \
             return ::comphelper::concatSequences( \
                 getAggregateServiceNames(), \

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -60,7 +60,7 @@
    Language Identifier Constants and Strings
    http://msdn2.microsoft.com/en-us/library/ms776294.aspx
 
-   Hey, yet another list, maybe this one will not move around? It seems to be 
+   Hey, yet another list, maybe this one will not move around? It seems to be
    quite complete..
    Language Identifier Constants and Strings (Windows)
    http://msdn.microsoft.com/en-us/library/dd318693(VS.85).aspx
@@ -409,7 +409,7 @@ typedef unsigned short LanguageType;
  * 0xFA00 to 0xFBFF with sublanguage ID 0x3E
  * 0xFE00 to 0xFFFF with sublanguage ID 0x3F
  *
- * Obsolete OOo user defines now have other values assigned by MS, and
+ * Obsolete AOO user defines now have other values assigned by MS, and
  * different name. Mapping an obsolete value to ISO code should work provided
  * that such a mapping exists in i18npool/source/isolang/isolang.cxx, but
  * mapping ISO back to LANGID will return the new value.
@@ -519,6 +519,6 @@ typedef unsigned short LanguageType;
 #define LANGUAGE_USER_KABYLE                0x0659
 #define LANGUAGE_USER_HAITIAN               0x065A
 #define LANGUAGE_USER_VENETAN               0x065B
-
+#define LANGUAGE_USER_LIGURIAN              0x065C
 
 #endif /* INCLUDED_I18NPOOL_LANG_H */

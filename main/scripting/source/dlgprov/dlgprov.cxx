@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -66,10 +66,10 @@ using namespace document;
 using namespace ::sf_misc;
 
 // component helper namespace
-namespace comp_DialogModelProvider 
+namespace comp_DialogModelProvider
 {
 
-    ::rtl::OUString SAL_CALL _getImplementationName() 
+    ::rtl::OUString SAL_CALL _getImplementationName()
     {
         return ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.comp.scripting.DialogModelProvider"));
     }
@@ -81,7 +81,7 @@ namespace comp_DialogModelProvider
         return s;
     }
 
-    uno::Reference< uno::XInterface > SAL_CALL _create(const uno::Reference< uno::XComponentContext > & context) SAL_THROW((uno::Exception))
+    uno::Reference< uno::XInterface > SAL_CALL _create(const uno::Reference< uno::XComponentContext > & context)
     {
         return static_cast< ::cppu::OWeakObject * >(new dlgprov::DialogModelProvider(context));
     }
@@ -115,7 +115,7 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
 	    Reference< XMultiComponentFactory > xSMgr_( i_xContext->getServiceManager(), UNO_QUERY_THROW );
 	    // TODO: Ctor
 	    Reference< resource::XStringResourceManager > xStringResourceManager( xSMgr_->createInstanceWithContext
-		    ( ::rtl::OUString::createFromAscii( "com.sun.star.resource.StringResourceWithLocation" ), 
+		    ( ::rtl::OUString::createFromAscii( "com.sun.star.resource.StringResourceWithLocation" ),
 			    i_xContext ), UNO_QUERY );
 	    if( xStringResourceManager.is() )
 	    {
@@ -132,9 +132,9 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
         return xControlModel;
     }
     Reference< container::XNameContainer > lcl_createDialogModel( const Reference< XComponentContext >& i_xContext,
-		const Reference< io::XInputStream >& xInput, 
+		const Reference< io::XInputStream >& xInput,
 		const Reference< resource::XStringResourceManager >& xStringResourceManager,
-		const Any &aDialogSourceURL) throw ( Exception )
+		const Any &aDialogSourceURL)
     {
         Reference< container::XNameContainer > xDialogModel(  lcl_createControlModel(i_xContext) );
 
@@ -151,8 +151,8 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
             aStringResourceManagerAny <<= xStringResourceManager;
             xDlgPSet->setPropertyValue( aResourceResolverPropName, aStringResourceManagerAny );
         }
-	
-        return xDialogModel; 
+
+        return xDialogModel;
     }
     // =============================================================================
     // component operations
@@ -244,35 +244,35 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
 				Reference< resource::XStringResourceResolver >
 					xStringResourceResolver = xStringResourceSupplier->getStringResource();
 
-				xStringResourceManager = 
+				xStringResourceManager =
 					Reference< resource::XStringResourceManager >( xStringResourceResolver, UNO_QUERY );
 			}
 		}
 		return xStringResourceManager;
 	}
 
-    Reference< container::XNameContainer > DialogProviderImpl::createControlModel() throw ( Exception )
+    Reference< container::XNameContainer > DialogProviderImpl::createControlModel()
     {
         return lcl_createControlModel(m_xContext);
     }
 
-    Reference< container::XNameContainer > DialogProviderImpl::createDialogModel( 
-		const Reference< io::XInputStream >& xInput, 
+    Reference< container::XNameContainer > DialogProviderImpl::createDialogModel(
+		const Reference< io::XInputStream >& xInput,
 		const Reference< resource::XStringResourceManager >& xStringResourceManager,
-		const Any &aDialogSourceURL) throw ( Exception )
+		const Any &aDialogSourceURL)
     {
-        
-	
-        return lcl_createDialogModel(m_xContext,xInput,xStringResourceManager,aDialogSourceURL); 
+
+
+        return lcl_createDialogModel(m_xContext,xInput,xStringResourceManager,aDialogSourceURL);
     }
 
-    Reference< XControlModel > DialogProviderImpl::createDialogModelForBasic() throw ( Exception )
+    Reference< XControlModel > DialogProviderImpl::createDialogModelForBasic()
     {
-        if ( !m_BasicInfo.get() ) 
-            // shouln't get here 
+        if ( !m_BasicInfo.get() )
+            // shouln't get here
             throw RuntimeException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("No information to create dialog" ) ), Reference< XInterface >() );
         Reference< resource::XStringResourceManager > xStringResourceManager = getStringResourceFromDialogLibrary( m_BasicInfo->mxDlgLib );
-		
+
 		rtl::OUString aURL(RTL_CONSTASCII_USTRINGPARAM("" ));
 		Any aDialogSourceURL;
 		aDialogSourceURL <<= aURL;
@@ -289,7 +289,7 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
         // TODO: use URL parsing class
         // TODO: decoding of location
         Reference< XMultiComponentFactory > xSMgr( m_xContext->getServiceManager(), UNO_QUERY );
-        
+
         if ( !xSMgr.is() )
         {
             throw RuntimeException(
@@ -304,11 +304,11 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
         if  ( !xFac.is() )
         {
             throw RuntimeException(
-                ::rtl::OUString::createFromAscii( "DialogProviderImpl::getDialogModel(), could not instatiate UriReferenceFactory." ),
+                ::rtl::OUString::createFromAscii( "DialogProviderImpl::getDialogModel(), could not instantiate UriReferenceFactory." ),
                 Reference< XInterface >() );
         }
 
-		// i75778: Support non-script URLs 
+		// i75778: Support non-script URLs
 		Reference< io::XInputStream > xInput;
         Reference< container::XNameContainer > xDialogLib;
 
@@ -358,7 +358,7 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
 		else
         {
 			::rtl::OUString sDescription = sfUri->getName();
-	        
+
 			sal_Int32 nIndex = 0;
 
 			::rtl::OUString sLibName = sDescription.getToken( 0, (sal_Unicode)'.', nIndex );
@@ -485,7 +485,7 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
 
 			Any aDialogSourceURLAny;
 			aDialogSourceURLAny <<= aURL;
-            
+
 			Reference< container::XNameContainer > xDialogModel( createDialogModel( xInput , xStringResourceManager, aDialogSourceURLAny  ), UNO_QUERY_THROW);
 
 			xCtrlModel = Reference< XControlModel >( xDialogModel, UNO_QUERY );
@@ -540,7 +540,7 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
                     }
 
                     // create a peer
-                    Reference< XToolkit> xToolkit( xSMgr->createInstanceWithContext( 
+                    Reference< XToolkit> xToolkit( xSMgr->createInstanceWithContext(
                         ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.awt.Toolkit" ) ), m_xContext ), UNO_QUERY );
                     if ( xToolkit.is() )
                         xDialogControl->createPeer( xToolkit, xPeer );
@@ -553,7 +553,7 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
 
     // -----------------------------------------------------------------------------
 
-    void DialogProviderImpl::attachControlEvents( 
+    void DialogProviderImpl::attachControlEvents(
 		const Reference< XControl >& rxControl,
 		const Reference< XInterface >& rxHandler,
 		const Reference< XIntrospectionAccess >& rxIntrospectionAccess,
@@ -580,7 +580,7 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
                 pObjects[nControlCount] = Reference< XInterface >( rxControl, UNO_QUERY );
 
 				Reference< XScriptEventsAttacher > xScriptEventsAttacher = new DialogEventsAttacherImpl
-					( m_xContext, m_xModel, rxControl, rxHandler, rxIntrospectionAccess, 
+					( m_xContext, m_xModel, rxControl, rxHandler, rxIntrospectionAccess,
 					  bDialogProviderMode, ( m_BasicInfo.get() ? m_BasicInfo->mxBasicRTLListener : NULL ) );
 
                 Any aHelper;
@@ -636,14 +636,14 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
     // XServiceInfo
     // -----------------------------------------------------------------------------
 
-    ::rtl::OUString DialogProviderImpl::getImplementationName(  ) throw (RuntimeException)
+    ::rtl::OUString DialogProviderImpl::getImplementationName(  )
     {
         return getImplementationName_DialogProviderImpl();
     }
 
     // -----------------------------------------------------------------------------
 
-    sal_Bool DialogProviderImpl::supportsService( const ::rtl::OUString& rServiceName ) throw (RuntimeException)
+    sal_Bool DialogProviderImpl::supportsService( const ::rtl::OUString& rServiceName )
     {
 	    Sequence< ::rtl::OUString > aNames( getSupportedServiceNames() );
 	    const ::rtl::OUString* pNames = aNames.getConstArray();
@@ -656,7 +656,7 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
 
     // -----------------------------------------------------------------------------
 
-    Sequence< ::rtl::OUString > DialogProviderImpl::getSupportedServiceNames(  ) throw (RuntimeException)
+    Sequence< ::rtl::OUString > DialogProviderImpl::getSupportedServiceNames(  )
     {
         return getSupportedServiceNames_DialogProviderImpl();
     }
@@ -665,7 +665,7 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
     // XInitialization
     // -----------------------------------------------------------------------------
 
-    void DialogProviderImpl::initialize( const Sequence< Any >& aArguments ) throw (Exception, RuntimeException)
+    void DialogProviderImpl::initialize( const Sequence< Any >& aArguments )
     {
         ::osl::MutexGuard aGuard( getMutex() );
 
@@ -712,7 +712,6 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
 	Reference < XControl > DialogProviderImpl::createDialogImpl(
 		const ::rtl::OUString& URL, const Reference< XInterface >& xHandler,
 		const Reference< XWindowPeer >& xParent, bool bDialogProviderMode )
-			throw (IllegalArgumentException, RuntimeException)
 	{
         // if the dialog is located in a document, the document must already be open!
 
@@ -778,7 +777,6 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
 	}
 
     Reference < XDialog > DialogProviderImpl::createDialog( const ::rtl::OUString& URL )
-        throw (IllegalArgumentException, RuntimeException)
     {
         Reference< XInterface > xDummyHandler;
 		Reference< XWindowPeer > xDummyPeer;
@@ -789,7 +787,6 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
 
 	Reference < XDialog > DialogProviderImpl::createDialogWithHandler(
 		const ::rtl::OUString& URL, const Reference< XInterface >& xHandler )
-			throw (IllegalArgumentException, RuntimeException)
 	{
 		if( !xHandler.is() )
 		{
@@ -805,7 +802,6 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
 
     Reference < XDialog > DialogProviderImpl::createDialogWithArguments(
 		const ::rtl::OUString& URL, const Sequence< NamedValue >& Arguments )
-			throw (IllegalArgumentException, RuntimeException)
 	{
         ::comphelper::NamedValueCollection aArguments( Arguments );
 
@@ -828,10 +824,9 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
         return xDialog;
 	}
 
-    Reference< XWindow > DialogProviderImpl::createContainerWindow( 
-		const ::rtl::OUString& URL, const ::rtl::OUString& WindowType, 
-		const Reference< XWindowPeer >& xParent, const Reference< XInterface >& xHandler ) 
-			throw (lang::IllegalArgumentException, RuntimeException)
+    Reference< XWindow > DialogProviderImpl::createContainerWindow(
+		const ::rtl::OUString& URL, const ::rtl::OUString& WindowType,
+		const Reference< XWindowPeer >& xParent, const Reference< XInterface >& xHandler )
 	{
 		(void)WindowType;	// for future use
 		if( !xParent.is() )
@@ -879,7 +874,7 @@ static ::rtl::OUString aResourceResolverPropName = ::rtl::OUString::createFromAs
 
 extern "C"
 {
-    void SAL_CALL component_getImplementationEnvironment( 
+    void SAL_CALL component_getImplementationEnvironment(
         const sal_Char ** ppEnvTypeName, uno_Environment ** ppEnv )
     {
 		(void)ppEnv;
@@ -887,11 +882,11 @@ extern "C"
         *ppEnvTypeName = CPPU_CURRENT_LANGUAGE_BINDING_NAME;
     }
 
-    void * SAL_CALL component_getFactory( 
+    void * SAL_CALL component_getFactory(
         const sal_Char * pImplName, lang::XMultiServiceFactory * pServiceManager,
         registry::XRegistryKey * pRegistryKey )
     {
-        return ::cppu::component_getFactoryHelper( 
+        return ::cppu::component_getFactoryHelper(
             pImplName, pServiceManager, pRegistryKey, ::dlgprov::s_component_entries );
     }
 }

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -69,6 +69,8 @@
 #define ODBC_UI_LIBRARY_1	"libodbcinst.so.1"
 #define ODBC_LIBRARY		"libodbc.so"
 #define ODBC_UI_LIBRARY		"libodbcinst.so"
+#define ODBC_LIBRARY_2		"libiodbc.so"
+#define ODBC_UI_LIBRARY_2	"libiodbcinst.so"
 #endif
 #endif
 
@@ -84,6 +86,10 @@
 #pragma warning(push)
 #pragma warning(disable: 4005)
 #endif
+#if _WIN64
+typedef long long INT64;
+typedef unsigned long long UINT64;
+#endif // _WIN64
 #endif // defined(WNT)
 
 #if defined(OS2)
@@ -215,6 +221,10 @@ OOdbcEnumeration::OOdbcEnumeration()
 #ifdef ODBC_LIBRARY_1
 	if ( !bLoaded )
 		bLoaded = load(ODBC_LIBRARY_1);
+#endif
+#ifdef ODBC_LIBRARY_2
+	if ( !bLoaded )
+		bLoaded = load(ODBC_LIBRARY_2);
 #endif
 
 	if ( bLoaded )

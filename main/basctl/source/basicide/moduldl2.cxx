@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -88,7 +88,7 @@ class DummyInteractionHandler  : public HandlerImpl_BASE
 public:
     DummyInteractionHandler( const Reference< task::XInteractionHandler >& xHandler ) : m_xHandler( xHandler ){}
 
-    virtual void SAL_CALL handle( const Reference< task::XInteractionRequest >& rRequest ) throw (::com::sun::star::uno::RuntimeException)
+    virtual void SAL_CALL handle( const Reference< task::XInteractionRequest >& rRequest )
     {
         if ( m_xHandler.is() )
         {
@@ -795,7 +795,7 @@ void LibPage::InsertLib()
     aFilter += ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( ";*.sdw;*.sxw;*.odt" ) );      // text
     aFilter += ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( ";*.vor;*.stw;*.ott" ) );      // text template
     aFilter += ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( ";*.sgl;*.sxg;*.odm" ) );      // master document
-    aFilter += ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( ";*.oth" ) );                  // html document template
+    aFilter += ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( ";*.oth" ) );                  // HTML document template
     aFilter += ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( ";*.sdc;*.sxc;*.ods" ) );      // spreadsheet
     aFilter += ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( ";*.stc;*.ots" ) );            // spreadsheet template
     aFilter += ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( ";*.sda;*.sxd;*.odg" ) );      // drawing
@@ -1238,20 +1238,16 @@ public:
 	{}
 
     // Methods
-    virtual Reference< task::XInteractionHandler > SAL_CALL getInteractionHandler()
-		throw(RuntimeException);
-    virtual Reference< XProgressHandler > SAL_CALL getProgressHandler()
-		throw(RuntimeException);
+    virtual Reference< task::XInteractionHandler > SAL_CALL getInteractionHandler();
+    virtual Reference< XProgressHandler > SAL_CALL getProgressHandler();
 };
 
 Reference< task::XInteractionHandler > OLibCommandEnvironment::getInteractionHandler()
-	throw(RuntimeException)
 {
 	return mxInteraction;
 }
 
 Reference< XProgressHandler > OLibCommandEnvironment::getProgressHandler()
-	throw(RuntimeException)
 {
 	Reference< XProgressHandler > xRet;
 	return xRet;
@@ -1721,4 +1717,3 @@ void createLibImpl( Window* pWin, const ScriptDocument& rDocument,
 }
 
 //----------------------------------------------------------------------------
-

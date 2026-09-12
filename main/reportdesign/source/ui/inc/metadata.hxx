@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -94,7 +94,7 @@ namespace rptui
 #define PROP_FLAG_COMPOSEABLE       0x00000008  // the property is "composeable", i.e. an intersection of property
                                                 //  sets should expose it, if all elements do
 #define PROP_FLAG_EXPERIMENTAL      0x00000010  // the property is experimental, i.e. should not appear in the
-                                                // UI, unless experimental properties are enabled by a configuraiton
+                                                // UI, unless experimental properties are enabled by a configuration
                                                 // option
 #define PROP_FLAG_DATA_PROPERTY     0x00000020  // the property is to appear on the "Data" page
 
@@ -148,11 +148,10 @@ namespace rptui
     #define PROPERTY_ID_FONT                            40
     #define PROPERTY_ID_PARAADJUST                      41
     #define PROPERTY_ID_VERTICALALIGN                   42
-    
+
 
 //............................................................................
 } // namespace rptui
 //............................................................................
 
 #endif // RPTUI_METADATA_HXX_
-

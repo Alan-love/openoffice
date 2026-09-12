@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,28 +49,22 @@ namespace tdoc_ucp
         : InteractionContinuation( pRequest ) {}
 
         // XInterface
-        virtual uno::Any SAL_CALL queryInterface( const uno::Type & rType )
-            throw ( uno::RuntimeException );
+        virtual uno::Any SAL_CALL queryInterface( const uno::Type & rType );
         virtual void SAL_CALL acquire()
             throw ();
         virtual void SAL_CALL release()
             throw ();
 
         // XTypeProvider
-        virtual uno::Sequence< uno::Type > SAL_CALL getTypes()
-            throw ( uno::RuntimeException );
-        virtual uno::Sequence< sal_Int8 > SAL_CALL getImplementationId()
-            throw ( uno::RuntimeException );
+        virtual uno::Sequence< uno::Type > SAL_CALL getTypes();
+        virtual uno::Sequence< sal_Int8 > SAL_CALL getImplementationId();
 
         // XInteractionContinuation
-        virtual void SAL_CALL select()
-            throw ( uno::RuntimeException );
+        virtual void SAL_CALL select();
 
         // XInteractionPassword
-        virtual void SAL_CALL setPassword( const rtl::OUString & aPasswd )
-            throw ( uno::RuntimeException );
-        virtual rtl::OUString SAL_CALL getPassword()
-            throw ( uno::RuntimeException );
+        virtual void SAL_CALL setPassword( const rtl::OUString & aPasswd );
+        virtual rtl::OUString SAL_CALL getPassword();
 
     private:
         osl::Mutex m_aMutex;
@@ -111,7 +105,6 @@ void SAL_CALL InteractionSupplyPassword::release()
 // virtual
 uno::Any SAL_CALL
 InteractionSupplyPassword::queryInterface( const uno::Type & rType )
-    throw ( uno::RuntimeException )
 {
     uno::Any aRet = cppu::queryInterface( rType,
                 static_cast< lang::XTypeProvider * >( this ),
@@ -131,7 +124,6 @@ InteractionSupplyPassword::queryInterface( const uno::Type & rType )
 // virtual
 uno::Sequence< sal_Int8 > SAL_CALL
 InteractionSupplyPassword::getImplementationId()
-    throw( uno::RuntimeException )
 {
     static cppu::OImplementationId * pId = 0;
     if ( !pId )
@@ -149,7 +141,6 @@ InteractionSupplyPassword::getImplementationId()
 //=========================================================================
 // virtual
 uno::Sequence< uno::Type > SAL_CALL InteractionSupplyPassword::getTypes()
-    throw( uno::RuntimeException )
 {
     static cppu::OTypeCollection * pCollection = 0;
     if ( !pCollection )
@@ -176,7 +167,6 @@ uno::Sequence< uno::Type > SAL_CALL InteractionSupplyPassword::getTypes()
 
 // virtual
 void SAL_CALL InteractionSupplyPassword::select()
-    throw( uno::RuntimeException )
 {
     recordSelection();
 }
@@ -190,7 +180,6 @@ void SAL_CALL InteractionSupplyPassword::select()
 // virtual
 void SAL_CALL
 InteractionSupplyPassword::setPassword( const ::rtl::OUString& aPasswd )
-    throw ( uno::RuntimeException )
 {
     osl::MutexGuard aGuard( m_aMutex );
     m_aPassword = aPasswd;
@@ -198,7 +187,6 @@ InteractionSupplyPassword::setPassword( const ::rtl::OUString& aPasswd )
 
 // virtual
 rtl::OUString SAL_CALL InteractionSupplyPassword::getPassword()
-    throw ( uno::RuntimeException )
 {
     osl::MutexGuard aGuard( m_aMutex );
     return m_aPassword;
@@ -223,7 +211,7 @@ DocumentPasswordRequest::DocumentPasswordRequest(
     aRequest.Classification = task::InteractionClassification_ERROR;
     aRequest.Mode           = eMode;
     aRequest.Name           = rDocumentName;
-	
+
     setRequest( uno::makeAny( aRequest ) );
 
     // Fill continuations...
@@ -235,4 +223,3 @@ DocumentPasswordRequest::DocumentPasswordRequest(
 
     setContinuations( aContinuations );
 }
-

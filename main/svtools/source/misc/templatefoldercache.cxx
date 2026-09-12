@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -346,7 +346,7 @@ namespace svt
 		{
 			// use the base class operator with the local name of the content
             String sURL = _rxContent->getURL();
-            // #116281# Keep office installtion relocatable. Never store
+            // #116281# Keep office installation relocatable. Never store
             // any direct references to office installation directory.
             sURL = m_xOfficeInstDirs->makeRelocatableURL( sURL );
             StoreString::operator() ( sURL );
@@ -754,7 +754,7 @@ namespace svt
 		{
 			String sURL;
 			m_pCacheStream->ReadByteString( sURL );
-            // #116281# Keep office installtion relocatable. Never store
+            // #116281# Keep office installation relocatable. Never store
             // any direct references to office installation directory.
             sURL = getOfficeInstDirs()->makeAbsoluteURL( sURL );
 			m_aPreviousState.push_back(
@@ -915,4 +915,3 @@ namespace svt
 //.........................................................................
 }	// namespace sfx2
 //.........................................................................
-

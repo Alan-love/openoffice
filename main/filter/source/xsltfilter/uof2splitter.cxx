@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,18 +7,18 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  **************************************************************/
- 
+
  // MARKER(update_precomp.py): autogen include statement, do not remove
 //This file is about the conversion of the UOF v2.0 and ODF document format
 #include "precompiled_filter.hxx"
@@ -56,17 +56,17 @@ UOF2Splitter::~UOF2Splitter()
 }
 
 // XActiveDataControl
-void UOF2Splitter::addListener ( const ::com::sun::star::uno::Reference< ::com::sun::star::io::XStreamListener> & rxListener ) throw( ::com::sun::star::uno::RuntimeException)
+void UOF2Splitter::addListener ( const ::com::sun::star::uno::Reference< ::com::sun::star::io::XStreamListener> & rxListener )
 {
 	m_StreamListeners.insert( rxListener );
 }
 
-void UOF2Splitter::removeListener ( const ::com::sun::star::uno::Reference< ::com::sun::star::io::XStreamListener> & rxListener ) throw( ::com::sun::star::uno::RuntimeException)
+void UOF2Splitter::removeListener ( const ::com::sun::star::uno::Reference< ::com::sun::star::io::XStreamListener> & rxListener )
 {
 	m_StreamListeners.erase( rxListener );
 }
 
-void UOF2Splitter::start (void) throw( ::com::sun::star::uno::RuntimeException)
+void UOF2Splitter::start (void)
 {
 	if ( !m_xStream.is() )
 		return;
@@ -103,31 +103,31 @@ void UOF2Splitter::start (void) throw( ::com::sun::star::uno::RuntimeException)
 	catch( Exception& e)
 	{
 		OSL_ENSURE(0, ::rtl::OUStringToOString(e.Message, RTL_TEXTENCODING_ASCII_US).getStr());
-	} 
+	}
 }
 
-void UOF2Splitter::terminate (void) throw( ::com::sun::star::uno::RuntimeException)
+void UOF2Splitter::terminate (void)
 {
 }
 
 // XActiveDataSink
-void UOF2Splitter::setInputStream ( const ::com::sun::star::uno::Reference< ::com::sun::star::io::XInputStream> &rxInputStream) throw( ::com::sun::star::uno::RuntimeException)
+void UOF2Splitter::setInputStream ( const ::com::sun::star::uno::Reference< ::com::sun::star::io::XInputStream> &rxInputStream)
 {
 	m_xInputStream = rxInputStream;
 }
 
-::com::sun::star::uno::Reference< ::com::sun::star::io::XInputStream> UOF2Splitter::getInputStream(void) throw( ::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Reference< ::com::sun::star::io::XInputStream> UOF2Splitter::getInputStream(void)
 {
 	return m_xInputStream;
 }
 
 // XActiveDataStreamer
-void UOF2Splitter::setStream( const ::com::sun::star::uno::Reference< ::com::sun::star::io::XStream> &rxStream) throw( ::com::sun::star::uno::RuntimeException)
+void UOF2Splitter::setStream( const ::com::sun::star::uno::Reference< ::com::sun::star::io::XStream> &rxStream)
 {
 	m_xStream = rxStream;
 }
 
-::com::sun::star::uno::Reference< ::com::sun::star::io::XStream> UOF2Splitter::getStream (void) throw( ::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Reference< ::com::sun::star::io::XStream> UOF2Splitter::getStream (void)
 {
 	return m_xStream;
 }

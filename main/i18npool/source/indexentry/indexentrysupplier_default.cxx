@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -48,14 +48,14 @@ IndexEntrySupplier_Unicode::~IndexEntrySupplier_Unicode()
 }
 
 sal_Bool SAL_CALL IndexEntrySupplier_Unicode::loadAlgorithm( const lang::Locale& rLocale,
-	const OUString& rAlgorithm, sal_Int32 collatorOptions ) throw (RuntimeException)
+	const OUString& rAlgorithm, sal_Int32 collatorOptions )
 {
     index->init(rLocale, rAlgorithm);
     return IndexEntrySupplier_Common::loadAlgorithm(rLocale, rAlgorithm, collatorOptions);
 }
 
 OUString SAL_CALL IndexEntrySupplier_Unicode::getIndexKey( const OUString& rIndexEntry,
-	const OUString& rPhoneticEntry, const lang::Locale& rLocale ) throw (RuntimeException)
+	const OUString& rPhoneticEntry, const lang::Locale& rLocale )
 {
     return index->getIndexDescription(getEntry(rIndexEntry, rPhoneticEntry, rLocale));
 }
@@ -63,20 +63,19 @@ OUString SAL_CALL IndexEntrySupplier_Unicode::getIndexKey( const OUString& rInde
 sal_Int16 SAL_CALL IndexEntrySupplier_Unicode::compareIndexEntry(
 	const OUString& rIndexEntry1, const OUString& rPhoneticEntry1, const lang::Locale& rLocale1,
 	const OUString& rIndexEntry2, const OUString& rPhoneticEntry2, const lang::Locale& rLocale2 )
-	throw (RuntimeException)
 {
     sal_Int16 result =
             index->getIndexWeight(getEntry(rIndexEntry1, rPhoneticEntry1, rLocale1)) -
             index->getIndexWeight(getEntry(rIndexEntry2, rPhoneticEntry2, rLocale2));
     if (result == 0)
         return IndexEntrySupplier_Common::compareIndexEntry(
-                    rIndexEntry1, rPhoneticEntry1, rLocale1, 
+                    rIndexEntry1, rPhoneticEntry1, rLocale1,
                     rIndexEntry2, rPhoneticEntry2, rLocale2);
     return result > 0 ? 1 : -1;
 }
 
 OUString SAL_CALL IndexEntrySupplier_Unicode::getIndexCharacter( const OUString& rIndexEntry,
-	const lang::Locale& rLocale, const OUString& rAlgorithm ) throw (RuntimeException) {
+	const lang::Locale& rLocale, const OUString& rAlgorithm ) {
 
     if (loadAlgorithm( rLocale, rAlgorithm, CollatorOptions::CollatorOptions_IGNORE_CASE_ACCENT))
         return index->getIndexDescription(rIndexEntry);
@@ -130,14 +129,14 @@ sal_Int16 Index::compare(sal_Unicode c1, sal_Unicode c2)
 sal_Int16 Index::getIndexWeight(const OUString& rIndexEntry)
 {
     sal_Int32 startPos=0;
-    if (skipping_chars.getLength() > 0) 
+    if (skipping_chars.getLength() > 0)
         while (skipping_chars.indexOf(rIndexEntry[startPos]) >= 0)
             startPos++;
     if (mkey_count > 0) {
         for (sal_Int16 i = 0; i < mkey_count; i++) {
             sal_Int32 len = keys[mkeys[i]].mkey.getLength();
             if (collator->compareSubstring(rIndexEntry, startPos, len,
-                                    keys[mkeys[i]].mkey, 0, len) == 0) 
+                                    keys[mkeys[i]].mkey, 0, len) == 0)
                 return mkeys[i];
         }
     }
@@ -167,12 +166,12 @@ OUString Index::getIndexDescription(const OUString& rIndexEntry)
 
 #define LOCALE_EN lang::Locale(OUString::createFromAscii("en"), OUString(), OUString())
 
-void Index::makeIndexKeys(const lang::Locale &rLocale, const OUString &algorithm) throw (RuntimeException)
+void Index::makeIndexKeys(const lang::Locale &rLocale, const OUString &algorithm)
 {
     OUString keyStr = LocaleData().getIndexKeysByAlgorithm(rLocale, algorithm);
 
     if (!keyStr.getLength()) {
-        keyStr = LocaleData().getIndexKeysByAlgorithm(LOCALE_EN, 
+        keyStr = LocaleData().getIndexKeysByAlgorithm(LOCALE_EN,
                     LocaleData().getDefaultIndexAlgorithm(LOCALE_EN));
         if( keyStr.isEmpty() )
             throw RuntimeException();
@@ -252,14 +251,14 @@ void Index::makeIndexKeys(const lang::Locale &rLocale, const OUString &algorithm
     }
 }
 
-void Index::init(const lang::Locale &rLocale, const OUString& algorithm) throw (RuntimeException)
+void Index::init(const lang::Locale &rLocale, const OUString& algorithm)
 {
     makeIndexKeys(rLocale, algorithm);
 
     Sequence< UnicodeScript > scriptList = LocaleData().getUnicodeScripts( rLocale );
 
     if (scriptList.getLength() == 0) {
-        scriptList = LocaleData().getUnicodeScripts(LOCALE_EN); 
+        scriptList = LocaleData().getUnicodeScripts(LOCALE_EN);
         if (scriptList.getLength() == 0)
             throw RuntimeException();
     }

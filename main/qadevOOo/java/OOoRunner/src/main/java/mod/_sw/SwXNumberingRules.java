@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -57,7 +57,7 @@ import com.sun.star.uno.XInterface;
  *  <li> <code>com::sun::star::text::NumberingRules</code></li>
  * </ul> <p>
  * This object test <b> is NOT </b> designed to be run in several
- * threads concurently.
+ * threads concurrently.
  * @see com.sun.star.beans.XPropertySet
  * @see com.sun.star.container.XIndexAccess
  * @see com.sun.star.container.XElementAccess
@@ -96,7 +96,7 @@ public class SwXNumberingRules extends TestCase {
     * Creating a Testenvironment for the interfaces to be tested.
     * At first some strings are inserted to a text document, then style families
     * are gotten from text document using <code>XStyleFamiliesSupplier</code>.
-    * Then style family 'NuberingRules' is retrieved, then style indexed '0'
+    * Then style family 'NumberingRules' is retrieved, then style indexed '0'
     * is obtained. At the end property value 'NumberingRules' is obtained from
     * given style.
     */
@@ -139,7 +139,7 @@ public class SwXNumberingRules extends TestCase {
             log.println("Error, exception occurred...");
             e.printStackTrace(log);
         }
-        
+
         Object instance1 = null;
 
         try {
@@ -163,10 +163,10 @@ public class SwXNumberingRules extends TestCase {
         } catch ( com.sun.star.lang.IllegalArgumentException e ) {
             log.println("Error, exception occurred...");
             e.printStackTrace(log);
-        }        
-        
+        }
+
         TestEnvironment tEnv = new TestEnvironment( oObj );
-        
+
         tEnv.addObjRelation("INSTANCE1", instance1);
         return tEnv;
     }

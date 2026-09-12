@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -64,7 +64,7 @@ namespace xmloff
     #define CCA_VISUAL_EFFECT           0x00800000
     #define CCA_ENABLEVISIBLE                 0x01000000
 
-	// flags for database control atttributes
+	// flags for database control attributes
 	#define DA_BOUND_COLUMN				0x00000001
 	#define DA_CONVERT_EMPTY			0x00000002
 	#define DA_DATA_FIELD				0x00000004
@@ -247,8 +247,8 @@ namespace xmloff
 			::rtl::OUString					sAttributeDefault;		// the default if the attribute is not present
 
 			// entries which are special to some value types
-			const SvXMLEnumMapEntry*		pEnumMap;				// the enum map, if appliable
-			sal_Bool						bInverseSemantics;		// for booleanss: attribute and property value have the same or an inverse semantics?
+			const SvXMLEnumMapEntry*		pEnumMap;				// the enum map, if applicable
+			sal_Bool						bInverseSemantics;		// for booleans: attribute and property value have the same or an inverse semantics?
 
 			AttributeAssignment() : pEnumMap(NULL), bInverseSemantics(sal_False) { }
 		};
@@ -356,4 +356,3 @@ namespace xmloff
 //.........................................................................
 
 #endif // _XMLOFF_FORMATTRIBUTES_HXX_
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -76,7 +76,7 @@ sal_Bool VCLXFont::ImplAssertValidFontMetric()
 
 
 // ::com::sun::star::uno::XInterface
-::com::sun::star::uno::Any VCLXFont::queryInterface( const ::com::sun::star::uno::Type & rType ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Any VCLXFont::queryInterface( const ::com::sun::star::uno::Type & rType )
 {
 	::com::sun::star::uno::Any aRet = ::cppu::queryInterface( rType,
 										SAL_STATIC_CAST( ::com::sun::star::awt::XFont*, this ),
@@ -95,7 +95,7 @@ IMPL_XTYPEPROVIDER_START( VCLXFont )
 IMPL_XTYPEPROVIDER_END
 
 
-::com::sun::star::awt::FontDescriptor VCLXFont::getFontDescriptor(  ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::awt::FontDescriptor VCLXFont::getFontDescriptor(  )
 {
 	::osl::Guard< ::osl::Mutex > aGuard( GetMutex() );
 
@@ -103,17 +103,17 @@ IMPL_XTYPEPROVIDER_END
 
 }
 
-::com::sun::star::awt::SimpleFontMetric VCLXFont::getFontMetric(  ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::awt::SimpleFontMetric VCLXFont::getFontMetric(  )
 {
 	::osl::Guard< ::osl::Mutex > aGuard( GetMutex() );
 
 	::com::sun::star::awt::SimpleFontMetric aFM;
-	if ( ImplAssertValidFontMetric() ) 
+	if ( ImplAssertValidFontMetric() )
 		aFM = VCLUnoHelper::CreateFontMetric( *mpFontMetric );
 	return aFM;
 }
 
-sal_Int16 VCLXFont::getCharWidth( sal_Unicode c ) throw(::com::sun::star::uno::RuntimeException)
+sal_Int16 VCLXFont::getCharWidth( sal_Unicode c )
 {
 	::osl::Guard< ::osl::Mutex > aGuard( GetMutex() );
 
@@ -123,7 +123,7 @@ sal_Int16 VCLXFont::getCharWidth( sal_Unicode c ) throw(::com::sun::star::uno::R
 	{
 		Font aOldFont = pOutDev->GetFont();
 		pOutDev->SetFont( maFont );
-		
+
 		nRet = sal::static_int_cast< sal_Int16 >(
             pOutDev->GetTextWidth( String(c) ));
 
@@ -132,7 +132,7 @@ sal_Int16 VCLXFont::getCharWidth( sal_Unicode c ) throw(::com::sun::star::uno::R
 	return nRet;
 }
 
-::com::sun::star::uno::Sequence< sal_Int16 > VCLXFont::getCharWidths( sal_Unicode nFirst, sal_Unicode nLast ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Sequence< sal_Int16 > VCLXFont::getCharWidths( sal_Unicode nFirst, sal_Unicode nLast )
 {
 	::osl::Guard< ::osl::Mutex > aGuard( GetMutex() );
 
@@ -142,7 +142,7 @@ sal_Int16 VCLXFont::getCharWidth( sal_Unicode c ) throw(::com::sun::star::uno::R
 	{
 		Font aOldFont = pOutDev->GetFont();
 		pOutDev->SetFont( maFont );
-		
+
 		sal_Int16 nCount = nLast-nFirst + 1;
 		aSeq = ::com::sun::star::uno::Sequence<sal_Int16>( nCount );
 		for ( sal_uInt16 n = 0; n < nCount; n++ )
@@ -157,7 +157,7 @@ sal_Int16 VCLXFont::getCharWidth( sal_Unicode c ) throw(::com::sun::star::uno::R
 	return aSeq;
 }
 
-sal_Int32 VCLXFont::getStringWidth( const ::rtl::OUString& str ) throw(::com::sun::star::uno::RuntimeException)
+sal_Int32 VCLXFont::getStringWidth( const ::rtl::OUString& str )
 {
 	::osl::Guard< ::osl::Mutex > aGuard( GetMutex() );
 
@@ -173,7 +173,7 @@ sal_Int32 VCLXFont::getStringWidth( const ::rtl::OUString& str ) throw(::com::su
 	return nRet;
 }
 
-sal_Int32 VCLXFont::getStringWidthArray( const ::rtl::OUString& str, ::com::sun::star::uno::Sequence< sal_Int32 >& rDXArray ) throw(::com::sun::star::uno::RuntimeException)
+sal_Int32 VCLXFont::getStringWidthArray( const ::rtl::OUString& str, ::com::sun::star::uno::Sequence< sal_Int32 >& rDXArray )
 {
 	::osl::Guard< ::osl::Mutex > aGuard( GetMutex() );
 
@@ -190,14 +190,13 @@ sal_Int32 VCLXFont::getStringWidthArray( const ::rtl::OUString& str, ::com::sun:
 	return nRet;
 }
 
-void VCLXFont::getKernPairs( ::com::sun::star::uno::Sequence< sal_Unicode >& /*rnChars1*/, ::com::sun::star::uno::Sequence< sal_Unicode >& /*rnChars2*/, ::com::sun::star::uno::Sequence< sal_Int16 >& /*rnKerns*/ ) throw(::com::sun::star::uno::RuntimeException)
+void VCLXFont::getKernPairs( ::com::sun::star::uno::Sequence< sal_Unicode >& /*rnChars1*/, ::com::sun::star::uno::Sequence< sal_Unicode >& /*rnChars2*/, ::com::sun::star::uno::Sequence< sal_Int16 >& /*rnKerns*/ )
 {
 	// NOTE: this empty method is just used for keeping the related UNO-API stable
 }
 
 // ::com::sun::star::awt::XFont2
 sal_Bool VCLXFont::hasGlyphs( const ::rtl::OUString& aText )
-    throw(::com::sun::star::uno::RuntimeException)
 {
 	::osl::Guard< ::osl::Mutex > aGuard( GetMutex() );
 

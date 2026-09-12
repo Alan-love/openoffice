@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -261,7 +261,7 @@ namespace frm
 
     //---------------------------------------------------------------------
     sal_Bool FontControlModel::convertFastPropertyValue( Any& _rConvertedValue, Any& _rOldValue,
-                sal_Int32 _nHandle, const Any& _rValue ) throw( IllegalArgumentException )
+                sal_Int32 _nHandle, const Any& _rValue )
     {
         sal_Bool bModified = sal_False;
         switch( _nHandle )
@@ -360,7 +360,7 @@ namespace frm
     }
 
     //------------------------------------------------------------------------------
-    void FontControlModel::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue ) throw ( Exception )
+    void FontControlModel::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue )
     {
         switch( _nHandle )
         {

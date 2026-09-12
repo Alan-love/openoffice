@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,21 +7,21 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 import uno
 import unohelper
 import sys
-import imp
+import types
 import os
 from com.sun.star.uno import Exception,RuntimeException
 from com.sun.star.loader import XImplementationLoader
@@ -84,14 +84,14 @@ class Loader( XImplementationLoader, XServiceInfo, unohelper.Base ):
                 # did we load the module already ?
                 mod = g_loadedComponents.get( url )
                 if not mod:
-                    mod = imp.new_module("uno_component")
+                    mod = types.ModuleType("uno_component")
 
                     # check for pythonpath.zip beside .py files
                     checkForPythonPathBesideComponent( url[0:url.rfind('/')] )
 
                     # read the file
                     filename = unohelper.fileUrlToSystemPath( url )
-                    fileHandle = file( filename )
+                    fileHandle = open( filename )
                     src = fileHandle.read().replace("\r","")
                     if not src.endswith( "\n" ):
                         src = src + "\n"

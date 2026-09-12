@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -119,21 +119,18 @@ public:
 	~NamingService_Impl();
 
     // XServiceInfo
-    virtual OUString SAL_CALL getImplementationName()
-	throw(::com::sun::star::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName )
-	throw(::com::sun::star::uno::RuntimeException);
-    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames()
-	throw(::com::sun::star::uno::RuntimeException);
+    virtual OUString SAL_CALL getImplementationName();
+    virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName );
+    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames();
     static Sequence< OUString > SAL_CALL getSupportedServiceNames_Static()
 	{
 		OUString aStr( OUString::createFromAscii( SERVICENAME ) );
 		return Sequence< OUString >( &aStr, 1 );
 	}
 
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface > SAL_CALL getRegisteredObject( const ::rtl::OUString& Name ) throw(Exception, RuntimeException);
-    virtual void SAL_CALL registerObject( const ::rtl::OUString& Name, const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >& Object ) throw(Exception, RuntimeException);
-    virtual void SAL_CALL revokeObject( const ::rtl::OUString& Name ) throw(Exception, RuntimeException);
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface > SAL_CALL getRegisteredObject( const ::rtl::OUString& Name );
+    virtual void SAL_CALL registerObject( const ::rtl::OUString& Name, const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >& Object );
+    virtual void SAL_CALL revokeObject( const ::rtl::OUString& Name );
 };
 
 //==================================================================================================
@@ -156,14 +153,12 @@ NamingService_Impl::~NamingService_Impl()
 
 // XServiceInfo
 OUString NamingService_Impl::getImplementationName()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return ns_getImplementationName();
 }
 
 // XServiceInfo
 sal_Bool NamingService_Impl::supportsService( const OUString & rServiceName )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	const Sequence< OUString > & rSNL = getSupportedServiceNames();
 	const OUString * pArray = rSNL.getConstArray();
@@ -177,13 +172,12 @@ sal_Bool NamingService_Impl::supportsService( const OUString & rServiceName )
 
 // XServiceInfo
 Sequence< OUString > NamingService_Impl::getSupportedServiceNames()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return ns_getSupportedServiceNames();
 }
 
 // XServiceInfo
-Reference< XInterface > NamingService_Impl::getRegisteredObject( const OUString& Name ) throw(Exception, RuntimeException)
+Reference< XInterface > NamingService_Impl::getRegisteredObject( const OUString& Name )
 {
 	Guard< Mutex > aGuard( aMutex );
 	Reference< XInterface > xRet;
@@ -194,14 +188,14 @@ Reference< XInterface > NamingService_Impl::getRegisteredObject( const OUString&
 }
 
 // XServiceInfo
-void NamingService_Impl::registerObject( const OUString& Name, const Reference< XInterface >& Object ) throw(Exception, RuntimeException)
+void NamingService_Impl::registerObject( const OUString& Name, const Reference< XInterface >& Object )
 {
 	Guard< Mutex > aGuard( aMutex );
 	aMap[ Name ] = Object;
 }
 
 // XServiceInfo
-void NamingService_Impl::revokeObject( const OUString& Name ) throw(Exception, RuntimeException)
+void NamingService_Impl::revokeObject( const OUString& Name )
 {
 	Guard< Mutex > aGuard( aMutex );
 	aMap.erase( Name );

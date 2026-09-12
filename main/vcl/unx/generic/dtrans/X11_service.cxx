@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_vcl.hxx"
@@ -73,42 +71,42 @@ Sequence< OUString > SAL_CALL x11::Xdnd_dropTarget_getSupportedServiceNames()
 
 css::uno::Reference< XInterface > X11SalInstance::CreateClipboard( const Sequence< Any >& arguments )
 {
-    static std::hash_map< OUString, ::std::hash_map< Atom, css::uno::Reference< XClipboard > >, ::rtl::OUStringHash > m_aInstances;
+	static std::hash_map< OUString, ::std::hash_map< Atom, css::uno::Reference< XClipboard > >, ::rtl::OUStringHash > m_aInstances;
 
 	OUString aDisplayName;
-    Atom nSelection;
-    
-    // extract display name from connection argument. An exception is thrown
-    // by SelectionManager.initialize() if no display connection is given. 
-    if( arguments.getLength() > 0 )
+	Atom nSelection;
+
+	// extract display name from connection argument. An exception is thrown
+	// by SelectionManager.initialize() if no display connection is given.
+	if( arguments.getLength() > 0 )
 	{
 		css::uno::Reference< XDisplayConnection > xConn;
 		arguments.getConstArray()[0] >>= xConn;
-        
+
 		if( xConn.is() )
 		{
 			Any aIdentifier = xConn->getIdentifier();
 			aIdentifier >>= aDisplayName;
 		}
 	}
-    
+
 	SelectionManager& rManager = SelectionManager::get( aDisplayName );
 	rManager.initialize( arguments );
-    
-    // check if any other selection than clipboard selection is specified
-    if( arguments.getLength() > 1 )
-    {
-        OUString aSelectionName;
-        
-        arguments.getConstArray()[1] >>= aSelectionName;
-        nSelection = rManager.getAtom( aSelectionName );
-    }
-    else
-    {
-        // default atom is clipboard selection
-        nSelection = rManager.getAtom( OUString::createFromAscii( "CLIPBOARD" ) );
-    }
-    
+
+	// check if any other selection than clipboard selection is specified
+	if( arguments.getLength() > 1 )
+	{
+		OUString aSelectionName;
+
+		arguments.getConstArray()[1] >>= aSelectionName;
+		nSelection = rManager.getAtom( aSelectionName );
+	}
+	else
+	{
+		// default atom is clipboard selection
+		nSelection = rManager.getAtom( OUString::createFromAscii( "CLIPBOARD" ) );
+	}
+
 	::std::hash_map< Atom, css::uno::Reference< XClipboard > >& rMap( m_aInstances[ aDisplayName ] );
 	::std::hash_map< Atom, css::uno::Reference< XClipboard > >::iterator it = rMap.find( nSelection );
 	if( it != rMap.end() )
@@ -134,4 +132,4 @@ css::uno::Reference< XInterface > X11SalInstance::CreateDropTarget()
 	return css::uno::Reference < XInterface >( ( OWeakObject * ) new DropTarget() );
 }
 
-
+/* vim: set noet sw=4 ts=4: */

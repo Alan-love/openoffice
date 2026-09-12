@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -52,7 +52,6 @@ namespace comphelper {
 // ----------------------------------------------------------------------
 uno::Reference< lang::XSingleServiceFactory > OStorageHelper::GetStorageFactory(
 							const uno::Reference< lang::XMultiServiceFactory >& xSF )
-		throw ( uno::Exception )
 {
 	uno::Reference< lang::XMultiServiceFactory > xFactory = xSF.is() ? xSF : ::comphelper::getProcessServiceFactory();
 	if ( !xFactory.is() )
@@ -71,7 +70,6 @@ uno::Reference< lang::XSingleServiceFactory > OStorageHelper::GetStorageFactory(
 // ----------------------------------------------------------------------
 uno::Reference< lang::XSingleServiceFactory > OStorageHelper::GetFileSystemStorageFactory(
 							const uno::Reference< lang::XMultiServiceFactory >& xSF )
-		throw ( uno::Exception )
 {
 	uno::Reference< lang::XMultiServiceFactory > xFactory = xSF.is() ? xSF : ::comphelper::getProcessServiceFactory();
 	if ( !xFactory.is() )
@@ -90,7 +88,6 @@ uno::Reference< lang::XSingleServiceFactory > OStorageHelper::GetFileSystemStora
 // ----------------------------------------------------------------------
 uno::Reference< embed::XStorage > OStorageHelper::GetTemporaryStorage(
 			const uno::Reference< lang::XMultiServiceFactory >& xFactory )
-	throw ( uno::Exception )
 {
 	uno::Reference< embed::XStorage > xTempStorage( GetStorageFactory( xFactory )->createInstance(),
 													uno::UNO_QUERY );
@@ -105,7 +102,6 @@ uno::Reference< embed::XStorage > OStorageHelper::GetStorageFromURL(
 			const ::rtl::OUString& aURL,
 			sal_Int32 nStorageMode,
 			const uno::Reference< lang::XMultiServiceFactory >& xFactory )
-	throw ( uno::Exception )
 {
 	uno::Sequence< uno::Any > aArgs( 2 );
 	aArgs[0] <<= aURL;
@@ -124,7 +120,6 @@ uno::Reference< embed::XStorage > OStorageHelper::GetStorageFromURL2(
 			const ::rtl::OUString& aURL,
 			sal_Int32 nStorageMode,
 			const uno::Reference< lang::XMultiServiceFactory >& xFactory )
-	throw ( uno::Exception )
 {
 	uno::Sequence< uno::Any > aArgs( 2 );
 	aArgs[0] <<= aURL;
@@ -155,7 +150,6 @@ uno::Reference< embed::XStorage > OStorageHelper::GetStorageFromURL2(
 uno::Reference< embed::XStorage > OStorageHelper::GetStorageFromInputStream(
             const uno::Reference < io::XInputStream >& xStream,
 			const uno::Reference< lang::XMultiServiceFactory >& xFactory )
-		throw ( uno::Exception )
 {
 	uno::Sequence< uno::Any > aArgs( 2 );
 	aArgs[0] <<= xStream;
@@ -174,7 +168,6 @@ uno::Reference< embed::XStorage > OStorageHelper::GetStorageFromStream(
             const uno::Reference < io::XStream >& xStream,
 			sal_Int32 nStorageMode,
 			const uno::Reference< lang::XMultiServiceFactory >& xFactory )
-		throw ( uno::Exception )
 {
 	uno::Sequence< uno::Any > aArgs( 2 );
 	aArgs[0] <<= xStream;
@@ -192,7 +185,6 @@ uno::Reference< embed::XStorage > OStorageHelper::GetStorageFromStream(
 void OStorageHelper::CopyInputToOutput(
 			const uno::Reference< io::XInputStream >& xInput,
 			const uno::Reference< io::XOutputStream >& xOutput )
-	throw ( uno::Exception )
 {
 	static const sal_Int32 nConstBufferSize = 32000;
 
@@ -217,7 +209,6 @@ void OStorageHelper::CopyInputToOutput(
 uno::Reference< io::XInputStream > OStorageHelper::GetInputStreamFromURL(
 			const ::rtl::OUString& aURL,
 			const uno::Reference< lang::XMultiServiceFactory >& xSF )
-	throw ( uno::Exception )
 {
 	uno::Reference< lang::XMultiServiceFactory > xFactory = xSF.is() ? xSF : ::comphelper::getProcessServiceFactory();
 	if ( !xFactory.is() )
@@ -241,7 +232,6 @@ uno::Reference< io::XInputStream > OStorageHelper::GetInputStreamFromURL(
 void OStorageHelper::SetCommonStorageEncryptionData(
 			const uno::Reference< embed::XStorage >& xStorage,
 			const uno::Sequence< beans::NamedValue >& aEncryptionData )
-	throw ( uno::Exception )
 {
 	uno::Reference< embed::XEncryptionProtectedSource2 > xEncrSet( xStorage, uno::UNO_QUERY );
 	if ( !xEncrSet.is() )
@@ -253,7 +243,6 @@ void OStorageHelper::SetCommonStorageEncryptionData(
 // ----------------------------------------------------------------------
 sal_Int32 OStorageHelper::GetXStorageFormat(
 			const uno::Reference< embed::XStorage >& xStorage )
-		throw ( uno::Exception )
 {
 	uno::Reference< beans::XPropertySet > xStorProps( xStorage, uno::UNO_QUERY_THROW );
 
@@ -312,7 +301,6 @@ sal_Int32 OStorageHelper::GetXStorageFormat(
 uno::Reference< embed::XStorage > OStorageHelper::GetTemporaryStorageOfFormat(
 			const ::rtl::OUString& aFormat,
 			const uno::Reference< lang::XMultiServiceFactory >& xFactory )
-	throw ( uno::Exception )
 {
 	uno::Reference< lang::XMultiServiceFactory > xFactoryToUse = xFactory.is() ? xFactory : ::comphelper::getProcessServiceFactory();
 	if ( !xFactoryToUse.is() )
@@ -332,7 +320,6 @@ uno::Reference< embed::XStorage > OStorageHelper::GetStorageOfFormatFromURL(
 			sal_Int32 nStorageMode,
 			const uno::Reference< lang::XMultiServiceFactory >& xFactory,
             sal_Bool bRepairStorage )
-	throw ( uno::Exception )
 {
 	uno::Sequence< beans::PropertyValue > aProps( 1 );
 	aProps[0].Name = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "StorageFormat" ) );
@@ -363,7 +350,6 @@ uno::Reference< embed::XStorage > OStorageHelper::GetStorageOfFormatFromInputStr
             const uno::Reference < io::XInputStream >& xStream,
 			const uno::Reference< lang::XMultiServiceFactory >& xFactory,
             sal_Bool bRepairStorage )
-		throw ( uno::Exception )
 {
 	uno::Sequence< beans::PropertyValue > aProps( 1 );
 	aProps[0].Name = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "StorageFormat" ) );
@@ -395,7 +381,6 @@ uno::Reference< embed::XStorage > OStorageHelper::GetStorageOfFormatFromStream(
 			sal_Int32 nStorageMode,
 			const uno::Reference< lang::XMultiServiceFactory >& xFactory,
             sal_Bool bRepairStorage )
-		throw ( uno::Exception )
 {
 	uno::Sequence< beans::PropertyValue > aProps( 1 );
 	aProps[0].Name = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "StorageFormat" ) );
@@ -437,7 +422,7 @@ uno::Sequence< beans::NamedValue > OStorageHelper::CreatePackageEncryptionData( 
 
             uno::Reference< xml::crypto::XDigestContextSupplier > xDigestContextSupplier( xFactory->createInstance( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.xml.crypto.NSSInitializer" ) ) ), uno::UNO_QUERY_THROW );
             uno::Reference< xml::crypto::XDigestContext > xDigestContext( xDigestContextSupplier->getDigestContext( xml::crypto::DigestID::SHA256, uno::Sequence< beans::NamedValue >() ), uno::UNO_SET_THROW );
-            
+
             ::rtl::OString aUTF8Password( ::rtl::OUStringToOString( aPassword, RTL_TEXTENCODING_UTF8 ) );
             xDigestContext->updateDigest( uno::Sequence< sal_Int8 >( reinterpret_cast< const sal_Int8* >( aUTF8Password.getStr() ), aUTF8Password.getLength() ) );
             uno::Sequence< sal_Int8 > aDigest = xDigestContext->finalizeDigestAndDispose();
@@ -506,7 +491,7 @@ sal_Bool OStorageHelper::IsValidZipEntryFileName(
             case ':':
                 return sal_False;
             case '/':
-                if ( !bSlashAllowed )
+                if ( ( i == 0 ) || !bSlashAllowed )
                     return sal_False;
                 break;
             default:
@@ -549,4 +534,3 @@ sal_Bool OStorageHelper::PathHasSegment( const ::rtl::OUString& aPath, const ::r
 }
 
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -57,7 +57,7 @@ ShellStackGuard::ShellStackGuard (Reference<frame::XController>& rxController)
     if (xControllerManager.is())
     {
         mxConfigurationController = xControllerManager->getConfigurationController();
-        
+
         // Tunnel through the controller to obtain a ViewShellBase.
         Reference<lang::XUnoTunnel> xTunnel (rxController, UNO_QUERY);
         if (xTunnel.is())
@@ -90,7 +90,7 @@ ShellStackGuard::ShellStackGuard (Reference<frame::XController>& rxController)
 ShellStackGuard::~ShellStackGuard (void)
 {
 }
-    
+
 
 
 
@@ -108,7 +108,6 @@ void SAL_CALL ShellStackGuard::disposing (void)
 
 void SAL_CALL ShellStackGuard::notifyConfigurationChange (
     const ConfigurationChangeEvent& rEvent)
-    throw (RuntimeException)
 {
     if (rEvent.Type.equals(FrameworkHelper::msConfigurationUpdateStartEvent))
     {
@@ -128,7 +127,6 @@ void SAL_CALL ShellStackGuard::notifyConfigurationChange (
 
 void SAL_CALL ShellStackGuard::disposing (
     const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     if (mxConfigurationController.is())
         if (rEvent.Source == mxConfigurationController)

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -63,7 +63,7 @@ namespace rptui
 	//====================================================================
 	//= DefaultComponentInspectorModel
 	//====================================================================
-    DBG_NAME(DefaultComponentInspectorModel)    
+    DBG_NAME(DefaultComponentInspectorModel)
 	//--------------------------------------------------------------------
     DefaultComponentInspectorModel::DefaultComponentInspectorModel( const Reference< XComponentContext >& _rxContext)
         :m_xContext( _rxContext )
@@ -74,41 +74,41 @@ namespace rptui
         ,m_nMaxHelpTextLines( 8 )
         ,m_pInfoService(new OPropertyInfoService())
     {
-        DBG_CTOR(DefaultComponentInspectorModel,NULL);        
+        DBG_CTOR(DefaultComponentInspectorModel,NULL);
     }
 
     //------------------------------------------------------------------------
     DefaultComponentInspectorModel::~DefaultComponentInspectorModel()
     {
-        DBG_DTOR(DefaultComponentInspectorModel,NULL);        
+        DBG_DTOR(DefaultComponentInspectorModel,NULL);
     }
 
 	//------------------------------------------------------------------------
-	::rtl::OUString SAL_CALL DefaultComponentInspectorModel::getImplementationName(  ) throw(RuntimeException)
+	::rtl::OUString SAL_CALL DefaultComponentInspectorModel::getImplementationName(  )
 	{
 		return getImplementationName_Static();
 	}
 
 	//------------------------------------------------------------------------
-	sal_Bool SAL_CALL DefaultComponentInspectorModel::supportsService( const ::rtl::OUString& ServiceName ) throw(RuntimeException)
+	sal_Bool SAL_CALL DefaultComponentInspectorModel::supportsService( const ::rtl::OUString& ServiceName )
 	{
 		return ::comphelper::existsValue(ServiceName,getSupportedServiceNames_static());
 	}
 
 	//------------------------------------------------------------------------
-	Sequence< ::rtl::OUString > SAL_CALL DefaultComponentInspectorModel::getSupportedServiceNames(  ) throw(RuntimeException)
+	Sequence< ::rtl::OUString > SAL_CALL DefaultComponentInspectorModel::getSupportedServiceNames(  )
 	{
 		return getSupportedServiceNames_static();
 	}
 
 	//------------------------------------------------------------------------
-	::rtl::OUString DefaultComponentInspectorModel::getImplementationName_Static(  ) throw(RuntimeException)
+	::rtl::OUString DefaultComponentInspectorModel::getImplementationName_Static(  )
 	{
         return ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.comp.report.DefaultComponentInspectorModel"));
 	}
 
 	//------------------------------------------------------------------------
-	Sequence< ::rtl::OUString > DefaultComponentInspectorModel::getSupportedServiceNames_static(  ) throw(RuntimeException)
+	Sequence< ::rtl::OUString > DefaultComponentInspectorModel::getSupportedServiceNames_static(  )
 	{
 		Sequence< ::rtl::OUString > aSupported(1);
         aSupported[0] = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.report.inspection.DefaultComponentInspectorModel"));
@@ -122,11 +122,11 @@ namespace rptui
 	}
 
     //--------------------------------------------------------------------
-    Sequence< Any > SAL_CALL DefaultComponentInspectorModel::getHandlerFactories() throw (RuntimeException)
+    Sequence< Any > SAL_CALL DefaultComponentInspectorModel::getHandlerFactories()
     {
         ::osl::MutexGuard aGuard( m_aMutex );
 
-        
+
         // service names for all our handlers
         const struct
         {
@@ -137,9 +137,9 @@ namespace rptui
             { "com.sun.star.form.inspection.EditPropertyHandler"},
             { "com.sun.star.report.inspection.DataProviderHandler"},
             { "com.sun.star.report.inspection.GeometryHandler"}
-            
+
             // generic virtual edit properties
-            
+
         };
 
         const size_t nFactories = sizeof( aFactories ) / sizeof( aFactories[ 0 ] );
@@ -153,39 +153,39 @@ namespace rptui
         return aReturn;
     }
     //--------------------------------------------------------------------
-    ::sal_Bool SAL_CALL DefaultComponentInspectorModel::getHasHelpSection() throw (RuntimeException)
+    ::sal_Bool SAL_CALL DefaultComponentInspectorModel::getHasHelpSection()
     {
         ::osl::MutexGuard aGuard(m_aMutex);
         return m_bHasHelpSection;
     }
-    
+
     //--------------------------------------------------------------------
-    ::sal_Int32 SAL_CALL DefaultComponentInspectorModel::getMinHelpTextLines() throw (RuntimeException)
+    ::sal_Int32 SAL_CALL DefaultComponentInspectorModel::getMinHelpTextLines()
     {
         ::osl::MutexGuard aGuard(m_aMutex);
         return m_nMinHelpTextLines;
     }
     //--------------------------------------------------------------------
-    ::sal_Bool SAL_CALL DefaultComponentInspectorModel::getIsReadOnly() throw (::com::sun::star::uno::RuntimeException)
+    ::sal_Bool SAL_CALL DefaultComponentInspectorModel::getIsReadOnly()
     {
         ::osl::MutexGuard aGuard(m_aMutex);
         return m_bIsReadOnly;
     }
     //--------------------------------------------------------------------
-    void SAL_CALL DefaultComponentInspectorModel::setIsReadOnly( ::sal_Bool _isreadonly ) throw (::com::sun::star::uno::RuntimeException)
+    void SAL_CALL DefaultComponentInspectorModel::setIsReadOnly( ::sal_Bool _isreadonly )
     {
         ::osl::MutexGuard aGuard(m_aMutex);
         m_bIsReadOnly = _isreadonly;
     }
-    
+
     //--------------------------------------------------------------------
-    ::sal_Int32 SAL_CALL DefaultComponentInspectorModel::getMaxHelpTextLines() throw (RuntimeException)
+    ::sal_Int32 SAL_CALL DefaultComponentInspectorModel::getMaxHelpTextLines()
     {
         ::osl::MutexGuard aGuard(m_aMutex);
         return m_nMaxHelpTextLines;
     }
     //--------------------------------------------------------------------
-    void SAL_CALL DefaultComponentInspectorModel::initialize( const Sequence< Any >& _arguments ) throw (Exception, RuntimeException)
+    void SAL_CALL DefaultComponentInspectorModel::initialize( const Sequence< Any >& _arguments )
     {
         ::osl::MutexGuard aGuard(m_aMutex);
         if ( m_bConstructed )
@@ -226,7 +226,7 @@ namespace rptui
         m_bConstructed = true;
     }
     //--------------------------------------------------------------------
-    Sequence< PropertyCategoryDescriptor > SAL_CALL DefaultComponentInspectorModel::describeCategories(  ) throw (RuntimeException)
+    Sequence< PropertyCategoryDescriptor > SAL_CALL DefaultComponentInspectorModel::describeCategories(  )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
 
@@ -254,7 +254,7 @@ namespace rptui
     }
 
     //--------------------------------------------------------------------
-    ::sal_Int32 SAL_CALL DefaultComponentInspectorModel::getPropertyOrderIndex( const ::rtl::OUString& _rPropertyName ) throw (RuntimeException)
+    ::sal_Int32 SAL_CALL DefaultComponentInspectorModel::getPropertyOrderIndex( const ::rtl::OUString& _rPropertyName )
     {
         ::osl::MutexGuard aGuard(m_aMutex);
         const sal_Int32 nPropertyId( m_pInfoService->getPropertyId( _rPropertyName ) );
@@ -277,4 +277,3 @@ namespace rptui
 //........................................................................
 } // namespace rptui
 //........................................................................
-

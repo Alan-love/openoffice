@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -71,7 +71,7 @@ public:
         ::com::sun::star::accessibility::XAccessible>& rxParent,
 		ScTabViewShell* pViewShell,
 		ScSplitPos eSplitPos);
-	
+
 	virtual void Init();
 
 
@@ -91,118 +91,92 @@ public:
 
 	///=====  XInterface  =====================================================
 
-	virtual ::com::sun::star::uno::Any SAL_CALL queryInterface( 
-		::com::sun::star::uno::Type const & rType ) 
-		throw (::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Any SAL_CALL queryInterface(
+		::com::sun::star::uno::Type const & rType );
 
 	virtual void SAL_CALL acquire() throw ();
-       
+
 	virtual void SAL_CALL release() throw ();
 
 	///=====  XAccessibleComponent  ============================================
 
     virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible >
 		SAL_CALL getAccessibleAtPoint(
-		const ::com::sun::star::awt::Point& rPoint )
-		throw (::com::sun::star::uno::RuntimeException);
+		const ::com::sun::star::awt::Point& rPoint );
 
-    virtual void SAL_CALL grabFocus(  )
-		throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL grabFocus(  );
 
 	///=====  XAccessibleContext  ==============================================
 
     ///	Return the number of currently visible children.
     virtual sal_Int32 SAL_CALL
-    	getAccessibleChildCount(void)
-        throw (::com::sun::star::uno::RuntimeException);
+    	getAccessibleChildCount(void);
 
     ///	Return the specified child or NULL if index is invalid.
     virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible> SAL_CALL
-    	getAccessibleChild(sal_Int32 nIndex)
-        throw (::com::sun::star::uno::RuntimeException,
-				::com::sun::star::lang::IndexOutOfBoundsException);
+    	getAccessibleChild(sal_Int32 nIndex);
 
     ///	Return the set of current states.
 	virtual ::com::sun::star::uno::Reference<
             ::com::sun::star::accessibility::XAccessibleStateSet> SAL_CALL
-    	getAccessibleStateSet(void)
-        throw (::com::sun::star::uno::RuntimeException);
+    	getAccessibleStateSet(void);
 
 	virtual ::rtl::OUString SAL_CALL
-		getAccessibleName(void)
-		throw (::com::sun::star::uno::RuntimeException);
+		getAccessibleName(void);
 
-	virtual ::com::sun::star::uno::Any SAL_CALL getExtendedAttributes() 
-		throw (::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::uno::RuntimeException) ;
+	virtual ::com::sun::star::uno::Any SAL_CALL getExtendedAttributes() ;
 	///=====  XAccessibleSelection  ===========================================
 
-    virtual void SAL_CALL 
-		selectAccessibleChild( sal_Int32 nChildIndex ) 
-		throw (::com::sun::star::lang::IndexOutOfBoundsException, 
-		::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL
+		selectAccessibleChild( sal_Int32 nChildIndex );
 
-    virtual sal_Bool SAL_CALL 
-		isAccessibleChildSelected( sal_Int32 nChildIndex ) 
-		throw (::com::sun::star::lang::IndexOutOfBoundsException,
-		::com::sun::star::uno::RuntimeException);
+    virtual sal_Bool SAL_CALL
+		isAccessibleChildSelected( sal_Int32 nChildIndex );
 
-    virtual void SAL_CALL 
-		clearAccessibleSelection(  ) 
-		throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL
+		clearAccessibleSelection(  );
 
-    virtual void SAL_CALL 
-		selectAllAccessibleChildren(  ) 
-		throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL
+		selectAllAccessibleChildren(  );
 
-    virtual sal_Int32 SAL_CALL 
-		getSelectedAccessibleChildCount(  ) 
-		throw (::com::sun::star::uno::RuntimeException);
+    virtual sal_Int32 SAL_CALL
+		getSelectedAccessibleChildCount(  );
 
     virtual ::com::sun::star::uno::Reference<
-		::com::sun::star::accessibility::XAccessible > SAL_CALL 
-		getSelectedAccessibleChild( sal_Int32 nSelectedChildIndex ) 
-		throw (::com::sun::star::lang::IndexOutOfBoundsException,
-		::com::sun::star::uno::RuntimeException);
+		::com::sun::star::accessibility::XAccessible > SAL_CALL
+		getSelectedAccessibleChild( sal_Int32 nSelectedChildIndex );
 
-    virtual void SAL_CALL 
-		deselectAccessibleChild( sal_Int32 nChildIndex ) 
-		throw (::com::sun::star::lang::IndexOutOfBoundsException,
-		::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL
+		deselectAccessibleChild( sal_Int32 nChildIndex );
 
 	///=====  XSelectionListener  =============================================
 
-    virtual void SAL_CALL selectionChanged( const ::com::sun::star::lang::EventObject& aEvent ) 
-		throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL selectionChanged( const ::com::sun::star::lang::EventObject& aEvent );
 
-    virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source )
-		throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source );
 
 	///=====  XServiceInfo  ===================================================
 
     /**	Returns an identifier for the implementation of this object.
     */
 	virtual ::rtl::OUString SAL_CALL
-    	getImplementationName(void)
-        throw (::com::sun::star::uno::RuntimeException);
+    	getImplementationName(void);
 
     /** Returns a list of all supported services.
     */
 	virtual ::com::sun::star::uno::Sequence< ::rtl::OUString> SAL_CALL
-    	getSupportedServiceNames(void)
-        throw (::com::sun::star::uno::RuntimeException);
+    	getSupportedServiceNames(void);
 
 	///=====  XTypeProvider  ===================================================
 
 	/// returns the possible types
-    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL 
-		getTypes() 
-		throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL
+		getTypes();
 
 	/**	Returns a implementation id.
     */
     virtual ::com::sun::star::uno::Sequence<sal_Int8> SAL_CALL
-        getImplementationId(void)
-        throw (::com::sun::star::uno::RuntimeException);
+        getImplementationId(void);
 
 	///=====  IAccessibleViewForwarder  ========================================
 
@@ -217,7 +191,7 @@ public:
     /** Returns the area of the underlying document that is visible in the
     * corresponding window.
 
-    	@return 
+    	@return
             The rectangle of the visible part of the document. The values
             are, contrary to the base class, in internal coordinates.
      */
@@ -229,7 +203,7 @@ public:
     	@param rPoint
             Point in internal coordinates.
 
-        @return 
+        @return
             The same point but in screen coordinates relative to the upper
             left corner of the (current) screen.
      */
@@ -241,7 +215,7 @@ public:
     	@param rSize
             Size in internal coordinates.
 
-        @return 
+        @return
             The same size but in screen coordinates.
      */
     virtual Size LogicToPixel (const Size& rSize) const;
@@ -253,7 +227,7 @@ public:
             Point in screen coordinates relative to the upper left corner of
             the (current) screen.
 
-        @return 
+        @return
             The same point but in internal coordinates.
      */
     virtual Point PixelToLogic (const Point& rPoint) const;
@@ -270,7 +244,7 @@ public:
     virtual Size PixelToLogic (const Size& rSize) const;
 
     ///======== internal =====================================================
-    
+
     utl::AccessibleRelationSetHelper* GetRelationSet(const ScAddress* pAddress) const;
 
 	::com::sun::star::uno::Reference
@@ -280,21 +254,17 @@ public:
 protected:
     ///	Return this object's description.
 	virtual ::rtl::OUString SAL_CALL
-    	createAccessibleDescription(void)
-        throw (::com::sun::star::uno::RuntimeException);
+    	createAccessibleDescription(void);
 
     ///	Return the object's current name.
 	virtual ::rtl::OUString SAL_CALL
-    	createAccessibleName(void)
-        throw (::com::sun::star::uno::RuntimeException);
+    	createAccessibleName(void);
 
     ///	Return the object's current bounding box relative to the desktop.
-	virtual Rectangle GetBoundingBoxOnScreen(void) const
-		throw (::com::sun::star::uno::RuntimeException);
+	virtual Rectangle GetBoundingBoxOnScreen(void) const;
 
 	///	Return the object's current bounding box relative to the parent object.
-	virtual Rectangle GetBoundingBox(void) const
-		throw (::com::sun::star::uno::RuntimeException);
+	virtual Rectangle GetBoundingBox(void) const;
 
 private:
 	ScTabViewShell*	mpViewShell;
@@ -334,14 +304,11 @@ public:
 	ScAddress   GetCurCellAddress() const;
 	//=====  XAccessibleGetAccFromXShape  ============================================
 	::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >
-		SAL_CALL get_AccFlowTo(const ::com::sun::star::uno::Any& rAny, sal_Int32 nType)
-		throw ( ::com::sun::star::uno::RuntimeException );
-	
-	 virtual sal_Int32 SAL_CALL getForeground(  ) 
-        throw (::com::sun::star::uno::RuntimeException);
+		SAL_CALL get_AccFlowTo(const ::com::sun::star::uno::Any& rAny, sal_Int32 nType);
 
-    virtual sal_Int32 SAL_CALL getBackground(  ) 
-        throw (::com::sun::star::uno::RuntimeException);
+	 virtual sal_Int32 SAL_CALL getForeground(  );
+
+    virtual sal_Int32 SAL_CALL getBackground(  );
 protected:
 	void SwitchViewFireFocus();
 };

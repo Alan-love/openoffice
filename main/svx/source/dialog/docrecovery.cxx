@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -478,7 +478,6 @@ ERecoveryState RecoveryCore::mapDocState2RecoverState(sal_Int32 eDocState)
 
 //===============================================
 void SAL_CALL RecoveryCore::statusChanged(const css::frame::FeatureStateEvent& aEvent)
-    throw(css::uno::RuntimeException)
 {
     // a) special notification about start/stop async dispatch!
     //    FeatureDescriptor = "start" || "stop"
@@ -567,7 +566,6 @@ void SAL_CALL RecoveryCore::statusChanged(const css::frame::FeatureStateEvent& a
 
 //===============================================
 void SAL_CALL RecoveryCore::disposing(const css::lang::EventObject& /*aEvent*/)
-    throw(css::uno::RuntimeException)
 {
     m_xRealCore.clear();
 }
@@ -679,7 +677,6 @@ Window* PluginProgress::getPlugWindow()
 
 //===============================================
 void SAL_CALL PluginProgress::dispose()
-    throw(css::uno::RuntimeException)
 {
     // m_pPluginProgressWindow was deleted ...
     // So the internal pointer of this progress
@@ -689,20 +686,17 @@ void SAL_CALL PluginProgress::dispose()
 
 //===============================================
 void SAL_CALL PluginProgress::addEventListener(const css::uno::Reference< css::lang::XEventListener >& )
-    throw(css::uno::RuntimeException)
 {
 }
 
 //===============================================
 void SAL_CALL PluginProgress::removeEventListener( const css::uno::Reference< css::lang::XEventListener >& )
-    throw(css::uno::RuntimeException)
 {
 }
 
 //===============================================
 void SAL_CALL PluginProgress::start(const ::rtl::OUString&,
                                           sal_Int32        nRange)
-    throw(css::uno::RuntimeException)
 {
     if (m_xProgress.is())
         m_xProgress->start(::rtl::OUString(), nRange);
@@ -710,7 +704,6 @@ void SAL_CALL PluginProgress::start(const ::rtl::OUString&,
 
 //===============================================
 void SAL_CALL PluginProgress::end()
-    throw(css::uno::RuntimeException)
 {
     if (m_xProgress.is())
         m_xProgress->end();
@@ -718,7 +711,6 @@ void SAL_CALL PluginProgress::end()
 
 //===============================================
 void SAL_CALL PluginProgress::setText(const ::rtl::OUString& sText)
-    throw(css::uno::RuntimeException)
 {
     if (m_xProgress.is())
         m_xProgress->setText(sText);
@@ -726,7 +718,6 @@ void SAL_CALL PluginProgress::setText(const ::rtl::OUString& sText)
 
 //===============================================
 void SAL_CALL PluginProgress::setValue(sal_Int32 nValue)
-    throw(css::uno::RuntimeException)
 {
     if (m_xProgress.is())
         m_xProgress->setValue(nValue);
@@ -734,7 +725,6 @@ void SAL_CALL PluginProgress::setValue(sal_Int32 nValue)
 
 //===============================================
 void SAL_CALL PluginProgress::reset()
-    throw(css::uno::RuntimeException)
 {
     if (m_xProgress.is())
         m_xProgress->reset();
@@ -2174,4 +2164,3 @@ void BrokenRecoveryDialog::impl_askForSavePath()
         }
     }   // namespace DocRecovery
 }	// namespace svx
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -50,19 +50,19 @@ InterfaceRef SAL_CALL OFormsCollection_CreateInstance(const Reference<XMultiServ
 }
 
 //------------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OFormsCollection::getServiceName() throw(RuntimeException)
+::rtl::OUString SAL_CALL OFormsCollection::getServiceName()
 {
 	return FRM_SUN_FORMS_COLLECTION;
 }
 
 //------------------------------------------------------------------------------
-Sequence< sal_Int8 > SAL_CALL OFormsCollection::getImplementationId(  ) throw(RuntimeException)
+Sequence< sal_Int8 > SAL_CALL OFormsCollection::getImplementationId(  )
 {
 	return OImplementationIds::getImplementationId(getTypes());
 }
 
 //------------------------------------------------------------------------------
-Sequence<Type> SAL_CALL OFormsCollection::getTypes() throw(RuntimeException)
+Sequence<Type> SAL_CALL OFormsCollection::getTypes()
 {
 	return concatSequences(OInterfaceContainer::getTypes(), FormsCollectionComponentBase::getTypes(), OFormsCollection_BASE::getTypes());
 }
@@ -97,7 +97,7 @@ OFormsCollection::~OFormsCollection()
 }
 
 //------------------------------------------------------------------------------
-Any SAL_CALL OFormsCollection::queryAggregation(const Type& _rType) throw(RuntimeException)
+Any SAL_CALL OFormsCollection::queryAggregation(const Type& _rType)
 {
 	Any aReturn = OFormsCollection_BASE::queryInterface(_rType);
 	if (!aReturn.hasValue())
@@ -112,13 +112,13 @@ Any SAL_CALL OFormsCollection::queryAggregation(const Type& _rType) throw(Runtim
 }
 
 //------------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OFormsCollection::getImplementationName() throw(RuntimeException)
+::rtl::OUString SAL_CALL OFormsCollection::getImplementationName()
 {
 	return ::rtl::OUString::createFromAscii("com.sun.star.comp.forms.OFormsCollection");
 }
 
 //------------------------------------------------------------------------------
-sal_Bool SAL_CALL OFormsCollection::supportsService( const ::rtl::OUString& _rServiceName ) throw(RuntimeException)
+sal_Bool SAL_CALL OFormsCollection::supportsService( const ::rtl::OUString& _rServiceName )
 {
 	Sequence<rtl::OUString> aSupported = getSupportedServiceNames();
 	const rtl::OUString* pSupported = aSupported.getConstArray();
@@ -129,7 +129,7 @@ sal_Bool SAL_CALL OFormsCollection::supportsService( const ::rtl::OUString& _rSe
 }
 
 //------------------------------------------------------------------------------
-StringSequence SAL_CALL OFormsCollection::getSupportedServiceNames() throw(RuntimeException)
+StringSequence SAL_CALL OFormsCollection::getSupportedServiceNames()
 {
 	StringSequence aReturn(2);
 
@@ -141,7 +141,7 @@ StringSequence SAL_CALL OFormsCollection::getSupportedServiceNames() throw(Runti
 
 // XCloneable
 //------------------------------------------------------------------------------
-Reference< XCloneable > SAL_CALL OFormsCollection::createClone(  ) throw (RuntimeException)
+Reference< XCloneable > SAL_CALL OFormsCollection::createClone(  )
 {
     OFormsCollection* pClone = new OFormsCollection( *this );
     osl_incrementInterlockedCount( &pClone->m_refCount );
@@ -164,14 +164,14 @@ void OFormsCollection::disposing()
 
 //XChild
 //------------------------------------------------------------------------------
-void OFormsCollection::setParent(const InterfaceRef& Parent) throw( NoSupportException, RuntimeException )
+void OFormsCollection::setParent(const InterfaceRef& Parent)
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	m_xParent = Parent;
 }
 
 //------------------------------------------------------------------------------
-InterfaceRef  OFormsCollection::getParent() throw( RuntimeException )
+InterfaceRef  OFormsCollection::getParent()
 {
 	return m_xParent;
 }
@@ -179,4 +179,3 @@ InterfaceRef  OFormsCollection::getParent() throw( RuntimeException )
 //.........................................................................
 }	// namespace frm
 //.........................................................................
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -300,7 +300,7 @@ OUString SAL_CALL classname##_getImplementationName() throw()\
 {\
 	return OUString( RTL_CONSTASCII_USTRINGPARAM( implementationname ) );\
 }\
-uno::Reference< uno::XInterface > SAL_CALL classname##_createInstance(const uno::Reference< lang::XMultiServiceFactory > & rSMgr) throw( uno::Exception )\
+uno::Reference< uno::XInterface > SAL_CALL classname##_createInstance(const uno::Reference< lang::XMultiServiceFactory > & rSMgr)\
 {\
 	return (cppu::OWeakObject*)new SdXMLImport( rSMgr, draw, flags );\
 }
@@ -355,18 +355,17 @@ SdXMLImport::SdXMLImport(
 
 	GetNamespaceMap().Add(
 		GetXMLToken(XML_NP_SMIL),
-        GetXMLToken(XML_N_SMIL_COMPAT), 
+        GetXMLToken(XML_N_SMIL_COMPAT),
 		XML_NAMESPACE_SMIL);
 
 	GetNamespaceMap().Add(
 		GetXMLToken(XML_NP_ANIMATION),
-        GetXMLToken(XML_N_ANIMATION), 
+        GetXMLToken(XML_N_ANIMATION),
 		XML_NAMESPACE_ANIMATION);
 }
 
 // XImporter
 void SAL_CALL SdXMLImport::setTargetDocument( const uno::Reference< lang::XComponent >& xDoc )
-	throw(lang::IllegalArgumentException, uno::RuntimeException)
 {
 	SvXMLImport::setTargetDocument( xDoc );
 
@@ -425,7 +424,6 @@ void SAL_CALL SdXMLImport::setTargetDocument( const uno::Reference< lang::XCompo
 
 // XInitialization
 void SAL_CALL SdXMLImport::initialize( const uno::Sequence< uno::Any >& aArguments )
-	throw( uno::Exception, uno::RuntimeException)
 {
 	SvXMLImport::initialize( aArguments );
 
@@ -998,7 +996,7 @@ void SdXMLImport::SetStatistics(
 
 
 // XServiceInfo
-OUString SAL_CALL SdXMLImport::getImplementationName() throw( uno::RuntimeException )
+OUString SAL_CALL SdXMLImport::getImplementationName()
 {
     if( IsDraw())
     {

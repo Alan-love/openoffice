@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 #include "StockChartTypeTemplate.hxx"
 #include "macros.hxx"
 #include "DataSeriesHelper.hxx"
@@ -114,7 +114,7 @@ private:
         ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_STOCKCHARTTYPE_TEMPLATE_OPEN, false );
         ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_STOCKCHARTTYPE_TEMPLATE_LOW_HIGH, true );
         ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_STOCKCHARTTYPE_TEMPLATE_JAPANESE, false );
-    }    
+    }
 };
 
 struct StaticStockChartTypeTemplateDefaults : public rtl::StaticAggregate< ::chart::tPropertyValueMap, StaticStockChartTypeTemplateDefaults_Initializer >
@@ -193,7 +193,6 @@ StockChartTypeTemplate::~StockChartTypeTemplate()
 {}
 // ____ OPropertySet ____
 uno::Any StockChartTypeTemplate::GetDefaultValue( sal_Int32 nHandle ) const
-    throw(beans::UnknownPropertyException)
 {
     const tPropertyValueMap& rStaticDefaults = *StaticStockChartTypeTemplateDefaults::get();
     tPropertyValueMap::const_iterator aFound( rStaticDefaults.find( nHandle ) );
@@ -209,7 +208,6 @@ uno::Any StockChartTypeTemplate::GetDefaultValue( sal_Int32 nHandle ) const
 
 // ____ XPropertySet ____
 uno::Reference< beans::XPropertySetInfo > SAL_CALL StockChartTypeTemplate::getPropertySetInfo()
-    throw (uno::RuntimeException)
 {
     return *StaticStockChartTypeTemplateInfo::get();
 }
@@ -235,7 +233,6 @@ void SAL_CALL StockChartTypeTemplate::applyStyle(
     ::sal_Int32 nChartTypeIndex,
     ::sal_Int32 nSeriesIndex,
     ::sal_Int32 nSeriesCount )
-    throw (uno::RuntimeException)
 {
     ChartTypeTemplate::applyStyle( xSeries, nChartTypeIndex, nSeriesIndex, nSeriesCount );
     try
@@ -270,7 +267,7 @@ void SAL_CALL StockChartTypeTemplate::applyStyle(
                     xProp->setPropertyValue( C2U("LineStyle"), uno::makeAny( drawing::LineStyle_SOLID ));
             }
         }
-        
+
     }
     catch( uno::Exception & ex )
     {
@@ -280,7 +277,6 @@ void SAL_CALL StockChartTypeTemplate::applyStyle(
 
 void SAL_CALL StockChartTypeTemplate::resetStyles(
     const Reference< chart2::XDiagram >& xDiagram )
-    throw (uno::RuntimeException)
 {
     ChartTypeTemplate::resetStyles( xDiagram );
     if( getDimension() == 3 )
@@ -362,7 +358,7 @@ void StockChartTypeTemplate::createChartTypes(
                 xFact->createInstance(
                     CHART2_SERVICE_NAME_CHARTTYPE_COLUMN ), uno::UNO_QUERY_THROW );
             aChartTypeVec.push_back( xCT );
-            
+
             if( aSeriesSeq.getLength() > nSeriesIndex &&
                 aSeriesSeq[nSeriesIndex].getLength() > 0 )
             {
@@ -384,7 +380,7 @@ void StockChartTypeTemplate::createChartTypes(
             xCTProp->setPropertyValue( C2U("ShowFirst"), uno::makeAny( bShowFirst ));
             xCTProp->setPropertyValue( C2U("ShowHighLow"), uno::makeAny( bShowHighLow ));
         }
-        
+
         if( aSeriesSeq.getLength() > nSeriesIndex &&
             aSeriesSeq[ nSeriesIndex ].getLength() > 0 )
         {
@@ -420,7 +416,6 @@ void StockChartTypeTemplate::createChartTypes(
 sal_Bool SAL_CALL StockChartTypeTemplate::matchesTemplate(
     const uno::Reference< XDiagram >& xDiagram,
     sal_Bool /* bAdaptProperties */ )
-    throw (uno::RuntimeException)
 {
     sal_Bool bResult = sal_False;
 
@@ -501,7 +496,6 @@ sal_Bool SAL_CALL StockChartTypeTemplate::matchesTemplate(
 
 Reference< XChartType > SAL_CALL StockChartTypeTemplate::getChartTypeForNewSeries(
         const uno::Sequence< Reference< chart2::XChartType > >& aFormerlyUsedChartTypes )
-    throw (uno::RuntimeException)
 {
     Reference< chart2::XChartType > xResult;
 
@@ -522,7 +516,6 @@ Reference< XChartType > SAL_CALL StockChartTypeTemplate::getChartTypeForNewSerie
 }
 
 Reference< XDataInterpreter > SAL_CALL StockChartTypeTemplate::getDataInterpreter()
-    throw (uno::RuntimeException)
 {
     if( ! m_xDataInterpreter.is())
         m_xDataInterpreter.set( new StockDataInterpreter( m_eStockVariant, GetComponentContext() ) );

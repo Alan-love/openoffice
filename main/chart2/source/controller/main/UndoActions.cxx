@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartcontroller.hxx"
 
 #include "UndoActions.hxx"
 #include "DisposeHelper.hxx"
@@ -96,7 +96,7 @@ void SAL_CALL UndoElement::disposing()
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-::rtl::OUString SAL_CALL UndoElement::getTitle() throw (RuntimeException)
+::rtl::OUString SAL_CALL UndoElement::getTitle()
 {
     return m_sActionString;
 }
@@ -113,13 +113,13 @@ void UndoElement::impl_toggleModelState()
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-void SAL_CALL UndoElement::undo(  ) throw (UndoFailedException, RuntimeException)
+void SAL_CALL UndoElement::undo(  )
 {
     impl_toggleModelState();
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-void SAL_CALL UndoElement::redo(  ) throw (UndoFailedException, RuntimeException)
+void SAL_CALL UndoElement::redo(  )
 {
     impl_toggleModelState();
 }
@@ -142,7 +142,7 @@ ShapeUndoElement::~ShapeUndoElement()
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-::rtl::OUString SAL_CALL ShapeUndoElement::getTitle() throw (RuntimeException)
+::rtl::OUString SAL_CALL ShapeUndoElement::getTitle()
 {
     if ( !m_pAction )
         throw DisposedException( ::rtl::OUString(), *this );
@@ -150,7 +150,7 @@ ShapeUndoElement::~ShapeUndoElement()
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-void SAL_CALL ShapeUndoElement::undo(  ) throw (UndoFailedException, RuntimeException)
+void SAL_CALL ShapeUndoElement::undo(  )
 {
     if ( !m_pAction )
         throw DisposedException( ::rtl::OUString(), *this );
@@ -158,7 +158,7 @@ void SAL_CALL ShapeUndoElement::undo(  ) throw (UndoFailedException, RuntimeExce
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-void SAL_CALL ShapeUndoElement::redo(  ) throw (UndoFailedException, RuntimeException)
+void SAL_CALL ShapeUndoElement::redo(  )
 {
     if ( !m_pAction )
         throw DisposedException( ::rtl::OUString(), *this );

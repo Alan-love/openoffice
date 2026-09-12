@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -33,7 +33,7 @@
 using namespace ::ooo::vba;
 using namespace ::com::sun::star;
 
-SwVbaOptions::SwVbaOptions( uno::Reference<uno::XComponentContext >& xContext ) throw ( uno::RuntimeException ) : SwVbaOptions_BASE( uno::Reference< XHelperInterface >(), xContext )
+SwVbaOptions::SwVbaOptions( uno::Reference<uno::XComponentContext >& xContext ) : SwVbaOptions_BASE( uno::Reference< XHelperInterface >(), xContext )
 {
     mxFactory.set( comphelper::getProcessServiceFactory(), uno::UNO_QUERY_THROW );
 }
@@ -42,8 +42,8 @@ SwVbaOptions::~SwVbaOptions()
 {
 }
 
-uno::Any SAL_CALL 
-SwVbaOptions::DefaultFilePath( sal_Int32 _path ) throw ( uno::RuntimeException )
+uno::Any SAL_CALL
+SwVbaOptions::DefaultFilePath( sal_Int32 _path )
 {
     switch( _path )
     {
@@ -86,7 +86,7 @@ SwVbaOptions::DefaultFilePath( sal_Int32 _path ) throw ( uno::RuntimeException )
         }
         default:
         {
-            DebugHelper::exception( SbERR_NOT_IMPLEMENTED, rtl::OUString() ); 
+            DebugHelper::exception( SbERR_NOT_IMPLEMENTED, rtl::OUString() );
             break;
         }
     }
@@ -129,145 +129,145 @@ uno::Any SwVbaOptions::getValueEvent()
     return uno::makeAny( sPath );
 }
 
-sal_Int32 SAL_CALL SwVbaOptions::getDefaultBorderLineStyle() throw (uno::RuntimeException)
+sal_Int32 SAL_CALL SwVbaOptions::getDefaultBorderLineStyle()
 {
     return word::WdLineStyle::wdLineStyleSingle;
 }
 
-void SAL_CALL SwVbaOptions::setDefaultBorderLineStyle( ::sal_Int32 /*_defaultborderlinestyle*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaOptions::setDefaultBorderLineStyle( ::sal_Int32 /*_defaultborderlinestyle*/ )
 {
     // not support in Writer
 }
 
-sal_Int32 SAL_CALL SwVbaOptions::getDefaultBorderLineWidth() throw (uno::RuntimeException)
+sal_Int32 SAL_CALL SwVbaOptions::getDefaultBorderLineWidth()
 {
     return word::WdLineWidth::wdLineWidth050pt;
 }
 
-void SAL_CALL SwVbaOptions::setDefaultBorderLineWidth( ::sal_Int32 /*_defaultborderlinewidth*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaOptions::setDefaultBorderLineWidth( ::sal_Int32 /*_defaultborderlinewidth*/ )
 {
     // not support in Writer
 }
 
-sal_Int32 SAL_CALL SwVbaOptions::getDefaultBorderColorIndex() throw (uno::RuntimeException)
+sal_Int32 SAL_CALL SwVbaOptions::getDefaultBorderColorIndex()
 {
     return word::WdColorIndex::wdAuto;
 }
 
-void SAL_CALL SwVbaOptions::setDefaultBorderColorIndex( ::sal_Int32 /*_defaultbordercolorindex*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaOptions::setDefaultBorderColorIndex( ::sal_Int32 /*_defaultbordercolorindex*/ )
 {
     // not support in Writer
 }
 
-::sal_Bool SAL_CALL SwVbaOptions::getReplaceSelection() throw (uno::RuntimeException)
+::sal_Bool SAL_CALL SwVbaOptions::getReplaceSelection()
 {
     return sal_True;
 }
 
-void SAL_CALL SwVbaOptions::setReplaceSelection( ::sal_Bool /*_replaceselection*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaOptions::setReplaceSelection( ::sal_Bool /*_replaceselection*/ )
 {
     // not support in Writer
 }
 
-::sal_Bool SAL_CALL SwVbaOptions::getMapPaperSize() throw (uno::RuntimeException)
+::sal_Bool SAL_CALL SwVbaOptions::getMapPaperSize()
 {
     return sal_False;
 }
 
-void SAL_CALL SwVbaOptions::setMapPaperSize( ::sal_Bool /*_mappapersize*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaOptions::setMapPaperSize( ::sal_Bool /*_mappapersize*/ )
 {
     // not support in Writer
 }
 
-::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatAsYouTypeApplyHeadings() throw (uno::RuntimeException)
+::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatAsYouTypeApplyHeadings()
 {
     return sal_False;
 }
 
-void SAL_CALL SwVbaOptions::setAutoFormatAsYouTypeApplyHeadings( ::sal_Bool /*_autoformatasyoutypeapplyheadings*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaOptions::setAutoFormatAsYouTypeApplyHeadings( ::sal_Bool /*_autoformatasyoutypeapplyheadings*/ )
 {
     // not support in Writer
 }
 
-::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatAsYouTypeApplyBulletedLists() throw (uno::RuntimeException)
+::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatAsYouTypeApplyBulletedLists()
 {
     return sal_False;
 }
 
-void SAL_CALL SwVbaOptions::setAutoFormatAsYouTypeApplyBulletedLists( ::sal_Bool /*_autoformatasyoutypeapplybulletedlists*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaOptions::setAutoFormatAsYouTypeApplyBulletedLists( ::sal_Bool /*_autoformatasyoutypeapplybulletedlists*/ )
 {
     // not support in Writer
 }
 
-::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatAsYouTypeApplyNumberedLists() throw (uno::RuntimeException)
+::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatAsYouTypeApplyNumberedLists()
 {
     return sal_False;
 }
 
-void SAL_CALL SwVbaOptions::setAutoFormatAsYouTypeApplyNumberedLists( ::sal_Bool /*_autoformatasyoutypeapplynumberedlists*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaOptions::setAutoFormatAsYouTypeApplyNumberedLists( ::sal_Bool /*_autoformatasyoutypeapplynumberedlists*/ )
 {
     // not support in Writer
 }
 
-::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatAsYouTypeFormatListItemBeginning() throw (uno::RuntimeException)
+::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatAsYouTypeFormatListItemBeginning()
 {
     return sal_False;
 }
 
-void SAL_CALL SwVbaOptions::setAutoFormatAsYouTypeFormatListItemBeginning( ::sal_Bool /*_autoformatasyoutypeformatlistitembeginning*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaOptions::setAutoFormatAsYouTypeFormatListItemBeginning( ::sal_Bool /*_autoformatasyoutypeformatlistitembeginning*/ )
 {
     // not support in Writer
 }
 
-::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatAsYouTypeDefineStyles() throw (uno::RuntimeException)
+::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatAsYouTypeDefineStyles()
 {
     return sal_False;
 }
 
-void SAL_CALL SwVbaOptions::setAutoFormatAsYouTypeDefineStyles( ::sal_Bool /*_autoformatasyoutypedefinestyles*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaOptions::setAutoFormatAsYouTypeDefineStyles( ::sal_Bool /*_autoformatasyoutypedefinestyles*/ )
 {
     // not support in Writer
 }
 
-::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatApplyHeadings() throw (uno::RuntimeException)
+::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatApplyHeadings()
 {
     return sal_False;
 }
 
-void SAL_CALL SwVbaOptions::setAutoFormatApplyHeadings( ::sal_Bool /*_autoformatapplyheadings*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaOptions::setAutoFormatApplyHeadings( ::sal_Bool /*_autoformatapplyheadings*/ )
 {
     // not support in Writer
 }
 
-::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatApplyLists() throw (uno::RuntimeException)
+::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatApplyLists()
 {
     return sal_False;
 }
 
-void SAL_CALL SwVbaOptions::setAutoFormatApplyLists( ::sal_Bool /*_autoformatapplylists*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaOptions::setAutoFormatApplyLists( ::sal_Bool /*_autoformatapplylists*/ )
 {
     // not support in Writer
 }
 
-::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatApplyBulletedLists() throw (uno::RuntimeException)
+::sal_Bool SAL_CALL SwVbaOptions::getAutoFormatApplyBulletedLists()
 {
     return sal_False;
 }
 
-void SAL_CALL SwVbaOptions::setAutoFormatApplyBulletedLists( ::sal_Bool /*_autoformatapplybulletedlists*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaOptions::setAutoFormatApplyBulletedLists( ::sal_Bool /*_autoformatapplybulletedlists*/ )
 {
     // not support in Writer
 }
 
 
-rtl::OUString& 
+rtl::OUString&
 SwVbaOptions::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("SwVbaOptions") );
 	return sImplName;
 }
 
-uno::Sequence< rtl::OUString > 
+uno::Sequence< rtl::OUString >
 SwVbaOptions::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > aServiceNames;

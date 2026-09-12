@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -166,7 +166,7 @@ void SvxHtmlOptions::Load( const Sequence< OUString >& aNames )
 							{
 								case 0:		nExpMode = HTML_CFG_HTML32;		break;
 								case 1:		nExpMode = HTML_CFG_MSIE_40;	break;
-//								case 2:		nExpMode = HTML_CFG_NS30;		break;	depricated
+//								case 2:		nExpMode = HTML_CFG_NS30;		break;	deprecated
 								case 3:		nExpMode = HTML_CFG_WRITER;		break;
 								case 4:		nExpMode = HTML_CFG_NS40;		break;
 								case 5:		nExpMode = HTML_CFG_MSIE_40_OLD;break;
@@ -239,7 +239,7 @@ void	SvxHtmlOptions::Commit()
 					{
 						case HTML_CFG_HTML32:		nExpMode = 0;	break;
 						case HTML_CFG_MSIE_40:		nExpMode = 1;	break;
-//						case HTML_CFG_NS30:			nExpMode = 2;	break;	depricated
+//						case HTML_CFG_NS30:			nExpMode = 2;	break;	deprecated
 						case HTML_CFG_WRITER:		nExpMode = 3;	break;
 						case HTML_CFG_NS40:			nExpMode = 4;	break;
 						case HTML_CFG_MSIE_40_OLD:	nExpMode = 5;	break;

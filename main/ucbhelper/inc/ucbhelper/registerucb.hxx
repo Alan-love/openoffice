@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -68,15 +68,15 @@ typedef std::vector< ContentProviderRegistrationInfo >
  */
 struct ContentProviderData
 {
-    /** The UNO service name to use to instanciate the content provider.
+    /** The UNO service name to use to instantiate the content provider.
 	 */
 	rtl::OUString ServiceName;
 
-    /** The URL template to use to instanciate the content provider.
+    /** The URL template to use to instantiate the content provider.
 	 */
     rtl::OUString URLTemplate;
 
-    /** The arguments to use to instanciate the content provider.
+    /** The arguments to use to instantiate the content provider.
 	 */
     rtl::OUString Arguments;
 
@@ -118,8 +118,7 @@ UCBHELPER_DLLPUBLIC bool registerAtUcb(
 	rtl::OUString const & rName,
 	rtl::OUString const & rArguments,
 	rtl::OUString const & rTemplate,
-	ContentProviderRegistrationInfo * pInfo)
-	throw (com::sun::star::uno::RuntimeException);
+	ContentProviderRegistrationInfo * pInfo);
 
 }
 #endif // _UCBHELPER_REGISTERUCB_HXX_

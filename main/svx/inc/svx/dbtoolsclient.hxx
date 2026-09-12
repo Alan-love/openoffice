@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -98,7 +98,7 @@ namespace svxform
 		// ------------------------------------------------
 	    sal_Int32 getDefaultNumberFormat(
             const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet >& _xColumn,
-			const ::com::sun::star::uno::Reference< ::com::sun::star::util::XNumberFormatTypes >& _xTypes,									 
+			const ::com::sun::star::uno::Reference< ::com::sun::star::util::XNumberFormatTypes >& _xTypes,
 			const ::com::sun::star::lang::Locale& _rLocale );
 
 		// ------------------------------------------------
@@ -107,21 +107,19 @@ namespace svxform
 			const ::rtl::OUString& _rUser,
 			const ::rtl::OUString& _rPwd,
 			const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory>& _rxFactory
-		) const SAL_THROW ( (::com::sun::star::sdbc::SQLException) );
+		) const;
 
 		// ------------------------------------------------
 		::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XConnection> connectRowset(
 			const ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XRowSet>& _rxRowSet,
 			const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory>& _rxFactory,
 			sal_Bool _bSetAsActiveConnection
-		) const SAL_THROW ( ( ::com::sun::star::sdbc::SQLException
-                            , ::com::sun::star::lang::WrappedTargetException
-                            , ::com::sun::star::uno::RuntimeException) );
+		) const;
 
 		// ------------------------------------------------
 		::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XConnection> getRowSetConnection(
 				const ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XRowSet>& _rxRowSet)
-				const SAL_THROW ( (::com::sun::star::uno::RuntimeException) );
+				const;
 
 		// ------------------------------------------------
 		void TransferFormComponentProperties(
@@ -227,5 +225,3 @@ namespace svxform
 //........................................................................
 
 #endif // SVX_DBTOOLSCLIENT_HXX
-
-

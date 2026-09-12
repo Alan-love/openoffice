@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -84,16 +84,16 @@ public:
     explicit StringRepresentation(uno::Reference< uno::XComponentContext > const & context);
 
     // lang::XServiceInfo:
-    virtual ::rtl::OUString SAL_CALL getImplementationName() throw (uno::RuntimeException);
-    virtual ::sal_Bool SAL_CALL supportsService(const ::rtl::OUString & ServiceName) throw (uno::RuntimeException);
-    virtual uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames() throw (uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getImplementationName();
+    virtual ::sal_Bool SAL_CALL supportsService(const ::rtl::OUString & ServiceName);
+    virtual uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames();
 
     // inspection::XStringRepresentation:
-    virtual ::rtl::OUString SAL_CALL convertToControlValue(const uno::Any & PropertyValue) throw (uno::RuntimeException, uno::Exception);
-    virtual uno::Any SAL_CALL convertToPropertyValue(const ::rtl::OUString & ControlValue, const uno::Type & ControlValueType) throw (uno::RuntimeException, uno::Exception);
+    virtual ::rtl::OUString SAL_CALL convertToControlValue(const uno::Any & PropertyValue);
+    virtual uno::Any SAL_CALL convertToPropertyValue(const ::rtl::OUString & ControlValue, const uno::Type & ControlValueType);
 
     // lang::XInitialization:
-    virtual void SAL_CALL initialize(const uno::Sequence< uno::Any > & aArguments) throw (uno::RuntimeException, uno::Exception);
+    virtual void SAL_CALL initialize(const uno::Sequence< uno::Any > & aArguments);
 
 private:
     StringRepresentation(StringRepresentation &); // not defined
@@ -137,7 +137,7 @@ private:
 
     /** converts a string into his constant value if it exists, otherwise the type converter is used.
     * \param _rValue the value to be converted
-    * \param _ePropertyType the type of the propery to be converted into
+    * \param _ePropertyType the type of the property to be converted into
     * \return the converted value
     */
     uno::Any convertStringToSimple( const ::rtl::OUString& _rValue,const uno::TypeClass& _ePropertyType );
@@ -155,23 +155,23 @@ StringRepresentation::StringRepresentation(uno::Reference< uno::XComponentContex
 {}
 
 // com.sun.star.uno.XServiceInfo:
-::rtl::OUString  SAL_CALL StringRepresentation::getImplementationName() throw (uno::RuntimeException)
+::rtl::OUString  SAL_CALL StringRepresentation::getImplementationName()
 {
     return comp_StringRepresentation::_getImplementationName();
 }
 
-::sal_Bool SAL_CALL StringRepresentation::supportsService(::rtl::OUString const & serviceName) throw (uno::RuntimeException)
+::sal_Bool SAL_CALL StringRepresentation::supportsService(::rtl::OUString const & serviceName)
 {
     return ::comphelper::existsValue(serviceName,comp_StringRepresentation::_getSupportedServiceNames());
 }
 
-uno::Sequence< ::rtl::OUString >  SAL_CALL StringRepresentation::getSupportedServiceNames() throw (uno::RuntimeException)
+uno::Sequence< ::rtl::OUString >  SAL_CALL StringRepresentation::getSupportedServiceNames()
 {
     return comp_StringRepresentation::_getSupportedServiceNames();
 }
 
 // inspection::XStringRepresentation:
-::rtl::OUString SAL_CALL StringRepresentation::convertToControlValue(const uno::Any & PropertyValue) throw (uno::RuntimeException, uno::Exception)
+::rtl::OUString SAL_CALL StringRepresentation::convertToControlValue(const uno::Any & PropertyValue)
 {
     ::rtl::OUString sReturn;
     if ( !convertGenericValueToString( PropertyValue, sReturn ) )
@@ -191,7 +191,7 @@ uno::Sequence< ::rtl::OUString >  SAL_CALL StringRepresentation::getSupportedSer
     return sReturn;
 }
 
-uno::Any SAL_CALL StringRepresentation::convertToPropertyValue(const ::rtl::OUString & ControlValue, const uno::Type & ControlValueType) throw (uno::RuntimeException, uno::Exception)
+uno::Any SAL_CALL StringRepresentation::convertToPropertyValue(const ::rtl::OUString & ControlValue, const uno::Type & ControlValueType)
 {
     uno::Any aReturn;
 
@@ -237,7 +237,7 @@ uno::Any SAL_CALL StringRepresentation::convertToPropertyValue(const ::rtl::OUSt
 }
 
 // lang::XInitialization:
-void SAL_CALL StringRepresentation::initialize(const uno::Sequence< uno::Any > & aArguments) throw (uno::RuntimeException, uno::Exception)
+void SAL_CALL StringRepresentation::initialize(const uno::Sequence< uno::Any > & aArguments)
 {
     sal_Int32 nLength = aArguments.getLength();
     if ( nLength )
@@ -427,7 +427,7 @@ bool StringRepresentation::convertGenericValueToString( const uno::Any& _rValue,
             ++i;
         }
         break;
-    
+
 	// some structs
     case uno::TypeClass_STRUCT:
         OSL_ENSURE( false, "StringRepresentation::convertGenericValueToString(STRUCT): this is dead code - isn't it?" );
@@ -580,7 +580,7 @@ bool StringRepresentation::convertStringToGenericValue( const ::rtl::OUString& _
             // weird enough, the string representation of dates, as used
             // by the control displaying dates, and thus as passed through the layers,
             // is YYYYMMDD.
-            
+
             _rValue <<= ::dbtools::DBTypeConversion::toDate(_rStringRep);
         }
         else if ( _rTargetType.equals( ::getCppuType( static_cast< util::Time* >( NULL ) ) ) )
@@ -627,7 +627,6 @@ uno::Sequence< ::rtl::OUString > SAL_CALL _getSupportedServiceNames()
 
 uno::Reference< uno::XInterface > SAL_CALL _create(
     const uno::Reference< uno::XComponentContext > & context)
-        SAL_THROW((uno::Exception))
 {
     return static_cast< ::cppu::OWeakObject * >(new pcr::StringRepresentation(context));
 }
@@ -643,4 +642,3 @@ extern "C" void SAL_CALL createRegistryInfo_StringRepresentation()
             comp_StringRepresentation::_create
         );
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -87,7 +87,7 @@ OColumnControlModel::OColumnControlModel(const Reference<XMultiServiceFactory>& 
     ,m_nWidth(50)
 {
 	DBG_CTOR(OColumnControlModel,NULL);
-	registerProperties();	
+	registerProperties();
 }
 // -----------------------------------------------------------------------------
 OColumnControlModel::OColumnControlModel(const OColumnControlModel* _pSource,const Reference<XMultiServiceFactory>& _rxFactory)
@@ -111,7 +111,7 @@ OColumnControlModel::~OColumnControlModel()
 	{
 		acquire();
 		dispose();
-	}	
+	}
 }
 // -----------------------------------------------------------------------------
 void OColumnControlModel::registerProperties()
@@ -138,9 +138,9 @@ void OColumnControlModel::registerProperties()
 }
 // XCloneable
 //------------------------------------------------------------------------------
-Reference< XCloneable > SAL_CALL OColumnControlModel::createClone( ) throw (RuntimeException)
+Reference< XCloneable > SAL_CALL OColumnControlModel::createClone( )
 {
-    return new OColumnControlModel( this, getORB() ); 
+    return new OColumnControlModel( this, getORB() );
 }
 //------------------------------------------------------------------------------
 IMPLEMENT_TYPEPROVIDER2(OColumnControlModel,OColumnControlModel_BASE,comphelper::OPropertyContainer)
@@ -148,13 +148,13 @@ IMPLEMENT_PROPERTYCONTAINER_DEFAULTS(OColumnControlModel)
 IMPLEMENT_SERVICE_INFO2_STATIC(OColumnControlModel,"com.sun.star.comp.dbu.OColumnControlModel","com.sun.star.awt.UnoControlModel","com.sun.star.sdb.ColumnDescriptorControlModel")
 IMPLEMENT_FORWARD_REFCOUNT( OColumnControlModel, OColumnControlModel_BASE )
 //------------------------------------------------------------------------------
-Any SAL_CALL OColumnControlModel::queryInterface( const Type& _rType ) throw (RuntimeException)
-{ 
+Any SAL_CALL OColumnControlModel::queryInterface( const Type& _rType )
+{
 	return OColumnControlModel_BASE::queryInterface( _rType );
 }
 // -----------------------------------------------------------------------------
 // com::sun::star::XAggregation
-Any SAL_CALL OColumnControlModel::queryAggregation( const Type& rType ) throw(RuntimeException)
+Any SAL_CALL OColumnControlModel::queryAggregation( const Type& rType )
 {
 	Any aRet(OColumnControlModel_BASE::queryAggregation(rType));
 	if (!aRet.hasValue())
@@ -162,18 +162,18 @@ Any SAL_CALL OColumnControlModel::queryAggregation( const Type& rType ) throw(Ru
 	return aRet;
 }
 //------------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OColumnControlModel::getServiceName() throw ( RuntimeException)
+::rtl::OUString SAL_CALL OColumnControlModel::getServiceName()
 {
 	return ::rtl::OUString();
 }
 //------------------------------------------------------------------------------
-void OColumnControlModel::write(const Reference<XObjectOutputStream>& /*_rxOutStream*/) throw ( ::com::sun::star::io::IOException, RuntimeException)
+void OColumnControlModel::write(const Reference<XObjectOutputStream>& /*_rxOutStream*/)
 {
 	// TODO
 }
 
 //------------------------------------------------------------------------------
-void OColumnControlModel::read(const Reference<XObjectInputStream>& /*_rxInStream*/) throw ( ::com::sun::star::io::IOException, RuntimeException)
+void OColumnControlModel::read(const Reference<XObjectInputStream>& /*_rxInStream*/)
 {
 	// TODO
 }
@@ -181,4 +181,3 @@ void OColumnControlModel::read(const Reference<XObjectInputStream>& /*_rxInStrea
 //.........................................................................
 }	// namespace dbaui
 //.........................................................................
-

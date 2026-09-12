@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,20 +7,20 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
- 
+
 #include "vbapalette.hxx"
 #include <cppuhelper/implbase1.hxx>
 #include <com/sun/star/beans/XPropertySet.hpp>
@@ -56,12 +56,12 @@ public:
    DefaultPalette(){}
 
     // Methods XIndexAccess
-    virtual ::sal_Int32 SAL_CALL getCount() throw (uno::RuntimeException)
+    virtual ::sal_Int32 SAL_CALL getCount()
     {
         return sizeof(spnDefColorTable8) / sizeof(spnDefColorTable8[0]);
     }
 
-    virtual uno::Any SAL_CALL getByIndex( ::sal_Int32 Index ) throw (lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
+    virtual uno::Any SAL_CALL getByIndex( ::sal_Int32 Index )
     {
 	if ( Index < 0 || Index >= getCount() )
 		throw lang::IndexOutOfBoundsException();
@@ -69,11 +69,11 @@ public:
     }
 
     // Methods XElementAcess
-    virtual uno::Type SAL_CALL getElementType() throw (uno::RuntimeException)
+    virtual uno::Type SAL_CALL getElementType()
     {
         return ::getCppuType( (sal_Int32*)0 );
     }
-    virtual ::sal_Bool SAL_CALL hasElements() throw (uno::RuntimeException)
+    virtual ::sal_Bool SAL_CALL hasElements()
     {
         return sal_True;
     }
@@ -96,12 +96,12 @@ ScVbaPalette::getPalette() const
 {
 	uno::Reference< container::XIndexAccess > xIndex;
 	uno::Reference< beans::XPropertySet > xProps;
-	if ( m_pShell )	
+	if ( m_pShell )
 		xProps.set( m_pShell->GetModel(), uno::UNO_QUERY_THROW );
 	else
 		throw uno::RuntimeException( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Can't extract palette, no doc shell" ) ), uno::Reference< uno::XInterface >() );
 	xIndex.set( xProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ColorPalette") ) ), uno::UNO_QUERY );
 	if ( !xIndex.is() )
 		return new DefaultPalette();
-	return xIndex;	
+	return xIndex;
 }

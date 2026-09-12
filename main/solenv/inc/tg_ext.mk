@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -132,6 +132,18 @@ $(MISC)/%.unpack : $(TARFILE_LOCATION2)/%.tar.gz
 $(MISC)/%.unpack : $(TARFILE_LOCATION2)/%.tgz
 	@-$(RM) $@
 	@noop $(assign UNPACKCMD := gzip -d -c $(subst,\,/ $(TARFILE_LOCATION)/$(TARFILE_MD5)-$(TARFILE_NAME).tgz) $(TARFILE_FILTER) | $(GNUTAR) -x$(tar_verbose_switch)f - )
+	@$(TYPE) $(mktmp $(UNPACKCMD)) > $@.$(INPATH)
+	@$(RENAME) $@.$(INPATH) $@
+
+$(MISC)/%.unpack : $(TARFILE_LOCATION2)/%.tar.xz
+	@-$(RM) $@
+	@noop $(assign UNPACKCMD := $(XZ) -d -c $(subst,\,/ $(TARFILE_LOCATION)/$(TARFILE_MD5)-$(TARFILE_NAME).tar.xz) $(TARFILE_FILTER) | $(GNUTAR) -x$(tar_verbose_switch)f - )
+	@$(TYPE) $(mktmp $(UNPACKCMD)) > $@.$(INPATH)
+	@$(RENAME) $@.$(INPATH) $@
+
+$(MISC)/%.unpack : $(TARFILE_LOCATION2)/%.txz
+	@-$(RM) $@
+	@noop $(assign UNPACKCMD := $(XZ) -d -c $(subst,\,/ $(TARFILE_LOCATION)/$(TARFILE_MD5)-$(TARFILE_NAME).txz) $(TARFILE_FILTER) | $(GNUTAR) -x$(tar_verbose_switch)f - )
 	@$(TYPE) $(mktmp $(UNPACKCMD)) > $@.$(INPATH)
 	@$(RENAME) $@.$(INPATH) $@
 
@@ -261,7 +273,7 @@ $(PACKAGE_DIR)/$(PREDELIVER_FLAG_FILE) : $(PACKAGE_DIR)/$(INSTALL_FLAG_FILE)
     $(COMMAND_ECHO)$(PERL) $(SOLARENV)/bin/macosx-change-install-names.pl extshl \
         $(EXTRPATH) \
         $(shell ls $(foreach,j,$(OUT2LIB) $(LB)/$(j:f)) | \
-            (grep -v '\.a$$' || test $$? = 1))
+            (grep -vE '\.(a|pc)$$' || test $$? = 1))
 .ENDIF
 .ENDIF			# "$(OUT2LIB)"!=""
 .IF "$(OUT2INC)"!=""
@@ -314,7 +326,7 @@ $(MISC)/$(TARFILE_ROOTDIR).done : $(MISC)/$(TARFILE_MD5)-$(TARFILE_NAME).unpack 
 	$(COMMAND_ECHO)$(CONVERT) dos  $(foreach,i,$(CONVERTFILES) $(MISC)/$(TARFILE_ROOTDIR)/$i)
 .ENDIF          # "$(CONVERTFILES)"!=""
 .ENDIF			# "$(PATCH_FILES)"!="none" && "$(PATCH_FILES)"!="
-.IF "$(GUI)"=="UNX"	
+.IF "$(GUI)"=="UNX"
 	$(COMMAND_ECHO)$(TOUCH) $@
 .ENDIF			# "$(GUI)"=="UNX"
 

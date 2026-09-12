@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -69,13 +69,13 @@ Sequence< OUString > SOEvaluation::GetSupportedServiceNames()
 {
 	sal_Int32 nSize = (sizeof( interfaces ) / sizeof( const char *)) - 1;
 	Sequence< OUString > aResult( nSize );
-	
+
 	for( sal_Int32 i = 0; i < nSize; i++ )
 		aResult[i] = OUString::createFromAscii( interfaces[i] );
 	return aResult;
 }
 
-Reference< XInterface >  SAL_CALL SOEvaluation::CreateInstance( 
+Reference< XInterface >  SAL_CALL SOEvaluation::CreateInstance(
     const Reference< XMultiServiceFactory >& rSMgr )
 {
 	static osl::Mutex	aMutex;
@@ -88,7 +88,7 @@ Reference< XInterface >  SAL_CALL SOEvaluation::CreateInstance(
 	return (XComponent*)0;
 }
 
-SOEvaluation::SOEvaluation( const Reference< XMultiServiceFactory >& xFactory ) : 
+SOEvaluation::SOEvaluation( const Reference< XMultiServiceFactory >& xFactory ) :
 	m_aListeners( m_aMutex ),
 	m_xServiceManager( xFactory )
 {
@@ -99,25 +99,25 @@ SOEvaluation::~SOEvaluation()
 }
 
 // XComponent
-void SAL_CALL SOEvaluation::dispose() throw ( RuntimeException )
+void SAL_CALL SOEvaluation::dispose()
 {
     EventObject aObject;
     aObject.Source = (XComponent*)this;
     m_aListeners.disposeAndClear( aObject );
 }
 
-void SAL_CALL SOEvaluation::addEventListener( const Reference< XEventListener > & aListener) throw ( RuntimeException )
+void SAL_CALL SOEvaluation::addEventListener( const Reference< XEventListener > & aListener)
 {
     m_aListeners.addInterface( aListener );
 }
 
-void SAL_CALL SOEvaluation::removeEventListener( const Reference< XEventListener > & aListener ) throw ( RuntimeException )
+void SAL_CALL SOEvaluation::removeEventListener( const Reference< XEventListener > & aListener )
 {
     m_aListeners.removeInterface( aListener );
 }
 
 // XExactName
-rtl::OUString SAL_CALL SOEvaluation::getExactName( const rtl::OUString& rApproximateName ) throw ( RuntimeException )
+rtl::OUString SAL_CALL SOEvaluation::getExactName( const rtl::OUString& rApproximateName )
 {
     // get the tabreg service for an evaluation version
     // without this service office shouldn't run at all
@@ -156,14 +156,14 @@ rtl::OUString SAL_CALL SOEvaluation::getExactName( const rtl::OUString& rApproxi
 }
 
 // XMaterialHolder
-Any SAL_CALL SOEvaluation::getMaterial() throw( RuntimeException )
+Any SAL_CALL SOEvaluation::getMaterial()
 {
 	// Time bomb implementation. Return empty Any to do nothing or
 	// provide a com::sun::star::util::Date with the time bomb date.
 	Any a;
 
     // change here to force recompile 00002
-#ifdef TIMEBOMB	
+#ifdef TIMEBOMB
 	// Code for extracting/providing time bomb date!
 	int nDay   = TIMEBOMB % 100;
 	int nMonth = ( TIMEBOMB % 10000 ) / 100;
@@ -175,25 +175,22 @@ Any SAL_CALL SOEvaluation::getMaterial() throw( RuntimeException )
 }
 
 // XServiceInfo
-::rtl::OUString SAL_CALL SOEvaluation::getImplementationName() 
-throw ( RuntimeException )
+::rtl::OUString SAL_CALL SOEvaluation::getImplementationName()
 {
 	return SOEvaluation::GetImplementationName();
 }
 
-sal_Bool SAL_CALL SOEvaluation::supportsService( const ::rtl::OUString& rServiceName ) 
-throw ( RuntimeException )
+sal_Bool SAL_CALL SOEvaluation::supportsService( const ::rtl::OUString& rServiceName )
 {
 	sal_Int32 nSize = (sizeof( interfaces ) / sizeof( const char *))-1;
-	
+
 	for( sal_Int32 i = 0; i < nSize; i++ )
 		if ( rServiceName.equalsAscii( interfaces[i] ))
 			return sal_True;
 	return sal_False;
 }
 
-Sequence< ::rtl::OUString > SAL_CALL SOEvaluation::getSupportedServiceNames() 
-throw ( RuntimeException )
+Sequence< ::rtl::OUString > SAL_CALL SOEvaluation::getSupportedServiceNames()
 {
 	return SOEvaluation::GetSupportedServiceNames();
 }

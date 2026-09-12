@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -410,7 +410,7 @@ bool SubstitutePathVariables_Impl::FilterRuleSet( const SubstituteRuleVector& aR
     if ( !aRuleSet.empty() )
     {
         const sal_uInt32 nCount = aRuleSet.size();
-        
+
         sal_Int16 nPrioCurrentRule = aEnvPrioTable[ ET_UNKNOWN ];
         for ( sal_uInt32 nIndex = 0; nIndex < nCount; nIndex++ )
         {
@@ -565,7 +565,7 @@ void SubstitutePathVariables_Impl::ReadSharePointRuleSetFromConfiguration(
             }
         }
 
-        // Decode the environment and optional the operatng system settings
+        // Decode the environment and optional the operating system settings
         Any                             aEnvValue;
         EnvironmentType eEnvType = GetEnvTypeFromString( aEnvUsed );
         if ( eEnvType == ET_OS )
@@ -624,7 +624,7 @@ SubstitutePathVariables::SubstitutePathVariables( const Reference< XMultiService
     {
         if (( i != PREDEFVAR_WORKDIRURL ) && ( i != PREDEFVAR_PATH ))
         {
-            // Special path variables, don't include into automatic resubstituion search!
+            // Special path variables, don't include into automatic resubstitution search!
             // $(workdirurl) is not allowed to resubstitute! This variable is the value of path settings entry
             // and it could be possible that it will be resubstituted by itself!!
             // Example: WORK_PATH=c:\test, $(workdirurl)=WORK_PATH => WORK_PATH=$(workdirurl) and this cannot be substituted!
@@ -658,7 +658,6 @@ SubstitutePathVariables::~SubstitutePathVariables()
 
 // XStringSubstitution
 rtl::OUString SAL_CALL SubstitutePathVariables::substituteVariables( const ::rtl::OUString& aText, sal_Bool bSubstRequired )
-throw ( NoSuchElementException, RuntimeException )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "SubstitutePathVariables::substituteVariables" );
     ResetableGuard aLock( m_aLock );
@@ -666,7 +665,6 @@ throw ( NoSuchElementException, RuntimeException )
 }
 
 rtl::OUString SAL_CALL SubstitutePathVariables::reSubstituteVariables( const ::rtl::OUString& aText )
-throw ( RuntimeException )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "SubstitutePathVariables::reSubstituteVariables" );
     ResetableGuard aLock( m_aLock );
@@ -674,7 +672,6 @@ throw ( RuntimeException )
 }
 
 rtl::OUString SAL_CALL SubstitutePathVariables::getSubstituteVariableValue( const ::rtl::OUString& aVariable )
-throw ( NoSuchElementException, RuntimeException )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "SubstitutePathVariables::getSubstituteVariableValue" );
     ResetableGuard aLock( m_aLock );
@@ -733,7 +730,7 @@ rtl::OUString SubstitutePathVariables::GetWorkVariableValue() const
                             ::rtl::OUString::createFromAscii("Variables"),
                             ::rtl::OUString::createFromAscii("Work"),
                             ::comphelper::ConfigurationHelper::E_READONLY) >>= aWorkPath;
-        
+
     // fallback to $HOME in case platform dependend config layer does not return
     // an usuable work dir value.
     if (aWorkPath.getLength() < 1)
@@ -791,7 +788,6 @@ rtl::OUString SubstitutePathVariables::GetPathVariableValue() const
 }
 
 rtl::OUString SubstitutePathVariables::impl_substituteVariable( const ::rtl::OUString& rText, bool bSubstRequired )
-throw ( NoSuchElementException, RuntimeException )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "SubstitutePathVariables::impl_substituteVariable" );
     // This is maximal recursive depth supported!
@@ -991,7 +987,6 @@ throw ( NoSuchElementException, RuntimeException )
 }
 
 rtl::OUString SubstitutePathVariables::impl_reSubstituteVariables( const ::rtl::OUString& rURL )
-throw ( RuntimeException )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "SubstitutePathVariables::impl_reSubstituteVariables" );
     rtl::OUString aURL;
@@ -1096,7 +1091,6 @@ throw ( RuntimeException )
 
 // This method support both request schemes "$("<varname>")" or "<varname>".
 ::rtl::OUString SubstitutePathVariables::impl_getSubstituteVariableValue( const ::rtl::OUString& rVariable )
-throw ( NoSuchElementException, RuntimeException )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "SubstitutePathVariables::impl_getSubstituteVariableValue" );
     rtl::OUString aVariable;
@@ -1217,7 +1211,7 @@ void SubstitutePathVariables::SetPredefinedPathVariables( PredefinedPathVariable
     // Set $(lang)
     aPreDefPathVariables.m_FixedVar[ PREDEFVAR_LANG ] = ConvertOSLtoUCBURL(
     rtl::OUString::createFromAscii( ResMgr::GetLang( aPreDefPathVariables.m_eLanguageType, 0 ) ));
-    
+
     // Set $(vlang)
     aPreDefPathVariables.m_FixedVar[ PREDEFVAR_VLANG ] = aLocaleStr;
 

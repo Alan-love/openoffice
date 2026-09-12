@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -74,13 +74,18 @@ rasqal_LIBS+=$(MINGW_SHARED_LIBSTDCPP)
 
 CONFIGURE_DIR=
 CONFIGURE_ACTION=.$/configure PATH="..$/..$/..$/bin:$$PATH"
-CONFIGURE_FLAGS=--disable-static --disable-gtk-doc --with-openssl-digests --with-xml-parser=libxml --without-bdb --without-sqlite --without-mysql --without-postgresql --without-threestore --disable-pcre --with-decimal=none --with-www=xml --build=i586-pc-mingw32 --host=i586-pc-mingw32 lt_cv_cc_dll_switch="-shared" CC="$(rasqal_CC)" CPPFLAGS="-nostdinc $(INCLUDE)" LDFLAGS="-no-undefined -Wl,--enable-runtime-pseudo-reloc-v2,--export-all-symbols -L$(ILIB:s/;/ -L/)" LIBS="$(rasqal_LIBS)" OBJDUMP="$(WRAPCMD) objdump" LIBXML2LIB=$(LIBXML2LIB) XSLTLIB="$(XSLTLIB)"
+CONFIGURE_FLAGS=--disable-static --disable-gtk-doc --with-openssl-digests --with-xml-parser=libxml --without-bdb --without-sqlite --without-mysql --without-postgresql --without-threestore --disable-pcre --with-decimal=none --build=i586-pc-mingw32 --host=i586-pc-mingw32 lt_cv_cc_dll_switch="-shared" CC="$(rasqal_CC)" CPPFLAGS="-nostdinc $(INCLUDE)" LDFLAGS="-no-undefined -Wl,--enable-runtime-pseudo-reloc-v2,--export-all-symbols -L$(ILIB:s/;/ -L/)" LIBS="$(rasqal_LIBS)" OBJDUMP="$(WRAPCMD) objdump" LIBXML2LIB=$(LIBXML2LIB) XSLTLIB="$(XSLTLIB)"
 BUILD_ACTION=$(GNUMAKE)
 BUILD_FLAGS+= -j$(EXTMAXPROCESS)
 BUILD_DIR=$(CONFIGURE_DIR)
 .ELSE
 # there is no wntmsci build environment in the tarball; we use custom dmakefile
 OOO_PATCH_FILES+= $(TARFILE_NAME).patch.win32
+# Must come after .patch.win32, which touches the same header: three of the
+# win32 shims stopped being redundant and became harmful once the UCRT started
+# declaring the real functions.  The guards are on _MSC_VER, so this is inert
+# on VC9 and the file behaves exactly as it did before.
+OOO_PATCH_FILES+= $(TARFILE_NAME).patch.ucrt
 CONFIGURE_ACTION= ${PERL} -p -e '$$prefix="'$(PWD)/$(OUT)'"; $$libdir="'$(PWD)/$(LB)'"; $$incdir="'$(PWD)/$(INCCOM)'"; $$ldflags="-L$(SOLARLIBDIR) -lraptor2 -lm";' -e 's/\@prefix\@/$$prefix/; s/\@exec_prefix\@/\$${prefix}/; s/\@libdir\@/$$libdir/; s/\@includedir\@/$$incdir/; s/\@PACKAGE\@/rasqal/; s/\@VERSION\@/0.9.33/; s/\@PKG_CONFIG_REQUIRES\@/raptor2 >= 2.0.7/; s/\@RAPTOR_LDFLAGS\@/$$ldflags/;'  < rasqal.pc.in > rasqal.pc && \
 	${PERL} -p -e 's/\@RASQAL_VERSION_DECIMAL\@/933/;s/\@VERSION\@/0.9.33/;s/\@RASQAL_VERSION_MAJOR\@/0/;s/\@RASQAL_VERSION_MINOR\@/9/;s/\@RASQAL_VERSION_RELEASE\@/33/;s/\@HAVE_SYS_TIME_H\@/0/;s/\@HAVE_TIME_H\@/1/;s/\@RAPTOR_VERSION_DEC\@/2.0.15/' < src/rasqal.h.in > src/rasqal.h && \
 	$(COPY) src/rasqal_config.h.in src/rasqal_config.h && \
@@ -163,4 +168,3 @@ OUT2BIN+=src/rasqal-config
 .INCLUDE : set_ext.mk
 .INCLUDE : target.mk
 .INCLUDE : tg_ext.mk
-

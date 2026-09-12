@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_sd.hxx"
@@ -400,7 +398,7 @@ sal_Bool ImplSdPPTImport::Import()
                                 {
                                     sal_uInt32 i;
 
-                                    nPropCount /= 6;    // 6 propertys a hyperlink
+                                    nPropCount /= 6;    // 6 properties a hyperlink
 
                                     SdHyperlinkEntry* pHyperlink = 0;
                                     for ( i = 0; i < nPropCount; i++ )
@@ -428,8 +426,8 @@ sal_Bool ImplSdPPTImport::Import()
                                         if ( !aPropItem.Read( pHyperlink->aSubAdress, VT_EMPTY ) )
                                             break;
                                         pHyperlink->nStartPos = pHyperlink->nEndPos = -1;
-                                        
-                                        if ( pHyperlink->aSubAdress.Len() ) // get the converted subadress
+
+                                        if ( pHyperlink->aSubAdress.Len() ) // get the converted subaddress
                                         {
                                             sal_uInt32 nPageNumber = 0;
                                             String aString( pHyperlink->aSubAdress );
@@ -633,12 +631,12 @@ sal_Bool ImplSdPPTImport::Import()
                     if ( nMasterNum > 2 )
                     {
                         if ( ePgKind == PK_STANDARD )
-                        {   // Standardseite: Neues Praesentationslayout erzeugen
+                        {   // Standardseite: Neues Präsentationslayout erzeugen
                             aLayoutName = String( SdResId( STR_LAYOUT_DEFAULT_TITLE_NAME ) );
                             aLayoutName += String::CreateFromInt32( (sal_Int32)( ( nMasterNum + 1 ) / 2 - 1 ) );
                             ( (SdStyleSheetPool*)mpDoc->GetStyleSheetPool() )->CreateLayoutStyleSheets( aLayoutName );
                         }
-                        else    // Notizseite: Praesentationslayout von der Standardseite verwenden
+                        else    // Notizseite: Präsentationslayout von der Standardseite verwenden
                             aLayoutName = ( (SdPage*)mpDoc->GetMasterPage( nMasterNum - 1 ) )->GetName();
                     }
                     pPage->SetName( aLayoutName );
@@ -885,7 +883,7 @@ sal_Bool ImplSdPPTImport::Import()
                         }
                         else
                         {
-                            // without StyleSheet, set attributes directly. This 
+                            // without StyleSheet, set attributes directly. This
                             // should not be done at all and is an error (will be asserted by SdrPage)
                             pMPage->getSdrPageProperties().ClearItem();
                             pMPage->getSdrPageProperties().PutItemSet(pObj->GetMergedItemSet());
@@ -1097,7 +1095,7 @@ sal_Bool ImplSdPPTImport::Import()
             const PptSlideLayoutAtom* pSlideLayout = GetSlideLayoutAtom();
             if ( pSlideLayout )
             {
-                switch ( pSlideLayout->eLayout )            // Praesentationslayouts fuer Standard-Seiten
+                switch ( pSlideLayout->eLayout )            // Präsentationslayouts für Standard-Seiten
                 {
                     case PPT_LAYOUT_TITLEANDBODYSLIDE :
                     {
@@ -1198,8 +1196,8 @@ sal_Bool ImplSdPPTImport::Import()
                     case PPT_LAYOUT_MASTERSLIDE :            // Layout der Standard- und Titel-MasterPage
                     case PPT_LAYOUT_TITLEMASTERSLIDE :
                     case PPT_LAYOUT_MASTERNOTES :            // Layout der Notizen-MasterPage
-                    case PPT_LAYOUT_NOTESTITLEBODY :        // Praesentationslayout fuer Notiz-Seiten
-                    case PPT_LAYOUT_HANDOUTLAYOUT :         // Praesentationslayout fuer Handzettelseiten
+                    case PPT_LAYOUT_NOTESTITLEBODY :        // Präsentationslayout für Notiz-Seiten
+                    case PPT_LAYOUT_HANDOUTLAYOUT :         // Präsentationslayout für Handzettelseiten
                         eAutoLayout = AUTOLAYOUT_NONE;
                     break;
                 }
@@ -1628,7 +1626,7 @@ void ImplSdPPTImport::ImportPageEffect( SdPage* pPage, const sal_Bool bNewAnimat
                                             if ( nDirection == 0 )
                                                 pPage->SetFadeEffect( ::com::sun::star::presentation::FadeEffect_NONE );                // Direkt
                                             else if ( nDirection == 1 )
-                                                pPage->SetFadeEffect( ::com::sun::star::presentation::FadeEffect_NONE );                // Direkt ueber Schwarz
+                                                pPage->SetFadeEffect( ::com::sun::star::presentation::FadeEffect_NONE );                // Direkt über Schwarz
                                         }
                                         else
                                             pPage->setTransitionType( 0 );
@@ -1799,11 +1797,11 @@ void ImplSdPPTImport::ImportPageEffect( SdPage* pPage, const sal_Bool bNewAnimat
                                 }
 
                                 if ( nSpeed == 0 )
-                                    pPage->setTransitionDuration( 3.0 );         // langsam
+                                    pPage->setTransitionDuration( 3.0 ); // slow
                                 else if ( nSpeed == 1 )
-                                    pPage->setTransitionDuration( 2.0 );    // mittel
+                                    pPage->setTransitionDuration( 2.0 ); // medium
                                 else if ( nSpeed == 2 )
-                                    pPage->setTransitionDuration( 1.0 );     // schnell
+                                    pPage->setTransitionDuration( 1.0 ); // fast
 
                                 if ( nBuildFlags & 0x400 )                      // slidechange by time
                                 {   // Standzeit (in Ticks)
@@ -1888,7 +1886,7 @@ void ImplSdPPTImport::ImportPageEffect( SdPage* pPage, const sal_Bool bNewAnimat
 
         for( ;aIter != aEnd; aIter++ )
         {
-            Ppt97AnimationPtr pPpt97Animation = (*aIter).second;;
+            Ppt97AnimationPtr pPpt97Animation = (*aIter).second;
             if( pPpt97Animation.get() )
                 pPpt97Animation->createAndSetCustomAnimationEffect( (*aIter).first );
         }
@@ -1901,7 +1899,7 @@ void ImplSdPPTImport::ImportPageEffect( SdPage* pPage, const sal_Bool bNewAnimat
 // Import von Sounds
 //
 // Die Sounds werden nicht nur als String importiert sondern auch
-// in die Gallery einefuegt, falls dort noch nicht vorhanden.
+// in die Gallery eingefügt, falls dort noch nicht vorhanden.
 //
 ///////////////////////////////////////////////////////////////////////////
 
@@ -1945,7 +1943,7 @@ String ImplSdPPTImport::ReadSound(sal_uInt32 nSoundRef) const
                 }
                 if ( bDone )
                 {
-                    // ueberpruefen, ob diese Sound-Datei schon
+                    // überprüfen, ob diese Sound-Datei schon
                     // existiert. Wenn nicht, exportiere diese
                     // in unser lokales Sound-Verzeichnis.
                     sal_Bool    bSoundExists = sal_False;
@@ -2061,7 +2059,7 @@ String ImplSdPPTImport::ReadMedia( sal_uInt32 nMediaRef ) const
                                                 if( ::utl::LocalFileHelper::ConvertPhysicalNameToURL( aStr, aRetVal ) )
                                                 {
                                                     aRetVal = INetURLObject( aRetVal ).GetMainURL( INetURLObject::DECODE_UNAMBIGUOUS );
-                                                }else{ 
+                                                }else{
                                                     aRetVal = aStr;
                                                 }
                                             }
@@ -2097,7 +2095,7 @@ void ImplSdPPTImport::FillSdAnimationInfo( SdAnimationInfo* pInfo, PptInteractiv
         pInfo->SetBookmark( ReadSound( pIAtom->nSoundRef ) );    // Pfad zum Soundfile in MSDOS-Notation
         pInfo->meClickAction = ::com::sun::star::presentation::ClickAction_SOUND;            // RunProgramAction
     }
-//    if ( nFlags & 0x01 )    // koennen wir nicht ( beim Anklicken markieren )
+//    if ( nFlags & 0x01 )    // können wir nicht ( beim Anklicken markieren )
     switch ( pIAtom->nAction )
     {
 //        case 0x01 :                                         // MacroAction
@@ -2193,7 +2191,7 @@ void ImplSdPPTImport::FillSdAnimationInfo( SdAnimationInfo* pInfo, PptInteractiv
             }
         }
         break;
-        case 0x05 :                     // OLEAction ( OLEVerb to use, 0==first, 1==secnd, .. )
+        case 0x05 :                     // OLEAction ( OLEVerb to use, 0==first, 1==second, .. )
         case 0x06 :                     // MediaAction
         case 0x07 :                     // CustomShowAction
         default :                        // 0x00: no action, else unknown action
@@ -2361,11 +2359,11 @@ SdrObject* ImplSdPPTImport::ApplyTextObj( PPTTextObj* pTextObj, SdrTextObj* pObj
                         rItemSet.Put( (SdrTextLowerDistItem&)pText->GetMergedItem( SDRATTR_TEXT_LOWERDIST ) );
                         rItemSet.Put( (SdrTextVertAdjustItem&)pText->GetMergedItem( SDRATTR_TEXT_VERTADJUST ) );
                         rItemSet.Put( (SdrTextHorzAdjustItem&)pText->GetMergedItem( SDRATTR_TEXT_HORZADJUST ) );
-                        if (  pTextObj->GetInstance() ==  TSS_TYPE_TITLE 
+                        if (  pTextObj->GetInstance() ==  TSS_TYPE_TITLE
                             || pTextObj->GetInstance() == TSS_TYPE_SUBTITLE)
                         {
                             rItemSet.Put( pText->GetMergedItemSet() );
-                        }                    
+                        }
                     }
                     pText->NbcSetStyleSheet( pSheet2, sal_False );
                 }
@@ -2408,9 +2406,9 @@ SdrObject* ImplSdPPTImport::ApplyTextObj( PPTTextObj* pTextObj, SdrTextObj* pObj
                     sal_Bool    bVertical = sal_False;
                     if ( ( pTextObj->GetShapeType() == mso_sptRectangle ) || ( pTextObj->GetShapeType() == mso_sptTextBox ) )
                     {
-                        //if a placeholder with some custom attribute,the pTextObj will keep those attr,whose text size is zero,
-                        //so sdPage should renew a PresObj to process placeholder.
-                        if ( pTextObj->Count() > 1 || 
+                        // if a placeholder with some custom attribute,the pTextObj will keep those attr, whose text size is zero,
+                        // so sdPage should renew a PresObj to process placeholder.
+                        if ( pTextObj->Count() > 1 ||
                             ( pTextObj->Count() == 1 &&(pTextObj->First()) && pTextObj->First()->GetTextSize()>0 ))
                             bEmptyPresObj = sal_False;
                         switch ( nPlaceholderId )
@@ -2473,7 +2471,7 @@ SdrObject* ImplSdPPTImport::ApplyTextObj( PPTTextObj* pTextObj, SdrTextObj* pObj
                             ApplyAttributes( rStCtrl, aSet );
                             pPresObj->SetLogicRect(pText->GetLogicRect());
                             ApplyTextAnchorAttributes( *pTextObj, aSet );
-                            //set custom font attribute of the placeholder 
+                            //set custom font attribute of the placeholder
                             if ( pTextObj->Count() == 1 )
                             {
                                 PPTParagraphObj* pPara = pTextObj->First();
@@ -2786,19 +2784,21 @@ SdrObject* ImplSdPPTImport::ProcessObj( SvStream& rSt, DffObjData& rObjData, voi
 // ---------------------
 
 extern "C" SAL_DLLPUBLIC_EXPORT sal_Bool SAL_CALL ImportPPT( const ::rtl::OUString& rConfigPath,
-        uno::Sequence< beans::PropertyValue >* pConfigData,
-        SdDrawDocument* pDocument, SvStream& rDocStream, SvStorage& rStorage, SfxMedium& rMedium )
+		uno::Sequence< beans::PropertyValue >* pConfigData,
+		SdDrawDocument* pDocument, SvStream& rDocStream, SvStorage& rStorage, SfxMedium& rMedium )
 {
-    sal_Bool bRet = sal_False;
+	sal_Bool bRet = sal_False;
 
-    MSFilterTracer aTracer( rConfigPath, pConfigData );
-    aTracer.StartTracing();
+	MSFilterTracer aTracer( rConfigPath, pConfigData );
+	aTracer.StartTracing();
 
-    SdPPTImport* pImport = new SdPPTImport( pDocument, rDocStream, rStorage, rMedium, &aTracer );
-    bRet = pImport->Import();
+	SdPPTImport* pImport = new SdPPTImport( pDocument, rDocStream, rStorage, rMedium, &aTracer );
+	bRet = pImport->Import();
 
-    aTracer.EndTracing();
-    delete pImport;
+	aTracer.EndTracing();
+	delete pImport;
 
-    return bRet;
+	return bRet;
 }
+
+/* vim: set noet sw=4 ts=4: */

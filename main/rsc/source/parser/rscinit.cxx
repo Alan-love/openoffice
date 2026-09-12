@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -193,18 +193,18 @@ void RscTypCont::Init()
 	aNmTb.SetSort( sal_False );
 {
 	/********** C O M P I L E R   T Y P E N ******************************/
-	aNmTb.Put( "LINE",               LINE,           (long)0 );
-	aNmTb.Put( "NOT",                NOT,            (long)0 );
-	aNmTb.Put( "DEFINE",             DEFINE,         (long)0 );
-	aNmTb.Put( "INCLUDE",            INCLUDE,        (long)0 );
-	aNmTb.Put( "DEFAULT",            DEFAULT,        (long)0  );
-	aNmTb.Put( "class",              CLASS,          (long)0  );
-	aNmTb.Put( "extendable",         EXTENDABLE,     (long)0  );
-	aNmTb.Put( "writeifset",         WRITEIFSET,     (long)0  );
+	aNmTb.Put( "LINE",               LINE,           (sal_IntPtr)0 );
+	aNmTb.Put( "NOT",                NOT,            (sal_IntPtr)0 );
+	aNmTb.Put( "DEFINE",             DEFINE,         (sal_IntPtr)0 );
+	aNmTb.Put( "INCLUDE",            INCLUDE,        (sal_IntPtr)0 );
+	aNmTb.Put( "DEFAULT",            DEFAULT,        (sal_IntPtr)0  );
+	aNmTb.Put( "class",              CLASS,          (sal_IntPtr)0  );
+	aNmTb.Put( "extendable",         EXTENDABLE,     (sal_IntPtr)0  );
+	aNmTb.Put( "writeifset",         WRITEIFSET,     (sal_IntPtr)0  );
 
 /* Werte fuer Aufzaehlungstypen */
-	aNmTb.Put( "TRUE",               BOOLEAN,        (long)sal_True  );
-	aNmTb.Put( "FALSE",              BOOLEAN,        (long)sal_False );
+	aNmTb.Put( "TRUE",               BOOLEAN,        (sal_IntPtr)sal_True  );
+	aNmTb.Put( "FALSE",              BOOLEAN,        (sal_IntPtr)sal_False );
 
 	#if 0
 /* Vordefinierte HilfeId's */
@@ -212,14 +212,14 @@ void RscTypCont::Init()
 	aNmTb.Put( "HELP_HELPONHELP",    NUMBER,     OOO_HELP_HELPONHELP );
 	#endif
 
-	aNmTb.Put( "XSCALE",             XSCALE ,        (long)0     );
-	aNmTb.Put( "YSCALE",             YSCALE ,        (long)0     );
-	aNmTb.Put( "RGB",                RGB    ,        (long)0     );
-	aNmTb.Put( "POSSIZE",            GEOMETRY,       (long)0     );
-	aNmTb.Put( "POS",                POSITION,       (long)0     );
-	aNmTb.Put( "SIZE",               DIMENSION,      (long)0     );
-	aNmTb.Put( "ZoomInOutputSize",   INZOOMOUTPUTSIZE,(long)0    );
-	aNmTb.Put( "FloatingPos",        FLOATINGPOS,    (long)0     );
+	aNmTb.Put( "XSCALE",             XSCALE ,        (sal_IntPtr)0     );
+	aNmTb.Put( "YSCALE",             YSCALE ,        (sal_IntPtr)0     );
+	aNmTb.Put( "RGB",                RGB    ,        (sal_IntPtr)0     );
+	aNmTb.Put( "POSSIZE",            GEOMETRY,       (sal_IntPtr)0     );
+	aNmTb.Put( "POS",                POSITION,       (sal_IntPtr)0     );
+	aNmTb.Put( "SIZE",               DIMENSION,      (sal_IntPtr)0     );
+	aNmTb.Put( "ZoomInOutputSize",   INZOOMOUTPUTSIZE,(sal_IntPtr)0    );
+	aNmTb.Put( "FloatingPos",        FLOATINGPOS,    (sal_IntPtr)0     );
 }
 	/********** B A S I S	T Y P E N ************************************/
 {
@@ -900,7 +900,7 @@ void RscTypCont::Init()
 	pClassFixedLine->SetCallPar( *pWinPar1, *pWinPar2, *pWinParType );
 
 	INS_WINBIT(pClassFixedLine,Vert)
-	
+
 	aNmTb.Put( nId, CLASSNAME, pClassFixedLine );
 	pRoot->Insert( pClassFixedLine );
 
@@ -934,4 +934,3 @@ void RscTypCont::Init()
 
 	aNmTb.SetSort();
 }
-

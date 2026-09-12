@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -62,7 +62,7 @@ char const * SyntaxStrings[] = {
 "\ttype definition:",
 "\tstruct | union identifier",
 "\t'{'",
-"\t\t{ type idetifier }",
+"\t\t{ type identifier }",
 "\t'}'",
 "\t|",
 "\tenum identifier",
@@ -122,7 +122,7 @@ char CommandLineSyntax[] =
 "-fs<slotmap file>          -fl<listing file>\n"
 "-fo<odl file>              -fd<data base file>\n"
 "-fi<item implementation>   -ft<type library file> (not OLE)\n"
-"-fr<ressource file>        -fm<makefile target file>\n"
+"-fr<resource file>         -fm<makefile target file>\n"
 "-fC<c++ source file>       -fH<c++ header file>\n"
 "-fc<c source file>         -fh<c header file>\n"
 "-rsc <*.srs header line>\n"
@@ -430,4 +430,3 @@ SvCommand::~SvCommand()
 	while( NULL != (pStr = aInFileList.Remove()) )
 		delete pStr;
 }
-

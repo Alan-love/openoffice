@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -88,7 +88,12 @@ CFLAGSEXCEPTIONS=-fexceptions -fno-enforce-eh-specs
 CFLAGS_NO_EXCEPTIONS=-fno-exceptions
 
 # -fpermissive should be removed as soon as possible
-CFLAGSCXX= -pipe $(ARCH_FLAGS) -std=gnu++98
+# C++11 is the lowest supported standard (matches the macOS floor).  Our old
+# code base still uses constructs deprecated in C++11 (notably std::auto_ptr and
+# dynamic exception specifications); those remain valid until C++17 and are kept
+# non-fatal via -Wno-error= below.  The compiler floor is GCC 4.8.5 (CentOS 7),
+# which fully supports gnu++11.
+CFLAGSCXX= -pipe $(ARCH_FLAGS) -std=gnu++11
 .IF "$(HAVE_GCC_VISIBILITY_FEATURE)" == "TRUE"
 CFLAGSCXX += -fvisibility-inlines-hidden
 .ENDIF # "$(HAVE_GCC_VISIBILITY_FEATURE)" == "TRUE"
@@ -127,12 +132,15 @@ CFLAGSWARNCXX=$(CFLAGSWARNCC) -Wshadow -Wno-ctor-dtor-privacy \
     -Wno-non-virtual-dtor
 CFLAGSWALLCC=$(CFLAGSWARNCC)
 CFLAGSWALLCXX=$(CFLAGSWARNCXX)
-CFLAGSWERRCC=-Werror
+# Keep -Werror, but do not let the C++11 dialect's deprecation/narrowing
+# warnings (std::auto_ptr, dynamic exception specs, braced-init narrowing) break
+# the build.  Mirrors the macOS handling in unxmacc.mk.
+CFLAGSWERRCC=-Werror -Wno-error=deprecated -Wno-error=deprecated-declarations -Wno-error=narrowing
 
 # Once all modules on this platform compile without warnings, set
 # COMPILER_WARN_ERRORS=TRUE here instead of setting MODULES_WITH_WARNINGS (see
 # settings.mk):
-MODULES_WITH_WARNINGS := 
+MODULES_WITH_WARNINGS :=
 
 # switches for dynamic and static linking
 STATIC		= -Wl,-Bstatic
@@ -217,6 +225,10 @@ STDSHLCUIMT+=-ljemalloc
 LINKFLAGS += -Wl,--hash-style=both
 .ELSE
 LINKFLAGS += -Wl,-zdynsort
+.ENDIF
+
+.IF "$(HAVE_LD_UNDEFINED_VERSION)" == "TRUE"
+LINKFLAGS += -Wl,--undefined-version
 .ENDIF
 
 # libraries for linking applications

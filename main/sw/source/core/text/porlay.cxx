@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -1727,7 +1727,7 @@ sal_uInt8 SwScriptInfo::CompType( const xub_StrLen nPos ) const
 /*************************************************************************
  *                      SwScriptInfo::HasKana()
  * returns, if there are compressable kanas or specials
- * betwenn nStart and nEnd
+ * between nStart and nEnd
  *************************************************************************/
 
 sal_uInt16 SwScriptInfo::HasKana( xub_StrLen nStart, const xub_StrLen nLen ) const
@@ -1886,7 +1886,7 @@ sal_uInt16 SwScriptInfo::KashidaJustify( sal_Int32* pKernArray,
     if( !IsKashidaLine(nStt))
         return STRING_LEN;
 
-    // evaluate kashida informatin in collected in SwScriptInfo
+    // evaluate kashida information in collected in SwScriptInfo
 
     sal_uInt16 nCntKash = 0;
     while( nCntKash < CountKashida() )
@@ -2448,4 +2448,3 @@ void SwScriptInfo::CalcHiddenRanges( const SwTxtNode& rNode, MultiSelection& rHi
     }
     rNode.SetHiddenCharAttribute( bNewHiddenCharsHidePara, bNewContainsHiddenChars );
 }
-

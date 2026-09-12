@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -53,30 +53,27 @@ public:
 	~CollatorImpl();
 
 	virtual sal_Int32 SAL_CALL compareSubstring(const rtl::OUString& s1, sal_Int32 off1, sal_Int32 len1,
-		const rtl::OUString& s2, sal_Int32 off2, sal_Int32 len2) throw(com::sun::star::uno::RuntimeException);
+		const rtl::OUString& s2, sal_Int32 off2, sal_Int32 len2);
 
 	virtual sal_Int32 SAL_CALL compareString( const rtl::OUString& s1,
-		const rtl::OUString& s2) throw(com::sun::star::uno::RuntimeException);
+		const rtl::OUString& s2);
 
-	virtual sal_Int32 SAL_CALL loadDefaultCollator( const lang::Locale& rLocale,  sal_Int32 collatorOptions) 
-		throw(com::sun::star::uno::RuntimeException);
+	virtual sal_Int32 SAL_CALL loadDefaultCollator( const lang::Locale& rLocale,  sal_Int32 collatorOptions);
 
 	virtual sal_Int32 SAL_CALL loadCollatorAlgorithm(  const rtl::OUString& impl, const lang::Locale& rLocale,
-		sal_Int32 collatorOptions) throw(com::sun::star::uno::RuntimeException);
+		sal_Int32 collatorOptions);
 
 	virtual void SAL_CALL loadCollatorAlgorithmWithEndUserOption( const rtl::OUString& impl, const lang::Locale& rLocale,
-		const com::sun::star::uno::Sequence< sal_Int32 >& collatorOptions) throw(com::sun::star::uno::RuntimeException);
+		const com::sun::star::uno::Sequence< sal_Int32 >& collatorOptions);
 
-	virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL listCollatorAlgorithms( const lang::Locale& rLocale )
-		throw(com::sun::star::uno::RuntimeException);
+	virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL listCollatorAlgorithms( const lang::Locale& rLocale );
 
-	virtual com::sun::star::uno::Sequence< sal_Int32 > SAL_CALL listCollatorOptions( const rtl::OUString& collatorAlgorithmName )
-		throw(com::sun::star::uno::RuntimeException);
+	virtual com::sun::star::uno::Sequence< sal_Int32 > SAL_CALL listCollatorOptions( const rtl::OUString& collatorAlgorithmName );
 
 	//XServiceInfo
-	virtual rtl::OUString SAL_CALL getImplementationName() throw( com::sun::star::uno::RuntimeException );
-	virtual sal_Bool SAL_CALL supportsService(const rtl::OUString& ServiceName) throw( com::sun::star::uno::RuntimeException );
-	virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames() throw( com::sun::star::uno::RuntimeException );
+	virtual rtl::OUString SAL_CALL getImplementationName();
+	virtual sal_Bool SAL_CALL supportsService(const rtl::OUString& ServiceName);
+	virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames();
 
 protected:
 	lang::Locale nLocale;
@@ -86,7 +83,7 @@ private :
 	    rtl::OUString algorithm;
 	    rtl::OUString service;
 	    com::sun::star::uno::Reference < XCollator > xC;
-	    lookupTableItem(const lang::Locale& rLocale, const rtl::OUString& _algorithm, const rtl::OUString& _service, 
+	    lookupTableItem(const lang::Locale& rLocale, const rtl::OUString& _algorithm, const rtl::OUString& _service,
 		com::sun::star::uno::Reference < XCollator >& _xC) : aLocale(rLocale), algorithm(_algorithm), service(_service), xC(_xC) {}
 	    sal_Bool SAL_CALL equals(const lang::Locale& rLocale, const rtl::OUString& _algorithm) {
 		return aLocale.Language == rLocale.Language &&
@@ -103,10 +100,9 @@ private :
 	// lang::Locale Data
 	com::sun::star::uno::Reference < XLocaleData > localedata;
 
-	sal_Bool SAL_CALL createCollator(const lang::Locale& rLocale, const rtl::OUString& serviceName, 
-		const rtl::OUString& rSortAlgorithm) throw(com::sun::star::uno::RuntimeException);
-	void SAL_CALL loadCachedCollator(const lang::Locale& rLocale, const rtl::OUString& rSortAlgorithm)
-		throw(com::sun::star::uno::RuntimeException);
+	sal_Bool SAL_CALL createCollator(const lang::Locale& rLocale, const rtl::OUString& serviceName,
+		const rtl::OUString& rSortAlgorithm);
+	void SAL_CALL loadCachedCollator(const lang::Locale& rLocale, const rtl::OUString& rSortAlgorithm);
 };
 
 } } } }

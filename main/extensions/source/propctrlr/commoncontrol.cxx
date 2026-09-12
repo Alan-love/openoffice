@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -64,37 +64,37 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    ::sal_Int16 SAL_CALL ControlHelper::getControlType() throw (RuntimeException)
+    ::sal_Int16 SAL_CALL ControlHelper::getControlType()
     {
         return m_nControlType;
     }
-    
+
     //--------------------------------------------------------------------
-    Reference< XPropertyControlContext > SAL_CALL ControlHelper::getControlContext() throw (RuntimeException)
+    Reference< XPropertyControlContext > SAL_CALL ControlHelper::getControlContext()
     {
         return m_xContext;
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL ControlHelper::setControlContext( const Reference< XPropertyControlContext >& _controlcontext ) throw (RuntimeException)
+    void SAL_CALL ControlHelper::setControlContext( const Reference< XPropertyControlContext >& _controlcontext )
     {
         m_xContext = _controlcontext;
     }
-    
+
     //--------------------------------------------------------------------
-    Reference< XWindow > SAL_CALL ControlHelper::getControlWindow() throw (RuntimeException)
+    Reference< XWindow > SAL_CALL ControlHelper::getControlWindow()
     {
         return VCLUnoHelper::GetInterface( m_pControlWindow );
     }
-    
+
     //--------------------------------------------------------------------
-    ::sal_Bool SAL_CALL ControlHelper::isModified(  ) throw (RuntimeException)
+    ::sal_Bool SAL_CALL ControlHelper::isModified(  )
     {
         return m_bModified;
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL ControlHelper::notifyModifiedValue(  ) throw (RuntimeException)
+    void SAL_CALL ControlHelper::notifyModifiedValue(  )
     {
 		if ( isModified() && m_xContext.is() )
         {
@@ -199,4 +199,3 @@ namespace pcr
 //............................................................................
 } // namespace pcr
 //............................................................................
-

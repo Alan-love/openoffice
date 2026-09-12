@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -79,7 +79,7 @@ oslInterlockedCount SAL_CALL osl_decrementInterlockedCount(oslInterlockedCount* 
     }
     else {
         __asm__ __volatile__ (
-            "lock\n\t" 
+            "lock\n\t"
             "xaddl %0, %1\n\t"
         :   "+r" (nCount), "+m" (*pCount)
         :   /* nothing */
@@ -178,6 +178,29 @@ oslInterlockedCount SAL_CALL osl_decrementInterlockedCount(oslInterlockedCount* 
 #endif
 }
 
+#elif (defined(__GNUC__) || defined(__clang__)) && defined ( AARCH64 )
+/* AArch64 (ARM 64-bit, e.g. Apple Silicon). Use the compiler's atomic
+   built-ins, which clang/gcc lower to the AArch64 load-exclusive/store-exclusive
+   (ldaxr/stlxr) sequence, or to LSE atomics (ldadd) on ARMv8.1+. This avoids the
+   global-mutex fallback below. __sync_*_and_fetch are full-barrier and return
+   the new value, matching the required semantics. */
+
+/*****************************************************************************/
+/* osl_incrementInterlockedCount */
+/*****************************************************************************/
+oslInterlockedCount SAL_CALL osl_incrementInterlockedCount(oslInterlockedCount* pCount)
+{
+    return __sync_add_and_fetch( pCount, 1 );
+}
+
+/*****************************************************************************/
+/* osl_decrementInterlockedCount */
+/*****************************************************************************/
+oslInterlockedCount SAL_CALL osl_decrementInterlockedCount(oslInterlockedCount* pCount)
+{
+    return __sync_sub_and_fetch( pCount, 1 );
+}
+
 #else
 /* use only if nothing else works, expensive due to single mutex for all reference counts */
 
@@ -212,4 +235,3 @@ oslInterlockedCount SAL_CALL osl_decrementInterlockedCount(oslInterlockedCount* 
 }
 
 #endif /* default */
-

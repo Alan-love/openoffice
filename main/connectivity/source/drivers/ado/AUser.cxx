@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_ado.hxx"
 #include "ado/AUser.hxx"
 #include "ado/ACatalog.hxx"
 #include "ado/AGroups.hxx"
@@ -91,7 +91,7 @@ Sequence< sal_Int8 > OAdoUser::getUnoTunnelImplementationId()
 
 // com::sun::star::lang::XUnoTunnel
 //------------------------------------------------------------------
-sal_Int64 OAdoUser::getSomething( const Sequence< sal_Int8 > & rId ) throw (RuntimeException)
+sal_Int64 OAdoUser::getSomething( const Sequence< sal_Int8 > & rId )
 {
 	return (rId.getLength() == 16 && 0 == rtl_compareMemory(getUnoTunnelImplementationId().getConstArray(),  rId.getConstArray(), 16 ) )
 				? reinterpret_cast< sal_Int64 >( this )
@@ -99,7 +99,7 @@ sal_Int64 OAdoUser::getSomething( const Sequence< sal_Int8 > & rId ) throw (Runt
 }
 
 // -------------------------------------------------------------------------
-void OAdoUser::setFastPropertyValue_NoBroadcast(sal_Int32 nHandle,const Any& rValue)throw (Exception)
+void OAdoUser::setFastPropertyValue_NoBroadcast(sal_Int32 nHandle,const Any& rValue)
 {
 	if(m_aUser.IsValid())
 	{
@@ -170,7 +170,7 @@ void SAL_CALL OAdoUser::release() throw()
 	OUser_TYPEDEF::release();
 }
 // -----------------------------------------------------------------------------
-sal_Int32 SAL_CALL OAdoUser::getPrivileges( const ::rtl::OUString& objName, sal_Int32 objType ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL OAdoUser::getPrivileges( const ::rtl::OUString& objName, sal_Int32 objType )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	checkDisposed(OUser_BASE_TYPEDEF::rBHelper.bDisposed);
@@ -178,7 +178,7 @@ sal_Int32 SAL_CALL OAdoUser::getPrivileges( const ::rtl::OUString& objName, sal_
 	return ADOS::mapAdoRights2Sdbc(m_aUser.GetPermissions(objName, ADOS::mapObjectType2Ado(objType)));
 }
 // -------------------------------------------------------------------------
-sal_Int32 SAL_CALL OAdoUser::getGrantablePrivileges( const ::rtl::OUString& objName, sal_Int32 objType ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL OAdoUser::getGrantablePrivileges( const ::rtl::OUString& objName, sal_Int32 objType )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	checkDisposed(OUser_BASE_TYPEDEF::rBHelper.bDisposed);
@@ -191,7 +191,7 @@ sal_Int32 SAL_CALL OAdoUser::getGrantablePrivileges( const ::rtl::OUString& objN
 	return nRights;
 }
 // -------------------------------------------------------------------------
-void SAL_CALL OAdoUser::grantPrivileges( const ::rtl::OUString& objName, sal_Int32 objType, sal_Int32 objPrivileges ) throw(SQLException, RuntimeException)
+void SAL_CALL OAdoUser::grantPrivileges( const ::rtl::OUString& objName, sal_Int32 objType, sal_Int32 objPrivileges )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	checkDisposed(OUser_BASE_TYPEDEF::rBHelper.bDisposed);
@@ -199,7 +199,7 @@ void SAL_CALL OAdoUser::grantPrivileges( const ::rtl::OUString& objName, sal_Int
 	ADOS::ThrowException(*m_pCatalog->getConnection()->getConnection(),*this);
 }
 // -------------------------------------------------------------------------
-void SAL_CALL OAdoUser::revokePrivileges( const ::rtl::OUString& objName, sal_Int32 objType, sal_Int32 objPrivileges ) throw(SQLException, RuntimeException)
+void SAL_CALL OAdoUser::revokePrivileges( const ::rtl::OUString& objName, sal_Int32 objType, sal_Int32 objPrivileges )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	checkDisposed(OUser_BASE_TYPEDEF::rBHelper.bDisposed);
@@ -208,7 +208,7 @@ void SAL_CALL OAdoUser::revokePrivileges( const ::rtl::OUString& objName, sal_In
 }
 // -----------------------------------------------------------------------------
 // XUser
-void SAL_CALL OAdoUser::changePassword( const ::rtl::OUString& objPassword, const ::rtl::OUString& newPassword ) throw(SQLException, RuntimeException)
+void SAL_CALL OAdoUser::changePassword( const ::rtl::OUString& objPassword, const ::rtl::OUString& newPassword )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	checkDisposed(OUser_BASE_TYPEDEF::rBHelper.bDisposed);
@@ -216,8 +216,3 @@ void SAL_CALL OAdoUser::changePassword( const ::rtl::OUString& objPassword, cons
 	ADOS::ThrowException(*m_pCatalog->getConnection()->getConnection(),*this);
 }
 // -----------------------------------------------------------------------------
-
-
-
-
-

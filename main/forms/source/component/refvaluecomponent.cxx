@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -43,7 +43,7 @@ namespace frm
     using namespace ::com::sun::star::form::binding;
 
     //====================================================================
-	//= 
+	//=
 	//====================================================================
 	//--------------------------------------------------------------------
 	OReferenceValueComponent::OReferenceValueComponent( const Reference< XMultiServiceFactory>& _rxFactory, const ::rtl::OUString& _rUnoControlModelTypeName, const ::rtl::OUString& _rDefault, sal_Bool _bSupportNoCheckRefValue )
@@ -94,9 +94,9 @@ namespace frm
             OBoundControlModel::getFastPropertyValue( _rValue, _nHandle );
         }
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL OReferenceValueComponent::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue ) throw (Exception)
+    void SAL_CALL OReferenceValueComponent::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue )
     {
         switch ( _nHandle )
         {
@@ -123,9 +123,9 @@ namespace frm
             OBoundControlModel::setFastPropertyValue_NoBroadcast( _nHandle, _rValue );
         }
     }
-    
+
     //--------------------------------------------------------------------
-    sal_Bool SAL_CALL OReferenceValueComponent::convertFastPropertyValue( Any& _rConvertedValue, Any& _rOldValue, sal_Int32 _nHandle, const Any& _rValue ) throw (IllegalArgumentException)
+    sal_Bool SAL_CALL OReferenceValueComponent::convertFastPropertyValue( Any& _rConvertedValue, Any& _rOldValue, sal_Int32 _nHandle, const Any& _rValue )
     {
         sal_Bool bModified = sal_False;
 	    switch ( _nHandle )
@@ -149,7 +149,7 @@ namespace frm
         }
         return bModified;
     }
-    
+
     //------------------------------------------------------------------------------
     Any OReferenceValueComponent::getDefaultForReset() const
     {
@@ -294,4 +294,3 @@ namespace frm
 //........................................................................
 } // namespace frm
 //........................................................................
-

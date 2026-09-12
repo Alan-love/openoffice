@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
@@ -28,6 +28,7 @@
 #include <svgio/svgreader/svgdocumenthandler.hxx>
 #include <com/sun/star/xml/sax/XParser.hpp>
 #include <com/sun/star/xml/sax/InputSource.hpp>
+#include <com/sun/star/uno/XComponentContext.hpp>
 #include <comphelper/processfactory.hxx>
 #include <drawinglayer/geometry/viewinformation2d.hxx>
 
@@ -53,14 +54,14 @@ namespace svgio
             virtual ~XSvgParser();
 
             // XSvgParser
-            virtual uno::Sequence< uno::Reference< ::graphic::XPrimitive2D > > SAL_CALL getDecomposition( 
+            virtual uno::Sequence< uno::Reference< ::graphic::XPrimitive2D > > SAL_CALL getDecomposition(
                 const uno::Reference< ::io::XInputStream >& xSVGStream,
-                const ::rtl::OUString& aAbsolutePath) throw (uno::RuntimeException);
+                const ::rtl::OUString& aAbsolutePath);
 
             // XServiceInfo
-            virtual rtl::OUString SAL_CALL getImplementationName() throw(uno::RuntimeException);
-            virtual ::sal_Bool SAL_CALL supportsService(const rtl::OUString&) throw(uno::RuntimeException);
-            virtual uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames() throw(uno::RuntimeException);
+            virtual rtl::OUString SAL_CALL getImplementationName();
+            virtual ::sal_Bool SAL_CALL supportsService(const rtl::OUString&);
+            virtual uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames();
         };
 	} // end of namespace svgreader
 } // end of namespace svgio
@@ -85,7 +86,7 @@ namespace svgio
             return rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "svgio::svgreader::XSvgParser" ) );
         }
 
-        uno::Reference< uno::XInterface > SAL_CALL XSvgParser_createInstance(const uno::Reference< lang::XMultiServiceFactory >&)
+        uno::Reference< uno::XInterface > SAL_CALL XSvgParser_createInstance(const uno::Reference< uno::XComponentContext >&)
         {
             return static_cast< ::cppu::OWeakObject* >(new XSvgParser);
         }
@@ -98,7 +99,7 @@ namespace svgio
 {
     namespace svgreader
     {
-        XSvgParser::XSvgParser() 
+        XSvgParser::XSvgParser()
         {
         }
 
@@ -107,8 +108,8 @@ namespace svgio
         }
 
         uno::Sequence< uno::Reference< ::graphic::XPrimitive2D > > XSvgParser::getDecomposition(
-            const uno::Reference< ::io::XInputStream >& xSVGStream, 
-            const ::rtl::OUString& aAbsolutePath ) throw (uno::RuntimeException)
+            const uno::Reference< ::io::XInputStream >& xSVGStream,
+            const ::rtl::OUString& aAbsolutePath )
         {
             drawinglayer::primitive2d::Primitive2DSequence aRetval;
 
@@ -123,16 +124,16 @@ namespace svgio
                     // prepare ParserInputSrouce
                     xml::sax::InputSource myInputSource;
                     myInputSource.aInputStream = xSVGStream;
-                
+
                     // get parser
                     uno::Reference< xml::sax::XParser > xParser(
                         comphelper::getProcessServiceFactory()->createInstance(
                             rtl::OUString::createFromAscii("com.sun.star.xml.sax.Parser") ),
                         uno::UNO_QUERY_THROW );
-                
+
                     // connect parser and filter
                     xParser->setDocumentHandler(xSvgDocHdl);
-                
+
                     // finally, parse the stream to a hierarchy of
                     // SVGGraphicPrimitive2D which will be embedded to the
                     // primitive sequence. Their decompositions will in the
@@ -144,7 +145,7 @@ namespace svgio
                 {
                     OSL_ENSURE(false, "Parse error (!)");
                 }
-                
+
                 // decompose to primitives
                 const SvgNodeVector& rResults = pSvgDocHdl->getSvgDocument().getSvgNodeVector();
                 const sal_uInt32 nCount(rResults.size());
@@ -167,12 +168,12 @@ namespace svgio
             return aRetval;
         }
 
-        rtl::OUString SAL_CALL XSvgParser::getImplementationName() throw(uno::RuntimeException)
+        rtl::OUString SAL_CALL XSvgParser::getImplementationName()
         {
             return(XSvgParser_getImplementationName());
         }
 
-        sal_Bool SAL_CALL XSvgParser::supportsService(const rtl::OUString& rServiceName) throw(uno::RuntimeException)
+        sal_Bool SAL_CALL XSvgParser::supportsService(const rtl::OUString& rServiceName)
         {
             const uno::Sequence< rtl::OUString > aServices(XSvgParser_getSupportedServiceNames());
 
@@ -187,7 +188,7 @@ namespace svgio
             return sal_False;
         }
 
-        uno::Sequence< rtl::OUString > SAL_CALL XSvgParser::getSupportedServiceNames() throw(uno::RuntimeException)
+        uno::Sequence< rtl::OUString > SAL_CALL XSvgParser::getSupportedServiceNames()
         {
             return XSvgParser_getSupportedServiceNames();
         }

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,27 +7,28 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_dbui.hxx"
+#include <iterator>
 #include "dbu_reghelper.hxx"
 #include <sfx2/sfxsids.hrc>
 #include "dbu_rel.hrc"
 #include <vcl/svapp.hxx>
-#include "browserids.hxx"		   
+#include "browserids.hxx"
 #include <comphelper/types.hxx>
 #include "dbustrings.hrc"
 #include <connectivity/dbtools.hxx>
@@ -99,25 +100,25 @@ using namespace ::comphelper;
 using namespace ::osl;
 
 //------------------------------------------------------------------------------
-::rtl::OUString SAL_CALL ORelationController::getImplementationName() throw( RuntimeException )
+::rtl::OUString SAL_CALL ORelationController::getImplementationName()
 {
 	return getImplementationName_Static();
 }
 
 //------------------------------------------------------------------------------
-::rtl::OUString ORelationController::getImplementationName_Static() throw( RuntimeException )
+::rtl::OUString ORelationController::getImplementationName_Static()
 {
 	return ::rtl::OUString::createFromAscii("org.openoffice.comp.dbu.ORelationDesign");
 }
 //------------------------------------------------------------------------------
-Sequence< ::rtl::OUString> ORelationController::getSupportedServiceNames_Static(void) throw( RuntimeException )
+Sequence< ::rtl::OUString> ORelationController::getSupportedServiceNames_Static(void)
 {
 	Sequence< ::rtl::OUString> aSupported(1);
 	aSupported.getArray()[0] = ::rtl::OUString::createFromAscii("com.sun.star.sdb.RelationDesign");
 	return aSupported;
 }
 //-------------------------------------------------------------------------
-Sequence< ::rtl::OUString> SAL_CALL ORelationController::getSupportedServiceNames() throw(RuntimeException)
+Sequence< ::rtl::OUString> SAL_CALL ORelationController::getSupportedServiceNames()
 {
 	return getSupportedServiceNames_Static();
 }
@@ -128,7 +129,7 @@ Reference< XInterface > SAL_CALL ORelationController::Create(const Reference<XMu
 }
 DBG_NAME(ORelationController);
 // -----------------------------------------------------------------------------
-ORelationController::ORelationController(const Reference< XMultiServiceFactory >& _rM) 
+ORelationController::ORelationController(const Reference< XMultiServiceFactory >& _rM)
 	: OJoinController(_rM)
     ,m_nThreadEvent(0)
 	,m_bRelationsPossible(sal_True)
@@ -177,7 +178,7 @@ void ORelationController::Execute(sal_uInt16 _nId, const Sequence< PropertyValue
 				else
 				{
 					// now we save the layout information
-					//  create the output stream 
+					//  create the output stream
 					try
 					{
 						if ( haveDataSource() && getDataSource()->getPropertySetInfo()->hasPropertyByName(PROPERTY_LAYOUTINFORMATION) )
@@ -246,7 +247,7 @@ void ORelationController::impl_initialize()
     {
         DBG_UNHANDLED_EXCEPTION();
     }
-	
+
 }
 // -----------------------------------------------------------------------------
 ::rtl::OUString ORelationController::getPrivateTitle( ) const
@@ -293,14 +294,14 @@ namespace
         const Reference< XNameAccess >	    m_xTables;
         const sal_Int32                     m_nStartIndex;
         const sal_Int32                     m_nEndIndex;
-        
+
     public:
 	    RelationLoader(ORelationController* _pParent
                         ,const Reference< XDatabaseMetaData>& _xMetaData
                         ,const Reference< XNameAccess >& _xTables
                         ,const Sequence< ::rtl::OUString>& _aTableList
                         ,const sal_Int32 _nStartIndex
-                        ,const sal_Int32 _nEndIndex) 
+                        ,const sal_Int32 _nEndIndex)
             :m_aTableData(_xMetaData.is() && _xMetaData->supportsMixedCaseQuotedIdentifiers())
             ,m_aTableList(_aTableList)
             ,m_pParent(_pParent)
@@ -315,8 +316,8 @@ namespace
 	    virtual void SAL_CALL run();
         virtual void SAL_CALL onTerminated();
     protected:
-        virtual ~RelationLoader(){}	    
-	    
+        virtual ~RelationLoader(){}
+
         void loadTableData(const Any& _aTable);
     };
 
@@ -328,8 +329,8 @@ namespace
             ::rtl::OUString sCatalog,sSchema,sTable;
 		    ::dbtools::qualifiedNameComponents(m_xMetaData,
 											    *pIter,
-											    sCatalog, 
-											    sSchema, 
+											    sCatalog,
+											    sSchema,
 											    sTable,
 											    ::dbtools::eInDataManipulation);
 		    Any aCatalog;
@@ -372,14 +373,14 @@ namespace
         TTableWindowData::value_type pReferencingTable = aFind->second;
 	    Reference<XIndexAccess> xKeys = pReferencingTable->getKeys();
         const Reference<XKeysSupplier> xKeySup(xTableProp,UNO_QUERY);
-    	
+
 	    if ( !xKeys.is() && xKeySup.is() )
 	    {
 		    xKeys = xKeySup->getKeys();
         }
-        
+
 	    if ( xKeys.is() )
-	    {  
+	    {
 		    Reference<XPropertySet> xKey;
             const sal_Int32 nCount = xKeys->getCount();
 		    for(sal_Int32 i = 0 ; i < nCount ; ++i)
@@ -440,7 +441,7 @@ namespace
 				    sal_Int32	nDeleteRule = 0;
 				    xKey->getPropertyValue(PROPERTY_UPDATERULE) >>= nUpdateRule;
 				    xKey->getPropertyValue(PROPERTY_DELETERULE) >>= nDeleteRule;
-    				
+
 				    pTabConnData->SetUpdateRules( nUpdateRule );
 				    pTabConnData->SetDeleteRules( nDeleteRule );
 
@@ -492,7 +493,7 @@ IMPL_LINK( ORelationController, OnThreadFinished, void*, /*NOTINTERESTEDIN*/ )
 	    getView()->Invalidate(INVALIDATE_NOERASE);
         ClearUndoManager();
 	    setModified(sal_False);		// and we are not modified yet
-    	
+
 	    if(m_vTableData.empty())
 		    Execute(ID_BROWSER_ADDTABLE,Sequence<PropertyValue>());
     }
@@ -546,7 +547,7 @@ void ORelationController::loadData()
 	catch(const Exception&)
 	{
         DBG_UNHANDLED_EXCEPTION();
-	}	
+	}
 }
 // -----------------------------------------------------------------------------
 TTableWindowData::value_type ORelationController::existsTable(const ::rtl::OUString& _rComposedTableName,sal_Bool _bCase)  const
@@ -607,5 +608,3 @@ bool ORelationController::allowQueries() const
 }
 
 // -----------------------------------------------------------------------------
-
-

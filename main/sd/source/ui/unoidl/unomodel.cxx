@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -45,7 +45,9 @@
 #include <editeng/unofield.hxx>
 #include <unomodel.hxx>
 #include <sfx2/dispatch.hxx>
+#include <sfx2/docfile.hxx>
 #include <sfx2/bindings.hxx>
+#include <sfx2/linkmgr.hxx>
 #include <vcl/svapp.hxx>
 #include <editeng/UnoForbiddenCharsTable.hxx>
 #include <svx/svdoutl.hxx>
@@ -289,7 +291,7 @@ uno::Reference< drawing::XDrawPage >  SdXImpressDocument::CreateXDrawPage( SdPag
 */
 
 // XInterface
-uno::Any SAL_CALL SdXImpressDocument::queryInterface( const uno::Type & rType ) throw(uno::RuntimeException)
+uno::Any SAL_CALL SdXImpressDocument::queryInterface( const uno::Type & rType )
 {
 	uno::Any aAny;
 
@@ -301,6 +303,7 @@ uno::Any SAL_CALL SdXImpressDocument::queryInterface( const uno::Type & rType ) 
 	else QUERYINT(drawing::XMasterPagesSupplier);
 	else QUERYINT(drawing::XDrawPagesSupplier);
 	else QUERYINT(presentation::XHandoutMasterSupplier);
+	else QUERYINT(document::XLinkAuthorizer);
 	else QUERYINT(document::XLinkTargetSupplier);
 	else QUERYINT(style::XStyleFamiliesSupplier);
 	else QUERYINT(com::sun::star::ucb::XAnyCompareFactory);
@@ -370,7 +373,7 @@ SdXImpressDocument* SdXImpressDocument::getImplementation( const uno::Reference<
         return NULL;
 }
 
-sal_Int64 SAL_CALL SdXImpressDocument::getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& rIdentifier ) throw(::com::sun::star::uno::RuntimeException)
+sal_Int64 SAL_CALL SdXImpressDocument::getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& rIdentifier )
 {
     if( rIdentifier.getLength() == 16 )
     {
@@ -385,7 +388,7 @@ sal_Int64 SAL_CALL SdXImpressDocument::getSomething( const ::com::sun::star::uno
 }
 
 // XTypeProvider
-uno::Sequence< uno::Type > SAL_CALL SdXImpressDocument::getTypes(  ) throw(uno::RuntimeException)
+uno::Sequence< uno::Type > SAL_CALL SdXImpressDocument::getTypes(  )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -395,7 +398,7 @@ uno::Sequence< uno::Type > SAL_CALL SdXImpressDocument::getTypes(  ) throw(uno::
 		const sal_Int32 nBaseTypes = aBaseTypes.getLength();
 		const uno::Type* pBaseTypes = aBaseTypes.getConstArray();
 
-		const sal_Int32 nOwnTypes = mbImpressDoc ? 14 : 11;		// !DANGER! Keep this updated!
+		const sal_Int32 nOwnTypes = mbImpressDoc ? 15 : 12;		// !DANGER! Keep this updated!
 
 		maTypeSequence.realloc(  nBaseTypes + nOwnTypes );
 		uno::Type* pTypes = maTypeSequence.getArray();
@@ -407,6 +410,7 @@ uno::Sequence< uno::Type > SAL_CALL SdXImpressDocument::getTypes(  ) throw(uno::
 		*pTypes++ = ITYPE(drawing::XLayerSupplier);
 		*pTypes++ = ITYPE(drawing::XMasterPagesSupplier);
 		*pTypes++ = ITYPE(drawing::XDrawPagesSupplier);
+		*pTypes++ = ITYPE(document::XLinkAuthorizer);
 		*pTypes++ = ITYPE(document::XLinkTargetSupplier);
 		*pTypes++ = ITYPE(style::XStyleFamiliesSupplier);
 		*pTypes++ = ITYPE(com::sun::star::ucb::XAnyCompareFactory);
@@ -425,7 +429,7 @@ uno::Sequence< uno::Type > SAL_CALL SdXImpressDocument::getTypes(  ) throw(uno::
 	return maTypeSequence;
 }
 
-uno::Sequence< sal_Int8 > SAL_CALL SdXImpressDocument::getImplementationId(  ) throw(uno::RuntimeException)
+uno::Sequence< sal_Int8 > SAL_CALL SdXImpressDocument::getImplementationId(  )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -611,7 +615,6 @@ void SdXImpressDocument::SetModified( sal_Bool bModified /* = sal_True */ ) thro
 
 // XModel
 void SAL_CALL SdXImpressDocument	::lockControllers(  )
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -622,7 +625,6 @@ void SAL_CALL SdXImpressDocument	::lockControllers(  )
 }
 
 void SAL_CALL SdXImpressDocument::unlockControllers(  )
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -636,7 +638,6 @@ void SAL_CALL SdXImpressDocument::unlockControllers(  )
 }
 
 sal_Bool SAL_CALL SdXImpressDocument::hasControllersLocked(  )
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -650,7 +651,7 @@ sal_Bool SAL_CALL SdXImpressDocument::hasControllersLocked(  )
 #include <comphelper/processfactory.hxx>
 #endif
 
-uno::Reference < container::XIndexAccess > SAL_CALL SdXImpressDocument::getViewData() throw( uno::RuntimeException )
+uno::Reference < container::XIndexAccess > SAL_CALL SdXImpressDocument::getViewData()
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -693,7 +694,7 @@ uno::Reference < container::XIndexAccess > SAL_CALL SdXImpressDocument::getViewD
 	return xRet;
 }
 
-void SAL_CALL SdXImpressDocument::setViewData( const uno::Reference < container::XIndexAccess >& xData ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL SdXImpressDocument::setViewData( const uno::Reference < container::XIndexAccess >& xData )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -742,7 +743,6 @@ void SAL_CALL SdXImpressDocument::setViewData( const uno::Reference < container:
 
 // XDrawPageDuplicator
 uno::Reference< drawing::XDrawPage > SAL_CALL SdXImpressDocument::duplicate( const uno::Reference< drawing::XDrawPage >& xPage )
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -771,7 +771,6 @@ uno::Reference< drawing::XDrawPage > SAL_CALL SdXImpressDocument::duplicate( con
 
 // XDrawPagesSupplier
 uno::Reference< drawing::XDrawPages > SAL_CALL SdXImpressDocument::getDrawPages()
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -791,7 +790,6 @@ uno::Reference< drawing::XDrawPages > SAL_CALL SdXImpressDocument::getDrawPages(
 
 // XMasterPagesSupplier
 uno::Reference< drawing::XDrawPages > SAL_CALL SdXImpressDocument::getMasterPages()
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -812,7 +810,6 @@ uno::Reference< drawing::XDrawPages > SAL_CALL SdXImpressDocument::getMasterPage
 
 // XLayerManagerSupplier
 uno::Reference< container::XNameAccess > SAL_CALL SdXImpressDocument::getLayerManager(  )
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -829,7 +826,6 @@ uno::Reference< container::XNameAccess > SAL_CALL SdXImpressDocument::getLayerMa
 
 // XCustomPresentationSupplier
 uno::Reference< container::XNameContainer > SAL_CALL SdXImpressDocument::getCustomPresentations()
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -848,7 +844,6 @@ extern uno::Reference< presentation::XPresentation > createPresentation( SdXImpr
 
 // XPresentationSupplier
 uno::Reference< presentation::XPresentation > SAL_CALL SdXImpressDocument::getPresentation()
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -860,7 +855,6 @@ uno::Reference< presentation::XPresentation > SAL_CALL SdXImpressDocument::getPr
 
 // XHandoutMasterSupplier
 uno::Reference< drawing::XDrawPage > SAL_CALL SdXImpressDocument::getHandoutMasterPage()
-	throw (uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -881,7 +875,6 @@ uno::Reference< drawing::XDrawPage > SAL_CALL SdXImpressDocument::getHandoutMast
 
 // XMultiServiceFactory ( SvxFmMSFactory )
 uno::Reference< uno::XInterface > SAL_CALL SdXImpressDocument::createInstance( const OUString& aServiceSpecifier )
-	throw(uno::Exception, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -1148,7 +1141,6 @@ uno::Reference< uno::XInterface > SAL_CALL SdXImpressDocument::createInstance( c
 }
 
 uno::Sequence< OUString > SAL_CALL SdXImpressDocument::getAvailableServiceNames()
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -1215,13 +1207,11 @@ uno::Sequence< OUString > SAL_CALL SdXImpressDocument::getAvailableServiceNames(
 
 // lang::XServiceInfo
 OUString SAL_CALL SdXImpressDocument::getImplementationName()
-	throw(uno::RuntimeException)
 {
 	return OUString( RTL_CONSTASCII_USTRINGPARAM("SdXImpressDocument"));
 }
 
 sal_Bool SAL_CALL SdXImpressDocument::supportsService( const OUString& ServiceName )
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -1240,7 +1230,7 @@ sal_Bool SAL_CALL SdXImpressDocument::supportsService( const OUString& ServiceNa
            );
 }
 
-uno::Sequence< OUString > SAL_CALL SdXImpressDocument::getSupportedServiceNames() throw(uno::RuntimeException)
+uno::Sequence< OUString > SAL_CALL SdXImpressDocument::getSupportedServiceNames()
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -1261,14 +1251,12 @@ uno::Sequence< OUString > SAL_CALL SdXImpressDocument::getSupportedServiceNames(
 
 // XPropertySet
 uno::Reference< beans::XPropertySetInfo > SAL_CALL SdXImpressDocument::getPropertySetInfo(  )
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 	return mpPropSet->getPropertySetInfo();
 }
 
 void SAL_CALL SdXImpressDocument::setPropertyValue( const OUString& aPropertyName, const uno::Any& aValue )
-	throw(beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -1342,7 +1330,6 @@ void SAL_CALL SdXImpressDocument::setPropertyValue( const OUString& aPropertyNam
 }
 
 uno::Any SAL_CALL SdXImpressDocument::getPropertyValue( const OUString& PropertyName )
-	throw(beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -1419,14 +1406,38 @@ uno::Any SAL_CALL SdXImpressDocument::getPropertyValue( const OUString& Property
 	return aAny;
 }
 
-void SAL_CALL SdXImpressDocument::addPropertyChangeListener( const OUString& , const uno::Reference< beans::XPropertyChangeListener >&  ) throw(beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException) {}
-void SAL_CALL SdXImpressDocument::removePropertyChangeListener( const OUString& , const uno::Reference< beans::XPropertyChangeListener >&  ) throw(beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException) {}
-void SAL_CALL SdXImpressDocument::addVetoableChangeListener( const OUString& , const uno::Reference< beans::XVetoableChangeListener >&  ) throw(beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException) {}
-void SAL_CALL SdXImpressDocument::removeVetoableChangeListener( const OUString& , const uno::Reference< beans::XVetoableChangeListener >&  ) throw(beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException) {}
+void SAL_CALL SdXImpressDocument::addPropertyChangeListener( const OUString& , const uno::Reference< beans::XPropertyChangeListener >&  ) {}
+void SAL_CALL SdXImpressDocument::removePropertyChangeListener( const OUString& , const uno::Reference< beans::XPropertyChangeListener >&  ) {}
+void SAL_CALL SdXImpressDocument::addVetoableChangeListener( const OUString& , const uno::Reference< beans::XVetoableChangeListener >&  ) {}
+void SAL_CALL SdXImpressDocument::removeVetoableChangeListener( const OUString& , const uno::Reference< beans::XVetoableChangeListener >&  ) {}
+
+// XLinkAuthorizer
+sal_Bool SAL_CALL SdXImpressDocument::authorizeLinks( const ::rtl::OUString &url )
+{
+	OGuard aGuard( Application::GetSolarMutex() );
+	if ( mpDoc ) {
+		// The following access to the window is copied from SwDoc::UpdateLinks()
+		SfxMedium* pMedium = mpDocShell->GetMedium();
+		SfxFrame* pFrm = pMedium ? pMedium->GetLoadTargetFrame() : 0;
+		sfx2::LinkManager *pLinkMgr = mpDoc->GetLinkManager();
+		if ( pLinkMgr->urlIsVendor( url ) ) {
+			return sal_False;
+		} else if ( pLinkMgr->urlIsSafe( url ) ) {
+			return sal_True;
+		}
+		Window* pDlgParent = 0;
+		if ( pFrm )
+			pDlgParent = &pFrm->GetWindow();
+		if ( !pDlgParent )
+			pDlgParent = mpDocShell->GetDialogParent( pMedium );
+		if ( pDlgParent )
+			return pLinkMgr->GetUserAllowsLinkUpdate( pDlgParent );
+	}
+	return sal_False;
+}
 
 // XLinkTargetSupplier
 uno::Reference< container::XNameAccess > SAL_CALL SdXImpressDocument::getLinks()
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -1441,7 +1452,6 @@ uno::Reference< container::XNameAccess > SAL_CALL SdXImpressDocument::getLinks()
 
 // XStyleFamiliesSupplier
 uno::Reference< container::XNameAccess > SAL_CALL SdXImpressDocument::getStyleFamilies(  )
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -1454,7 +1464,6 @@ uno::Reference< container::XNameAccess > SAL_CALL SdXImpressDocument::getStyleFa
 
 // XAnyCompareFactory
 uno::Reference< com::sun::star::ucb::XAnyCompare > SAL_CALL SdXImpressDocument::createAnyCompareByName( const OUString& )
-    throw (uno::RuntimeException)
 {
 	return SvxCreateNumRuleCompare();
 }
@@ -1462,7 +1471,6 @@ uno::Reference< com::sun::star::ucb::XAnyCompare > SAL_CALL SdXImpressDocument::
 // XRenderable
 sal_Int32 SAL_CALL SdXImpressDocument::getRendererCount( const uno::Any& rSelection,
                                                          const uno::Sequence< beans::PropertyValue >&  )
-    throw (lang::IllegalArgumentException, uno::RuntimeException)
 {
 	OGuard      aGuard( Application::GetSolarMutex() );
 	sal_Int32   nRet = 0;
@@ -1495,7 +1503,6 @@ sal_Int32 SAL_CALL SdXImpressDocument::getRendererCount( const uno::Any& rSelect
 
 uno::Sequence< beans::PropertyValue > SAL_CALL SdXImpressDocument::getRenderer( sal_Int32 , const uno::Any& ,
                                                                                 const uno::Sequence< beans::PropertyValue >& rxOptions )
-    throw (lang::IllegalArgumentException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -1548,7 +1555,7 @@ public:
 	// all default implementations just call the same methods at the original. To do something
 	// different, overload the method and at least do what the method does.
 	virtual drawinglayer::primitive2d::Primitive2DSequence createRedirectedPrimitive2DSequence(
-		const sdr::contact::ViewObjectContact& rOriginal, 
+		const sdr::contact::ViewObjectContact& rOriginal,
 		const sdr::contact::DisplayInfo& rDisplayInfo);
 };
 
@@ -1757,7 +1764,7 @@ void ImplPDFExportShapeInteraction( uno::Reference< drawing::XShape > xShape, Sd
 vcl::PDFWriter::StructElement ImplRenderPaintProc::ImplBegStructureTag( SdrObject& rObject )
 {
 	vcl::PDFWriter::StructElement eElement(vcl::PDFWriter::NonStructElement);
-	
+
 	if ( pPDFExtOutDevData && pPDFExtOutDevData->GetIsExportTaggedPDF() )
 	{
 		sal_uInt32 nInventor   = rObject.GetObjInventor();
@@ -1781,7 +1788,7 @@ vcl::PDFWriter::StructElement ImplRenderPaintProc::ImplBegStructureTag( SdrObjec
 }
 
 drawinglayer::primitive2d::Primitive2DSequence ImplRenderPaintProc::createRedirectedPrimitive2DSequence(
-	const sdr::contact::ViewObjectContact& rOriginal, 
+	const sdr::contact::ViewObjectContact& rOriginal,
 	const sdr::contact::DisplayInfo& rDisplayInfo)
 {
 	SdrObject* pObject = rOriginal.GetViewContact().TryToGetSdrObject();
@@ -1854,7 +1861,6 @@ sal_Bool ImplRenderPaintProc::IsPrintable( const SdrObject* pObj ) const
 }
 void SAL_CALL SdXImpressDocument::render( sal_Int32 nRenderer, const uno::Any& rSelection,
                                           const uno::Sequence< beans::PropertyValue >& rxOptions )
-    throw (lang::IllegalArgumentException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -1953,7 +1959,7 @@ void SAL_CALL SdXImpressDocument::render( sal_Int32 nRenderer, const uno::Any& r
                             bScreenDisplay = false;
                         }
 
-                        // #i75566# Name change GetBackgroundColor -> GetPageBackgroundColor and 
+                        // #i75566# Name change GetBackgroundColor -> GetPageBackgroundColor and
                         // hint value if screen display. Only then the AutoColor mechanisms shall be applied
 						rOutl.SetBackgroundColor( pPage->GetPageBackgroundColor( pPV, bScreenDisplay ) );
 					}
@@ -2135,10 +2141,10 @@ void SAL_CALL SdXImpressDocument::render( sal_Int32 nRenderer, const uno::Any& r
 									// Destination Export
 									const sal_Int32 nDestId =
 										pPDFExtOutDevData->CreateDest( aPageRect , nPageNumber - 1 );
-    
+
 									// Create a new outline item:
 									pPDFExtOutDevData->CreateOutlineItem( -1 , aPageName, nDestId );
-								}                            
+								}
 							}
 							//<--- i56629, i40318
 						}
@@ -2227,7 +2233,7 @@ void SdXImpressDocument::initializeDocument()
     }
 }
 
-void SAL_CALL SdXImpressDocument::dispose() throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL SdXImpressDocument::dispose()
 {
     if( !mbDisposed )
     {
@@ -2344,7 +2350,6 @@ SdDrawPagesAccess::~SdDrawPagesAccess() throw()
 
 // XIndexAccess
 sal_Int32 SAL_CALL SdDrawPagesAccess::getCount()
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2355,7 +2360,6 @@ sal_Int32 SAL_CALL SdDrawPagesAccess::getCount()
 }
 
 uno::Any SAL_CALL SdDrawPagesAccess::getByIndex( sal_Int32 Index )
-	throw(lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2378,7 +2382,7 @@ uno::Any SAL_CALL SdDrawPagesAccess::getByIndex( sal_Int32 Index )
 }
 
 // XNameAccess
-uno::Any SAL_CALL SdDrawPagesAccess::getByName( const OUString& aName ) throw(container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
+uno::Any SAL_CALL SdDrawPagesAccess::getByName( const OUString& aName )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2408,7 +2412,7 @@ uno::Any SAL_CALL SdDrawPagesAccess::getByName( const OUString& aName ) throw(co
 	throw container::NoSuchElementException();
 }
 
-uno::Sequence< OUString > SAL_CALL SdDrawPagesAccess::getElementNames() throw(uno::RuntimeException)
+uno::Sequence< OUString > SAL_CALL SdDrawPagesAccess::getElementNames()
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2429,7 +2433,7 @@ uno::Sequence< OUString > SAL_CALL SdDrawPagesAccess::getElementNames() throw(un
 	return aNames;
 }
 
-sal_Bool SAL_CALL SdDrawPagesAccess::hasByName( const OUString& aName ) throw(uno::RuntimeException)
+sal_Bool SAL_CALL SdDrawPagesAccess::hasByName( const OUString& aName )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2453,13 +2457,11 @@ sal_Bool SAL_CALL SdDrawPagesAccess::hasByName( const OUString& aName ) throw(un
 
 // XElementAccess
 uno::Type SAL_CALL SdDrawPagesAccess::getElementType()
-	throw(uno::RuntimeException)
 {
 	return ITYPE( drawing::XDrawPage );
 }
 
 sal_Bool SAL_CALL SdDrawPagesAccess::hasElements()
-	throw(uno::RuntimeException)
 {
 	return getCount() > 0;
 }
@@ -2471,7 +2473,6 @@ sal_Bool SAL_CALL SdDrawPagesAccess::hasElements()
 * dazugehoerige SdDrawPage zurueck.                                           *
 ******************************************************************************/
 uno::Reference< drawing::XDrawPage > SAL_CALL SdDrawPagesAccess::insertNewByIndex( sal_Int32 nIndex )
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2497,7 +2498,6 @@ uno::Reference< drawing::XDrawPage > SAL_CALL SdDrawPagesAccess::insertNewByInde
 * nach dem entfernen dieser Seite vorhanden ist.							  *
 ******************************************************************************/
 void SAL_CALL SdDrawPagesAccess::remove( const uno::Reference< drawing::XDrawPage >& xPage )
-		throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2552,17 +2552,17 @@ void SAL_CALL SdDrawPagesAccess::remove( const uno::Reference< drawing::XDrawPag
 // XServiceInfo
 sal_Char pSdDrawPagesAccessService[sizeof("com.sun.star.drawing.DrawPages")] = "com.sun.star.drawing.DrawPages";
 
-OUString SAL_CALL SdDrawPagesAccess::getImplementationName(  ) throw(uno::RuntimeException)
+OUString SAL_CALL SdDrawPagesAccess::getImplementationName(  )
 {
 	return OUString( RTL_CONSTASCII_USTRINGPARAM( "SdDrawPagesAccess" ) );
 }
 
-sal_Bool SAL_CALL SdDrawPagesAccess::supportsService( const OUString& ServiceName ) throw(uno::RuntimeException)
+sal_Bool SAL_CALL SdDrawPagesAccess::supportsService( const OUString& ServiceName )
 {
 	return ServiceName.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM( pSdDrawPagesAccessService ) );
 }
 
-uno::Sequence< OUString > SAL_CALL SdDrawPagesAccess::getSupportedServiceNames(  ) throw(uno::RuntimeException)
+uno::Sequence< OUString > SAL_CALL SdDrawPagesAccess::getSupportedServiceNames(  )
 {
 	OUString aService( RTL_CONSTASCII_USTRINGPARAM( pSdDrawPagesAccessService ) );
 	uno::Sequence< OUString > aSeq( &aService, 1 );
@@ -2570,17 +2570,17 @@ uno::Sequence< OUString > SAL_CALL SdDrawPagesAccess::getSupportedServiceNames( 
 }
 
 // XComponent
-void SAL_CALL SdDrawPagesAccess::dispose(  ) throw (uno::RuntimeException)
+void SAL_CALL SdDrawPagesAccess::dispose(  )
 {
 	mpModel = NULL;
 }
 
-void SAL_CALL SdDrawPagesAccess::addEventListener( const uno::Reference< lang::XEventListener >&  ) throw (uno::RuntimeException)
+void SAL_CALL SdDrawPagesAccess::addEventListener( const uno::Reference< lang::XEventListener >&  )
 {
 	DBG_ERROR( "not implemented!" );
 }
 
-void SAL_CALL SdDrawPagesAccess::removeEventListener( const uno::Reference< lang::XEventListener >&  ) throw (uno::RuntimeException)
+void SAL_CALL SdDrawPagesAccess::removeEventListener( const uno::Reference< lang::XEventListener >&  )
 {
 	DBG_ERROR( "not implemented!" );
 }
@@ -2599,24 +2599,23 @@ SdMasterPagesAccess::~SdMasterPagesAccess() throw()
 }
 
 // XComponent
-void SAL_CALL SdMasterPagesAccess::dispose(  ) throw (uno::RuntimeException)
+void SAL_CALL SdMasterPagesAccess::dispose(  )
 {
 	mpModel = NULL;
 }
 
-void SAL_CALL SdMasterPagesAccess::addEventListener( const uno::Reference< lang::XEventListener >&  ) throw (uno::RuntimeException)
+void SAL_CALL SdMasterPagesAccess::addEventListener( const uno::Reference< lang::XEventListener >&  )
 {
 	DBG_ERROR( "not implemented!" );
 }
 
-void SAL_CALL SdMasterPagesAccess::removeEventListener( const uno::Reference< lang::XEventListener >&  ) throw (uno::RuntimeException)
+void SAL_CALL SdMasterPagesAccess::removeEventListener( const uno::Reference< lang::XEventListener >&  )
 {
 	DBG_ERROR( "not implemented!" );
 }
 
 // XIndexAccess
 sal_Int32 SAL_CALL SdMasterPagesAccess::getCount()
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2631,7 +2630,6 @@ sal_Int32 SAL_CALL SdMasterPagesAccess::getCount()
 * angegebennen Position im Model.                                             *
 ******************************************************************************/
 uno::Any SAL_CALL SdMasterPagesAccess::getByIndex( sal_Int32 Index )
-	throw(lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2655,20 +2653,17 @@ uno::Any SAL_CALL SdMasterPagesAccess::getByIndex( sal_Int32 Index )
 
 // XElementAccess
 uno::Type SAL_CALL SdMasterPagesAccess::getElementType()
-	throw(uno::RuntimeException)
 {
 	return ITYPE(drawing::XDrawPage);
 }
 
 sal_Bool SAL_CALL SdMasterPagesAccess::hasElements()
-	throw(uno::RuntimeException)
 {
 	return getCount() > 0;
 }
 
 // XDrawPages
 uno::Reference< drawing::XDrawPage > SAL_CALL SdMasterPagesAccess::insertNewByIndex( sal_Int32 nInsertPos )
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2726,7 +2721,7 @@ uno::Reference< drawing::XDrawPage > SAL_CALL SdMasterPagesAccess::insertNewByIn
 		SdPage* pPage = mpModel->mpDoc->GetSdPage( (sal_uInt16)0, PK_STANDARD );
 		SdPage* pRefNotesPage = mpModel->mpDoc->GetSdPage( (sal_uInt16)0, PK_NOTES);
 
-		// create and instert new draw masterpage
+		// create and insert new draw masterpage
 		SdPage* pMPage = (SdPage*)mpModel->mpDoc->AllocPage(sal_True);
 		pMPage->SetSize( pPage->GetSize() );
 		pMPage->SetBorder( pPage->GetLftBorder(),
@@ -2736,14 +2731,14 @@ uno::Reference< drawing::XDrawPage > SAL_CALL SdMasterPagesAccess::insertNewByIn
 		pMPage->SetLayoutName( aLayoutName );
 		mpDoc->InsertMasterPage(pMPage,  (sal_uInt16)nInsertPos);
 
-		{ 
+		{
 			// ensure default MasterPage fill
             pMPage->EnsureMasterPageDefaultBackground();
 		}
 
 		xDrawPage = uno::Reference< drawing::XDrawPage >::query( pMPage->getUnoPage() );
 
-		// create and instert new notes masterpage
+		// create and insert new notes masterpage
 		SdPage* pMNotesPage = (SdPage*)mpModel->mpDoc->AllocPage(sal_True);
 		pMNotesPage->SetSize( pRefNotesPage->GetSize() );
 		pMNotesPage->SetPageKind(PK_NOTES);
@@ -2767,7 +2762,6 @@ uno::Reference< drawing::XDrawPage > SAL_CALL SdMasterPagesAccess::insertNewByIn
 * Seite als Masterpage benutzt.                                               *
 ******************************************************************************/
 void SAL_CALL SdMasterPagesAccess::remove( const uno::Reference< drawing::XDrawPage >& xPage )
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2822,17 +2816,17 @@ void SAL_CALL SdMasterPagesAccess::remove( const uno::Reference< drawing::XDrawP
 // XServiceInfo
 sal_Char pSdMasterPagesAccessService[sizeof("com.sun.star.drawing.MasterPages")] = "com.sun.star.drawing.MasterPages";
 
-OUString SAL_CALL SdMasterPagesAccess::getImplementationName(  ) throw(uno::RuntimeException)
+OUString SAL_CALL SdMasterPagesAccess::getImplementationName(  )
 {
 	return OUString( RTL_CONSTASCII_USTRINGPARAM( "SdMasterPagesAccess" ) );
 }
 
-sal_Bool SAL_CALL SdMasterPagesAccess::supportsService( const OUString& ServiceName ) throw(uno::RuntimeException)
+sal_Bool SAL_CALL SdMasterPagesAccess::supportsService( const OUString& ServiceName )
 {
 	return ServiceName.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM( pSdMasterPagesAccessService ) );
 }
 
-uno::Sequence< OUString > SAL_CALL SdMasterPagesAccess::getSupportedServiceNames(  ) throw(uno::RuntimeException)
+uno::Sequence< OUString > SAL_CALL SdMasterPagesAccess::getSupportedServiceNames(  )
 {
 	OUString aService( RTL_CONSTASCII_USTRINGPARAM( pSdMasterPagesAccessService ) );
 	uno::Sequence< OUString > aSeq( &aService, 1 );
@@ -2853,24 +2847,23 @@ SdDocLinkTargets::~SdDocLinkTargets() throw()
 }
 
 // XComponent
-void SAL_CALL SdDocLinkTargets::dispose(  ) throw (uno::RuntimeException)
+void SAL_CALL SdDocLinkTargets::dispose(  )
 {
 	mpModel = NULL;
 }
 
-void SAL_CALL SdDocLinkTargets::addEventListener( const uno::Reference< lang::XEventListener >&  ) throw (uno::RuntimeException)
+void SAL_CALL SdDocLinkTargets::addEventListener( const uno::Reference< lang::XEventListener >&  )
 {
 	DBG_ERROR( "not implemented!" );
 }
 
-void SAL_CALL SdDocLinkTargets::removeEventListener( const uno::Reference< lang::XEventListener >&  ) throw (uno::RuntimeException)
+void SAL_CALL SdDocLinkTargets::removeEventListener( const uno::Reference< lang::XEventListener >&  )
 {
 	DBG_ERROR( "not implemented!" );
 }
 
 // XNameAccess
 uno::Any SAL_CALL SdDocLinkTargets::getByName( const OUString& aName )
-	throw(container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2892,7 +2885,6 @@ uno::Any SAL_CALL SdDocLinkTargets::getByName( const OUString& aName )
 }
 
 uno::Sequence< OUString > SAL_CALL SdDocLinkTargets::getElementNames()
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2945,7 +2937,6 @@ uno::Sequence< OUString > SAL_CALL SdDocLinkTargets::getElementNames()
 }
 
 sal_Bool SAL_CALL SdDocLinkTargets::hasByName( const OUString& aName )
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -2957,13 +2948,11 @@ sal_Bool SAL_CALL SdDocLinkTargets::hasByName( const OUString& aName )
 
 // container::XElementAccess
 uno::Type SAL_CALL SdDocLinkTargets::getElementType()
-	throw(uno::RuntimeException)
 {
 	return ITYPE(beans::XPropertySet);
 }
 
 sal_Bool SAL_CALL SdDocLinkTargets::hasElements()
-	throw(uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -3010,19 +2999,16 @@ SdPage* SdDocLinkTargets::FindPage( const OUString& rName ) const throw()
 
 // XServiceInfo
 OUString SAL_CALL SdDocLinkTargets::getImplementationName()
-	throw(uno::RuntimeException)
 {
 	return OUString( RTL_CONSTASCII_USTRINGPARAM("SdDocLinkTargets") );
 }
 
 sal_Bool SAL_CALL SdDocLinkTargets::supportsService( const OUString& ServiceName )
-	throw(uno::RuntimeException)
 {
 	return comphelper::ServiceInfoHelper::supportsService( ServiceName, getSupportedServiceNames() );
 }
 
 uno::Sequence< OUString > SAL_CALL SdDocLinkTargets::getSupportedServiceNames()
-	throw(uno::RuntimeException)
 {
 	const OUString aSN( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.document.LinkTargets") );
 	uno::Sequence< OUString > aSeq( &aSN, 1 );

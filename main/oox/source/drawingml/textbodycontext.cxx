@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -46,8 +46,8 @@ class TextParagraphContext : public ContextHandler
 public:
     TextParagraphContext( ContextHandler& rParent, TextParagraph& rPara );
 
-	virtual void SAL_CALL endFastElement( sal_Int32 aElementToken ) throw (SAXException, RuntimeException);
-	virtual Reference< XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException);
+	virtual void SAL_CALL endFastElement( sal_Int32 aElementToken );
+	virtual Reference< XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs );
 
 protected:
 	TextParagraph& mrParagraph;
@@ -61,7 +61,7 @@ TextParagraphContext::TextParagraphContext( ContextHandler& rParent, TextParagra
 }
 
 // --------------------------------------------------------------------
-void TextParagraphContext::endFastElement( sal_Int32 aElementToken ) throw (SAXException, RuntimeException)
+void TextParagraphContext::endFastElement( sal_Int32 aElementToken )
 {
 	if( aElementToken == (A_TOKEN( p )) )
 	{
@@ -70,7 +70,7 @@ void TextParagraphContext::endFastElement( sal_Int32 aElementToken ) throw (SAXE
 
 // --------------------------------------------------------------------
 
-Reference< XFastContextHandler > TextParagraphContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > TextParagraphContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xRet;
 
@@ -120,7 +120,7 @@ RegularTextRunContext::RegularTextRunContext( ContextHandler& rParent, TextRunPt
 
 // --------------------------------------------------------------------
 
-void RegularTextRunContext::endFastElement( sal_Int32 aElementToken ) throw (SAXException, RuntimeException)
+void RegularTextRunContext::endFastElement( sal_Int32 aElementToken )
 {
 	switch( aElementToken )
 	{
@@ -139,7 +139,7 @@ void RegularTextRunContext::endFastElement( sal_Int32 aElementToken ) throw (SAX
 
 // --------------------------------------------------------------------
 
-void RegularTextRunContext::characters( const OUString& aChars ) throw (SAXException, RuntimeException)
+void RegularTextRunContext::characters( const OUString& aChars )
 {
 	if( mbIsInText )
 	{
@@ -149,7 +149,7 @@ void RegularTextRunContext::characters( const OUString& aChars ) throw (SAXExcep
 
 // --------------------------------------------------------------------
 
-Reference< XFastContextHandler > RegularTextRunContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > RegularTextRunContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs)
 {
 	Reference< XFastContextHandler > xRet( this );
 
@@ -176,13 +176,13 @@ TextBodyContext::TextBodyContext( ContextHandler& rParent, TextBody& rTextBody )
 
 // --------------------------------------------------------------------
 
-void TextBodyContext::endFastElement( sal_Int32 ) throw (SAXException, RuntimeException)
+void TextBodyContext::endFastElement( sal_Int32 )
 {
 }
 
 // --------------------------------------------------------------------
 
-Reference< XFastContextHandler > TextBodyContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > TextBodyContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xRet;
 
@@ -205,4 +205,3 @@ Reference< XFastContextHandler > TextBodyContext::createFastChildContext( sal_In
 // --------------------------------------------------------------------
 
 } }
-

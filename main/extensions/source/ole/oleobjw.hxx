@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -90,28 +90,19 @@ public:
 	~IUnknownWrapper_Impl();
 
     //XInterface
-	Any SAL_CALL queryInterface(const Type& t)
-        throw (RuntimeException);
+	Any SAL_CALL queryInterface(const Type& t);
 
 	// XInvokation
-	virtual Reference< XIntrospectionAccess > SAL_CALL getIntrospection(  )
-        throw(RuntimeException);
+	virtual Reference< XIntrospectionAccess > SAL_CALL getIntrospection(  );
     virtual Any SAL_CALL invoke( const OUString& aFunctionName,
                                  const Sequence< Any >& aParams,
                                  Sequence< sal_Int16 >& aOutParamIndex,
-                                 Sequence< Any >& aOutParam )
-        throw(IllegalArgumentException, CannotConvertException,
-              InvocationTargetException, RuntimeException);
+                                 Sequence< Any >& aOutParam );
     virtual void SAL_CALL setValue( const OUString& aPropertyName,
-                                    const Any& aValue )
-        throw(UnknownPropertyException, CannotConvertException,
-              InvocationTargetException, RuntimeException);
-    virtual Any SAL_CALL getValue( const OUString& aPropertyName )
-        throw(UnknownPropertyException, RuntimeException);
-    virtual sal_Bool SAL_CALL hasMethod( const OUString& aName )
-        throw(RuntimeException);
-    virtual sal_Bool SAL_CALL hasProperty( const OUString& aName )
-        throw(RuntimeException);
+                                    const Any& aValue );
+    virtual Any SAL_CALL getValue( const OUString& aPropertyName );
+    virtual sal_Bool SAL_CALL hasMethod( const OUString& aName );
+    virtual sal_Bool SAL_CALL hasProperty( const OUString& aName );
 
 	// XBridgeSupplier2
 	// This interface is implemented to provide a safe way to obtain the original
@@ -121,22 +112,20 @@ public:
 	virtual Any SAL_CALL createBridge( const Any& modelDepObject,
                                        const Sequence< sal_Int8 >& aProcessId,
                                        sal_Int16 sourceModelType,
-                                       sal_Int16 destModelType )
-        throw(IllegalArgumentException, RuntimeException);
+                                       sal_Int16 destModelType );
 
 	// XInitialization
-    virtual void SAL_CALL initialize( const Sequence< Any >& aArguments )
-        throw(Exception, RuntimeException);
+    virtual void SAL_CALL initialize( const Sequence< Any >& aArguments );
 
     // XDefaultProperty
-    virtual ::rtl::OUString SAL_CALL getDefaultPropertyName(  ) throw (::com::sun::star::uno::RuntimeException) { return m_sDefaultMember; }
+    virtual ::rtl::OUString SAL_CALL getDefaultPropertyName(  ) { return m_sDefaultMember; }
 
     // XDefaultMethod
-    virtual ::rtl::OUString SAL_CALL getDefaultMethodName(  ) throw (::com::sun::star::uno::RuntimeException) { return m_sDefaultMember; }
+    virtual ::rtl::OUString SAL_CALL getDefaultMethodName(  ) { return m_sDefaultMember; }
 
     // XDirectInvocation
-    virtual ::com::sun::star::uno::Any SAL_CALL directInvoke( const ::rtl::OUString& aName, const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aParams ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::script::CannotConvertException, ::com::sun::star::reflection::InvocationTargetException, ::com::sun::star::uno::RuntimeException);
-    virtual ::sal_Bool SAL_CALL hasMember( const ::rtl::OUString& aName ) throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Any SAL_CALL directInvoke( const ::rtl::OUString& aName, const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aParams );
+    virtual ::sal_Bool SAL_CALL hasMember( const ::rtl::OUString& aName );
 
 protected:
 	// ----------------------------------------------------------------------------
@@ -145,7 +134,7 @@ protected:
                                        Sequence<sal_Int16 >& OutParamIndex,
                                        Sequence< Any >& OutParam);
 	// Is used for OleObjectFactory service
-	virtual Any invokeWithDispIdComTlb(const OUString& sFuncName, 
+	virtual Any invokeWithDispIdComTlb(const OUString& sFuncName,
                                        const Sequence< Any >& Params,
                                        Sequence< sal_Int16 >& OutParamIndex,
                                        Sequence< Any >& OutParam);
@@ -189,15 +178,15 @@ protected:
         used. The interface is kept in the instance of this class.
      */
 	ITypeInfo*	getTypeInfo();
-	
+
 	/** Returns the DISPID for a function or property name. If true is returned then
 		id contains a valid DISPID.
 	*/
 	bool getDispid(const OUString& sFuncName, DISPID * id);
-    
+
 	/** Gets the element type in a VARIANT like style. E.g. if desc->lptdesc contains
 		a VT_PTR than it is replaced by VT_BYREF and VT_SAFEARRAY is replaced by VT_ARRAY
-		If the TYPEDESC describes an SAFEARRAY then varType is a combination of VT_ARRAY 
+		If the TYPEDESC describes an SAFEARRAY then varType is a combination of VT_ARRAY
 		and the element type.
 		The argument desc must be obtained from FUNCDESC::lprgelemdescParam[i].tdesc where
 		FUNCDESC was obtained from the ITypeInfo belonging to wrapped IDispatch.
@@ -212,10 +201,10 @@ protected:
 
     /** Returns a FUNCDESC structure which contains type information about the
         current XInvocation::invoke call. The FUNCDESC either describes a method,
-        a property put or a property get operation. 
+        a property put or a property get operation.
         It uses the types  com.sun.star.bridge.oleautomation.PropertyPutArgument
         which can be
-        contained in the sequence of in-arguments of invoke to determine if the call is 
+        contained in the sequence of in-arguments of invoke to determine if the call is
         a property put or property get operation.
         If no adequate FUNCDESC was found, an IllegalArgumentException is thrown.
         Therefore it is safe to assume that the returned FUNCDESC* is not NULL.
@@ -271,4 +260,3 @@ protected:
 
 } // end namespace
 #endif
-

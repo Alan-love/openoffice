@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -93,7 +93,6 @@ PropertyHelper_Spell & SpellChecker::GetPropHelper_Impl()
 
 
 Sequence< Locale > SAL_CALL SpellChecker::getLocales()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -111,7 +110,6 @@ Sequence< Locale > SAL_CALL SpellChecker::getLocales()
 
 
 sal_Bool SAL_CALL SpellChecker::hasLocale(const Locale& rLocale)
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -140,7 +138,7 @@ INT16 SpellChecker::GetSpellFailure( const OUString &rWord, const Locale &rLocal
 	// - words with 'x' or 'X' will have incorrect spelling.
 	// - words with 's' or 'S' as first letter will have the wrong caption.
 	// - all other words will be OK.
-	
+
 	INT16 nRes = -1;
 
 	String aTmp( rWord );
@@ -167,10 +165,9 @@ INT16 SpellChecker::GetSpellFailure( const OUString &rWord, const Locale &rLocal
 }
 
 
-sal_Bool SAL_CALL 
-	SpellChecker::isValid( const OUString& rWord, const Locale& rLocale, 
-			const PropertyValues& rProperties ) 
-		throw(IllegalArgumentException, RuntimeException)
+sal_Bool SAL_CALL
+	SpellChecker::isValid( const OUString& rWord, const Locale& rLocale,
+			const PropertyValues& rProperties )
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -219,7 +216,7 @@ Reference< XSpellAlternatives >
 	// - 'x' or 'X' will be replaced by 'u' or 'U' for the first proposal
 	//   and they will be removed from the word for the second proposal.
 	// - 's' or 'S' as first letter will be changed to the other caption.
-	
+
 	Reference< XSpellAlternatives > xRes;
 
 	String aTmp( rWord );
@@ -230,7 +227,7 @@ Reference< XSpellAlternatives >
 		if (STRING_NOTFOUND != aTmp.SearchAscii( "liss" ))
 		{
 			aTmp.SearchAndReplaceAllAscii( "liss", A2OU("liz") );
-			xRes = new SpellAlternatives( aTmp, nLang, 
+			xRes = new SpellAlternatives( aTmp, nLang,
 						SpellFailure::IS_NEGATIVE_WORD, aTmp );
 		}
 		else if (STRING_NOTFOUND != aTmp.Search( (sal_Unicode) 'x' )  ||
@@ -246,12 +243,12 @@ Reference< XSpellAlternatives >
 			aAlt2.EraseAllChars( (sal_Unicode) 'X' );
 			pStr[0] = aAlt1;
 			pStr[1] = aAlt2;
-			
+
 			SpellAlternatives *pAlt = new SpellAlternatives;
 			pAlt->SetWordLanguage( aTmp, nLang );
 			pAlt->SetFailureType( SpellFailure::SPELLING_ERROR );
 			pAlt->SetAlternatives( aStr );
-			
+
 			xRes = pAlt;
 		}
 		else
@@ -259,7 +256,7 @@ Reference< XSpellAlternatives >
 			sal_Unicode cChar = aTmp.GetChar( 0 );
 			if (cChar == (sal_Unicode) 's'  ||  cChar == (sal_Unicode) 'S')
 			{
-				sal_Unicode cNewChar = cChar == (sal_Unicode) 's' ? 
+				sal_Unicode cNewChar = cChar == (sal_Unicode) 's' ?
 						(sal_Unicode) 'S': (sal_Unicode) 's';
 				aTmp.GetBufferAccess()[0] = cNewChar;
 				xRes = new SpellAlternatives( aTmp, nLang,
@@ -272,10 +269,9 @@ Reference< XSpellAlternatives >
 }
 
 
-Reference< XSpellAlternatives > SAL_CALL 
-	SpellChecker::spell( const OUString& rWord, const Locale& rLocale, 
-			const PropertyValues& rProperties ) 
-		throw(IllegalArgumentException, RuntimeException)
+Reference< XSpellAlternatives > SAL_CALL
+	SpellChecker::spell( const OUString& rWord, const Locale& rLocale,
+			const PropertyValues& rProperties )
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -298,23 +294,21 @@ Reference< XSpellAlternatives > SAL_CALL
 }
 
 
-Reference< XInterface > SAL_CALL SpellChecker_CreateInstance( 
+Reference< XInterface > SAL_CALL SpellChecker_CreateInstance(
 			const Reference< XMultiServiceFactory > & rSMgr )
-		throw(Exception)
 {
 	Reference< XInterface > xService = (cppu::OWeakObject*) new SpellChecker;
 	return xService;
 }
-    
-	
-sal_Bool SAL_CALL 
-	SpellChecker::addLinguServiceEventListener( 
-			const Reference< XLinguServiceEventListener >& rxLstnr ) 
-		throw(RuntimeException)
+
+
+sal_Bool SAL_CALL
+	SpellChecker::addLinguServiceEventListener(
+			const Reference< XLinguServiceEventListener >& rxLstnr )
 {
 	MutexGuard	aGuard( GetLinguMutex() );
-	
-	BOOL bRes = FALSE;   
+
+	BOOL bRes = FALSE;
 	if (!bDisposing && rxLstnr.is())
 	{
 		bRes = GetPropHelper().addLinguServiceEventListener( rxLstnr );
@@ -323,14 +317,13 @@ sal_Bool SAL_CALL
 }
 
 
-sal_Bool SAL_CALL 
-	SpellChecker::removeLinguServiceEventListener( 
-			const Reference< XLinguServiceEventListener >& rxLstnr ) 
-		throw(RuntimeException)
+sal_Bool SAL_CALL
+	SpellChecker::removeLinguServiceEventListener(
+			const Reference< XLinguServiceEventListener >& rxLstnr )
 {
 	MutexGuard	aGuard( GetLinguMutex() );
-	
-	BOOL bRes = FALSE;   
+
+	BOOL bRes = FALSE;
 	if (!bDisposing && rxLstnr.is())
 	{
 		DBG_ASSERT( xPropHelper.is(), "xPropHelper non existent" );
@@ -340,21 +333,19 @@ sal_Bool SAL_CALL
 }
 
 
-OUString SAL_CALL 
-	SpellChecker::getServiceDisplayName( const Locale& rLocale ) 
-		throw(RuntimeException)
+OUString SAL_CALL
+	SpellChecker::getServiceDisplayName( const Locale& rLocale )
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return A2OU( "OpenOffice example spellchecker" );
 }
 
 
-void SAL_CALL 
-	SpellChecker::initialize( const Sequence< Any >& rArguments ) 
-		throw(Exception, RuntimeException)
+void SAL_CALL
+	SpellChecker::initialize( const Sequence< Any >& rArguments )
 {
 	MutexGuard	aGuard( GetLinguMutex() );
-	
+
 	if (!pPropHelper)
 	{
 		INT32 nLen = rArguments.getLength();
@@ -378,12 +369,11 @@ void SAL_CALL
 }
 
 
-void SAL_CALL 
-	SpellChecker::dispose() 
-		throw(RuntimeException)
+void SAL_CALL
+	SpellChecker::dispose()
 {
 	MutexGuard	aGuard( GetLinguMutex() );
-	
+
 	if (!bDisposing)
 	{
 		bDisposing = TRUE;
@@ -393,23 +383,21 @@ void SAL_CALL
 }
 
 
-void SAL_CALL 
-	SpellChecker::addEventListener( const Reference< XEventListener >& rxListener ) 
-		throw(RuntimeException)
+void SAL_CALL
+	SpellChecker::addEventListener( const Reference< XEventListener >& rxListener )
 {
 	MutexGuard	aGuard( GetLinguMutex() );
-	
+
 	if (!bDisposing && rxListener.is())
 		aEvtListeners.addInterface( rxListener );
 }
 
 
-void SAL_CALL 
-	SpellChecker::removeEventListener( const Reference< XEventListener >& rxListener ) 
-		throw(RuntimeException)
+void SAL_CALL
+	SpellChecker::removeEventListener( const Reference< XEventListener >& rxListener )
 {
 	MutexGuard	aGuard( GetLinguMutex() );
-	
+
 	if (!bDisposing && rxListener.is())
 		aEvtListeners.removeInterface( rxListener );
 }
@@ -419,8 +407,7 @@ void SAL_CALL
 // Service specific part
 //
 
-OUString SAL_CALL SpellChecker::getImplementationName() 
-		throw(RuntimeException)
+OUString SAL_CALL SpellChecker::getImplementationName()
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return getImplementationName_Static();
@@ -428,7 +415,6 @@ OUString SAL_CALL SpellChecker::getImplementationName()
 
 
 sal_Bool SAL_CALL SpellChecker::supportsService( const OUString& ServiceName )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -442,14 +428,13 @@ sal_Bool SAL_CALL SpellChecker::supportsService( const OUString& ServiceName )
 
 
 Sequence< OUString > SAL_CALL SpellChecker::getSupportedServiceNames()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 	return getSupportedServiceNames_Static();
 }
 
 
-Sequence< OUString > SpellChecker::getSupportedServiceNames_Static() 
+Sequence< OUString > SpellChecker::getSupportedServiceNames_Static()
 		throw()
 {
 	MutexGuard	aGuard( GetLinguMutex() );
@@ -505,4 +490,3 @@ void * SAL_CALL SpellChecker_getFactory( const sal_Char * pImplName,
 
 
 ///////////////////////////////////////////////////////////////////////////
-

@@ -103,7 +103,7 @@ namespace /* private */
             const sal_Unicode *pStart = rStr.getStr();
             const sal_Unicode *pFrom = pStart;
             const sal_Int32 nLen = rStr.getLength();
-            sal_Int32 nPrev = 0;;
+            sal_Int32 nPrev = 0;
             do
             {
                 aBuffer.append( pFrom, nIndex - nPrev );
@@ -208,7 +208,6 @@ namespace /* private */
 
 
 Reference<XMailMessage> SAL_CALL WinSysMailClient::createMailMessage()
-    throw (RuntimeException)
 {
     return Reference<XMailMessage>( new WinSysMailMsg() );
 }
@@ -304,7 +303,6 @@ void WinSysMailClient::assembleCommandLine(
 void SAL_CALL WinSysMailClient::sendMailMessage(
     const Reference<XMailMessage>& xMailMessage,
     sal_Int32 aFlag)
-    throw (IllegalArgumentException, Exception, RuntimeException)
 {
     validateParameter(xMailMessage, aFlag);
 

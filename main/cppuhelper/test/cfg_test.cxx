@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -85,17 +85,17 @@ class ServiceImpl0
     : public WeakImplHelper2< lang::XServiceInfo, lang::XInitialization >
 {
 	Reference< XComponentContext > m_xContext;
-    
+
 public:
     ServiceImpl0( Reference< XComponentContext > const & xContext ) SAL_THROW( () );
 
     // XInitialization
-    virtual void SAL_CALL initialize( const Sequence< Any >& rArgs ) throw (Exception, RuntimeException);
-    
+    virtual void SAL_CALL initialize( const Sequence< Any >& rArgs );
+
 	// XServiceInfo
-	virtual Sequence< OUString > SAL_CALL getSupportedServiceNames() throw (RuntimeException);
-	virtual OUString SAL_CALL getImplementationName() throw (RuntimeException);
-	virtual sal_Bool SAL_CALL supportsService( const OUString & rServiceName ) throw (RuntimeException);
+	virtual Sequence< OUString > SAL_CALL getSupportedServiceNames();
+	virtual OUString SAL_CALL getImplementationName();
+	virtual sal_Bool SAL_CALL supportsService( const OUString & rServiceName );
 };
 //__________________________________________________________________________________________________
 ServiceImpl0::ServiceImpl0( Reference< XComponentContext > const & xContext ) SAL_THROW( () )
@@ -103,7 +103,7 @@ ServiceImpl0::ServiceImpl0( Reference< XComponentContext > const & xContext ) SA
 {
     sal_Int32 n;
     OUString val;
-    
+
     // service properties
     OSL_VERIFY( m_xContext->getValueByName(
         OUSTR("/services/com.sun.star.bootstrap.TestComponent0/context-properties/serviceprop0") ) >>= n );
@@ -122,7 +122,6 @@ ServiceImpl0::ServiceImpl0( Reference< XComponentContext > const & xContext ) SA
 // XInitialization
 //__________________________________________________________________________________________________
 void ServiceImpl0::initialize( const Sequence< Any >& rArgs )
-    throw (Exception, RuntimeException)
 {
     // check args
     OUString val;
@@ -137,19 +136,16 @@ void ServiceImpl0::initialize( const Sequence< Any >& rArgs )
 // XServiceInfo
 //__________________________________________________________________________________________________
 OUString ServiceImpl0::getImplementationName()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return impl0_getImplementationName();
 }
 //__________________________________________________________________________________________________
 Sequence< OUString > ServiceImpl0::getSupportedServiceNames()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return impl0_getSupportedServiceNames();
 }
 //__________________________________________________________________________________________________
 sal_Bool ServiceImpl0::supportsService( const OUString & rServiceName )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	const Sequence< OUString > & rSNL = getSupportedServiceNames();
 	const OUString * pArray = rSNL.getConstArray();
@@ -168,20 +164,18 @@ public:
     inline ServiceImpl1( Reference< XComponentContext > const & xContext ) SAL_THROW( () )
         : ServiceImpl0( xContext )
         {}
-    
+
     // XServiceInfo
-	virtual Sequence< OUString > SAL_CALL getSupportedServiceNames() throw (RuntimeException);
-	virtual OUString SAL_CALL getImplementationName() throw (RuntimeException);
+	virtual Sequence< OUString > SAL_CALL getSupportedServiceNames();
+	virtual OUString SAL_CALL getImplementationName();
 };
 //__________________________________________________________________________________________________
 OUString ServiceImpl1::getImplementationName()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return impl1_getImplementationName();
 }
 //__________________________________________________________________________________________________
 Sequence< OUString > ServiceImpl1::getSupportedServiceNames()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return impl1_getSupportedServiceNames();
 }
@@ -189,14 +183,12 @@ Sequence< OUString > ServiceImpl1::getSupportedServiceNames()
 //==================================================================================================
 static Reference< XInterface > SAL_CALL ServiceImpl0_create(
     Reference< XComponentContext > const & xContext )
-	SAL_THROW( (Exception) )
 {
 	return (OWeakObject *)new ServiceImpl0( xContext );
 }
 //==================================================================================================
 static Reference< XInterface > SAL_CALL ServiceImpl1_create(
     Reference< XComponentContext > const & xContext )
-	SAL_THROW( (Exception) )
 {
 	return (OWeakObject *)new ServiceImpl1( xContext );
 }
@@ -254,19 +246,19 @@ SAL_IMPLEMENT_MAIN()
     {
         Reference< XComponentContext > xContext( defaultBootstrap_InitialComponentContext() );
         Reference< lang::XMultiComponentFactory > xMgr( xContext->getServiceManager() );
-        
+
         // show what is in context
         xContext->getValueByName( OUSTR("dump_maps") );
-        
+
         sal_Int32 n;
         OSL_VERIFY( xContext->getValueByName( OUSTR("/global-context-properties/TestValue") ) >>= n );
         ::fprintf( stderr, "> n=%d\n", n );
-        
+
         Reference< XInterface > x;
         OSL_VERIFY( !(xContext->getValueByName( OUSTR("/singletons/my_converter") ) >>= x) );
         OSL_VERIFY( xContext->getValueByName( OUSTR("/singletons/com.sun.star.script.theConverter") ) >>= x );
         OSL_VERIFY( xContext->getValueByName( OUSTR("/singletons/com.sun.star.bootstrap.theTestComponent0") ) >>= x );
-        
+
         ::fprintf( stderr, "> registering service...\n", n );
 #if defined(SAL_W32) || defined(SAL_OS2)
         OUString libName( OUSTR("cfg_test.dll") );
@@ -279,10 +271,10 @@ SAL_IMPLEMENT_MAIN()
 		xImplReg->registerImplementation(
             OUSTR("com.sun.star.loader.SharedLibrary"), libName,
             Reference< registry::XSimpleRegistry >() );
-		
+
         OSL_VERIFY( (x = xMgr->createInstanceWithContext( OUSTR("com.sun.star.bootstrap.TestComponent0"), xContext )).is() );
         OSL_VERIFY( (x = xMgr->createInstanceWithContext( OUSTR("com.sun.star.bootstrap.TestComponent1"), xContext )).is() );
-        
+
         Reference< lang::XComponent > xComp( xContext, UNO_QUERY );
         if (xComp.is())
         {

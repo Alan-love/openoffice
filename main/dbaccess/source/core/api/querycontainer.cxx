@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -124,7 +124,7 @@ OQueryContainer::OQueryContainer(
 	{
 	    m_pCommandsListener = new OContainerListener( *this, m_aMutex );
 	    m_pCommandsListener->acquire();
-    	
+
 		Reference< XContainer >	xContainer( m_xCommandDefinitions, UNO_QUERY_THROW );
 		xContainer->addContainerListener( m_pCommandsListener );
 
@@ -191,14 +191,14 @@ IMPLEMENT_SERVICE_INFO2(OQueryContainer, "com.sun.star.sdb.dbaccess.OQueryContai
 
 // XDataDescriptorFactory
 //--------------------------------------------------------------------------
-Reference< XPropertySet > SAL_CALL OQueryContainer::createDataDescriptor(  ) throw(RuntimeException)
+Reference< XPropertySet > SAL_CALL OQueryContainer::createDataDescriptor(  )
 {
 	return new OQueryDescriptor();
 }
 
 // XAppend
 //------------------------------------------------------------------------------
-void SAL_CALL OQueryContainer::appendByDescriptor( const Reference< XPropertySet >& _rxDesc ) throw(SQLException, ElementExistException, RuntimeException)
+void SAL_CALL OQueryContainer::appendByDescriptor( const Reference< XPropertySet >& _rxDesc )
 {
 	ResettableMutexGuard aGuard(m_aMutex);
     if ( !m_xCommandDefinitions.is() )
@@ -239,7 +239,7 @@ void SAL_CALL OQueryContainer::appendByDescriptor( const Reference< XPropertySet
 
 // XDrop
 //------------------------------------------------------------------------------
-void SAL_CALL OQueryContainer::dropByName( const ::rtl::OUString& _rName ) throw(SQLException, NoSuchElementException, RuntimeException)
+void SAL_CALL OQueryContainer::dropByName( const ::rtl::OUString& _rName )
 {
 	MutexGuard aGuard(m_aMutex);
 	if ( !checkExistence(_rName) )
@@ -254,7 +254,7 @@ void SAL_CALL OQueryContainer::dropByName( const ::rtl::OUString& _rName ) throw
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL OQueryContainer::dropByIndex( sal_Int32 _nIndex ) throw(SQLException, IndexOutOfBoundsException, RuntimeException)
+void SAL_CALL OQueryContainer::dropByIndex( sal_Int32 _nIndex )
 {
 	MutexGuard aGuard(m_aMutex);
 	if ((_nIndex<0) || (_nIndex>getCount()))
@@ -271,7 +271,7 @@ void SAL_CALL OQueryContainer::dropByIndex( sal_Int32 _nIndex ) throw(SQLExcepti
 	dropByName(sName);
 }
 //------------------------------------------------------------------------------
-void SAL_CALL OQueryContainer::elementInserted( const ::com::sun::star::container::ContainerEvent& _rEvent ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL OQueryContainer::elementInserted( const ::com::sun::star::container::ContainerEvent& _rEvent )
 {
 	Reference< XContent > xNewElement;
 	::rtl::OUString sElementName;
@@ -294,7 +294,7 @@ void SAL_CALL OQueryContainer::elementInserted( const ::com::sun::star::containe
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL OQueryContainer::elementRemoved( const ::com::sun::star::container::ContainerEvent& _rEvent ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL OQueryContainer::elementRemoved( const ::com::sun::star::container::ContainerEvent& _rEvent )
 {
 	::rtl::OUString sAccessor;
 	_rEvent.Accessor >>= sAccessor;
@@ -308,7 +308,7 @@ void SAL_CALL OQueryContainer::elementRemoved( const ::com::sun::star::container
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL OQueryContainer::elementReplaced( const ::com::sun::star::container::ContainerEvent& _rEvent ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL OQueryContainer::elementReplaced( const ::com::sun::star::container::ContainerEvent& _rEvent )
 {
 	Reference< XPropertySet > xReplacedElement;
 	Reference< XContent > xNewElement;
@@ -321,7 +321,7 @@ void SAL_CALL OQueryContainer::elementReplaced( const ::com::sun::star::containe
 		DBG_ASSERT(m_aDocumentMap.find(sAccessor) != m_aDocumentMap.end(), "OQueryContainer::elementReplaced         : oops .... we're inconsistent with our master container !");
 		if (!sAccessor.getLength() || !hasByName(sAccessor))
 			return;
-		
+
 		xNewElement = implCreateWrapper(sAccessor);
 	}
 
@@ -329,7 +329,7 @@ void SAL_CALL OQueryContainer::elementReplaced( const ::com::sun::star::containe
 }
 
 //------------------------------------------------------------------------------
-Reference< XVeto > SAL_CALL OQueryContainer::approveInsertElement( const ContainerEvent& Event ) throw (WrappedTargetException, RuntimeException)
+Reference< XVeto > SAL_CALL OQueryContainer::approveInsertElement( const ContainerEvent& Event )
 {
     ::rtl::OUString sName;
     OSL_VERIFY( Event.Accessor >>= sName );
@@ -348,26 +348,26 @@ Reference< XVeto > SAL_CALL OQueryContainer::approveInsertElement( const Contain
 }
 
 //------------------------------------------------------------------------------
-Reference< XVeto > SAL_CALL OQueryContainer::approveReplaceElement( const ContainerEvent& /*Event*/ ) throw (WrappedTargetException, RuntimeException)
+Reference< XVeto > SAL_CALL OQueryContainer::approveReplaceElement( const ContainerEvent& /*Event*/ )
 {
     return NULL;
 }
 
 //------------------------------------------------------------------------------
-Reference< XVeto > SAL_CALL OQueryContainer::approveRemoveElement( const ContainerEvent& /*Event*/ ) throw (WrappedTargetException, RuntimeException)
+Reference< XVeto > SAL_CALL OQueryContainer::approveRemoveElement( const ContainerEvent& /*Event*/ )
 {
     return NULL;
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL OQueryContainer::disposing( const ::com::sun::star::lang::EventObject& _rSource ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL OQueryContainer::disposing( const ::com::sun::star::lang::EventObject& _rSource )
 {
 	if (_rSource.Source.get() == Reference< XInterface >(m_xCommandDefinitions, UNO_QUERY).get())
 	{	// our "master container" (with the command definitions) is being disposed
 		DBG_ERROR("OQueryContainer::disposing : nobody should dispose the CommandDefinition container before disposing my connection !");
 		dispose();
 	}
-	else 
+	else
 	{
 		Reference< XContent > xSource(_rSource.Source, UNO_QUERY);
 		// it's one of our documents ....
@@ -446,19 +446,19 @@ sal_Bool OQueryContainer::checkExistence(const ::rtl::OUString& _rName)
 	return bRet;
 }
 //--------------------------------------------------------------------------
-sal_Bool SAL_CALL OQueryContainer::hasElements( ) throw (RuntimeException)
+sal_Bool SAL_CALL OQueryContainer::hasElements( )
 {
 	MutexGuard aGuard(m_aMutex);
 	return m_xCommandDefinitions->hasElements();
 }
 // -----------------------------------------------------------------------------
-sal_Int32 SAL_CALL OQueryContainer::getCount(  ) throw(RuntimeException)
+sal_Int32 SAL_CALL OQueryContainer::getCount(  )
 {
 	MutexGuard aGuard(m_aMutex);
 	return Reference<XIndexAccess>(m_xCommandDefinitions,UNO_QUERY)->getCount();
 }
 // -----------------------------------------------------------------------------
-Sequence< ::rtl::OUString > SAL_CALL OQueryContainer::getElementNames(  ) throw(RuntimeException)
+Sequence< ::rtl::OUString > SAL_CALL OQueryContainer::getElementNames(  )
 {
 	MutexGuard aGuard(m_aMutex);
 
@@ -468,4 +468,3 @@ Sequence< ::rtl::OUString > SAL_CALL OQueryContainer::getElementNames(  ) throw(
 //........................................................................
 }	// namespace dbaccess
 //........................................................................
-

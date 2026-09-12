@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -97,8 +97,7 @@ class SfxFrameStatusListener : public svt::FrameStatusListener
         virtual ~SfxFrameStatusListener();
 
         // XStatusListener
-    	virtual void SAL_CALL statusChanged( const ::com::sun::star::frame::FeatureStateEvent& Event )
-            throw ( ::com::sun::star::uno::RuntimeException );
+    	virtual void SAL_CALL statusChanged( const ::com::sun::star::frame::FeatureStateEvent& Event );
 
     private:
         SfxStatusListenerInterface* m_pCallee;
@@ -234,48 +233,42 @@ protected:
     void                       SetPopupWindow( SfxPopupWindow* pWindow );
 
     // XInterface
-    virtual ::com::sun::star::uno::Any SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType ) throw(::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Any SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType );
 	virtual void			   SAL_CALL acquire() throw();
 	virtual void			   SAL_CALL release() throw();
 
     // XEventListener
     using ::cppu::OPropertySetHelper::disposing;
-    virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& aEvent ) throw( ::com::sun::star::uno::RuntimeException );
+    virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& aEvent );
 
     // XComponent
-    virtual void SAL_CALL dispose() throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL dispose();
 
     // new controller API
     // XStatusListener
-	virtual void SAL_CALL statusChanged( const ::com::sun::star::frame::FeatureStateEvent& Event )
-        throw ( ::com::sun::star::uno::RuntimeException );
+	virtual void SAL_CALL statusChanged( const ::com::sun::star::frame::FeatureStateEvent& Event );
 
     // XToolbarController
-    virtual void SAL_CALL execute( sal_Int16 KeyModifier )
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL click()
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL doubleClick()
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow > SAL_CALL createPopupWindow()
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow > SAL_CALL createItemWindow( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow >& rParent )
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL execute( sal_Int16 KeyModifier );
+    virtual void SAL_CALL click();
+    virtual void SAL_CALL doubleClick();
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow > SAL_CALL createPopupWindow();
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow > SAL_CALL createItemWindow( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow >& rParent );
 
     // XSubToolbarController
-    virtual ::sal_Bool SAL_CALL opensSubToolbar(  ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::rtl::OUString SAL_CALL getSubToolbarName(  ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL functionSelected( const ::rtl::OUString& aCommand ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL updateImage(  ) throw (::com::sun::star::uno::RuntimeException);
+    virtual ::sal_Bool SAL_CALL opensSubToolbar(  );
+    virtual ::rtl::OUString SAL_CALL getSubToolbarName(  );
+    virtual void SAL_CALL functionSelected( const ::rtl::OUString& aCommand );
+    virtual void SAL_CALL updateImage(  );
 
     //  XDockableWindowListener
-    virtual void SAL_CALL startDocking( const ::com::sun::star::awt::DockingEvent& e ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::awt::DockingData SAL_CALL docking( const ::com::sun::star::awt::DockingEvent& e ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL endDocking( const ::com::sun::star::awt::EndDockingEvent& e ) throw (::com::sun::star::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL prepareToggleFloatingMode( const ::com::sun::star::lang::EventObject& e ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL toggleFloatingMode( const ::com::sun::star::lang::EventObject& e ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL closed( const ::com::sun::star::lang::EventObject& e ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL endPopupMode( const ::com::sun::star::awt::EndPopupModeEvent& e ) throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL startDocking( const ::com::sun::star::awt::DockingEvent& e );
+    virtual ::com::sun::star::awt::DockingData SAL_CALL docking( const ::com::sun::star::awt::DockingEvent& e );
+    virtual void SAL_CALL endDocking( const ::com::sun::star::awt::EndDockingEvent& e );
+    virtual sal_Bool SAL_CALL prepareToggleFloatingMode( const ::com::sun::star::lang::EventObject& e );
+    virtual void SAL_CALL toggleFloatingMode( const ::com::sun::star::lang::EventObject& e );
+    virtual void SAL_CALL closed( const ::com::sun::star::lang::EventObject& e );
+    virtual void SAL_CALL endPopupMode( const ::com::sun::star::awt::EndPopupModeEvent& e );
 
     // helper methods
     void    createAndPositionSubToolBar( const ::rtl::OUString& rSubToolBarResName );

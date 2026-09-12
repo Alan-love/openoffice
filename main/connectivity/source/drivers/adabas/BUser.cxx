@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_adabas.hxx"
 #include "adabas/BUser.hxx"
 #include "adabas/BGroups.hxx"
 #include <com/sun/star/sdbc/XRow.hpp>
@@ -109,7 +109,7 @@ cppu::IPropertyArrayHelper & OUserExtend::getInfoHelper()
 }
 typedef connectivity::sdbcx::OUser_BASE OUser_BASE_RBHELPER;
 // -----------------------------------------------------------------------------
-sal_Int32 SAL_CALL OAdabasUser::getPrivileges( const ::rtl::OUString& objName, sal_Int32 objType ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL OAdabasUser::getPrivileges( const ::rtl::OUString& objName, sal_Int32 objType )
 {
     if ( objType != PrivilegeObject::TABLE )
         return 0;
@@ -122,7 +122,7 @@ sal_Int32 SAL_CALL OAdabasUser::getPrivileges( const ::rtl::OUString& objName, s
 	return nRights;
 }
 // -----------------------------------------------------------------------------
-void OAdabasUser::getAnyTablePrivileges(const ::rtl::OUString& objName, sal_Int32& nRights,sal_Int32& nRightsWithGrant) throw(SQLException, RuntimeException)
+void OAdabasUser::getAnyTablePrivileges(const ::rtl::OUString& objName, sal_Int32& nRights,sal_Int32& nRightsWithGrant)
 {
 	nRightsWithGrant = nRights = 0;
 	// first we need to create the sql stmt to select the privs
@@ -175,7 +175,7 @@ void OAdabasUser::getAnyTablePrivileges(const ::rtl::OUString& objName, sal_Int3
 	}
 }
 // -------------------------------------------------------------------------
-sal_Int32 SAL_CALL OAdabasUser::getGrantablePrivileges( const ::rtl::OUString& objName, sal_Int32 objType ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL OAdabasUser::getGrantablePrivileges( const ::rtl::OUString& objName, sal_Int32 objType )
 {
     if ( objType != PrivilegeObject::TABLE )
         return 0;
@@ -188,7 +188,7 @@ sal_Int32 SAL_CALL OAdabasUser::getGrantablePrivileges( const ::rtl::OUString& o
 	return nRightsWithGrant;
 }
 // -------------------------------------------------------------------------
-void SAL_CALL OAdabasUser::grantPrivileges( const ::rtl::OUString& objName, sal_Int32 objType, sal_Int32 objPrivileges ) throw(SQLException, RuntimeException)
+void SAL_CALL OAdabasUser::grantPrivileges( const ::rtl::OUString& objName, sal_Int32 objType, sal_Int32 objPrivileges )
 {
     if ( objType != PrivilegeObject::TABLE )
         m_pConnection->throwGenericSQLException(STR_PRIVILEGE_NOT_GRANTED,*this);
@@ -213,7 +213,7 @@ void SAL_CALL OAdabasUser::grantPrivileges( const ::rtl::OUString& objName, sal_
 	}
 }
 // -------------------------------------------------------------------------
-void SAL_CALL OAdabasUser::revokePrivileges( const ::rtl::OUString& objName, sal_Int32 objType, sal_Int32 objPrivileges ) throw(SQLException, RuntimeException)
+void SAL_CALL OAdabasUser::revokePrivileges( const ::rtl::OUString& objName, sal_Int32 objType, sal_Int32 objPrivileges )
 {
     if ( objType != PrivilegeObject::TABLE )
         m_pConnection->throwGenericSQLException(STR_PRIVILEGE_NOT_REVOKED,*this);
@@ -240,7 +240,7 @@ void SAL_CALL OAdabasUser::revokePrivileges( const ::rtl::OUString& objName, sal
 }
 // -----------------------------------------------------------------------------
 // XUser
-void SAL_CALL OAdabasUser::changePassword( const ::rtl::OUString& objPassword, const ::rtl::OUString& newPassword ) throw(SQLException, RuntimeException)
+void SAL_CALL OAdabasUser::changePassword( const ::rtl::OUString& objPassword, const ::rtl::OUString& newPassword )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	checkDisposed(OUser_BASE_RBHELPER::rBHelper.bDisposed);
@@ -325,4 +325,3 @@ void SAL_CALL OAdabasUser::changePassword( const ::rtl::OUString& objPassword, c
 	return sPrivs;
 }
 // -----------------------------------------------------------------------------
-

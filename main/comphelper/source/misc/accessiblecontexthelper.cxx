@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -142,7 +142,7 @@ namespace comphelper
 	}
 
 	//---------------------------------------------------------------------
-	void SAL_CALL OAccessibleContextHelper::addEventListener( const Reference< XAccessibleEventListener >& _rxListener ) throw (RuntimeException)
+	void SAL_CALL OAccessibleContextHelper::addEventListener( const Reference< XAccessibleEventListener >& _rxListener )
 	{
 		OMutexGuard aGuard( getExternalLock() );
 			// don't use the OContextEntryGuard - it will throw an exception if we're not alive
@@ -165,7 +165,7 @@ namespace comphelper
 	}
 
 	//---------------------------------------------------------------------
-	void SAL_CALL OAccessibleContextHelper::removeEventListener( const Reference< XAccessibleEventListener >& _rxListener ) throw (RuntimeException)
+	void SAL_CALL OAccessibleContextHelper::removeEventListener( const Reference< XAccessibleEventListener >& _rxListener )
 	{
 		OMutexGuard aGuard( getExternalLock() );
 			// don't use the OContextEntryGuard - it will throw an exception if we're not alive
@@ -245,7 +245,7 @@ namespace comphelper
 	}
 
 	//---------------------------------------------------------------------
-	void OAccessibleContextHelper::ensureAlive() const SAL_THROW( ( DisposedException ) )
+	void OAccessibleContextHelper::ensureAlive() const
 	{
 		if( !isAlive() )
 			throw DisposedException();
@@ -275,7 +275,7 @@ namespace comphelper
 	}
 
 	//---------------------------------------------------------------------
-	sal_Int32 SAL_CALL OAccessibleContextHelper::getAccessibleIndexInParent(  ) throw (RuntimeException)
+	sal_Int32 SAL_CALL OAccessibleContextHelper::getAccessibleIndexInParent(  )
 	{
 		OExternalLockGuard aGuard( this );
 
@@ -284,7 +284,7 @@ namespace comphelper
 
 		try
 		{
-			
+
 			Reference< XAccessibleContext > xParentContext( implGetParentContext() );
 
 			//  iterate over parent's children and search for this object
@@ -321,7 +321,7 @@ namespace comphelper
 	}
 
 	//---------------------------------------------------------------------
-	Locale SAL_CALL OAccessibleContextHelper::getLocale(  ) throw (IllegalAccessibleComponentStateException, RuntimeException)
+	Locale SAL_CALL OAccessibleContextHelper::getLocale(  )
 	{
 		// simply ask the parent
 		Reference< XAccessible > xParent = getAccessibleParent();
@@ -336,7 +336,7 @@ namespace comphelper
 	}
 
 	//---------------------------------------------------------------------
-	Reference< XAccessibleContext > OAccessibleContextHelper::implGetParentContext() SAL_THROW( ( RuntimeException ) )
+	Reference< XAccessibleContext > OAccessibleContextHelper::implGetParentContext()
 	{
 		Reference< XAccessible > xParent = getAccessibleParent();
 		Reference< XAccessibleContext > xParentContext;
@@ -348,5 +348,3 @@ namespace comphelper
 //.........................................................................
 }	// namespace comphelper
 //.........................................................................
-
-

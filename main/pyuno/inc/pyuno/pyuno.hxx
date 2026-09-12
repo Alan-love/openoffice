@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #ifndef _PYUNO_PYUNO_HXX_
@@ -74,10 +74,10 @@
     pyuno module.
 
     preconditions: python has been initialized before and
-                   the global interpreter lock is held 
+                   the global interpreter lock is held
 */
 #if PY_MAJOR_VERSION >= 3
-PY_DLLEXPORT PyMODINIT_FUNC PyInit_pyuno();
+PyMODINIT_FUNC PyInit_pyuno();
 #else
 extern "C" PY_DLLEXPORT void SAL_CALL initpyuno();
 #endif
@@ -94,8 +94,8 @@ namespace pyuno
     PyRef( pointer, SAL_NO_ACQUIRE) ctor.
 
     precondition: python has been initialized before and
-    the global interpreter lock is held 
- 
+    the global interpreter lock is held
+
 */
 class PyRef
 {
@@ -103,11 +103,11 @@ class PyRef
 public:
     PyRef () : m(0) {}
     PyRef( PyObject * p ) : m( p ) { Py_XINCREF( m ); }
-    
+
     PyRef( PyObject * p, __sal_NoAcquire ) : m( p ) {}
 
     PyRef( const PyRef &r ) : m( r.get() ) { Py_XINCREF( m ); }
-    
+
     ~PyRef() { Py_XDECREF( m ); }
 
     PyObject *get() const { return m; }
@@ -149,7 +149,7 @@ public:
     /** returns 1 when the reference points to a python object python object,
         otherwise 0.
     */
-    sal_Bool is() const 
+    sal_Bool is() const
     {
         return m != 0;
     }
@@ -179,7 +179,7 @@ class PY_DLLEXPORT Runtime
 public:
     ~Runtime( );
 
-    /** 
+    /**
         preconditions: python has been initialized before,
         the global interpreter lock is held and pyuno
         has been initialized for the currently used interpreter.
@@ -190,11 +190,11 @@ public:
         @throw RuntimeException in case the runtime has not been
                initialized before
      */
-    Runtime() throw( com::sun::star::uno::RuntimeException );
-    
+    Runtime();
+
     Runtime( const Runtime & );
     Runtime & operator = ( const Runtime & );
-    
+
     /** Initializes the python-UNO bridge. May be called only once per python interpreter.
 
         @param ctx the component context is used to instantiate bridge services needed
@@ -208,35 +208,31 @@ public:
                                 has not been initialized.
     */
     static void SAL_CALL initialize(
-        const com::sun::star::uno::Reference< com::sun::star::uno::XComponentContext > & ctx )
-        throw ( com::sun::star::uno::RuntimeException );
+        const com::sun::star::uno::Reference< com::sun::star::uno::XComponentContext > & ctx );
 
 
     /** Checks, whether the uno runtime is already initialized in the current python interpreter.
      */
-    static bool SAL_CALL isInitialized() throw (com::sun::star::uno::RuntimeException);
+    static bool SAL_CALL isInitialized();
 
 
     /** disposes the UNO bridge in this interpreter. All existing stubs/proxies
         become non-functional, using these proxies/stubs leads to runtime errors.
-        
+
         preconditions: python has been initialized before and
         the global interpreter lock is held and pyuno was
         initialized before for the currently in use interpreter.
     */
-    static void SAL_CALL finalize() throw(com::sun::star::uno::RuntimeException );
+    static void SAL_CALL finalize();
 
     /** converts something contained in an UNO Any to a Python object
-    
+
         preconditions: python has been initialized before,
         the global interpreter lock is held and pyuno::Runtime
         has been initialized.
     */
-    PyRef any2PyObject (const com::sun::star::uno::Any &source ) const
-        throw ( com::sun::star::script::CannotConvertException,
-                com::sun::star::lang::IllegalArgumentException,
-                com::sun::star::uno::RuntimeException );
-    
+    PyRef any2PyObject (const com::sun::star::uno::Any &source ) const;
+
     /** converts a Python object to a UNO any
 
         preconditions: python has been initialized before,
@@ -244,8 +240,7 @@ public:
         has been initialized
     */
     com::sun::star::uno::Any pyObject2Any (
-        const PyRef & source , enum ConversionMode mode = REJECT_UNO_ANY ) const
-        throw ( com::sun::star::uno::RuntimeException);
+        const PyRef & source , enum ConversionMode mode = REJECT_UNO_ANY ) const;
 
     /** extracts a proper uno exception from a given python exception
      */
@@ -261,7 +256,7 @@ public:
 /** helper class for attaching the current thread to the python runtime.
 
     Attaching is done creating a new threadstate for the given interpreter
-    and acquiring the global interpreter lock. 
+    and acquiring the global interpreter lock.
 
     Usage:
 
@@ -287,7 +282,7 @@ class PY_DLLEXPORT PyThreadAttach
 {
     PyThreadState *tstate;
     PyThreadAttach ( const PyThreadAttach & ); // not implemented
-    PyThreadAttach & operator = ( const PyThreadAttach & ); 
+    PyThreadAttach & operator = ( const PyThreadAttach & );
 public:
 
     /** Creates a new python threadstate and acquires the global interpreter lock.
@@ -297,10 +292,10 @@ public:
         @raises com::sun::star::uno::RuntimeException
              in case no pythread state could be created
      */
-    PyThreadAttach( PyInterpreterState *interp) throw ( com::sun::star::uno::RuntimeException );
-    
+    PyThreadAttach( PyInterpreterState *interp);
 
-    /** Releases the global interpreter lock and destroys the thread state. 
+
+    /** Releases the global interpreter lock and destroys the thread state.
      */
     ~PyThreadAttach();
 };
@@ -315,14 +310,14 @@ class PY_DLLEXPORT PyThreadDetach
     PyThreadState *tstate;
     PyThreadDetach ( const PyThreadDetach & ); // not implemented
     PyThreadDetach & operator = ( const PyThreadDetach & ); // not implemented
-    
+
 public:
     /** Releases the global interpreter lock.
 
        precondition: The current thread MUST hold the global interpreter lock.
        postcondition: The current thread does not hold the global interpreter lock anymore.
     */
-    PyThreadDetach() throw ( com::sun::star::uno::RuntimeException );
+    PyThreadDetach();
     /** Acquires the global interpreter lock again
     */
     ~PyThreadDetach();

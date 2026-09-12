@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -76,13 +76,12 @@ TVFactory::release(
 Any SAL_CALL
 TVFactory::queryInterface(
 	const Type& rType )
-	throw( RuntimeException )
 {
 	Any aRet = cppu::queryInterface( rType,
 									 SAL_STATIC_CAST( XServiceInfo*,  this ),
 									 SAL_STATIC_CAST( XTypeProvider*, this ),
 									 SAL_STATIC_CAST( XMultiServiceFactory*, this ) );
-	
+
 	return aRet.hasValue() ? aRet : OWeakObject::queryInterface( rType );
 }
 
@@ -104,7 +103,6 @@ XTYPEPROVIDER_IMPL_3( TVFactory,
 
 rtl::OUString SAL_CALL
 TVFactory::getImplementationName()
-	throw( RuntimeException )
 {
 	return TVFactory::getImplementationName_static();
 }
@@ -113,7 +111,6 @@ TVFactory::getImplementationName()
 sal_Bool SAL_CALL
 TVFactory::supportsService(
 	const rtl::OUString& ServiceName )
-	throw( RuntimeException )
 {
 	return
 		ServiceName.compareToAscii( "com.sun.star.help.TreeView" ) == 0 ||
@@ -123,20 +120,17 @@ TVFactory::supportsService(
 
 Sequence< rtl::OUString > SAL_CALL
 TVFactory::getSupportedServiceNames( void )
-	throw( RuntimeException )
 {
 	return TVFactory::getSupportedServiceNames_static();
 }
 
 
 
-// XMultiServiceFactory 
+// XMultiServiceFactory
 
 Reference< XInterface > SAL_CALL
 TVFactory::createInstance(
 	const rtl::OUString& aServiceSpecifier )
-	throw( Exception,
-		   RuntimeException )
 {
 	Any aAny;
 	aAny <<= rtl::OUString();
@@ -146,7 +140,7 @@ TVFactory::createInstance(
 		-1,
 		aAny,
 		PropertyState_DIRECT_VALUE );
-	
+
 	return createInstanceWithArguments( aServiceSpecifier,
 										seq );
 }
@@ -156,8 +150,6 @@ Reference< XInterface > SAL_CALL
 TVFactory::createInstanceWithArguments(
 	const rtl::OUString& ServiceSpecifier,
 	const Sequence< Any >& Arguments )
-	throw( Exception,
-		   RuntimeException )
 {
 	(void)ServiceSpecifier;
 
@@ -166,25 +158,25 @@ TVFactory::createInstanceWithArguments(
 		cppu::OWeakObject* p = new TVChildTarget( m_xMSF );
 		m_xHDS = Reference< XInterface >( p );
 	}
-	
+
 	Reference< XInterface > ret = m_xHDS;
-	
+
 	rtl::OUString hierview;
 	for( int i = 0; i < Arguments.getLength(); ++i )
 	{
 		PropertyValue pV;
 		if( ! ( Arguments[i] >>= pV ) )
 			continue;
-		
+
 		if( pV.Name.compareToAscii( "nodepath" ) )
 			continue;
-		
+
 		if( ! ( pV.Value >>= hierview ) )
 			continue;
-		
+
 		break;
 	}
-	
+
 	if( hierview.getLength() )
 	{
 		Reference< XHierarchicalNameAccess > xhieraccess( m_xHDS,UNO_QUERY );
@@ -200,7 +192,6 @@ TVFactory::createInstanceWithArguments(
 
 Sequence< rtl::OUString > SAL_CALL
 TVFactory::getAvailableServiceNames( )
-	throw( RuntimeException )
 {
 	Sequence< rtl::OUString > seq( 1 );
 	seq[0] = rtl::OUString::createFromAscii( "com.sun.star.ucb.HierarchyDataReadAccess" );
@@ -267,28 +258,28 @@ extern "C" SAL_DLLPUBLIC_EXPORT void * SAL_CALL component_getFactory(
 	(void)pRegistryKey;
 
 	void * pRet = 0;
-	
+
 	Reference< XMultiServiceFactory > xSMgr(
 		reinterpret_cast< XMultiServiceFactory * >( pServiceManager ) );
-	
+
 	Reference< XSingleServiceFactory > xFactory;
-	
+
 	//////////////////////////////////////////////////////////////////////
 	// File Content Provider.
 	//////////////////////////////////////////////////////////////////////
-	
+
 	if ( TVFactory::getImplementationName_static().compareToAscii( pImplName ) == 0 )
 	{
 		xFactory = TVFactory::createServiceFactory( xSMgr );
 	}
 
 	//////////////////////////////////////////////////////////////////////
-	
+
 	if ( xFactory.is() )
 	{
 		xFactory->acquire();
 		pRet = xFactory.get();
 	}
-	
+
 	return pRet;
 }

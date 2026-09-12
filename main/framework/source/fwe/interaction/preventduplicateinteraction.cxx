@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -106,7 +106,6 @@ void PreventDuplicateInteraction::useDefaultUUIHandler()
 
 //_________________________________________________________________________________________________________________
 css::uno::Any SAL_CALL PreventDuplicateInteraction::queryInterface( const css::uno::Type& aType )
-    throw (css::uno::RuntimeException)
 {
     if ( aType.equals( XInteractionHandler2::static_type() ) )
     {
@@ -121,7 +120,6 @@ css::uno::Any SAL_CALL PreventDuplicateInteraction::queryInterface( const css::u
 //_________________________________________________________________________________________________________________
 
 void SAL_CALL PreventDuplicateInteraction::handle(const css::uno::Reference< css::task::XInteractionRequest >& xRequest)
-    throw(css::uno::RuntimeException)
 {
     css::uno::Any aRequest  = xRequest->getRequest();
     sal_Bool      bHandleIt = sal_True;
@@ -177,7 +175,6 @@ void SAL_CALL PreventDuplicateInteraction::handle(const css::uno::Reference< css
 //_________________________________________________________________________________________________________________
 
 ::sal_Bool SAL_CALL PreventDuplicateInteraction::handleInteractionRequest( const css::uno::Reference< css::task::XInteractionRequest >& xRequest )
-            throw (css::uno::RuntimeException)
 {
     css::uno::Any aRequest  = xRequest->getRequest();
     sal_Bool      bHandleIt = sal_True;

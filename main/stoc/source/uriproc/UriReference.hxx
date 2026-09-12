@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -42,44 +42,39 @@ public:
 
     ~UriReference();
 
-    rtl::OUString getUriReference()
-        throw (com::sun::star::uno::RuntimeException);
+    rtl::OUString getUriReference();
 
-    sal_Bool isAbsolute() throw (com::sun::star::uno::RuntimeException);
+    sal_Bool isAbsolute();
 
-    rtl::OUString getScheme() throw (com::sun::star::uno::RuntimeException);
+    rtl::OUString getScheme();
 
-    rtl::OUString getSchemeSpecificPart()
-        throw (com::sun::star::uno::RuntimeException);
+    rtl::OUString getSchemeSpecificPart();
 
-    sal_Bool isHierarchical() throw (com::sun::star::uno::RuntimeException);
+    sal_Bool isHierarchical();
 
-    sal_Bool hasAuthority() throw (com::sun::star::uno::RuntimeException);
+    sal_Bool hasAuthority();
 
-    rtl::OUString getAuthority() throw (com::sun::star::uno::RuntimeException);
+    rtl::OUString getAuthority();
 
-    rtl::OUString getPath() throw (com::sun::star::uno::RuntimeException);
+    rtl::OUString getPath();
 
-    sal_Bool hasRelativePath() throw (com::sun::star::uno::RuntimeException);
+    sal_Bool hasRelativePath();
 
-    sal_Int32 getPathSegmentCount()
-        throw (com::sun::star::uno::RuntimeException);
+    sal_Int32 getPathSegmentCount();
 
-    rtl::OUString getPathSegment(sal_Int32 index)
-        throw (com::sun::star::uno::RuntimeException);
+    rtl::OUString getPathSegment(sal_Int32 index);
 
-    sal_Bool hasQuery() throw (com::sun::star::uno::RuntimeException);
+    sal_Bool hasQuery();
 
-    rtl::OUString getQuery() throw (com::sun::star::uno::RuntimeException);
+    rtl::OUString getQuery();
 
-    sal_Bool hasFragment() throw (com::sun::star::uno::RuntimeException);
+    sal_Bool hasFragment();
 
-    rtl::OUString getFragment() throw (com::sun::star::uno::RuntimeException);
+    rtl::OUString getFragment();
 
-    void setFragment(rtl::OUString const & fragment)
-        throw (com::sun::star::uno::RuntimeException);
+    void setFragment(rtl::OUString const & fragment);
 
-    void clearFragment() throw (com::sun::star::uno::RuntimeException);
+    void clearFragment();
 
     osl::Mutex m_mutex;
     rtl::OUString m_scheme;

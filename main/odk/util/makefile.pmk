@@ -22,7 +22,7 @@
 
 
 # used for sdk common files
-PRODUCT_RELEASE=4.5.0
+PRODUCT_RELEASE=5.1.0
 OFFICENAME=OpenOffice
 .IF "$(GUI)"=="WNT"
 SDKDIRNAME=OpenOffice_$(PRODUCT_RELEASE)_SDK
@@ -84,7 +84,7 @@ MY_COPY_RECURSIVE=$(GNUCOPY) -urf
 .ENDIF
 
 MY_DELETE_RECURSIVE=rm -rf
-MY_TEXTCOPY=@cp 
+MY_TEXTCOPY=@cp
 
 .IF "$(GUI)"=="WNT"
 #--------------------

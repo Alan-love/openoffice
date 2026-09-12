@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -77,7 +77,7 @@ ViewShellWrapper::ViewShellWrapper (
 ViewShellWrapper::~ViewShellWrapper (void)
 {
 }
-    
+
 
 
 
@@ -110,7 +110,6 @@ void SAL_CALL ViewShellWrapper::disposing (void)
 //----- XResource -------------------------------------------------------------
 
 Reference<XResourceId> SAL_CALL ViewShellWrapper::getResourceId (void)
-    throw (RuntimeException)
 {
     return mxViewId;
 }
@@ -119,7 +118,6 @@ Reference<XResourceId> SAL_CALL ViewShellWrapper::getResourceId (void)
 
 
 sal_Bool SAL_CALL ViewShellWrapper::isAnchorOnly (void)
-    throw (RuntimeException)
 {
     return false;
 }
@@ -131,7 +129,6 @@ sal_Bool SAL_CALL ViewShellWrapper::isAnchorOnly (void)
 
 sal_Bool SAL_CALL ViewShellWrapper::relocateToAnchor (
     const Reference<XResource>& xResource)
-    throw (RuntimeException)
 {
     sal_Bool bResult (false);
 
@@ -143,7 +140,7 @@ sal_Bool SAL_CALL ViewShellWrapper::relocateToAnchor (
         if (xWindow.is())
             xWindow->removeWindowListener(this);
         mxWindow = NULL;
-    
+
         if (mpViewShell.get() != NULL)
         {
             ::Window* pWindow = VCLUnoHelper::GetWindow(xPane->getWindow());
@@ -190,8 +187,7 @@ const Sequence<sal_Int8>& ViewShellWrapper::getUnoTunnelId (void)
 
 
 sal_Int64 SAL_CALL ViewShellWrapper::getSomething (const Sequence<sal_Int8>& rId)
-    throw (RuntimeException)
-{    
+{
     sal_Int64 nResult = 0;
 
     if (rId.getLength() == 16
@@ -209,7 +205,6 @@ sal_Int64 SAL_CALL ViewShellWrapper::getSomething (const Sequence<sal_Int8>& rId
 //===== awt::XWindowListener ==================================================
 
 void SAL_CALL ViewShellWrapper::windowResized (const awt::WindowEvent& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
     ViewShell* pViewShell (mpViewShell.get());
@@ -221,28 +216,25 @@ void SAL_CALL ViewShellWrapper::windowResized (const awt::WindowEvent& rEvent)
 
 
 void SAL_CALL ViewShellWrapper::windowMoved (const awt::WindowEvent& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
 }
-    
+
 
 
 
 void SAL_CALL ViewShellWrapper::windowShown (const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
     ViewShell* pViewShell (mpViewShell.get());
     if (pViewShell != NULL)
         pViewShell->Resize();
 }
-    
+
 
 
 
 void SAL_CALL ViewShellWrapper::windowHidden (const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
 }
@@ -253,7 +245,6 @@ void SAL_CALL ViewShellWrapper::windowHidden (const lang::EventObject& rEvent)
 //===== XEventListener ========================================================
 
 void SAL_CALL ViewShellWrapper::disposing (const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     if (rEvent.Source == mxWindow)
         mxWindow = NULL;

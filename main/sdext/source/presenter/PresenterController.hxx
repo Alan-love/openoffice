@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -147,62 +147,49 @@ public:
     // XConfigurationChangeListener
 
     virtual void SAL_CALL notifyConfigurationChange (
-        const com::sun::star::drawing::framework::ConfigurationChangeEvent& rEvent)
-        throw (com::sun::star::uno::RuntimeException);
+        const com::sun::star::drawing::framework::ConfigurationChangeEvent& rEvent);
 
 
     // XEventListener
 
     virtual void SAL_CALL disposing (
-        const com::sun::star::lang::EventObject& rEvent)
-        throw (com::sun::star::uno::RuntimeException);
+        const com::sun::star::lang::EventObject& rEvent);
 
 
     // XFrameActionListener
 
     virtual void SAL_CALL frameAction (
-        const css::frame::FrameActionEvent& rEvent)
-        throw (com::sun::star::uno::RuntimeException);
+        const css::frame::FrameActionEvent& rEvent);
 
-    
+
     // XKeyListener
 
-    virtual void SAL_CALL keyPressed (const css::awt::KeyEvent& rEvent)
-        throw (css::uno::RuntimeException);
-    virtual void SAL_CALL keyReleased (const css::awt::KeyEvent& rEvent)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL keyPressed (const css::awt::KeyEvent& rEvent);
+    virtual void SAL_CALL keyReleased (const css::awt::KeyEvent& rEvent);
 
 
     // XFocusListener
 
-    virtual void SAL_CALL focusGained (const css::awt::FocusEvent& rEvent)
-        throw (css::uno::RuntimeException);
-    virtual void SAL_CALL focusLost (const css::awt::FocusEvent& rEvent)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL focusGained (const css::awt::FocusEvent& rEvent);
+    virtual void SAL_CALL focusLost (const css::awt::FocusEvent& rEvent);
 
 
     // XMouseListener
 
-    virtual void SAL_CALL mousePressed (const css::awt::MouseEvent& rEvent)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL mousePressed (const css::awt::MouseEvent& rEvent);
 
-    virtual void SAL_CALL mouseReleased (const css::awt::MouseEvent& rEvent)
-        throw (css::uno::RuntimeException);
-    
-    virtual void SAL_CALL mouseEntered (const css::awt::MouseEvent& rEvent)
-        throw (css::uno::RuntimeException);
-    
-    virtual void SAL_CALL mouseExited (const css::awt::MouseEvent& rEvent)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL mouseReleased (const css::awt::MouseEvent& rEvent);
+
+    virtual void SAL_CALL mouseEntered (const css::awt::MouseEvent& rEvent);
+
+    virtual void SAL_CALL mouseExited (const css::awt::MouseEvent& rEvent);
 
 
     // XMouseMotionListener
-    
-    virtual void SAL_CALL mouseMoved (const css::awt::MouseEvent& rEvent)
-        throw (css::uno::RuntimeException);
 
-    virtual void SAL_CALL mouseDragged (const css::awt::MouseEvent& rEvent)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL mouseMoved (const css::awt::MouseEvent& rEvent);
+
+    virtual void SAL_CALL mouseDragged (const css::awt::MouseEvent& rEvent);
 
 private:
     typedef ::std::map<css::uno::Reference<css::frame::XFrame>,rtl::Reference<PresenterController> > InstanceContainer;
@@ -233,7 +220,7 @@ private:
     css::uno::Reference<css::util::XURLTransformer> mxUrlTransformer;
     ::rtl::Reference<PresenterAccessible> mpAccessibleObject;
     bool mbIsAccessibilityActive;
-    
+
     void InitializePresenterScreen (void);
     void InitializeSlideShowView (const css::uno::Reference<css::uno::XInterface>& rxView);
     void GetSlides (const sal_Int32 nOffset);
@@ -253,8 +240,8 @@ private:
             The modifier bit field as provided by the key up event.
     */
     void HandleNumericKeyPress (const sal_Int32 nKey, const sal_Int32 nModifiers);
-    
-    void ThrowIfDisposed (void) const throw (::com::sun::star::lang::DisposedException);
+
+    void ThrowIfDisposed (void) const;
 };
 
 

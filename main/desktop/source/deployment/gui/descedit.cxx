@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_desktop.hxx"
@@ -38,59 +36,60 @@ using dp_gui::DescriptionEdit;
 
 DescriptionEdit::DescriptionEdit( Window* pParent, const ResId& rResId ) :
 
-    ExtMultiLineEdit( pParent, rResId ),
+	ExtMultiLineEdit( pParent, rResId ),
 
-    m_bIsVerticalScrollBarHidden( true )
+	m_bIsVerticalScrollBarHidden( true )
 
 {
-    Init();
+	Init();
 }
 
 // -----------------------------------------------------------------------
 
 void DescriptionEdit::Init()
 {
-    Clear();
-    // no tabstop
-    SetStyle( ( GetStyle() & ~WB_TABSTOP ) | WB_NOTABSTOP );
-    // read-only
-    SetReadOnly();
-    // no cursor
-    EnableCursor( sal_False );
+	Clear();
+	// no tabstop
+	SetStyle( ( GetStyle() & ~WB_TABSTOP ) | WB_NOTABSTOP );
+	// read-only
+	SetReadOnly();
+	// no cursor
+	EnableCursor( sal_False );
 }
 
 // -----------------------------------------------------------------------
 
 void DescriptionEdit::UpdateScrollBar()
 {
-    if ( m_bIsVerticalScrollBarHidden )
-    {
-        ScrollBar*  pVScrBar = GetVScrollBar();
-        if ( pVScrBar && pVScrBar->GetVisibleSize() < pVScrBar->GetRangeMax() )
-        {
-            pVScrBar->Show();
-            m_bIsVerticalScrollBarHidden = false;
-        }
-    }
+	if ( m_bIsVerticalScrollBarHidden )
+	{
+		ScrollBar*  pVScrBar = GetVScrollBar();
+		if ( pVScrBar && pVScrBar->GetVisibleSize() < pVScrBar->GetRangeMax() )
+		{
+			pVScrBar->Show();
+			m_bIsVerticalScrollBarHidden = false;
+		}
+	}
 }
 
 // -----------------------------------------------------------------------
 
 void DescriptionEdit::Clear()
 {
-    SetText( String() );
+	SetText( String() );
 
-    m_bIsVerticalScrollBarHidden = true;
-    ScrollBar*  pVScrBar = GetVScrollBar();
-    if ( pVScrBar )
-        pVScrBar->Hide();
+	m_bIsVerticalScrollBarHidden = true;
+	ScrollBar*  pVScrBar = GetVScrollBar();
+	if ( pVScrBar )
+		pVScrBar->Hide();
 }
 
 // -----------------------------------------------------------------------
 
 void DescriptionEdit::SetDescription( const String& rDescription )
 {
-    SetText( rDescription );
-    UpdateScrollBar();
+	SetText( rDescription );
+	UpdateScrollBar();
 }
 
+/* vim: set noet sw=4 ts=4: */

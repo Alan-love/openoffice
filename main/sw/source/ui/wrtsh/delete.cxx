@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,23 +7,20 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_sw.hxx"
-
 
 #include <wrtsh.hxx>
 #include <crsskip.hxx>
@@ -96,14 +93,14 @@ sal_Bool SwWrtShell::TryRemoveIndent()
 }
 
 /*------------------------------------------------------------------------
- Beschreibung:	Zeile loeschen
+ Beschreibung:	Zeile löschen
 ------------------------------------------------------------------------*/
 
 
 
 long SwWrtShell::DelLine()
 {
-	ACT_KONTEXT(this);
+	ACT_CONTEXT(this);
 	ResetCursorStack();
 		// alten Cursor merken
 	Push();
@@ -111,7 +108,7 @@ long SwWrtShell::DelLine()
 	SwCrsrShell::LeftMargin();
 	SetMark();
 	SwCrsrShell::RightMargin();
-//Warum soll hier noch ein Zeichen in der naechsten Zeile geloescht werden?
+//Warum soll hier noch ein Zeichen in der nächsten Zeile gelöscht werden?
 //	if(!IsEndOfPara())
 //		SwCrsrShell::Right();
 	long nRet = Delete();
@@ -176,10 +173,10 @@ long SwWrtShell::DelLeft()
 	{
 		if( !IsBlockMode() || HasSelection() )
         {
-             //OS: wieder einmal Basic: ACT_KONTEXT muss vor
+             //OS: wieder einmal Basic: ACT_CONTEXT muss vor
             //EnterStdMode verlassen werden!
             {
-                ACT_KONTEXT(this);
+                ACT_CONTEXT(this);
                 ResetCursorStack();
                 Delete();
                 UpdateAttr();
@@ -259,6 +256,8 @@ long SwWrtShell::DelRight()
 		nSelection = nsSelectionType::SEL_TBL;
 	if(nSelection & nsSelectionType::SEL_TXT)
 		nSelection = nsSelectionType::SEL_TXT;
+	if(nSelection & nsSelectionType::SEL_FONTWORK)
+		nSelection = nsSelectionType::SEL_DRW;
 
 	const SwTableNode * pWasInTblNd = NULL;
 
@@ -273,10 +272,10 @@ long SwWrtShell::DelRight()
 		{
             if( !IsBlockMode() || HasSelection() )
             {
-                //OS: wieder einmal Basic: ACT_KONTEXT muss vor
+                //OS: wieder einmal Basic: ACT_CONTEXT muss vor
                 //EnterStdMode verlassen werden!
                 {
-                    ACT_KONTEXT(this);
+                    ACT_CONTEXT(this);
                     ResetCursorStack();
                     Delete();
                     UpdateAttr();
@@ -430,7 +429,7 @@ long SwWrtShell::DelRight()
 
 long SwWrtShell::DelToEndOfPara()
 {
-	ACT_KONTEXT(this);
+	ACT_CONTEXT(this);
 	ResetCursorStack();
 	Push();
 	SetMark();
@@ -450,7 +449,7 @@ long SwWrtShell::DelToEndOfPara()
 
 long SwWrtShell::DelToStartOfPara()
 {
-	ACT_KONTEXT(this);
+	ACT_CONTEXT(this);
 	ResetCursorStack();
 	Push();
 	SetMark();
@@ -466,9 +465,9 @@ long SwWrtShell::DelToStartOfPara()
 	return nRet;
 }
 /*
- * alle Loeschoperationen sollten mit Find statt mit
+ * alle Löschoperationen sollten mit Find statt mit
  * Nxt-/PrvDelim arbeiten, da letzteren mit Wrap Around arbeiten
- * -- das ist wohl nicht gewuenscht.
+ * -- das ist wohl nicht gewünscht.
  */
 
 
@@ -511,7 +510,7 @@ long SwWrtShell::DelNxtWord()
 {
 	if(IsEndOfDoc())
 		return 0;
-	ACT_KONTEXT(this);
+	ACT_CONTEXT(this);
 	ResetCursorStack();
 	EnterStdMode();
 	SetMark();
@@ -537,7 +536,7 @@ long SwWrtShell::DelPrvWord()
 {
 	if(IsStartOfDoc())
 		return 0;
-	ACT_KONTEXT(this);
+	ACT_CONTEXT(this);
 	ResetCursorStack();
 	EnterStdMode();
 	SetMark();
@@ -571,6 +570,4 @@ long SwWrtShell::DelPrvWord()
 	return nRet;
 }
 
-
-
-
+/* vim: set noet sw=4 ts=4: */

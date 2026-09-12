@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,20 +7,20 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
- 
+
 #include "vbahelper/vbadocumentsbase.hxx"
 
 #include <comphelper/mediadescriptor.hxx>
@@ -77,11 +77,11 @@ class DocumentsEnumImpl : public DocumentsEnumImpl_BASE
 	Documents::const_iterator m_it;
 
 public:
-	DocumentsEnumImpl( const uno::Reference< uno::XComponentContext >& xContext, const Documents& docs ) throw ( uno::RuntimeException ) :  m_xContext( xContext ), m_documents( docs )
+	DocumentsEnumImpl( const uno::Reference< uno::XComponentContext >& xContext, const Documents& docs ) :  m_xContext( xContext ), m_documents( docs )
 	{
 		m_it = m_documents.begin();
 	}
-	DocumentsEnumImpl( const uno::Reference< uno::XComponentContext >& xContext ) throw ( uno::RuntimeException ) :  m_xContext( xContext )
+	DocumentsEnumImpl( const uno::Reference< uno::XComponentContext >& xContext ) :  m_xContext( xContext )
 	{
 		uno::Reference< lang::XMultiComponentFactory > xSMgr(
 			m_xContext->getServiceManager(), uno::UNO_QUERY_THROW );
@@ -98,13 +98,13 @@ public:
 		m_it = m_documents.begin();
 	}
 	// XEnumeration
-	virtual ::sal_Bool SAL_CALL hasMoreElements(  ) throw (uno::RuntimeException) 
-	{ 
+	virtual ::sal_Bool SAL_CALL hasMoreElements(  )
+	{
 		return m_it != m_documents.end();
 	}
 
-	virtual uno::Any SAL_CALL nextElement(  ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException) 
-	{ 
+	virtual uno::Any SAL_CALL nextElement(  )
+	{
 		if ( !hasMoreElements() )
 		{
 			throw container::NoSuchElementException();
@@ -117,9 +117,9 @@ public:
 // a very similar one is used in vbawindow ( SelectedSheetsEnumAccess )
 // Maybe a template base class that does all of the operations on the hashmap
 // and vector only, and the sub-class does everything else
-// => ctor, createEnumeration & factory method need be defined ( to be called 
+// => ctor, createEnumeration & factory method need be defined ( to be called
 // by getByIndex, getByName )
-typedef ::cppu::WeakImplHelper3< container::XEnumerationAccess 
+typedef ::cppu::WeakImplHelper3< container::XEnumerationAccess
 	, com::sun::star::container::XIndexAccess
 	, com::sun::star::container::XNameAccess
 	> DocumentsAccessImpl_BASE;
@@ -130,15 +130,15 @@ class DocumentsAccessImpl : public DocumentsAccessImpl_BASE
 	Documents m_documents;
 	NameIndexHash namesToIndices;
     VbaDocumentsBase::DOCUMENT_TYPE meDocType;
-public:	
-	DocumentsAccessImpl( const uno::Reference< uno::XComponentContext >& xContext, VbaDocumentsBase::DOCUMENT_TYPE eDocType ) throw (uno::RuntimeException) :m_xContext( xContext ), meDocType( eDocType )
+public:
+	DocumentsAccessImpl( const uno::Reference< uno::XComponentContext >& xContext, VbaDocumentsBase::DOCUMENT_TYPE eDocType ) :m_xContext( xContext ), meDocType( eDocType )
 	{
 		uno::Reference< container::XEnumeration > xEnum = new DocumentsEnumImpl( m_xContext );
 		sal_Int32 nIndex=0;
 		while( xEnum->hasMoreElements() )
 		{
             uno::Reference< lang::XServiceInfo > xServiceInfo( xEnum->nextElement(), uno::UNO_QUERY );
-			if ( xServiceInfo.is() 
+			if ( xServiceInfo.is()
                 && (  ( xServiceInfo->supportsService( sSpreadsheetDocument ) && meDocType == VbaDocumentsBase::EXCEL_DOCUMENT )
                 || ( xServiceInfo->supportsService( sTextDocument ) && meDocType == VbaDocumentsBase::WORD_DOCUMENT ) ) )
 			{
@@ -148,68 +148,68 @@ public:
 				namesToIndices[ aURL.GetLastName() ] = nIndex++;
 			}
 		}
-			
+
 	}
-	
+
 	//XEnumerationAccess
-	virtual uno::Reference< container::XEnumeration > SAL_CALL createEnumeration(  ) throw (uno::RuntimeException)
+	virtual uno::Reference< container::XEnumeration > SAL_CALL createEnumeration(  )
 	{
-		return new DocumentsEnumImpl( m_xContext, m_documents ); 
+		return new DocumentsEnumImpl( m_xContext, m_documents );
 	}
 	// XIndexAccess
-	virtual ::sal_Int32 SAL_CALL getCount(  ) throw (uno::RuntimeException) 
-	{ 
+	virtual ::sal_Int32 SAL_CALL getCount(  )
+	{
 		return m_documents.size();
 	}
-	virtual uno::Any SAL_CALL getByIndex( ::sal_Int32 Index ) throw ( lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException) 
-	{ 
-		if ( Index < 0 
-			|| static_cast< Documents::size_type >(Index) >= m_documents.size() ) 
+	virtual uno::Any SAL_CALL getByIndex( ::sal_Int32 Index )
+	{
+		if ( Index < 0
+			|| static_cast< Documents::size_type >(Index) >= m_documents.size() )
 			throw lang::IndexOutOfBoundsException();
 		return makeAny( m_documents[ Index ] ); // returns xspreadsheetdoc
 	}
 
 	//XElementAccess
-	virtual uno::Type SAL_CALL getElementType(  ) throw (uno::RuntimeException)
-	{ 
-		return frame::XModel::static_type(0); 
+	virtual uno::Type SAL_CALL getElementType(  )
+	{
+		return frame::XModel::static_type(0);
 	}
 
-	virtual ::sal_Bool SAL_CALL hasElements(  ) throw (uno::RuntimeException) 
-	{ 
+	virtual ::sal_Bool SAL_CALL hasElements(  )
+	{
 		return (m_documents.size() > 0);
 	}
 
 	//XNameAccess
-	virtual uno::Any SAL_CALL getByName( const ::rtl::OUString& aName ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException) 
-	{ 
+	virtual uno::Any SAL_CALL getByName( const ::rtl::OUString& aName )
+	{
 		NameIndexHash::const_iterator it = namesToIndices.find( aName );
 		if ( it == namesToIndices.end() )
 			throw container::NoSuchElementException();
 		return makeAny( m_documents[ it->second ] );
-		
+
 	}
 
-	virtual uno::Sequence< ::rtl::OUString > SAL_CALL getElementNames(  ) throw (uno::RuntimeException) 
-	{ 
+	virtual uno::Sequence< ::rtl::OUString > SAL_CALL getElementNames(  )
+	{
 		uno::Sequence< ::rtl::OUString > names( namesToIndices.size() );
 		::rtl::OUString* pString = names.getArray();
 		NameIndexHash::const_iterator it = namesToIndices.begin();
 		NameIndexHash::const_iterator it_end = namesToIndices.end();
 		for ( ; it != it_end; ++it, ++pString )
-			*pString = it->first;	
-		return names;	
+			*pString = it->first;
+		return names;
 	}
 
-	virtual ::sal_Bool SAL_CALL hasByName( const ::rtl::OUString& aName ) throw (uno::RuntimeException) 
-	{ 
+	virtual ::sal_Bool SAL_CALL hasByName( const ::rtl::OUString& aName )
+	{
 		NameIndexHash::const_iterator it = namesToIndices.find( aName );
 		return (it != namesToIndices.end());
 	}
 
 };
 
-VbaDocumentsBase::VbaDocumentsBase( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< css::uno::XComponentContext >& xContext, DOCUMENT_TYPE eDocType ) throw (uno::RuntimeException) : VbaDocumentsBase_BASE( xParent, xContext, uno::Reference< container::XIndexAccess >( new DocumentsAccessImpl( xContext, eDocType ) ) ), meDocType( eDocType )
+VbaDocumentsBase::VbaDocumentsBase( const uno::Reference< XHelperInterface >& xParent, const uno::Reference< css::uno::XComponentContext >& xContext, DOCUMENT_TYPE eDocType ) : VbaDocumentsBase_BASE( xParent, xContext, uno::Reference< container::XIndexAccess >( new DocumentsAccessImpl( xContext, eDocType ) ) ), meDocType( eDocType )
 {
 }
 
@@ -239,7 +239,7 @@ void lclSetupComponent( const uno::Reference< lang::XComponent >& rxComponent, s
 
 } // namespace
 
-uno::Any VbaDocumentsBase::createDocument() throw (uno::RuntimeException)
+uno::Any VbaDocumentsBase::createDocument()
 {
     // #163808# determine state of Application.ScreenUpdating and Application.Interactive symbols (before new document is opened)
     uno::Reference< XApplicationBase > xApplication( Application(), uno::UNO_QUERY );
@@ -266,7 +266,7 @@ uno::Any VbaDocumentsBase::createDocument() throw (uno::RuntimeException)
     aMediaDesc[ ::comphelper::MediaDescriptor::PROP_MACROEXECUTIONMODE() ] <<= document::MacroExecMode::USE_CONFIG;
     aMediaDesc.setComponentDataEntry( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "ApplyFormDesignMode" ) ), uno::Any( false ) );
 
-    // craete the new document
+    // create the new document
 	uno::Reference< lang::XComponent > xComponent = xLoader->loadComponentFromURL(
 									   sURL ,
 									   rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("_blank") ), 0,
@@ -278,7 +278,7 @@ uno::Any VbaDocumentsBase::createDocument() throw (uno::RuntimeException)
     return uno::makeAny( xComponent );
 }
 
-void VbaDocumentsBase::closeDocuments() throw (uno::RuntimeException)
+void VbaDocumentsBase::closeDocuments()
 {
 // #FIXME this *MUST* be wrong documents::close surely closes ALL documents
 // in the collection, use of getCurrentDocument here is totally wrong
@@ -292,7 +292,7 @@ void VbaDocumentsBase::closeDocuments() throw (uno::RuntimeException)
 }
 
 // #TODO# #FIXME# can any of the unused params below be used?
-uno::Any VbaDocumentsBase::openDocument( const rtl::OUString& rFileName, const uno::Any& ReadOnly, const uno::Sequence< beans::PropertyValue >& rProps ) throw (uno::RuntimeException)
+uno::Any VbaDocumentsBase::openDocument( const rtl::OUString& rFileName, const uno::Any& ReadOnly, const uno::Sequence< beans::PropertyValue >& rProps )
 {
     // #163808# determine state of Application.ScreenUpdating and Application.Interactive symbols (before new document is opened)
     uno::Reference< XApplicationBase > xApplication( Application(), uno::UNO_QUERY );
@@ -345,4 +345,3 @@ uno::Any VbaDocumentsBase::openDocument( const rtl::OUString& rFileName, const u
 
     return uno::makeAny( xComponent );
 }
-

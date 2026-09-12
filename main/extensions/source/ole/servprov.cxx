@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -386,8 +386,6 @@ Any SAL_CALL OleConverter_Impl2::createBridge(const Any& modelDepObject,
 									   const Sequence< sal_Int8 >& ProcessId,
 									   sal_Int16 sourceModelType,
 									   sal_Int16 destModelType)
-									   throw (IllegalArgumentException,
-									   			RuntimeException )
 {
 	Any ret;
 	sal_uInt8 arId[16];
@@ -473,7 +471,6 @@ Any SAL_CALL OleConverter_Impl2::createBridge(const Any& modelDepObject,
 // XInitialize ------------------------------------------------------------------------------
 // the first argument is an XMultiServiceFactory if at all
 void SAL_CALL OleConverter_Impl2::initialize( const Sequence< Any >& aArguments )
-				throw(Exception, RuntimeException)
 {
 	if( aArguments.getLength() == 1 && aArguments[0].getValueTypeClass() == TypeClass_INTERFACE)
 	{
@@ -539,7 +536,7 @@ OleClient_Impl::~OleClient_Impl()
 	globalModuleCount.modCnt.release( &globalModuleCount.modCnt);
 }
 
-Sequence< OUString >	SAL_CALL OleClient_Impl::getAvailableServiceNames() throw( RuntimeException )
+Sequence< OUString >	SAL_CALL OleClient_Impl::getAvailableServiceNames()
 {
 	Sequence< OUString > ret;
 
@@ -552,7 +549,7 @@ OUString OleClient_Impl::getImplementationName()
 	return OUString(reinterpret_cast<const sal_Unicode*>(L"com.sun.star.comp.ole.OleClient"));
 }
 
-Reference<XInterface> SAL_CALL OleClient_Impl::createInstance(const OUString& ServiceSpecifier) throw (Exception, RuntimeException )
+Reference<XInterface> SAL_CALL OleClient_Impl::createInstance(const OUString& ServiceSpecifier)
 {
 	Reference<XInterface> 	ret;
 	HRESULT 		result;
@@ -599,7 +596,7 @@ Reference<XInterface> SAL_CALL OleClient_Impl::createInstance(const OUString& Se
 	return ret;
 }
 
-Reference<XInterface> SAL_CALL OleClient_Impl::createInstanceWithArguments(const OUString& ServiceSpecifier, const Sequence< Any >& /*Arguments*/) throw (Exception, RuntimeException)
+Reference<XInterface> SAL_CALL OleClient_Impl::createInstanceWithArguments(const OUString& ServiceSpecifier, const Sequence< Any >& /*Arguments*/)
 {
 	return createInstance( ServiceSpecifier);
 }
@@ -656,7 +653,7 @@ OleServer_Impl::OleServer_Impl( const Reference<XMultiServiceFactory>& smgr):
 	sal_Bool bOLERegister = sal_False;
 #else
 	sal_Bool bOLERegister = sal_True;
-#endif	
+#endif
 	sal_Bool ret = provideInstance( m_smgr, (GUID*)&OID_ServiceManager, bOLERegister );
     (void)ret;
 }
@@ -673,7 +670,7 @@ OleServer_Impl::~OleServer_Impl()
 	globalModuleCount.modCnt.release( &globalModuleCount.modCnt);
 }
 // XInterface --------------------------------------------------
-Any SAL_CALL OleServer_Impl::queryInterface( const Type& aType ) throw(RuntimeException)
+Any SAL_CALL OleServer_Impl::queryInterface( const Type& aType )
 {
 	Any a= ::cppu::queryInterface( aType, static_cast<XTypeProvider*>(this));
 	if( a == Any())
@@ -692,7 +689,7 @@ void SAL_CALL OleServer_Impl::release(  ) throw ()
 
 
 // XTypeProvider --------------------------------------------------
-Sequence< Type > SAL_CALL OleServer_Impl::getTypes( ) throw(RuntimeException)
+Sequence< Type > SAL_CALL OleServer_Impl::getTypes( )
 {
 	static OTypeCollection *pCollection = 0;
 	if( ! pCollection )
@@ -708,7 +705,7 @@ Sequence< Type > SAL_CALL OleServer_Impl::getTypes( ) throw(RuntimeException)
 	}
 	return (*pCollection).getTypes();
 }
-Sequence< sal_Int8 > SAL_CALL OleServer_Impl::getImplementationId() throw(RuntimeException)
+Sequence< sal_Int8 > SAL_CALL OleServer_Impl::getImplementationId()
 {
 	static OImplementationId *pId = 0;
 	if( ! pId )

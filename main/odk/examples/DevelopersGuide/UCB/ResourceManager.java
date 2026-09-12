@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -46,7 +46,7 @@ public class ResourceManager {
     /**
      * Constructor.
      *
-     *@param      String[]   This construtor requires the arguments:
+     *@param      String[]   This constructor requires the arguments:
      *                          -url=...             (optional)
      *                          -targetFolderURL=... (optional)
      *                          -newTitle=...        (optional)
@@ -203,7 +203,7 @@ public class ResourceManager {
         }
 
 		if ( m_contenturl == null || m_contenturl.equals( "" )) {
-            m_contenturl = Helper.prependCurrentDirAsAbsoluteFileURL( "data/data.txt" );;
+            m_contenturl = Helper.prependCurrentDirAsAbsoluteFileURL( "data/data.txt" );
         }
 
         if ( m_targetFolderURL == null || m_targetFolderURL.equals( "" )) {
@@ -211,7 +211,7 @@ public class ResourceManager {
         }
 
         if ( m_newTitle == null || m_newTitle.equals( "" )) {
-            m_newTitle = "transfered-resource-" + System.currentTimeMillis();
+            m_newTitle = "transferred-resource-" + System.currentTimeMillis();
         }
 
         if ( m_transOperation == null || m_transOperation.equals( "" )) {
@@ -226,7 +226,7 @@ public class ResourceManager {
         System.out.println(
             "Usage: ResourceManager -url=... -targetFolderURL=... -newTitle=... -transOper=... -workdir=..." );
         System.out.println(
-            "Defaults: -url=<currentdir>/data/data.txt> -targetFolderURL=<workdir> -newTitle=transfered-resource-<uniquepostfix> -transOper=copy -workdir=<currentdir>");
+            "Defaults: -url=<currentdir>/data/data.txt> -targetFolderURL=<workdir> -newTitle=transferred-resource-<uniquepostfix> -transOper=copy -workdir=<currentdir>");
         System.out.println(
             "\nExample : -url=file:///temp/MyFile.txt -targetFolderURL=file:///test/ -newTitle=RenamedFile.txt -transOper=copy " );
     }

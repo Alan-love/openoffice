@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -154,7 +154,7 @@ DEFINE_XTYPEPROVIDER_4  (   MenuDispatcher     ,
 //	XDispatch
 //*****************************************************************************************************************
 void SAL_CALL MenuDispatcher::dispatch(    const   URL&                        /*aURL*/            ,
-											const	Sequence< PropertyValue >&	/*seqProperties*/	) throw( RuntimeException )
+											const	Sequence< PropertyValue >&	/*seqProperties*/	)
 {
 }
 
@@ -162,7 +162,7 @@ void SAL_CALL MenuDispatcher::dispatch(    const   URL&                        /
 //	XDispatch
 //*****************************************************************************************************************
 void SAL_CALL MenuDispatcher::addStatusListener(   const   uno::Reference< XStatusListener >&   xControl,
-													const	URL&							aURL	) throw( RuntimeException )
+													const	URL&							aURL	)
 {
 	// Ready for multithreading
 	ResetableGuard aGuard( m_aLock );
@@ -177,7 +177,7 @@ void SAL_CALL MenuDispatcher::addStatusListener(   const   uno::Reference< XStat
 //	XDispatch
 //*****************************************************************************************************************
 void SAL_CALL MenuDispatcher::removeStatusListener(    const   uno::Reference< XStatusListener >&   xControl,
-														const	URL&							aURL	) throw( RuntimeException )
+														const	URL&							aURL	)
 {
 	// Ready for multithreading
 	ResetableGuard aGuard( m_aLock );
@@ -192,7 +192,7 @@ void SAL_CALL MenuDispatcher::removeStatusListener(    const   uno::Reference< X
 //	 XFrameActionListener
 //*****************************************************************************************************************
 
-void SAL_CALL MenuDispatcher::frameAction( const FrameActionEvent& aEvent ) throw ( RuntimeException )
+void SAL_CALL MenuDispatcher::frameAction( const FrameActionEvent& aEvent )
 {
 	ResetableGuard aGuard( m_aLock );
 
@@ -230,7 +230,7 @@ void SAL_CALL MenuDispatcher::frameAction( const FrameActionEvent& aEvent ) thro
 //*****************************************************************************************************************
 //	 XEventListener
 //*****************************************************************************************************************
-void SAL_CALL MenuDispatcher::disposing( const EventObject& ) throw( RuntimeException )
+void SAL_CALL MenuDispatcher::disposing( const EventObject& )
 {
 	// Ready for multithreading
 	ResetableGuard aGuard( m_aLock );

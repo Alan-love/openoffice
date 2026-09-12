@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -41,16 +41,14 @@ UUIInteractionHandler::~UUIInteractionHandler()
 }
 
 rtl::OUString SAL_CALL UUIInteractionHandler::getImplementationName()
-    throw (uno::RuntimeException)
 {
     return rtl::OUString::createFromAscii(m_aImplementationName);
 }
 
 sal_Bool SAL_CALL
 UUIInteractionHandler::supportsService(rtl::OUString const & rServiceName)
-    throw (uno::RuntimeException)
 {
-    uno::Sequence< rtl::OUString > 
+    uno::Sequence< rtl::OUString >
 	aNames(getSupportedServiceNames_static());
     for (sal_Int32 i = 0; i < aNames.getLength(); ++i)
         if (aNames[i] == rServiceName)
@@ -60,7 +58,6 @@ UUIInteractionHandler::supportsService(rtl::OUString const & rServiceName)
 
 uno::Sequence< rtl::OUString > SAL_CALL
 UUIInteractionHandler::getSupportedServiceNames()
-    throw (uno::RuntimeException)
 {
     return getSupportedServiceNames_static();
 }
@@ -68,7 +65,6 @@ UUIInteractionHandler::getSupportedServiceNames()
 void SAL_CALL
 UUIInteractionHandler::initialize(
     uno::Sequence< uno::Any > const & rArguments)
-    throw (uno::Exception)
 {
     delete m_pImpl;
     m_pImpl = new UUIInteractionHelper(m_xServiceFactory, rArguments);
@@ -77,7 +73,6 @@ UUIInteractionHandler::initialize(
 void SAL_CALL
 UUIInteractionHandler::handle(
     uno::Reference< task::XInteractionRequest > const & rRequest)
-    throw (uno::RuntimeException)
 {
     try
     {
@@ -90,7 +85,7 @@ UUIInteractionHandler::handle(
 }
 
 ::sal_Bool SAL_CALL UUIInteractionHandler::handleInteractionRequest(
-    const uno::Reference< task::XInteractionRequest >& _Request ) throw ( uno::RuntimeException )
+    const uno::Reference< task::XInteractionRequest >& _Request )
 {
     try
     {
@@ -125,7 +120,6 @@ uno::Reference< uno::XInterface > SAL_CALL
 UUIInteractionHandler::createInstance(
     uno::Reference< lang::XMultiServiceFactory > const &
         rServiceFactory)
-    SAL_THROW((uno::Exception))
 {
     try
     {

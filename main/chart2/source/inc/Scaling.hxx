@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -53,22 +53,20 @@ public:
     LogarithmicScaling( double fBase = 10.0 );
     virtual ~LogarithmicScaling();
 
-    /// establish methods for factory instatiation
+    /// establish methods for factory instantiation
 	APPHELPER_SERVICE_FACTORY_HELPER( LogarithmicScaling )
     /// declare XServiceInfo methods
     APPHELPER_XSERVICEINFO_DECL()
 
     // ____ XScaling ____
-    virtual double SAL_CALL doScaling( double value )
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual double SAL_CALL doScaling( double value );
 
     virtual ::com::sun::star::uno::Reference<
         ::com::sun::star::chart2::XScaling > SAL_CALL
-        getInverseScaling() throw (::com::sun::star::uno::RuntimeException);
+        getInverseScaling();
 
     // ____ XServiceName ____
-    virtual ::rtl::OUString SAL_CALL getServiceName()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getServiceName();
 
 private:
     const double m_fBase;
@@ -94,23 +92,21 @@ public:
     explicit ExponentialScaling( double fBase = 10.0 );
     virtual ~ExponentialScaling();
 
-    /// establish methods for factory instatiation
+    /// establish methods for factory instantiation
 	APPHELPER_SERVICE_FACTORY_HELPER( ExponentialScaling )
     /// declare XServiceInfo methods
     APPHELPER_XSERVICEINFO_DECL()
 
     // ____ XScaling ____
         virtual double SAL_CALL
-    doScaling( double value )
-        throw (::com::sun::star::uno::RuntimeException);
+    doScaling( double value );
 
         virtual ::com::sun::star::uno::Reference<
         ::com::sun::star::chart2::XScaling > SAL_CALL
-    getInverseScaling() throw (::com::sun::star::uno::RuntimeException);
+    getInverseScaling();
 
     // ____ XServiceName ____
-    virtual ::rtl::OUString SAL_CALL getServiceName()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getServiceName();
 
 private:
     const double m_fBase;
@@ -135,22 +131,20 @@ public:
     LinearScaling( double fSlope = 1.0, double fOffset = 0.0 );
     virtual ~LinearScaling();
 
-    /// establish methods for factory instatiation
+    /// establish methods for factory instantiation
 	APPHELPER_SERVICE_FACTORY_HELPER( LinearScaling )
     /// declare XServiceInfo methods
     APPHELPER_XSERVICEINFO_DECL()
 
     // ____ XScaling ____
-    virtual double SAL_CALL doScaling( double value )
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual double SAL_CALL doScaling( double value );
 
     virtual ::com::sun::star::uno::Reference<
         ::com::sun::star::chart2::XScaling > SAL_CALL
-        getInverseScaling() throw (::com::sun::star::uno::RuntimeException);
+        getInverseScaling();
 
     // ____ XServiceName ____
-    virtual ::rtl::OUString SAL_CALL getServiceName()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getServiceName();
 
 private:
     const double m_fSlope;
@@ -175,23 +169,21 @@ public:
     explicit PowerScaling( double fExponent = 10.0 );
     virtual ~PowerScaling();
 
-    /// establish methods for factory instatiation
+    /// establish methods for factory instantiation
 	APPHELPER_SERVICE_FACTORY_HELPER( PowerScaling )
     /// declare XServiceInfo methods
     APPHELPER_XSERVICEINFO_DECL()
 
     // ____ XScaling ____
         virtual double SAL_CALL
-    doScaling( double value )
-        throw (::com::sun::star::uno::RuntimeException);
+    doScaling( double value );
 
         virtual ::com::sun::star::uno::Reference<
         ::com::sun::star::chart2::XScaling > SAL_CALL
-    getInverseScaling() throw (::com::sun::star::uno::RuntimeException);
+    getInverseScaling();
 
     // ____ XServiceName ____
-    virtual ::rtl::OUString SAL_CALL getServiceName()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getServiceName();
 
 private:
     const double m_fExponent;
@@ -203,4 +195,3 @@ private:
 } //namespace chart
 //.............................................................................
 #endif
-

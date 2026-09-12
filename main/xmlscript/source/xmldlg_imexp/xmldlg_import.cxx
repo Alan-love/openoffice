@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -64,7 +64,6 @@ namespace xmlscript
 
 //__________________________________________________________________________________________________
 void EventElement::endElement()
-    throw (xml::sax::SAXException, RuntimeException)
 {
     static_cast< ControlElement * >( _pParent )->_events.push_back( this );
 }
@@ -273,7 +272,7 @@ bool StyleElement::importBorderStyle(
             _border = BORDER_SIMPLE_COLOR;
             _borderColor = toInt32(aValue);
         }
-        
+
         _hasValue |= 0x4;
         importBorderStyle(xProps); // write values
     }
@@ -295,7 +294,7 @@ bool StyleElement::importVisualEffectStyle(
         return false;
     }
     _inited |= 0x40;
-    
+
     OUString aValue;
     if (getStringAttr( &aValue, OUString( RTL_CONSTASCII_USTRINGPARAM("look") ),
                        _xAttributes, _pImport->XMLNS_DIALOGS_UID ))
@@ -314,7 +313,7 @@ bool StyleElement::importVisualEffectStyle(
         }
         else
             OSL_ASSERT( 0 );
-        
+
         _hasValue |= 0x40;
         xProps->setPropertyValue( OUSTR("VisualEffect"),
                                   makeAny(_visualEffect) );
@@ -674,7 +673,7 @@ bool StyleElement::importFontStyle(
         &_descr.WordLineMode,
         OUString( RTL_CONSTASCII_USTRINGPARAM("font-wordlinemode") ),
         _xAttributes, _pImport->XMLNS_DIALOGS_UID );
-    
+
     // dialog:font-type "(raster|device|scalable)" #IMPLIED
     if (getStringAttr(
             &aValue, OUString( RTL_CONSTASCII_USTRINGPARAM("font-type") ),
@@ -1351,7 +1350,7 @@ bool ImportContext::importImageScaleModeProperty(
     if (!aImageScaleMode.isEmpty())
     {
         sal_Int16 nImageScaleMode;
-        
+
         if (aImageScaleMode.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM("none") ))
         {
             nImageScaleMode = awt::ImageScaleMode::NONE;
@@ -1370,7 +1369,7 @@ bool ImportContext::importImageScaleModeProperty(
                 OUString( RTL_CONSTASCII_USTRINGPARAM("invalid scale image mode value!") ),
                 Reference< XInterface >(), Any() );
         }
-        
+
         _xControlModel->setPropertyValue( rPropName, makeAny( nImageScaleMode ) );
         return true;
     }
@@ -1485,10 +1484,10 @@ void ImportContext::importEvents(
                         }
                     }
 					else if ( descr.ScriptType.equals( OUString( RTL_CONSTASCII_USTRINGPARAM( "Script" ) ) ) )
-					{ 
+					{
 						// Check if there is a protocol, if not assume
 						// this is an early scripting framework url ( without
-						// the protocol ) and fix it up!! 
+						// the protocol ) and fix it up!!
 						if ( descr.ScriptCode.indexOf( ':' ) == -1 )
 						{
 							::rtl::OUStringBuffer buf;
@@ -1580,7 +1579,7 @@ void ImportContext::importEvents(
                         _pImport->XMLNS_DIALOGS_UID == nUid &&
                         aLocalName.equalsAsciiL(
                             RTL_CONSTASCII_STRINGPARAM("event") ) );
-                    
+
                     if (!getStringAttr( &descr.ListenerType,
                                         OUString( RTL_CONSTASCII_USTRINGPARAM(
                                                       "listener-type") ),
@@ -1651,7 +1650,7 @@ void ImportContext::importDefaults(
     {
 	try
 	{
-		
+
         	_xControlModel->setPropertyValue(
             		OUString( RTL_CONSTASCII_USTRINGPARAM("EnableVisible") ), makeAny( sal_False ) );
 	}
@@ -1716,57 +1715,48 @@ void ImportContext::importDefaults(
 
 //__________________________________________________________________________________________________
 Reference< xml::input::XElement > ElementBase::getParent()
-    throw (RuntimeException)
 {
     return static_cast< xml::input::XElement * >( _pParent );
 }
 //__________________________________________________________________________________________________
 OUString ElementBase::getLocalName()
-    throw (RuntimeException)
 {
     return _aLocalName;
 }
 //__________________________________________________________________________________________________
 sal_Int32 ElementBase::getUid()
-    throw (RuntimeException)
 {
     return _nUid;
 }
 //__________________________________________________________________________________________________
 Reference< xml::input::XAttributes > ElementBase::getAttributes()
-    throw (RuntimeException)
 {
     return _xAttributes;
 }
 //__________________________________________________________________________________________________
 void ElementBase::ignorableWhitespace(
     OUString const & /*rWhitespaces*/ )
-    throw (xml::sax::SAXException, RuntimeException)
 {
     // not used
 }
 //__________________________________________________________________________________________________
 void ElementBase::characters( OUString const & /*rChars*/ )
-    throw (xml::sax::SAXException, RuntimeException)
 {
     // not used, all characters ignored
 }
 //__________________________________________________________________________________________________
 void ElementBase::endElement()
-    throw (xml::sax::SAXException, RuntimeException)
 {
 }
 //______________________________________________________________________________
 void ElementBase::processingInstruction(
     OUString const & /*Target*/, OUString const & /*Data*/ )
-    throw (xml::sax::SAXException, RuntimeException)
 {
 }
 //__________________________________________________________________________________________________
 Reference< xml::input::XElement > ElementBase::startChildElement(
     sal_Int32 /*nUid*/, OUString const & /*rLocalName*/,
     Reference< xml::input::XAttributes > const & /*xAttributes*/ )
-    throw (xml::sax::SAXException, RuntimeException)
 {
     throw xml::sax::SAXException(
         OUString( RTL_CONSTASCII_USTRINGPARAM("unexpected element!") ),
@@ -1818,7 +1808,6 @@ ElementBase::~ElementBase()
 //______________________________________________________________________________
 void DialogImport::startDocument(
     Reference< xml::input::XNamespaceMapping > const & xNamespaceMapping )
-    throw (xml::sax::SAXException, RuntimeException)
 {
     XMLNS_DIALOGS_UID = xNamespaceMapping->getUidByUri(
         OUSTR(XMLNS_DIALOGS_URI) );
@@ -1827,21 +1816,18 @@ void DialogImport::startDocument(
 }
 //__________________________________________________________________________________________________
 void DialogImport::endDocument()
-    throw (xml::sax::SAXException, RuntimeException)
 {
     // ignored
 }
 //__________________________________________________________________________________________________
 void DialogImport::processingInstruction(
     OUString const & /*rTarget*/, OUString const & /*rData*/ )
-    throw (xml::sax::SAXException, RuntimeException)
 {
     // ignored for now: xxx todo
 }
 //__________________________________________________________________________________________________
 void DialogImport::setDocumentLocator(
     Reference< xml::sax::XLocator > const & /*xLocator*/ )
-    throw (xml::sax::SAXException, RuntimeException)
 {
     // ignored for now: xxx todo
 }
@@ -1849,7 +1835,6 @@ void DialogImport::setDocumentLocator(
 Reference< xml::input::XElement > DialogImport::startRootElement(
     sal_Int32 nUid, OUString const & rLocalName,
     Reference< xml::input::XAttributes > const & xAttributes )
-    throw (xml::sax::SAXException, RuntimeException)
 {
     if (XMLNS_DIALOGS_UID != nUid)
     {
@@ -1889,7 +1874,7 @@ Reference< util::XNumberFormatsSupplier > const & DialogImport::getNumberFormats
                 OUString( RTL_CONSTASCII_USTRINGPARAM(
                               "com.sun.star.util.NumberFormatsSupplier") ),
                 xContext ), UNO_QUERY );
-        
+
         ::osl::MutexGuard aGuard( ::osl::Mutex::getGlobalMutex() );
         if (! _xSupplier.is())
         {
@@ -1929,7 +1914,6 @@ Reference< xml::input::XElement > DialogImport::getStyle(
 Reference< xml::sax::XDocumentHandler > SAL_CALL importDialogModel(
     Reference< container::XNameContainer > const & xDialogModel,
     Reference< XComponentContext > const & xContext )
-    SAL_THROW( (Exception) )
 {
     return ::xmlscript::createDocumentHandler(
         static_cast< xml::input::XRoot * >(

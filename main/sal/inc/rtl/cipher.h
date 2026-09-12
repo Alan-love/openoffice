@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -124,7 +124,7 @@ rtlCipher SAL_CALL rtl_cipher_create (
 ) SAL_THROW_EXTERN_C();
 
 
-/** Inititialize a cipher for the given direction.
+/** Initialize a cipher for the given direction.
     @see rtlCipherDirection
 
 	@param  Cipher    [in] cipher handle.
@@ -204,7 +204,7 @@ rtlCipher SAL_CALL rtl_cipher_createBF (
 ) SAL_THROW_EXTERN_C();
 
 
-/** Inititialize a Blowfish cipher for the given direction.
+/** Initialize a Blowfish cipher for the given direction.
 	@see rtl_cipher_init()
  */
 rtlCipherError SAL_CALL rtl_cipher_initBF (
@@ -262,7 +262,7 @@ rtlCipher SAL_CALL rtl_cipher_createARCFOUR (
 ) SAL_THROW_EXTERN_C();
 
 
-/** Inititialize a RC4 cipher for the given direction.
+/** Initialize a RC4 cipher for the given direction.
 	@see rtl_cipher_init()
  */
 rtlCipherError SAL_CALL rtl_cipher_initARCFOUR (
@@ -312,4 +312,3 @@ void SAL_CALL rtl_cipher_destroyARCFOUR (
 #endif
 
 #endif /* !_RTL_CIPHER_H_ */
-

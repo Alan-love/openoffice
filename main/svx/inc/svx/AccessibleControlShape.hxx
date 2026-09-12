@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -67,19 +67,19 @@ public:
     AccessibleControlShape* SAL_CALL GetLabeledByControlShape();
 protected:
 	//---  XAccessible  ----------------------------------------
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessibleContext> SAL_CALL getAccessibleContext( ) throw(::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessibleContext> SAL_CALL getAccessibleContext( );
 
 	//---  XAccessibleComponent  -------------------------------
     /// forward the focus to the contained control(in alive mode)
-    virtual void SAL_CALL grabFocus( ) throw(::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL grabFocus( );
 
 	//---  XAccessibleContext  ---------------------------------
-    virtual sal_Int32 SAL_CALL getAccessibleChildCount( ) throw(::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL getAccessibleChild( sal_Int32 i ) throw(::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::uno::RuntimeException);
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessibleRelationSet > SAL_CALL getAccessibleRelationSet(  ) throw (::com::sun::star::uno::RuntimeException);
+    virtual sal_Int32 SAL_CALL getAccessibleChildCount( );
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL getAccessibleChild( sal_Int32 i );
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessibleRelationSet > SAL_CALL getAccessibleRelationSet(  );
 
 	//---  XServiceInfo  ---------------------------------------
-	virtual ::rtl::OUString SAL_CALL getImplementationName( ) throw(::com::sun::star::uno::RuntimeException);
+	virtual ::rtl::OUString SAL_CALL getImplementationName( );
 
 	//---  XInterface  -----------------------------------------
 	DECLARE_XINTERFACE( )
@@ -88,27 +88,27 @@ protected:
 	DECLARE_XTYPEPROVIDER( )
 
     //---  XPropertyChangeListener  ----------------------------
-    virtual void SAL_CALL propertyChange( const ::com::sun::star::beans::PropertyChangeEvent& _rEvent ) throw(::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL propertyChange( const ::com::sun::star::beans::PropertyChangeEvent& _rEvent );
 
     //---  XComponent  -----------------------------------------
     virtual void SAL_CALL disposing( );
 
     //---  XEventListener  -------------------------------------
-    virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& Source) throw(::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& Source);
 
     //---  XModeChangeListener  --------------------------------
-	virtual void SAL_CALL modeChanged( const ::com::sun::star::util::ModeChangeEvent& _rSource ) throw(::com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL modeChanged( const ::com::sun::star::util::ModeChangeEvent& _rSource );
 
     //---  XAccessibleEventListener ----------------------------
-	virtual void SAL_CALL notifyEvent( const ::com::sun::star::accessibility::AccessibleEventObject& aEvent ) throw(::com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL notifyEvent( const ::com::sun::star::accessibility::AccessibleEventObject& aEvent );
 
     //---  document::XEventListener ----------------------------
     using AccessibleShape::notifyEvent;
 
     // XVclContainerListener
-    virtual void SAL_CALL elementInserted( const ::com::sun::star::container::ContainerEvent& Event ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL elementRemoved( const ::com::sun::star::container::ContainerEvent& Event ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL elementReplaced( const ::com::sun::star::container::ContainerEvent& Event ) throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL elementInserted( const ::com::sun::star::container::ContainerEvent& Event );
+    virtual void SAL_CALL elementRemoved( const ::com::sun::star::container::ContainerEvent& Event );
+    virtual void SAL_CALL elementReplaced( const ::com::sun::star::container::ContainerEvent& Event );
 
 protected:
     /** Initialize a new shape.  See the documentation of the base' constructor
@@ -118,20 +118,17 @@ protected:
 
     ///	Create a name string that contains the accessible name.
 	virtual ::rtl::OUString
-    	CreateAccessibleBaseName( )
-        throw(::com::sun::star::uno::RuntimeException);
+    	CreateAccessibleBaseName( );
 
     /**	Create a unique name string that contains the accessible name.  The
         name consists of the base name and the index.
     */
 	virtual ::rtl::OUString
-    	CreateAccessibleName( )
-        throw(::com::sun::star::uno::RuntimeException);
+    	CreateAccessibleName( );
 
     ///	Create a description string that contains the accessible description.
 	virtual ::rtl::OUString
-    	CreateAccessibleDescription( )
-        throw(::com::sun::star::uno::RuntimeException);
+    	CreateAccessibleDescription( );
 
 #ifdef DBG_UTIL
     /// Set the specified state
@@ -158,7 +155,7 @@ protected:
 
 	/** adjusts our AccessibleRole, depending on the control type we're working for
 
-		<p>Only to be called during inituialization</p>
+		<p>Only to be called during initialization</p>
 	*/
 	void		adjustAccessibleRole( );
 
@@ -197,7 +194,7 @@ private:
     sal_Bool        m_bWaitingForControl    : 1;    // if we are created before our control exists, we need to wait for it to appear ...
 
 private:
-    /** Don't use the default constructor.  Use the public constructor that 
+    /** Don't use the default constructor.  Use the public constructor that
         takes the original shape and the parent as arguments instead.
     */
     AccessibleControlShape( );

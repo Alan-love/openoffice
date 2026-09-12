@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -29,18 +29,18 @@
 // forward declaractions
 namespace xforms
 {
-    class Model; 
+    class Model;
     class EvaluationContext;
 }
 namespace com { namespace sun { namespace star {
     namespace xml {
         namespace xpath { class XXPathAPI; }
-        namespace dom 
-        { 
-            class XNode; 
+        namespace dom
+        {
+            class XNode;
             class XNodeList;
         }
-    } 
+    }
     namespace container { class XNameContainer; }
     namespace xforms { class XModel; }
     namespace xsd { class XDataType; }
@@ -125,7 +125,7 @@ private:
     /// an XPath-expression to be instantiated on the data instance
     PathExpression maBindingExpression;
 
-    /// an XPath-expression to determine read-only status 
+    /// an XPath-expression to determine read-only status
     BoolExpression maReadonly;
 
     /// an XPath-expression to determine relevance
@@ -149,7 +149,7 @@ private:
     /// a type name
     rtl::OUString msTypeName;
 
-    /// modify listeners 
+    /// modify listeners
     ModifyListeners_t maModifyListeners;
 
     /// list entry listener
@@ -187,7 +187,7 @@ public:
 
     Model_t getModel() const;   /// get XForms model
     void _setModel( const Model_t& ); /// set XForms model (only called by Model)
-    
+
 
     rtl::OUString getModelID() const;   /// get ID of XForms model
 
@@ -218,7 +218,7 @@ public:
     void setType( const rtl::OUString& );  /// set type name MIP (static)
 
     // a binding expression can only be interpreted with respect to
-    // suitable namespace declarations. We collect those in the model and in a binding. 
+    // suitable namespace declarations. We collect those in the model and in a binding.
 
     // access to a binding's namespace
     // (set-method only changes local namespaces (but may add to model))
@@ -241,7 +241,7 @@ public:
     // - type (static; default: xsd:string)
     // - minOccurs/maxOccurs (computed XPath; default: 0/inf)
     // - p3ptype (static; no default)
-    
+
 
 
 
@@ -255,7 +255,7 @@ public:
     XNodeList_t getXNodeList();
 
     /// heuristically determine whether this binding is simple binding
-    /// (here: simple binding == does not depend on other parts of the 
+    /// (here: simple binding == does not depend on other parts of the
     ///                          instance, it's not a 'dynamic' binding)
     bool isSimpleBinding() const;
 
@@ -318,11 +318,11 @@ public:
 private:
     /// check whether object is live, and throw suitable exception if not
     /// (to be used be API methods before acting on the object)
-    void checkLive() throw( RuntimeException_t );
+    void checkLive();
 
     /// check whether binding has a model, and throw exception if not
     /// (to be used be API methods before acting on the object)
-    void checkModel() throw( RuntimeException_t );
+    void checkModel();
 
     /// determine whether object is live
     /// live: has model, and model has been initialized
@@ -339,7 +339,7 @@ private:
     /// bind this binding, and pre-compute the affected nodes
     void bind( bool bForceRebind = false );
 
-    /// the binding value has been changed: 
+    /// the binding value has been changed:
     ///   trigger a modified event on all modified listeners
     void valueModified();
 
@@ -392,21 +392,13 @@ public:
 
 public:
 
-    virtual Sequence_Type_t SAL_CALL getSupportedValueTypes() 
-        throw( RuntimeException_t );
+    virtual Sequence_Type_t SAL_CALL getSupportedValueTypes();
 
-    virtual sal_Bool SAL_CALL supportsType( const Type_t& aType ) 
-        throw( RuntimeException_t );
+    virtual sal_Bool SAL_CALL supportsType( const Type_t& aType );
 
-    virtual Any_t SAL_CALL getValue( const Type_t& aType )
-        throw( IncompatibleTypesException_t, 
-               RuntimeException_t );
+    virtual Any_t SAL_CALL getValue( const Type_t& aType );
 
-    virtual void SAL_CALL setValue( const Any_t& aValue ) 
-        throw( IncompatibleTypesException_t, 
-               InvalidBindingStateException_t,
-               NoSupportException_t, 
-               RuntimeException_t );
+    virtual void SAL_CALL setValue( const Any_t& aValue );
 
 
 
@@ -414,23 +406,15 @@ public:
     // XListEntry Source
     //
 
-    virtual sal_Int32 SAL_CALL getListEntryCount()
-        throw( RuntimeException_t );
+    virtual sal_Int32 SAL_CALL getListEntryCount();
 
-    virtual rtl::OUString SAL_CALL getListEntry( sal_Int32 nPosition )
-        throw( IndexOutOfBoundsException_t,
-               RuntimeException_t );
+    virtual rtl::OUString SAL_CALL getListEntry( sal_Int32 nPosition );
 
-    virtual StringSequence_t SAL_CALL getAllListEntries()
-        throw( RuntimeException_t );
+    virtual StringSequence_t SAL_CALL getAllListEntries();
 
-    virtual void SAL_CALL addListEntryListener( const XListEntryListener_t& )
-        throw( NullPointerException_t,
-               RuntimeException_t );
+    virtual void SAL_CALL addListEntryListener( const XListEntryListener_t& );
 
-    virtual void SAL_CALL removeListEntryListener( const XListEntryListener_t&)
-        throw( NullPointerException_t,
-               RuntimeException_t );
+    virtual void SAL_CALL removeListEntryListener( const XListEntryListener_t&);
 
 
 
@@ -438,23 +422,17 @@ public:
     // XValidator:
     //
 
-    virtual sal_Bool SAL_CALL isValid( 
-        const Any_t& )
-        throw( RuntimeException_t );
+    virtual sal_Bool SAL_CALL isValid(
+        const Any_t& );
 
     virtual rtl::OUString SAL_CALL explainInvalid(
-        const Any_t& )
-        throw( RuntimeException_t );
+        const Any_t& );
 
     virtual void SAL_CALL addValidityConstraintListener(
-        const XValidityConstraintListener_t& xListener )
-        throw( NullPointerException_t,
-               RuntimeException_t );
+        const XValidityConstraintListener_t& xListener );
 
     virtual void SAL_CALL removeValidityConstraintListener(
-        const XValidityConstraintListener_t& xListener )
-        throw( NullPointerException_t,
-               RuntimeException_t );
+        const XValidityConstraintListener_t& xListener );
 
 
     //
@@ -464,13 +442,11 @@ public:
 
 public:
 
-    virtual void SAL_CALL addModifyListener( 
-        const XModifyListener_t& xListener )
-        throw( RuntimeException_t );
+    virtual void SAL_CALL addModifyListener(
+        const XModifyListener_t& xListener );
 
     virtual void SAL_CALL removeModifyListener(
-        const XModifyListener_t& xListener )
-        throw( RuntimeException_t );
+        const XModifyListener_t& xListener );
 
 
 
@@ -482,22 +458,19 @@ public:
 
 public:
 
-    virtual rtl::OUString SAL_CALL getName()
-        throw( RuntimeException_t );
+    virtual rtl::OUString SAL_CALL getName();
 
-    virtual void SAL_CALL setName( const rtl::OUString& )
-        throw( RuntimeException_t );
+    virtual void SAL_CALL setName( const rtl::OUString& );
 
 
 
-    // 
+    //
     // xml::dom::event::XEventListener
     //   receive an event if our node changed
     //
 
-    virtual void SAL_CALL handleEvent( 
-        const XEvent_t& xEvent )
-        throw( RuntimeException_t );
+    virtual void SAL_CALL handleEvent(
+        const XEvent_t& xEvent );
 
 
 
@@ -505,16 +478,14 @@ public:
     // XUnoTunnel
     //
 
-    virtual sal_Int64 SAL_CALL getSomething( const IntSequence_t& )
-        throw( RuntimeException_t );
+    virtual sal_Int64 SAL_CALL getSomething( const IntSequence_t& );
 
 
     //
     // XCloneable
     //
 
-    virtual XCloneable_t SAL_CALL createClone()
-        throw( RuntimeException_t );
+    virtual XCloneable_t SAL_CALL createClone();
 };
 
 

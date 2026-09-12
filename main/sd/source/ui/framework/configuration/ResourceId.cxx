@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -57,7 +57,7 @@ Reference<XInterface> SAL_CALL ResourceId_createInstance (
 
 
 
-::rtl::OUString ResourceId_getImplementationName (void) throw(RuntimeException)
+::rtl::OUString ResourceId_getImplementationName (void)
 {
     return ::rtl::OUString(
         RTL_CONSTASCII_USTRINGPARAM("com.sun.star.comp.Draw.framework.ResourceId"));
@@ -67,7 +67,6 @@ Reference<XInterface> SAL_CALL ResourceId_createInstance (
 
 
 Sequence<rtl::OUString> SAL_CALL ResourceId_getSupportedServiceNames (void)
-    throw (RuntimeException)
 {
 	static const ::rtl::OUString sServiceName(
         ::rtl::OUString::createFromAscii("com.sun.star.drawing.framework.ResourceId"));
@@ -177,7 +176,6 @@ ResourceId::~ResourceId (void)
 
 OUString SAL_CALL
     ResourceId::getResourceURL (void)
-    throw(com::sun::star::uno::RuntimeException)
 {
     if (!maResourceURLs.empty())
         return maResourceURLs[0];
@@ -190,7 +188,6 @@ OUString SAL_CALL
 
 util::URL SAL_CALL
     ResourceId::getFullResourceURL (void)
- throw(com::sun::star::uno::RuntimeException)
 {
     if (mpURL.get() != NULL)
         return *mpURL;
@@ -215,7 +212,6 @@ util::URL SAL_CALL
 
 sal_Bool SAL_CALL
     ResourceId::hasAnchor (void)
-    throw (RuntimeException)
 {
     return maResourceURLs.size()>1;
 }
@@ -225,7 +221,6 @@ sal_Bool SAL_CALL
 
 Reference<XResourceId> SAL_CALL
     ResourceId::getAnchor (void)
-    throw (RuntimeException)
 {
     ::rtl::Reference<ResourceId> rResourceId (new ResourceId());
     const sal_Int32 nAnchorCount (maResourceURLs.size()-1);
@@ -243,7 +238,6 @@ Reference<XResourceId> SAL_CALL
 
 Sequence<OUString> SAL_CALL
     ResourceId::getAnchorURLs (void)
-    throw (RuntimeException)
 {
     const sal_Int32 nAnchorCount (maResourceURLs.size() - 1);
     if (nAnchorCount > 0)
@@ -262,7 +256,6 @@ Sequence<OUString> SAL_CALL
 
 OUString SAL_CALL
     ResourceId::getResourceTypePrefix (void)
-    throw (RuntimeException)
 {
     if (!maResourceURLs.empty() )
     {
@@ -287,10 +280,9 @@ OUString SAL_CALL
 
 sal_Int16 SAL_CALL
     ResourceId::compareTo (const Reference<XResourceId>& rxResourceId)
-    throw (RuntimeException)
 {
     sal_Int16 nResult (0);
-    
+
     if ( ! rxResourceId.is())
     {
         // The empty reference is interpreted as empty resource id object.
@@ -377,7 +369,7 @@ sal_Int16 ResourceId::CompareToExternalImplementation (const Reference<XResource
     const Sequence<OUString> aAnchorURLs (rxId->getAnchorURLs());
     const sal_uInt32 nLocalURLCount (maResourceURLs.size());
     const sal_uInt32 nURLCount(1+aAnchorURLs.getLength());
-    
+
     // Start comparison with the top most anchors.
     sal_Int32 nLocalResult (0);
     for (sal_Int32 nIndex=nURLCount-1,nLocalIndex=nLocalURLCount-1;
@@ -422,7 +414,6 @@ sal_Bool SAL_CALL
     ResourceId::isBoundTo (
         const Reference<XResourceId>& rxResourceId,
         AnchorBindingMode eMode)
-    throw (RuntimeException)
 {
     if ( ! rxResourceId.is())
     {
@@ -445,7 +436,7 @@ sal_Bool SAL_CALL
         return IsBoundToAnchor(&sResourceURL, &aAnchorURLs, eMode);
     }
 }
-    
+
 
 
 
@@ -453,7 +444,6 @@ sal_Bool SAL_CALL
     ResourceId::isBoundToURL (
         const OUString& rsAnchorURL,
         AnchorBindingMode eMode)
-    throw (RuntimeException)
 {
     return IsBoundToAnchor(&rsAnchorURL, NULL, eMode);
 }
@@ -463,7 +453,6 @@ sal_Bool SAL_CALL
 
 Reference<XResourceId> SAL_CALL
     ResourceId::clone (void)
-    throw(RuntimeException)
 {
     return new ResourceId(maResourceURLs);
 }
@@ -474,7 +463,6 @@ Reference<XResourceId> SAL_CALL
 //----- XInitialization -------------------------------------------------------
 
 void SAL_CALL ResourceId::initialize (const Sequence<Any>& aArguments)
-    throw (RuntimeException)
 {
     sal_uInt32 nCount (aArguments.getLength());
     for (sal_uInt32 nIndex=0; nIndex<nCount; ++nIndex)
@@ -605,7 +593,7 @@ void ResourceId::ParseResourceURL (void)
         SdGlobalResourceContainer::Instance().AddResource(
             Reference<XInterface>(xURLTransformer,UNO_QUERY));
     }
-    
+
     if (xURLTransformer.is() && !maResourceURLs.empty() )
     {
         mpURL.reset(new util::URL);

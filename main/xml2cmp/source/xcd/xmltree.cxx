@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -51,7 +51,7 @@ char  C_sAttr_xl_role[] = "xlink:role";
 char  C_sAttr_xl_title[] = "xlink:title";
 char  C_sAttr_xmlns[] = "xmlns:xlink";
 char  C_sAttr_xl_type[] = "xlink:type";
-char  C_sCompDescrListTitle[] = "Component Descriptions"; 
+char  C_sCompDescrListTitle[] = "Component Descriptions";
 
 
 FreeChoiceElement *	Create_ModuleDescrOptional_Element(
@@ -151,7 +151,7 @@ CompDescrList::Create_and_Add_NewElement()
 void
 CompDescrList::Get_SupportedServices( List< const MultipleTextElement * > & o_rResult ) const
 {
-	unsigned i_max = aCDs.size();;
+	unsigned i_max = aCDs.size();
 	for (unsigned i = 0; i < i_max; ++i)
 	{
 		o_rResult.push_back(& aCDs[i]->SupportedServices());
@@ -161,7 +161,7 @@ CompDescrList::Get_SupportedServices( List< const MultipleTextElement * > & o_rR
 void
 CompDescrList::Get_Types( List< const MultipleTextElement * > & o_rResult ) const
 {
-	unsigned i_max = aCDs.size();;
+	unsigned i_max = aCDs.size();
 	for (unsigned i = 0; i < i_max; ++i)
 	{
 		o_rResult.push_back(& aCDs[i]->Types());
@@ -171,7 +171,7 @@ CompDescrList::Get_Types( List< const MultipleTextElement * > & o_rResult ) cons
 void
 CompDescrList::Get_ServiceDependencies( List< const MultipleTextElement * > & o_rResult ) const
 {
-	unsigned i_max = aCDs.size();;
+	unsigned i_max = aCDs.size();
 	for (unsigned i = 0; i < i_max; ++i)
 	{
 		o_rResult.push_back(& aCDs[i]->ServiceDependencies());
@@ -278,5 +278,3 @@ ComponentDescription::ServiceDependencies() const
 }
 
 #endif
-
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -226,7 +226,6 @@ SwXDocumentSettings::~SwXDocumentSettings()
 }
 
 Any SAL_CALL SwXDocumentSettings::queryInterface( const Type& rType )
-	throw(RuntimeException)
 {
         return ::cppu::queryInterface ( rType,
 										// OWeakObject interfaces
@@ -251,7 +250,6 @@ void SwXDocumentSettings::release ()
 }
 
 uno::Sequence< uno::Type > SAL_CALL SwXDocumentSettings::getTypes(  )
-    throw (RuntimeException)
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -270,7 +268,6 @@ uno::Sequence< uno::Type > SAL_CALL SwXDocumentSettings::getTypes(  )
 }
 
 uno::Sequence< sal_Int8 > SAL_CALL SwXDocumentSettings::getImplementationId(  )
-    throw (RuntimeException)
 {
     vos::OGuard aGuard(Application::GetSolarMutex());
     static Sequence< sal_Int8 > aId( 16 );
@@ -284,7 +281,6 @@ uno::Sequence< sal_Int8 > SAL_CALL SwXDocumentSettings::getImplementationId(  )
 }
 
 void SwXDocumentSettings::_preSetValues ()
-        throw(beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException )
 {
 	mpDocSh = mpModel->GetDocShell();
 	mpDoc = mpDocSh->GetDoc();
@@ -295,7 +291,6 @@ void SwXDocumentSettings::_preSetValues ()
 
 
 void SwXDocumentSettings::_setSingleValue( const comphelper::PropertyInfo & rInfo, const uno::Any &rValue )
-        throw(beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException )
 {
 	if (rInfo.mnAttributes & PropertyAttribute::READONLY)
 		throw PropertyVetoException ( OUString ( RTL_CONSTASCII_USTRINGPARAM ( "Property is read-only: " ) ) + C2U(rInfo.mpName), static_cast < cppu::OWeakObject * > ( 0 ) );
@@ -673,7 +668,7 @@ void SwXDocumentSettings::_setSingleValue( const comphelper::PropertyInfo & rInf
         {
             uno::Sequence< beans::PropertyValue > aInfo;
             if ( !( rValue >>= aInfo ) )
-                throw lang::IllegalArgumentException( 
+                throw lang::IllegalArgumentException(
                     ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Value of type Sequence<PropertyValue> expected!" ) ),
                     uno::Reference< uno::XInterface >(),
                     2 );
@@ -696,7 +691,6 @@ void SwXDocumentSettings::_setSingleValue( const comphelper::PropertyInfo & rInf
 }
 
 void SwXDocumentSettings::_postSetValues ()
-        throw(beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException )
 {
     // set printer only once, namely here!
     if( mpPrinter != NULL )
@@ -718,7 +712,6 @@ void SwXDocumentSettings::_postSetValues ()
 }
 
 void SwXDocumentSettings::_preGetValues ()
-        throw(beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException )
 {
 	mpDocSh = mpModel->GetDocShell();
 	mpDoc = mpDocSh->GetDoc();
@@ -727,7 +720,6 @@ void SwXDocumentSettings::_preGetValues ()
 }
 
 void SwXDocumentSettings::_getSingleValue( const comphelper::PropertyInfo & rInfo, uno::Any & rValue )
-        throw(beans::UnknownPropertyException, lang::WrappedTargetException )
 {
 	switch( rInfo.mnHandle )
 	{
@@ -1031,7 +1023,6 @@ void SwXDocumentSettings::_getSingleValue( const comphelper::PropertyInfo & rInf
 }
 
 void SwXDocumentSettings::_postGetValues ()
-        throw(beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException )
 {
 	mpDocSh = 0;
 	mpDoc = 0;
@@ -1039,13 +1030,11 @@ void SwXDocumentSettings::_postGetValues ()
 
 // XServiceInfo
 OUString SAL_CALL SwXDocumentSettings::getImplementationName(  )
-	throw(RuntimeException)
 {
 	return OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.comp.Writer.DocumentSettings"));
 }
 
 sal_Bool SAL_CALL SwXDocumentSettings::supportsService( const OUString& ServiceName )
-	throw(RuntimeException)
 {
 	const Sequence< OUString > aSeq( getSupportedServiceNames() );
 	sal_Int32 nCount = aSeq.getLength();
@@ -1059,7 +1048,6 @@ sal_Bool SAL_CALL SwXDocumentSettings::supportsService( const OUString& ServiceN
 }
 
 Sequence< OUString > SAL_CALL SwXDocumentSettings::getSupportedServiceNames(  )
-	throw(RuntimeException)
 {
     Sequence< OUString > aSeq( 4 );
 	aSeq[0] = OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.document.Settings") );
@@ -1068,5 +1056,3 @@ Sequence< OUString > SAL_CALL SwXDocumentSettings::getSupportedServiceNames(  )
     aSeq[3] = OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.text.PrintPreviewSettings") );
     return aSeq;
 }
-
-

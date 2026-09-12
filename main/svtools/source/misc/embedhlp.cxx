@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -79,16 +79,13 @@ public:
 
     static EmbedEventListener_Impl* Create( EmbeddedObjectRef* );
 
-    virtual void SAL_CALL changingState( const lang::EventObject& aEvent, ::sal_Int32 nOldState, ::sal_Int32 nNewState )
-									throw (embed::WrongStateException, uno::RuntimeException);
-    virtual void SAL_CALL stateChanged( const lang::EventObject& aEvent, ::sal_Int32 nOldState, ::sal_Int32 nNewState )
-									throw (uno::RuntimeException);
-    virtual void SAL_CALL queryClosing( const lang::EventObject& Source, ::sal_Bool GetsOwnership )
-                                    throw (util::CloseVetoException, uno::RuntimeException);
-    virtual void SAL_CALL notifyClosing( const lang::EventObject& Source ) throw (uno::RuntimeException);
-    virtual void SAL_CALL notifyEvent( const document::EventObject& aEvent ) throw( uno::RuntimeException );
-    virtual void SAL_CALL disposing( const lang::EventObject& aEvent ) throw( uno::RuntimeException );
-    virtual void SAL_CALL modified( const ::com::sun::star::lang::EventObject& aEvent ) throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL changingState( const lang::EventObject& aEvent, ::sal_Int32 nOldState, ::sal_Int32 nNewState );
+    virtual void SAL_CALL stateChanged( const lang::EventObject& aEvent, ::sal_Int32 nOldState, ::sal_Int32 nNewState );
+    virtual void SAL_CALL queryClosing( const lang::EventObject& Source, ::sal_Bool GetsOwnership );
+    virtual void SAL_CALL notifyClosing( const lang::EventObject& Source );
+    virtual void SAL_CALL notifyEvent( const document::EventObject& aEvent );
+    virtual void SAL_CALL disposing( const lang::EventObject& aEvent );
+    virtual void SAL_CALL modified( const ::com::sun::star::lang::EventObject& aEvent );
 };
 
 EmbedEventListener_Impl* EmbedEventListener_Impl::Create( EmbeddedObjectRef* p )
@@ -125,15 +122,12 @@ EmbedEventListener_Impl* EmbedEventListener_Impl::Create( EmbeddedObjectRef* p )
 void SAL_CALL EmbedEventListener_Impl::changingState( const lang::EventObject&,
 													::sal_Int32,
 													::sal_Int32 )
-	throw ( embed::WrongStateException,
-			uno::RuntimeException )
 {
 }
 
 void SAL_CALL EmbedEventListener_Impl::stateChanged( const lang::EventObject&,
 													::sal_Int32 nOldState,
 													::sal_Int32 nNewState )
-	throw ( uno::RuntimeException )
 {
 	::vos::OGuard aGuard( Application::GetSolarMutex() );
     nState = nNewState;
@@ -169,7 +163,7 @@ void SAL_CALL EmbedEventListener_Impl::stateChanged( const lang::EventObject&,
     }
 }
 
-void SAL_CALL EmbedEventListener_Impl::modified( const lang::EventObject& ) throw (uno::RuntimeException)
+void SAL_CALL EmbedEventListener_Impl::modified( const lang::EventObject& )
 {
 	::vos::OGuard aGuard( Application::GetSolarMutex() );
     if ( pObject && pObject->GetViewAspect() != embed::Aspects::MSOLE_ICON )
@@ -190,7 +184,7 @@ void SAL_CALL EmbedEventListener_Impl::modified( const lang::EventObject& ) thro
     }
 }
 
-void SAL_CALL EmbedEventListener_Impl::notifyEvent( const document::EventObject& aEvent ) throw( uno::RuntimeException )
+void SAL_CALL EmbedEventListener_Impl::notifyEvent( const document::EventObject& aEvent )
 {
 	::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -210,7 +204,6 @@ void SAL_CALL EmbedEventListener_Impl::notifyEvent( const document::EventObject&
 }
 
 void SAL_CALL EmbedEventListener_Impl::queryClosing( const lang::EventObject& Source, ::sal_Bool )
-        throw ( util::CloseVetoException, uno::RuntimeException)
 {
     // An embedded object can be shared between several objects (f.e. for undo purposes)
     // the object will not be closed before the last "customer" is destroyed
@@ -219,7 +212,7 @@ void SAL_CALL EmbedEventListener_Impl::queryClosing( const lang::EventObject& So
         throw util::CloseVetoException();
 }
 
-void SAL_CALL EmbedEventListener_Impl::notifyClosing( const lang::EventObject& Source ) throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL EmbedEventListener_Impl::notifyClosing( const lang::EventObject& Source )
 {
     if ( pObject && Source.Source == pObject->GetObject() )
     {
@@ -228,7 +221,7 @@ void SAL_CALL EmbedEventListener_Impl::notifyClosing( const lang::EventObject& S
     }
 }
 
-void SAL_CALL EmbedEventListener_Impl::disposing( const lang::EventObject& aEvent ) throw( uno::RuntimeException )
+void SAL_CALL EmbedEventListener_Impl::disposing( const lang::EventObject& aEvent )
 {
     if ( pObject && aEvent.Source == pObject->GetObject() )
     {
@@ -251,7 +244,7 @@ struct EmbeddedObjectRef_Impl
 
     // #i104867#
     sal_uInt32                                  mnGraphicVersion;
-    awt::Size                                   aDefaultSizeForChart_In_100TH_MM;//#i103460# charts do not necessaryly have an own size within ODF files, in this case they need to use the size settings from the surrounding frame, which is made available with this member
+    awt::Size                                   aDefaultSizeForChart_In_100TH_MM;//#i103460# charts do not necessarily have an own size within ODF files, in this case they need to use the size settings from the surrounding frame, which is made available with this member
 };
 
 void EmbeddedObjectRef::Construct_Impl()
@@ -305,7 +298,7 @@ EmbeddedObjectRef::EmbeddedObjectRef( const EmbeddedObjectRef& rObj )
 EmbeddedObjectRef::~EmbeddedObjectRef()
 {
     delete mpImp->pGraphic;
-	if ( mpImp->pHCGraphic ) 
+	if ( mpImp->pHCGraphic )
         DELETEZ( mpImp->pHCGraphic );
     Clear();
     delete mpImp;
@@ -459,7 +452,7 @@ void EmbeddedObjectRef::GetReplacement( sal_Bool bUpdate )
         DELETEZ( mpImp->pGraphic );
         mpImp->aMediaType = ::rtl::OUString();
         mpImp->pGraphic = new Graphic;
-		if ( mpImp->pHCGraphic ) 
+		if ( mpImp->pHCGraphic )
             DELETEZ( mpImp->pHCGraphic );
         mpImp->mnGraphicVersion++;
     }
@@ -613,7 +606,7 @@ Graphic* EmbeddedObjectRef::GetHCGraphic() const
 				if ( !pStream->GetError() )
 				{
         			GraphicFilter* pGF = GraphicFilter::GetGraphicFilter();
-					Graphic* pGraphic = new Graphic(); 
+					Graphic* pGraphic = new Graphic();
         			if ( pGF->ImportGraphic( *pGraphic, String(), *pStream, GRFILTER_FORMAT_DONTKNOW ) == 0 )
 						mpImp->pHCGraphic = pGraphic;
 					else
@@ -636,7 +629,7 @@ void EmbeddedObjectRef::SetGraphicStream( const uno::Reference< io::XInputStream
         delete mpImp->pGraphic;
     mpImp->pGraphic = new Graphic();
     mpImp->aMediaType = rMediaType;
-	if ( mpImp->pHCGraphic ) 
+	if ( mpImp->pHCGraphic )
         DELETEZ( mpImp->pHCGraphic );
     mpImp->mnGraphicVersion++;
 
@@ -647,7 +640,7 @@ void EmbeddedObjectRef::SetGraphicStream( const uno::Reference< io::XInputStream
         GraphicFilter* pGF = GraphicFilter::GetGraphicFilter();
         pGF->ImportGraphic( *mpImp->pGraphic, String(), *pGraphicStream, GRFILTER_FORMAT_DONTKNOW );
         mpImp->mnGraphicVersion++;
-    
+
 		if ( mpImp->pContainer )
 		{
 			pGraphicStream->Seek( 0 );
@@ -669,7 +662,7 @@ void EmbeddedObjectRef::SetGraphic( const Graphic& rGraphic, const ::rtl::OUStri
         delete mpImp->pGraphic;
     mpImp->pGraphic = new Graphic( rGraphic );
     mpImp->aMediaType = rMediaType;
-	if ( mpImp->pHCGraphic ) 
+	if ( mpImp->pHCGraphic )
         DELETEZ( mpImp->pHCGraphic );
     mpImp->mnGraphicVersion++;
 
@@ -887,7 +880,6 @@ void EmbeddedObjectRef::SetGraphicToContainer( const Graphic& rGraphic,
 }
 
 sal_Bool EmbeddedObjectRef::ObjectIsModified( const uno::Reference< embed::XEmbeddedObject >& xObj )
-	throw( uno::Exception )
 {
 	sal_Bool bResult = sal_False;
 
@@ -917,7 +909,7 @@ void EmbeddedObjectRef::UpdateReplacementOnDemand()
 {
     DELETEZ( mpImp->pGraphic );
     mpImp->bNeedUpdate = sal_True;
-	if ( mpImp->pHCGraphic ) 
+	if ( mpImp->pHCGraphic )
         DELETEZ( mpImp->pHCGraphic );
     mpImp->mnGraphicVersion++;
 
@@ -978,10 +970,10 @@ rtl::OUString EmbeddedObjectRef::GetChartType()
 						uno::Reference< chart2::XChartTypeContainer > xCTCnt( aCooSysSeq[nCooSysIdx], uno::UNO_QUERY_THROW );
 						uno::Sequence< uno::Reference< chart2::XChartType > > aChartTypes( xCTCnt->getChartTypes());
 						int nDimesionCount = aCooSysSeq[nCooSysIdx]->getDimension();
-						if( nDimesionCount == 3 )	
-							Style += rtl::OUString::createFromAscii("3D ");	
+						if( nDimesionCount == 3 )
+							Style += rtl::OUString::createFromAscii("3D ");
 						else
-							Style += rtl::OUString::createFromAscii("2D ");	
+							Style += rtl::OUString::createFromAscii("2D ");
 						for( sal_Int32 nCTIdx=0; nCTIdx<aChartTypes.getLength(); ++nCTIdx )
 						{
 							rtl::OUString strChartType = aChartTypes[nCTIdx]->getChartType();
@@ -1044,7 +1036,7 @@ rtl::OUString EmbeddedObjectRef::GetChartType()
 			}
 		}
 	}
-	return Style;	
+	return Style;
 }
 
 // #i104867#
@@ -1055,7 +1047,7 @@ sal_uInt32 EmbeddedObjectRef::getGraphicVersion() const
 
 void EmbeddedObjectRef::SetDefaultSizeForChart( const Size& rSizeIn_100TH_MM )
 {
-    //#i103460# charts do not necessaryly have an own size within ODF files,
+    //#i103460# charts do not necessarily have an own size within ODF files,
     //for this case they need to use the size settings from the surrounding frame,
     //which is made available with this method
 
@@ -1068,4 +1060,3 @@ void EmbeddedObjectRef::SetDefaultSizeForChart( const Size& rSizeIn_100TH_MM )
 }
 
 } // namespace svt
-

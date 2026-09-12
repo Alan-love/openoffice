@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--***********************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -8,16 +8,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  ***********************************************************-->
 
 
@@ -628,7 +628,7 @@
                         </xsl:call-template>
                     </xsl:when>
                     <xsl:when test="string-length(translate($curr-char ,  '+-' ,'') ) = 0  and string-length($number) &gt; 0">
-                        <!-- finsh it with +/- -->
+                        <!-- finish it with +/- -->
                         <xsl:value-of select="concat( round( concat( $curr-char, $number)) ,  ':' , $position)"/>
                     </xsl:when>
                     <xsl:otherwise>
@@ -648,7 +648,7 @@
                 <xsl:variable name="curr-char" select="substring($svg-path, $position , 1)"/>
                 <xsl:choose>
                     <xsl:when test="string-length(translate($curr-char ,  'MmZzLlHhVvCcSsQqTtAa' ,'')) = 0 ">
-                        <!-- "MmZzLlHhVvCcSsQqTtAa" are all possiable  command chars -->
+                        <!-- "MmZzLlHhVvCcSsQqTtAa" are all possible command chars -->
                         <xsl:value-of select="concat( $curr-char , ':'  , $position +1)"/>
                     </xsl:when>
                     <xsl:when test="string-length(translate($curr-char ,  '+-.0123456789' ,'')) = 0 ">

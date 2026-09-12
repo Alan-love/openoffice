@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -887,7 +887,7 @@ static XMLTransformerActionInit aTableValueTypeActionTable[] =
 		   XML_NAMESPACE_OFFICE, XML_STRING_VALUE ),
 	ENTRY0( TABLE, STYLE_NAME, XML_ATACTION_ENCODE_STYLE_NAME_REF ),
 	ENTRY1( TABLE, FORMULA, XML_ATACTION_ADD_APP_NAMESPACE_PREFIX,
-		 			XML_NAMESPACE_OOOW ),
+					XML_NAMESPACE_OF ),
 	ENTRY1Q( TABLE, VALIDATION_NAME, XML_ATACTION_RENAME,
 		   XML_NAMESPACE_TABLE, XML_CONTENT_VALIDATION_NAME ),
 	ENTRY0( TABLE, TOKEN_INVALID, XML_ATACTION_EOT )
@@ -1892,7 +1892,6 @@ OOo2OasisTransformer::~OOo2OasisTransformer() throw()
 }
 
 Any OOo2OasisTransformer::queryInterface( const Type& rType )
-    throw (RuntimeException)
 {
     Any aRet;
     if ( rType == ::getCppuType((Reference<XImporter> *)0) )
@@ -1916,7 +1915,6 @@ Any OOo2OasisTransformer::queryInterface( const Type& rType )
 // XImporter
 void SAL_CALL OOo2OasisTransformer::setTargetDocument(
 		const Reference< XComponent >& xDoc )
-	throw( IllegalArgumentException, RuntimeException)
 {
 	if( !GetDocHandler().is() )
 	{
@@ -1937,7 +1935,6 @@ void SAL_CALL OOo2OasisTransformer::setTargetDocument(
 // XFilter
 sal_Bool SAL_CALL OOo2OasisTransformer::filter(
 		const Sequence< PropertyValue >& aDescriptor )
-    throw ( RuntimeException)
 {
 	Reference< XFilter> xFilter( GetDocHandler(), UNO_QUERY );
 	OSL_ENSURE( xFilter.is(), "doc handler is not a filter" );
@@ -1948,7 +1945,6 @@ sal_Bool SAL_CALL OOo2OasisTransformer::filter(
 }
 
 void SAL_CALL OOo2OasisTransformer::cancel(  )
-    throw ( RuntimeException)
 {
 	Reference< XFilter> xFilter( GetDocHandler(), UNO_QUERY );
 	OSL_ENSURE( xFilter.is(), "doc handler is not a filter" );
@@ -1959,13 +1955,11 @@ void SAL_CALL OOo2OasisTransformer::cancel(  )
 // XInitialize
 void SAL_CALL OOo2OasisTransformer::initialize(
 				const Sequence< Any >& rArguments )
-	throw( Exception, RuntimeException )
 {
 	Initialize( rArguments );
 }
 
 void SAL_CALL OOo2OasisTransformer::startDocument( void )
-	throw( SAXException, RuntimeException )
 {
 	if( !GetDocHandler().is() )
 	{
@@ -1981,7 +1975,6 @@ void SAL_CALL OOo2OasisTransformer::startDocument( void )
 
 void SAL_CALL OOo2OasisTransformer::Initialize(
 				const Sequence< Any >& rArguments )
-	throw( Exception, RuntimeException )
 {
 	OSL_ENSURE( !GetDocHandler().is(), "duplication initialization" );
 
@@ -2042,7 +2035,6 @@ const Sequence< sal_Int8 > & OOo2OasisTransformer::getUnoTunnelId() throw()
 
 // XUnoTunnel
 sal_Int64 SAL_CALL OOo2OasisTransformer::getSomething( const Sequence< sal_Int8 >& rId )
-	throw(RuntimeException)
 {
     if( rId.getLength() == 16
         && 0 == rtl_compareMemory( getUnoTunnelId().getConstArray(),
@@ -2058,19 +2050,16 @@ sal_Int64 SAL_CALL OOo2OasisTransformer::getSomething( const Sequence< sal_Int8 
 
 // XServiceInfo
 OUString SAL_CALL OOo2OasisTransformer::getImplementationName()
-    throw(RuntimeException)
 {
 	return m_aImplName;
 }
 
 sal_Bool SAL_CALL OOo2OasisTransformer::supportsService( const OUString& )
-	throw(RuntimeException)
 {
     return sal_False;
 }
 
 Sequence< OUString > SAL_CALL OOo2OasisTransformer::getSupportedServiceNames(  )
-	throw(RuntimeException)
 {
     Sequence<OUString> aSeq(0);
     return aSeq;
@@ -2078,7 +2067,7 @@ Sequence< OUString > SAL_CALL OOo2OasisTransformer::getSupportedServiceNames(  )
 
 // XTypeProvider
 Sequence< ::com::sun::star::uno::Type > SAL_CALL
-	OOo2OasisTransformer::getTypes() throw(RuntimeException)
+	OOo2OasisTransformer::getTypes()
 {
 	Sequence< ::com::sun::star::uno::Type > aTypes(
 						XMLTransformerBase::getTypes() );
@@ -2110,7 +2099,6 @@ Sequence< OUString > SAL_CALL OOo2OasisTransformer_getSupportedServiceNames() th
 
 Reference< XInterface > SAL_CALL OOo2OasisTransformer_createInstance(
 		const Reference< XMultiServiceFactory > & )
-	throw( Exception )
 {
 	return (cppu::OWeakObject*)new OOo2OasisTransformer();
 }
@@ -2130,7 +2118,6 @@ Sequence< OUString > SAL_CALL className##_getSupportedServiceNames() throw()\
 																		\
 Reference< XInterface > SAL_CALL className##_createInstance(			\
 		const Reference< XMultiServiceFactory > & )      				\
-	throw( Exception )													\
 {																		\
 	return (cppu::OWeakObject*)new OOo2OasisTransformer( implName,		\
 										 subServiceName );				\

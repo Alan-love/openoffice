@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,25 +7,25 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
- 
+
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_filter.hxx"
 
-#include "swfdialog.hxx" 
-#include "impswfdialog.hxx" 
+#include "swfdialog.hxx"
+#include "impswfdialog.hxx"
 #include <vcl/svapp.hxx>
 #include <vcl/dialog.hxx>
 #include <svl/solar.hrc>
@@ -52,15 +52,13 @@ using namespace ::com::sun::star::document;
 // -----------------------------------------------------------------------------
 
 OUString SWFDialog_getImplementationName ()
-	throw (RuntimeException)
 {
 	return OUString ( RTL_CONSTASCII_USTRINGPARAM ( SERVICE_NAME ) );
 }
 
 // -----------------------------------------------------------------------------
 
-Sequence< sal_Int8 > SAL_CALL SWFDialog_getImplementationId() 
-    throw(RuntimeException)
+Sequence< sal_Int8 > SAL_CALL SWFDialog_getImplementationId()
 {
     static ::cppu::OImplementationId aId;
     return aId.getImplementationId();
@@ -68,8 +66,7 @@ Sequence< sal_Int8 > SAL_CALL SWFDialog_getImplementationId()
 
 // -----------------------------------------------------------------------------
 
-Sequence< OUString > SAL_CALL SWFDialog_getSupportedServiceNames() 
-    throw (RuntimeException)
+Sequence< OUString > SAL_CALL SWFDialog_getSupportedServiceNames()
 {
 	Sequence < OUString > aRet(1);
     OUString* pArray = aRet.getArray();
@@ -79,8 +76,7 @@ Sequence< OUString > SAL_CALL SWFDialog_getSupportedServiceNames()
 
 // -----------------------------------------------------------------------------
 
-Reference< XInterface > SAL_CALL SWFDialog_createInstance( const Reference< XMultiServiceFactory > & rSMgr) 
-    throw( Exception )
+Reference< XInterface > SAL_CALL SWFDialog_createInstance( const Reference< XMultiServiceFactory > & rSMgr)
 {
 	return (cppu::OWeakObject*) new SWFDialog( rSMgr );
 }
@@ -110,13 +106,12 @@ SWFDialog::~SWFDialog()
 
 // -----------------------------------------------------------------------------
 
-Any SAL_CALL SWFDialog::queryInterface( const Type& rType ) 
-    throw (RuntimeException)
+Any SAL_CALL SWFDialog::queryInterface( const Type& rType )
 {
     Any aReturn = OGenericUnoDialog::queryInterface( rType );
 
 	if( !aReturn.hasValue() )
-		aReturn = ::cppu::queryInterface( rType, 
+		aReturn = ::cppu::queryInterface( rType,
                                           static_cast< XPropertyAccess* >( this ),
                                           static_cast< XExporter* >( this ) );
 
@@ -125,7 +120,7 @@ Any SAL_CALL SWFDialog::queryInterface( const Type& rType )
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL SWFDialog::acquire() 
+void SAL_CALL SWFDialog::acquire()
     throw ()
 {
     OWeakObject::acquire();
@@ -133,7 +128,7 @@ void SAL_CALL SWFDialog::acquire()
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL SWFDialog::release() 
+void SAL_CALL SWFDialog::release()
     throw ()
 {
     OWeakObject::release();
@@ -141,16 +136,14 @@ void SAL_CALL SWFDialog::release()
 
 // -----------------------------------------------------------------------------
 
-Sequence< sal_Int8 > SAL_CALL SWFDialog::getImplementationId() 
-    throw(RuntimeException)
+Sequence< sal_Int8 > SAL_CALL SWFDialog::getImplementationId()
 {
     return SWFDialog_getImplementationId();
 }
 
 // -----------------------------------------------------------------------------
 
-OUString SAL_CALL SWFDialog::getImplementationName() 
-	throw (RuntimeException)
+OUString SAL_CALL SWFDialog::getImplementationName()
 {
 	return SWFDialog_getImplementationName();
 }
@@ -158,7 +151,6 @@ OUString SAL_CALL SWFDialog::getImplementationName()
 // -----------------------------------------------------------------------------
 
 Sequence< OUString > SAL_CALL SWFDialog::getSupportedServiceNames()
-    throw (RuntimeException)
 {
     return SWFDialog_getSupportedServiceNames();
 }
@@ -182,7 +174,7 @@ Dialog*	SWFDialog::createDialog( Window* pParent )
 	        if( xController.is() )
 	        {
 		        Reference< XSelectionSupplier > xView( xController, UNO_QUERY );
-    		    
+
 		        if( xView.is() )
 			        xView->getSelection() >>= aSelection;
             }
@@ -190,7 +182,7 @@ Dialog*	SWFDialog::createDialog( Window* pParent )
         catch( RuntimeException )
         {
         }
-*/        
+*/
         ImpSWFDialog* pDlg = new ImpSWFDialog( pParent, *mpResMgr, maFilterData );
         pRet = pDlg;
     }
@@ -210,8 +202,7 @@ void SWFDialog::executedDialog( sal_Int16 nExecutionResult )
 
 // -----------------------------------------------------------------------------
 
-Reference< XPropertySetInfo > SAL_CALL SWFDialog::getPropertySetInfo() 
-    throw(RuntimeException)
+Reference< XPropertySetInfo > SAL_CALL SWFDialog::getPropertySetInfo()
 {
 	Reference< XPropertySetInfo >  xInfo( createPropertySetInfo( getInfoHelper() ) );
 	return xInfo;
@@ -234,13 +225,12 @@ Reference< XPropertySetInfo > SAL_CALL SWFDialog::getPropertySetInfo()
 // -----------------------------------------------------------------------------
 
 Sequence< PropertyValue > SAL_CALL SWFDialog::getPropertyValues()
-    throw ( RuntimeException )
 {
     sal_Int32 i, nCount;
 
     for( i = 0, nCount = maMediaDescriptor.getLength(); i < nCount; i++ )
 	{
-		if( maMediaDescriptor[ i ].Name.equalsAscii( "FilterData" ) ) 
+		if( maMediaDescriptor[ i ].Name.equalsAscii( "FilterData" ) )
 			break;
 	}
 
@@ -249,20 +239,19 @@ Sequence< PropertyValue > SAL_CALL SWFDialog::getPropertyValues()
 
 	maMediaDescriptor[ i ].Name = String( RTL_CONSTASCII_USTRINGPARAM( "FilterData" ) );
 	maMediaDescriptor[ i ].Value <<= maFilterData;
-    
+
     return maMediaDescriptor;
 }
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL SWFDialog::setPropertyValues( const Sequence< PropertyValue >& rProps ) 
-    throw ( UnknownPropertyException, PropertyVetoException, IllegalArgumentException, WrappedTargetException, RuntimeException )
+void SAL_CALL SWFDialog::setPropertyValues( const Sequence< PropertyValue >& rProps )
 {
     maMediaDescriptor = rProps;
 
 	for( sal_Int32 i = 0, nCount = maMediaDescriptor.getLength(); i < nCount; i++ )
 	{
-		if( maMediaDescriptor[ i ].Name.equalsAscii( "FilterData" ) ) 
+		if( maMediaDescriptor[ i ].Name.equalsAscii( "FilterData" ) )
 		{
 			maMediaDescriptor[ i ].Value >>= maFilterData;
 			break;
@@ -272,8 +261,7 @@ void SAL_CALL SWFDialog::setPropertyValues( const Sequence< PropertyValue >& rPr
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL SWFDialog::setSourceDocument( const Reference< XComponent >& xDoc ) 
-    throw(IllegalArgumentException, RuntimeException)
+void SAL_CALL SWFDialog::setSourceDocument( const Reference< XComponent >& xDoc )
 {
     mxSrcDoc = xDoc;
 }

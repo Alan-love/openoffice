@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -91,7 +91,7 @@ public:
         ::Window* pTarget);
 
     /** Let the focus manager transfer the focus from the specified source
-        window to a target window that is determined according the the
+        window to a target window that is determined according to the
         registered links and the given key code.
         When there is no rule for this combination of source window and key
         code then the focus stays where it is.
@@ -101,7 +101,7 @@ public:
 private:
     class LinkMap;
     ::std::auto_ptr<LinkMap> mpLinks;
-    
+
     FocusManager (void);
     ~FocusManager (void);
 
@@ -109,7 +109,7 @@ private:
         listeners.
     */
     void Clear (void);
-    
+
     /** Remove all links from or to the given window.
     */
     void RemoveLinks (::Window* pWindow);

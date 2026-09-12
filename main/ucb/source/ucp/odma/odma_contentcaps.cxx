@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -67,8 +67,8 @@ uno::Sequence< beans::Property > Content::getProperties(
 	//           by yourself and supply your own logic here. The base class
 	//           uses the service "com.sun.star.ucb.Store" to maintain
 	//           Additional Core properties. But using server functionality
-	//           is preferred! In fact you should return a table conatining
-	//           even that dynamicly added properties.
+	//           is preferred! In fact you should return a table containing
+	//           even that dynamically added properties.
 
 //	osl::Guard< osl::Mutex > aGuard( m_aMutex );
 
@@ -240,4 +240,3 @@ uno::Sequence< ucb::CommandInfo > Content::getCommands(
     return uno::Sequence<
             ucb::CommandInfo >( aCommandInfoTable, COMMAND_COUNT );
 }
-

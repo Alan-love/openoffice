@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -102,7 +102,7 @@ struct SubstituteRule
 struct SubstitutePathNotify
 {
     SubstitutePathNotify() {};
-    
+
     const com::sun::star::uno::Sequence<rtl::OUString> aPropertyNames;
 };
 
@@ -199,7 +199,7 @@ enum PreDefVariable
 struct PredefinedPathVariables
 {
     // Predefined variables supported by substitute variables
-    LanguageType    m_eLanguageType;                    // Lanuage type of Office
+    LanguageType    m_eLanguageType;                    // Language type of Office
     rtl::OUString   m_FixedVar[ PREDEFVAR_COUNT ];      // Variable value access by PreDefVariable
     rtl::OUString   m_FixedVarNames[ PREDEFVAR_COUNT ]; // Variable name access by PreDefVariable
 };
@@ -244,12 +244,9 @@ class SubstitutePathVariables : private ThreadHelpBase, // Struct for right init
         DECLARE_XSERVICEINFO
 
         // XStringSubstitution
-        virtual rtl::OUString SAL_CALL substituteVariables( const ::rtl::OUString& aText, sal_Bool bSubstRequired )
-            throw (::com::sun::star::container::NoSuchElementException, ::com::sun::star::uno::RuntimeException);
-        virtual rtl::OUString SAL_CALL reSubstituteVariables( const ::rtl::OUString& aText )
-            throw (::com::sun::star::uno::RuntimeException);
-        virtual ::rtl::OUString SAL_CALL getSubstituteVariableValue( const ::rtl::OUString& variable )
-            throw (::com::sun::star::container::NoSuchElementException, ::com::sun::star::uno::RuntimeException);
+        virtual rtl::OUString SAL_CALL substituteVariables( const ::rtl::OUString& aText, sal_Bool bSubstRequired );
+        virtual rtl::OUString SAL_CALL reSubstituteVariables( const ::rtl::OUString& aText );
+        virtual ::rtl::OUString SAL_CALL getSubstituteVariableValue( const ::rtl::OUString& variable );
 
         protected:
             DECL_LINK( implts_ConfigurationNotify, SubstitutePathNotify* );
@@ -266,12 +263,9 @@ class SubstitutePathVariables : private ThreadHelpBase, // Struct for right init
             rtl::OUString   GetHomeVariableValue() const;
 
             // XStringSubstitution implementation methods
-            rtl::OUString impl_substituteVariable( const ::rtl::OUString& aText, bool bSustRequired )
-                throw (::com::sun::star::container::NoSuchElementException, ::com::sun::star::uno::RuntimeException);
-            rtl::OUString impl_reSubstituteVariables( const ::rtl::OUString& aText )
-                throw (::com::sun::star::uno::RuntimeException);
-            ::rtl::OUString impl_getSubstituteVariableValue( const ::rtl::OUString& variable )
-                throw (::com::sun::star::container::NoSuchElementException, ::com::sun::star::uno::RuntimeException);
+            rtl::OUString impl_substituteVariable( const ::rtl::OUString& aText, bool bSustRequired );
+            rtl::OUString impl_reSubstituteVariables( const ::rtl::OUString& aText );
+            ::rtl::OUString impl_getSubstituteVariableValue( const ::rtl::OUString& variable );
 
         private:
             class VarNameToIndexMap : public std::hash_map< ::rtl::OUString,

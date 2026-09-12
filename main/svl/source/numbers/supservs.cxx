@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -67,7 +67,7 @@ SvNumberFormatsSupplierServiceObject::~SvNumberFormatsSupplierServiceObject()
 }
 
 //-------------------------------------------------------------------------
-Any SAL_CALL SvNumberFormatsSupplierServiceObject::queryAggregation( const Type& _rType ) throw (RuntimeException)
+Any SAL_CALL SvNumberFormatsSupplierServiceObject::queryAggregation( const Type& _rType )
 {
 	Any aReturn = ::cppu::queryInterface(_rType,
 		static_cast< XInitialization* >(this),
@@ -82,7 +82,7 @@ Any SAL_CALL SvNumberFormatsSupplierServiceObject::queryAggregation( const Type&
 }
 
 //-------------------------------------------------------------------------
-void SAL_CALL SvNumberFormatsSupplierServiceObject::initialize( const Sequence< Any >& _rArguments ) throw(Exception, RuntimeException)
+void SAL_CALL SvNumberFormatsSupplierServiceObject::initialize( const Sequence< Any >& _rArguments )
 {
     ::osl::MutexGuard aGuard( getSharedMutex() );
 
@@ -124,13 +124,13 @@ void SAL_CALL SvNumberFormatsSupplierServiceObject::initialize( const Sequence< 
 }
 
 //-------------------------------------------------------------------------
-::rtl::OUString SAL_CALL SvNumberFormatsSupplierServiceObject::getImplementationName(  ) throw(RuntimeException)
+::rtl::OUString SAL_CALL SvNumberFormatsSupplierServiceObject::getImplementationName(  )
 {
 	return ::rtl::OUString::createFromAscii("com.sun.star.uno.util.numbers.SvNumberFormatsSupplierServiceObject");
 }
 
 //-------------------------------------------------------------------------
-sal_Bool SAL_CALL SvNumberFormatsSupplierServiceObject::supportsService( const ::rtl::OUString& _rServiceName ) throw(RuntimeException)
+sal_Bool SAL_CALL SvNumberFormatsSupplierServiceObject::supportsService( const ::rtl::OUString& _rServiceName )
 {
 	Sequence< ::rtl::OUString > aServices = getSupportedServiceNames();
 	const ::rtl::OUString* pServices = aServices.getConstArray();
@@ -142,7 +142,7 @@ sal_Bool SAL_CALL SvNumberFormatsSupplierServiceObject::supportsService( const :
 }
 
 //-------------------------------------------------------------------------
-Sequence< ::rtl::OUString > SAL_CALL SvNumberFormatsSupplierServiceObject::getSupportedServiceNames(  ) throw(RuntimeException)
+Sequence< ::rtl::OUString > SAL_CALL SvNumberFormatsSupplierServiceObject::getSupportedServiceNames(  )
 {
 	Sequence< ::rtl::OUString > aSupported(1);
 	aSupported.getArray()[0] = PERSISTENT_SERVICE_NAME;
@@ -150,13 +150,13 @@ Sequence< ::rtl::OUString > SAL_CALL SvNumberFormatsSupplierServiceObject::getSu
 }
 
 //-------------------------------------------------------------------------
-::rtl::OUString SAL_CALL SvNumberFormatsSupplierServiceObject::getServiceName(  ) throw(RuntimeException)
+::rtl::OUString SAL_CALL SvNumberFormatsSupplierServiceObject::getServiceName(  )
 {
 	return PERSISTENT_SERVICE_NAME;
 }
 
 //-------------------------------------------------------------------------
-void SAL_CALL SvNumberFormatsSupplierServiceObject::write( const Reference< XObjectOutputStream >& _rxOutStream ) throw(IOException, RuntimeException)
+void SAL_CALL SvNumberFormatsSupplierServiceObject::write( const Reference< XObjectOutputStream >& _rxOutStream )
 {
     ::osl::MutexGuard aGuard( getSharedMutex() );
 	implEnsureFormatter();
@@ -169,7 +169,7 @@ void SAL_CALL SvNumberFormatsSupplierServiceObject::write( const Reference< XObj
 }
 
 //-------------------------------------------------------------------------
-void SAL_CALL SvNumberFormatsSupplierServiceObject::read( const Reference< XObjectInputStream >& _rxInStream ) throw(IOException, RuntimeException)
+void SAL_CALL SvNumberFormatsSupplierServiceObject::read( const Reference< XObjectInputStream >& _rxInStream )
 {
     ::osl::MutexGuard aGuard( getSharedMutex() );
 	implEnsureFormatter();
@@ -181,7 +181,7 @@ void SAL_CALL SvNumberFormatsSupplierServiceObject::read( const Reference< XObje
 }
 
 //-------------------------------------------------------------------------
-Reference< XPropertySet > SAL_CALL SvNumberFormatsSupplierServiceObject::getNumberFormatSettings() throw(RuntimeException)
+Reference< XPropertySet > SAL_CALL SvNumberFormatsSupplierServiceObject::getNumberFormatSettings()
 {
     ::osl::MutexGuard aGuard( getSharedMutex() );
 	implEnsureFormatter();
@@ -189,7 +189,7 @@ Reference< XPropertySet > SAL_CALL SvNumberFormatsSupplierServiceObject::getNumb
 }
 
 //-------------------------------------------------------------------------
-Reference< XNumberFormats > SAL_CALL SvNumberFormatsSupplierServiceObject::getNumberFormats() throw(RuntimeException)
+Reference< XNumberFormats > SAL_CALL SvNumberFormatsSupplierServiceObject::getNumberFormats()
 {
     ::osl::MutexGuard aGuard( getSharedMutex() );
 	implEnsureFormatter();
@@ -197,7 +197,7 @@ Reference< XNumberFormats > SAL_CALL SvNumberFormatsSupplierServiceObject::getNu
 }
 
 //-------------------------------------------------------------------------
-sal_Int64 SAL_CALL SvNumberFormatsSupplierServiceObject::getSomething( const Sequence< sal_Int8 >& aIdentifier ) throw (RuntimeException)
+sal_Int64 SAL_CALL SvNumberFormatsSupplierServiceObject::getSomething( const Sequence< sal_Int8 >& aIdentifier )
 {
 	sal_Int64 nReturn = SvNumberFormatsSupplierObj::getSomething( aIdentifier );
 	if ( nReturn )
@@ -222,4 +222,3 @@ void SvNumberFormatsSupplierServiceObject::implEnsureFormatter()
 		initialize( aFakedInitProps );
 	}
 }
-

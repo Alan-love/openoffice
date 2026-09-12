@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartcontroller.hxx"
 #include "LegendWrapper.hxx"
 #include "macros.hxx"
 #include "Chart2ModelContact.hxx"
@@ -68,10 +68,8 @@ public:
     WrappedLegendAlignmentProperty();
     virtual ~WrappedLegendAlignmentProperty();
 
-    virtual void setPropertyValue( const Any& rOuterValue, const Reference< beans::XPropertySet >& xInnerPropertySet ) const
-                                    throw (beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException, uno::RuntimeException);
-    virtual Any getPropertyValue( const Reference< beans::XPropertySet >& xInnerPropertySet ) const
-                                    throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException);
+    virtual void setPropertyValue( const Any& rOuterValue, const Reference< beans::XPropertySet >& xInnerPropertySet ) const;
+    virtual Any getPropertyValue( const Reference< beans::XPropertySet >& xInnerPropertySet ) const;
 
 protected:
     virtual Any convertInnerToOuterValue( const Any& rInnerValue ) const;
@@ -87,7 +85,6 @@ WrappedLegendAlignmentProperty::~WrappedLegendAlignmentProperty()
 }
 
 Any WrappedLegendAlignmentProperty::getPropertyValue( const Reference< beans::XPropertySet >& xInnerPropertySet ) const
-                        throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
     Any aRet;
     if( xInnerPropertySet.is() )
@@ -108,7 +105,6 @@ Any WrappedLegendAlignmentProperty::getPropertyValue( const Reference< beans::XP
 }
 
 void WrappedLegendAlignmentProperty::setPropertyValue( const Any& rOuterValue, const Reference< beans::XPropertySet >& xInnerPropertySet ) const
-                throw (beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException, uno::RuntimeException)
 {
     if(xInnerPropertySet.is())
     {
@@ -304,19 +300,17 @@ LegendWrapper::~LegendWrapper()
 
 // ____ XShape ____
 awt::Point SAL_CALL LegendWrapper::getPosition()
-    throw (uno::RuntimeException)
 {
     return m_spChart2ModelContact->GetLegendPosition();
 }
 
 void SAL_CALL LegendWrapper::setPosition( const awt::Point& aPosition )
-    throw (uno::RuntimeException)
 {
     Reference< beans::XPropertySet > xProp( this->getInnerPropertySet() );
     if( xProp.is() )
     {
         awt::Size aPageSize( m_spChart2ModelContact->GetPageSize() );
-        
+
         chart2::RelativePosition aRelativePosition;
         aRelativePosition.Anchor = drawing::Alignment_TOP_LEFT;
         aRelativePosition.Primary = double(aPosition.X)/double(aPageSize.Width);
@@ -326,14 +320,11 @@ void SAL_CALL LegendWrapper::setPosition( const awt::Point& aPosition )
 }
 
 awt::Size SAL_CALL LegendWrapper::getSize()
-    throw (uno::RuntimeException)
 {
     return m_spChart2ModelContact->GetLegendSize();
 }
 
 void SAL_CALL LegendWrapper::setSize( const awt::Size& aSize )
-    throw (beans::PropertyVetoException,
-           uno::RuntimeException)
 {
     Reference< beans::XPropertySet > xProp( this->getInnerPropertySet() );
     if( xProp.is() )
@@ -351,14 +342,12 @@ void SAL_CALL LegendWrapper::setSize( const awt::Size& aSize )
 
 // ____ XShapeDescriptor (base of XShape) ____
 ::rtl::OUString SAL_CALL LegendWrapper::getShapeType()
-    throw (uno::RuntimeException)
 {
     return C2U( "com.sun.star.chart.ChartLegend" );
 }
 
 // ____ XComponent ____
 void SAL_CALL LegendWrapper::dispose()
-    throw (uno::RuntimeException)
 {
     Reference< uno::XInterface > xSource( static_cast< ::cppu::OWeakObject* >( this ) );
     m_aEventListenerContainer.disposeAndClear( lang::EventObject( xSource ) );
@@ -371,14 +360,12 @@ void SAL_CALL LegendWrapper::dispose()
 
 void SAL_CALL LegendWrapper::addEventListener(
     const Reference< lang::XEventListener >& xListener )
-    throw (uno::RuntimeException)
 {
 	m_aEventListenerContainer.addInterface( xListener );
 }
 
 void SAL_CALL LegendWrapper::removeEventListener(
     const Reference< lang::XEventListener >& aListener )
-    throw (uno::RuntimeException)
 {
 	m_aEventListenerContainer.removeInterface( aListener );
 }

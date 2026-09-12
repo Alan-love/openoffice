@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -64,58 +64,51 @@ ScAccessibleFilterMenuItem::~ScAccessibleFilterMenuItem()
 }
 
 sal_Int32 ScAccessibleFilterMenuItem::getAccessibleChildCount()
-    throw (RuntimeException)
 {
     return 0;
 }
 
 Reference<XAccessible> ScAccessibleFilterMenuItem::getAccessibleChild(sal_Int32 /*nIndex*/)
-    throw (RuntimeException, IndexOutOfBoundsException)
 {
     throw IndexOutOfBoundsException();
 }
 
 Reference<XAccessibleStateSet> ScAccessibleFilterMenuItem::getAccessibleStateSet()
-    throw (RuntimeException)
 {
     updateStateSet();
     return mxStateSet;
 }
 
 OUString ScAccessibleFilterMenuItem::getImplementationName()
-    throw (RuntimeException)
 {
     return OUString::createFromAscii("ScAccessibleFilterMenuItem");
 }
 
 // XAccessibleAction
 
-sal_Int32 ScAccessibleFilterMenuItem::getAccessibleActionCount() throw (RuntimeException)
+sal_Int32 ScAccessibleFilterMenuItem::getAccessibleActionCount()
 {
     return 1;
 }
 
 sal_Bool ScAccessibleFilterMenuItem::doAccessibleAction(sal_Int32 /*nIndex*/)
-    throw (IndexOutOfBoundsException, RuntimeException)
 {
     mpWindow->executeMenuItem(mnMenuPos);
     return true;
 }
 
 OUString ScAccessibleFilterMenuItem::getAccessibleActionDescription(sal_Int32 /*nIndex*/)
-    throw (IndexOutOfBoundsException, RuntimeException)
 {
     return OUString::createFromAscii("click");
 }
 
 Reference<XAccessibleKeyBinding> ScAccessibleFilterMenuItem::getAccessibleActionKeyBinding(
-    sal_Int32 /*nIndex*/) throw (IndexOutOfBoundsException, RuntimeException)
+    sal_Int32 /*nIndex*/)
 {
     return Reference<XAccessibleKeyBinding>();
 }
 
 Any SAL_CALL ScAccessibleFilterMenuItem::queryInterface( uno::Type const & rType )
-	throw (RuntimeException)
 {
 	Any any = ScAccessibleContextBase::queryInterface(rType);
     if (any.hasValue())
@@ -150,7 +143,6 @@ void ScAccessibleFilterMenuItem::setEnabled(bool bEnabled)
 }
 
 Rectangle ScAccessibleFilterMenuItem::GetBoundingBoxOnScreen() const
-    throw (RuntimeException)
 {
     if (!mpWindow->IsVisible())
         return Rectangle();
@@ -164,7 +156,6 @@ Rectangle ScAccessibleFilterMenuItem::GetBoundingBoxOnScreen() const
 }
 
 Rectangle ScAccessibleFilterMenuItem::GetBoundingBox() const
-    throw (RuntimeException)
 {
     if (!mpWindow->IsVisible())
         return Rectangle();
@@ -198,4 +189,3 @@ void ScAccessibleFilterMenuItem::updateStateSet()
     if (isSelected())
         p->insert(SELECTED);
 }
-

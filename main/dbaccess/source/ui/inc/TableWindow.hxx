@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -65,9 +65,9 @@ namespace dbaui
 		OTableWindowAccess*		m_pAccessible;
 
 	private:
-        TTableWindowData::value_type		
+        TTableWindowData::value_type
                                 m_pData;
-        ::rtl::Reference< comphelper::OContainerListenerAdapter>                    
+        ::rtl::Reference< comphelper::OContainerListenerAdapter>
                                 m_pContainerListener;
 		sal_Int32				m_nMoveCount;			// how often the arrow keys was pressed
 		sal_Int32				m_nMoveIncrement;		// how many pixel we should move
@@ -76,16 +76,16 @@ namespace dbaui
 
 		void Draw3DBorder( const Rectangle& rRect );
         // OContainerListener
-        virtual void _elementInserted( const ::com::sun::star::container::ContainerEvent& _rEvent ) throw(::com::sun::star::uno::RuntimeException);
-	    virtual void _elementRemoved( const  ::com::sun::star::container::ContainerEvent& _rEvent ) throw(::com::sun::star::uno::RuntimeException);
-	    virtual void _elementReplaced( const ::com::sun::star::container::ContainerEvent& _rEvent ) throw(::com::sun::star::uno::RuntimeException);
+        virtual void _elementInserted( const ::com::sun::star::container::ContainerEvent& _rEvent );
+	    virtual void _elementRemoved( const  ::com::sun::star::container::ContainerEvent& _rEvent );
+	    virtual void _elementReplaced( const ::com::sun::star::container::ContainerEvent& _rEvent );
 
 	protected:
 		virtual void	Resize();
 		virtual void	Paint( const Rectangle& rRect );
 		virtual void	MouseMove( const MouseEvent& rEvt );
 		virtual void	MouseButtonDown( const MouseEvent& rEvt );
-		virtual void	DataChanged( const DataChangedEvent& rDCEvt ); 
+		virtual void	DataChanged( const DataChangedEvent& rDCEvt );
 
 		virtual OTableWindowListBox*	CreateListBox();
 			// wird im ERSTEN Init aufgerufen
@@ -118,7 +118,7 @@ namespace dbaui
 			@return
 				the user data which will be append at the listbox entry, may be <NULL/>
 		*/
-		virtual void* createUserData(const ::com::sun::star::uno::Reference< 
+		virtual void* createUserData(const ::com::sun::star::uno::Reference<
 									::com::sun::star::beans::XPropertySet>& _xColumn,
 									bool _bPrimaryKey);
 
@@ -174,7 +174,7 @@ namespace dbaui
 		*/
 		void						resetSizingFlag() { m_nSizingFlags = SIZING_NONE; }
 
-		/** returns the new sizing 
+		/** returns the new sizing
 		*/
 		Rectangle getSizingRect(const Point& _rPos,const Size& _rOutputSize) const;
 
@@ -201,5 +201,3 @@ namespace dbaui
 	};
 }
 #endif //DBAUI_TABLEWINDOW_HXX
-
-

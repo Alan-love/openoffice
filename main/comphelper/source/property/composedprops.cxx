@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -48,9 +48,9 @@ namespace comphelper
 	public:
 		OComposedPropertySetInfo(const Sequence< Property>& _rProperties);
 
-		virtual Sequence< Property > SAL_CALL getProperties(  ) throw(RuntimeException);
-		virtual Property SAL_CALL getPropertyByName( const ::rtl::OUString& _rName ) throw(UnknownPropertyException, RuntimeException);
-		virtual sal_Bool SAL_CALL hasPropertyByName( const ::rtl::OUString& _rName ) throw(RuntimeException);
+		virtual Sequence< Property > SAL_CALL getProperties(  );
+		virtual Property SAL_CALL getPropertyByName( const ::rtl::OUString& _rName );
+		virtual sal_Bool SAL_CALL hasPropertyByName( const ::rtl::OUString& _rName );
 	};
 
 	//=====================================================================
@@ -142,7 +142,7 @@ namespace comphelper
 			sal_Int32 nOverallProperties = 0;
 			for (sal_Int32 nCounter=0; nCounter<nMasterPropsCount; ++nCounter)
 			{
-				if (pInclusionFlags[nCounter]) 
+				if (pInclusionFlags[nCounter])
 					++nOverallProperties;
 			}
 
@@ -160,7 +160,7 @@ namespace comphelper
 	}
 
 	//------------------------------------------------------------------------------
-	Reference< XPropertySetInfo > SAL_CALL OComposedPropertySet::getPropertySetInfo(  ) throw(RuntimeException)
+	Reference< XPropertySetInfo > SAL_CALL OComposedPropertySet::getPropertySetInfo(  )
 	{
 		::osl::MutexGuard aGuard(m_aMutex);
 		if (!m_pInfo)
@@ -172,7 +172,7 @@ namespace comphelper
 	}
 
 	//------------------------------------------------------------------------------
-	PropertyState SAL_CALL OComposedPropertySet::getPropertyState( const ::rtl::OUString& _rPropertyName ) throw(UnknownPropertyException, RuntimeException)
+	PropertyState SAL_CALL OComposedPropertySet::getPropertyState( const ::rtl::OUString& _rPropertyName )
 	{
 		// assume DIRECT for the moment
 		PropertyState eState = PropertyState_DIRECT_VALUE;
@@ -201,7 +201,7 @@ namespace comphelper
 
 				// the secondary state
 				eSecondaryState = PropertyState_DIRECT_VALUE;
-				if(xSecondaryState.is()) 
+				if(xSecondaryState.is())
 					eSecondaryState = xSecondaryState->getPropertyState(_rPropertyName);
 
 				// the secondary value
@@ -225,7 +225,7 @@ namespace comphelper
 	}
 
 	//---------------------------------------------------------------------
-	Sequence< PropertyState > SAL_CALL OComposedPropertySet::getPropertyStates( const Sequence< ::rtl::OUString >& _rPropertyName ) throw(UnknownPropertyException, RuntimeException)
+	Sequence< PropertyState > SAL_CALL OComposedPropertySet::getPropertyStates( const Sequence< ::rtl::OUString >& _rPropertyName )
 	{
 		sal_Int32 nCount = _rPropertyName.getLength();
 		Sequence< PropertyState > aReturn(nCount);
@@ -237,7 +237,7 @@ namespace comphelper
 	}
 
 	//---------------------------------------------------------------------
-	void SAL_CALL OComposedPropertySet::setPropertyToDefault( const ::rtl::OUString& _rPropertyName ) throw(UnknownPropertyException, RuntimeException)
+	void SAL_CALL OComposedPropertySet::setPropertyToDefault( const ::rtl::OUString& _rPropertyName )
 	{
 		sal_Int32 nSingleSets = m_aSingleSets.size();
 		for (sal_Int32 i=0; i<nSingleSets; ++i)
@@ -249,13 +249,13 @@ namespace comphelper
 	}
 
 	//---------------------------------------------------------------------
-	Any SAL_CALL OComposedPropertySet::getPropertyDefault( const ::rtl::OUString& ) throw(UnknownPropertyException, WrappedTargetException, RuntimeException)
+	Any SAL_CALL OComposedPropertySet::getPropertyDefault( const ::rtl::OUString& )
 	{
 		return Any();
 	}
 
 	//------------------------------------------------------------------------------
-	void SAL_CALL OComposedPropertySet::setPropertyValue( const ::rtl::OUString& _rPropertyName, const Any& _rValue ) throw(UnknownPropertyException, PropertyVetoException, IllegalArgumentException, WrappedTargetException, RuntimeException)
+	void SAL_CALL OComposedPropertySet::setPropertyValue( const ::rtl::OUString& _rPropertyName, const Any& _rValue )
 	{
 		sal_Int32 nSingleSets = m_aSingleSets.size();
 		for (sal_Int32 i=0; i<nSingleSets; ++i)
@@ -266,7 +266,7 @@ namespace comphelper
 	}
 
 	//------------------------------------------------------------------------------
-	Any SAL_CALL OComposedPropertySet::getPropertyValue( const ::rtl::OUString& _rPropertyName ) throw(UnknownPropertyException, WrappedTargetException, RuntimeException)
+	Any SAL_CALL OComposedPropertySet::getPropertyValue( const ::rtl::OUString& _rPropertyName )
 	{
 		sal_Int32 nSingleSets = m_aSingleSets.size();
 
@@ -276,7 +276,7 @@ namespace comphelper
 	}
 
 	//------------------------------------------------------------------------------
-	void SAL_CALL OComposedPropertySet::addPropertyChangeListener( const ::rtl::OUString&, const Reference< XPropertyChangeListener >& ) throw(UnknownPropertyException, WrappedTargetException, RuntimeException)
+	void SAL_CALL OComposedPropertySet::addPropertyChangeListener( const ::rtl::OUString&, const Reference< XPropertyChangeListener >& )
 	{
 		// TODO:
 		// hold the single property sets weak
@@ -287,19 +287,19 @@ namespace comphelper
 	}
 
 	//------------------------------------------------------------------------------
-	void SAL_CALL OComposedPropertySet::removePropertyChangeListener( const ::rtl::OUString&, const Reference< XPropertyChangeListener >& ) throw(UnknownPropertyException, WrappedTargetException, RuntimeException)
+	void SAL_CALL OComposedPropertySet::removePropertyChangeListener( const ::rtl::OUString&, const Reference< XPropertyChangeListener >& )
 	{
 		// TODO
 	}
 
 	//------------------------------------------------------------------------------
-	void SAL_CALL OComposedPropertySet::addVetoableChangeListener( const ::rtl::OUString&, const Reference< XVetoableChangeListener >& ) throw(UnknownPropertyException, WrappedTargetException, RuntimeException)
+	void SAL_CALL OComposedPropertySet::addVetoableChangeListener( const ::rtl::OUString&, const Reference< XVetoableChangeListener >& )
 	{
 		OSL_ENSURE(sal_False, "OComposedPropertySet::addVetoableChangeListener: no implemented (yet)!");
 	}
 
 	//------------------------------------------------------------------------------
-	void SAL_CALL OComposedPropertySet::removeVetoableChangeListener( const ::rtl::OUString&, const Reference< XVetoableChangeListener >& ) throw(UnknownPropertyException, WrappedTargetException, RuntimeException)
+	void SAL_CALL OComposedPropertySet::removeVetoableChangeListener( const ::rtl::OUString&, const Reference< XVetoableChangeListener >& )
 	{
 		OSL_ENSURE(sal_False, "OComposedPropertySet::removeVetoableChangeListener: no implemented (yet)!");
 	}
@@ -311,13 +311,13 @@ namespace comphelper
 	}
 
 	//------------------------------------------------------------------------------
-	Sequence< Property> SAL_CALL OComposedPropertySetInfo::getProperties() throw(RuntimeException)
+	Sequence< Property> SAL_CALL OComposedPropertySetInfo::getProperties()
 	{
 		return m_aProperties;
 	}
 
 	//------------------------------------------------------------------------------
-	Property SAL_CALL OComposedPropertySetInfo::getPropertyByName( const ::rtl::OUString& _rName ) throw(UnknownPropertyException, RuntimeException)
+	Property SAL_CALL OComposedPropertySetInfo::getPropertyByName( const ::rtl::OUString& _rName )
 	{
 		sal_Int32 nLength = m_aProperties.getLength();
 		const Property*	pProps = m_aProperties.getConstArray();
@@ -332,14 +332,14 @@ namespace comphelper
 	}
 
 	//------------------------------------------------------------------------------
-	sal_Bool SAL_CALL OComposedPropertySetInfo::hasPropertyByName( const ::rtl::OUString& _rName ) throw(RuntimeException)
+	sal_Bool SAL_CALL OComposedPropertySetInfo::hasPropertyByName( const ::rtl::OUString& _rName )
 	{
 		sal_Int32 nLength = m_aProperties.getLength();
 		const Property*	pProps = m_aProperties.getConstArray();
 		// TODO TODO TODO: this O(n) search really sucks ...
 		for( sal_Int32 i=0; i<nLength; ++i,++pProps )
 		{
-			if(pProps->Name == _rName) 
+			if(pProps->Name == _rName)
 				return sal_True;
 		}
 
@@ -349,5 +349,3 @@ namespace comphelper
 //.........................................................................
 }	// namespace comphelper
 //.........................................................................
-
-

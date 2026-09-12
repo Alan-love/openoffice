@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -44,8 +44,8 @@ class InteractionContinuationImpl : public ::cppu::OWeakObject,
 {
     const Type m_type;
     bool * m_pselect;
-    
-public:    
+
+public:
     inline InteractionContinuationImpl( Type const & type, bool * pselect )
         : m_type( type ),
           m_pselect( pselect )
@@ -53,15 +53,14 @@ public:
             ::getCppuType(
                 static_cast< Reference<task::XInteractionContinuation>
                 const *>(0) ).isAssignableFrom(m_type) ); }
-    
+
     // XInterface
     virtual void SAL_CALL acquire() throw ();
     virtual void SAL_CALL release() throw ();
-    virtual Any SAL_CALL queryInterface( Type const & type )
-        throw (RuntimeException);
-    
+    virtual Any SAL_CALL queryInterface( Type const & type );
+
     // XInteractionContinuation
-    virtual void SAL_CALL select() throw (RuntimeException);
+    virtual void SAL_CALL select();
 };
 
 // XInterface
@@ -79,7 +78,6 @@ void InteractionContinuationImpl::release() throw ()
 
 //______________________________________________________________________________
 Any InteractionContinuationImpl::queryInterface( Type const & type )
-    throw (RuntimeException)
 {
     if (type.isAssignableFrom( m_type )) {
         Reference<task::XInteractionContinuation> xThis(this);
@@ -91,7 +89,7 @@ Any InteractionContinuationImpl::queryInterface( Type const & type )
 
 // XInteractionContinuation
 //______________________________________________________________________________
-void InteractionContinuationImpl::select() throw (RuntimeException)
+void InteractionContinuationImpl::select()
 {
     *m_pselect = true;
 }
@@ -102,7 +100,7 @@ class InteractionRequest :
 {
     Any m_request;
     Sequence< Reference<task::XInteractionContinuation> > m_conts;
-    
+
 public:
     inline InteractionRequest(
         Any const & request,
@@ -112,22 +110,21 @@ public:
         {}
 
     // XInteractionRequest
-    virtual Any SAL_CALL getRequest()
-        throw (RuntimeException);
+    virtual Any SAL_CALL getRequest();
     virtual Sequence< Reference<task::XInteractionContinuation> >
-    SAL_CALL getContinuations() throw (RuntimeException);
+    SAL_CALL getContinuations();
 };
 
 // XInteractionRequest
 //______________________________________________________________________________
-Any InteractionRequest::getRequest() throw (RuntimeException)
+Any InteractionRequest::getRequest()
 {
     return m_request;
 }
 
 //______________________________________________________________________________
 Sequence< Reference< task::XInteractionContinuation > >
-InteractionRequest::getContinuations() throw (RuntimeException)
+InteractionRequest::getContinuations()
 {
     return m_conts;
 }
@@ -170,7 +167,7 @@ bool interactContinuation( Any const & request,
 
 // XAbortChannel
 //______________________________________________________________________________
-void AbortChannel::sendAbort() throw (RuntimeException)
+void AbortChannel::sendAbort()
 {
     m_aborted = true;
     if (m_xNext.is())
@@ -178,4 +175,3 @@ void AbortChannel::sendAbort() throw (RuntimeException)
 }
 
 } // dp_misc
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -75,7 +75,6 @@ ActiveMSPList::createNewMSP( const uno::Any& context )
 
 Reference< provider::XScriptProvider >
 ActiveMSPList::getMSPFromAnyContext( const Any& aContext )
-            SAL_THROW(( lang::IllegalArgumentException, RuntimeException ))
 {
     Reference< provider::XScriptProvider > msp;
     ::rtl::OUString sContext;
@@ -119,7 +118,6 @@ ActiveMSPList::getMSPFromAnyContext( const Any& aContext )
 
 Reference< provider::XScriptProvider >
     ActiveMSPList::getMSPFromInvocationContext( const Reference< document::XScriptInvocationContext >& xContext )
-        SAL_THROW(( lang::IllegalArgumentException, RuntimeException ))
 {
     Reference< provider::XScriptProvider > msp;
 
@@ -154,7 +152,6 @@ Reference< provider::XScriptProvider >
 
 Reference< provider::XScriptProvider >
     ActiveMSPList::getMSPFromStringContext( const ::rtl::OUString& context )
-        SAL_THROW(( lang::IllegalArgumentException, RuntimeException ))
 {
     Reference< provider::XScriptProvider > msp;
     try
@@ -252,7 +249,6 @@ ActiveMSPList::addActiveMSP( const Reference< uno::XInterface >& xComponent,
 //*************************************************************************
 void SAL_CALL
 ActiveMSPList::disposing( const ::com::sun::star::lang::EventObject& Source )
-throw ( ::com::sun::star::uno::RuntimeException )
 
 {
     try
@@ -316,4 +312,3 @@ ActiveMSPList::createNonDocMSPs()
 
 
 } // namespace func_provider
-

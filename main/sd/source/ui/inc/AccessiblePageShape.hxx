@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -51,7 +51,7 @@ public:
             The accessible parent object.  It will be used, for example when
             the <member>getIndexInParent</member> method is called.
         @param rShapeTreeInfo
-            Bundel of information passed to this shape and all of its desendants.
+            Bundle of information passed to this shape and all of its descendants.
         @param nIndex
             Index used to disambiguate between objects that have the same
             name.  Passing a value of -1 leads to the use of the object's
@@ -85,7 +85,7 @@ public:
     virtual sal_Int32 SAL_CALL
     	getAccessibleChildCount (void)
         throw ();
-        
+
     /**	Return the specified child.
         @param nIndex
             Index of the requested child.
@@ -96,45 +96,37 @@ public:
             Throws always an exception because there are no children.
     */
     virtual ::com::sun::star::uno::Reference<
-            ::com::sun::star::accessibility::XAccessible> SAL_CALL 
-    	getAccessibleChild (sal_Int32 nIndex)
-        throw (::com::sun::star::uno::RuntimeException);
+            ::com::sun::star::accessibility::XAccessible> SAL_CALL
+    	getAccessibleChild (sal_Int32 nIndex);
 
 
     //=====  XAccessibleComponent  ============================================
 
-    virtual ::com::sun::star::awt::Rectangle SAL_CALL getBounds (void) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::awt::Rectangle SAL_CALL getBounds (void);
 
-    virtual sal_Int32 SAL_CALL getForeground (void) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual sal_Int32 SAL_CALL getForeground (void);
 
-    virtual sal_Int32 SAL_CALL getBackground (void) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual sal_Int32 SAL_CALL getBackground (void);
 
     //=====  XComponent  ======================================================
 
-    virtual void SAL_CALL 
-        dispose (void) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL
+        dispose (void);
 
 
 	//=====  XServiceInfo  ====================================================
-    
+
 	virtual ::rtl::OUString SAL_CALL
-    	getImplementationName (void)
-	    throw (::com::sun::star::uno::RuntimeException);
+    	getImplementationName (void);
 
     virtual ::com::sun::star::uno::Sequence< ::rtl::OUString> SAL_CALL
-        getSupportedServiceNames (void)
-        throw (::com::sun::star::uno::RuntimeException);
+        getSupportedServiceNames (void);
 
 
     //=====  lang::XEventListener  ============================================
 
-    virtual void SAL_CALL 
-        disposing (const ::com::sun::star::lang::EventObject& Source) 
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL
+        disposing (const ::com::sun::star::lang::EventObject& Source);
 
 
 	using AccessibleShape::disposing;
@@ -143,23 +135,20 @@ protected:
     /**	Create a base name string that contains the accessible name.
     */
 	virtual ::rtl::OUString
-    	CreateAccessibleBaseName (void)
-        throw (::com::sun::star::uno::RuntimeException);
+    	CreateAccessibleBaseName (void);
 
 	virtual ::rtl::OUString
-    	CreateAccessibleName (void)
-        throw (::com::sun::star::uno::RuntimeException);
+    	CreateAccessibleName (void);
 
     ///	Create a description string that contains the accessible description.
 	virtual ::rtl::OUString
-    	CreateAccessibleDescription (void)
-        throw (::com::sun::star::uno::RuntimeException);
+    	CreateAccessibleDescription (void);
 
 private:
     ::com::sun::star::uno::Reference<
         ::com::sun::star::drawing::XDrawPage> mxPage;
-    
-    /** Don't use the default constructor.  Use the public constructor that 
+
+    /** Don't use the default constructor.  Use the public constructor that
         takes the original shape and the parent as arguments instead.
     */
     explicit AccessiblePageShape (void);

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -68,15 +68,12 @@ using ::comphelper::DocumentInfo;
 // virtual
 void SAL_CALL OfficeDocumentsManager::OfficeDocumentsCloseListener::queryClosing(
          const lang::EventObject& /*Source*/, sal_Bool /*GetsOwnership*/ )
-    throw ( util::CloseVetoException,
-            uno::RuntimeException )
 {
 }
 
 //=========================================================================
 void SAL_CALL OfficeDocumentsManager::OfficeDocumentsCloseListener::notifyClosing(
          const lang::EventObject& Source )
-    throw ( uno::RuntimeException )
 {
     document::EventObject aDocEvent;
     aDocEvent.Source = Source.Source;
@@ -94,7 +91,6 @@ void SAL_CALL OfficeDocumentsManager::OfficeDocumentsCloseListener::notifyClosin
 // virtual
 void SAL_CALL OfficeDocumentsManager::OfficeDocumentsCloseListener::disposing(
         const lang::EventObject& /*Source*/ )
-    throw ( uno::RuntimeException )
 {
 }
 
@@ -191,7 +187,6 @@ getDocumentId( const uno::Reference< uno::XInterface > & xDoc )
 // virtual
 void SAL_CALL OfficeDocumentsManager::notifyEvent(
         const document::EventObject & Event )
-    throw ( uno::RuntimeException )
 {
 /*
     Events documentation: OOo Developer's Guide / Writing UNO Components / Jobs
@@ -448,7 +443,6 @@ void SAL_CALL OfficeDocumentsManager::notifyEvent(
 // virtual
 void SAL_CALL OfficeDocumentsManager::disposing(
         const lang::EventObject& /*Source*/ )
-    throw ( uno::RuntimeException )
 {
 }
 
@@ -478,7 +472,7 @@ OfficeDocumentsManager::createDocumentEventNotifier(
 
     OSL_ENSURE(
         xIfc.is(),
-        "Could not instanciate com.sun.star.frame.GlobalEventBroadcaster" );
+        "Could not instantiate com.sun.star.frame.GlobalEventBroadcaster" );
 
     if ( xIfc.is() )
     {
@@ -718,7 +712,7 @@ bool OfficeDocumentsManager::isBasicIDE(
             }
 
             OSL_ENSURE( m_xModuleMgr .is(),
-                        "Could not instanciate ModuleManager service!" );
+                        "Could not instantiate ModuleManager service!" );
         }
     }
 

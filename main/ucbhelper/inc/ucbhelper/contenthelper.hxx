@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -78,7 +78,7 @@ class ContentProviderImplHelper;
   *     XCommandInfoChangeNotifier )
   *	- XPropertyContainer implementation ( persistence is implemented using
   *   service com.sun.star.ucb.Store )
-  * - complete XPropertySetInfo implementation ( including Additioanl Core
+  * - complete XPropertySetInfo implementation ( including Additional Core
   *   Properties supplied via XPropertyContainer interface )
   *   -> protected method: getPropertySetInfo
   *	- complete XCommandInfo implementation
@@ -125,7 +125,7 @@ private:
 	  * @param xEnv is an environment to use for example, for interactions.
 	  * @return a sequence containing the property meta data.
 	  */
-	UCBHELPER_DLLPRIVATE 
+	UCBHELPER_DLLPRIVATE
     virtual com::sun::star::uno::Sequence< com::sun::star::beans::Property >
 	getProperties( const com::sun::star::uno::Reference<
 					com::sun::star::ucb::XCommandEnvironment > & xEnv ) = 0;
@@ -137,7 +137,7 @@ private:
 	  * @param xEnv is an environment to use for example, for interactions.
 	  * @return a sequence containing the command meta data.
 	  */
-	UCBHELPER_DLLPRIVATE 
+	UCBHELPER_DLLPRIVATE
     virtual com::sun::star::uno::Sequence< com::sun::star::ucb::CommandInfo >
 	getCommands( const com::sun::star::uno::Reference<
 					com::sun::star::ucb::XCommandEnvironment > & xEnv ) = 0;
@@ -162,7 +162,7 @@ protected:
 	  * "getPropertySetInfo" simply return the return value of this method.
 	  *
 	  * @param xEnv is an environment to use for example, for interactions.
-	  * @param bCache indicates, whether the implemetation should use
+	  * @param bCache indicates, whether the implementation should use
 	  *        cached data, if exist.
 	  * @return an XPropertySetInfo implementation object containing meta data
 	  *         for the properties supported by this content.
@@ -178,7 +178,7 @@ protected:
 	  * return the return value of this method.
 	  *
 	  * @param xEnv is an environment to use for example, for interactions.
-	  * @param bCache indicates, whether the implemetation should use
+	  * @param bCache indicates, whether the implementation should use
 	  *        cached data, if exist.
 	  * @return an XCommandInfo implementation object containing meta data
 	  *         for the commands supported by this content.
@@ -270,7 +270,7 @@ protected:
 	  * @return the implementation of the service
 	  *         com.sun.star.ucb.PersistentPropertySet.
 	  */
-	com::sun::star::uno::Reference<	
+	com::sun::star::uno::Reference<
         com::sun::star::ucb::XPersistentPropertySet >
 	getAdditionalPropertySet( sal_Bool bCreate );
 
@@ -349,88 +349,69 @@ public:
 
     // XServiceInfo
     virtual ::rtl::OUString SAL_CALL
-	getImplementationName()
-		throw( ::com::sun::star::uno::RuntimeException ) = 0;
+	getImplementationName() = 0;
     virtual sal_Bool SAL_CALL
-	supportsService( const ::rtl::OUString& ServiceName )
-		throw( ::com::sun::star::uno::RuntimeException );
+	supportsService( const ::rtl::OUString& ServiceName );
     virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL
-	getSupportedServiceNames()
-		throw( ::com::sun::star::uno::RuntimeException ) = 0;
+	getSupportedServiceNames() = 0;
 
 	// XComponent
     virtual void SAL_CALL
-	dispose()
-		throw( com::sun::star::uno::RuntimeException );
+	dispose();
     virtual void SAL_CALL
 	addEventListener( const com::sun::star::uno::Reference<
-						com::sun::star::lang::XEventListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+						com::sun::star::lang::XEventListener >& Listener );
     virtual void SAL_CALL
 	removeEventListener( const com::sun::star::uno::Reference<
-							com::sun::star::lang::XEventListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+							com::sun::star::lang::XEventListener >& Listener );
 
 	// XContent
     virtual com::sun::star::uno::Reference<
 				com::sun::star::ucb::XContentIdentifier > SAL_CALL
-	getIdentifier()
-		throw( com::sun::star::uno::RuntimeException );
+	getIdentifier();
     virtual rtl::OUString SAL_CALL
-	getContentType()
-		throw( com::sun::star::uno::RuntimeException ) = 0;
+	getContentType() = 0;
     virtual void SAL_CALL
 	addContentEventListener(
 		const com::sun::star::uno::Reference<
-			com::sun::star::ucb::XContentEventListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+			com::sun::star::ucb::XContentEventListener >& Listener );
     virtual void SAL_CALL
 	removeContentEventListener(
 		const com::sun::star::uno::Reference<
-			com::sun::star::ucb::XContentEventListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+			com::sun::star::ucb::XContentEventListener >& Listener );
 
 	// XCommandProcessor
     virtual sal_Int32 SAL_CALL
-	createCommandIdentifier()
-		throw( com::sun::star::uno::RuntimeException );
+	createCommandIdentifier();
     virtual com::sun::star::uno::Any SAL_CALL
 	execute( const com::sun::star::ucb::Command& aCommand,
 			 sal_Int32 CommandId,
 			 const com::sun::star::uno::Reference<
-			 	com::sun::star::ucb::XCommandEnvironment >& Environment )
-    	throw( com::sun::star::uno::Exception,
-			   com::sun::star::ucb::CommandAbortedException,
-			   com::sun::star::uno::RuntimeException ) = 0;
+			 	com::sun::star::ucb::XCommandEnvironment >& Environment ) = 0;
     virtual void SAL_CALL
-	abort( sal_Int32 CommandId )
-		throw( com::sun::star::uno::RuntimeException ) = 0;
+	abort( sal_Int32 CommandId ) = 0;
 
 	// XPropertiesChangeNotifier
     virtual void SAL_CALL
 	addPropertiesChangeListener(
 		const com::sun::star::uno::Sequence< rtl::OUString >& PropertyNames,
 	 	const com::sun::star::uno::Reference<
-			com::sun::star::beans::XPropertiesChangeListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+			com::sun::star::beans::XPropertiesChangeListener >& Listener );
     virtual void SAL_CALL
 	removePropertiesChangeListener(
 		const com::sun::star::uno::Sequence< rtl::OUString >& PropertyNames,
 		const com::sun::star::uno::Reference<
-			com::sun::star::beans::XPropertiesChangeListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+			com::sun::star::beans::XPropertiesChangeListener >& Listener );
 
 	// XCommandInfoChangeNotifier
     virtual void SAL_CALL
 	addCommandInfoChangeListener(
 		const com::sun::star::uno::Reference<
-			com::sun::star::ucb::XCommandInfoChangeListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+			com::sun::star::ucb::XCommandInfoChangeListener >& Listener );
     virtual void SAL_CALL
 	removeCommandInfoChangeListener(
 		const com::sun::star::uno::Reference<
-			::com::sun::star::ucb::XCommandInfoChangeListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+			::com::sun::star::ucb::XCommandInfoChangeListener >& Listener );
 
 	// XPropertyContainer
 
@@ -447,11 +428,7 @@ public:
 	virtual void SAL_CALL
 	addProperty( const rtl::OUString& Name,
 				 sal_Int16 Attributes,
-				 const com::sun::star::uno::Any& DefaultValue )
-		throw( com::sun::star::beans::PropertyExistException,
-			   com::sun::star::beans::IllegalTypeException,
-			   com::sun::star::lang::IllegalArgumentException,
-			   com::sun::star::uno::RuntimeException );
+				 const com::sun::star::uno::Any& DefaultValue );
 
 	/**
 	  * This method removes a property from the content according to the
@@ -464,22 +441,17 @@ public:
 	  * implementation of getPropertyInfoTable.
 	  */
     virtual void SAL_CALL
-	removeProperty( const rtl::OUString& Name )
-		throw( com::sun::star::beans::UnknownPropertyException,
-			   com::sun::star::beans::NotRemoveableException,
-			   com::sun::star::uno::RuntimeException );
+	removeProperty( const rtl::OUString& Name );
 
 	// XPropertySetInfoChangeNotifier
     virtual void SAL_CALL
 	addPropertySetInfoChangeListener(
 		const com::sun::star::uno::Reference<
-			com::sun::star::beans::XPropertySetInfoChangeListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+			com::sun::star::beans::XPropertySetInfoChangeListener >& Listener );
     virtual void SAL_CALL
 	removePropertySetInfoChangeListener(
 		const com::sun::star::uno::Reference<
-			com::sun::star::beans::XPropertySetInfoChangeListener >& Listener )
-		throw( com::sun::star::uno::RuntimeException );
+			com::sun::star::beans::XPropertySetInfoChangeListener >& Listener );
 
 	// XChild
 
@@ -490,17 +462,14 @@ public:
 	  */
     virtual com::sun::star::uno::Reference<
 				com::sun::star::uno::XInterface > SAL_CALL
-	getParent()
-		throw( com::sun::star::uno::RuntimeException );
+	getParent();
 
 	/**
 	  * The implementation of this method always throws a NoSupportException.
 	  */
     virtual void SAL_CALL
 	setParent( const com::sun::star::uno::Reference<
-						com::sun::star::uno::XInterface >& Parent )
-		throw( com::sun::star::lang::NoSupportException,
-			   com::sun::star::uno::RuntimeException );
+						com::sun::star::uno::XInterface >& Parent );
 
 	//////////////////////////////////////////////////////////////////////
 	// Non-interface methods.

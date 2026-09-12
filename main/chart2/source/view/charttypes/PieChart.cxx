@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,23 +7,23 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartview.hxx"
 
 #include "PieChart.hxx"
 #include "PlottingPositionHelper.hxx"
@@ -89,7 +89,7 @@ bool PiePositionHelper::getInnerAndOuterRadius( double fCategoryX
 
     if( !isMathematicalOrientationRadius() )
     {
-        //in this case the given getMaximumX() was not corrcect instead the minimum should have been smaller by fMaxOffset
+        //in this case the given getMaximumX() was not correct instead the minimum should have been smaller by fMaxOffset
         //but during getMaximumX and getMimumX we do not know the axis orientation
         fLogicInner += fMaxOffset;
         fLogicOuter += fMaxOffset;
@@ -388,7 +388,7 @@ void PieChart::createShapes()
             continue;
 
         m_pPosHelper->m_fAngleDegreeOffset = pSeries->getStartingAngle();
-	   
+
         double fLogicYSum = 0.0;
         //iterate through all points to get the sum
         sal_Int32 nPointIndex=0;
@@ -450,7 +450,7 @@ void PieChart::createShapes()
                 }
 
                 //---------------------------
-                //transforme to unit circle:
+                //transform to unit circle:
                 double fUnitCircleWidthAngleDegree = m_pPosHelper->getWidthAngleDegree( fLogicStartAngleValue, fLogicEndAngleValue );
                 double fUnitCircleStartAngleDegree = m_pPosHelper->transformToAngleDegree( fLogicStartAngleValue );
                 double fUnitCircleInnerRadius = m_pPosHelper->transformToRadius( fLogicInnerRadius );
@@ -489,7 +489,7 @@ void PieChart::createShapes()
                     bool bMovementAllowed = ( nLabelPlacement == ::com::sun::star::chart::DataLabelPlacement::AVOID_OVERLAP );
                     if( bMovementAllowed )
                         nLabelPlacement = ::com::sun::star::chart::DataLabelPlacement::OUTSIDE;
-                    
+
                     LabelAlignment eAlignment(LABEL_ALIGN_CENTER);
                     sal_Int32 nScreenValueOffsetInRadiusDirection = 0 ;
                     if( nLabelPlacement == ::com::sun::star::chart::DataLabelPlacement::OUTSIDE )
@@ -515,7 +515,7 @@ void PieChart::createShapes()
                         aScreenPosition2D.X += aDirection.getX();
                         aScreenPosition2D.Y += aDirection.getY();
                     }
-                    
+
                     aPieLabelInfo.xTextShape = this->createDataLabel( xTextTarget, *pSeries, nPointIndex
                                     , fLogicYValue, fLogicYSum, aScreenPosition2D, eAlignment );
 
@@ -542,7 +542,7 @@ void PieChart::createShapes()
                     double fMaxDeltaRadius = fUnitCircleOuterRadius-fUnitCircleInnerRadius;
                     drawing::Position3D aOrigin = m_pPosHelper->transformUnitCircleToScene( fAngle, fUnitCircleOuterRadius, fLogicZ );
                     drawing::Position3D aNewOrigin = m_pPosHelper->transformUnitCircleToScene( fAngle, fUnitCircleOuterRadius + fMaxDeltaRadius, fLogicZ );
-                    
+
                     sal_Int32 nOffsetPercent( static_cast<sal_Int32>(fExplodePercentage * 100.0) );
 
                     awt::Point aMinimumPosition( PlottingPositionHelper::transformSceneToScreenPosition(
@@ -643,12 +643,12 @@ bool PieChart::PieLabelInfo::moveAwayFrom( const PieChart::PieLabelInfo* pFix, c
             nShift*=-1;
         awt::Point aOldPos( this->xLabelGroupShape->getPosition() );
         basegfx::B2IVector aNewPos = basegfx::B2IVector( aOldPos.X, aOldPos.Y ) + nShift*aTangentialDirection;
-    
+
         //check whether the new position is ok
         awt::Point aNewAWTPos( aNewPos.getX(), aNewPos.getY() );
         if( !lcl_isInsidePage( aNewAWTPos, this->xLabelGroupShape->getSize(), rPageSize ) )
             return false;
-        
+
         this->xLabelGroupShape->setPosition( aNewAWTPos );
         this->bMoved = true;
     }
@@ -666,7 +666,7 @@ void PieChart::resetLabelPositionsToPreviousState()
 bool PieChart::detectLabelOverlapsAndMove( const awt::Size& rPageSize )
 {
     //returns true when there might be more to do
-    
+
     //find borders of a group of overlapping labels
     bool bOverlapFound = false;
     PieLabelInfo* pStart = &(*(m_aLabelInfoList.rbegin()));
@@ -679,7 +679,7 @@ bool PieChart::detectLabelOverlapsAndMove( const awt::Size& rPageSize )
         ::basegfx::B2IRectangle aNextOverlap( aPreviousOverlap );
         aPreviousOverlap.intersect( lcl_getRect( pCurrent->pPrevious->xLabelGroupShape ) );
         aNextOverlap.intersect( lcl_getRect( pCurrent->pNext->xLabelGroupShape ) );
-        
+
         bool bPreviousOverlap = !aPreviousOverlap.isEmpty();
         bool bNextOverlap = !aNextOverlap.isEmpty();
         if( bPreviousOverlap || bNextOverlap )

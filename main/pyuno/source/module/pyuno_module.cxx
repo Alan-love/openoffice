@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -74,7 +74,7 @@ sal_Int32 fillStructWithInitializer(
     const Reference< XInvocation2 > &inv,
     typelib_CompoundTypeDescription *pCompType,
     PyObject *initializer,
-    const Runtime &runtime) throw ( RuntimeException )
+    const Runtime &runtime)
 {
     sal_Int32 nIndex = 0;
     if( pCompType->pBaseTypeDescription )
@@ -160,7 +160,7 @@ static PyObject* getComponentContext (PyObject*, PyObject*)
                     "file for bootstrapping python uno bridge\n" );
                 return NULL;
             }
-            
+
             OUStringBuffer iniFileName;
             iniFileName.append( path );
             iniFileName.appendAscii( "/" );
@@ -175,11 +175,11 @@ static PyObject* getComponentContext (PyObject*, PyObject*)
             }
             else
             {
-                // defaulting to the standard bootstrapping 
+                // defaulting to the standard bootstrapping
                 PyThreadDetach antiguard;
                 ctx = cppu::defaultBootstrap_InitialComponentContext ();
             }
-            
+
         }
 
         if( ! Runtime::isInitialized() )
@@ -225,11 +225,7 @@ PyObject * extractOneStringArg( PyObject *args, char const *funcName )
         return NULL;
     }
     PyObject *obj = PyTuple_GetItem( args, 0 );
-#if PY_MAJOR_VERSION >= 3
     if( ! PyUnicode_Check(obj) )
-#else
-    if( !PyBytes_Check( obj ) && ! PyUnicode_Check(obj))
-#endif
     {
         OStringBuffer buf;
         buf.append( funcName ).append( ": expecting one string argument" );
@@ -251,7 +247,7 @@ static PyObject *createUnoStructHelper(PyObject *, PyObject* args )
         {
             PyObject *structName = PyTuple_GetItem( args,0 );
             PyObject *initializer = PyTuple_GetItem( args ,1 );
-            
+
             if( PYSTR_CHECK( structName ) )
             {
                 if( PyTuple_Check( initializer ) )
@@ -367,7 +363,7 @@ static PyObject *getConstantByName( PyObject *, PyObject *args )
     try
     {
         char *name;
-        
+
         if (PyArg_ParseTuple (args, const_cast< char * >("s"), &name))
         {
             OUString typeName ( OUString::createFromAscii( name ) );
@@ -390,7 +386,7 @@ static PyObject *getConstantByName( PyObject *, PyObject *args )
     catch( NoSuchElementException & e )
     {
         // to the python programmer, this is a runtime exception,
-        // do not support tweakings with the type system 
+        // do not support tweakings with the type system
         RuntimeException runExc( e.Message, Reference< XInterface > () );
         raisePyExceptionWithAny( makeAny( runExc ) );
     }
@@ -419,7 +415,7 @@ static PyObject *checkType( PyObject *, PyObject *args )
         return NULL;
     }
     PyObject *obj = PyTuple_GetItem( args, 0 );
-    
+
     try
     {
         PyType2Type( obj );
@@ -443,7 +439,7 @@ static PyObject *checkEnum( PyObject *, PyObject *args )
         return NULL;
     }
     PyObject *obj = PyTuple_GetItem( args, 0 );
-    
+
     try
     {
         PyEnum2Enum( obj );
@@ -455,7 +451,7 @@ static PyObject *checkEnum( PyObject *, PyObject *args )
     }
     Py_INCREF( Py_None );
     return Py_None;
-}    
+}
 
 static PyObject *getClass( PyObject *, PyObject *args )
 {
@@ -488,18 +484,9 @@ static PyObject *isInterface( PyObject *, PyObject *args )
     {
         PyObject *obj = PyTuple_GetItem( args, 0 );
         Runtime r;
-#if PY_MAJOR_VERSION >= 3
         return PyLong_FromLong( isInterfaceClass( r, obj ) );
-#else
-        return PyInt_FromLong( isInterfaceClass( r, obj ) );
-
-#endif
     }
-#if PY_MAJOR_VERSION >= 3
     return PyLong_FromLong( 0 );
-#else
-    return PyInt_FromLong( 0 );
-#endif
 }
 
 static PyObject * generateUuid( PyObject *, PyObject * )
@@ -587,7 +574,7 @@ static PyObject * absolutize( PyObject *, PyObject * args )
             buf.appendAscii( " for reason (" );
             buf.append( (sal_Int32) e );
             buf.appendAscii( ")" );
-                
+
             PyErr_SetString(
                 PyExc_OSError,
                 OUStringToOString(buf.makeStringAndClear(),osl_getThreadTextEncoding()));
@@ -607,14 +594,7 @@ static PyObject * invoke ( PyObject *, PyObject * args )
 
         if( PYSTR_CHECK( PyTuple_GetItem( args, 1 ) ) )
         {
-#if PY_VERSION_HEX >= 0x03030000
             const char *name = PyUnicode_AsUTF8( PyTuple_GetItem( args, 1 ) );
-#elif PY_MAJOR_VERSION >= 3
-            PyRef pUtf8(PyUnicode_AsUTF8String( PyTuple_GetItem( args, 1 ) ), SAL_NO_ACQUIRE);
-            const char *name = PyBytes_AsString( pUtf8.get() );
-#else
-            const char *name = PyBytes_AsString( PyTuple_GetItem( args, 1 ) );
-#endif
             if( PyTuple_Check( PyTuple_GetItem( args , 2 )))
             {
                 ret = PyUNO_invoke( object, name , PyTuple_GetItem( args, 2 ) );
@@ -623,11 +603,7 @@ static PyObject * invoke ( PyObject *, PyObject * args )
             {
                 OStringBuffer buf;
                 buf.append( "uno.invoke expects a tuple as 3rd argument, got " );
-#if PY_MAJOR_VERSION >= 3
                 buf.append( OUStringToOString( pyString2ustring( PyTuple_GetItem( args, 2 ) ), RTL_TEXTENCODING_ASCII_US) );
-#else
-                buf.append( PyBytes_AsString( PyObject_Str( PyTuple_GetItem( args, 2) ) ) );
-#endif
                 PyErr_SetString( PyExc_RuntimeError, buf.makeStringAndClear() );
             }
         }
@@ -635,11 +611,7 @@ static PyObject * invoke ( PyObject *, PyObject * args )
         {
             OStringBuffer buf;
             buf.append( "uno.invoke expected a string as 2nd argument, got " );
-#if PY_MAJOR_VERSION >= 3
             buf.append( OUStringToOString( pyString2ustring( PyTuple_GetItem( args, 1 ) ), RTL_TEXTENCODING_ASCII_US ) );
-#else
-            buf.append( PyBytes_AsString( PyObject_Str( PyTuple_GetItem( args, 1) ) ) );
-#endif
             PyErr_SetString( PyExc_RuntimeError, buf.makeStringAndClear() );
         }
     }
@@ -675,25 +647,21 @@ static PyObject *setCurrentContext( PyObject *, PyObject * args )
     {
         if( PyTuple_Check( args ) && PyTuple_Size( args ) == 1 )
         {
-            
+
             Runtime runtime;
             Any a = runtime.pyObject2Any( PyTuple_GetItem( args, 0 ) );
-            
+
             Reference< com::sun::star::uno::XCurrentContext > context;
-            
+
             if( (a.hasValue() && (a >>= context)) || ! a.hasValue() )
             {
                 ret = com::sun::star::uno::setCurrentContext( context ) ? Py_True : Py_False;
             }
-            else 
+            else
             {
                 OStringBuffer buf;
                 buf.append( "uno.setCurrentContext expects an XComponentContext implementation, got " );
-#if PY_MAJOR_VERSION >= 3
                 buf.append( OUStringToOString( pyString2ustring( PyTuple_GetItem( args, 0 ) ), RTL_TEXTENCODING_ASCII_US ) );
-#else
-                buf.append( PyBytes_AsString( PyObject_Str( PyTuple_GetItem( args, 0) ) ) );
-#endif
                 PyErr_SetString( PyExc_RuntimeError, buf.makeStringAndClear() );
             }
         }
@@ -715,7 +683,7 @@ static PyObject *setCurrentContext( PyObject *, PyObject * args )
 
 struct PyMethodDef PyUNOModule_methods [] =
 {
-    {const_cast< char * >("getComponentContext"), getComponentContext, METH_NOARGS, NULL}, 
+    {const_cast< char * >("getComponentContext"), getComponentContext, METH_NOARGS, NULL},
     {const_cast< char * >("_createUnoStructHelper"), createUnoStructHelper, METH_VARARGS, NULL},
     {const_cast< char * >("getTypeByName"), getTypeByName, METH_VARARGS, NULL},
     {const_cast< char * >("getConstantByName"), getConstantByName, METH_VARARGS, NULL},
@@ -733,7 +701,6 @@ struct PyMethodDef PyUNOModule_methods [] =
     {NULL, NULL, 0, NULL}
 };
 
-#if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef PyUNOModule =
 {
     PyModuleDef_HEAD_INIT,
@@ -742,30 +709,17 @@ static struct PyModuleDef PyUNOModule =
     -1,
     PyUNOModule_methods
 };
-#endif
 }
 
-#if PY_MAJOR_VERSION >= 3
-PY_DLLEXPORT PyMODINIT_FUNC PyInit_pyuno()
+PyMODINIT_FUNC PyInit_pyuno()
 {
     PyObject *m;
-    
-    PyEval_InitThreads();
-    
+
     m = PyModule_Create(&PyUNOModule);
     if (m == NULL)
         return NULL;
-    
+
     if (PyType_Ready((PyTypeObject *)getPyUnoClass().get()))
         return NULL;
     return m;
 }
-#else
-extern "C" PY_DLLEXPORT void initpyuno()
-{
-    // noop when called already, otherwise needed to allow multiple threads
-    // This has to be reworked for Python 3.
-    PyEval_InitThreads();
-    Py_InitModule (const_cast< char * >("pyuno"), PyUNOModule_methods);
-}
-#endif

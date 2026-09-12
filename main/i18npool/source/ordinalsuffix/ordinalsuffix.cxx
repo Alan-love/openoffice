@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -80,7 +80,7 @@ static OUString getOrdinalSuffixEn( sal_Int32 nNumber )
 
 
 OUString SAL_CALL OrdinalSuffix::getOrdinalSuffix( sal_Int32 nNumber,
-        const Locale &aLocale ) throw( RuntimeException )
+        const Locale &aLocale )
 {
     OUString retValue;
 
@@ -93,17 +93,17 @@ OUString SAL_CALL OrdinalSuffix::getOrdinalSuffix( sal_Int32 nNumber,
 
 const sal_Char cOrdinalSuffix[] = "com.sun.star.i18n.OrdinalSuffix";
 
-OUString SAL_CALL OrdinalSuffix::getImplementationName(void) throw( RuntimeException )
+OUString SAL_CALL OrdinalSuffix::getImplementationName(void)
 {
     return OUString::createFromAscii(cOrdinalSuffix);
 }
 
-sal_Bool SAL_CALL OrdinalSuffix::supportsService( const OUString& rServiceName) throw( RuntimeException )
+sal_Bool SAL_CALL OrdinalSuffix::supportsService( const OUString& rServiceName)
 {
     return !rServiceName.compareToAscii(cOrdinalSuffix);
 }
 
-Sequence< OUString > SAL_CALL OrdinalSuffix::getSupportedServiceNames(void) throw( RuntimeException )
+Sequence< OUString > SAL_CALL OrdinalSuffix::getSupportedServiceNames(void)
 {
     Sequence< OUString > aRet(1);
     aRet[0] = OUString::createFromAscii(cOrdinalSuffix);

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -93,14 +93,14 @@ Sequence< OUString > SAL_CALL ExcelFilter_getSupportedServiceNames() throw()
 }
 
 Reference< XInterface > SAL_CALL ExcelFilter_createInstance(
-        const Reference< XComponentContext >& rxContext ) throw( Exception )
+        const Reference< XComponentContext >& rxContext )
 {
     return static_cast< ::cppu::OWeakObject* >( new ExcelFilter( rxContext ) );
 }
 
 // ----------------------------------------------------------------------------
 
-ExcelFilter::ExcelFilter( const Reference< XComponentContext >& rxContext ) throw( RuntimeException ) :
+ExcelFilter::ExcelFilter( const Reference< XComponentContext >& rxContext ) :
     XmlFilterBase( rxContext )
 {
 }
@@ -184,14 +184,14 @@ Sequence< OUString > SAL_CALL ExcelBiffFilter_getSupportedServiceNames() throw()
 }
 
 Reference< XInterface > SAL_CALL ExcelBiffFilter_createInstance(
-        const Reference< XComponentContext >& rxContext ) throw( Exception )
+        const Reference< XComponentContext >& rxContext )
 {
     return static_cast< ::cppu::OWeakObject* >( new ExcelBiffFilter( rxContext ) );
 }
 
 // ----------------------------------------------------------------------------
 
-ExcelBiffFilter::ExcelBiffFilter( const Reference< XComponentContext >& rxContext ) throw( RuntimeException ) :
+ExcelBiffFilter::ExcelBiffFilter( const Reference< XComponentContext >& rxContext ) :
     BinaryFilterBase( rxContext )
 {
 }
@@ -223,7 +223,7 @@ bool ExcelBiffFilter::importDocument() throw()
     OSL_ENSURE( eBiff != BIFF_UNKNOWN, "ExcelBiffFilter::ExcelBiffFilter - invalid file format" );
     if( eBiff == BIFF_UNKNOWN )
         return false;
-        
+
     /*  Construct the WorkbookGlobals object referred to by every instance of
         the class WorkbookHelper, and execute the import filter by constructing
         an instance of BiffWorkbookFragment and loading the file. */
@@ -266,14 +266,14 @@ Sequence< OUString > SAL_CALL ExcelVbaProjectFilter_getSupportedServiceNames() t
 }
 
 Reference< XInterface > SAL_CALL ExcelVbaProjectFilter_createInstance(
-        const Reference< XComponentContext >& rxContext ) throw( Exception )
+        const Reference< XComponentContext >& rxContext )
 {
     return static_cast< ::cppu::OWeakObject* >( new ExcelVbaProjectFilter( rxContext ) );
 }
 
 // ----------------------------------------------------------------------------
 
-ExcelVbaProjectFilter::ExcelVbaProjectFilter( const Reference< XComponentContext >& rxContext ) throw( RuntimeException ) :
+ExcelVbaProjectFilter::ExcelVbaProjectFilter( const Reference< XComponentContext >& rxContext ) :
     ExcelBiffFilter( rxContext )
 {
 }

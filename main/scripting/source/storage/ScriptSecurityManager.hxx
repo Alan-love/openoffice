@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -50,36 +50,28 @@ typedef ::std::hash_map< ::rtl::OUString, StoragePerm, ::rtl::OUStringHash,
 /**
  * Class responsible for managing the ScriptSecurity.
  */
-class ScriptSecurityManager 
+class ScriptSecurityManager
 {
 public:
-    explicit ScriptSecurityManager( 
-        const css::uno::Reference< css::uno::XComponentContext > & xContext )
-        throw ( css::uno::RuntimeException );
+    explicit ScriptSecurityManager(
+        const css::uno::Reference< css::uno::XComponentContext > & xContext );
     ~ScriptSecurityManager();
-    void addScriptStorage( rtl::OUString scriptStorageURL, sal_Int32 storageID)
-        throw ( css::uno::RuntimeException );
+    void addScriptStorage( rtl::OUString scriptStorageURL, sal_Int32 storageID);
 /**
  * checks to see if the requested permission can be granted
- * checks to see whether the requested ScriptPeremission is allowed. 
+ * checks to see whether the requested ScriptPeremission is allowed.
  */
-    void checkPermission( const rtl::OUString & scriptStorageURL, 
-        const rtl::OUString & permissionRequest ) 
-        throw ( css::uno::RuntimeException, css::lang::IllegalArgumentException,
-            css::security::AccessControlException );
+    void checkPermission( const rtl::OUString & scriptStorageURL,
+        const rtl::OUString & permissionRequest );
     void removePermissionSettings ( ::rtl::OUString & scriptStorageURL );
 private:
-    void readConfiguration() throw (css::uno::RuntimeException);
+    void readConfiguration();
 
-    short executeDialog ( const rtl::OUString & path ) 
-        throw (css::uno::RuntimeException);        
-    short executeStandardDialog()
-        throw ( css::uno::RuntimeException );
-    short executePathDialog(const rtl::OUString & path)
-        throw ( css::uno::RuntimeException );
+    short executeDialog ( const rtl::OUString & path );
+    short executeStandardDialog();
+    short executePathDialog(const rtl::OUString & path);
 
-        void addToSecurePaths ( const rtl::OUString & path )
-        throw (css::uno::RuntimeException);
+        void addToSecurePaths ( const rtl::OUString & path );
     bool isSecureURL( const rtl::OUString & path );
     css::uno::Reference< css::uno::XComponentContext > m_xContext;
     sal_Bool m_confirmationRequired;
@@ -88,7 +80,7 @@ private:
     css::uno::Reference< css::lang::XMultiServiceFactory > m_xConfigProvFactory;
     css::uno::Sequence< rtl::OUString > m_secureURL;
     Permission_Hash m_permissionSettings;
-    
+
 };
 } // scripting_securitymgr
 

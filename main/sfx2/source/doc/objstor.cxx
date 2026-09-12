@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -299,7 +299,7 @@ sal_Bool SfxObjectShell::PutURLContentsToVersionStream_Impl(
             uno::Reference< embed::XStorage > xTempStorage =
                 ::comphelper::OStorageHelper::GetStorageFromURL( aTempURL, embed::ElementModes::READWRITE );
 
-            // the password will be transferred from the xStorage to xTempStorage by storage implemetation
+            // the password will be transferred from the xStorage to xTempStorage by storage implementation
             xStorage->copyToStorage( xTempStorage );
 
             // the temporary storage was committed by the previous method and it will die by refcount
@@ -2035,7 +2035,7 @@ sal_Bool SfxObjectShell::DoSaveObjectAs( SfxMedium& rMedium, sal_Bool bCommit )
 }
 
 //-------------------------------------------------------------------------
-// TODO/LATER: may be the call must be removed completelly
+// TODO/LATER: may be the call must be removed completely
 sal_Bool SfxObjectShell::DoSaveAs( SfxMedium& rMedium )
 {
     // hier kommen nur Root-Storages rein, die via Temp-File gespeichert werden
@@ -2653,7 +2653,7 @@ sal_Bool SfxObjectShell::DoSave_Impl( const SfxItemSet* pArgs )
     pSet->ClearItem( SID_VERSION );
     pSet->ClearItem( SID_DOC_BASEURL );
 
-    // create a medium as a copy; this medium is only for writingm, because it uses the same name as the original one
+    // create a medium as a copy; this medium is only for writing, because it uses the same name as the original one
     // writing is done through a copy, that will be transferred to the target ( of course after calling HandsOff )
     SfxMedium* pMediumTmp = new SfxMedium( pRetrMedium->GetName(), pRetrMedium->GetOpenMode(), pRetrMedium->IsDirect(), pFilter, pSet );
     pMediumTmp->SetLongName( pRetrMedium->GetLongName() );
@@ -3698,7 +3698,7 @@ sal_Bool SfxObjectShell::GenerateAndStoreThumbnail( sal_Bool bEncrypted,
                                                     const uno::Reference< embed::XStorage >& xStor )
 {
     RTL_LOGFILE_CONTEXT( aLog, "sfx2 (mv76033) SfxObjectShell::GenerateAndStoreThumbnail" );
-	
+
     bIsInGenerateThumbnail = sal_True;//optimize thumbnail generate and store procedure to improve odt saving performance, i120030
 
     sal_Bool bResult = sal_False;
@@ -3728,7 +3728,7 @@ sal_Bool SfxObjectShell::GenerateAndStoreThumbnail( sal_Bool bEncrypted,
     catch( uno::Exception& )
     {
     }
-	
+
     bIsInGenerateThumbnail = sal_False;//optimize thumbnail generate and store procedure to improve odt saving performance, i120030
 
     return bResult;

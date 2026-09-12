@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -99,13 +99,13 @@ namespace pcr
         ~DefaultEnumRepresentation();
 
     protected:
-        // IPropertyEnumRepresentation implementqation
+        // IPropertyEnumRepresentation implementation
         virtual ::std::vector< ::rtl::OUString >
                                     SAL_CALL getDescriptions() const;
         virtual void                SAL_CALL getValueFromDescription( const ::rtl::OUString& _rDescription, ::com::sun::star::uno::Any& _out_rValue ) const;
         virtual ::rtl::OUString     SAL_CALL getDescriptionForValue( const ::com::sun::star::uno::Any& _rEnumValue ) const;
 
-        // IReference implementqation
+        // IReference implementation
         virtual oslInterlockedCount SAL_CALL acquire();
         virtual oslInterlockedCount SAL_CALL release();
 
@@ -130,7 +130,7 @@ namespace pcr
 #define PROP_FLAG_COMPOSEABLE       0x00000080  // the property is "composeable", i.e. an intersection of property
                                                 //  sets should expose it, if all elements do
 #define PROP_FLAG_EXPERIMENTAL      0x00000100  // the property is experimental, i.e. should not appear in the
-                                                // UI, unless experimental properties are enabled by a configuraiton
+                                                // UI, unless experimental properties are enabled by a configuration
                                                 // option
 
 	//========================================================================
@@ -322,7 +322,7 @@ namespace pcr
     #define PROPERTY_ID_LIST_BINDING                185
     #define PROPERTY_ID_VERTICAL_ALIGN              186
     #define PROPERTY_ID_BINDING_NAME                187
-    #define PROPERTY_ID_DECORATION                  188		
+    #define PROPERTY_ID_DECORATION                  188
 	#define PROPERTY_ID_SELECTION_TYPE				189
 	#define PROPERTY_ID_ROOT_DISPLAYED				190
 	#define PROPERTY_ID_SHOWS_HANDLES				191
@@ -343,4 +343,3 @@ namespace pcr
 //............................................................................
 
 #endif // _EXTENSIONS_PROPCTRLR_FORMMETADATA_HXX_
-

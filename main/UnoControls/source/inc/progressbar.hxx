@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -138,7 +138,7 @@ public:
 		@onerror
 	*/
 
-	virtual UNO3_ANY SAL_CALL queryInterface( const UNO3_TYPE& aType ) throw( UNO3_RUNTIMEEXCEPTION );
+	virtual UNO3_ANY SAL_CALL queryInterface( const UNO3_TYPE& aType );
 
 	/**_______________________________________________________________________________________________________
 		@short		increment refcount
@@ -189,7 +189,7 @@ public:
 		@onerror
 	*/
 
-	virtual UNO3_SEQUENCE< UNO3_TYPE > SAL_CALL getTypes() throw( UNO3_RUNTIMEEXCEPTION );
+	virtual UNO3_SEQUENCE< UNO3_TYPE > SAL_CALL getTypes();
 
 	//__________________________________________________________________________________________________________
 	//	XAggregation
@@ -208,7 +208,7 @@ public:
 		@onerror
 	*/
 
-	UNO3_ANY SAL_CALL queryAggregation( const UNO3_TYPE& aType ) throw( UNO3_RUNTIMEEXCEPTION );
+	UNO3_ANY SAL_CALL queryAggregation( const UNO3_TYPE& aType );
 
 	//________________________________________________________________________________________________________
 	//	XProgressBar
@@ -227,7 +227,7 @@ public:
 		@onerror
 	*/
 
-    virtual void SAL_CALL setForegroundColor( sal_Int32 nColor ) throw( UNO3_RUNTIMEEXCEPTION );
+    virtual void SAL_CALL setForegroundColor( sal_Int32 nColor );
 
 	/**_________________________________________________________________________________________________________
 		@short
@@ -242,7 +242,7 @@ public:
 		@onerror
 	*/
 
-    virtual void SAL_CALL setBackgroundColor( sal_Int32 nColor ) throw( UNO3_RUNTIMEEXCEPTION );
+    virtual void SAL_CALL setBackgroundColor( sal_Int32 nColor );
 
 	/**_________________________________________________________________________________________________________
 		@short
@@ -257,7 +257,7 @@ public:
 		@onerror
 	*/
 
-    virtual void SAL_CALL setValue( sal_Int32 nValue ) throw( UNO3_RUNTIMEEXCEPTION );
+    virtual void SAL_CALL setValue( sal_Int32 nValue );
 
 	/**_________________________________________________________________________________________________________
 		@short
@@ -273,7 +273,7 @@ public:
 	*/
 
     virtual void SAL_CALL setRange(	sal_Int32	nMin	,
-									sal_Int32	nMax	) throw( UNO3_RUNTIMEEXCEPTION );
+									sal_Int32	nMax	);
 
 	/**_________________________________________________________________________________________________________
 		@short
@@ -288,7 +288,7 @@ public:
 		@onerror
 	*/
 
-    virtual sal_Int32 SAL_CALL getValue() throw( UNO3_RUNTIMEEXCEPTION );
+    virtual sal_Int32 SAL_CALL getValue();
 
 	//__________________________________________________________________________________________________________
 	//	XWindow
@@ -311,7 +311,7 @@ public:
 										sal_Int32	nY		,
 										sal_Int32	nWidth	,
 										sal_Int32	nHeight	,
-										sal_Int16	nFlags	) throw( UNO3_RUNTIMEEXCEPTION );
+										sal_Int16	nFlags	);
 
 	//__________________________________________________________________________________________________________
 	//	XControl
@@ -330,7 +330,7 @@ public:
 		@onerror
 	*/
 
-    virtual sal_Bool SAL_CALL setModel( const UNO3_REFERENCE< UNO3_XCONTROLMODEL >& xModel ) throw( UNO3_RUNTIMEEXCEPTION );
+    virtual sal_Bool SAL_CALL setModel( const UNO3_REFERENCE< UNO3_XCONTROLMODEL >& xModel );
 
 	/**_________________________________________________________________________________________________________
 		@short
@@ -345,7 +345,7 @@ public:
 		@onerror
 	*/
 
-    virtual UNO3_REFERENCE< UNO3_XCONTROLMODEL > SAL_CALL getModel() throw( UNO3_RUNTIMEEXCEPTION );
+    virtual UNO3_REFERENCE< UNO3_XCONTROLMODEL > SAL_CALL getModel();
 
 	//__________________________________________________________________________________________________________
 	//	BaseControl

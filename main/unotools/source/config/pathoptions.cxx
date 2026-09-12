@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -286,7 +286,7 @@ const String& SvtPathOptions_Impl::GetPath( SvtPathOptions::Pathes ePath )
 	String		aResult;
 	sal_Int32	nHandle = m_aMapEnumToPropHandle[ (sal_Int32)ePath ];
 
-	// Substitution is done by the service itself using the substition service
+	// Substitution is done by the service itself using the substitution service
 	Any 		a = m_xPathSettings->getFastPropertyValue( nHandle );
 	a >>= aPathValue;
 	if( ePath == SvtPathOptions::PATH_ADDIN     ||
@@ -355,7 +355,7 @@ void SvtPathOptions_Impl::SetPath( SvtPathOptions::Pathes ePath, const String& r
 				aNewValue = rNewPath;
 		}
 
-		// Resubstitution is done by the service itself using the substition service
+		// Resubstitution is done by the service itself using the substitution service
 		a <<= aNewValue;
 		try
 		{
@@ -1063,33 +1063,33 @@ void SvtPathOptions::SetPath( SvtPathOptions::Pathes ePath, const String& rNewPa
 
 class PathService : public ::cppu::WeakImplHelper2< ::com::sun::star::frame::XConfigManager, ::com::sun::star::lang::XServiceInfo >
 {
-    virtual ::rtl::OUString	SAL_CALL	getImplementationName(  ) throw(::com::sun::star::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL			supportsService( const ::rtl::OUString& ServiceName ) throw(::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString	SAL_CALL	getImplementationName(  );
+    virtual sal_Bool SAL_CALL			supportsService( const ::rtl::OUString& ServiceName );
     virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL
-										getSupportedServiceNames(  ) throw(::com::sun::star::uno::RuntimeException);
-    virtual ::rtl::OUString SAL_CALL	substituteVariables( const ::rtl::OUString& sText ) throw(::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL				addPropertyChangeListener( const ::rtl::OUString& sKeyName, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener >& xListener ) throw(::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL				removePropertyChangeListener( const ::rtl::OUString& sKeyName, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener >& xListener ) throw(::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL				flush(  ) throw(::com::sun::star::uno::RuntimeException);
+										getSupportedServiceNames(  );
+    virtual ::rtl::OUString SAL_CALL	substituteVariables( const ::rtl::OUString& sText );
+    virtual void SAL_CALL				addPropertyChangeListener( const ::rtl::OUString& sKeyName, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener >& xListener );
+    virtual void SAL_CALL				removePropertyChangeListener( const ::rtl::OUString& sKeyName, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener >& xListener );
+    virtual void SAL_CALL				flush(  );
 };
 
 // class PathService -----------------------------------------------------
 
-void SAL_CALL PathService::addPropertyChangeListener( const ::rtl::OUString&, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener >& ) throw(::com::sun::star::uno::RuntimeException) {}
-void SAL_CALL PathService::removePropertyChangeListener( const ::rtl::OUString&, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener >& ) throw(::com::sun::star::uno::RuntimeException) {}
-void SAL_CALL PathService::flush(  ) throw(::com::sun::star::uno::RuntimeException) {}
+void SAL_CALL PathService::addPropertyChangeListener( const ::rtl::OUString&, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener >& ) {}
+void SAL_CALL PathService::removePropertyChangeListener( const ::rtl::OUString&, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener >& ) {}
+void SAL_CALL PathService::flush(  ) {}
 
-::rtl::OUString SAL_CALL PathService::substituteVariables( const ::rtl::OUString& sText ) throw(::com::sun::star::uno::RuntimeException)
+::rtl::OUString SAL_CALL PathService::substituteVariables( const ::rtl::OUString& sText )
 {
     return SvtPathOptions().SubstituteVariable( sText );
 }
 
-::rtl::OUString SAL_CALL PathService::getImplementationName(  ) throw(::com::sun::star::uno::RuntimeException)
+::rtl::OUString SAL_CALL PathService::getImplementationName(  )
 {
     return OUString::createFromAscii("com.sun.star.comp.unotools.PathService");
 }
 
-sal_Bool SAL_CALL PathService::supportsService( const ::rtl::OUString& ServiceName ) throw(::com::sun::star::uno::RuntimeException)
+sal_Bool SAL_CALL PathService::supportsService( const ::rtl::OUString& ServiceName )
 {
     if ( ServiceName.compareToAscii("com.sun.star.config.SpecialConfigManager") == COMPARE_EQUAL )
         return sal_True;
@@ -1097,7 +1097,7 @@ sal_Bool SAL_CALL PathService::supportsService( const ::rtl::OUString& ServiceNa
         return sal_False;
 }
 
-::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL PathService::getSupportedServiceNames(  ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL PathService::getSupportedServiceNames(  )
 {
     Sequence< OUString > aRet(1);
     *aRet.getArray() = OUString::createFromAscii("com.sun.star.config.SpecialConfigManager");

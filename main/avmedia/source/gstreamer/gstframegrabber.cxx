@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -104,7 +104,7 @@ FrameGrabber* FrameGrabber::create( const GString* pURI )
 
                 g_mutex_unlock( pFrameGrabber->mpMutex );
             }
-            
+
             GstElement* pPixbufSink = gst_element_factory_make( "gdkpixbufsink", NULL );
 
             // check if player pipeline and GdkPixbufSink could be initialized
@@ -157,7 +157,7 @@ gboolean FrameGrabber::busCallback( GstBus* pBus, GstMessage* pMsg )
             }
 
             g_mutex_unlock( mpFrameMutex );
-            
+
             if( bFrameGrabbed )
             {
                 g_cond_signal( mpFrameCond );
@@ -173,7 +173,6 @@ gboolean FrameGrabber::busCallback( GstBus* pBus, GstMessage* pMsg )
 // ------------------------------------------------------------------------------
 
 uno::Reference< graphic::XGraphic > SAL_CALL FrameGrabber::grabFrame( double fMediaTime )
-    throw (uno::RuntimeException)
 {
     uno::Reference< graphic::XGraphic > xRet;
 
@@ -271,14 +270,13 @@ uno::Reference< graphic::XGraphic > SAL_CALL FrameGrabber::grabFrame( double fMe
             g_mutex_unlock( mpFrameMutex );
         }
     }
-    
+
     return xRet;
 }
 
 // ------------------------------------------------------------------------------
 
 ::rtl::OUString SAL_CALL FrameGrabber::getImplementationName(  )
-    throw (uno::RuntimeException)
 {
     return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( AVMEDIA_GSTREAMER_FRAMEGRABBER_IMPLEMENTATIONNAME ) );
 }
@@ -286,7 +284,6 @@ uno::Reference< graphic::XGraphic > SAL_CALL FrameGrabber::grabFrame( double fMe
 // ------------------------------------------------------------------------------
 
 sal_Bool SAL_CALL FrameGrabber::supportsService( const ::rtl::OUString& ServiceName )
-    throw (uno::RuntimeException)
 {
     return ServiceName.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM ( AVMEDIA_GSTREAMER_FRAMEGRABBER_SERVICENAME ) );
 }
@@ -294,7 +291,6 @@ sal_Bool SAL_CALL FrameGrabber::supportsService( const ::rtl::OUString& ServiceN
 // ------------------------------------------------------------------------------
 
 uno::Sequence< ::rtl::OUString > SAL_CALL FrameGrabber::getSupportedServiceNames(  )
-    throw (uno::RuntimeException)
 {
     uno::Sequence< ::rtl::OUString > aRet(1);
     aRet[0] = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM ( AVMEDIA_GSTREAMER_FRAMEGRABBER_SERVICENAME ) );

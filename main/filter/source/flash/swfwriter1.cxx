@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -623,7 +623,7 @@ void Writer::Impl_writeText( const Point& rPos, const String& rText, const sal_I
 
 */
 
-#if	0 // makes the calculated bound rect visible for debuging
+#if	0 // makes the calculated bound rect visible for debugging
 {
 		Polygon aTmpPoly( aPoly );
 		sal_uInt16 nID = FlashGeometryExporter::writePolygonShape( aMovieStream, aTmpPoly, false, Color(COL_MAGENTA), Color(COL_MAGENTA), mpClipPolyPolygon  );
@@ -879,7 +879,7 @@ sal_uInt16 Writer::defineBitmap( const BitmapEx &bmpSource, sal_Int32 nJPEGQuali
 	}
 
 	//Figure out JPEG size
-	const sal_uInt8* pJpgData = NULL;;
+	const sal_uInt8* pJpgData = NULL;
 	sal_uInt32 nJpgDataLength = 0xffffffff;
 
 	Graphic aGraphic( bmpSource );
@@ -960,7 +960,7 @@ void Writer::Impl_writeImage( const BitmapEx& rBmpEx, const Point& rPt, const Si
 
 			Rectangle cropRect(destRect);
 
-			// AS: The bmp origion is always 0,0 so we have to adjust before we crop.
+			// AS: The bmp origin is always 0,0 so we have to adjust before we crop.
 			cropRect.Move(-srcPt.X(), -srcPt.Y());
 			// AS: Rectangle has no scale function (?!) so I do it manually...
 			Rectangle cropPixelRect(static_cast<long>(cropRect.Left()*XScale),
@@ -1043,9 +1043,9 @@ void Writer::Impl_writeBmp( sal_uInt16 nBitmapId, sal_uInt32 width, sal_uInt32 h
 
 void Writer::Impl_writeJPEG(sal_uInt16 nBitmapId, const sal_uInt8* pJpgData, sal_uInt32 nJpgDataLength, sal_uInt8 *pAlphaCompressed, sal_uInt32 alpha_compressed_size )
 {
-	// AS: Go through the actuall JPEG bits, separating out the
+	// AS: Go through the actual JPEG bits, separating out the
 	//  header fields from the actual image fields.  Fields are
-	//  identifed by 0xFFXX where XX is the field type.  Both
+	//  identified by 0xFFXX where XX is the field type.  Both
 	//  the header and the image need start and stop (D8 and D9),
 	//  so that's why you see those written to both.  I don't
 	//  really know what the rest of these are, I got it to work

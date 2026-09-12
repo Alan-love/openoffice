@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -68,7 +68,7 @@ namespace sax_fastparser {
     FastSaxSerializer::FastSaxSerializer( ) : mxOutputStream(), mxFastTokenHandler(), maMarkStack() {}
     FastSaxSerializer::~FastSaxSerializer() {}
 
-	void SAL_CALL FastSaxSerializer::startDocument(  ) throw (SAXException, RuntimeException)
+	void SAL_CALL FastSaxSerializer::startDocument(  )
 	{
 		if (!mxOutputStream.is())
 			return;
@@ -95,21 +95,21 @@ namespace sax_fastparser {
 		}
 		return sBuf.makeStringAndClear();
 	}
-	
+
 	void FastSaxSerializer::write( const OUString& s )
 	{
 		OString sOutput( OUStringToOString( s, RTL_TEXTENCODING_UTF8 ) );
-		writeBytes( Sequence< sal_Int8 >( 
-					reinterpret_cast< const sal_Int8*>( sOutput.getStr() ), 
+		writeBytes( Sequence< sal_Int8 >(
+					reinterpret_cast< const sal_Int8*>( sOutput.getStr() ),
 					sOutput.getLength() ) );
 	}
 
-    void SAL_CALL FastSaxSerializer::endDocument(  ) throw (SAXException, RuntimeException)
+    void SAL_CALL FastSaxSerializer::endDocument(  )
 	{
 		if (!mxOutputStream.is())
 			return;
 	}
-	
+
     void SAL_CALL FastSaxSerializer::writeId( ::sal_Int32 nElement )
     {
         if( HAS_NAMESPACE( nElement ) ) {
@@ -121,7 +121,6 @@ namespace sax_fastparser {
     }
 
     void SAL_CALL FastSaxSerializer::startFastElement( ::sal_Int32 Element, const Reference< XFastAttributeList >& Attribs )
-		throw (SAXException, RuntimeException)
 	{
 		if (!mxOutputStream.is())
 			return;
@@ -135,7 +134,6 @@ namespace sax_fastparser {
 	}
 
     void SAL_CALL FastSaxSerializer::startUnknownElement( const OUString& Namespace, const OUString& Name, const Reference< XFastAttributeList >& Attribs )
-		throw (SAXException, RuntimeException)
 	{
 		if (!mxOutputStream.is())
 			return;
@@ -147,16 +145,15 @@ namespace sax_fastparser {
 			write(Namespace);
 			writeBytes(toUnoSequence(aColon));
 		}
-		
+
 		write(Name);
-		
+
 		writeFastAttributeList(Attribs);
-			
+
 		writeBytes(toUnoSequence(aClosingBracket));
 	}
 
     void SAL_CALL FastSaxSerializer::endFastElement( ::sal_Int32 Element )
-		throw (SAXException, RuntimeException)
 	{
 		if (!mxOutputStream.is())
 			return;
@@ -169,7 +166,6 @@ namespace sax_fastparser {
 	}
 
     void SAL_CALL FastSaxSerializer::endUnknownElement( const OUString& Namespace, const OUString& Name )
-		throw (SAXException, RuntimeException)
 	{
 		if (!mxOutputStream.is())
 			return;
@@ -181,14 +177,13 @@ namespace sax_fastparser {
 			write(Namespace);
 			writeBytes(toUnoSequence(aColon));
 		}
-		
+
 		write(Name);
-		
+
 		writeBytes(toUnoSequence(aClosingBracket));
 	}
 
     void SAL_CALL FastSaxSerializer::singleFastElement( ::sal_Int32 Element, const Reference< XFastAttributeList >& Attribs )
-		throw (SAXException, RuntimeException)
 	{
 		if (!mxOutputStream.is())
 			return;
@@ -202,7 +197,6 @@ namespace sax_fastparser {
 	}
 
     void SAL_CALL FastSaxSerializer::singleUnknownElement( const OUString& Namespace, const OUString& Name, const Reference< XFastAttributeList >& Attribs )
-		throw (SAXException, RuntimeException)
 	{
 		if (!mxOutputStream.is())
 			return;
@@ -214,31 +208,28 @@ namespace sax_fastparser {
 			write(Namespace);
 			writeBytes(toUnoSequence(aColon));
 		}
-		
+
 		write(Name);
 
 		writeFastAttributeList(Attribs);
-			
+
 		writeBytes(toUnoSequence(aSlashAndClosingBracket));
 	}
 
     void SAL_CALL FastSaxSerializer::characters( const OUString& aChars )
-		throw (SAXException, RuntimeException)
 	{
 		if (!mxOutputStream.is())
 			return;
 
 		write( aChars );
 	}
-	
+
     void SAL_CALL FastSaxSerializer::setOutputStream( const ::com::sun::star::uno::Reference< ::com::sun::star::io::XOutputStream >& xOutputStream )
-		throw (::com::sun::star::uno::RuntimeException)
 	{
 		mxOutputStream = xOutputStream;
 	}
 
     void SAL_CALL FastSaxSerializer::setFastTokenHandler( const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastTokenHandler >& xFastTokenHandler )
-		throw (::com::sun::star::uno::RuntimeException)
 	{
 		mxFastTokenHandler = xFastTokenHandler;
 	}
@@ -256,7 +247,7 @@ namespace sax_fastparser {
 			write(escapeXml(pAttr[i].Value));
 			writeBytes(toUnoSequence(aQuote));
 		}
-		
+
 		Sequence< FastAttribute > aFastAttrSeq = Attribs->getFastAttributes();
 		const FastAttribute *pFastAttr = aFastAttrSeq.getConstArray();
 		sal_Int32 nFastAttrLength = aFastAttrSeq.getLength();
@@ -266,23 +257,23 @@ namespace sax_fastparser {
 
             sal_Int32 nToken = pFastAttr[j].Token;
             writeId(nToken);
-			
+
 			writeBytes(toUnoSequence(aEqualSignAndQuote));
-	
+
 			write(escapeXml(Attribs->getValue(pFastAttr[j].Token)));
-			
+
 			writeBytes(toUnoSequence(aQuote));
 		}
 	}
 
 	// XServiceInfo
-	OUString FastSaxSerializer::getImplementationName() throw (RuntimeException)
+	OUString FastSaxSerializer::getImplementationName()
 	{
-		return OUString::createFromAscii( SERIALIZER_IMPLEMENTATION_NAME );
+		return getImplementationName_Static();
 	}
 
 	// XServiceInfo
-	sal_Bool FastSaxSerializer::supportsService(const OUString& ServiceName) throw (RuntimeException)
+	sal_Bool FastSaxSerializer::supportsService(const OUString& ServiceName)
 	{
 		Sequence< OUString > aSNL = getSupportedServiceNames();
 		const OUString * pArray = aSNL.getConstArray();
@@ -295,7 +286,7 @@ namespace sax_fastparser {
 	}
 
 	// XServiceInfo
-	Sequence< OUString > FastSaxSerializer::getSupportedServiceNames(void) throw (RuntimeException)
+	Sequence< OUString > FastSaxSerializer::getSupportedServiceNames(void)
 	{
 		Sequence<OUString> seq(1);
 		seq.getArray()[0] = OUString::createFromAscii( SERIALIZER_SERVICE_NAME );
@@ -342,7 +333,7 @@ namespace sax_fastparser {
         }
     }
 
-    void FastSaxSerializer::writeBytes( const Sequence< ::sal_Int8 >& aData ) throw ( NotConnectedException, BufferSizeExceededException, IOException, RuntimeException )
+    void FastSaxSerializer::writeBytes( const Sequence< ::sal_Int8 >& aData )
     {
         if ( maMarkStack.empty() )
             mxOutputStream->writeBytes( aData );
@@ -354,7 +345,7 @@ namespace sax_fastparser {
     {
         merge( maData, maPostponed, true );
         maPostponed.realloc( 0 );
-        
+
         return maData;
     }
 
@@ -396,4 +387,3 @@ namespace sax_fastparser {
     }
 
 } // namespace sax_fastparser
-

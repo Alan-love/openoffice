@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -392,7 +392,7 @@ void NewMenuController::fillPopupMenu( Reference< css::awt::XPopupMenu >& rPopup
 }
 
 // XEventListener
-void SAL_CALL NewMenuController::disposing( const EventObject& ) throw ( RuntimeException )
+void SAL_CALL NewMenuController::disposing( const EventObject& )
 {
     Reference< css::awt::XMenuListener > xHolder(( OWeakObject *)this, UNO_QUERY );
 
@@ -407,12 +407,12 @@ void SAL_CALL NewMenuController::disposing( const EventObject& ) throw ( Runtime
 }
 
 // XStatusListener
-void SAL_CALL NewMenuController::statusChanged( const FeatureStateEvent& ) throw ( RuntimeException )
+void SAL_CALL NewMenuController::statusChanged( const FeatureStateEvent& )
 {
 }
 
 // XMenuListener
-void SAL_CALL NewMenuController::itemSelected( const css::awt::MenuEvent& rEvent ) throw (RuntimeException)
+void SAL_CALL NewMenuController::itemSelected( const css::awt::MenuEvent& rEvent )
 {
     Reference< css::awt::XPopupMenu > xPopupMenu;
     Reference< XDispatch >            xDispatch;
@@ -470,7 +470,7 @@ void SAL_CALL NewMenuController::itemSelected( const css::awt::MenuEvent& rEvent
     }
 }
 
-void SAL_CALL NewMenuController::itemActivated( const css::awt::MenuEvent& ) throw (RuntimeException)
+void SAL_CALL NewMenuController::itemActivated( const css::awt::MenuEvent& )
 {
     vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
     if ( m_xFrame.is() && m_xPopupMenu.is() )
@@ -543,7 +543,7 @@ void NewMenuController::impl_setPopupMenu()
 }
 
 // XInitialization
-void SAL_CALL NewMenuController::initialize( const Sequence< Any >& aArguments ) throw ( Exception, RuntimeException )
+void SAL_CALL NewMenuController::initialize( const Sequence< Any >& aArguments )
 {
     osl::MutexGuard aLock( m_aMutex );
 

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -67,7 +67,7 @@ DialogModelProvider::DialogModelProvider(Reference< XComponentContext > const & 
 {}
 
 // lang::XInitialization:
-void SAL_CALL DialogModelProvider::initialize(const css::uno::Sequence< uno::Any > & aArguments) throw (css::uno::RuntimeException, css::uno::Exception)
+void SAL_CALL DialogModelProvider::initialize(const css::uno::Sequence< uno::Any > & aArguments)
 {
 	if ( aArguments.getLength() == 1 )
     {
@@ -89,7 +89,7 @@ void SAL_CALL DialogModelProvider::initialize(const css::uno::Sequence< uno::Any
                 xStringResourceManager = dlgprov::lcl_getStringResourceManager(m_xContext,sURL);
                 Any aDialogSourceURLAny;
 			    aDialogSourceURLAny <<= sURL;
-                
+
 			    m_xDialogModel.set( dlgprov::lcl_createDialogModel( m_xContext,xInput , xStringResourceManager, aDialogSourceURLAny  ), UNO_QUERY_THROW);
                 m_xDialogModelProp.set(m_xDialogModel, UNO_QUERY_THROW);
 			}
@@ -101,79 +101,79 @@ void SAL_CALL DialogModelProvider::initialize(const css::uno::Sequence< uno::Any
 }
 
 // container::XElementAccess:
-uno::Type SAL_CALL DialogModelProvider::getElementType() throw (css::uno::RuntimeException)
+uno::Type SAL_CALL DialogModelProvider::getElementType()
 {
     return m_xDialogModel->getElementType();
 }
 
-::sal_Bool SAL_CALL DialogModelProvider::hasElements() throw (css::uno::RuntimeException)
-{    
+::sal_Bool SAL_CALL DialogModelProvider::hasElements()
+{
     return m_xDialogModel->hasElements();
 }
 
 // container::XNameAccess:
-uno::Any SAL_CALL DialogModelProvider::getByName(const ::rtl::OUString & aName) throw (css::uno::RuntimeException, css::container::NoSuchElementException, css::lang::WrappedTargetException)
+uno::Any SAL_CALL DialogModelProvider::getByName(const ::rtl::OUString & aName)
 {
     return m_xDialogModel->getByName(aName);
 }
 
-css::uno::Sequence< ::rtl::OUString > SAL_CALL DialogModelProvider::getElementNames() throw (css::uno::RuntimeException)
+css::uno::Sequence< ::rtl::OUString > SAL_CALL DialogModelProvider::getElementNames()
 {
     return m_xDialogModel->getElementNames();
 }
 
-::sal_Bool SAL_CALL DialogModelProvider::hasByName(const ::rtl::OUString & aName) throw (css::uno::RuntimeException)
+::sal_Bool SAL_CALL DialogModelProvider::hasByName(const ::rtl::OUString & aName)
 {
     return m_xDialogModel->hasByName(aName);
 }
 
 // container::XNameReplace:
-void SAL_CALL DialogModelProvider::replaceByName(const ::rtl::OUString & aName, const uno::Any & aElement) throw (css::uno::RuntimeException, css::lang::IllegalArgumentException, css::container::NoSuchElementException, css::lang::WrappedTargetException)
+void SAL_CALL DialogModelProvider::replaceByName(const ::rtl::OUString & aName, const uno::Any & aElement)
 {
     m_xDialogModel->replaceByName(aName,aElement);
 }
 
 // container::XNameContainer:
-void SAL_CALL DialogModelProvider::insertByName(const ::rtl::OUString & aName, const uno::Any & aElement) throw (css::uno::RuntimeException, css::lang::IllegalArgumentException, css::container::ElementExistException, css::lang::WrappedTargetException)
+void SAL_CALL DialogModelProvider::insertByName(const ::rtl::OUString & aName, const uno::Any & aElement)
 {
     m_xDialogModel->insertByName(aName,aElement);
 }
 
-void SAL_CALL DialogModelProvider::removeByName(const ::rtl::OUString & aName) throw (css::uno::RuntimeException, css::container::NoSuchElementException, css::lang::WrappedTargetException)
+void SAL_CALL DialogModelProvider::removeByName(const ::rtl::OUString & aName)
 {
     m_xDialogModel->removeByName(aName);
 }
-uno::Reference< beans::XPropertySetInfo > SAL_CALL DialogModelProvider::getPropertySetInfo(  ) throw (uno::RuntimeException)
+uno::Reference< beans::XPropertySetInfo > SAL_CALL DialogModelProvider::getPropertySetInfo(  )
 {
     return m_xDialogModelProp->getPropertySetInfo();
 }
-void SAL_CALL DialogModelProvider::setPropertyValue( const ::rtl::OUString&, const uno::Any& ) throw (beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException, uno::RuntimeException)
+void SAL_CALL DialogModelProvider::setPropertyValue( const ::rtl::OUString&, const uno::Any& )
 {
 }
-uno::Any SAL_CALL DialogModelProvider::getPropertyValue( const ::rtl::OUString& PropertyName ) throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
+uno::Any SAL_CALL DialogModelProvider::getPropertyValue( const ::rtl::OUString& PropertyName )
 {
     return m_xDialogModelProp->getPropertyValue(PropertyName);
 }
-void SAL_CALL DialogModelProvider::addPropertyChangeListener( const ::rtl::OUString& , const uno::Reference< beans::XPropertyChangeListener >& ) throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
+void SAL_CALL DialogModelProvider::addPropertyChangeListener( const ::rtl::OUString& , const uno::Reference< beans::XPropertyChangeListener >& )
 {
 }
-void SAL_CALL DialogModelProvider::removePropertyChangeListener( const ::rtl::OUString& , const uno::Reference< beans::XPropertyChangeListener >& ) throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
+void SAL_CALL DialogModelProvider::removePropertyChangeListener( const ::rtl::OUString& , const uno::Reference< beans::XPropertyChangeListener >& )
 {
 }
-void SAL_CALL DialogModelProvider::addVetoableChangeListener( const ::rtl::OUString& , const uno::Reference< beans::XVetoableChangeListener >& ) throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
+void SAL_CALL DialogModelProvider::addVetoableChangeListener( const ::rtl::OUString& , const uno::Reference< beans::XVetoableChangeListener >& )
 {
 }
-void SAL_CALL DialogModelProvider::removeVetoableChangeListener( const ::rtl::OUString& ,const uno::Reference< beans::XVetoableChangeListener >& ) throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
+void SAL_CALL DialogModelProvider::removeVetoableChangeListener( const ::rtl::OUString& ,const uno::Reference< beans::XVetoableChangeListener >& )
 {
 }
 
 // com.sun.star.uno.XServiceInfo:
-::rtl::OUString SAL_CALL DialogModelProvider::getImplementationName() throw (css::uno::RuntimeException)
+::rtl::OUString SAL_CALL DialogModelProvider::getImplementationName()
 {
     return comp_DialogModelProvider::_getImplementationName();
 }
 
-::sal_Bool SAL_CALL DialogModelProvider::supportsService(::rtl::OUString const & serviceName) throw (css::uno::RuntimeException)
+::sal_Bool SAL_CALL DialogModelProvider::supportsService(::rtl::OUString const & serviceName)
 {
     css::uno::Sequence< ::rtl::OUString > serviceNames = comp_DialogModelProvider::_getSupportedServiceNames();
     for (::sal_Int32 i = 0; i < serviceNames.getLength(); ++i) {
@@ -183,10 +183,9 @@ void SAL_CALL DialogModelProvider::removeVetoableChangeListener( const ::rtl::OU
     return sal_False;
 }
 
-css::uno::Sequence< ::rtl::OUString > SAL_CALL DialogModelProvider::getSupportedServiceNames() throw (css::uno::RuntimeException)
+css::uno::Sequence< ::rtl::OUString > SAL_CALL DialogModelProvider::getSupportedServiceNames()
 {
     return comp_DialogModelProvider::_getSupportedServiceNames();
 }
 
 } // closing anonymous implementation namespace
-

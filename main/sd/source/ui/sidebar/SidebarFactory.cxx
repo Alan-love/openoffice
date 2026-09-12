@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #include "precompiled_sd.hxx"
@@ -77,7 +77,7 @@ Reference<XInterface> SAL_CALL SidebarFactory_createInstance (
 
 
 
-::rtl::OUString SidebarFactory_getImplementationName (void) throw(RuntimeException)
+::rtl::OUString SidebarFactory_getImplementationName (void)
 {
     return ::rtl::OUString(
         RTL_CONSTASCII_USTRINGPARAM("org.openoffice.comp.Draw.framework.SidebarFactory"));
@@ -87,7 +87,6 @@ Reference<XInterface> SAL_CALL SidebarFactory_createInstance (
 
 
 Sequence<rtl::OUString> SAL_CALL SidebarFactory_getSupportedServiceNames (void)
-    throw (RuntimeException)
 {
 	static const ::rtl::OUString sServiceName(
         ::rtl::OUString::createFromAscii("com.sun.star.drawing.framework.SidebarFactory"));
@@ -125,7 +124,6 @@ void SAL_CALL SidebarFactory::disposing (void)
 // XInitialization
 
 void SAL_CALL SidebarFactory::initialize (const Sequence<Any>& aArguments)
-    throw (Exception, RuntimeException)
 {
 }
 
@@ -137,10 +135,6 @@ void SAL_CALL SidebarFactory::initialize (const Sequence<Any>& aArguments)
 Reference<ui::XUIElement> SAL_CALL SidebarFactory::createUIElement (
     const ::rtl::OUString& rsUIElementResourceURL,
     const ::cssu::Sequence<css::beans::PropertyValue>& rArguments)
-    throw(
-        css::container::NoSuchElementException,
-        css::lang::IllegalArgumentException,
-        cssu::RuntimeException)
 {
     // Process arguments.
     const ::comphelper::NamedValueCollection aArguments (rArguments);
@@ -215,7 +209,7 @@ Reference<ui::XUIElement> SAL_CALL SidebarFactory::createUIElement (
     Reference<lang::XComponent> xComponent (xUIElement, UNO_QUERY);
     if (xComponent.is())
         xComponent->addEventListener(this);
-    
+
     return xUIElement;
 }
 
@@ -223,7 +217,6 @@ Reference<ui::XUIElement> SAL_CALL SidebarFactory::createUIElement (
 
 
 void SAL_CALL SidebarFactory::disposing (const ::css::lang::EventObject& rEvent)
-    throw(cssu::RuntimeException)
 {
     /*
     if (mpImplementation

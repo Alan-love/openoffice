@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -82,7 +82,7 @@ namespace {
             drawing::framework::BorderType eBorderType) const;
         const Reference<rendering::XCanvasFont> GetFont (
             const Reference<rendering::XCanvas>& rxCanvas) const;
-        
+
         SharedBitmapDescriptor mpTopLeft;
         SharedBitmapDescriptor mpTop;
         SharedBitmapDescriptor mpTopRight;
@@ -120,7 +120,7 @@ public:
         const Reference<XComponentContext>& rxContext,
         const ::boost::shared_ptr<PresenterTheme>& rpTheme);
     ~Renderer (void);
-        
+
     void SetCanvas (const Reference<rendering::XCanvas>& rxCanvas);
     void PaintBorder (
         const OUString& rsTitle,
@@ -141,7 +141,7 @@ public:
     ::boost::shared_ptr<RendererPaneStyle> GetRendererPaneStyle (const OUString& rsResourceURL);
     void SetCalloutAnchor (
         const awt::Point& rCalloutAnchor);
-        
+
 private:
     ::boost::shared_ptr<PresenterTheme> mpTheme;
     typedef ::std::map<OUString, ::boost::shared_ptr<RendererPaneStyle> > RendererPaneStyleContainer;
@@ -152,7 +152,7 @@ private:
     Reference<rendering::XPolyPolygon2D> mxViewStateClip;
     bool mbHasCallout;
     awt::Point maCalloutAnchor;
-    
+
     void PaintBitmap(
         const awt::Rectangle& rBox,
         const awt::Rectangle& rUpdateBox,
@@ -169,7 +169,7 @@ private:
 
 
 // ===== PresenterPaneBorderPainter ===========================================
-    
+
 PresenterPaneBorderPainter::PresenterPaneBorderPainter (
     const Reference<XComponentContext>& rxContext)
     : PresenterPaneBorderPainterInterfaceBase(m_aMutex),
@@ -195,10 +195,9 @@ awt::Rectangle SAL_CALL PresenterPaneBorderPainter::addBorder (
     const rtl::OUString& rsPaneBorderStyleName,
     const css::awt::Rectangle& rRectangle,
     drawing::framework::BorderType eBorderType)
-    throw(css::uno::RuntimeException)
 {
     ThrowIfDisposed();
-    
+
     ProvideTheme();
 
     return AddBorder(rsPaneBorderStyleName, rRectangle, eBorderType);
@@ -211,10 +210,9 @@ awt::Rectangle SAL_CALL PresenterPaneBorderPainter::removeBorder (
     const rtl::OUString& rsPaneBorderStyleName,
     const css::awt::Rectangle& rRectangle,
     drawing::framework::BorderType eBorderType)
-    throw(css::uno::RuntimeException)
 {
     ThrowIfDisposed();
-    
+
     ProvideTheme();
 
     return RemoveBorder(rsPaneBorderStyleName, rRectangle, eBorderType);
@@ -229,7 +227,6 @@ void SAL_CALL PresenterPaneBorderPainter::paintBorder (
     const css::awt::Rectangle& rOuterBorderRectangle,
     const css::awt::Rectangle& rRepaintArea,
     const rtl::OUString& rsTitle)
-    throw(css::uno::RuntimeException)
 {
     ThrowIfDisposed();
 
@@ -242,7 +239,7 @@ void SAL_CALL PresenterPaneBorderPainter::paintBorder (
         return;
     }
     ProvideTheme(rxCanvas);
-    
+
     if (mpRenderer.get() != NULL)
     {
         mpRenderer->SetCanvas(rxCanvas);
@@ -268,7 +265,6 @@ void SAL_CALL PresenterPaneBorderPainter::paintBorderWithCallout (
     const css::awt::Rectangle& rRepaintArea,
     const rtl::OUString& rsTitle,
     const css::awt::Point& rCalloutAnchor)
-    throw(css::uno::RuntimeException)
 {
     ThrowIfDisposed();
 
@@ -281,7 +277,7 @@ void SAL_CALL PresenterPaneBorderPainter::paintBorderWithCallout (
         return;
     }
     ProvideTheme(rxCanvas);
-    
+
     if (mpRenderer.get() != NULL)
     {
         mpRenderer->SetCanvas(rxCanvas);
@@ -303,7 +299,6 @@ void SAL_CALL PresenterPaneBorderPainter::paintBorderWithCallout (
 
 awt::Point SAL_CALL PresenterPaneBorderPainter::getCalloutOffset (
     const rtl::OUString& rsPaneBorderStyleName)
-    throw(css::uno::RuntimeException)
 {
     ThrowIfDisposed();
     ProvideTheme();
@@ -332,7 +327,7 @@ awt::Point SAL_CALL PresenterPaneBorderPainter::getCalloutOffset (
 bool PresenterPaneBorderPainter::ProvideTheme (const Reference<rendering::XCanvas>& rxCanvas)
 {
     bool bModified (false);
-    
+
     if ( ! mxContext.is())
         return false;
 
@@ -436,7 +431,6 @@ awt::Rectangle PresenterPaneBorderPainter::RemoveBorder (
 
 
 void PresenterPaneBorderPainter::ThrowIfDisposed (void) const
-    throw (::com::sun::star::lang::DisposedException)
 {
 	if (rBHelper.bDisposed || rBHelper.bInDispose)
 	{
@@ -507,12 +501,12 @@ void PresenterPaneBorderPainter::Renderer::PaintBorder (
 {
     if ( ! mxCanvas.is())
         return;
-    
+
     // Create the outer and inner border of the, ahm, border.
     ::boost::shared_ptr<RendererPaneStyle> pStyle (GetRendererPaneStyle(rsPaneURL));
     if (pStyle.get() == NULL)
         return;
-    
+
     awt::Rectangle aOuterBox (rBBox);
     awt::Rectangle aCenterBox (
         pStyle->RemoveBorder(aOuterBox, drawing::framework::BorderType_OUTER_BORDER));
@@ -589,14 +583,14 @@ void PresenterPaneBorderPainter::Renderer::PaintTitle (
 {
     if ( ! mxCanvas.is())
         return;
-    
+
     if (rsTitle.getLength() == 0)
         return;
 
     Reference<rendering::XCanvasFont> xFont (rpStyle->GetFont(mxCanvas));
     if ( ! xFont.is())
         return;
-    
+
     rendering::StringContext aContext (
         rsTitle,
         0,
@@ -631,7 +625,7 @@ void PresenterPaneBorderPainter::Renderer::PaintTitle (
     }
     nX += rpStyle->mnFontXOffset;
     nY += rpStyle->mnFontYOffset;
-        
+
     if (rUpdateBox.X >= nX+nTextWidth
         || rUpdateBox.Y >= nY+nTextHeight
         || rUpdateBox.X+rUpdateBox.Width <= nX
@@ -639,13 +633,13 @@ void PresenterPaneBorderPainter::Renderer::PaintTitle (
     {
         return;
     }
-                
+
     rendering::RenderState aRenderState(
         geometry::AffineMatrix2D(1,0,nX, 0,1,nY),
         NULL,
         Sequence<double>(4),
         rendering::CompositeOperation::SOURCE);
-        
+
     if (bPaintBackground)
     {
         PresenterCanvasHelper::SetDeviceColor(aRenderState, util::Color(0x00ffffff));
@@ -695,7 +689,7 @@ void PresenterPaneBorderPainter::Renderer::PaintTitle (
         const OUString sStyleName (mpTheme->GetStyleName(rsResourceURL));
         if (sStyleName.getLength() > 0)
             sPaneStyleName = sStyleName;
-        
+
         // Create a new pane style object and initialize it with bitmaps.
         ::boost::shared_ptr<RendererPaneStyle> pStyle (
             new RendererPaneStyle(mpTheme,sPaneStyleName));
@@ -733,7 +727,7 @@ void PresenterPaneBorderPainter::Renderer::PaintBitmap(
     const SharedBitmapDescriptor& rpBackgroundBitmap)
 {
     (void)rpBackgroundBitmap;
-    
+
     bool bUseCanvas (mxCanvas.is());
     if ( ! bUseCanvas)
         return;
@@ -865,7 +859,7 @@ void PresenterPaneBorderPainter::Renderer::SetupClipping (
             mxViewStateClip->setFillRule(rendering::FillRule_EVEN_ODD);
     }
     maViewState.Clip = mxViewStateClip;
-}    
+}
 
 
 
@@ -946,7 +940,7 @@ RendererPaneStyle::RendererPaneStyle (
         mpBottomRight = GetBitmap(rpTheme, rsStyleName,  A2S("BottomRight"));
         mpBottomCallout = GetBitmap(rpTheme, rsStyleName,  A2S("BottomCallout"));
         mpBackground = GetBitmap(rpTheme, OUString(), A2S("Background"));
-            
+
         // Get font description.
         mpFont = rpTheme->GetFont(rsStyleName);
 
@@ -988,7 +982,7 @@ RendererPaneStyle::RendererPaneStyle (
         {
             OSL_ASSERT(false);
         }
-        
+
         UpdateBorderSizes();
     }
 }

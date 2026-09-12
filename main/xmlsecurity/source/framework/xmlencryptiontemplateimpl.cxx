@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -35,7 +35,7 @@ using ::rtl::OUString ;
 using ::com::sun::star::xml::wrapper::XXMLElementWrapper ;
 using ::com::sun::star::xml::crypto::XXMLEncryptionTemplate ;
 
-XMLEncryptionTemplateImpl :: XMLEncryptionTemplateImpl( const Reference< XMultiServiceFactory >& aFactory ) 
+XMLEncryptionTemplateImpl :: XMLEncryptionTemplateImpl( const Reference< XMultiServiceFactory >& aFactory )
 	: m_xTemplate( NULL ),
       m_xTarget( NULL ),
       m_xServiceManager( aFactory ),
@@ -46,58 +46,51 @@ XMLEncryptionTemplateImpl :: ~XMLEncryptionTemplateImpl() {
 }
 
 /* XXMLEncryptionTemplate */
-void SAL_CALL XMLEncryptionTemplateImpl :: setTemplate( const Reference< XXMLElementWrapper >& aTemplate ) 
-	throw (com::sun::star::uno::RuntimeException, com::sun::star::lang::IllegalArgumentException)
+void SAL_CALL XMLEncryptionTemplateImpl :: setTemplate( const Reference< XXMLElementWrapper >& aTemplate )
 {
 	m_xTemplate = aTemplate ;
 }
 
 /* XXMLEncryptionTemplate */
-Reference< XXMLElementWrapper > SAL_CALL XMLEncryptionTemplateImpl :: getTemplate() 
-throw (com::sun::star::uno::RuntimeException)
+Reference< XXMLElementWrapper > SAL_CALL XMLEncryptionTemplateImpl :: getTemplate()
 {
 	return m_xTemplate ;
 }
 
 /* XXMLEncryptionTemplate */
-void SAL_CALL XMLEncryptionTemplateImpl :: setTarget( const Reference< XXMLElementWrapper >& aTarget ) 
-	throw( com::sun::star::lang::IllegalArgumentException ) {
+void SAL_CALL XMLEncryptionTemplateImpl :: setTarget( const Reference< XXMLElementWrapper >& aTarget ) {
 	m_xTarget = aTarget ;
 }
 
 /* XXMLEncryptionTemplate */
-Reference< XXMLElementWrapper > SAL_CALL XMLEncryptionTemplateImpl :: getTarget() 
-throw (com::sun::star::uno::RuntimeException)
+Reference< XXMLElementWrapper > SAL_CALL XMLEncryptionTemplateImpl :: getTarget()
 {
 	return m_xTarget ;
 }
 
 void SAL_CALL XMLEncryptionTemplateImpl::setStatus(
 	::com::sun::star::xml::crypto::SecurityOperationStatus status )
-	throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException)
 {
 	m_nStatus = status;
 }
 
 ::com::sun::star::xml::crypto::SecurityOperationStatus SAL_CALL XMLEncryptionTemplateImpl::getStatus(  )
-	throw (::com::sun::star::uno::RuntimeException)
 {
 	return m_nStatus;
 }
 
 /* XInitialization */
-void SAL_CALL XMLEncryptionTemplateImpl :: initialize( const Sequence< Any >& /*aArguments*/ )
-    throw( Exception, RuntimeException ) {
+void SAL_CALL XMLEncryptionTemplateImpl :: initialize( const Sequence< Any >& /*aArguments*/ ) {
 	// TBD
 } ;
 
 /* XServiceInfo */
-OUString SAL_CALL XMLEncryptionTemplateImpl :: getImplementationName() throw( RuntimeException ) {
+OUString SAL_CALL XMLEncryptionTemplateImpl :: getImplementationName() {
 	return impl_getImplementationName() ;
 }
 
 /* XServiceInfo */
-sal_Bool SAL_CALL XMLEncryptionTemplateImpl :: supportsService( const OUString& serviceName) throw( RuntimeException ) {
+sal_Bool SAL_CALL XMLEncryptionTemplateImpl :: supportsService( const OUString& serviceName) {
 	Sequence< OUString > seqServiceNames = getSupportedServiceNames() ;
 	const OUString* pArray = seqServiceNames.getConstArray() ;
 	for( sal_Int32 i = 0 ; i < seqServiceNames.getLength() ; i ++ ) {
@@ -108,7 +101,7 @@ sal_Bool SAL_CALL XMLEncryptionTemplateImpl :: supportsService( const OUString& 
 }
 
 /* XServiceInfo */
-Sequence< OUString > SAL_CALL XMLEncryptionTemplateImpl :: getSupportedServiceNames() throw( RuntimeException ) {
+Sequence< OUString > SAL_CALL XMLEncryptionTemplateImpl :: getSupportedServiceNames() {
 	return impl_getSupportedServiceNames() ;
 }
 
@@ -120,12 +113,12 @@ Sequence< OUString > XMLEncryptionTemplateImpl :: impl_getSupportedServiceNames(
 	return seqServiceNames ;
 }
 
-OUString XMLEncryptionTemplateImpl :: impl_getImplementationName() throw( RuntimeException ) {
+OUString XMLEncryptionTemplateImpl :: impl_getImplementationName() {
 	return OUString::createFromAscii( "com.sun.star.xml.security.framework.XMLEncryptionTemplateImpl" ) ;
 }
 
 //Helper for registry
-Reference< XInterface > SAL_CALL XMLEncryptionTemplateImpl :: impl_createInstance( const Reference< XMultiServiceFactory >& aServiceManager ) throw( RuntimeException ) {
+Reference< XInterface > SAL_CALL XMLEncryptionTemplateImpl :: impl_createInstance( const Reference< XMultiServiceFactory >& aServiceManager ) {
 	return Reference< XInterface >( *new XMLEncryptionTemplateImpl( aServiceManager ) ) ;
 }
 
@@ -135,4 +128,3 @@ Reference< XSingleServiceFactory > XMLEncryptionTemplateImpl :: impl_createFacto
 	//return xFactory ;
 	return ::cppu::createSingleFactory( aServiceManager , impl_getImplementationName() , impl_createInstance , impl_getSupportedServiceNames() ) ;
 }
-

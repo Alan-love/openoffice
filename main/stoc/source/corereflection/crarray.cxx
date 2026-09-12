@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -35,7 +35,6 @@ namespace stoc_corefl
 // XInterface
 //__________________________________________________________________________________________________
 Any ArrayIdlClassImpl::queryInterface( const Type & rType )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	Any aRet( ::cppu::queryInterface( rType, static_cast< XIdlArray * >( this ) ) );
 	return (aRet.hasValue() ? aRet : IdlClassImpl::queryInterface( rType ));
@@ -54,7 +53,6 @@ void ArrayIdlClassImpl::release() throw()
 // XTypeProvider
 //__________________________________________________________________________________________________
 Sequence< Type > ArrayIdlClassImpl::getTypes()
-	throw (::com::sun::star::uno::RuntimeException)
 {
 	static OTypeCollection * s_pTypes = 0;
 	if (! s_pTypes)
@@ -72,7 +70,6 @@ Sequence< Type > ArrayIdlClassImpl::getTypes()
 }
 //__________________________________________________________________________________________________
 Sequence< sal_Int8 > ArrayIdlClassImpl::getImplementationId()
-	throw (::com::sun::star::uno::RuntimeException)
 {
 	static OImplementationId * s_pId = 0;
 	if (! s_pId)
@@ -90,7 +87,6 @@ Sequence< sal_Int8 > ArrayIdlClassImpl::getImplementationId()
 // XIdlArray
 //__________________________________________________________________________________________________
 void ArrayIdlClassImpl::realloc( Any & rArray, sal_Int32 nLen )
-	throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException)
 {
 	TypeClass eTC = rArray.getValueTypeClass();
 	if (eTC != TypeClass_SEQUENCE && eTC != TypeClass_ARRAY)
@@ -105,7 +101,7 @@ void ArrayIdlClassImpl::realloc( Any & rArray, sal_Int32 nLen )
 			OUString( RTL_CONSTASCII_USTRINGPARAM("illegal length given!") ),
 			(XWeak *)(OWeakObject *)this, 1 );
 	}
-	
+
 	uno_Sequence ** ppSeq = (uno_Sequence **)rArray.getValue();
 	uno_sequence_realloc( ppSeq, (typelib_TypeDescription *)getTypeDescr(),
 						  nLen,
@@ -115,7 +111,6 @@ void ArrayIdlClassImpl::realloc( Any & rArray, sal_Int32 nLen )
 }
 //__________________________________________________________________________________________________
 sal_Int32 ArrayIdlClassImpl::getLen( const Any & rArray )
-	throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException)
 {
 	TypeClass eTC = rArray.getValueTypeClass();
 	if (eTC != TypeClass_SEQUENCE && eTC != TypeClass_ARRAY)
@@ -124,12 +119,11 @@ sal_Int32 ArrayIdlClassImpl::getLen( const Any & rArray )
 			OUString( RTL_CONSTASCII_USTRINGPARAM("no sequence given!") ),
 			(XWeak *)(OWeakObject *)this, 0 );
 	}
-	
+
 	return (*(uno_Sequence **)rArray.getValue())->nElements;
 }
 //__________________________________________________________________________________________________
 Any ArrayIdlClassImpl::get( const Any & rArray, sal_Int32 nIndex )
-	throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::ArrayIndexOutOfBoundsException, ::com::sun::star::uno::RuntimeException)
 {
 	TypeClass eTC = rArray.getValueTypeClass();
 	if (eTC != TypeClass_SEQUENCE && eTC != TypeClass_ARRAY)
@@ -138,7 +132,7 @@ Any ArrayIdlClassImpl::get( const Any & rArray, sal_Int32 nIndex )
 			OUString( RTL_CONSTASCII_USTRINGPARAM("no sequence given!") ),
 			(XWeak *)(OWeakObject *)this, 0 );
 	}
-	
+
 	uno_Sequence * pSeq = *(uno_Sequence **)rArray.getValue();
 	if (pSeq->nElements <= nIndex)
 	{
@@ -146,7 +140,7 @@ Any ArrayIdlClassImpl::get( const Any & rArray, sal_Int32 nIndex )
 			OUString( RTL_CONSTASCII_USTRINGPARAM("illegal index given!") ),
 			(XWeak *)(OWeakObject *)this );
 	}
-	
+
 	Any aRet;
 	typelib_TypeDescription * pElemTypeDescr = 0;
 	TYPELIB_DANGER_GET( &pElemTypeDescr, getTypeDescr()->pType );
@@ -160,7 +154,6 @@ Any ArrayIdlClassImpl::get( const Any & rArray, sal_Int32 nIndex )
 
 //__________________________________________________________________________________________________
 void ArrayIdlClassImpl::set( Any & rArray, sal_Int32 nIndex, const Any & rNewValue )
-	throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::ArrayIndexOutOfBoundsException, ::com::sun::star::uno::RuntimeException)
 {
 	TypeClass eTC = rArray.getValueTypeClass();
 	if (eTC != TypeClass_SEQUENCE && eTC != TypeClass_ARRAY)
@@ -169,7 +162,7 @@ void ArrayIdlClassImpl::set( Any & rArray, sal_Int32 nIndex, const Any & rNewVal
 			OUString( RTL_CONSTASCII_USTRINGPARAM("no sequence given!") ),
 			(XWeak *)(OWeakObject *)this, 0 );
 	}
-	
+
 	uno_Sequence * pSeq = *(uno_Sequence **)rArray.getValue();
 	if (pSeq->nElements <= nIndex)
 	{
@@ -177,7 +170,7 @@ void ArrayIdlClassImpl::set( Any & rArray, sal_Int32 nIndex, const Any & rNewVal
 			OUString( RTL_CONSTASCII_USTRINGPARAM("illegal index given!") ),
 			(XWeak *)(OWeakObject *)this );
 	}
-	
+
 	uno_Sequence ** ppSeq = (uno_Sequence **)rArray.getValue();
 	uno_sequence_reference2One(
         ppSeq, (typelib_TypeDescription *)getTypeDescr(),
@@ -185,10 +178,10 @@ void ArrayIdlClassImpl::set( Any & rArray, sal_Int32 nIndex, const Any & rNewVal
         reinterpret_cast< uno_ReleaseFunc >(cpp_release) );
 	rArray.pData = ppSeq;
 	pSeq = *ppSeq;
-	
+
 	typelib_TypeDescription * pElemTypeDescr = 0;
 	TYPELIB_DANGER_GET( &pElemTypeDescr, getTypeDescr()->pType );
-	
+
 	if (! coerce_assign( &pSeq->elements[nIndex * pElemTypeDescr->nSize],
 						 pElemTypeDescr, rNewValue, getReflection() ))
 	{
@@ -203,7 +196,6 @@ void ArrayIdlClassImpl::set( Any & rArray, sal_Int32 nIndex, const Any & rNewVal
 // ArrayIdlClassImpl
 //__________________________________________________________________________________________________
 sal_Bool ArrayIdlClassImpl::isAssignableFrom( const Reference< XIdlClass > & xType )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return (xType.is() &&
 			(equals( xType ) ||
@@ -212,17 +204,13 @@ sal_Bool ArrayIdlClassImpl::isAssignableFrom( const Reference< XIdlClass > & xTy
 }
 //__________________________________________________________________________________________________
 Reference< XIdlClass > ArrayIdlClassImpl::getComponentType()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return getReflection()->forType( getTypeDescr()->pType );
 }
 //__________________________________________________________________________________________________
 Reference< XIdlArray > ArrayIdlClassImpl::getArray()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return this;
 }
 
 }
-
-

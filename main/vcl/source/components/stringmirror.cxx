@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -46,23 +46,23 @@ class StringMirror : public ::cppu::WeakAggImplHelper2< XStringMapping, XService
 public:
     StringMirror()
     {}
-    
+
     virtual ~StringMirror()
     {}
-    
+
     // XServiceInfo
-    virtual OUString SAL_CALL getImplementationName(  ) throw (RuntimeException);
-    virtual ::sal_Bool SAL_CALL supportsService( const OUString& ) throw (RuntimeException);
-    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames(  ) throw (RuntimeException);
+    virtual OUString SAL_CALL getImplementationName(  );
+    virtual ::sal_Bool SAL_CALL supportsService( const OUString& );
+    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames(  );
 
     // XStringMapping
-    virtual sal_Bool SAL_CALL mapStrings( Sequence< OUString >& io_rStrings ) throw (RuntimeException)
+    virtual sal_Bool SAL_CALL mapStrings( Sequence< OUString >& io_rStrings )
     {
         sal_Int32 nItems = io_rStrings.getLength();
         for( sal_Int32 n = 0; n < nItems; n++ )
         {
             rtl::OUString& rStr( io_rStrings.getArray()[n] );
-            
+
             sal_Int32 nLen = rStr.getLength();
             rtl::OUStringBuffer aMirror( nLen );
             for(sal_Int32 i = nLen - 1; i >= 0; i--)
@@ -95,12 +95,12 @@ Reference< XInterface > SAL_CALL StringMirror_createInstance( const Reference< X
 
 
 // XServiceInfo
-OUString SAL_CALL StringMirror::getImplementationName() throw (RuntimeException)
+OUString SAL_CALL StringMirror::getImplementationName()
 {
 	return StringMirror_getImplementationName();
 }
 
-sal_Bool SAL_CALL StringMirror::supportsService( const OUString& i_rServiceName ) throw (RuntimeException)
+sal_Bool SAL_CALL StringMirror::supportsService( const OUString& i_rServiceName )
 {
 	Sequence< OUString > aSN( StringMirror_getSupportedServiceNames() );
 	for( sal_Int32 nService = 0; nService < aSN.getLength(); nService++ )
@@ -111,7 +111,7 @@ sal_Bool SAL_CALL StringMirror::supportsService( const OUString& i_rServiceName 
 	return sal_False;
 }
 
-Sequence< OUString > SAL_CALL StringMirror::getSupportedServiceNames() throw (RuntimeException)
+Sequence< OUString > SAL_CALL StringMirror::getSupportedServiceNames()
 {
 	return StringMirror_getSupportedServiceNames();
 }

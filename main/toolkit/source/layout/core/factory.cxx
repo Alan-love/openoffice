@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -75,32 +75,27 @@ uno::Reference< uno::XInterface > SAL_CALL LayoutFactory::impl_staticCreateSelfI
 
 // XServiceInfo
 ::rtl::OUString SAL_CALL LayoutFactory::getImplementationName()
-    throw ( uno::RuntimeException )
 {
     return impl_staticGetImplementationName();
 }
 
 uno::Sequence< ::rtl::OUString > SAL_CALL LayoutFactory::getSupportedServiceNames()
-    throw ( uno::RuntimeException )
 {
     return impl_staticGetSupportedServiceNames();
 }
 
 sal_Bool SAL_CALL LayoutFactory::supportsService( const ::rtl::OUString& ServiceName )
-    throw ( uno::RuntimeException )
 {
     uno::Sequence< ::rtl::OUString > aSeq = impl_staticGetSupportedServiceNames();
     for ( sal_Int32 i = 0; i < aSeq.getLength(); i++ )
         if ( ServiceName.compareTo( aSeq[i] ) == 0 )
             return sal_True;
-    
+
     return sal_False;
 }
 
 // XSingleServiceFactory
 uno::Reference< uno::XInterface > SAL_CALL LayoutFactory::createInstance()
-    throw ( uno::Exception,
-            uno::RuntimeException )
 {
     return uno::Reference< uno::XInterface >(
         static_cast< OWeakObject* >( new LayoutRoot( m_xFactory ) ),
@@ -109,8 +104,6 @@ uno::Reference< uno::XInterface > SAL_CALL LayoutFactory::createInstance()
 
 uno::Reference< uno::XInterface > SAL_CALL LayoutFactory::createInstanceWithArguments(
     const uno::Sequence< uno::Any >& aArguments )
-    throw ( uno::Exception,
-            uno::RuntimeException )
 {
     uno::Reference< uno::XInterface > layout = createInstance();
     uno::Reference< lang::XInitialization > xInit( layout, uno::UNO_QUERY );

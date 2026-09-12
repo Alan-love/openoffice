@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
@@ -24,6 +24,9 @@
 
 #include <sfx2/linkmgr.hxx>
 #include <com/sun/star/document/UpdateDocMode.hpp>
+#include <com/sun/star/lang/XMultiServiceFactory.hpp>
+#include <com/sun/star/util/XURLTransformer.hpp>
+
 #include <sfx2/objsh.hxx>
 #include <svl/urihelper.hxx>
 #include <sot/formats.hxx>
@@ -38,6 +41,7 @@
 #include <svl/eitem.hxx>
 #include <svl/intitem.hxx>
 #include <unotools/localfilehelper.hxx>
+#include <comphelper/processfactory.hxx>
 #include <i18npool/mslangid.hxx>
 #include <sfx2/request.hxx>
 #include <vcl/dibtools.hxx>
@@ -276,7 +280,7 @@ sal_Bool LinkManager::GetDisplayNames( const SvBaseLink * pLink,
 	            break;
 	    }
 	}
-	
+
 	return bRet;
 }
 
@@ -318,10 +322,10 @@ void LinkManager::SetUserAllowsLinkUpdate(SvBaseLink *pLink, sal_Bool allows)
 }
 
 
-void LinkManager::UpdateAllLinks( 
-    sal_Bool bAskUpdate, 
+void LinkManager::UpdateAllLinks(
+    sal_Bool bAskUpdate,
     sal_Bool /*bCallErrHdl*/,
-    sal_Bool bUpdateGrfLinks, 
+    sal_Bool bUpdateGrfLinks,
     Window* pParentWin )
 {
 	SvStringsDtor aApps, aTopics, aItems;
@@ -363,7 +367,7 @@ void LinkManager::UpdateAllLinks(
 			continue;
 
 		sal_Bool allows = sal_True;
-			
+
 		if (bAskUpdate)
 		{
 			allows = GetUserAllowsLinkUpdate(pParentWin);
@@ -538,6 +542,50 @@ sal_Bool LinkManager::GetGraphicFromAny( const String& rMimeType,
 	return bRet;
 }
 
+sal_Bool LinkManager::urlIsSafe( const ::rtl::OUString &url )
+{
+	if ( url.getLength() == 0 ) {
+		return sal_False;
+	}
+	if ( !xURLTransformer.is() ) {
+		const com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext > xContext ( ::comphelper::getProcessComponentContext() );
+		com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiComponentFactory > xFactory ( xContext->getServiceManager(), ::com::sun::star::uno::UNO_QUERY );
+		if ( !xFactory.is() ) {
+			return sal_False;
+		}
+		xURLTransformer.set( xFactory->createInstanceWithContext( rtl::OUString::createFromAscii( "com.sun.star.util.URLTransformer" ), xContext), com::sun::star::uno::UNO_QUERY );
+		if ( !xURLTransformer.is() ) {
+			return sal_False;
+		}
+	}
+	com::sun::star::util::URL aURL;
+	aURL.Complete = url;
+	sal_Bool b = xURLTransformer->parseSmart( aURL, ::rtl::OUString() );
+	if ( !b ) {
+		return sal_False;
+	}
+	return urlIsSafe( aURL );
+}
+
+sal_Bool LinkManager::urlIsSafe( const ::com::sun::star::util::URL &url )
+{
+	sal_Bool result = ( url.Path.getLength() == 0 ) &&
+		( url.Server.getLength() == 0);
+	return result;
+}
+
+
+sal_Bool LinkManager::urlIsVendor( const ::rtl::OUString &url )
+{
+	if ( url.matchIgnoreAsciiCaseAsciiL( "vnd.sun.star.", 13, 0 ) ) {
+		return url.matchIgnoreAsciiCaseAsciiL ( "expand", 6, 13 ) ||
+			url.matchIgnoreAsciiCaseAsciiL ( "script", 6, 13 ) ||
+			url.matchIgnoreAsciiCaseAsciiL ( "tdoc", 4, 13 ) ||
+			url.matchIgnoreAsciiCaseAsciiL ( "uno", 3, 13 );
+	}
+	return sal_False;
+}
+
 
 // ----------------------------------------------------------------------
 String lcl_DDE_RelToAbs( const String& rTopic, const String& rBaseURL )
@@ -565,7 +613,7 @@ sal_Bool SvxInternalLink::Connect( sfx2::SvBaseLink* pLink )
 	    com::sun::star::lang::Locale aLocale;
 	    MsLangId::convertLanguageToLocale( LANGUAGE_SYSTEM, aLocale );
 		CharClass aCC( aLocale );
-		
+
         String sNm( sTopic ), sTmp;
 		aCC.toLower( sNm );
 
@@ -675,4 +723,3 @@ sal_Bool SvxInternalLink::Connect( sfx2::SvBaseLink* pLink )
 
 
 }
-

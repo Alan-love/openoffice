@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -37,11 +37,11 @@
 
 EDITENG_DLLPUBLIC ::com::sun::star::uno::Reference< ::com::sun::star::container::XIndexReplace > SvxCreateNumRule( const SvxNumRule* pRule ) throw();
 EDITENG_DLLPUBLIC ::com::sun::star::uno::Reference< ::com::sun::star::container::XIndexReplace > SvxCreateNumRule() throw();
-const SvxNumRule& SvxGetNumRule( ::com::sun::star::uno::Reference< ::com::sun::star::container::XIndexReplace > xRule ) throw( ::com::sun::star::lang::IllegalArgumentException );
+const SvxNumRule& SvxGetNumRule( ::com::sun::star::uno::Reference< ::com::sun::star::container::XIndexReplace > xRule );
 bool SvxGetNumRule( ::com::sun::star::uno::Reference< ::com::sun::star::container::XIndexReplace > xRule, SvxNumRule& rNumRule );
 EDITENG_DLLPUBLIC ::com::sun::star::uno::Reference< ::com::sun::star::ucb::XAnyCompare > SvxCreateNumRuleCompare() throw();
 
-class SvxUnoNumberingRules : public ::cppu::WeakAggImplHelper5< com::sun::star::container::XIndexReplace, com::sun::star::ucb::XAnyCompare, 
+class SvxUnoNumberingRules : public ::cppu::WeakAggImplHelper5< com::sun::star::container::XIndexReplace, com::sun::star::ucb::XAnyCompare,
 	com::sun::star::lang::XUnoTunnel, com::sun::star::util::XCloneable, com::sun::star::lang::XServiceInfo >
 {
 private:
@@ -53,32 +53,30 @@ public:
 	UNO3_GETIMPLEMENTATION_DECL( SvxUnoNumberingRules )
 
 	//XIndexReplace
-	virtual void SAL_CALL replaceByIndex( sal_Int32 Index, const com::sun::star::uno::Any& Element ) throw(
-	com::sun::star::lang::IllegalArgumentException, com::sun::star::lang::IndexOutOfBoundsException, com::sun::star::lang::WrappedTargetException, com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL replaceByIndex( sal_Int32 Index, const com::sun::star::uno::Any& Element );
 
 	//XIndexAccess
-    virtual sal_Int32 SAL_CALL getCount() throw(com::sun::star::uno::RuntimeException) ;
-	virtual com::sun::star::uno::Any SAL_CALL getByIndex( sal_Int32 Index ) throw(com::sun::star::lang::IndexOutOfBoundsException, 
-		com::sun::star::lang::WrappedTargetException, com::sun::star::uno::RuntimeException);
+    virtual sal_Int32 SAL_CALL getCount() ;
+	virtual com::sun::star::uno::Any SAL_CALL getByIndex( sal_Int32 Index );
 
 	//XElementAccess
-    virtual com::sun::star::uno::Type SAL_CALL getElementType() throw(com::sun::star::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL hasElements() throw(com::sun::star::uno::RuntimeException);
+    virtual com::sun::star::uno::Type SAL_CALL getElementType();
+    virtual sal_Bool SAL_CALL hasElements();
 
     // XAnyCompare
-    virtual sal_Int16 SAL_CALL compare( const com::sun::star::uno::Any& Any1, const com::sun::star::uno::Any& Any2 ) throw(com::sun::star::uno::RuntimeException);
+    virtual sal_Int16 SAL_CALL compare( const com::sun::star::uno::Any& Any1, const com::sun::star::uno::Any& Any2 );
 
     // XCloneable
-	virtual com::sun::star::uno::Reference< com::sun::star::util::XCloneable > SAL_CALL createClone(  ) throw (com::sun::star::uno::RuntimeException);
+	virtual com::sun::star::uno::Reference< com::sun::star::util::XCloneable > SAL_CALL createClone(  );
 
     // XServiceInfo
-	virtual rtl::OUString SAL_CALL getImplementationName(  ) throw(com::sun::star::uno::RuntimeException);
-	virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName ) throw(com::sun::star::uno::RuntimeException);
-	virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames(  ) throw(com::sun::star::uno::RuntimeException);
+	virtual rtl::OUString SAL_CALL getImplementationName(  );
+	virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName );
+	virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames(  );
 
 	// intern
 	com::sun::star::uno::Sequence<com::sun::star::beans::PropertyValue> getNumberingRuleByIndex( sal_Int32 nIndex) const throw();
-	void setNumberingRuleByIndex( const com::sun::star::uno::Sequence< com::sun::star::beans::PropertyValue >& rProperties, sal_Int32 nIndex) throw( com::sun::star::uno::RuntimeException, com::sun::star::lang::IllegalArgumentException );
+	void setNumberingRuleByIndex( const com::sun::star::uno::Sequence< com::sun::star::beans::PropertyValue >& rProperties, sal_Int32 nIndex);
 
     static sal_Int16 Compare( const com::sun::star::uno::Any& rAny1, const com::sun::star::uno::Any& rAny2 );
 
@@ -87,5 +85,3 @@ public:
 
 
 #endif
-
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #ifndef _SVTOOLS_VCLXACCESSIBLEHEADERBAR_HXX_
@@ -40,7 +40,7 @@ class HeaderBar;
 typedef std::vector< ::com::sun::star::uno::WeakReference< ::com::sun::star::accessibility::XAccessible > >
     ListItems;
 
-class VCLXAccessibleHeaderBar : public VCLXAccessibleComponent								
+class VCLXAccessibleHeaderBar : public VCLXAccessibleComponent
 {
 
 public:
@@ -53,14 +53,14 @@ public:
 	VCLXAccessibleHeaderBar( VCLXWindow* pVCLXindow );
 
 	// XAccessibleContext
-	virtual sal_Int32 SAL_CALL getAccessibleChildCount(  ) throw (::com::sun::star::uno::RuntimeException);
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL getAccessibleChild( sal_Int32 i ) throw (::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::uno::RuntimeException);
-	virtual sal_Int16 SAL_CALL getAccessibleRole(  ) throw (::com::sun::star::uno::RuntimeException);
+	virtual sal_Int32 SAL_CALL getAccessibleChildCount(  );
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL getAccessibleChild( sal_Int32 i );
+	virtual sal_Int16 SAL_CALL getAccessibleRole(  );
 
 
 	// XServiceInfo
-	virtual ::rtl::OUString SAL_CALL getImplementationName() throw (::com::sun::star::uno::RuntimeException);
-	virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames() throw (::com::sun::star::uno::RuntimeException);
+	virtual ::rtl::OUString SAL_CALL getImplementationName();
+	virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames();
 
 public:
 	virtual void SAL_CALL disposing (void);
@@ -77,10 +77,9 @@ class VCLXHeaderBar :  public VCLXWindow
 public:
     VCLXHeaderBar(Window* pHeaderBar);
     virtual ~VCLXHeaderBar();
-	
+
     virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessibleContext > CreateAccessibleContext();
-	
+
 };
 
 #endif // _SVTOOLS_VCLXACCESSIBLEHEADERBAR_HXX_
-

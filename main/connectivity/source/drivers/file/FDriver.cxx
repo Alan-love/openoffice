@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_file.hxx"
 #include "file/FDriver.hxx"
 #include "file/FConnection.hxx"
 #include "file/fcode.hxx"
@@ -68,12 +68,12 @@ void OFileDriver::disposing()
 
 // static ServiceInfo
 //------------------------------------------------------------------------------
-rtl::OUString OFileDriver::getImplementationName_Static(  ) throw(RuntimeException)
+rtl::OUString OFileDriver::getImplementationName_Static(  )
 {
 	return rtl::OUString::createFromAscii("com.sun.star.sdbc.driver.file.Driver");
 }
 //------------------------------------------------------------------------------
-Sequence< ::rtl::OUString > OFileDriver::getSupportedServiceNames_Static(  ) throw (RuntimeException)
+Sequence< ::rtl::OUString > OFileDriver::getSupportedServiceNames_Static(  )
 {
     Sequence< ::rtl::OUString > aSNS( 2 );
 	aSNS[0] = ::rtl::OUString::createFromAscii("com.sun.star.sdbc.Driver");
@@ -82,13 +82,13 @@ Sequence< ::rtl::OUString > OFileDriver::getSupportedServiceNames_Static(  ) thr
 }
 
 //------------------------------------------------------------------
-::rtl::OUString SAL_CALL OFileDriver::getImplementationName(  ) throw(RuntimeException)
+::rtl::OUString SAL_CALL OFileDriver::getImplementationName(  )
 {
 	return getImplementationName_Static();
 }
 
 //------------------------------------------------------------------
-sal_Bool SAL_CALL OFileDriver::supportsService( const ::rtl::OUString& _rServiceName ) throw(RuntimeException)
+sal_Bool SAL_CALL OFileDriver::supportsService( const ::rtl::OUString& _rServiceName )
 {
     Sequence< ::rtl::OUString > aSupported(getSupportedServiceNames());
 	const ::rtl::OUString* pSupported = aSupported.getConstArray();
@@ -100,13 +100,13 @@ sal_Bool SAL_CALL OFileDriver::supportsService( const ::rtl::OUString& _rService
 }
 
 //------------------------------------------------------------------
-Sequence< ::rtl::OUString > SAL_CALL OFileDriver::getSupportedServiceNames(  ) throw(RuntimeException)
+Sequence< ::rtl::OUString > SAL_CALL OFileDriver::getSupportedServiceNames(  )
 {
 	return getSupportedServiceNames_Static();
 }
 
 // --------------------------------------------------------------------------------
-Reference< XConnection > SAL_CALL OFileDriver::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info ) throw(SQLException, RuntimeException)
+Reference< XConnection > SAL_CALL OFileDriver::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "file", "Ocke.Janssen@sun.com", "OFileDriver::connect" );
 	::osl::MutexGuard aGuard( m_aMutex );
@@ -121,13 +121,12 @@ Reference< XConnection > SAL_CALL OFileDriver::connect( const ::rtl::OUString& u
 }
 // --------------------------------------------------------------------------------
 sal_Bool SAL_CALL OFileDriver::acceptsURL( const ::rtl::OUString& url )
-                throw(SQLException, RuntimeException)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "file", "Ocke.Janssen@sun.com", "OFileDriver::acceptsURL" );
 	return (!url.compareTo(::rtl::OUString::createFromAscii("sdbc:file:"),10));
 }
 // --------------------------------------------------------------------------------
-Sequence< DriverPropertyInfo > SAL_CALL OFileDriver::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& /*info*/ ) throw(SQLException, RuntimeException)
+Sequence< DriverPropertyInfo > SAL_CALL OFileDriver::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& /*info*/ )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "file", "Ocke.Janssen@sun.com", "OFileDriver::getPropertyInfo" );
 	if ( acceptsURL(url) )
@@ -190,13 +189,13 @@ Sequence< DriverPropertyInfo > SAL_CALL OFileDriver::getPropertyInfo( const ::rt
 	return Sequence< DriverPropertyInfo >();
 }
 // --------------------------------------------------------------------------------
-sal_Int32 SAL_CALL OFileDriver::getMajorVersion(  ) throw(RuntimeException)
+sal_Int32 SAL_CALL OFileDriver::getMajorVersion(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "file", "Ocke.Janssen@sun.com", "OFileDriver::getMajorVersion" );
 	return 1;
 }
 // --------------------------------------------------------------------------------
-sal_Int32 SAL_CALL OFileDriver::getMinorVersion(  ) throw(RuntimeException)
+sal_Int32 SAL_CALL OFileDriver::getMinorVersion(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "file", "Ocke.Janssen@sun.com", "OFileDriver::getMinorVersion" );
 	return 0;
@@ -204,7 +203,7 @@ sal_Int32 SAL_CALL OFileDriver::getMinorVersion(  ) throw(RuntimeException)
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
 // XDataDefinitionSupplier
-Reference< XTablesSupplier > SAL_CALL OFileDriver::getDataDefinitionByConnection( const Reference< ::com::sun::star::sdbc::XConnection >& connection ) throw(::com::sun::star::sdbc::SQLException, RuntimeException)
+Reference< XTablesSupplier > SAL_CALL OFileDriver::getDataDefinitionByConnection( const Reference< ::com::sun::star::sdbc::XConnection >& connection )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "file", "Ocke.Janssen@sun.com", "OFileDriver::getDataDefinitionByConnection" );
 	::osl::MutexGuard aGuard( m_aMutex );
@@ -232,7 +231,7 @@ Reference< XTablesSupplier > SAL_CALL OFileDriver::getDataDefinitionByConnection
 }
 
 // --------------------------------------------------------------------------------
-Reference< XTablesSupplier > SAL_CALL OFileDriver::getDataDefinitionByURL( const ::rtl::OUString& url, const Sequence< PropertyValue >& info ) throw(::com::sun::star::sdbc::SQLException, RuntimeException)
+Reference< XTablesSupplier > SAL_CALL OFileDriver::getDataDefinitionByURL( const ::rtl::OUString& url, const Sequence< PropertyValue >& info )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "file", "Ocke.Janssen@sun.com", "OFileDriver::getDataDefinitionByURL" );
 	if ( ! acceptsURL(url) )
@@ -275,7 +274,3 @@ OOperandAttr::OOperandAttr(sal_uInt16 _nPos,const Reference< XPropertySet>& _xCo
 {
 }
 // -----------------------------------------------------------------------------
-
-
-
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -31,7 +31,7 @@ class RscTop;
 typedef struct {
     Atom          nName;
     sal_uInt32          nTyp;
-    long            yylval;
+    sal_IntPtr      yylval;
 } KEY_STRUCT;
 
 class RscNameTable {
@@ -42,9 +42,9 @@ public:
             RscNameTable();
             ~RscNameTable();
     void    SetSort( sal_Bool bSorted = sal_True );
-    Atom  Put( Atom nName, sal_uInt32 nTyp, long nValue );
+    Atom  Put( Atom nName, sal_uInt32 nTyp, sal_IntPtr nValue );
     Atom  Put( Atom nName, sal_uInt32 nTyp );
-    Atom  Put( const char * pName, sal_uInt32 nTyp, long nValue );
+    Atom  Put( const char * pName, sal_uInt32 nTyp, sal_IntPtr nValue );
     Atom  Put( const char * pName, sal_uInt32 nTyp );
     Atom  Put( Atom nName, sal_uInt32 nTyp, RscTop * pClass );
     Atom  Put( const char * pName, sal_uInt32 nTyp, RscTop * pClass );

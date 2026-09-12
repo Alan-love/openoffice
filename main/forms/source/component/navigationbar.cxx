@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -148,7 +148,7 @@ namespace frm
     }
 
     //------------------------------------------------------------------
-    Any SAL_CALL ONavigationBarModel::queryAggregation( const Type& _rType ) throw ( RuntimeException )
+    Any SAL_CALL ONavigationBarModel::queryAggregation( const Type& _rType )
     {
 	    Any aReturn = ONavigationBarModel_BASE::queryInterface( _rType );
 
@@ -165,13 +165,13 @@ namespace frm
     IMPLEMENT_DEFAULT_CLONING( ONavigationBarModel )
 
     //------------------------------------------------------------------
-    ::rtl::OUString	SAL_CALL ONavigationBarModel::getImplementationName()  throw(RuntimeException)
+    ::rtl::OUString	SAL_CALL ONavigationBarModel::getImplementationName()
     {
         return getImplementationName_Static();
     }
 
     //------------------------------------------------------------------
-    Sequence< ::rtl::OUString > SAL_CALL ONavigationBarModel::getSupportedServiceNames()  throw(RuntimeException)
+    Sequence< ::rtl::OUString > SAL_CALL ONavigationBarModel::getSupportedServiceNames()
     {
         return getSupportedServiceNames_Static();
     }
@@ -207,7 +207,7 @@ namespace frm
     }
 
     //------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL ONavigationBarModel::getServiceName() throw ( RuntimeException )
+    ::rtl::OUString SAL_CALL ONavigationBarModel::getServiceName()
     {
         return FRM_SUN_COMPONENT_NAVTOOLBAR;
     }
@@ -227,7 +227,7 @@ namespace frm
     #define PERSIST_SHOW_FILTERSORT 0x0040
 
     //------------------------------------------------------------------
-    void SAL_CALL ONavigationBarModel::write( const Reference< XObjectOutputStream >& _rxOutStream ) throw ( IOException, RuntimeException )
+    void SAL_CALL ONavigationBarModel::write( const Reference< XObjectOutputStream >& _rxOutStream )
     {
         // open a section for compatibility - if we later on write additional members,
         // then older versions can skip them
@@ -301,7 +301,7 @@ namespace frm
     }
 
     //------------------------------------------------------------------
-    void SAL_CALL ONavigationBarModel::read( const Reference< XObjectInputStream >& _rxInStream ) throw ( IOException, RuntimeException )
+    void SAL_CALL ONavigationBarModel::read( const Reference< XObjectInputStream >& _rxInStream )
     {
         Reference< XDataInputStream > xDataIn( _rxInStream, UNO_QUERY );
         OStreamSection aEnsureBlockCompat( xDataIn );
@@ -381,7 +381,7 @@ namespace frm
 
     //------------------------------------------------------------------
     sal_Bool SAL_CALL ONavigationBarModel::convertFastPropertyValue( Any& _rConvertedValue, Any& _rOldValue,
-        sal_Int32 _nHandle, const Any& _rValue ) throw( IllegalArgumentException )
+        sal_Int32 _nHandle, const Any& _rValue )
     {
         sal_Bool bModified = sal_False;
 
@@ -402,7 +402,7 @@ namespace frm
     }
 
     //------------------------------------------------------------------
-    void SAL_CALL ONavigationBarModel::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue ) throw ( Exception )
+    void SAL_CALL ONavigationBarModel::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue )
     {
         if ( isRegisteredProperty( _nHandle ) )
         {

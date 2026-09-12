@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -137,13 +137,13 @@ int SAL_CALL main( int argc, char **argv )
 		Sequence < Reference< XCertificate > > xPersonalCerts = pSecEnv->getPersonalCertificates() ;
 		Sequence < Reference< XCertificate > > xCertPath ;
 		for( int i = 0; i < xPersonalCerts.getLength(); i ++ ) {
-			//Print the certificate infomation.
+			//Print the certificate information.
 			fprintf( stdout, "\nPersonal Certificate Info\n" ) ;
 			fprintf( stdout, "\tCertificate Issuer[%s]\n", OUStringToOString( xPersonalCerts[i]->getIssuerName(), RTL_TEXTENCODING_ASCII_US ).getStr() ) ;
 			fprintf( stdout, "\tCertificate Serial Number[%s]\n", OUStringToOString( bigIntegerToNumericString( xPersonalCerts[i]->getSerialNumber() ), RTL_TEXTENCODING_ASCII_US ).getStr() ) ;
 			fprintf( stdout, "\tCertificate Subject[%s]\n", OUStringToOString( xPersonalCerts[i]->getSubjectName(), RTL_TEXTENCODING_ASCII_US ).getStr() ) ;
 
-			//build the certificate path 
+			//build the certificate path
 			xCertPath = pSecEnv->buildCertificatePath( xPersonalCerts[i] ) ;
 			//Print the certificate path.
 			fprintf( stdout, "\tCertificate Path\n" ) ;
@@ -182,4 +182,3 @@ done:
 
 	return 0;
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -59,7 +59,6 @@ public:
         m_published(published) {}
 
     virtual sal_Bool SAL_CALL isPublished()
-        throw (::com::sun::star::uno::RuntimeException)
     { return m_published; }
 
 private:
@@ -87,9 +86,6 @@ TypeDescriptionEnumerationImpl::createInstance(
         const uno::Sequence< uno::TypeClass > & rTypes,
         reflection::TypeDescriptionSearchDepth eDepth,
         const RegistryKeyList & rBaseKeys )
-    throw ( reflection::NoSuchTypeNameException,
-            reflection::InvalidTypeNameException,
-            uno::RuntimeException )
 {
     if ( rModuleName.getLength() == 0 )
     {
@@ -252,7 +248,6 @@ TypeDescriptionEnumerationImpl::~TypeDescriptionEnumerationImpl()
 
 // virtual
 sal_Bool SAL_CALL TypeDescriptionEnumerationImpl::hasMoreElements()
-    throw ( uno::RuntimeException )
 {
     return queryMore();
 }
@@ -260,9 +255,6 @@ sal_Bool SAL_CALL TypeDescriptionEnumerationImpl::hasMoreElements()
 //=========================================================================
 // virtual
 uno::Any SAL_CALL TypeDescriptionEnumerationImpl::nextElement()
-    throw ( container::NoSuchElementException,
-            lang::WrappedTargetException,
-            uno::RuntimeException )
 {
     return uno::Any( uno::makeAny( nextTypeDescription() ) );
 }
@@ -276,8 +268,6 @@ uno::Any SAL_CALL TypeDescriptionEnumerationImpl::nextElement()
 // virtual
 uno::Reference< reflection::XTypeDescription > SAL_CALL
 TypeDescriptionEnumerationImpl::nextTypeDescription()
-    throw ( container::NoSuchElementException,
-            uno::RuntimeException )
 {
     uno::Reference< reflection::XTypeDescription > xTD( queryNext() );
 
@@ -351,7 +341,7 @@ bool TypeDescriptionEnumerationImpl::queryMore()
         }
 
         // Note: m_aCurrentModuleSubKeys is always empty AND m_aModuleKeys is
-        //       never empty when ariving here.
+        //       never empty when arriving here.
         //       ==> select new module key, fill m_aCurrentModuleSubKeys
 
         uno::Sequence< uno::Reference< registry::XRegistryKey > > aKeys;
@@ -636,4 +626,3 @@ TypeDescriptionEnumerationImpl::queryNext()
 }
 
 } // namespace stoc_rdbtdp
-

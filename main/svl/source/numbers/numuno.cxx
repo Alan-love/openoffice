@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -99,7 +99,6 @@ void SvNumberFormatsSupplierObj::SettingsChanged()
 // XNumberFormatsSupplier
 
 uno::Reference<beans::XPropertySet> SAL_CALL SvNumberFormatsSupplierObj::getNumberFormatSettings()
-										throw(uno::RuntimeException)
 {
     ::osl::MutexGuard aGuard( pImpl->aMutex );
 
@@ -107,7 +106,6 @@ uno::Reference<beans::XPropertySet> SAL_CALL SvNumberFormatsSupplierObj::getNumb
 }
 
 uno::Reference<util::XNumberFormats> SAL_CALL SvNumberFormatsSupplierObj::getNumberFormats()
-										throw(uno::RuntimeException)
 {
     ::osl::MutexGuard aGuard( pImpl->aMutex );
 
@@ -117,10 +115,10 @@ uno::Reference<util::XNumberFormats> SAL_CALL SvNumberFormatsSupplierObj::getNum
 // XUnoTunnel
 
 sal_Int64 SAL_CALL SvNumberFormatsSupplierObj::getSomething(
-				const uno::Sequence<sal_Int8 >& rId ) throw(uno::RuntimeException)
+				const uno::Sequence<sal_Int8 >& rId )
 {
-	if ( rId.getLength() == 16 && 
-          0 == rtl_compareMemory( getUnoTunnelId().getConstArray(),  
+	if ( rId.getLength() == 16 &&
+          0 == rtl_compareMemory( getUnoTunnelId().getConstArray(),
 									rId.getConstArray(), 16 ) )
 	{
         return sal::static_int_cast<sal_Int64>(reinterpret_cast<sal_IntPtr>(this));
@@ -158,6 +156,3 @@ SvNumberFormatsSupplierObj* SvNumberFormatsSupplierObj::getImplementation(
 
 
 //------------------------------------------------------------------------
-
-
-

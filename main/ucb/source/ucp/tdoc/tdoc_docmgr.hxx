@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -96,18 +96,14 @@ namespace tdoc_ucp {
             // util::XCloseListener
             virtual void SAL_CALL queryClosing(
                     const ::com::sun::star::lang::EventObject& Source,
-                    ::sal_Bool GetsOwnership )
-                throw (::com::sun::star::util::CloseVetoException,
-                       ::com::sun::star::uno::RuntimeException);
+                    ::sal_Bool GetsOwnership );
 
             virtual void SAL_CALL notifyClosing(
-                    const ::com::sun::star::lang::EventObject& Source )
-                throw (::com::sun::star::uno::RuntimeException);
+                    const ::com::sun::star::lang::EventObject& Source );
 
             // lang::XEventListener (base of util::XCloseListener)
             virtual void SAL_CALL disposing(
-                    const com::sun::star::lang::EventObject & Source )
-                throw ( com::sun::star::uno::RuntimeException );
+                    const com::sun::star::lang::EventObject & Source );
         private:
             OfficeDocumentsManager * m_pManager;
         };
@@ -123,13 +119,11 @@ namespace tdoc_ucp {
 
         // document::XEventListener
         virtual void SAL_CALL notifyEvent(
-                const com::sun::star::document::EventObject & Event )
-            throw ( com::sun::star::uno::RuntimeException );
+                const com::sun::star::document::EventObject & Event );
 
         // lang::XEventListener (base of document::XEventListener)
         virtual void SAL_CALL disposing(
-                const com::sun::star::lang::EventObject & Source )
-            throw ( com::sun::star::uno::RuntimeException );
+                const com::sun::star::lang::EventObject & Source );
 
         // Non-interface
         com::sun::star::uno::Reference< com::sun::star::embed::XStorage >

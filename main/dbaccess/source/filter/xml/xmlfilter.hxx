@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -106,7 +106,7 @@ public:
     typedef ::std::vector< ::com::sun::star::beans::PropertyValue> TInfoSequence;
 private:
 	TPropertyNameMap								m_aQuerySettings;
-	TPropertyNameMap								m_aTablesSettings;    
+	TPropertyNameMap								m_aTablesSettings;
     TInfoSequence                                   m_aInfoSequence;
 	Reference< XComponent >							m_xSrcDoc;
 	mutable ::std::auto_ptr<SvXMLTokenMap>			m_pDocElemTokenMap;
@@ -127,7 +127,7 @@ private:
 	sal_Int32										m_nPreviewMode;
     bool                                            m_bNewFormat;
 
-	sal_Bool							implImport( const Sequence< PropertyValue >& rDescriptor ) throw (RuntimeException);
+	sal_Bool							implImport( const Sequence< PropertyValue >& rDescriptor );
 
 
 	/** fills the map with the Properties
@@ -150,11 +150,11 @@ protected:
 
 	virtual	~ODBFilter()  throw();
 public:
-	
+
 	ODBFilter( const Reference< XMultiServiceFactory >& _rxMSF );
 
 	// XFilter
-    virtual sal_Bool SAL_CALL filter( const Sequence< PropertyValue >& rDescriptor ) throw(RuntimeException);
+    virtual sal_Bool SAL_CALL filter( const Sequence< PropertyValue >& rDescriptor );
 
 	// XServiceInfo
 	DECLARE_SERVICE_INFO_STATIC( );

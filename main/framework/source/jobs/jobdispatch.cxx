@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,19 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
-    
+
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_framework.hxx"
@@ -114,11 +114,11 @@ JobDispatch::JobDispatch( /*IN*/ const css::uno::Reference< css::lang::XMultiSer
 //________________________________
 /**
     @short  let this instance die
-    @descr  We have to release all used ressources and free used memory.
+    @descr  We have to release all used resources and free used memory.
 */
 JobDispatch::~JobDispatch()
 {
-    // release all used ressources
+    // release all used resources
     m_xSMGR  = css::uno::Reference< css::lang::XMultiServiceFactory >();
     m_xFrame = css::uno::Reference< css::frame::XFrame >();
 }
@@ -133,8 +133,7 @@ JobDispatch::~JobDispatch()
                 the list of initialization arguments
                 First parameter should be the frame reference we need.
 */
-void SAL_CALL JobDispatch::initialize( const css::uno::Sequence< css::uno::Any >& lArguments ) throw(css::uno::Exception       ,
-                                                                                                     css::uno::RuntimeException)
+void SAL_CALL JobDispatch::initialize( const css::uno::Sequence< css::uno::Any >& lArguments )
 {
     /* SAFE { */
     WriteGuard aWriteLock(m_aLock);
@@ -147,7 +146,7 @@ void SAL_CALL JobDispatch::initialize( const css::uno::Sequence< css::uno::Any >
 
             css::uno::Reference< css::frame::XModuleManager > xModuleManager(
                 m_xSMGR->createInstance(
-                    SERVICENAME_MODULEMANAGER ), 
+                    SERVICENAME_MODULEMANAGER ),
                 css::uno::UNO_QUERY_THROW );
             try
             {
@@ -182,7 +181,7 @@ void SAL_CALL JobDispatch::initialize( const css::uno::Sequence< css::uno::Any >
 */
 css::uno::Reference< css::frame::XDispatch > SAL_CALL JobDispatch::queryDispatch( /*IN*/ const css::util::URL&  aURL             ,
                                                                                   /*IN*/ const ::rtl::OUString& /*sTargetFrameName*/ ,
-                                                                                  /*IN*/       sal_Int32        /*nSearchFlags*/     ) throw(css::uno::RuntimeException)
+                                                                                  /*IN*/       sal_Int32        /*nSearchFlags*/     )
 {
     css::uno::Reference< css::frame::XDispatch > xDispatch;
 
@@ -206,7 +205,7 @@ css::uno::Reference< css::frame::XDispatch > SAL_CALL JobDispatch::queryDispatch
             NULL references are not skipped. Every result
             match to one given descriptor item.
 */
-css::uno::Sequence< css::uno::Reference< css::frame::XDispatch > > SAL_CALL JobDispatch::queryDispatches( const css::uno::Sequence< css::frame::DispatchDescriptor >& lDescriptor ) throw(css::uno::RuntimeException)
+css::uno::Sequence< css::uno::Reference< css::frame::XDispatch > > SAL_CALL JobDispatch::queryDispatches( const css::uno::Sequence< css::frame::DispatchDescriptor >& lDescriptor )
 {
     // don't pack resulting list!
     sal_Int32 nCount = lDescriptor.getLength();
@@ -246,7 +245,7 @@ css::uno::Sequence< css::uno::Reference< css::frame::XDispatch > > SAL_CALL JobD
 */
 void SAL_CALL JobDispatch::dispatchWithNotification( /*IN*/ const css::util::URL&                                             aURL      ,
                                                      /*IN*/ const css::uno::Sequence< css::beans::PropertyValue >&            lArgs     ,
-                                                     /*IN*/ const css::uno::Reference< css::frame::XDispatchResultListener >& xListener ) throw(css::uno::RuntimeException)
+                                                     /*IN*/ const css::uno::Reference< css::frame::XDispatchResultListener >& xListener )
 {
     JobURL aAnalyzedURL(aURL.Complete);
     if (aAnalyzedURL.isValid())
@@ -297,7 +296,7 @@ void JobDispatch::impl_dispatchEvent( /*IN*/ const ::rtl::OUString&             
 
     // no jobs ... no execution
     // But a may given listener will know something ...
-    // I think this operaton was finished successfully.
+    // I think this operation was finished successfully.
     // It's not really an error, if no registered jobs could be located.
     // Step over all found jobs and execute it
     int nExecutedJobs=0;
@@ -354,7 +353,7 @@ void JobDispatch::impl_dispatchEvent( /*IN*/ const ::rtl::OUString&             
             of e.g. one instance services.
 
     @param  sService
-                the uno implementation or service name of the job, which should be instanciated
+                the uno implementation or service name of the job, which should be instantiated
 
     @param  lArgs
                 optional arguments for this request
@@ -464,7 +463,7 @@ void JobDispatch::impl_dispatchAlias( /*IN*/ const ::rtl::OUString&             
     @see    dispatchWithNotification()
 */
 void SAL_CALL JobDispatch::dispatch( /*IN*/ const css::util::URL&                                  aURL  ,
-                                     /*IN*/ const css::uno::Sequence< css::beans::PropertyValue >& lArgs ) throw(css::uno::RuntimeException)
+                                     /*IN*/ const css::uno::Sequence< css::beans::PropertyValue >& lArgs )
 {
     dispatchWithNotification(aURL, lArgs, css::uno::Reference< css::frame::XDispatchResultListener >());
 }
@@ -474,7 +473,7 @@ void SAL_CALL JobDispatch::dispatch( /*IN*/ const css::util::URL&               
     @short  not supported
 */
 void SAL_CALL JobDispatch::addStatusListener( /*IN*/ const css::uno::Reference< css::frame::XStatusListener >&,
-                                              /*IN*/ const css::util::URL&                                      ) throw(css::uno::RuntimeException)
+                                              /*IN*/ const css::util::URL&                                      )
 {
 }
 
@@ -483,7 +482,7 @@ void SAL_CALL JobDispatch::addStatusListener( /*IN*/ const css::uno::Reference< 
     @short  not supported
 */
 void SAL_CALL JobDispatch::removeStatusListener( /*IN*/ const css::uno::Reference< css::frame::XStatusListener >&,
-                                                 /*IN*/ const css::util::URL&                                          ) throw(css::uno::RuntimeException)
+                                                 /*IN*/ const css::util::URL&                                          )
 {
 }
 

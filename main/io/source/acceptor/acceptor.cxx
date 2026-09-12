@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -60,12 +60,8 @@ namespace io_acceptor
 		virtual ~OAcceptor();
 	public:
 		// Methods
-		virtual Reference< XConnection > SAL_CALL accept( const OUString& sConnectionDescription )
-			throw( AlreadyAcceptingException,
-				   ConnectionSetupException,
-				   IllegalArgumentException,
-				   RuntimeException);
-		virtual void SAL_CALL stopAccepting(  ) throw( RuntimeException);
+		virtual Reference< XConnection > SAL_CALL accept( const OUString& sConnectionDescription );
+		virtual void SAL_CALL stopAccepting(  );
 
 	public: // XServiceInfo
                 virtual OUString              SAL_CALL getImplementationName() throw();
@@ -110,7 +106,7 @@ namespace io_acceptor
 
 	struct BeingInAccept
 	{
-		BeingInAccept( sal_Bool *pFlag,const OUString & sConnectionDescription  ) throw( AlreadyAcceptingException)
+		BeingInAccept( sal_Bool *pFlag,const OUString & sConnectionDescription  )
 			: m_pFlag( pFlag )
 			{
   				if( *m_pFlag )
@@ -129,10 +125,6 @@ namespace io_acceptor
 	};
 
 	Reference< XConnection > OAcceptor::accept( const OUString &sConnectionDescription )
-		throw( AlreadyAcceptingException,
-			   ConnectionSetupException,
-			   IllegalArgumentException,
-			   RuntimeException)
 	{
 		OSL_TRACE(
             "acceptor %s\n",
@@ -147,7 +139,7 @@ namespace io_acceptor
 		{
 			// instantiate another acceptor for different ports
 			OUString sMessage = OUString( RTL_CONSTASCII_USTRINGPARAM(
-				"acceptor::accept called multiple times with different conncetion strings\n" ) );
+				"acceptor::accept called multiple times with different connection strings\n" ) );
 			throw ConnectionSetupException( sMessage, Reference< XInterface > () );
 		}
 
@@ -265,7 +257,7 @@ namespace io_acceptor
 		return r;
 	}
 
-	void SAL_CALL OAcceptor::stopAccepting(  ) throw( RuntimeException)
+	void SAL_CALL OAcceptor::stopAccepting(  )
 	{
 		MutexGuard guard( m_mutex );
 
@@ -368,6 +360,3 @@ SAL_DLLPUBLIC_EXPORT void * SAL_CALL component_getFactory(
 	return component_getFactoryHelper( pImplName, pServiceManager, pRegistryKey , g_entries );
 }
 }
-
-
-

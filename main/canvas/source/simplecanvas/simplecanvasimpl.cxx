@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -56,12 +56,12 @@ namespace
     {
         // TODO(F3): Color management
         uno::Sequence< double > aRes( 4 );
-        
-        aRes[0] = static_cast<sal_uInt8>( (nColor&0xFF000000U) >> 24U ) / 255.0; 
-        aRes[1] = static_cast<sal_uInt8>( (nColor&0x00FF0000U) >> 16U ) / 255.0; 
-        aRes[2] = static_cast<sal_uInt8>( (nColor&0x0000FF00U) >>  8U ) / 255.0; 
-        aRes[3] = static_cast<sal_uInt8>( (nColor&0x000000FFU) )        / 255.0; 
-        
+
+        aRes[0] = static_cast<sal_uInt8>( (nColor&0xFF000000U) >> 24U ) / 255.0;
+        aRes[1] = static_cast<sal_uInt8>( (nColor&0x00FF0000U) >> 16U ) / 255.0;
+        aRes[2] = static_cast<sal_uInt8>( (nColor&0x0000FF00U) >>  8U ) / 255.0;
+        aRes[3] = static_cast<sal_uInt8>( (nColor&0x000000FFU) )        / 255.0;
+
         return aRes;
     }
 
@@ -81,7 +81,7 @@ namespace
         uno::Reference< rendering::XPolyPolygon2D > xRes(
             xDevice->createCompatibleLinePolyPolygon( sequenceSequence ),
             uno::UNO_QUERY );
-        if( xRes.is() ) 
+        if( xRes.is() )
             xRes->setClosed( 0, sal_True );
         return xRes;
     }
@@ -125,7 +125,7 @@ namespace
         }
 
         rendering::RenderState createStrokingRenderState() const
-        { 
+        {
             return rendering::RenderState(maRenderState.m_aTransformation,
                                           *maRenderState.m_aRectClip,
                                           *maRenderState.m_aPenColor,
@@ -138,7 +138,7 @@ namespace
         }
 
         rendering::RenderState createFillingRenderState() const
-        { 
+        {
             return rendering::RenderState(maRenderState.m_aTransformation,
                                           *maRenderState.m_aRectClip,
                                           *maRenderState.m_aFillColor,
@@ -169,7 +169,7 @@ namespace
             mxCanvas( grabCanvas(aArguments) ),
             maFont(boost::bind( &rendering::XCanvas::createFont,
                                 boost::cref(mxCanvas),
-                                _1, 
+                                _1,
                                 uno::Sequence< beans::PropertyValue >(),
                                 geometry::Matrix2D() )),
             maViewState(),
@@ -182,52 +182,52 @@ namespace
 
     private:
         // Ifc XServiceName
-        virtual ::rtl::OUString SAL_CALL getServiceName(  ) throw (uno::RuntimeException)
+        virtual ::rtl::OUString SAL_CALL getServiceName(  )
         {
             return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( SERVICE_NAME ) );
         }
 
         // Ifc XSimpleCanvas
-        virtual void SAL_CALL selectFont( const ::rtl::OUString& sFontName, 
-                                          double                 size, 
-                                          ::sal_Bool             bold, 
-                                          ::sal_Bool             italic ) throw (uno::RuntimeException)
+        virtual void SAL_CALL selectFont( const ::rtl::OUString& sFontName,
+                                          double                 size,
+                                          ::sal_Bool             bold,
+                                          ::sal_Bool             italic )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
-            
+
             maFont->FontDescription.FamilyName = sFontName;
             maFont->CellSize = size;
-            maFont->FontDescription.FontDescription.Weight = 
+            maFont->FontDescription.FontDescription.Weight =
                 bold ? rendering::PanoseWeight::BOLD : rendering::PanoseWeight::MEDIUM;
-            maFont->FontDescription.FontDescription.Letterform = 
+            maFont->FontDescription.FontDescription.Letterform =
                 italic ? rendering::PanoseLetterForm::OBLIQUE_CONTACT : rendering::PanoseLetterForm::ANYTHING;
         }
 
-        virtual void SAL_CALL setPenColor( ::sal_Int32 nsRgbaColor ) throw (uno::RuntimeException)
+        virtual void SAL_CALL setPenColor( ::sal_Int32 nsRgbaColor )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             *(maRenderState.m_aPenColor) = nsRgbaColor;
         }
 
-        virtual void SAL_CALL setFillColor( ::sal_Int32 nsRgbaColor ) throw (uno::RuntimeException)
+        virtual void SAL_CALL setFillColor( ::sal_Int32 nsRgbaColor )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             *(maRenderState.m_aFillColor) = nsRgbaColor;
         }
 
-        virtual void SAL_CALL setRectClip( const geometry::RealRectangle2D& aRect ) throw (uno::RuntimeException)
+        virtual void SAL_CALL setRectClip( const geometry::RealRectangle2D& aRect )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             *(maRenderState.m_aRectClip) = aRect;
         }
 
-        virtual void SAL_CALL setTransformation( const geometry::AffineMatrix2D& aTransform ) throw (uno::RuntimeException)
+        virtual void SAL_CALL setTransformation( const geometry::AffineMatrix2D& aTransform )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             maRenderState.m_aTransformation = aTransform;
         }
 
-        virtual void SAL_CALL drawPixel( const geometry::RealPoint2D& aPoint ) throw (uno::RuntimeException)
+        virtual void SAL_CALL drawPixel( const geometry::RealPoint2D& aPoint )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             mxCanvas->drawPoint(aPoint,
@@ -235,8 +235,8 @@ namespace
                                 createFillingRenderState());
         }
 
-        virtual void SAL_CALL drawLine( const geometry::RealPoint2D& aStartPoint, 
-                                        const geometry::RealPoint2D& aEndPoint ) throw (uno::RuntimeException)
+        virtual void SAL_CALL drawLine( const geometry::RealPoint2D& aStartPoint,
+                                        const geometry::RealPoint2D& aEndPoint )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             mxCanvas->drawLine(aStartPoint,
@@ -245,7 +245,7 @@ namespace
                                createStrokingRenderState());
         }
 
-        virtual void SAL_CALL drawRect( const geometry::RealRectangle2D& aRect ) throw (uno::RuntimeException)
+        virtual void SAL_CALL drawRect( const geometry::RealRectangle2D& aRect )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             uno::Reference< rendering::XPolyPolygon2D > xPoly(
@@ -262,7 +262,7 @@ namespace
                                           createStrokingRenderState());
         }
 
-        virtual void SAL_CALL drawPolyPolygon( const uno::Reference< rendering::XPolyPolygon2D >& xPolyPolygon ) throw (uno::RuntimeException)
+        virtual void SAL_CALL drawPolyPolygon( const uno::Reference< rendering::XPolyPolygon2D >& xPolyPolygon )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
 
@@ -276,9 +276,9 @@ namespace
                                           createStrokingRenderState());
         }
 
-        virtual void SAL_CALL drawText( const rendering::StringContext& aText, 
-                                        const geometry::RealPoint2D&    aOutPos, 
-                                        ::sal_Int8                      nTextDirection ) throw (uno::RuntimeException)
+        virtual void SAL_CALL drawText( const rendering::StringContext& aText,
+                                        const geometry::RealPoint2D&    aOutPos,
+                                        ::sal_Int8                      nTextDirection )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             const basegfx::B2DHomMatrix offsetTransform(basegfx::tools::createTranslateB2DHomMatrix(aOutPos.X,aOutPos.Y));
@@ -292,8 +292,8 @@ namespace
                                nTextDirection);
         }
 
-        virtual void SAL_CALL drawBitmap( const uno::Reference< rendering::XBitmap >& xBitmap, 
-                                          const geometry::RealPoint2D&                aLeftTop ) throw (uno::RuntimeException)
+        virtual void SAL_CALL drawBitmap( const uno::Reference< rendering::XBitmap >& xBitmap,
+                                          const geometry::RealPoint2D&                aLeftTop )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             const basegfx::B2DHomMatrix offsetTransform(basegfx::tools::createTranslateB2DHomMatrix(aLeftTop.X,aLeftTop.Y));
@@ -303,61 +303,61 @@ namespace
             mxCanvas->drawBitmap(xBitmap,maViewState,aRenderState);
         }
 
-        virtual uno::Reference< rendering::XGraphicDevice > SAL_CALL getDevice(  ) throw (uno::RuntimeException)
+        virtual uno::Reference< rendering::XGraphicDevice > SAL_CALL getDevice(  )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             return mxCanvas->getDevice();
         }
 
-        virtual uno::Reference< rendering::XCanvas > SAL_CALL getCanvas(  ) throw (uno::RuntimeException)
+        virtual uno::Reference< rendering::XCanvas > SAL_CALL getCanvas(  )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             return mxCanvas;
         }
 
-        virtual rendering::FontMetrics SAL_CALL getFontMetrics(  ) throw (uno::RuntimeException)
+        virtual rendering::FontMetrics SAL_CALL getFontMetrics(  )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             return maFont.getOutValue()->getFontMetrics();
         }
 
-        virtual uno::Reference< rendering::XCanvasFont > SAL_CALL getCurrentFont(  ) throw (uno::RuntimeException)
+        virtual uno::Reference< rendering::XCanvasFont > SAL_CALL getCurrentFont(  )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             return maFont.getOutValue();
         }
 
-        virtual ::sal_Int32 SAL_CALL getCurrentPenColor(  ) throw (uno::RuntimeException)
+        virtual ::sal_Int32 SAL_CALL getCurrentPenColor(  )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             return maRenderState.m_aPenColor.getInValue();
         }
 
-        virtual ::sal_Int32 SAL_CALL getCurrentFillColor(  ) throw (uno::RuntimeException)
+        virtual ::sal_Int32 SAL_CALL getCurrentFillColor(  )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             return maRenderState.m_aFillColor.getInValue();
         }
 
-        virtual geometry::RealRectangle2D SAL_CALL getCurrentClipRect(  ) throw (uno::RuntimeException)
+        virtual geometry::RealRectangle2D SAL_CALL getCurrentClipRect(  )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             return maRenderState.m_aRectClip.getInValue();
         }
 
-        virtual geometry::AffineMatrix2D SAL_CALL getCurrentTransformation(  ) throw (uno::RuntimeException)
+        virtual geometry::AffineMatrix2D SAL_CALL getCurrentTransformation(  )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             return maRenderState.m_aTransformation;
         }
 
-        virtual rendering::ViewState SAL_CALL getCurrentViewState(  ) throw (uno::RuntimeException)
+        virtual rendering::ViewState SAL_CALL getCurrentViewState(  )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             return maViewState;
         }
 
-        virtual rendering::RenderState SAL_CALL getCurrentRenderState( sal_Bool bUseFillColor ) throw (uno::RuntimeException)
+        virtual rendering::RenderState SAL_CALL getCurrentRenderState( sal_Bool bUseFillColor )
         {
             ::osl::MutexGuard aGuard( m_aMutex );
             if( bUseFillColor )
@@ -375,7 +375,7 @@ namespace
 
         uno::Reference<rendering::XCanvas> mxCanvas;
         SimpleFont                         maFont;
-        rendering::ViewState               maViewState;   
+        rendering::ViewState               maViewState;
         SimpleRenderState                  maRenderState;
     };
 

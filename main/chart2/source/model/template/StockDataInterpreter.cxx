@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 
 #include "StockDataInterpreter.hxx"
 #include "DataSeries.hxx"
@@ -72,7 +72,6 @@ InterpretedData SAL_CALL StockDataInterpreter::interpretDataSource(
     const Reference< data::XDataSource >& xSource,
     const Sequence< beans::PropertyValue >& rArguments,
     const Sequence< Reference< XDataSeries > >& rSeriesToReUse )
-    throw (uno::RuntimeException)
 {
     if( ! xSource.is())
         return InterpretedData();
@@ -274,7 +273,6 @@ InterpretedData SAL_CALL StockDataInterpreter::interpretDataSource(
 // volume to one with volume)
 sal_Bool SAL_CALL StockDataInterpreter::isDataCompatible(
     const InterpretedData& aInterpretedData )
-    throw (uno::RuntimeException)
 {
     // high/low/close
     sal_Int32 nNumberOfNecessarySequences = 3;
@@ -331,7 +329,6 @@ sal_Bool SAL_CALL StockDataInterpreter::isDataCompatible(
 
 InterpretedData SAL_CALL StockDataInterpreter::reinterpretDataSeries(
     const InterpretedData& aInterpretedData )
-    throw (uno::RuntimeException)
 {
     // prerequisite: StockDataInterpreter::isDataCompatible() returned true
     return aInterpretedData;

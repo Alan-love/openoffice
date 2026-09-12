@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -210,11 +210,25 @@ Impl_getTextEncodingData(rtl_TextEncoding nEncoding) SAL_THROW_EXTERN_C()
             &aImplBig5HkscsTextEncodingData, /* BIG5_HKSCS */
             &aImplTis620TextEncodingData, /* TIS_620 */
             &aImplKoi8UTextEncodingData, /* KOI8_U */
+            NULL, /* ISCII_DEVANAGARI: converter removed (#i119141), but the
+                     slot MUST remain.  This array is indexed positionally by
+                     the (ABI-frozen) rtl_TextEncoding enum value, so a missing
+                     slot shifts every following encoding onto the wrong
+                     converter. */
             &aImplJavaUtf8TextEncodingData, /* JAVA_UTF8 */
             &adobeStandardEncodingData, /* ADOBE_STANDARD */
             &adobeSymbolEncodingData, /* ADOBE_SYMBOL */
             &aImplPT154TextEncodingData, /* PT154 */
             &adobeDingbatsEncodingData }; /* ADOBE_DINGBATS */
+    /* aData[] is indexed positionally by the (ABI-frozen) rtl_TextEncoding
+       enum, so its length must equal the highest enum value plus one.  Assert
+       this at compile time: dropping a slot (as happened to ISCII_DEVANAGARI,
+       #i119141) would otherwise silently shift every following encoding onto
+       the wrong converter, undetectable at run time because the bounds check
+       below just maps the now-out-of-range top encoding to NULL. */
+    typedef int Impl_textEncodingDataSizeCheck[
+        sizeof aData / sizeof aData[0]
+            == RTL_TEXTENCODING_ADOBE_DINGBATS + 1 ? 1 : -1];
     return
         nEncoding < sizeof aData / sizeof aData[0] ? aData[nEncoding] : NULL;
 }

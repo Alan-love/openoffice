@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 from pseudo import PseudoSet,PseudoOrderedDict
@@ -47,7 +47,7 @@ class SdfData:
 
     def read(self):
         try:
-            f = open(self._filename, "r")
+            f = open(self._filename, "r", encoding="utf-8")
             lines = [line.rstrip('\n') for line in f.readlines()]
         except IOError:
             print("ERROR: Trying to read "+ self._filename)
@@ -62,7 +62,7 @@ class SdfData:
 
     def write(self, filename):
         try:
-            f = open(filename, "w+")
+            f = open(filename, "w+", encoding="utf-8")
             for value in self._dict.values():
                 #f.write( repr(value)+"\n" )
                 f.write(value + "\n")

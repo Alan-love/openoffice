@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -64,11 +64,11 @@ public:
 	virtual ~OInputStreamWrapper();
 
 // stario::XInputStream
-	virtual sal_Int32	SAL_CALL	readBytes(staruno::Sequence< sal_Int8 >& aData, sal_Int32 nBytesToRead) throw(stario::NotConnectedException, stario::BufferSizeExceededException, staruno::RuntimeException);
-	virtual sal_Int32	SAL_CALL	readSomeBytes(staruno::Sequence< sal_Int8 >& aData, sal_Int32 nMaxBytesToRead) throw(stario::NotConnectedException, stario::BufferSizeExceededException, staruno::RuntimeException);
-	virtual void		SAL_CALL	skipBytes(sal_Int32 nBytesToSkip) throw(stario::NotConnectedException, stario::BufferSizeExceededException, staruno::RuntimeException);
-	virtual sal_Int32	SAL_CALL	available() throw(stario::NotConnectedException, staruno::RuntimeException);
-	virtual void		SAL_CALL	closeInput() throw(stario::NotConnectedException, staruno::RuntimeException);
+	virtual sal_Int32	SAL_CALL	readBytes(staruno::Sequence< sal_Int8 >& aData, sal_Int32 nBytesToRead);
+	virtual sal_Int32	SAL_CALL	readSomeBytes(staruno::Sequence< sal_Int8 >& aData, sal_Int32 nMaxBytesToRead);
+	virtual void		SAL_CALL	skipBytes(sal_Int32 nBytesToSkip);
+	virtual sal_Int32	SAL_CALL	available();
+	virtual void		SAL_CALL	closeInput();
 
 protected:
 	/// throws a NotConnectedException if the object is not connected anymore
@@ -94,9 +94,9 @@ public:
 	OSeekableInputStreamWrapper(SvStream* _pStream, sal_Bool _bOwner = sal_False);
 
 	// XSeekable
-    virtual void SAL_CALL seek( sal_Int64 _nLocation ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException);
-    virtual sal_Int64 SAL_CALL getPosition(  ) throw (::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException);
-    virtual sal_Int64 SAL_CALL getLength(  ) throw (::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL seek( sal_Int64 _nLocation );
+    virtual sal_Int64 SAL_CALL getPosition(  );
+    virtual sal_Int64 SAL_CALL getLength(  );
 };
 
 //==================================================================
@@ -114,9 +114,9 @@ public:
 	OOutputStreamWrapper(SvStream& _rStream) :rStream(_rStream) { }
 
 // stario::XOutputStream
-	virtual void SAL_CALL writeBytes(const staruno::Sequence< sal_Int8 >& aData) throw(stario::NotConnectedException, stario::BufferSizeExceededException, staruno::RuntimeException);
-	virtual void SAL_CALL flush() throw(stario::NotConnectedException, stario::BufferSizeExceededException, staruno::RuntimeException);
-	virtual void SAL_CALL closeOutput() throw(stario::NotConnectedException, stario::BufferSizeExceededException, staruno::RuntimeException);
+	virtual void SAL_CALL writeBytes(const staruno::Sequence< sal_Int8 >& aData);
+	virtual void SAL_CALL flush();
+	virtual void SAL_CALL closeOutput();
 
 protected:
 	/// throws an exception according to the error flag of m_pSvStream
@@ -139,14 +139,14 @@ public:
 	OSeekableOutputStreamWrapper(SvStream& _rStream);
 
 	// disambiguate XInterface
-    virtual ::com::sun::star::uno::Any SAL_CALL queryInterface( const ::com::sun::star::uno::Type& _rType ) throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Any SAL_CALL queryInterface( const ::com::sun::star::uno::Type& _rType );
     virtual void SAL_CALL acquire(  ) throw ();
     virtual void SAL_CALL release(  ) throw ();
 
 	// XSeekable
-    virtual void SAL_CALL seek( sal_Int64 _nLocation ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException);
-    virtual sal_Int64 SAL_CALL getPosition(  ) throw (::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException);
-    virtual sal_Int64 SAL_CALL getLength(  ) throw (::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL seek( sal_Int64 _nLocation );
+    virtual sal_Int64 SAL_CALL getPosition(  );
+    virtual sal_Int64 SAL_CALL getLength(  );
 };
 
 class UNOTOOLS_DLLPUBLIC OStreamWrapper : public ::cppu::ImplInheritanceHelper3 < OSeekableInputStreamWrapper, com::sun::star::io::XStream, com::sun::star::io::XOutputStream, com::sun::star::io::XTruncate >
@@ -155,18 +155,17 @@ public:
     OStreamWrapper(SvStream& _rStream);
 
 // stario::XStream
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::io::XInputStream > SAL_CALL getInputStream(  ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::io::XOutputStream > SAL_CALL getOutputStream(  ) throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::io::XInputStream > SAL_CALL getInputStream(  );
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::io::XOutputStream > SAL_CALL getOutputStream(  );
 
 // stario::XOutputStream
-    virtual void SAL_CALL writeBytes(const staruno::Sequence< sal_Int8 >& aData) throw(stario::NotConnectedException, stario::BufferSizeExceededException, staruno::RuntimeException);
-	virtual void SAL_CALL flush() throw(stario::NotConnectedException, stario::BufferSizeExceededException, staruno::RuntimeException);
-	virtual void SAL_CALL closeOutput() throw(stario::NotConnectedException, stario::BufferSizeExceededException, staruno::RuntimeException);
-    virtual void SAL_CALL truncate() throw(::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL writeBytes(const staruno::Sequence< sal_Int8 >& aData);
+	virtual void SAL_CALL flush();
+	virtual void SAL_CALL closeOutput();
+    virtual void SAL_CALL truncate();
 };
 
 }
 // namespace utl
 
 #endif // _UTL_STREAM_WRAPPER_HXX_
-

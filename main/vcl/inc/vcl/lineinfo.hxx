@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -47,7 +47,7 @@ struct ImplLineInfo
 	sal_uInt16				    mnDotCount;
 	long				    mnDotLen;
 	long				    mnDistance;
-    
+
     basegfx::B2DLineJoin    meLineJoin;
     com::sun::star::drawing::LineCap meLineCap;
 
@@ -66,7 +66,7 @@ struct ImplLineInfo
 
 class VCL_DLLPUBLIC LineInfo
 {
-private:	
+private:
 
 	ImplLineInfo*	mpImplLineInfo;
 	long			n1;
@@ -123,7 +123,7 @@ public:
 
 	// helper to get decomposed polygon data with the LineInfo applied. The source
 	// hairline polygon is given in io_rLinePolyPolygon. Both given polygons may
-	// contain results; e.g. when no fat line but DasDot is defined, the resut will
+	// contain results; e.g. when no fat line but DasDot is defined, the result will
 	// be in io_rLinePolyPolygon while o_rFillPolyPolygon will be empty. When fat line
 	// is defined, it will be vice-versa. If none is defined, io_rLinePolyPolygon will
 	// not be changed (but o_rFillPolyPolygon will be freed)

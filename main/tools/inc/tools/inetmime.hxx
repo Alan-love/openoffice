@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -1383,7 +1383,7 @@ struct INetContentTypeParameter
 	 */
 	const UniString m_sValue;
 
-	/** This is true if the value is successfuly converted to Unicode, and
+	/** This is true if the value is successfully converted to Unicode, and
 		false if the value is a special mixture of ISO-LATIN-1 characters and
 		characters from Unicode's Private Use Area.
 	 */
@@ -1438,4 +1438,3 @@ INetContentTypeParameterList::GetObject(sal_uIntPtr nIndex) const
 }
 
 #endif // TOOLS_INETMIME_HXX
-

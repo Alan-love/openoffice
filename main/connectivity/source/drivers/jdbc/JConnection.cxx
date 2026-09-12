@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_jdbc.hxx"
 
 #include "java/sql/Connection.hxx"
 #include "java/lang/Class.hxx"
@@ -274,7 +274,7 @@ java_sql_Connection::java_sql_Connection( const java_sql_Driver& _rDriver )
     ,m_bParameterSubstitution(sal_False)
     ,m_bIgnoreDriverPrivileges(sal_True)
     ,m_bIgnoreCurrency(sal_False)
-{      
+{
 }
 // -----------------------------------------------------------------------------
 java_sql_Connection::~java_sql_Connection()
@@ -284,7 +284,7 @@ java_sql_Connection::~java_sql_Connection()
 	{
 		SDBThreadAttach t;
         clearObject(*t.pEnv);
-		
+
 		{
 			if ( m_pDriverobject )
 				t.pEnv->DeleteGlobalRef( m_pDriverobject );
@@ -327,7 +327,7 @@ jclass java_sql_Connection::getMyClass() const
 }
 
 // -------------------------------------------------------------------------
-::rtl::OUString SAL_CALL java_sql_Connection::getCatalog(  ) throw(SQLException, RuntimeException)
+::rtl::OUString SAL_CALL java_sql_Connection::getCatalog(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Connection_BASE::rBHelper.bDisposed);
@@ -336,7 +336,7 @@ jclass java_sql_Connection::getMyClass() const
     return callStringMethod("getCatalog",mID);
 }
 // -------------------------------------------------------------------------
-Reference< XDatabaseMetaData > SAL_CALL java_sql_Connection::getMetaData(  ) throw(SQLException, RuntimeException)
+Reference< XDatabaseMetaData > SAL_CALL java_sql_Connection::getMetaData(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Connection_BASE::rBHelper.bDisposed);
@@ -345,7 +345,7 @@ Reference< XDatabaseMetaData > SAL_CALL java_sql_Connection::getMetaData(  ) thr
 	Reference< XDatabaseMetaData > xMetaData = m_xMetaData;
 	if(!xMetaData.is())
 	{
-        SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+        SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
         static jmethodID mID(NULL);
         jobject out = callObjectMethod(t.pEnv,"getMetaData","()Ljava/sql/DatabaseMetaData;", mID);
 		if(out)
@@ -358,18 +358,18 @@ Reference< XDatabaseMetaData > SAL_CALL java_sql_Connection::getMetaData(  ) thr
 	return xMetaData;
 }
 // -------------------------------------------------------------------------
-void SAL_CALL java_sql_Connection::close(  ) throw(SQLException, RuntimeException)
+void SAL_CALL java_sql_Connection::close(  )
 {
 	dispose();
 }
 // -------------------------------------------------------------------------
-void SAL_CALL java_sql_Connection::commit(  ) throw(SQLException, RuntimeException)
+void SAL_CALL java_sql_Connection::commit(  )
 {
     static jmethodID mID(NULL);
     callVoidMethod("commit",mID);
 }
 // -------------------------------------------------------------------------
-sal_Bool SAL_CALL java_sql_Connection::isClosed(  ) throw(SQLException, RuntimeException)
+sal_Bool SAL_CALL java_sql_Connection::isClosed(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 
@@ -377,7 +377,7 @@ sal_Bool SAL_CALL java_sql_Connection::isClosed(  ) throw(SQLException, RuntimeE
     return callBooleanMethod( "isClosed", mID ) && java_sql_Connection_BASE::rBHelper.bDisposed;
 }
 // -------------------------------------------------------------------------
-sal_Bool SAL_CALL java_sql_Connection::isReadOnly(  ) throw(SQLException, RuntimeException)
+sal_Bool SAL_CALL java_sql_Connection::isReadOnly(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Connection_BASE::rBHelper.bDisposed);
@@ -385,49 +385,49 @@ sal_Bool SAL_CALL java_sql_Connection::isReadOnly(  ) throw(SQLException, Runtim
     return callBooleanMethod( "isReadOnly", mID );
 }
 // -------------------------------------------------------------------------
-void SAL_CALL java_sql_Connection::setCatalog( const ::rtl::OUString& catalog ) throw(SQLException, RuntimeException)
+void SAL_CALL java_sql_Connection::setCatalog( const ::rtl::OUString& catalog )
 {
     static jmethodID mID(NULL);
     callVoidMethodWithStringArg("setCatalog",mID,catalog);
 }
 // -------------------------------------------------------------------------
-void SAL_CALL java_sql_Connection::rollback(  ) throw(SQLException, RuntimeException)
+void SAL_CALL java_sql_Connection::rollback(  )
 {
     static jmethodID mID(NULL);
     callVoidMethod("rollback",mID);
 }
 // -------------------------------------------------------------------------
-sal_Bool SAL_CALL java_sql_Connection::getAutoCommit(  ) throw(SQLException, RuntimeException)
+sal_Bool SAL_CALL java_sql_Connection::getAutoCommit(  )
 {
     static jmethodID mID(NULL);
     return callBooleanMethod( "getAutoCommit", mID );
 }
 // -------------------------------------------------------------------------
-void SAL_CALL java_sql_Connection::setReadOnly( sal_Bool readOnly ) throw(SQLException, RuntimeException)
+void SAL_CALL java_sql_Connection::setReadOnly( sal_Bool readOnly )
 {
     static jmethodID mID(NULL);
     callVoidMethodWithBoolArg("setReadOnly",mID,readOnly);
 }
 // -------------------------------------------------------------------------
-void SAL_CALL java_sql_Connection::setAutoCommit( sal_Bool autoCommit ) throw(SQLException, RuntimeException)
+void SAL_CALL java_sql_Connection::setAutoCommit( sal_Bool autoCommit )
 {
     static jmethodID mID(NULL);
     callVoidMethodWithBoolArg("setAutoCommit",mID,autoCommit);
 }
 // -------------------------------------------------------------------------
-Reference< ::com::sun::star::container::XNameAccess > SAL_CALL java_sql_Connection::getTypeMap(  ) throw(SQLException, RuntimeException)
+Reference< ::com::sun::star::container::XNameAccess > SAL_CALL java_sql_Connection::getTypeMap(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Connection_BASE::rBHelper.bDisposed);
 
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
     static jmethodID mID(NULL);
     /*jobject out = */callObjectMethod(t.pEnv,"getTypeMap","()Ljava/util/Map;", mID);
 	// ACHTUNG: der Aufrufer wird Eigentuemer des zurueckgelieferten Zeigers !!!
 	return 0;// ? 0 : Map2XNameAccess( t.pEnv, out );
 }
 // -------------------------------------------------------------------------
-void SAL_CALL java_sql_Connection::setTypeMap( const Reference< ::com::sun::star::container::XNameAccess >& /*typeMap*/ ) throw(SQLException, RuntimeException)
+void SAL_CALL java_sql_Connection::setTypeMap( const Reference< ::com::sun::star::container::XNameAccess >& /*typeMap*/ )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Connection_BASE::rBHelper.bDisposed);
@@ -436,7 +436,7 @@ void SAL_CALL java_sql_Connection::setTypeMap( const Reference< ::com::sun::star
 }
 
 // -------------------------------------------------------------------------
-sal_Int32 SAL_CALL java_sql_Connection::getTransactionIsolation(  ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL java_sql_Connection::getTransactionIsolation(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Connection_BASE::rBHelper.bDisposed);
@@ -445,7 +445,7 @@ sal_Int32 SAL_CALL java_sql_Connection::getTransactionIsolation(  ) throw(SQLExc
 	return callIntMethod("getTransactionIsolation",mID);
 }
 // -------------------------------------------------------------------------
-void SAL_CALL java_sql_Connection::setTransactionIsolation( sal_Int32 level ) throw(SQLException, RuntimeException)
+void SAL_CALL java_sql_Connection::setTransactionIsolation( sal_Int32 level )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Connection_BASE::rBHelper.bDisposed);
@@ -454,7 +454,7 @@ void SAL_CALL java_sql_Connection::setTransactionIsolation( sal_Int32 level ) th
     callVoidMethodWithIntArg("setTransactionIsolation",mID,level);
 }
 // -------------------------------------------------------------------------
-Reference< XStatement > SAL_CALL java_sql_Connection::createStatement(  ) throw(SQLException, RuntimeException)
+Reference< XStatement > SAL_CALL java_sql_Connection::createStatement(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Connection_BASE::rBHelper.bDisposed);
@@ -495,7 +495,7 @@ Reference< XStatement > SAL_CALL java_sql_Connection::createStatement(  ) throw(
 	return sSqlStatement;
 }
 // -------------------------------------------------------------------------
-Reference< XPreparedStatement > SAL_CALL java_sql_Connection::prepareStatement( const ::rtl::OUString& sql ) throw(SQLException, RuntimeException)
+Reference< XPreparedStatement > SAL_CALL java_sql_Connection::prepareStatement( const ::rtl::OUString& sql )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Connection_BASE::rBHelper.bDisposed);
@@ -513,7 +513,7 @@ Reference< XPreparedStatement > SAL_CALL java_sql_Connection::prepareStatement( 
 	return xReturn;
 }
 // -------------------------------------------------------------------------
-Reference< XPreparedStatement > SAL_CALL java_sql_Connection::prepareCall( const ::rtl::OUString& sql ) throw(SQLException, RuntimeException)
+Reference< XPreparedStatement > SAL_CALL java_sql_Connection::prepareCall( const ::rtl::OUString& sql )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Connection_BASE::rBHelper.bDisposed);
@@ -531,13 +531,13 @@ Reference< XPreparedStatement > SAL_CALL java_sql_Connection::prepareCall( const
     return xStmt;
 }
 // -------------------------------------------------------------------------
-::rtl::OUString SAL_CALL java_sql_Connection::nativeSQL( const ::rtl::OUString& sql ) throw(SQLException, RuntimeException)
+::rtl::OUString SAL_CALL java_sql_Connection::nativeSQL( const ::rtl::OUString& sql )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Connection_BASE::rBHelper.bDisposed);
 
 	::rtl::OUString aStr;
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
 	{
 
 		// temporaere Variable initialisieren
@@ -559,13 +559,13 @@ Reference< XPreparedStatement > SAL_CALL java_sql_Connection::prepareCall( const
 	return aStr;
 }
 // -------------------------------------------------------------------------
-void SAL_CALL java_sql_Connection::clearWarnings(  ) throw(SQLException, RuntimeException)
+void SAL_CALL java_sql_Connection::clearWarnings(  )
 {
     static jmethodID mID(NULL);
     callVoidMethod("clearWarnings",mID);
 }
 // -------------------------------------------------------------------------
-Any SAL_CALL java_sql_Connection::getWarnings(  ) throw(SQLException, RuntimeException)
+Any SAL_CALL java_sql_Connection::getWarnings(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(java_sql_Connection_BASE::rBHelper.bDisposed);
@@ -586,7 +586,7 @@ Any SAL_CALL java_sql_Connection::getWarnings(  ) throw(SQLException, RuntimeExc
         aWarning.SQLState = aAsException.SQLState;
         aWarning.ErrorCode = aAsException.ErrorCode;
         aWarning.NextException = aAsException.NextException;
-        
+
 		return makeAny( aWarning );
 	}
 
@@ -725,7 +725,7 @@ void java_sql_Connection::loadDriverFromProperties( const ::rtl::OUString& _sDri
 
                     if( t.pEnv && m_pDriverobject )
                         m_pDriverobject = t.pEnv->NewGlobalRef( m_pDriverobject );
-                    
+
                     {
                         jclass tempClass = t.pEnv->GetObjectClass(m_pDriverobject);
                         if ( m_pDriverobject )
@@ -756,7 +756,7 @@ void java_sql_Connection::loadDriverFromProperties( const ::rtl::OUString& _sDri
             *this
         );
 	}
-	
+
 	enableAutoRetrievingEnabled( bAutoRetrievingEnabled );
 	setAutoRetrievingStatement( sGeneratedValueStatement );
 }

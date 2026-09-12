@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -140,7 +140,6 @@ XSERVICEINFO_NOFACTORY_IMPL_1( SortedDynamicResultSet,
 // XComponent methods.
 //--------------------------------------------------------------------------
 void SAL_CALL SortedDynamicResultSet::dispose()
-	throw( RuntimeException )
 {
 	osl::Guard< osl::Mutex > aGuard( maMutex );
 
@@ -163,7 +162,6 @@ void SAL_CALL SortedDynamicResultSet::dispose()
 //--------------------------------------------------------------------------
 void SAL_CALL SortedDynamicResultSet::addEventListener(
 							const Reference< XEventListener >& Listener )
-	throw( RuntimeException )
 {
 	osl::Guard< osl::Mutex > aGuard( maMutex );
 
@@ -177,7 +175,6 @@ void SAL_CALL SortedDynamicResultSet::addEventListener(
 //--------------------------------------------------------------------------
 void SAL_CALL SortedDynamicResultSet::removeEventListener(
 							const Reference< XEventListener >& Listener )
-	throw( RuntimeException )
 {
 	osl::Guard< osl::Mutex > aGuard( maMutex );
 
@@ -190,7 +187,6 @@ void SAL_CALL SortedDynamicResultSet::removeEventListener(
 // ------------------------------------------------------------------------------
 Reference< XResultSet > SAL_CALL
 SortedDynamicResultSet::getStaticResultSet()
-	throw( ListenerAlreadySetException, RuntimeException )
 {
 	osl::Guard< osl::Mutex > aGuard( maMutex );
 
@@ -212,7 +208,6 @@ SortedDynamicResultSet::getStaticResultSet()
 // ------------------------------------------------------------------------------
 void SAL_CALL
 SortedDynamicResultSet::setListener( const Reference< XDynamicResultSetListener >& Listener )
-	throw( ListenerAlreadySetException, RuntimeException )
 {
 	osl::Guard< osl::Mutex > aGuard( maMutex );
 
@@ -231,10 +226,6 @@ SortedDynamicResultSet::setListener( const Reference< XDynamicResultSetListener 
 void SAL_CALL
 SortedDynamicResultSet::connectToCache(
 		const Reference< XDynamicResultSet > & xCache )
-		throw( ListenerAlreadySetException,
-			   AlreadyInitializedException,
-			   ServiceNotFoundException,
-			   RuntimeException )
 {
 	if( mxListener.is() )
 		throw ListenerAlreadySetException();
@@ -271,7 +262,6 @@ SortedDynamicResultSet::connectToCache(
 // ------------------------------------------------------------------------------
 sal_Int16 SAL_CALL
 SortedDynamicResultSet::getCapabilities()
-	throw( RuntimeException )
 {
 	osl::Guard< osl::Mutex > aGuard( maMutex );
 
@@ -306,7 +296,6 @@ SortedDynamicResultSet::getCapabilities()
 */
 void SAL_CALL
 SortedDynamicResultSet::impl_notify( const ListEvent& Changes )
-	throw( RuntimeException )
 {
 	osl::Guard< osl::Mutex > aGuard( maMutex );
 
@@ -435,7 +424,6 @@ SortedDynamicResultSet::impl_notify( const ListEvent& Changes )
 //-----------------------------------------------------------------
 void SAL_CALL
 SortedDynamicResultSet::impl_disposing( const EventObject& )
-	throw( RuntimeException )
 {
 	mxListener.clear();
 	mxOriginal.clear();
@@ -526,7 +514,6 @@ SortedDynamicResultSetFactory::createSortedDynamicResultSet(
 				const Reference< XDynamicResultSet > & Source,
 				const Sequence< NumberedSortingInfo > & Info,
 				const Reference< XAnyCompareFactory > & CompareFactory )
-	throw( RuntimeException )
 {
 	Reference< XDynamicResultSet > xRet;
 	xRet = new SortedDynamicResultSet( Source, Info, CompareFactory, mxSMgr );
@@ -591,7 +578,6 @@ XINTERFACE_IMPL_2( SortedDynamicResultSetListener,
 //-----------------------------------------------------------------
 void SAL_CALL
 SortedDynamicResultSetListener::disposing( const EventObject& Source )
-	throw( RuntimeException )
 {
 	osl::Guard< osl::Mutex > aGuard( maMutex );
 
@@ -604,7 +590,6 @@ SortedDynamicResultSetListener::disposing( const EventObject& Source )
 //-----------------------------------------------------------------
 void SAL_CALL
 SortedDynamicResultSetListener::notify( const ListEvent& Changes )
-	throw( RuntimeException )
 {
 	osl::Guard< osl::Mutex > aGuard( maMutex );
 
@@ -621,4 +606,3 @@ SortedDynamicResultSetListener::impl_OwnerDies()
 	osl::Guard< osl::Mutex > aGuard( maMutex );
 	mpOwner = NULL;
 }
-

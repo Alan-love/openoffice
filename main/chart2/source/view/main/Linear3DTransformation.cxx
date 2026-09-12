@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartview.hxx"
 #include "Linear3DTransformation.hxx"
 #include <algorithm>
 
@@ -45,8 +45,6 @@ Linear3DTransformation::~Linear3DTransformation()
 // ____ XTransformation ____
 Sequence< double > SAL_CALL Linear3DTransformation::transform(
                         const Sequence< double >& rSourceValues )
-    throw (RuntimeException,
-           lang::IllegalArgumentException)
 {
     double fX = rSourceValues[0];
     double fY = rSourceValues[1];
@@ -88,13 +86,11 @@ Sequence< double > SAL_CALL Linear3DTransformation::transform(
 }
 
 sal_Int32 SAL_CALL Linear3DTransformation::getSourceDimension()
-    throw (RuntimeException)
 {
     return 3;
 }
 
 sal_Int32 SAL_CALL Linear3DTransformation::getTargetDimension()
-    throw (RuntimeException)
 {
     return 3;
 }

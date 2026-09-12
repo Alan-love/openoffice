@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -39,7 +39,7 @@
 namespace sd { namespace tools {
 
 
-typedef cppu::WeakComponentImplHelper1< 
+typedef cppu::WeakComponentImplHelper1<
     ::com::sun::star::frame::XStatusListener
     > SlotStateListenerInterfaceBase;
 
@@ -93,7 +93,7 @@ public:
         @throws DisposedException
     */
     void ObserveSlot (const ::rtl::OUString& rSlotName);
-    
+
     //=====  frame::XStatusListener  ==========================================
 
     /** Called by slot state change broadcasters.  In turn the callback is
@@ -102,14 +102,12 @@ public:
     */
     virtual void SAL_CALL
         statusChanged (
-            const ::com::sun::star::frame::FeatureStateEvent& rState)
-        throw (::com::sun::star::uno::RuntimeException);
+            const ::com::sun::star::frame::FeatureStateEvent& rState);
 
     //=====  lang::XEventListener  ============================================
 
     virtual void SAL_CALL
-        disposing(const com::sun::star::lang::EventObject& rEvent) 
-        throw(com::sun::star::uno::RuntimeException);
+        disposing(const com::sun::star::lang::EventObject& rEvent);
 
 protected:
     /** This method is called by the WeakComponentImplHelper base class in
@@ -137,8 +135,7 @@ private:
     /** This method throws a DisposedException when the object has already been
         disposed.
     */
-    void ThrowIfDisposed (void)
-        throw (::com::sun::star::lang::DisposedException);
+    void ThrowIfDisposed (void);
 
     /** Transform the given string into a URL object.
     */
@@ -146,7 +143,7 @@ private:
 
     /** Return an XDispatch object for the given URL.
     */
-    ::com::sun::star::uno::Reference<com::sun::star::frame::XDispatch> 
+    ::com::sun::star::uno::Reference<com::sun::star::frame::XDispatch>
         GetDispatch (
             const ::com::sun::star::util::URL& rURL) const;
 };

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -138,7 +138,6 @@ WidgetElement::~WidgetElement()
 uno::Reference <xml::input::XElement>
 WidgetElement::startChildElement ( sal_Int32 nUid, OUString const &name,
                                    uno::Reference <xml::input::XAttributes> const &attributes )
-    throw( xml::sax::SAXException, uno::RuntimeException )
 {
     // Adding a child to the widget
     WidgetElement *pChild = new WidgetElement ( nUid, name, attributes, this, mpImport );
@@ -160,7 +159,6 @@ WidgetElement::startChildElement ( sal_Int32 nUid, OUString const &name,
 // transex3 hack.
 void SAL_CALL
 WidgetElement::characters( OUString const& rChars )
-    throw (xml::sax::SAXException, uno::RuntimeException)
 {
     if ( mpWidget && rChars.trim().getLength() )
     {
@@ -193,7 +191,6 @@ SAL_THROW(())
 
 void ImportContext::startDocument(
     uno::Reference< xml::input::XNamespaceMapping > const & xNamespaceMapping )
-    throw (xml::sax::SAXException, uno::RuntimeException)
 {
     XMLNS_LAYOUT_UID = xNamespaceMapping->getUidByUri(
         OUString( RTL_CONSTASCII_USTRINGPARAM( XMLNS_LAYOUT_URI ) ) );
@@ -216,7 +213,6 @@ ToplevelElement::~ToplevelElement()
 uno::Reference< xml::input::XElement > ImportContext::startRootElement(
     sal_Int32 nUid, OUString const & rLocalName,
     uno::Reference< xml::input::XAttributes > const & xAttributes )
-    throw (xml::sax::SAXException, uno::RuntimeException)
 {
     if ( XMLNS_LAYOUT_UID != nUid )
         throw xml::sax::SAXException(
@@ -230,11 +226,10 @@ RadioGroups::RadioGroups()
 }
 
 void RadioGroups::addItem( rtl::OUString id, uno::Reference< awt::XRadioButton > xRadio )
-    throw (uno::RuntimeException)
 {
     if ( ! xRadio.is() )
         throw uno::RuntimeException();
-    
+
     uno::Reference< RadioGroup > group;
     RadioGroupsMap::iterator it = mxRadioGroups.find( id );
     if ( it == mxRadioGroups.end() )
@@ -280,7 +275,6 @@ void RadioGroups::RadioGroup::addItem( uno::Reference< awt::XRadioButton > xRadi
 }
 
 void RadioGroups::RadioGroup::handleSelected ()
-    throw (uno::RuntimeException)
 {
     for ( RadioButtonsList::iterator it = mxRadios.begin();
           it != mxRadios.end(); it++ )
@@ -294,7 +288,6 @@ void RadioGroups::RadioGroup::handleSelected ()
 
 // awt::XItemListener
 void RadioGroups::RadioGroup::itemStateChanged( const awt::ItemEvent& e )
-    throw (uno::RuntimeException)
 {
     // TOO late: actionPerformed is called before itemStateChanged.
     // If client code (wrongly?) uses actionPerformed, it will see
@@ -307,14 +300,12 @@ void RadioGroups::RadioGroup::itemStateChanged( const awt::ItemEvent& e )
 
 // awt::XActionListener
 void RadioGroups::RadioGroup::actionPerformed( const awt::ActionEvent& )
-    throw (uno::RuntimeException)
 {
     handleSelected ();
 }
 
 // lang::XEventListener
 void SAL_CALL RadioGroups::RadioGroup::disposing( const lang::EventObject& )
-    throw (uno::RuntimeException)
 {
 }
 

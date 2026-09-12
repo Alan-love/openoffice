@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -41,7 +41,6 @@ namespace com { namespace sun { namespace star { namespace i18n {
 
 OUString SAL_CALL
 ignoreWidth::folding( const OUString& inStr, sal_Int32 startPos, sal_Int32 nCount, Sequence< sal_Int32 >& offset )
-  throw(RuntimeException)
 {
     fullwidthToHalfwidth t1;
     return t1.transliterate(inStr, startPos, nCount, offset);
@@ -49,7 +48,6 @@ ignoreWidth::folding( const OUString& inStr, sal_Int32 startPos, sal_Int32 nCoun
 
 Sequence< OUString > SAL_CALL
 ignoreWidth::transliterateRange( const OUString& str1, const OUString& str2 )
-  throw(RuntimeException)
 {
     fullwidthToHalfwidth t1;
     halfwidthToFullwidth t2;
@@ -58,7 +56,7 @@ ignoreWidth::transliterateRange( const OUString& str1, const OUString& str2 )
 }
 
 sal_Unicode SAL_CALL
-ignoreWidth::transliterateChar2Char( sal_Unicode inChar) throw(RuntimeException, MultipleCharsOutputException)
+ignoreWidth::transliterateChar2Char( sal_Unicode inChar)
 {
     fullwidthToHalfwidth t1;
     return t1.transliterateChar2Char(inChar);

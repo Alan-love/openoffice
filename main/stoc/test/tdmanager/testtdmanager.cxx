@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -67,16 +67,14 @@ namespace {
 class Service: public cppu::WeakImplHelper1< css::lang::XMain > {
 public:
     virtual sal_Int32 SAL_CALL
-    run(css::uno::Sequence< rtl::OUString > const & arguments)
-        throw (css::uno::RuntimeException);
+    run(css::uno::Sequence< rtl::OUString > const & arguments);
 
     static rtl::OUString getImplementationName();
 
     static css::uno::Sequence< rtl::OUString > getSupportedServiceNames();
 
     static css::uno::Reference< css::uno::XInterface > SAL_CALL createInstance(
-        css::uno::Reference< css::uno::XComponentContext > const & context)
-        throw (css::uno::Exception);
+        css::uno::Reference< css::uno::XComponentContext > const & context);
 
 private:
     explicit Service(
@@ -123,7 +121,6 @@ template< typename T > void assertEqual(T const & value, T const & argument) {
 }
 
 sal_Int32 Service::run(css::uno::Sequence< rtl::OUString > const & arguments)
-    throw (css::uno::RuntimeException)
 {
     css::uno::Reference< css::lang::XMultiComponentFactory > factory(
         m_context->getServiceManager());
@@ -149,7 +146,7 @@ sal_Int32 Service::run(css::uno::Sequence< rtl::OUString > const & arguments)
                         arguments[argPos].pData, &url.pData ) );
         bool supposedToBeCompatible = ! url.endsWithIgnoreAsciiCaseAsciiL(
             RTL_CONSTASCII_STRINGPARAM("_incomp.rdb") );
-        
+
         css::uno::Reference<css::registry::XSimpleRegistry> xReg(
             m_context->getServiceManager()->createInstanceWithContext(
                 rtl::OUString( RTL_CONSTASCII_USTRINGPARAM(
@@ -178,9 +175,9 @@ sal_Int32 Service::run(css::uno::Sequence< rtl::OUString > const & arguments)
             assertFalse(supposedToBeCompatible);
         }
     }
-    
+
     ///////
-    
+
     css::uno::Reference< css::reflection::XIndirectTypeDescription > sequence(
         manager->getByHierarchicalName(
             rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("[][]boolean"))),
@@ -303,7 +300,6 @@ css::uno::Sequence< rtl::OUString > Service::getSupportedServiceNames() {
 
 css::uno::Reference< css::uno::XInterface > Service::createInstance(
     css::uno::Reference< css::uno::XComponentContext > const & context)
-    throw (css::uno::Exception)
 {
     return static_cast< cppu::OWeakObject * >(new Service(context));
 }

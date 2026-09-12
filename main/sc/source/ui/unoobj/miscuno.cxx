@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -197,7 +197,7 @@ void ScUnoHelpFunctions::SetBoolInAny( uno::Any& rAny, sal_Bool bValue )
 }
 
 //  static
-void ScUnoHelpFunctions::SetOptionalPropertyValue( 
+void ScUnoHelpFunctions::SetOptionalPropertyValue(
     Reference<beans::XPropertySet>& rPropSet, const sal_Char* pPropName, const Any& rVal )
 {
     try
@@ -226,14 +226,13 @@ ScIndexEnumeration::~ScIndexEnumeration()
 
 // XEnumeration
 
-sal_Bool SAL_CALL ScIndexEnumeration::hasMoreElements() throw(uno::RuntimeException)
+sal_Bool SAL_CALL ScIndexEnumeration::hasMoreElements()
 {
 	ScUnoGuard aGuard;
 	return ( nPos < xIndex->getCount() );
 }
 
-uno::Any SAL_CALL ScIndexEnumeration::nextElement() throw(container::NoSuchElementException,
-										lang::WrappedTargetException, uno::RuntimeException)
+uno::Any SAL_CALL ScIndexEnumeration::nextElement()
 {
 	ScUnoGuard aGuard;
     uno::Any aReturn;
@@ -249,20 +248,17 @@ uno::Any SAL_CALL ScIndexEnumeration::nextElement() throw(container::NoSuchEleme
 }
 
 ::rtl::OUString SAL_CALL ScIndexEnumeration::getImplementationName()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return ::rtl::OUString::createFromAscii("ScIndexEnumeration");
 }
 
 sal_Bool SAL_CALL ScIndexEnumeration::supportsService( const ::rtl::OUString& ServiceName )
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	return sServiceName == ServiceName;
 }
 
 ::com::sun::star::uno::Sequence< ::rtl::OUString >
 	SAL_CALL ScIndexEnumeration::getSupportedServiceNames(void)
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	::com::sun::star::uno::Sequence< ::rtl::OUString > aRet(1);
 	::rtl::OUString* pArray = aRet.getArray();
@@ -275,26 +271,26 @@ sal_Bool SAL_CALL ScIndexEnumeration::supportsService( const ::rtl::OUString& Se
 //UNUSED2008-05  ScEmptyEnumerationAccess::ScEmptyEnumerationAccess()
 //UNUSED2008-05  {
 //UNUSED2008-05  }
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  ScEmptyEnumerationAccess::~ScEmptyEnumerationAccess()
 //UNUSED2008-05  {
 //UNUSED2008-05  }
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  // XEnumerationAccess
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  uno::Reference<container::XEnumeration> SAL_CALL ScEmptyEnumerationAccess::createEnumeration()
 //UNUSED2008-05                                                      throw(uno::RuntimeException)
 //UNUSED2008-05  {
 //UNUSED2008-05      ScUnoGuard aGuard;
 //UNUSED2008-05      return new ScEmptyEnumeration;
 //UNUSED2008-05  }
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  uno::Type SAL_CALL ScEmptyEnumerationAccess::getElementType() throw(uno::RuntimeException)
 //UNUSED2008-05  {
 //UNUSED2008-05      ScUnoGuard aGuard;
 //UNUSED2008-05      return getCppuType((uno::Reference<uno::XInterface>*)0);    // or what?
 //UNUSED2008-05  }
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  sal_Bool SAL_CALL ScEmptyEnumerationAccess::hasElements() throw(uno::RuntimeException)
 //UNUSED2008-05  {
 //UNUSED2008-05      return sal_False;
@@ -305,19 +301,19 @@ sal_Bool SAL_CALL ScIndexEnumeration::supportsService( const ::rtl::OUString& Se
 //UNUSED2008-05  ScEmptyEnumeration::ScEmptyEnumeration()
 //UNUSED2008-05  {
 //UNUSED2008-05  }
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  ScEmptyEnumeration::~ScEmptyEnumeration()
 //UNUSED2008-05  {
 //UNUSED2008-05  }
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  // XEnumeration
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  sal_Bool SAL_CALL ScEmptyEnumeration::hasMoreElements() throw(uno::RuntimeException)
 //UNUSED2008-05  {
 //UNUSED2008-05      ScUnoGuard aGuard;
 //UNUSED2008-05      return sal_False;
 //UNUSED2008-05  }
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  uno::Any SAL_CALL ScEmptyEnumeration::nextElement() throw(container::NoSuchElementException,
 //UNUSED2008-05                                          lang::WrappedTargetException, uno::RuntimeException)
 //UNUSED2008-05  {
@@ -343,15 +339,12 @@ ScNameToIndexAccess::~ScNameToIndexAccess()
 
 // XIndexAccess
 
-sal_Int32 SAL_CALL ScNameToIndexAccess::getCount(  ) throw(::com::sun::star::uno::RuntimeException)
+sal_Int32 SAL_CALL ScNameToIndexAccess::getCount(  )
 {
 	return aNames.getLength();
 }
 
 ::com::sun::star::uno::Any SAL_CALL ScNameToIndexAccess::getByIndex( sal_Int32 nIndex )
-								throw(::com::sun::star::lang::IndexOutOfBoundsException,
-										::com::sun::star::lang::WrappedTargetException,
-										::com::sun::star::uno::RuntimeException)
 {
 	if ( xNameAccess.is() && nIndex >= 0 && nIndex < aNames.getLength() )
 		return xNameAccess->getByName( aNames.getConstArray()[nIndex] );
@@ -363,7 +356,6 @@ sal_Int32 SAL_CALL ScNameToIndexAccess::getCount(  ) throw(::com::sun::star::uno
 // XElementAccess
 
 ::com::sun::star::uno::Type SAL_CALL ScNameToIndexAccess::getElementType(  )
-								throw(::com::sun::star::uno::RuntimeException)
 {
 	if ( xNameAccess.is() )
 		return xNameAccess->getElementType();
@@ -371,7 +363,7 @@ sal_Int32 SAL_CALL ScNameToIndexAccess::getCount(  ) throw(::com::sun::star::uno
 		return uno::Type();
 }
 
-sal_Bool SAL_CALL ScNameToIndexAccess::hasElements(  ) throw(::com::sun::star::uno::RuntimeException)
+sal_Bool SAL_CALL ScNameToIndexAccess::hasElements(  )
 {
 	return getCount() > 0;
 }
@@ -381,19 +373,19 @@ sal_Bool SAL_CALL ScNameToIndexAccess::hasElements(  ) throw(::com::sun::star::u
 //UNUSED2008-05  ScPrintSettingsObj::ScPrintSettingsObj()
 //UNUSED2008-05  {
 //UNUSED2008-05  }
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  ScPrintSettingsObj::~ScPrintSettingsObj()
 //UNUSED2008-05  {
 //UNUSED2008-05  }
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  // XPropertySet
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  uno::Reference<beans::XPropertySetInfo> SAL_CALL ScPrintSettingsObj::getPropertySetInfo()
 //UNUSED2008-05                                                          throw(uno::RuntimeException)
 //UNUSED2008-05  {
 //UNUSED2008-05      return NULL;
 //UNUSED2008-05  }
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  void SAL_CALL ScPrintSettingsObj::setPropertyValue(
 //UNUSED2008-05                          const rtl::OUString& /* aPropertyName */, const uno::Any& /* aValue */ )
 //UNUSED2008-05                  throw(beans::UnknownPropertyException, beans::PropertyVetoException,
@@ -402,7 +394,7 @@ sal_Bool SAL_CALL ScNameToIndexAccess::hasElements(  ) throw(::com::sun::star::u
 //UNUSED2008-05  {
 //UNUSED2008-05      //! later...
 //UNUSED2008-05  }
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  uno::Any SAL_CALL ScPrintSettingsObj::getPropertyValue( const rtl::OUString& /* aPropertyName */ )
 //UNUSED2008-05                  throw(beans::UnknownPropertyException, lang::WrappedTargetException,
 //UNUSED2008-05                          uno::RuntimeException)
@@ -410,11 +402,8 @@ sal_Bool SAL_CALL ScNameToIndexAccess::hasElements(  ) throw(::com::sun::star::u
 //UNUSED2008-05      //! later...
 //UNUSED2008-05      return uno::Any();
 //UNUSED2008-05  }
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  SC_IMPL_DUMMY_PROPERTY_LISTENER( ScPrintSettingsObj )
 
 
 //------------------------------------------------------------------------
-
-
-

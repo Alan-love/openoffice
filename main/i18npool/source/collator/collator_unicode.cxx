@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -56,13 +56,13 @@ Collator_Unicode::~Collator_Unicode()
 
 sal_Int32 SAL_CALL
 Collator_Unicode::compareSubstring( const OUString& str1, sal_Int32 off1, sal_Int32 len1,
-	const OUString& str2, sal_Int32 off2, sal_Int32 len2) throw(RuntimeException)
+	const OUString& str2, sal_Int32 off2, sal_Int32 len2)
 {
     return collator->compare(reinterpret_cast<const UChar *>(str1.getStr()) + off1, len1, reinterpret_cast<const UChar *>(str2.getStr()) + off2, len2);	// UChar != sal_Unicode in MinGW
 }
 
 sal_Int32 SAL_CALL
-Collator_Unicode::compareString( const OUString& str1, const OUString& str2) throw(RuntimeException)
+Collator_Unicode::compareString( const OUString& str1, const OUString& str2)
 {
     return collator->compare(reinterpret_cast<const UChar *>(str1.getStr()), reinterpret_cast<const UChar *>(str2.getStr()));	// UChar != sal_Unicode in MinGW
 }
@@ -71,7 +71,6 @@ extern "C" { static void SAL_CALL thisModule() {} }
 
 sal_Int32 SAL_CALL
 Collator_Unicode::loadCollatorAlgorithm(const OUString& rAlgorithm, const lang::Locale& rLocale, sal_Int32 options)
-	throw(RuntimeException)
 {
 	if (!collator) {
         UErrorCode status = U_ZERO_ERROR;
@@ -93,9 +92,9 @@ Collator_Unicode::loadCollatorAlgorithm(const OUString& rAlgorithm, const lang::
 				if (rLocale.Language.equalsAscii("zh")) {
 					OUString func_base = aBuf.makeStringAndClear();
 					if (OUString::createFromAscii("TW HK MO").indexOf(rLocale.Country) >= 0)
-						func=(const sal_uInt8* (*)()) osl_getFunctionSymbol(hModule, 
+						func=(const sal_uInt8* (*)()) osl_getFunctionSymbol(hModule,
 									(func_base + OUString::createFromAscii("TW_") + rAlgorithm).pData);
-					if (!func) 
+					if (!func)
 						func=(const sal_uInt8* (*)()) osl_getFunctionSymbol(hModule, (func_base + rAlgorithm).pData);
 				} else {
 					if (rLocale.Language.equalsAscii("ja")) {
@@ -149,19 +148,19 @@ Collator_Unicode::loadCollatorAlgorithm(const OUString& rAlgorithm, const lang::
 
 
 OUString SAL_CALL
-Collator_Unicode::getImplementationName() throw( RuntimeException )
+Collator_Unicode::getImplementationName()
 {
     return OUString::createFromAscii(implementationName);
 }
 
 sal_Bool SAL_CALL
-Collator_Unicode::supportsService(const rtl::OUString& rServiceName) throw( RuntimeException )
+Collator_Unicode::supportsService(const rtl::OUString& rServiceName)
 {
     return !rServiceName.compareToAscii(implementationName);
 }
 
 Sequence< OUString > SAL_CALL
-Collator_Unicode::getSupportedServiceNames() throw( RuntimeException )
+Collator_Unicode::getSupportedServiceNames()
 {
     Sequence< OUString > aRet(1);
     aRet[0] = OUString::createFromAscii(implementationName);
@@ -169,4 +168,3 @@ Collator_Unicode::getSupportedServiceNames() throw( RuntimeException )
 }
 
 } } } }
-

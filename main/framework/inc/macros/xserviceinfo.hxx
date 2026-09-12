@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -66,7 +66,7 @@ namespace framework{
     1)  DECLARE_XSERVICEINFO                                                                                => use it to declare XServiceInfo in your header
     2)  DEFINE_XSERVICEINFO_MULTISERVICE( CLASS, XINTERFACECAST, SERVICENAME, IMPLEMENTATIONNAME )          => use it to define XServiceInfo for multi service mode
     3)  DEFINE_XSERVICEINFO_ONEINSTANCESERVICE( CLASS, XINTERFACECAST, SERVICENAME, IMPLEMENTATIONNAME )    => use it to define XServiceInfo for one instance service mode
-    4)  DEFINE_INIT_SERVICE( CLASS )                                                                        => use it to implement your own impl_initService() method, which is necessary for initializeing object by using his own reference!
+    4)  DEFINE_INIT_SERVICE( CLASS )                                                                        => use it to implement your own impl_initService() method, which is necessary for initializing object by using his own reference!
 
 _________________________________________________________________________________________________________________*/
 
@@ -78,7 +78,7 @@ ________________________________________________________________________________
 	/*===========================================================================================================*/									\
 	/* XServiceInfo																								 */									\
 	/*===========================================================================================================*/									\
-    ::rtl::OUString SAL_CALL CLASS::getImplementationName() throw( css::uno::RuntimeException )                                                     \
+    ::rtl::OUString SAL_CALL CLASS::getImplementationName()                                                     \
 	{																																				\
 		return impl_getStaticImplementationName();																									\
 	}																																				\
@@ -86,7 +86,7 @@ ________________________________________________________________________________
 	/*===========================================================================================================*/									\
 	/* XServiceInfo																								 */									\
 	/*===========================================================================================================*/									\
-    sal_Bool SAL_CALL CLASS::supportsService( const ::rtl::OUString& sServiceName ) throw( css::uno::RuntimeException )                             \
+    sal_Bool SAL_CALL CLASS::supportsService( const ::rtl::OUString& sServiceName )                             \
 	{																																				\
         return ::comphelper::findValue(getSupportedServiceNames(), sServiceName, sal_True).getLength() != 0;                                        \
     }																																				\
@@ -94,7 +94,7 @@ ________________________________________________________________________________
 	/*===========================================================================================================*/									\
 	/* XServiceInfo																								 */									\
 	/*===========================================================================================================*/									\
-    css::uno::Sequence< ::rtl::OUString > SAL_CALL CLASS::getSupportedServiceNames() throw( css::uno::RuntimeException )                            \
+    css::uno::Sequence< ::rtl::OUString > SAL_CALL CLASS::getSupportedServiceNames()                            \
 	{																																				\
 		return impl_getStaticSupportedServiceNames();																								\
 	}																																				\
@@ -126,7 +126,7 @@ ________________________________________________________________________________
     /*            work on your ref count! All other things are allowed. Do work with your own reference - please */                                 \
     /*            use "impl_initService()" method.                                                               */                                 \
 	/*===========================================================================================================*/									\
-    css::uno::Reference< css::uno::XInterface > SAL_CALL CLASS::impl_createInstance( const css::uno::Reference< css::lang::XMultiServiceFactory >& xServiceManager ) throw( css::uno::Exception )  \
+    css::uno::Reference< css::uno::XInterface > SAL_CALL CLASS::impl_createInstance( const css::uno::Reference< css::lang::XMultiServiceFactory >& xServiceManager )  \
     {                                                                                                                                                                                              \
         RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework","Ocke.Janssen@sun.com",U2B(IMPLEMENTATIONNAME).getStr());                                                                                                               \
         /* create new instance of service */                                                                                                                                                       \
@@ -149,7 +149,6 @@ ________________________________________________________________________________
     /*            use "impl_initService()" method.                                                               */                                 \
 	/*===========================================================================================================*/									\
     css::uno::Reference< css::uno::XInterface > SAL_CALL CLASS::impl_createInstance( const css::uno::Reference< css::lang::XMultiServiceFactory >& xServiceManager )\
-		throw( css::uno::Exception )																																\
     {																																								\
 		/* retrieve component context from the given service manager */																								\
 		static const ::rtl::OUString PROP_DEFAULTCONTEXT = ::rtl::OUString::createFromAscii("DefaultContext");														\
@@ -204,14 +203,14 @@ ________________________________________________________________________________
 //*****************************************************************************************************************
 #define DECLARE_XSERVICEINFO                                                                                                                                                                                                            \
     /* interface XServiceInfo */                                                                                                                                                                                                        \
-    virtual ::rtl::OUString                                        SAL_CALL getImplementationName              (                                                                               ) throw( css::uno::RuntimeException );   \
-    virtual sal_Bool                                               SAL_CALL supportsService                    ( const ::rtl::OUString&                                        sServiceName    ) throw( css::uno::RuntimeException );   \
-    virtual css::uno::Sequence< ::rtl::OUString >                  SAL_CALL getSupportedServiceNames           (                                                                               ) throw( css::uno::RuntimeException );   \
+    virtual ::rtl::OUString                                        SAL_CALL getImplementationName              (                                                                               );   \
+    virtual sal_Bool                                               SAL_CALL supportsService                    ( const ::rtl::OUString&                                        sServiceName    );   \
+    virtual css::uno::Sequence< ::rtl::OUString >                  SAL_CALL getSupportedServiceNames           (                                                                               );   \
     /* Helper for XServiceInfo */                                                                                                                                                                                                       \
     static css::uno::Sequence< ::rtl::OUString >                   SAL_CALL impl_getStaticSupportedServiceNames(                                                                               );                                       \
     static ::rtl::OUString                                         SAL_CALL impl_getStaticImplementationName   (                                                                               );                                       \
     /* Helper for registry */                                                                                                                                                                                                           \
-    static css::uno::Reference< css::uno::XInterface >             SAL_CALL impl_createInstance                ( const css::uno::Reference< css::lang::XMultiServiceFactory >& xServiceManager ) throw( css::uno::Exception );          \
+    static css::uno::Reference< css::uno::XInterface >             SAL_CALL impl_createInstance                ( const css::uno::Reference< css::lang::XMultiServiceFactory >& xServiceManager );          \
     static css::uno::Reference< css::lang::XSingleServiceFactory > SAL_CALL impl_createFactory                 ( const css::uno::Reference< css::lang::XMultiServiceFactory >& xServiceManager );                                       \
     /* Helper for initialization of service by using own reference! */                                                                                                                                                                  \
     virtual void                                                   SAL_CALL impl_initService                   (                                                                               );                                       \

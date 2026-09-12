@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -87,52 +87,42 @@ public:
 	virtual ~ChartTypeTemplate();
 
     APPHELPER_XSERVICEINFO_DECL()
-    /// establish methods for factory instatiation
+    /// establish methods for factory instantiation
 // 	APPHELPER_SERVICE_FACTORY_HELPER( ChartTypeTemplate )
 
 protected:
     // ____ XChartTypeTemplate ____
     virtual ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDiagram > SAL_CALL createDiagramByDataSource(
         const ::com::sun::star::uno::Reference< ::com::sun::star::chart2::data::XDataSource >& xDataSource,
-        const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& aArguments )
-        throw (::com::sun::star::uno::RuntimeException);
+        const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& aArguments );
     /// denotes if the chart needs categories at the first scale
-    virtual sal_Bool SAL_CALL supportsCategories()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual sal_Bool SAL_CALL supportsCategories();
     virtual void SAL_CALL changeDiagram(
-        const ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDiagram >& xDiagram )
-        throw (::com::sun::star::uno::RuntimeException);
+        const ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDiagram >& xDiagram );
     virtual void SAL_CALL changeDiagramData(
         const ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDiagram >& xDiagram,
         const ::com::sun::star::uno::Reference< ::com::sun::star::chart2::data::XDataSource >& xDataSource,
-        const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& aArguments )
-        throw (::com::sun::star::uno::RuntimeException);
+        const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& aArguments );
     virtual ::sal_Bool SAL_CALL matchesTemplate(
         const ::com::sun::star::uno::Reference<
         ::com::sun::star::chart2::XDiagram >& xDiagram,
-        ::sal_Bool bAdaptProperties )
-        throw (::com::sun::star::uno::RuntimeException);
+        ::sal_Bool bAdaptProperties );
     // still abstract: getChartTypeForNewSeries()
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDataInterpreter > SAL_CALL getDataInterpreter()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDataInterpreter > SAL_CALL getDataInterpreter();
     virtual void SAL_CALL applyStyle(
         const ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDataSeries >& xSeries,
         ::sal_Int32 nChartTypeIndex,
         ::sal_Int32 nSeriesIndex,
-        ::sal_Int32 nSeriesCount )
-        throw (::com::sun::star::uno::RuntimeException);
+        ::sal_Int32 nSeriesCount );
     virtual void SAL_CALL resetStyles(
-        const ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDiagram >& xDiagram )
-        throw (::com::sun::star::uno::RuntimeException);
+        const ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDiagram >& xDiagram );
 
     //
     virtual void SAL_CALL applyStyles(
-        const ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDiagram >& xDiagram )
-        throw (::com::sun::star::uno::RuntimeException);
+        const ::com::sun::star::uno::Reference< ::com::sun::star::chart2::XDiagram >& xDiagram );
 
     // ____ XServiceName ____
-    virtual ::rtl::OUString SAL_CALL getServiceName()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getServiceName();
 
     // Methods to overload for automatic creation
     // ------------------------------------------
@@ -246,7 +236,7 @@ protected:
      */
     virtual sal_Int32 getAxisCountByDimension( sal_Int32 nDimension );
 
-    /** adapt properties of exsisting axes and remove superfluous axes
+    /** adapt properties of existing axes and remove superfluous axes
     */
     virtual void adaptAxes(
         const ::com::sun::star::uno::Sequence<

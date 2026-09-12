@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_hsqldb.hxx"
 #include "hsqldb/HDriver.hxx"
 #include "hsqldb/HConnection.hxx"
 #include <osl/diagnose.h>
@@ -72,7 +72,7 @@ namespace connectivity
 
 	namespace hsqldb
 	{
-		Reference< XInterface >  SAL_CALL ODriverDelegator_CreateInstance(const Reference< ::com::sun::star::lang::XMultiServiceFactory >& _rxFac) throw( Exception )
+		Reference< XInterface >  SAL_CALL ODriverDelegator_CreateInstance(const Reference< ::com::sun::star::lang::XMultiServiceFactory >& _rxFac)
 		{
 			return *(new ODriverDelegator(_rxFac));
 		}
@@ -167,12 +167,12 @@ namespace connectivity
                 aPermittedMethods.append( sPermittedMethod );
             }
 
-            return aPermittedMethods.makeStringAndClear();;
+            return aPermittedMethods.makeStringAndClear();
         }
     }
 
 	//--------------------------------------------------------------------
-	Reference< XConnection > SAL_CALL ODriverDelegator::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info ) throw (SQLException, RuntimeException)
+	Reference< XConnection > SAL_CALL ODriverDelegator::connect( const ::rtl::OUString& url, const Sequence< PropertyValue >& info )
 	{
 		Reference< XConnection > xConnection;
 		if ( acceptsURL(url) )
@@ -257,7 +257,7 @@ namespace connectivity
                     makeAny( lcl_getPermittedJavaMethods_nothrow( m_xFactory ) )
                 );
                 aProperties.put( "SystemProperties", Sequence< NamedValue >( &aPermittedClasses, 1 ) );
-				
+
 				const ::rtl::OUString sProperties( RTL_CONSTASCII_USTRINGPARAM( "properties" ) );
 				::rtl::OUString sMessage;
                 try
@@ -297,7 +297,7 @@ namespace connectivity
 									const sal_Int32 nMajor = sVersionString.GetToken(0,'.').ToInt32();
 									const sal_Int32 nMinor = sVersionString.GetToken(1,'.').ToInt32();
 									const sal_Int32 nMicro = sVersionString.GetToken(2,'.').ToInt32();
-									if ( 	 nMajor > 1 
+									if ( 	 nMajor > 1
 										|| ( nMajor == 1 && nMinor > 8 )
 										|| ( nMajor == 1 && nMinor == 8 && nMicro > 0 ) )
 					                {
@@ -398,7 +398,7 @@ namespace connectivity
 	}
 
 	//--------------------------------------------------------------------
-	sal_Bool SAL_CALL ODriverDelegator::acceptsURL( const ::rtl::OUString& url ) throw (SQLException, RuntimeException)
+	sal_Bool SAL_CALL ODriverDelegator::acceptsURL( const ::rtl::OUString& url )
 	{
 		sal_Bool bEnabled = sal_False;
 		OSL_VERIFY_EQUALS( jfw_getEnabled( &bEnabled ), JFW_E_NONE, "error in jfw_getEnabled" );
@@ -406,7 +406,7 @@ namespace connectivity
 	}
 
 	//--------------------------------------------------------------------
-	Sequence< DriverPropertyInfo > SAL_CALL ODriverDelegator::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& /*info*/ ) throw (SQLException, RuntimeException)
+	Sequence< DriverPropertyInfo > SAL_CALL ODriverDelegator::getPropertyInfo( const ::rtl::OUString& url, const Sequence< PropertyValue >& /*info*/ )
 	{
 		if ( !acceptsURL(url) )
             return Sequence< DriverPropertyInfo >();
@@ -436,19 +436,19 @@ namespace connectivity
 	}
 
 	//--------------------------------------------------------------------
-	sal_Int32 SAL_CALL ODriverDelegator::getMajorVersion(  ) throw (RuntimeException)
+	sal_Int32 SAL_CALL ODriverDelegator::getMajorVersion(  )
 	{
 		return 1;
 	}
 
 	//--------------------------------------------------------------------
-	sal_Int32 SAL_CALL ODriverDelegator::getMinorVersion(  ) throw (RuntimeException)
+	sal_Int32 SAL_CALL ODriverDelegator::getMinorVersion(  )
 	{
 		return 0;
 	}
 
 	//--------------------------------------------------------------------
-	Reference< XTablesSupplier > SAL_CALL ODriverDelegator::getDataDefinitionByConnection( const Reference< XConnection >& connection ) throw (SQLException, RuntimeException)
+	Reference< XTablesSupplier > SAL_CALL ODriverDelegator::getDataDefinitionByConnection( const Reference< XConnection >& connection )
 	{
 		::osl::MutexGuard aGuard( m_aMutex );
 		checkDisposed(ODriverDelegator_BASE::rBHelper.bDisposed);
@@ -474,7 +474,7 @@ namespace connectivity
 	}
 
 	//--------------------------------------------------------------------
-	Reference< XTablesSupplier > SAL_CALL ODriverDelegator::getDataDefinitionByURL( const ::rtl::OUString& url, const Sequence< PropertyValue >& info ) throw (SQLException, RuntimeException)
+	Reference< XTablesSupplier > SAL_CALL ODriverDelegator::getDataDefinitionByURL( const ::rtl::OUString& url, const Sequence< PropertyValue >& info )
 	{
 		if ( ! acceptsURL(url) )
         {
@@ -482,19 +482,19 @@ namespace connectivity
             const ::rtl::OUString sMessage = aResources.getResourceString(STR_URI_SYNTAX_ERROR);
 		    ::dbtools::throwGenericSQLException(sMessage ,*this);
         }
-		
+
 		return getDataDefinitionByConnection(connect(url,info));
 	}
 
 	// XServiceInfo
 	// --------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------
-	rtl::OUString ODriverDelegator::getImplementationName_Static(  ) throw(RuntimeException)
+	rtl::OUString ODriverDelegator::getImplementationName_Static(  )
 	{
 		return rtl::OUString::createFromAscii("com.sun.star.sdbcx.comp.hsqldb.Driver");
 	}
 	//------------------------------------------------------------------------------
-	Sequence< ::rtl::OUString > ODriverDelegator::getSupportedServiceNames_Static(  ) throw (RuntimeException)
+	Sequence< ::rtl::OUString > ODriverDelegator::getSupportedServiceNames_Static(  )
 	{
 		Sequence< ::rtl::OUString > aSNS( 2 );
 		aSNS[0] = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.sdbc.Driver"));
@@ -502,13 +502,13 @@ namespace connectivity
 		return aSNS;
 	}
 	//------------------------------------------------------------------
-	::rtl::OUString SAL_CALL ODriverDelegator::getImplementationName(  ) throw(RuntimeException)
+	::rtl::OUString SAL_CALL ODriverDelegator::getImplementationName(  )
 	{
 		return getImplementationName_Static();
 	}
 
 	//------------------------------------------------------------------
-	sal_Bool SAL_CALL ODriverDelegator::supportsService( const ::rtl::OUString& _rServiceName ) throw(RuntimeException)
+	sal_Bool SAL_CALL ODriverDelegator::supportsService( const ::rtl::OUString& _rServiceName )
 	{
 		Sequence< ::rtl::OUString > aSupported(getSupportedServiceNames());
 		const ::rtl::OUString* pSupported = aSupported.getConstArray();
@@ -519,12 +519,12 @@ namespace connectivity
 		return pSupported != pEnd;
 	}
 	//------------------------------------------------------------------
-	Sequence< ::rtl::OUString > SAL_CALL ODriverDelegator::getSupportedServiceNames(  ) throw(RuntimeException)
+	Sequence< ::rtl::OUString > SAL_CALL ODriverDelegator::getSupportedServiceNames(  )
 	{
 		return getSupportedServiceNames_Static();
 	}
 	//------------------------------------------------------------------
-	void SAL_CALL ODriverDelegator::createCatalog( const Sequence< PropertyValue >& /*info*/ ) throw (SQLException, ::com::sun::star::container::ElementExistException, RuntimeException)
+	void SAL_CALL ODriverDelegator::createCatalog( const Sequence< PropertyValue >& /*info*/ )
 	{
         ::dbtools::throwFeatureNotImplementedException( "XCreateCatalog::createCatalog", *this );
 	}
@@ -564,7 +564,7 @@ namespace connectivity
             m_aConnections.erase(_aIter);
     }
 	//------------------------------------------------------------------
-	void SAL_CALL ODriverDelegator::disposing( const ::com::sun::star::lang::EventObject& Source ) throw(::com::sun::star::uno::RuntimeException)
+	void SAL_CALL ODriverDelegator::disposing( const ::com::sun::star::lang::EventObject& Source )
 	{
 		::osl::MutexGuard aGuard(m_aMutex);
 		Reference<XConnection> xCon(Source.Source,UNO_QUERY);
@@ -630,7 +630,7 @@ namespace connectivity
 		}
     }
     //------------------------------------------------------------------
-    void SAL_CALL ODriverDelegator::preCommit( const ::com::sun::star::lang::EventObject& aEvent ) throw (::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException)
+    void SAL_CALL ODriverDelegator::preCommit( const ::com::sun::star::lang::EventObject& aEvent )
     {
         ::osl::MutexGuard aGuard(m_aMutex);
 
@@ -671,15 +671,15 @@ namespace connectivity
         }
     }
     //------------------------------------------------------------------
-    void SAL_CALL ODriverDelegator::commited( const ::com::sun::star::lang::EventObject& /*aEvent*/ ) throw (::com::sun::star::uno::RuntimeException)
+    void SAL_CALL ODriverDelegator::commited( const ::com::sun::star::lang::EventObject& /*aEvent*/ )
     {
     }
     //------------------------------------------------------------------
-    void SAL_CALL ODriverDelegator::preRevert( const ::com::sun::star::lang::EventObject& /*aEvent*/ ) throw (::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException)
+    void SAL_CALL ODriverDelegator::preRevert( const ::com::sun::star::lang::EventObject& /*aEvent*/ )
     {
     }
     //------------------------------------------------------------------
-    void SAL_CALL ODriverDelegator::reverted( const ::com::sun::star::lang::EventObject& /*aEvent*/ ) throw (::com::sun::star::uno::RuntimeException)
+    void SAL_CALL ODriverDelegator::reverted( const ::com::sun::star::lang::EventObject& /*aEvent*/ )
     {
     }
     //------------------------------------------------------------------
@@ -913,4 +913,3 @@ namespace connectivity
 //........................................................................
 }	// namespace connectivity
 //........................................................................
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -208,11 +208,11 @@ void DrawAnnotationContext::EndElement()
 
 TYPEINIT1( SdXMLGenericPageContext, SvXMLImportContext );
 
-SdXMLGenericPageContext::SdXMLGenericPageContext( 
+SdXMLGenericPageContext::SdXMLGenericPageContext(
 	SvXMLImport& rImport,
 	sal_uInt16 nPrfx, const OUString& rLocalName,
 	const Reference< xml::sax::XAttributeList>& xAttrList,
-	Reference< drawing::XShapes >& rShapes) 
+	Reference< drawing::XShapes >& rShapes)
 : SvXMLImportContext( rImport, nPrfx, rLocalName )
 , mxShapes( rShapes )
 , mxAnnotationAccess( rShapes, UNO_QUERY )
@@ -340,9 +340,9 @@ void SdXMLGenericPageContext::EndElement()
 
 						if( pStyles )
 						{
-							const SdXMLNumberFormatImportContext* pSdNumStyle = 
+							const SdXMLNumberFormatImportContext* pSdNumStyle =
 								dynamic_cast< const SdXMLNumberFormatImportContext* >( pStyles->FindStyleChildContext( XML_STYLE_FAMILY_DATA_STYLE, aDateTimeFormat, sal_True ) );
-						
+
 							if( pSdNumStyle )
 							{
 								xSet->setPropertyValue( OUString( RTL_CONSTASCII_USTRINGPARAM("DateTimeFormat") ),
@@ -367,7 +367,7 @@ void SdXMLGenericPageContext::SetStyle( rtl::OUString& rStyleName )
 {
 	// set PageProperties?
 	if(rStyleName.getLength())
-	{	
+	{
 		try
 		{
 			const SvXMLImportContext* pContext = GetSdImport().GetShapeImport()->GetAutoStylesContext();
@@ -383,7 +383,7 @@ void SdXMLGenericPageContext::SetStyle( rtl::OUString& rStyleName )
 					if(pStyle && pStyle->ISA(XMLPropStyleContext))
 					{
 						XMLPropStyleContext* pPropStyle = (XMLPropStyleContext*)pStyle;
-					
+
 						Reference <beans::XPropertySet> xPropSet1(mxShapes, uno::UNO_QUERY);
 						if(xPropSet1.is())
 						{
@@ -402,9 +402,9 @@ void SdXMLGenericPageContext::SetStyle( rtl::OUString& rStyleName )
 										xBackgroundSet = Reference< beans::XPropertySet >::query(
 											xServiceFact->createInstance(
 											OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.drawing.Background"))));
-									}					
+									}
 								}
-								
+
 								if( xBackgroundSet.is() )
 									xPropSet = PropertySetMerger_CreateInstance( xPropSet1, xBackgroundSet );
 							}
@@ -485,7 +485,7 @@ void SdXMLGenericPageContext::DeleteAllShapes()
 	{
 		Reference< drawing::XShape > xShape;
 		uno::Any aAny(mxShapes->getByIndex(0L));
-		
+
 		aAny >>= xShape;
 
 		if(xShape.is())
@@ -563,12 +563,12 @@ public:
 	NavigationOrderAccess( std::vector< Reference< XShape > >& rShapes );
 
 	// XIndexAccess
-    virtual sal_Int32 SAL_CALL getCount(  ) throw (RuntimeException);
-    virtual Any SAL_CALL getByIndex( sal_Int32 Index ) throw (IndexOutOfBoundsException, WrappedTargetException, RuntimeException);
+    virtual sal_Int32 SAL_CALL getCount(  );
+    virtual Any SAL_CALL getByIndex( sal_Int32 Index );
 
     // XElementAccess
-    virtual Type SAL_CALL getElementType(  ) throw (RuntimeException);
-    virtual sal_Bool SAL_CALL hasElements(  ) throw (RuntimeException);
+    virtual Type SAL_CALL getElementType(  );
+    virtual sal_Bool SAL_CALL hasElements(  );
 
 private:
 	std::vector< Reference< XShape > > maShapes;
@@ -580,12 +580,12 @@ NavigationOrderAccess::NavigationOrderAccess( std::vector< Reference< XShape > >
 }
 
 // XIndexAccess
-sal_Int32 SAL_CALL NavigationOrderAccess::getCount(  ) throw (RuntimeException)
+sal_Int32 SAL_CALL NavigationOrderAccess::getCount(  )
 {
 	return static_cast< sal_Int32 >( maShapes.size() );
 }
 
-Any SAL_CALL NavigationOrderAccess::getByIndex( sal_Int32 Index ) throw (IndexOutOfBoundsException, WrappedTargetException, RuntimeException)
+Any SAL_CALL NavigationOrderAccess::getByIndex( sal_Int32 Index )
 {
 	if( (Index < 0) || (Index > getCount()) )
 		throw IndexOutOfBoundsException();
@@ -594,12 +594,12 @@ Any SAL_CALL NavigationOrderAccess::getByIndex( sal_Int32 Index ) throw (IndexOu
 }
 
 // XElementAccess
-Type SAL_CALL NavigationOrderAccess::getElementType(  ) throw (RuntimeException)
+Type SAL_CALL NavigationOrderAccess::getElementType(  )
 {
 	return XShape::static_type();
 }
 
-sal_Bool SAL_CALL NavigationOrderAccess::hasElements(  ) throw (RuntimeException)
+sal_Bool SAL_CALL NavigationOrderAccess::hasElements(  )
 {
 	return maShapes.empty() ? sal_False : sal_True;
 }
@@ -619,7 +619,7 @@ void SdXMLGenericPageContext::SetNavigationOrder()
 		{
 			if( !aEnumerator.getNextToken(sId) )
 				break;
-			
+
 			aShapes[nIndex] = Reference< XShape >( rIdMapper.getReference( sId ), UNO_QUERY );
 		}
 

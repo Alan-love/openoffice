@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_ado.hxx"
 #include "ado/AKeys.hxx"
 #ifndef _CONNECTIVITY_ADO_INDEX_HXX_
 #include "ado/AKey.hxx"
@@ -53,7 +53,7 @@ sdbcx::ObjectType OKeys::createObject(const ::rtl::OUString& _rName)
 	return new OAdoKey(isCaseSensitive(),m_pConnection,m_aCollection.GetItem(_rName));
 }
 // -------------------------------------------------------------------------
-void OKeys::impl_refresh() throw(RuntimeException)
+void OKeys::impl_refresh()
 {
 	m_aCollection.Refresh();
 }
@@ -73,7 +73,7 @@ sdbcx::ObjectType OKeys::appendObject( const ::rtl::OUString&, const Reference< 
 	// To pass as column parameter to Key's Apppend method
 	OLEVariant vOptional;
 	vOptional.setNoArg();
-	
+
 #if OSL_DEBUG_LEVEL > 0
     KeyTypeEnum eKey =
 #endif
@@ -107,5 +107,3 @@ void OKeys::dropObject(sal_Int32 /*_nPos*/,const ::rtl::OUString _sElementName)
 		ADOS::ThrowException(*m_pConnection->getConnection(),static_cast<XTypeProvider*>(this));
 }
 // -----------------------------------------------------------------------------
-
-

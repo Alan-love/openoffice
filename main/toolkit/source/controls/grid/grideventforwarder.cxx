@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -78,55 +78,55 @@ namespace toolkit
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL GridEventForwarder::rowsInserted( const GridDataEvent& i_event ) throw (RuntimeException)
+    void SAL_CALL GridEventForwarder::rowsInserted( const GridDataEvent& i_event )
     {
         Reference< XGridDataListener > xPeer( m_parent.getPeer(), UNO_QUERY );
         if ( xPeer.is() )
             xPeer->rowsInserted( i_event );
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL GridEventForwarder::rowsRemoved( const GridDataEvent& i_event ) throw (RuntimeException)
+    void SAL_CALL GridEventForwarder::rowsRemoved( const GridDataEvent& i_event )
     {
         Reference< XGridDataListener > xPeer( m_parent.getPeer(), UNO_QUERY );
         if ( xPeer.is() )
             xPeer->rowsRemoved( i_event );
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL GridEventForwarder::dataChanged( const GridDataEvent& i_event ) throw (RuntimeException)
+    void SAL_CALL GridEventForwarder::dataChanged( const GridDataEvent& i_event )
     {
         Reference< XGridDataListener > xPeer( m_parent.getPeer(), UNO_QUERY );
         if ( xPeer.is() )
             xPeer->dataChanged( i_event );
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL GridEventForwarder::rowHeadingChanged( const GridDataEvent& i_event ) throw (RuntimeException)
+    void SAL_CALL GridEventForwarder::rowHeadingChanged( const GridDataEvent& i_event )
     {
         Reference< XGridDataListener > xPeer( m_parent.getPeer(), UNO_QUERY );
         if ( xPeer.is() )
             xPeer->rowHeadingChanged( i_event );
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL GridEventForwarder::elementInserted( const ContainerEvent& i_event ) throw (RuntimeException)
+    void SAL_CALL GridEventForwarder::elementInserted( const ContainerEvent& i_event )
     {
         Reference< XContainerListener > xPeer( m_parent.getPeer(), UNO_QUERY );
         if ( xPeer.is() )
             xPeer->elementInserted( i_event );
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL GridEventForwarder::elementRemoved( const ContainerEvent& i_event ) throw (RuntimeException)
+    void SAL_CALL GridEventForwarder::elementRemoved( const ContainerEvent& i_event )
     {
         Reference< XContainerListener > xPeer( m_parent.getPeer(), UNO_QUERY );
         if ( xPeer.is() )
             xPeer->elementRemoved( i_event );
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL GridEventForwarder::elementReplaced( const ContainerEvent& i_event ) throw (RuntimeException)
+    void SAL_CALL GridEventForwarder::elementReplaced( const ContainerEvent& i_event )
     {
         Reference< XContainerListener > xPeer( m_parent.getPeer(), UNO_QUERY );
         if ( xPeer.is() )
@@ -134,7 +134,7 @@ namespace toolkit
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL GridEventForwarder::disposing( const EventObject& i_event ) throw (RuntimeException)
+    void SAL_CALL GridEventForwarder::disposing( const EventObject& i_event )
     {
         Reference< XEventListener > xPeer( m_parent.getPeer(), UNO_QUERY );
         if ( xPeer.is() )

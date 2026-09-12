@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_charttools.hxx"
 
 #include "WrappedProperty.hxx"
 #include "macros.hxx"
@@ -69,14 +69,12 @@ Any WrappedProperty::convertOuterToInnerValue( const Any& rOuterValue ) const
 }
 
 void WrappedProperty::setPropertyValue( const Any& rOuterValue, const Reference< beans::XPropertySet >& xInnerPropertySet ) const
-                throw (beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException, uno::RuntimeException)
 {
     if(xInnerPropertySet.is())
         xInnerPropertySet->setPropertyValue( this->getInnerName(), this->convertOuterToInnerValue( rOuterValue ) );
 }
 
 Any WrappedProperty::getPropertyValue( const Reference< beans::XPropertySet >& xInnerPropertySet ) const
-                        throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
     Any aRet;
     if( xInnerPropertySet.is() )
@@ -88,7 +86,6 @@ Any WrappedProperty::getPropertyValue( const Reference< beans::XPropertySet >& x
 }
 
 void WrappedProperty::setPropertyToDefault( const Reference< beans::XPropertyState >& xInnerPropertyState ) const
-                        throw (::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::uno::RuntimeException)
 {
     if( xInnerPropertyState.is() && !this->getInnerName().isEmpty() )
         xInnerPropertyState->setPropertyToDefault(this->getInnerName());
@@ -100,19 +97,17 @@ void WrappedProperty::setPropertyToDefault( const Reference< beans::XPropertySta
 }
 
 Any WrappedProperty::getPropertyDefault( const Reference< beans::XPropertyState >& xInnerPropertyState ) const
-                        throw (beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
     Any aRet;
     if( xInnerPropertyState.is() )
     {
         aRet = xInnerPropertyState->getPropertyDefault( this->getInnerName() );
-        aRet = this->convertInnerToOuterValue( aRet );    
+        aRet = this->convertInnerToOuterValue( aRet );
     }
     return aRet;
 }
 
 beans::PropertyState WrappedProperty::getPropertyState( const Reference< beans::XPropertyState >& xInnerPropertyState ) const
-                        throw (beans::UnknownPropertyException, uno::RuntimeException)
 {
     beans::PropertyState aState = beans::PropertyState_DIRECT_VALUE;
     rtl::OUString aInnerName( this->getInnerName() );

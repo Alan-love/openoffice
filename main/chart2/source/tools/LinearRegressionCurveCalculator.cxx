@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_charttools.hxx"
 #include "LinearRegressionCurveCalculator.hxx"
 #include "macros.hxx"
 #include "RegressionCalculationHelper.hxx"
@@ -53,7 +53,6 @@ LinearRegressionCurveCalculator::~LinearRegressionCurveCalculator()
 void SAL_CALL LinearRegressionCurveCalculator::recalculateRegression(
     const uno::Sequence< double >& aXValues,
     const uno::Sequence< double >& aYValues )
-    throw (uno::RuntimeException)
 {
     RegressionCalculationHelper::tDoubleVectorPair aValues(
         RegressionCalculationHelper::cleanup(
@@ -89,8 +88,6 @@ void SAL_CALL LinearRegressionCurveCalculator::recalculateRegression(
 }
 
 double SAL_CALL LinearRegressionCurveCalculator::getCurveValue( double x )
-    throw (lang::IllegalArgumentException,
-           uno::RuntimeException)
 {
     double fResult;
     ::rtl::math::setNan( & fResult );
@@ -109,8 +106,6 @@ uno::Sequence< geometry::RealPoint2D > SAL_CALL LinearRegressionCurveCalculator:
     const uno::Reference< chart2::XScaling >& xScalingX,
     const uno::Reference< chart2::XScaling >& xScalingY,
     ::sal_Bool bMaySkipPointsInCalculation )
-    throw (lang::IllegalArgumentException,
-           uno::RuntimeException)
 {
     if( bMaySkipPointsInCalculation &&
         isLinearScaling( xScalingX ) &&

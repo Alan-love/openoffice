@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 #include "ChartType.hxx"
 #include "PropertyHelper.hxx"
 #include "CommonFunctors.hxx"
@@ -81,8 +81,6 @@ Reference< uno::XComponentContext > ChartType::GetComponentContext() const
 // ____ XChartType ____
 Reference< chart2::XCoordinateSystem > SAL_CALL
     ChartType::createCoordinateSystem( ::sal_Int32 DimensionCount )
-    throw (lang::IllegalArgumentException,
-           uno::RuntimeException)
 {
     Reference< chart2::XCoordinateSystem > xResult(
         new CartesianCoordinateSystem(
@@ -115,7 +113,6 @@ Reference< chart2::XCoordinateSystem > SAL_CALL
 }
 
 Sequence< OUString > SAL_CALL ChartType::getSupportedMandatoryRoles()
-    throw (uno::RuntimeException)
 {
     static Sequence< OUString > aDefaultSeq;
 
@@ -130,7 +127,6 @@ Sequence< OUString > SAL_CALL ChartType::getSupportedMandatoryRoles()
 }
 
 Sequence< OUString > SAL_CALL ChartType::getSupportedOptionalRoles()
-    throw (uno::RuntimeException)
 {
     static Sequence< OUString > aDefaultOptRolesSeq;
 
@@ -144,7 +140,6 @@ Sequence< OUString > SAL_CALL ChartType::getSupportedOptionalRoles()
 }
 
 OUString SAL_CALL ChartType::getRoleOfSequenceForSeriesLabel()
-    throw (uno::RuntimeException)
 {
     return C2U( "values-y" );
 }
@@ -162,16 +157,12 @@ void ChartType::impl_addDataSeriesWithoutNotification(
 
 // ____ XDataSeriesContainer ____
 void SAL_CALL ChartType::addDataSeries( const Reference< chart2::XDataSeries >& xDataSeries )
-    throw (lang::IllegalArgumentException,
-           uno::RuntimeException)
 {
     impl_addDataSeriesWithoutNotification( xDataSeries );
     fireModifyEvent();
 }
 
 void SAL_CALL ChartType::removeDataSeries( const Reference< chart2::XDataSeries >& xDataSeries )
-    throw (container::NoSuchElementException,
-           uno::RuntimeException)
 {
     if( !xDataSeries.is())
         throw container::NoSuchElementException();
@@ -190,14 +181,11 @@ void SAL_CALL ChartType::removeDataSeries( const Reference< chart2::XDataSeries 
 }
 
 Sequence< Reference< chart2::XDataSeries > > SAL_CALL ChartType::getDataSeries()
-    throw (uno::RuntimeException)
 {
     return ContainerHelper::ContainerToSequence( m_aDataSeries );
 }
 
 void SAL_CALL ChartType::setDataSeries( const Sequence< Reference< chart2::XDataSeries > >& aDataSeries )
-    throw (lang::IllegalArgumentException,
-           uno::RuntimeException)
 {
     m_bNotifyChanges = false;
     try
@@ -206,7 +194,7 @@ void SAL_CALL ChartType::setDataSeries( const Sequence< Reference< chart2::XData
         for( sal_Int32 nN=0; nN<aOldSeries.getLength(); ++nN )
             ModifyListenerHelper::removeListener( aOldSeries[nN], m_xModifyEventForwarder );
         m_aDataSeries.clear();
-        
+
         for( sal_Int32 i=0; i<aDataSeries.getLength(); ++i )
             impl_addDataSeriesWithoutNotification( aDataSeries[i] );
     }
@@ -221,7 +209,6 @@ void SAL_CALL ChartType::setDataSeries( const Sequence< Reference< chart2::XData
 
 // ____ OPropertySet ____
 uno::Any ChartType::GetDefaultValue( sal_Int32 /* nHandle */ ) const
-    throw(beans::UnknownPropertyException)
 {
     return uno::Any();
 }
@@ -268,14 +255,12 @@ struct StaticChartTypeInfo : public rtl::StaticAggregate< uno::Reference< beans:
 
 // ____ XPropertySet ____
 uno::Reference< beans::XPropertySetInfo > SAL_CALL ChartType::getPropertySetInfo()
-    throw (uno::RuntimeException)
 {
     return *StaticChartTypeInfo::get();
 }
 
 // ____ XModifyBroadcaster ____
 void SAL_CALL ChartType::addModifyListener( const uno::Reference< util::XModifyListener >& aListener )
-    throw (uno::RuntimeException)
 {
     try
     {
@@ -289,7 +274,6 @@ void SAL_CALL ChartType::addModifyListener( const uno::Reference< util::XModifyL
 }
 
 void SAL_CALL ChartType::removeModifyListener( const uno::Reference< util::XModifyListener >& aListener )
-    throw (uno::RuntimeException)
 {
     try
     {
@@ -304,14 +288,12 @@ void SAL_CALL ChartType::removeModifyListener( const uno::Reference< util::XModi
 
 // ____ XModifyListener ____
 void SAL_CALL ChartType::modified( const lang::EventObject& aEvent )
-    throw (uno::RuntimeException)
 {
     m_xModifyEventForwarder->modified( aEvent );
 }
 
 // ____ XEventListener (base of XModifyListener) ____
 void SAL_CALL ChartType::disposing( const lang::EventObject& /* Source */ )
-    throw (uno::RuntimeException)
 {
     // nothing
 }

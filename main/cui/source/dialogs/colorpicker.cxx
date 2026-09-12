@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
@@ -1555,20 +1555,20 @@ public:
     ColorPicker( Reference< XComponentContext > const & xContext );
 
     // XInitialization
-    virtual void SAL_CALL initialize( const Sequence< Any >& aArguments ) throw (Exception, RuntimeException);
+    virtual void SAL_CALL initialize( const Sequence< Any >& aArguments );
 
     // XInitialization
-    virtual OUString SAL_CALL getImplementationName(  ) throw (RuntimeException);
-    virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName ) throw (RuntimeException);
-    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames(  ) throw (RuntimeException);
+    virtual OUString SAL_CALL getImplementationName(  );
+    virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName );
+    virtual Sequence< OUString > SAL_CALL getSupportedServiceNames(  );
 
     // XPropertyAccess
-    virtual Sequence< PropertyValue > SAL_CALL getPropertyValues(  ) throw (RuntimeException);
-    virtual void SAL_CALL setPropertyValues( const Sequence< PropertyValue >& aProps ) throw (UnknownPropertyException, PropertyVetoException, IllegalArgumentException, WrappedTargetException, RuntimeException);
+    virtual Sequence< PropertyValue > SAL_CALL getPropertyValues(  );
+    virtual void SAL_CALL setPropertyValues( const Sequence< PropertyValue >& aProps );
 
     // XExecutableDialog
-    virtual void SAL_CALL setTitle( const OUString& aTitle ) throw (RuntimeException);
-    virtual sal_Int16 SAL_CALL execute(  ) throw (RuntimeException);
+    virtual void SAL_CALL setTitle( const OUString& aTitle );
+    virtual sal_Int16 SAL_CALL execute(  );
 
 private:
     Reference< XComponentContext > mxContext;
@@ -1589,14 +1589,14 @@ OUString SAL_CALL ColorPicker_getImplementationName()
 
 // --------------------------------------------------------------------
 
-Reference< XInterface > SAL_CALL ColorPicker_createInstance( Reference< XComponentContext > const & xContext ) SAL_THROW( (Exception) )
+Reference< XInterface > SAL_CALL ColorPicker_createInstance( Reference< XComponentContext > const & xContext )
 {
     return static_cast<XWeak*>( new ColorPicker( xContext ) );
 }
 
 // --------------------------------------------------------------------
 
-Sequence< OUString > SAL_CALL ColorPicker_getSupportedServiceNames() throw( RuntimeException )
+Sequence< OUString > SAL_CALL ColorPicker_getSupportedServiceNames()
 {
     Sequence< OUString > seq(1);
     seq[0] = OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.ui.dialogs.ColorPicker" ) );
@@ -1618,7 +1618,7 @@ ColorPicker::ColorPicker( Reference< XComponentContext > const & xContext )
 // --------------------------------------------------------------------
 
 // XInitialization
-void SAL_CALL ColorPicker::initialize( const Sequence< Any >& aArguments ) throw (Exception, RuntimeException)
+void SAL_CALL ColorPicker::initialize( const Sequence< Any >& aArguments )
 {
     if( aArguments.getLength() == 1 )
     {
@@ -1629,21 +1629,21 @@ void SAL_CALL ColorPicker::initialize( const Sequence< Any >& aArguments ) throw
 // --------------------------------------------------------------------
 
 // XInitialization
-OUString SAL_CALL ColorPicker::getImplementationName(  ) throw (RuntimeException)
+OUString SAL_CALL ColorPicker::getImplementationName(  )
 {
     return ColorPicker_getImplementationName();
 }
 
 // --------------------------------------------------------------------
 
-sal_Bool SAL_CALL ColorPicker::supportsService( const OUString& sServiceName ) throw (RuntimeException)
+sal_Bool SAL_CALL ColorPicker::supportsService( const OUString& sServiceName )
 {
     return sServiceName.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM( "com.sun.star.ui.dialogs.ColorPicker" ) );
 }
 
 // --------------------------------------------------------------------
 
-Sequence< OUString > SAL_CALL ColorPicker::getSupportedServiceNames(  ) throw (RuntimeException)
+Sequence< OUString > SAL_CALL ColorPicker::getSupportedServiceNames(  )
 {
     return ColorPicker_getSupportedServiceNames();
 }
@@ -1651,7 +1651,7 @@ Sequence< OUString > SAL_CALL ColorPicker::getSupportedServiceNames(  ) throw (R
 // --------------------------------------------------------------------
 
 // XPropertyAccess
-Sequence< PropertyValue > SAL_CALL ColorPicker::getPropertyValues(  ) throw (RuntimeException)
+Sequence< PropertyValue > SAL_CALL ColorPicker::getPropertyValues(  )
 {
     Sequence< PropertyValue > props(1);
     props[0].Name = msColorKey;
@@ -1661,7 +1661,7 @@ Sequence< PropertyValue > SAL_CALL ColorPicker::getPropertyValues(  ) throw (Run
 
 // --------------------------------------------------------------------
 
-void SAL_CALL ColorPicker::setPropertyValues( const Sequence< PropertyValue >& aProps ) throw (UnknownPropertyException, PropertyVetoException, IllegalArgumentException, WrappedTargetException, RuntimeException)
+void SAL_CALL ColorPicker::setPropertyValues( const Sequence< PropertyValue >& aProps )
 {
     for( sal_Int32 n = 0; n < aProps.getLength(); n++ )
     {
@@ -1679,14 +1679,14 @@ void SAL_CALL ColorPicker::setPropertyValues( const Sequence< PropertyValue >& a
 // --------------------------------------------------------------------
 
 // XExecutableDialog
-void SAL_CALL ColorPicker::setTitle( const OUString& sTitle ) throw (RuntimeException)
+void SAL_CALL ColorPicker::setTitle( const OUString& sTitle )
 {
     msTitle = sTitle;
 }
 
 // --------------------------------------------------------------------
 
-sal_Int16 SAL_CALL ColorPicker::execute(  ) throw (RuntimeException)
+sal_Int16 SAL_CALL ColorPicker::execute(  )
 {
     ColorPickerDialog aDlg( VCLUnoHelper::GetWindow( mxParent ), mnColor, mnMode );
     sal_Int16 ret = aDlg.Execute();

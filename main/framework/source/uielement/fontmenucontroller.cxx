@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -60,7 +60,7 @@
 //_________________________________________________________________________________________________________________
 //	Defines
 //_________________________________________________________________________________________________________________
-// 
+//
 
 using namespace com::sun::star::uno;
 using namespace com::sun::star::lang;
@@ -102,13 +102,13 @@ void FontMenuController::fillPopupMenu( const Sequence< ::rtl::OUString >& rFont
     const rtl::OUString*    pFontNameArray = rFontNameSeq.getConstArray();
     VCLXPopupMenu*          pPopupMenu = (VCLXPopupMenu *)VCLXMenu::GetImplementation( rPopupMenu );
     PopupMenu*              pVCLPopupMenu = 0;
-    
+
     vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
-    
+
     resetPopupMenu( rPopupMenu );
     if ( pPopupMenu )
         pVCLPopupMenu = (PopupMenu *)pPopupMenu->GetMenu();
-        
+
 	if ( pVCLPopupMenu )
 	{
 		vector<rtl::OUString> aVector;
@@ -138,7 +138,7 @@ void FontMenuController::fillPopupMenu( const Sequence< ::rtl::OUString >& rFont
 }
 
 // XEventListener
-void SAL_CALL FontMenuController::disposing( const EventObject& ) throw ( RuntimeException )
+void SAL_CALL FontMenuController::disposing( const EventObject& )
 {
     Reference< css::awt::XMenuListener > xHolder(( OWeakObject *)this, UNO_QUERY );
 
@@ -154,7 +154,7 @@ void SAL_CALL FontMenuController::disposing( const EventObject& ) throw ( Runtim
 }
 
 // XStatusListener
-void SAL_CALL FontMenuController::statusChanged( const FeatureStateEvent& Event ) throw ( RuntimeException )
+void SAL_CALL FontMenuController::statusChanged( const FeatureStateEvent& Event )
 {
     com::sun::star::awt::FontDescriptor aFontDescriptor;
     Sequence< rtl::OUString >           aFontNameSeq;
@@ -187,10 +187,10 @@ void FontMenuController::impl_select(const Reference< XDispatch >& _xDispatch,co
 		_xDispatch->dispatch( aTargetURL, aArgs );
 }
 
-void SAL_CALL FontMenuController::itemActivated( const css::awt::MenuEvent& ) throw (RuntimeException)
+void SAL_CALL FontMenuController::itemActivated( const css::awt::MenuEvent& )
 {
     osl::MutexGuard aLock( m_aMutex );
-    
+
     if ( m_xPopupMenu.is() )
     {
         // find new font name and set check mark!
@@ -228,15 +228,15 @@ void SAL_CALL FontMenuController::itemActivated( const css::awt::MenuEvent& ) th
 void FontMenuController::impl_setPopupMenu()
 {
     Reference< XDispatchProvider > xDispatchProvider( m_xFrame, UNO_QUERY );
-    
+
     com::sun::star::util::URL aTargetURL;
     // Register for font list updates to get the current font list from the controller
     aTargetURL.Complete = rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( ".uno:FontNameList" ));
     m_xURLTransformer->parseStrict( aTargetURL );
     m_xFontListDispatch = xDispatchProvider->queryDispatch( aTargetURL, ::rtl::OUString(), 0 );
 }
-		
-void SAL_CALL FontMenuController::updatePopupMenu() throw ( ::com::sun::star::uno::RuntimeException )
+
+void SAL_CALL FontMenuController::updatePopupMenu()
 {
 	svt::PopupMenuControllerBase::updatePopupMenu();
 
@@ -255,4 +255,3 @@ void SAL_CALL FontMenuController::updatePopupMenu() throw ( ::com::sun::star::un
 }
 
 }
-

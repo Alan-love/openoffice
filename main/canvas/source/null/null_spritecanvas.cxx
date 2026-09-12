@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -72,7 +72,7 @@ namespace nullcanvas
         // containing a pointer to a valid window, on which to output
         // At index 2, we expect the current window bound rect
         ENSURE_ARG_OR_THROW( maArguments.getLength() >= 4 &&
-                             maArguments[1].getValueTypeClass() == uno::TypeClass_LONG, 
+                             maArguments[1].getValueTypeClass() == uno::TypeClass_LONG,
                              "SpriteCanvas::initialize: wrong number of arguments, or wrong types" );
 
         awt::Rectangle aRect;
@@ -105,7 +105,7 @@ namespace nullcanvas
         SpriteCanvasBaseT::disposing();
     }
 
-    ::sal_Bool SAL_CALL SpriteCanvas::showBuffer( ::sal_Bool bUpdateAll ) throw (uno::RuntimeException)
+    ::sal_Bool SAL_CALL SpriteCanvas::showBuffer( ::sal_Bool bUpdateAll )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
 
@@ -115,7 +115,7 @@ namespace nullcanvas
         return !mbIsVisible ? false : SpriteCanvasBaseT::showBuffer( bUpdateAll );
     }
 
-    ::sal_Bool SAL_CALL SpriteCanvas::switchBuffer( ::sal_Bool bUpdateAll ) throw (uno::RuntimeException)
+    ::sal_Bool SAL_CALL SpriteCanvas::switchBuffer( ::sal_Bool bUpdateAll )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
 
@@ -125,7 +125,7 @@ namespace nullcanvas
         return !mbIsVisible ? false : SpriteCanvasBaseT::switchBuffer( bUpdateAll );
     }
 
-    sal_Bool SAL_CALL SpriteCanvas::updateScreen( sal_Bool bUpdateAll ) throw (uno::RuntimeException)
+    sal_Bool SAL_CALL SpriteCanvas::updateScreen( sal_Bool bUpdateAll )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
 
@@ -138,7 +138,7 @@ namespace nullcanvas
             mbSurfaceDirty );
     }
 
-    ::rtl::OUString SAL_CALL SpriteCanvas::getServiceName(  ) throw (uno::RuntimeException)
+    ::rtl::OUString SAL_CALL SpriteCanvas::getServiceName(  )
     {
         return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( SERVICE_NAME ) );
     }

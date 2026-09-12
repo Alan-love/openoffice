@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -151,11 +151,69 @@ double SAL_CALL rtl_ustr_toDouble(sal_Unicode const * pStr)
 }
 
 /* ======================================================================= */
+/* NULL-pointer guards for the mixed UTF-16 / ASCII comparison helpers.    */
+/*                                                                         */
+/* These follow the same policy as strtmpl.c (which is #included above and */
+/* already defines the sal_Unicode empty string aImplGuardEmptyStr): the   */
+/* public functions document a non-NULL, null-terminated contract; a NULL  */
+/* argument is diagnosed in non-product builds via OSL_PRECOND and treated */
+/* as the empty string otherwise, so NULL is never dereferenced.  The      */
+/* guards are at function entry, outside the per-character loops.          */
+/* ======================================================================= */
+
+#if OSL_DEBUG_LEVEL > 0
+
+static const sal_Char aImplGuardEmptyAscii = 0;
+
+/* Null-terminated ASCII argument: treat NULL as the empty string. */
+#define IMPL_RTL_ASCII_NULL_AS_EMPTY( pAscii )                              \
+    do {                                                                    \
+        OSL_PRECOND( (pAscii) != NULL,                                      \
+            "rtl_ustr_ascii_*: NULL ASCII pointer passed; contract "        \
+            "requires a non-NULL, null-terminated string" );                \
+        if ( !(pAscii) )                                                    \
+            (pAscii) = &aImplGuardEmptyAscii;                               \
+    } while (0)
+
+/* Null-terminated UTF-16 argument: treat NULL as the empty string. */
+#define IMPL_RTL_UNI_NULL_AS_EMPTY( pUni )                                  \
+    do {                                                                    \
+        OSL_PRECOND( (pUni) != NULL,                                        \
+            "rtl_ustr_ascii_*: NULL string pointer passed; contract "       \
+            "requires a non-NULL, null-terminated string" );                \
+        if ( !(pUni) )                                                      \
+            (pUni) = &aImplGuardEmptyStr;                                   \
+    } while (0)
+
+/* Length-bounded UTF-16 argument: a NULL pointer is an empty (length 0)    */
+/* string.  Clamp the length to 0 so the pointer is never dereferenced and  */
+/* substitute a valid buffer to avoid NULL pointer arithmetic (pStr + len). */
+#define IMPL_RTL_UNI_NULL_AS_EMPTY_LEN( pUni, nLen )                        \
+    do {                                                                    \
+        OSL_PRECOND( (pUni) != NULL,                                        \
+            "rtl_ustr_ascii_*: NULL string pointer passed; contract "       \
+            "requires a valid buffer of the given length" );                \
+        if ( !(pUni) )                                                      \
+        {                                                                   \
+            (pUni) = &aImplGuardEmptyStr;                                   \
+            (nLen) = 0;                                                     \
+        }                                                                   \
+    } while (0)
+
+#else /* product build: guards compile away, callers must honour contract */
+
+#define IMPL_RTL_ASCII_NULL_AS_EMPTY( pAscii )        ((void)0)
+#define IMPL_RTL_UNI_NULL_AS_EMPTY( pUni )            ((void)0)
+#define IMPL_RTL_UNI_NULL_AS_EMPTY_LEN( pUni, nLen )  ((void)0)
+
+#endif
 
 sal_Int32 SAL_CALL rtl_ustr_ascii_compare( const sal_Unicode* pStr1,
                                            const sal_Char* pStr2 )
 {
     sal_Int32 nRet;
+    IMPL_RTL_UNI_NULL_AS_EMPTY( pStr1 );
+    IMPL_RTL_ASCII_NULL_AS_EMPTY( pStr2 );
     while ( ((nRet = ((sal_Int32)(*pStr1))-
                      ((sal_Int32)((unsigned char)(*pStr2)))) == 0) &&
             *pStr2 )
@@ -174,6 +232,8 @@ sal_Int32 SAL_CALL rtl_ustr_ascii_compare_WithLength( const sal_Unicode* pStr1,
                                                       const sal_Char* pStr2 )
 {
 	sal_Int32 nRet = 0;
+    IMPL_RTL_UNI_NULL_AS_EMPTY_LEN( pStr1, nStr1Len );
+    IMPL_RTL_ASCII_NULL_AS_EMPTY( pStr2 );
     while( ((nRet = (nStr1Len ? (sal_Int32)(*pStr1) : 0)-
                     ((sal_Int32)((unsigned char)(*pStr2)))) == 0) &&
            nStr1Len && *pStr2 )
@@ -193,8 +253,11 @@ sal_Int32 SAL_CALL rtl_ustr_ascii_shortenedCompare_WithLength( const sal_Unicode
                                                                const sal_Char* pStr2,
                                                                sal_Int32 nShortenedLength )
 {
-    const sal_Unicode*  pStr1End = pStr1 + nStr1Len;
+    const sal_Unicode*  pStr1End;
     sal_Int32           nRet;
+    IMPL_RTL_UNI_NULL_AS_EMPTY_LEN( pStr1, nStr1Len );
+    IMPL_RTL_ASCII_NULL_AS_EMPTY( pStr2 );
+    pStr1End = pStr1 + nStr1Len;
     while ( (nShortenedLength > 0) &&
             (pStr1 < pStr1End) && *pStr2 )
     {
@@ -278,6 +341,8 @@ sal_Int32 SAL_CALL rtl_ustr_ascii_compareIgnoreAsciiCase( const sal_Unicode* pSt
     sal_Int32   nRet;
     sal_Int32   c1;
     sal_Int32   c2;
+    IMPL_RTL_UNI_NULL_AS_EMPTY( pStr1 );
+    IMPL_RTL_ASCII_NULL_AS_EMPTY( pStr2 );
     do
     {
         /* If character between 'A' and 'Z', than convert it to lowercase */
@@ -308,6 +373,8 @@ sal_Int32 SAL_CALL rtl_ustr_ascii_compareIgnoreAsciiCase_WithLength( const sal_U
     sal_Int32   nRet;
     sal_Int32   c1;
     sal_Int32   c2;
+    IMPL_RTL_UNI_NULL_AS_EMPTY_LEN( pStr1, nStr1Len );
+    IMPL_RTL_ASCII_NULL_AS_EMPTY( pStr2 );
     do
     {
         if ( !nStr1Len )
@@ -364,10 +431,13 @@ sal_Int32 SAL_CALL rtl_ustr_ascii_shortenedCompareIgnoreAsciiCase_WithLength( co
                                                                               const sal_Char* pStr2,
                                                                               sal_Int32 nShortenedLength )
 {
-    const sal_Unicode*  pStr1End = pStr1 + nStr1Len;
+    const sal_Unicode*  pStr1End;
     sal_Int32           nRet;
     sal_Int32           c1;
     sal_Int32           c2;
+    IMPL_RTL_UNI_NULL_AS_EMPTY_LEN( pStr1, nStr1Len );
+    IMPL_RTL_ASCII_NULL_AS_EMPTY( pStr2 );
+    pStr1End = pStr1 + nStr1Len;
     while ( (nShortenedLength > 0) &&
             (pStr1 < pStr1End) && *pStr2 )
     {

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 
 #include "BubbleDataInterpreter.hxx"
 #include "DataSeries.hxx"
@@ -60,7 +60,6 @@ chart2::InterpretedData SAL_CALL BubbleDataInterpreter::interpretDataSource(
     const Reference< chart2::data::XDataSource >& xSource,
     const Sequence< beans::PropertyValue >& aArguments,
     const Sequence< Reference< XDataSeries > >& aSeriesToReUse )
-    throw (uno::RuntimeException)
 {
     if( ! xSource.is())
         return InterpretedData();
@@ -74,14 +73,14 @@ chart2::InterpretedData SAL_CALL BubbleDataInterpreter::interpretDataSource(
     Reference< data::XLabeledDataSequence > xCategories;
     bool bHasCategories = HasCategories( aArguments, aData );
     bool bUseCategoriesAsX = UseCategoriesAsX( aArguments );
-    
+
     bool bSetXValues = false;
     sal_Int32 nDataSeqCount = aData.getLength();
 
     bSetXValues = bHasCategories ? ( (nDataSeqCount-1) > 2 && (nDataSeqCount-1) % 2 != 0 )
                                  :( nDataSeqCount > 2 && nDataSeqCount % 2 != 0 );
 
-    bool bCategoriesUsed = false;  
+    bool bCategoriesUsed = false;
     bool bNextIsYValues = bHasCategories ? nDataSeqCount>2 : nDataSeqCount>1;
     for( sal_Int32 nDataIdx = 0; nDataIdx < nDataSeqCount; ++nDataIdx )
     {
@@ -146,7 +145,7 @@ chart2::InterpretedData SAL_CALL BubbleDataInterpreter::interpretDataSource(
             aNewData.push_back( xClonedXValues );
         }
         if( aYValuesVector.size() > nN )
-            aNewData.push_back( aYValuesVector[nN] ); 
+            aNewData.push_back( aYValuesVector[nN] );
         if( aSizeValuesVector.size() > nN )
             aNewData.push_back( aSizeValuesVector[nN] );
 
@@ -170,7 +169,6 @@ chart2::InterpretedData SAL_CALL BubbleDataInterpreter::interpretDataSource(
 
 chart2::InterpretedData SAL_CALL BubbleDataInterpreter::reinterpretDataSeries(
     const chart2::InterpretedData& aInterpretedData )
-    throw (uno::RuntimeException)
 {
     InterpretedData aResult( aInterpretedData );
 
@@ -281,7 +279,6 @@ chart2::InterpretedData SAL_CALL BubbleDataInterpreter::reinterpretDataSeries(
 
 sal_Bool SAL_CALL BubbleDataInterpreter::isDataCompatible(
     const chart2::InterpretedData& aInterpretedData )
-    throw (uno::RuntimeException)
 {
     Sequence< Reference< XDataSeries > > aSeries( FlattenSequence( aInterpretedData.Series ));
     for( sal_Int32 i=0; i<aSeries.getLength(); ++i )

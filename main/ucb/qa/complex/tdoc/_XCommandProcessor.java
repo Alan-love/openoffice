@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -69,18 +69,18 @@ import share.LogWriter;
 *   is not specified. This file is used by 'GlobalTransfer'
 *   command as a source file for copying.</li>
 * <ul> <p>
-* Test is <b> NOT </b> multithread compilant. <p>
+* Test is <b> NOT </b> multithread compliant. <p>
 * @see com.sun.star.ucb.XCommandProcessor
 */
 public class _XCommandProcessor {
 
     /**
-     * Conatins the tested object.
+     * Contains the tested object.
      */
     public XCommandProcessor oObj;
     public LogWriter log = null;
     private XMultiServiceFactory xMSF = null;
-    
+
     /**
      * Contains the command id returned by <code>createCommandIdentifier()
      * </code>. It is used in <code>abort()</code> test.
@@ -90,11 +90,11 @@ public class _XCommandProcessor {
     public void before(XMultiServiceFactory _xMSF) {
         xMSF = _xMSF;
     }
-    
+
     /**
      * Tests <code>createCommandIdentifier()</code>. Calls it for two times
      * and checks returned values. <p>
-     * Has <b>OK</b> status if values are unique correct idenifiers: not 0.
+     * Has <b>OK</b> status if values are unique correct identifiers: not 0.
      */
     public boolean _createCommandIdentifier() {
         log.println("creating a command line identifier");
@@ -174,9 +174,9 @@ public class _XCommandProcessor {
     	        }
                 found = propCount == 0;
             }
-            
+
             returnVal &= found;
-            
+
             if (!found) {
                 log.println("Command '" + commandName + "' was not executed correctly.");
             }
@@ -212,7 +212,7 @@ public class _XCommandProcessor {
      * The following method tests are to be completed successfully before :
      * <ul>
      *  <li> <code> createCommandIdentifier() </code> : to have a unique
-     *  identifier which is used to abourt started command. </li>
+     *  identifier which is used to abort started command. </li>
      * </ul>
      */
     public boolean _abort() {

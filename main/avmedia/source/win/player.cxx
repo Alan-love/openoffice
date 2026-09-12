@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -86,9 +86,9 @@ bool isWindowsVistaOrHigher()
 // - Player -
 // ----------------
 
-Player::Player( const uno::Reference< lang::XMultiServiceFactory >& rxMgr ) :
+Player::Player( const uno::Reference< uno::XComponentContext >& rxContext ) :
     Player_BASE(m_aMutex),
-    mxMgr( rxMgr ),
+    mxContext( rxContext ),
     mpGB( NULL ),
     mpOMF( NULL ),
     mpMC( NULL ),
@@ -135,26 +135,26 @@ void SAL_CALL Player::disposing()
 
     if( mpMP )
         mpMP->Release();
-        
+
     if( mpMS )
         mpMS->Release();
-    
+
     if( mpME )
 	{
 		mpME->SetNotifyWindow( 0, WM_GRAPHNOTIFY, 0);
         mpME->Release();
 	}
 
-        
+
     if( mpMC )
         mpMC->Release();
-    
+
     if( mpEV )
         mpEV->Release();
-        
+
     if( mpOMF )
         mpOMF->Release();
-    
+
     if( mpGB )
         mpGB->Release();
 }
@@ -172,11 +172,11 @@ bool Player::create( const ::rtl::OUString& rURL )
 		if( !isWindowsVistaOrHigher() && SUCCEEDED( CoCreateInstance( CLSID_OverlayMixer, NULL, CLSCTX_INPROC_SERVER, IID_IBaseFilter, (void**) &mpOMF ) ) )
 		{
 			mpGB->AddFilter( mpOMF, L"com_sun_star_media_OverlayMixerFilter" );
-	            
+
 			if( !SUCCEEDED( mpOMF->QueryInterface( IID_IDDrawExclModeVideo, (void**) &mpEV ) ) )
 				mpEV = NULL;
 		}
-        
+
         if( SUCCEEDED( hR = mpGB->RenderFile( reinterpret_cast<LPCWSTR>(rURL.getStr()), NULL ) ) &&
             SUCCEEDED( hR = mpGB->QueryInterface( IID_IMediaControl, (void**) &mpMC ) ) &&
             SUCCEEDED( hR = mpGB->QueryInterface( IID_IMediaEventEx, (void**) &mpME ) ) &&
@@ -196,7 +196,7 @@ bool Player::create( const ::rtl::OUString& rURL )
             bRet = true;
         }
     }
-    
+
     if( bRet )
         maURL = rURL;
     else
@@ -235,15 +235,16 @@ void Player::setDDrawParams( IDirectDraw* pDDraw, IDirectDrawSurface* pDDrawSurf
 // ------------------------------------------------------------------------------
 
 long Player::processEvent()
-{   
-    long nCode, nParam1, nParam2;
-    
+{
+    long nCode;
+    LONG_PTR nParam1, nParam2;
+
     while( mpME && SUCCEEDED( mpME->GetEvent( &nCode, &nParam1, &nParam2, 0 ) ) )
     {
         if( EC_COMPLETE == nCode )
         {
             if( mbLooping )
-            { 
+            {
                 setMediaTime( 0.0 );
                 start();
             }
@@ -253,17 +254,16 @@ long Player::processEvent()
                 stop();
             }
         }
-   
+
         mpME->FreeEventParams( nCode, nParam1, nParam2 );
     }
-    
+
     return 0;
 }
 
 // ------------------------------------------------------------------------------
 
 void SAL_CALL Player::start(  )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
     if( mpMC )
@@ -308,7 +308,6 @@ void SAL_CALL Player::start(  )
 // ------------------------------------------------------------------------------
 
 void SAL_CALL Player::stop(  )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -319,7 +318,6 @@ void SAL_CALL Player::stop(  )
 // ------------------------------------------------------------------------------
 
 sal_Bool SAL_CALL Player::isPlaying()
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -335,7 +333,6 @@ sal_Bool SAL_CALL Player::isPlaying()
 // ------------------------------------------------------------------------------
 
 double SAL_CALL Player::getDuration(  )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -343,14 +340,13 @@ double SAL_CALL Player::getDuration(  )
 
     if( mpMP  )
         mpMP->get_Duration( &aRefTime );
-        
+
     return aRefTime;
 }
 
 // ------------------------------------------------------------------------------
 
 void SAL_CALL Player::setMediaTime( double fTime )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -368,7 +364,6 @@ void SAL_CALL Player::setMediaTime( double fTime )
 // ------------------------------------------------------------------------------
 
 double SAL_CALL Player::getMediaTime(  )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -376,14 +371,13 @@ double SAL_CALL Player::getMediaTime(  )
 
     if( mpMP  )
         mpMP->get_CurrentPosition( &aRefTime );
-    
-    return aRefTime; 
+
+    return aRefTime;
 }
 
 // ------------------------------------------------------------------------------
 
 void SAL_CALL Player::setStopTime( double fTime )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -394,7 +388,6 @@ void SAL_CALL Player::setStopTime( double fTime )
 // ------------------------------------------------------------------------------
 
 double SAL_CALL Player::getStopTime(  )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -403,13 +396,12 @@ double SAL_CALL Player::getStopTime(  )
     if( mpMP  )
         mpMP->get_StopTime( &aRefTime );
 
-    return aRefTime; 
+    return aRefTime;
 }
 
 // ------------------------------------------------------------------------------
 
 void SAL_CALL Player::setRate( double fRate )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -420,7 +412,6 @@ void SAL_CALL Player::setRate( double fRate )
 // ------------------------------------------------------------------------------
 
 double SAL_CALL Player::getRate(  )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -428,14 +419,13 @@ double SAL_CALL Player::getRate(  )
 
     if( mpMP  )
         mpMP->get_Rate( &fRet );
-    
+
     return fRet;
 }
 
 // ------------------------------------------------------------------------------
 
 void SAL_CALL Player::setPlaybackLoop( sal_Bool bSet )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -445,7 +435,6 @@ void SAL_CALL Player::setPlaybackLoop( sal_Bool bSet )
 // ------------------------------------------------------------------------------
 
 sal_Bool SAL_CALL Player::isPlaybackLoop(  )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -455,7 +444,6 @@ sal_Bool SAL_CALL Player::isPlaybackLoop(  )
 // ------------------------------------------------------------------------------
 
 void SAL_CALL Player::setMute( sal_Bool bSet )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -469,7 +457,6 @@ void SAL_CALL Player::setMute( sal_Bool bSet )
 // ------------------------------------------------------------------------------
 
 sal_Bool SAL_CALL Player::isMute(  )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -478,8 +465,7 @@ sal_Bool SAL_CALL Player::isMute(  )
 
 // ------------------------------------------------------------------------------
 
-void SAL_CALL Player::setVolumeDB( sal_Int16 nVolumeDB ) 
-    throw (uno::RuntimeException)
+void SAL_CALL Player::setVolumeDB( sal_Int16 nVolumeDB )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -490,9 +476,8 @@ void SAL_CALL Player::setVolumeDB( sal_Int16 nVolumeDB )
 }
 
 // ------------------------------------------------------------------------------
-    
-sal_Int16 SAL_CALL Player::getVolumeDB(  ) 
-    throw (uno::RuntimeException)
+
+sal_Int16 SAL_CALL Player::getVolumeDB(  )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -502,14 +487,13 @@ sal_Int16 SAL_CALL Player::getVolumeDB(  )
 // ------------------------------------------------------------------------------
 
 awt::Size SAL_CALL Player::getPreferredPlayerWindowSize(  )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
     awt::Size aSize( 0, 0 );
-    
+
     if( mpBV )
-    { 
+    {
         long nWidth = 0, nHeight = 0;
 
         mpBV->GetVideoSize( &nWidth, &nHeight );
@@ -523,7 +507,6 @@ awt::Size SAL_CALL Player::getPreferredPlayerWindowSize(  )
 // ------------------------------------------------------------------------------
 
 uno::Reference< ::media::XPlayerWindow > SAL_CALL Player::createPlayerWindow( const uno::Sequence< uno::Any >& aArguments )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -532,7 +515,7 @@ uno::Reference< ::media::XPlayerWindow > SAL_CALL Player::createPlayerWindow( co
 
     if( mpVW && aSize.Width > 0 && aSize.Height > 0 )
     {
-        ::avmedia::win::Window* pWindow = new ::avmedia::win::Window( mxMgr, *this );
+        ::avmedia::win::Window* pWindow = new ::avmedia::win::Window( mxContext, *this );
 
         xRet = pWindow;
 
@@ -546,7 +529,6 @@ uno::Reference< ::media::XPlayerWindow > SAL_CALL Player::createPlayerWindow( co
 // ------------------------------------------------------------------------------
 
 uno::Reference< media::XFrameGrabber > SAL_CALL Player::createFrameGrabber(  )
-    throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -554,21 +536,20 @@ uno::Reference< media::XFrameGrabber > SAL_CALL Player::createFrameGrabber(  )
 
     if( !maURL.isEmpty() )
     {
-        FrameGrabber* pGrabber = new FrameGrabber( mxMgr );
-        
+        FrameGrabber* pGrabber = new FrameGrabber( mxContext );
+
         xRet = pGrabber;
-        
+
         if( !pGrabber->create( maURL ) )
             xRet.clear();
     }
-    
+
     return xRet;
 }
 
 // ------------------------------------------------------------------------------
 
 ::rtl::OUString SAL_CALL Player::getImplementationName(  )
-    throw (uno::RuntimeException)
 {
     return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( AVMEDIA_WIN_PLAYER_IMPLEMENTATIONNAME ) );
 }
@@ -576,7 +557,6 @@ uno::Reference< media::XFrameGrabber > SAL_CALL Player::createFrameGrabber(  )
 // ------------------------------------------------------------------------------
 
 sal_Bool SAL_CALL Player::supportsService( const ::rtl::OUString& ServiceName )
-    throw (uno::RuntimeException)
 {
     return ServiceName.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM ( AVMEDIA_WIN_PLAYER_SERVICENAME ) );
 }
@@ -584,7 +564,6 @@ sal_Bool SAL_CALL Player::supportsService( const ::rtl::OUString& ServiceName )
 // ------------------------------------------------------------------------------
 
 uno::Sequence< ::rtl::OUString > SAL_CALL Player::getSupportedServiceNames(  )
-    throw (uno::RuntimeException)
 {
     uno::Sequence< ::rtl::OUString > aRet(1);
     aRet[0] = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM ( AVMEDIA_WIN_PLAYER_SERVICENAME ) );

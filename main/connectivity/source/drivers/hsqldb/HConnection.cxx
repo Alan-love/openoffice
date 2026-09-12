@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_hsqldb.hxx"
 
 #include "hsqldb/HConnection.hxx"
 #include "hsqldb/HTools.hxx"
@@ -102,11 +102,11 @@ namespace connectivity { namespace hsqldb
         virtual bool    implTypedNotify(
                             const Reference< XFlushListener >& _rxListener,
                             const EventObject& _rEvent
-                        )   SAL_THROW( ( Exception ) );
+                        );
     };
 
     // -----------------------------------------------------------------------------
-    bool FlushListeners::implTypedNotify( const Reference< XFlushListener >& _rxListener, const EventObject& _rEvent ) SAL_THROW( ( Exception ) )
+    bool FlushListeners::implTypedNotify( const Reference< XFlushListener >& _rxListener, const EventObject& _rEvent )
     {
         _rxListener->flushed( _rEvent );
         return true;    // continue notifying the other listeners, if any
@@ -162,10 +162,10 @@ namespace connectivity { namespace hsqldb
 
     // XFlushable
     //--------------------------------------------------------------------
-    void SAL_CALL OHsqlConnection::flush(  ) throw (RuntimeException)
+    void SAL_CALL OHsqlConnection::flush(  )
     {
         MethodGuard aGuard( *this );
-        	
+
 	    try
 	    {
 		    if ( m_xConnection.is() )
@@ -200,21 +200,21 @@ namespace connectivity { namespace hsqldb
    }
 
     //--------------------------------------------------------------------
-    void SAL_CALL OHsqlConnection::addFlushListener( const Reference< XFlushListener >& l ) throw (RuntimeException)
+    void SAL_CALL OHsqlConnection::addFlushListener( const Reference< XFlushListener >& l )
     {
         MethodGuard aGuard( *this );
         m_aFlushListeners.addInterface( l );
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL OHsqlConnection::removeFlushListener( const Reference< XFlushListener >& l ) throw (RuntimeException)
+    void SAL_CALL OHsqlConnection::removeFlushListener( const Reference< XFlushListener >& l )
     {
         MethodGuard aGuard( *this );
         m_aFlushListeners.removeInterface( l );
     }
 
     // -------------------------------------------------------------------
-    Reference< XGraphic > SAL_CALL OHsqlConnection::getTableIcon( const ::rtl::OUString& _TableName, ::sal_Int32 _ColorMode ) throw (RuntimeException)
+    Reference< XGraphic > SAL_CALL OHsqlConnection::getTableIcon( const ::rtl::OUString& _TableName, ::sal_Int32 _ColorMode )
     {
         MethodGuard aGuard( *this );
 
@@ -226,7 +226,7 @@ namespace connectivity { namespace hsqldb
     }
 
     // -------------------------------------------------------------------
-    Reference< XInterface > SAL_CALL OHsqlConnection::getTableEditor( const Reference< XDatabaseDocumentUI >& _DocumentUI, const ::rtl::OUString& _TableName ) throw (IllegalArgumentException, WrappedTargetException, RuntimeException)
+    Reference< XInterface > SAL_CALL OHsqlConnection::getTableEditor( const Reference< XDatabaseDocumentUI >& _DocumentUI, const ::rtl::OUString& _TableName )
     {
         MethodGuard aGuard( *this );
 
@@ -298,7 +298,7 @@ namespace connectivity { namespace hsqldb
                 ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "ParentWindow" ) ),
                 makeAny( _rxDocumentUI->getApplicationMainWindow() )
             );
-                
+
             aContext.createComponentWithArguments( "com.sun.star.sdb.hsql.LinkedTableEditor", aArguments, xDialog );
             if ( !xDialog.is() )
                 throw ServiceNotRegisteredException( ::rtl::OUString::createFromAscii( "com.sun.star.sdb.hsql.LinkedTableEditor" ), *this );

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -48,7 +48,6 @@ RtfExportFilter::~RtfExportFilter()
 }
 
 sal_Bool RtfExportFilter::filter( const uno::Sequence< beans::PropertyValue >& aDescriptor )
-    throw (uno::RuntimeException)
 {
     OSL_TRACE("%s", OSL_THIS_FUNC);
 
@@ -98,12 +97,11 @@ sal_Bool RtfExportFilter::filter( const uno::Sequence< beans::PropertyValue >& a
 }
 
 
-void RtfExportFilter::cancel(  ) throw (uno::RuntimeException)
+void RtfExportFilter::cancel(  )
 {
 }
 
 void RtfExportFilter::setSourceDocument( const uno::Reference< lang::XComponent >& xDoc )
-    throw (lang::IllegalArgumentException, uno::RuntimeException)
 {
     m_xSrcDoc = xDoc;
 }
@@ -124,7 +122,7 @@ uno::Sequence< OUString > SAL_CALL RtfExport_getSupportedServiceNames() throw()
     return aSeq;
 }
 
-uno::Reference< uno::XInterface > SAL_CALL RtfExport_createInstance(const uno::Reference< lang::XMultiServiceFactory > & rSMgr ) throw( uno::Exception )
+uno::Reference< uno::XInterface > SAL_CALL RtfExport_createInstance(const uno::Reference< lang::XMultiServiceFactory > & rSMgr )
 {
     return (cppu::OWeakObject*) new RtfExportFilter( rSMgr );
 }
@@ -156,7 +154,7 @@ SAL_DLLPUBLIC_EXPORT void* SAL_CALL component_getFactory( const sal_Char* pImplN
                     RtfExport_getImplementationName(),
                     RtfExport_createInstance,
                     RtfExport_getSupportedServiceNames() ) );
-    } 
+    }
     else if ( rtl_str_compare( pImplName, IMPL_NAME_RTFIMPORT ) == 0 ) {
         const OUString aServiceName( OUString::createFromAscii( IMPL_NAME_RTFIMPORT ) );
 

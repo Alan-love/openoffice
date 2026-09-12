@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -53,7 +53,7 @@ import com.sun.star.view.XControlAccess;
  *   for adding a component (such as CommandButton) and obtaining
  *   its control via tested interface. </li>
  * <ul> <p>
- * Test is <b> NOT </b> multithread compilant. <p>
+ * Test is <b> NOT </b> multithread compliant. <p>
  * @see com.sun.star.view.XControlAccess
  */
 public class _XControlAccess extends MultiMethodTest {
@@ -84,7 +84,7 @@ public class _XControlAccess extends MultiMethodTest {
                 UnoRuntime.queryInterface(XDrawPagesSupplier.class, oDoc);
                 oDP = (XDrawPage) UnoRuntime.queryInterface(XDrawPage.class, oDPS.getDrawPages().getByIndex(0));
             } else {
-                
+
 
             XDrawPageSupplier oDPS = (XDrawPageSupplier)
                 UnoRuntime.queryInterface(XDrawPageSupplier.class, oDoc);
@@ -117,4 +117,3 @@ public class _XControlAccess extends MultiMethodTest {
         tRes.tested("getControl()", bResult);
     }
 }
-

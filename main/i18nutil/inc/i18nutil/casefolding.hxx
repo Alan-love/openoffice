@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -70,9 +70,9 @@ struct MappingElement
 class I18NUTIL_DLLPUBLIC casefolding
 {
 public:
-	static Mapping& getValue(const sal_Unicode* str, sal_Int32 pos, sal_Int32 len, com::sun::star::lang::Locale& aLocale, sal_uInt8 nMappingType) throw (com::sun::star::uno::RuntimeException);
-	static Mapping& getConditionalValue(const sal_Unicode* str, sal_Int32 pos, sal_Int32 len, com::sun::star::lang::Locale& aLocale, sal_uInt8 nMappingType) throw (com::sun::star::uno::RuntimeException);
-	static sal_Unicode getNextChar(const sal_Unicode *str, sal_Int32& idx, sal_Int32 len, MappingElement& e, com::sun::star::lang::Locale& aLocale,sal_uInt8 nMappingtype, TransliterationModules moduleLoaded) throw (com::sun::star::uno::RuntimeException);
+	static Mapping& getValue(const sal_Unicode* str, sal_Int32 pos, sal_Int32 len, com::sun::star::lang::Locale& aLocale, sal_uInt8 nMappingType);
+	static Mapping& getConditionalValue(const sal_Unicode* str, sal_Int32 pos, sal_Int32 len, com::sun::star::lang::Locale& aLocale, sal_uInt8 nMappingType);
+	static sal_Unicode getNextChar(const sal_Unicode *str, sal_Int32& idx, sal_Int32 len, MappingElement& e, com::sun::star::lang::Locale& aLocale,sal_uInt8 nMappingtype, TransliterationModules moduleLoaded);
 
 };
 

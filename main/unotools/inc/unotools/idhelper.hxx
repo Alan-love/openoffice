@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -96,7 +96,7 @@ DECLARE_STL_MAP	(	TypeSequence,
 	As we don't want a global helper class which handles implementation id's
 	of components from all over the office (supposing somebody want's to use this :)
 	this is only a define. Wherever you have a "closed" area (which is small enough
-	and large enough :), see below) where diffenrent components want to use an id helper,
+	and large enough :), see below) where different components want to use an id helper,
 	define your own one with this macro.<BR>
 	The more classes use this helper, the later redundant map entries will be
 	cleared. The less classes use it, the earlier map entries which may have
@@ -203,4 +203,3 @@ void classname::implCreateMap()	\
 
 
 #endif // _UNOTOOLS_ID_HELPER_HXX_
-

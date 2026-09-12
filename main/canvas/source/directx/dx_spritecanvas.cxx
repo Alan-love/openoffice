@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -89,7 +89,7 @@ namespace dxcanvas
            5: SystemGraphicsData as a streamed Any
          */
         ENSURE_ARG_OR_THROW( maArguments.getLength() >= 5 &&
-                             maArguments[4].getValueTypeClass() == uno::TypeClass_INTERFACE, 
+                             maArguments[4].getValueTypeClass() == uno::TypeClass_INTERFACE,
                              "VCLSpriteCanvas::initialize: wrong number of arguments, or wrong types" );
 
         uno::Reference< awt::XWindow > xParentWindow;
@@ -99,7 +99,7 @@ namespace dxcanvas
             throw lang::NoSupportException(
                 ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM(
                                      "Parent window not VCL window, or canvas out-of-process!")),
-                NULL);            
+                NULL);
 
         awt::Rectangle aRect;
         maArguments[2] >>= aRect;
@@ -131,7 +131,7 @@ namespace dxcanvas
         SpriteCanvasBaseT::disposing();
     }
 
-    ::sal_Bool SAL_CALL SpriteCanvas::showBuffer( ::sal_Bool bUpdateAll ) throw (uno::RuntimeException)
+    ::sal_Bool SAL_CALL SpriteCanvas::showBuffer( ::sal_Bool bUpdateAll )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
 
@@ -141,7 +141,7 @@ namespace dxcanvas
         return !mbIsVisible ? false : SpriteCanvasBaseT::showBuffer( bUpdateAll );
     }
 
-    ::sal_Bool SAL_CALL SpriteCanvas::switchBuffer( ::sal_Bool bUpdateAll ) throw (uno::RuntimeException)
+    ::sal_Bool SAL_CALL SpriteCanvas::switchBuffer( ::sal_Bool bUpdateAll )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
 
@@ -151,7 +151,7 @@ namespace dxcanvas
         return !mbIsVisible ? false : SpriteCanvasBaseT::switchBuffer( bUpdateAll );
     }
 
-    sal_Bool SAL_CALL SpriteCanvas::updateScreen( sal_Bool bUpdateAll ) throw (uno::RuntimeException)
+    sal_Bool SAL_CALL SpriteCanvas::updateScreen( sal_Bool bUpdateAll )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
 
@@ -164,7 +164,7 @@ namespace dxcanvas
             mbSurfaceDirty );
     }
 
-    ::rtl::OUString SAL_CALL SpriteCanvas::getServiceName(  ) throw (uno::RuntimeException)
+    ::rtl::OUString SAL_CALL SpriteCanvas::getServiceName(  )
     {
         return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( SPRITECANVAS_SERVICE_NAME ) );
     }
@@ -173,9 +173,9 @@ namespace dxcanvas
     {
         ::osl::MutexGuard aGuard( m_aMutex );
 
-        return maDeviceHelper.getRenderModule(); 
+        return maDeviceHelper.getRenderModule();
     }
-    
+
     const DXSurfaceBitmapSharedPtr& SpriteCanvas::getBackBuffer() const
     {
         ::osl::MutexGuard aGuard( m_aMutex );

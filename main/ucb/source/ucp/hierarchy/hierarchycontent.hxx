@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -200,23 +200,19 @@ private:
             const ::com::sun::star::uno::Sequence<
                     ::com::sun::star::beans::PropertyValue >& rValues,
             const ::com::sun::star::uno::Reference<
-                    ::com::sun::star::ucb::XCommandEnvironment > & xEnv )
-        throw( ::com::sun::star::uno::Exception );
+                    ::com::sun::star::ucb::XCommandEnvironment > & xEnv );
 
     void insert( sal_Int32 nNameClashResolve,
                  const ::com::sun::star::uno::Reference<
-                    ::com::sun::star::ucb::XCommandEnvironment > & xEnv )
-        throw( ::com::sun::star::uno::Exception );
+                    ::com::sun::star::ucb::XCommandEnvironment > & xEnv );
 
     void destroy( sal_Bool bDeletePhysical,
                   const ::com::sun::star::uno::Reference<
-                    ::com::sun::star::ucb::XCommandEnvironment > & xEnv )
-        throw( ::com::sun::star::uno::Exception );
+                    ::com::sun::star::ucb::XCommandEnvironment > & xEnv );
 
     void transfer( const ::com::sun::star::ucb::TransferInfo& rInfo,
                    const ::com::sun::star::uno::Reference<
-                    ::com::sun::star::ucb::XCommandEnvironment > & xEnv )
-        throw( ::com::sun::star::uno::Exception );
+                    ::com::sun::star::ucb::XCommandEnvironment > & xEnv );
 
 public:
     // Create existing content. Fail, if not already exists.
@@ -246,33 +242,25 @@ public:
 
     // XServiceInfo
     virtual ::rtl::OUString SAL_CALL
-    getImplementationName()
-        throw( ::com::sun::star::uno::RuntimeException );
+    getImplementationName();
     virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL
-    getSupportedServiceNames()
-        throw( ::com::sun::star::uno::RuntimeException );
+    getSupportedServiceNames();
 
     // XContent
     virtual rtl::OUString SAL_CALL
-    getContentType()
-        throw( com::sun::star::uno::RuntimeException );
+    getContentType();
     virtual com::sun::star::uno::Reference<
                 com::sun::star::ucb::XContentIdentifier > SAL_CALL
-    getIdentifier()
-        throw( com::sun::star::uno::RuntimeException );
+    getIdentifier();
 
     // XCommandProcessor
     virtual com::sun::star::uno::Any SAL_CALL
     execute( const com::sun::star::ucb::Command& aCommand,
              sal_Int32 CommandId,
              const com::sun::star::uno::Reference<
-                com::sun::star::ucb::XCommandEnvironment >& Environment )
-        throw( com::sun::star::uno::Exception,
-               com::sun::star::ucb::CommandAbortedException,
-               com::sun::star::uno::RuntimeException );
+                com::sun::star::ucb::XCommandEnvironment >& Environment );
     virtual void SAL_CALL
-    abort( sal_Int32 CommandId )
-        throw( com::sun::star::uno::RuntimeException );
+    abort( sal_Int32 CommandId );
 
     //////////////////////////////////////////////////////////////////////
     // Additional interfaces
@@ -281,12 +269,10 @@ public:
     // XContentCreator
     virtual com::sun::star::uno::Sequence<
                 com::sun::star::ucb::ContentInfo > SAL_CALL
-    queryCreatableContentsInfo()
-        throw( com::sun::star::uno::RuntimeException );
+    queryCreatableContentsInfo();
     virtual com::sun::star::uno::Reference<
                 com::sun::star::ucb::XContent > SAL_CALL
-    createNewContent( const com::sun::star::ucb::ContentInfo& Info )
-        throw( com::sun::star::uno::RuntimeException );
+    createNewContent( const com::sun::star::ucb::ContentInfo& Info );
 
     //////////////////////////////////////////////////////////////////////
     // Non-interface methods.

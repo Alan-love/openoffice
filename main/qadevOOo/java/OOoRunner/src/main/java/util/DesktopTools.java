@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -57,7 +57,7 @@ public class DesktopTools
 
     /**
      * Queries the XComponentLoader
-     * 
+     *
      * @param xMSF the MultiServiceFactory
      * @return the gained XComponentLoader
      */
@@ -74,7 +74,7 @@ public class DesktopTools
 
     /**
      * Creates an Instance of the Desktop service
-     * 
+     *
      * @param xMSF the MultiServiceFactory
      * @return the gained Object
      */
@@ -131,13 +131,13 @@ public class DesktopTools
     }
 
     /**
-     * returns an object arrary of all open documents
+     * returns an object array of all open documents
      * @param xMSF the MultiServiceFactory
      * @return returns an Array of document kinds like ["swriter"]
      */
     /**
      * returns an array of all open documents
-     * @param xMSF the XMultiSerivceFactory
+     * @param xMSF the XMultiServiceFactory
      * @return returns an array of all open documents
      */
     public static Object[] getAllOpenDocuments(XMultiServiceFactory xMSF)
@@ -454,7 +454,7 @@ public class DesktopTools
             aConfig.insertOrUpdateExtensibleGroupProperty(
                     "Windows", "5539", "UserData", "Data", "V2,V,0,AL:(5,16,0/0/244/349,244;610)");
 
-            // Is node "SplitWindow2" available? If not, instert it.
+            // Is node "SplitWindow2" available? If not, insert it.
             aConfig.getOrInsertGroup("Windows", "SplitWindow2");
 
             aConfig.insertOrUpdateExtensibleGroupProperty(
@@ -481,7 +481,7 @@ public class DesktopTools
         bringWindowToFront(xModel);
     }
 
-    /** 
+    /**
      * This function brings a document to the front.<P>
      * NOTE: it is not possible to change the window order of your Window-Manager!!
      * Only the order of Office documents are changeable.

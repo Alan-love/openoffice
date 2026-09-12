@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #include <cppuhelper/compbase1.hxx>
@@ -201,9 +201,19 @@ TEST_F(LayerManagerTest, testShapeRepaint)
     TestShapeSharedPtr pShape4( createTestShape(
         basegfx::B2DRange(0.0,0.0,10.0,10.0),
         4.0));
+    // NB: priority must differ from pShape4's.  Shape::lessThanShape
+    // tie-breaks equal priorities on raw pointer value, so two shapes at the
+    // same priority order by heap address -- which makes updateShapeLayers()
+    // assign them to layers differently depending on allocation history, and
+    // this test then passes or fails with the wind (it survived on x86 and
+    // failed on x64; --gtest_shuffle flips it on either).  The tie cannot
+    // occur in production: ShapeImporter hands out priorities from a running
+    // counter (mnAscendingPrio += 1.0 per shape), so they are unique by
+    // construction, and the pointer tie-break exists only to stop std::set
+    // from treating two shapes as equivalent and dropping one.
     TestShapeSharedPtr pShape5( createTestShape(
         basegfx::B2DRange(20.0,20.0,30.0,30.0),
-        4.0));
+        5.0));
 
     mpLayerManager->addShape(mpTestShape);
     mpLayerManager->addShape(pShape2);
@@ -300,5 +310,3 @@ TEST_F(LayerManagerTest, testRefCounting)
 
 
 } // namespace
-
-

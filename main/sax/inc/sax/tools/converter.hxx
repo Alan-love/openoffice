@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,7 +49,7 @@ namespace com { namespace sun { namespace star {
 namespace sax {
 
 /** the Converter converts values of various types from
-	their internal represantation to the textual form used in xml
+	their internal representation to the textual form used in xml
 	and back.
 
 	All unit types are expressed as com::sun::star::util::MeasureUnit
@@ -60,7 +60,7 @@ class SAX_DLLPUBLIC Converter
 {
 public:
 	/** convert string to measure using optional min and max values*/
-	static bool convertMeasure(	sal_Int32& rValue, 
+	static bool convertMeasure(	sal_Int32& rValue,
 								const ::rtl::OUString& rString,
 								sal_Int16 nTargetUnit = ::com::sun::star::util::MeasureUnit::MM_100TH,
 								sal_Int32 nMin = SAL_MIN_INT32,
@@ -184,9 +184,9 @@ public:
 	static void encodeBase64(rtl::OUStringBuffer& aStrBuffer, const com::sun::star::uno::Sequence<sal_Int8>& aPass);
 
 	// Decode a base 64 encoded string into a sequence of bytes. The first
-	// version can be used for attribute values only, bacause it does not
+	// version can be used for attribute values only, because it does not
 	// return any chars left from conversion.
-	// For text submitted throgh the SAX characters call, the later method
+	// For text submitted through the SAX characters call, the later method
 	// must be used!
 	static void decodeBase64(com::sun::star::uno::Sequence<sal_Int8>& aPass, const rtl::OUString& sBuffer);
 

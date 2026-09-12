@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -159,7 +159,7 @@ namespace {
 
 		virtual ::sal_Bool SAL_CALL callHandlerMethod( const uno::Reference< awt::XDialog >& /*xDialog*/,
 													   const uno::Any& /*EventObject*/,
-													   const ::rtl::OUString& MethodName ) throw (lang::WrappedTargetException, uno::RuntimeException)
+													   const ::rtl::OUString& MethodName )
 		{
             (void)MethodName;
 			OSL_ENSURE( MethodName.compareToAscii("SelectionChanged") == 0,
@@ -168,7 +168,7 @@ namespace {
 			return sal_True;
 		}
 
-		virtual uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedMethodNames(  ) throw (uno::RuntimeException)
+		virtual uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedMethodNames(  )
 		{
 			uno::Sequence< ::rtl::OUString > aMethods(1);
 			aMethods[0] = rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "SelectionChanged" ));
@@ -352,7 +352,7 @@ PDFDetector::PDFDetector( const uno::Reference< uno::XComponentContext >& xConte
 {}
 
 // XExtendedFilterDetection
-rtl::OUString SAL_CALL PDFDetector::detect( uno::Sequence< beans::PropertyValue >& rFilterData ) throw( uno::RuntimeException )
+rtl::OUString SAL_CALL PDFDetector::detect( uno::Sequence< beans::PropertyValue >& rFilterData )
 {
     osl::MutexGuard const guard( m_aMutex );
     bool bSuccess = false;
@@ -733,7 +733,7 @@ uno::Reference< io::XStream > getAdditionalStream( const rtl::OUString&         
                                         xEmbed.clear();
                                         break;
                                     }
-                                    
+
                                     rtl::OUString aDocName( rInPDFFileURL.copy( rInPDFFileURL.lastIndexOf( sal_Unicode('/') )+1 ) );
 
                                     bool bEntered = false;

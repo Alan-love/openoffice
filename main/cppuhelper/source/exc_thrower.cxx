@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -52,7 +52,7 @@ using cppuhelper::detail::XExceptionThrower;
 struct ExceptionThrower : public uno_Interface, XExceptionThrower
 {
     inline ExceptionThrower();
-    
+
 public:
     static ExceptionThrower * get();
     static inline Type const & getCppuType()
@@ -60,16 +60,15 @@ public:
         return ::getCppuType(
             reinterpret_cast< Reference< XExceptionThrower > const * >(0) );
     }
-    
+
     // XInterface
-    virtual Any SAL_CALL queryInterface( Type const & type )
-        throw (RuntimeException);
+    virtual Any SAL_CALL queryInterface( Type const & type );
     virtual void SAL_CALL acquire() throw ();
     virtual void SAL_CALL release() throw ();
-    
+
     // XExceptionThrower
-    virtual void SAL_CALL throwException( Any const & exc ) throw (Exception);
-    virtual void SAL_CALL rethrowException() throw (Exception);
+    virtual void SAL_CALL throwException( Any const & exc );
+    virtual void SAL_CALL rethrowException();
 };
 
 extern "C"
@@ -86,7 +85,7 @@ static void SAL_CALL ExceptionThrower_dispatch(
     void * pReturn, void * pArgs [], uno_Any ** ppException )
 {
     OSL_ASSERT( pMemberType->eTypeClass == typelib_TypeClass_INTERFACE_METHOD );
-    
+
     switch (reinterpret_cast< typelib_InterfaceMemberTypeDescription * >(
                 const_cast< typelib_TypeDescription * >( pMemberType ) )->
             nPosition)
@@ -141,7 +140,6 @@ static void SAL_CALL ExceptionThrower_dispatch(
 
 //______________________________________________________________________________
 Any ExceptionThrower::queryInterface( Type const & type )
-    throw (RuntimeException)
 {
     if (type.equals( ::getCppuType( reinterpret_cast<
                                     Reference< XInterface > const * >(0) ) ) ||
@@ -163,14 +161,14 @@ void ExceptionThrower::release() throw ()
 }
 
 //______________________________________________________________________________
-void ExceptionThrower::throwException( Any const & exc ) throw (Exception)
+void ExceptionThrower::throwException( Any const & exc )
 {
     OSL_ENSURE( 0, "unexpected!" );
     ::cppu::throwException( exc );
 }
 
 //______________________________________________________________________________
-void ExceptionThrower::rethrowException() throw (Exception)
+void ExceptionThrower::rethrowException()
 {
     throw;
 }
@@ -208,7 +206,7 @@ namespace cppu
 {
 
 //==============================================================================
-void SAL_CALL throwException( Any const & exc ) SAL_THROW( (Exception) )
+void SAL_CALL throwException( Any const & exc )
 {
     if (exc.getValueTypeClass() != TypeClass_EXCEPTION)
     {
@@ -217,7 +215,7 @@ void SAL_CALL throwException( Any const & exc ) SAL_THROW( (Exception) )
                   "(must be derived from com::sun::star::uno::Exception)!"),
             Reference< XInterface >() );
     }
-    
+
     Mapping uno2cpp(Environment(OUSTR(UNO_LB_UNO)), Environment::getCurrent());
     if (! uno2cpp.is())
     {
@@ -225,7 +223,7 @@ void SAL_CALL throwException( Any const & exc ) SAL_THROW( (Exception) )
             OUSTR("cannot get binary UNO to C++ mapping!"),
             Reference< XInterface >() );
     }
-    
+
     Reference< XExceptionThrower > xThrower;
     uno2cpp.mapInterface(
         reinterpret_cast< void ** >( &xThrower ),
@@ -252,11 +250,11 @@ Any SAL_CALL getCaughtException()
             OUSTR("cannot get binary UNO to C++ mapping!"),
             Reference< XInterface >() );
     }
-    
+
     typelib_TypeDescription * pTD = 0;
     TYPELIB_DANGER_GET(
         &pTD, ExceptionThrower::getCppuType().getTypeLibType() );
-    
+
     UnoInterfaceReference unoI;
     cpp2uno.mapInterface(
         reinterpret_cast< void ** >( &unoI.m_pUnoI ),
@@ -268,21 +266,21 @@ Any SAL_CALL getCaughtException()
         &pMemberTD,
         reinterpret_cast< typelib_InterfaceTypeDescription * >( pTD )->
         ppMembers[ 1 ] /* rethrowException() */ );
-    
+
     uno_Any exc_mem;
     uno_Any * exc = &exc_mem;
     unoI.dispatch( pMemberTD, 0, 0, &exc );
-    
+
     TYPELIB_DANGER_RELEASE( pMemberTD );
     TYPELIB_DANGER_RELEASE( pTD );
-    
+
     if (exc == 0)
     {
         throw RuntimeException(
             OUSTR("rethrowing C++ exception failed!"),
             Reference< XInterface >() );
     }
-    
+
     Any ret;
     uno_any_destruct( &ret, reinterpret_cast< uno_ReleaseFunc >(cpp_release) );
     uno_type_any_constructAndConvert(

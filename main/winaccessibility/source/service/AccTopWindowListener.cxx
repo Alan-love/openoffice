@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #include <cppuhelper/bootstrap.hxx>
@@ -27,7 +27,7 @@
 
 #ifndef _SV_SYSDATA_HXX
 #if defined( WIN ) || defined( WNT ) || defined( OS2 )
-typedef sal_Int32 HWND;
+typedef void* HWND;
 typedef sal_Int32 HMENU;
 typedef sal_Int32 HDC;
 typedef void *PVOID;
@@ -72,15 +72,15 @@ void FreeTopWindowListener()
 /**
  *	As a global method to invoke the handleWindowOpened() method
  */
-void handleWindowOpened_impl(long pAcc)
+void handleWindowOpened_impl(sal_Int64 pAcc)
 {
     if( g_pTop && pAcc != NULL )
-        g_pTop->handleWindowOpened( (com::sun::star::accessibility::XAccessible*)((void*)pAcc) );
+        g_pTop->handleWindowOpened( (com::sun::star::accessibility::XAccessible*)((void*)(sal_IntPtr)pAcc) );
 }
 
 /**
  *	For the new opened window, generate all the UNO accessible's object, COM object and add
- *	accessible listener to monitor all these objects. 
+ *	accessible listener to monitor all these objects.
  *	@param pAccessible		the accessible of the new opened window
  */
 void AccTopWindowListener::handleWindowOpened( com::sun::star::accessibility::XAccessible* pAccessible )
@@ -125,7 +125,7 @@ void AccTopWindowListener::handleWindowOpened( com::sun::star::accessibility::XA
 
         if (role == com::sun::star::accessibility::AccessibleRole::FRAME ||
                 role == com::sun::star::accessibility::AccessibleRole::DIALOG ||
-                role == com::sun::star::accessibility::AccessibleRole::WINDOW || 
+                role == com::sun::star::accessibility::AccessibleRole::WINDOW ||
 				role == com::sun::star::accessibility::AccessibleRole::ALERT)
         {
             accManagerAgent.NotifyAccEvent(UM_EVENT_SHOW, pAccessible);
@@ -146,7 +146,7 @@ AccTopWindowListener::~AccTopWindowListener()
 /**
  *	It is invoked when a new window is opened, the source of this EventObject is the window
  */
-void AccTopWindowListener::windowOpened( const ::com::sun::star::lang::EventObject& e ) throw (::com::sun::star::uno::RuntimeException)
+void AccTopWindowListener::windowOpened( const ::com::sun::star::lang::EventObject& e )
 {
     if ( !e.Source.is())
     {
@@ -165,7 +165,7 @@ void AccTopWindowListener::windowOpened( const ::com::sun::star::lang::EventObje
 }
 
 /**
- *	Add the accessible event listener to object and all its children objects. 
+ *	Add the accessible event listener to object and all its children objects.
  *	@param	pAccessible		the accessible object
  *	@param	pParentXAcc		the parent of current accessible object
  *	@param	pWND			the handle of top window which current object resides
@@ -195,7 +195,7 @@ void AccTopWindowListener::AddAllListeners(com::sun::star::accessibility::XAcces
     if(com::sun::star::accessibility::AccessibleRole::DOCUMENT == role )
     {
         if(accManagerAgent.IsStateManageDescendant(pAccessible))
-        {        	
+        {
             return ;
         }
     }
@@ -222,7 +222,7 @@ void AccTopWindowListener::AddAllListeners(com::sun::star::accessibility::XAcces
     }
 }
 
-void AccTopWindowListener::windowClosing( const ::com::sun::star::lang::EventObject& e ) throw (::com::sun::star::uno::RuntimeException)
+void AccTopWindowListener::windowClosing( const ::com::sun::star::lang::EventObject& e )
 {
 }
 
@@ -231,7 +231,7 @@ void AccTopWindowListener::windowClosing( const ::com::sun::star::lang::EventObj
  *	from current manager's cache, and remove the COM object and the accessible event listener
  *	assigned to the accessible objects.
  */
-void AccTopWindowListener::windowClosed( const ::com::sun::star::lang::EventObject& e ) throw (::com::sun::star::uno::RuntimeException)
+void AccTopWindowListener::windowClosed( const ::com::sun::star::lang::EventObject& e )
 {
     if ( !e.Source.is())
     {
@@ -275,28 +275,28 @@ void AccTopWindowListener::windowClosed( const ::com::sun::star::lang::EventObje
 
 }
 
-void AccTopWindowListener::windowMinimized( const ::com::sun::star::lang::EventObject& ) throw (::com::sun::star::uno::RuntimeException)
+void AccTopWindowListener::windowMinimized( const ::com::sun::star::lang::EventObject& )
 {
 }
 
-void AccTopWindowListener::windowNormalized( const ::com::sun::star::lang::EventObject& ) throw (::com::sun::star::uno::RuntimeException)
+void AccTopWindowListener::windowNormalized( const ::com::sun::star::lang::EventObject& )
 {
 }
 
-void AccTopWindowListener::windowActivated( const ::com::sun::star::lang::EventObject& ) throw (::com::sun::star::uno::RuntimeException)
+void AccTopWindowListener::windowActivated( const ::com::sun::star::lang::EventObject& )
 {
 }
 
-void AccTopWindowListener::windowDeactivated( const ::com::sun::star::lang::EventObject& ) throw (::com::sun::star::uno::RuntimeException)
+void AccTopWindowListener::windowDeactivated( const ::com::sun::star::lang::EventObject& )
 {
 }
 
-void AccTopWindowListener::disposing( const ::com::sun::star::lang::EventObject&  ) throw (::com::sun::star::uno::RuntimeException)
+void AccTopWindowListener::disposing( const ::com::sun::star::lang::EventObject&  )
 {
 }
 
 //need to investigate further
-::com::sun::star::uno::Any SAL_CALL AccTopWindowListener::queryInterface( const ::com::sun::star::uno::Type& aType ) throw (::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Any SAL_CALL AccTopWindowListener::queryInterface( const ::com::sun::star::uno::Type& aType )
 {
     if (aType.equals( ::getCppuType( (Reference< com::sun::star::awt::XTopWindowListener> const *)0 ) ))
     {

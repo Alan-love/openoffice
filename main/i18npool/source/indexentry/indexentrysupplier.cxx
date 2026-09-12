@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -39,18 +39,18 @@ IndexEntrySupplier::IndexEntrySupplier( const Reference < XMultiServiceFactory >
 {
 }
 
-Sequence < Locale > SAL_CALL IndexEntrySupplier::getLocaleList() throw (RuntimeException)
+Sequence < Locale > SAL_CALL IndexEntrySupplier::getLocaleList()
 {
         return LocaleData().getAllInstalledLocaleNames();
 }
 
-Sequence < OUString > SAL_CALL IndexEntrySupplier::getAlgorithmList( const Locale& rLocale ) throw (RuntimeException)
+Sequence < OUString > SAL_CALL IndexEntrySupplier::getAlgorithmList( const Locale& rLocale )
 {
         return LocaleData().getIndexAlgorithm(rLocale);
 }
 
 sal_Bool SAL_CALL IndexEntrySupplier::loadAlgorithm( const Locale& rLocale, const OUString& SortAlgorithm,
-        sal_Int32 collatorOptions ) throw (RuntimeException)
+        sal_Int32 collatorOptions )
 {
         Sequence < OUString > algorithmList = getAlgorithmList( rLocale );
         for (sal_Int32 i = 0; i < algorithmList.getLength(); i++) {
@@ -62,13 +62,13 @@ sal_Bool SAL_CALL IndexEntrySupplier::loadAlgorithm( const Locale& rLocale, cons
         return sal_False;
 }
 
-sal_Bool SAL_CALL IndexEntrySupplier::usePhoneticEntry( const Locale& rLocale ) throw (RuntimeException)
+sal_Bool SAL_CALL IndexEntrySupplier::usePhoneticEntry( const Locale& rLocale )
 {
         return LocaleData().hasPhonetic(rLocale);
 }
 
 OUString SAL_CALL IndexEntrySupplier::getPhoneticCandidate( const OUString& rIndexEntry,
-        const Locale& rLocale ) throw (RuntimeException)
+        const Locale& rLocale )
 {
         if (getLocaleSpecificIndexEntrySupplier(rLocale, OUString()).is())
             return xIES->getPhoneticCandidate(rIndexEntry, rLocale);
@@ -77,7 +77,7 @@ OUString SAL_CALL IndexEntrySupplier::getPhoneticCandidate( const OUString& rInd
 }
 
 OUString SAL_CALL IndexEntrySupplier::getIndexKey( const OUString& rIndexEntry,
-        const OUString& rPhoneticEntry, const Locale& rLocale ) throw (RuntimeException)
+        const OUString& rPhoneticEntry, const Locale& rLocale )
 {
         if (xIES.is())
             return xIES->getIndexKey(rIndexEntry, rPhoneticEntry, rLocale);
@@ -88,7 +88,6 @@ OUString SAL_CALL IndexEntrySupplier::getIndexKey( const OUString& rIndexEntry,
 sal_Int16 SAL_CALL IndexEntrySupplier::compareIndexEntry(
         const OUString& rIndexEntry1, const OUString& rPhoneticEntry1, const Locale& rLocale1,
         const OUString& rIndexEntry2, const OUString& rPhoneticEntry2, const Locale& rLocale2 )
-        throw (com::sun::star::uno::RuntimeException)
 {
         if (xIES.is())
             return xIES->compareIndexEntry(rIndexEntry1, rPhoneticEntry1, rLocale1,
@@ -99,13 +98,12 @@ sal_Int16 SAL_CALL IndexEntrySupplier::compareIndexEntry(
 
 OUString SAL_CALL IndexEntrySupplier::getIndexCharacter( const OUString& rIndexEntry,
         const Locale& rLocale, const OUString& rSortAlgorithm )
-        throw (RuntimeException)
 {
         return getLocaleSpecificIndexEntrySupplier(rLocale, rSortAlgorithm)->
                         getIndexCharacter( rIndexEntry, rLocale, rSortAlgorithm );
 }
 
-sal_Bool SAL_CALL IndexEntrySupplier::createLocaleSpecificIndexEntrySupplier(const OUString& name) throw( RuntimeException )
+sal_Bool SAL_CALL IndexEntrySupplier::createLocaleSpecificIndexEntrySupplier(const OUString& name)
 {
         Reference < XInterface > xI = xMSF->createInstance(
             OUString::createFromAscii("com.sun.star.i18n.IndexEntrySupplier_") + name);
@@ -118,9 +116,9 @@ sal_Bool SAL_CALL IndexEntrySupplier::createLocaleSpecificIndexEntrySupplier(con
 }
 
 Reference < com::sun::star::i18n::XExtendedIndexEntrySupplier > SAL_CALL
-IndexEntrySupplier::getLocaleSpecificIndexEntrySupplier(const Locale& rLocale, const OUString& rSortAlgorithm) throw (RuntimeException)
+IndexEntrySupplier::getLocaleSpecificIndexEntrySupplier(const Locale& rLocale, const OUString& rSortAlgorithm)
 {
-        if (xIES.is() && rSortAlgorithm == aSortAlgorithm && rLocale.Language == aLocale.Language && 
+        if (xIES.is() && rSortAlgorithm == aSortAlgorithm && rLocale.Language == aLocale.Language &&
                 rLocale.Country == aLocale.Country && rLocale.Variant == aLocale.Variant)
             return xIES;
         else if (xMSF.is()) {
@@ -171,31 +169,31 @@ IndexEntrySupplier::getLocaleSpecificIndexEntrySupplier(const Locale& rLocale, c
 }
 
 OUString SAL_CALL IndexEntrySupplier::getIndexFollowPageWord( sal_Bool bMorePages,
-        const Locale& rLocale ) throw (RuntimeException)
+        const Locale& rLocale )
 {
         Sequence< OUString > aFollowPageWords = LocaleData().getFollowPageWords(rLocale);
 
         return (bMorePages && aFollowPageWords.getLength() > 1) ?
-            aFollowPageWords[1] : (aFollowPageWords.getLength() > 0 ? 
+            aFollowPageWords[1] : (aFollowPageWords.getLength() > 0 ?
             aFollowPageWords[0] : OUString());
 }
 
 #define implementationName "com.sun.star.i18n.IndexEntrySupplier"
 
 OUString SAL_CALL
-IndexEntrySupplier::getImplementationName() throw( RuntimeException )
+IndexEntrySupplier::getImplementationName()
 {
         return OUString::createFromAscii( implementationName );
 }
 
 sal_Bool SAL_CALL
-IndexEntrySupplier::supportsService(const OUString& rServiceName) throw( RuntimeException )
+IndexEntrySupplier::supportsService(const OUString& rServiceName)
 {
         return rServiceName.compareToAscii(implementationName) == 0;
 }
 
 Sequence< OUString > SAL_CALL
-IndexEntrySupplier::getSupportedServiceNames() throw( RuntimeException )
+IndexEntrySupplier::getSupportedServiceNames()
 {
         Sequence< OUString > aRet(1);
         aRet[0] = OUString::createFromAscii( implementationName );

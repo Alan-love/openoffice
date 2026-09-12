@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -96,10 +96,10 @@ namespace utl{
 			~ConfigChangeListener_Impl();
 
 		//XChangesListener
-    	virtual void SAL_CALL changesOccurred( const ChangesEvent& Event ) throw(RuntimeException);
+    	virtual void SAL_CALL changesOccurred( const ChangesEvent& Event );
 
 		//XEventListener
-    	virtual void SAL_CALL disposing( const EventObject& Source ) throw(RuntimeException);
+    	virtual void SAL_CALL disposing( const EventObject& Source );
 	};
 /* -----------------------------12.02.01 11:38--------------------------------
 
@@ -192,7 +192,7 @@ sal_Bool lcl_Find(
 	return sal_False;
 }
 //-----------------------------------------------------------------------------
-void ConfigChangeListener_Impl::changesOccurred( const ChangesEvent& rEvent ) throw(RuntimeException)
+void ConfigChangeListener_Impl::changesOccurred( const ChangesEvent& rEvent )
 {
 	const ElementChange* pElementChanges = rEvent.Changes.getConstArray();
 
@@ -223,7 +223,7 @@ void ConfigChangeListener_Impl::changesOccurred( const ChangesEvent& rEvent ) th
 /* -----------------------------29.08.00 16:34--------------------------------
 
  ---------------------------------------------------------------------------*/
-void ConfigChangeListener_Impl::disposing( const EventObject& /*rSource*/ ) throw(RuntimeException)
+void ConfigChangeListener_Impl::disposing( const EventObject& /*rSource*/ )
 {
 	pParent->RemoveChangesListener();
 }
@@ -800,7 +800,7 @@ void lcl_normalizeLocalNames(Sequence< OUString >& _rNames, ConfigNameFormat _eF
             }
         }
         OSL_ENSURE(false, "Cannot create absolute paths: missing interface");
-        // make local paths instaed
+        // make local paths instead
 
     case CONFIG_NAME_LOCAL_PATH:
         {
@@ -1414,5 +1414,3 @@ void ConfigItem::UnlockTree()
     if(0 != (pImpl->nMode&CONFIG_MODE_RELEASE_TREE))
         m_xHierarchyAccess = 0;
 }
-
-

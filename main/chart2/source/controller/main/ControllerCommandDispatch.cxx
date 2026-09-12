@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartcontroller.hxx"
 
 #include "ControllerCommandDispatch.hxx"
 #include "ChartModelHelper.hxx"
@@ -733,7 +733,6 @@ void ControllerCommandDispatch::fireStatusEvent(
 void SAL_CALL ControllerCommandDispatch::dispatch(
     const util::URL& URL,
     const Sequence< beans::PropertyValue >& Arguments )
-    throw (uno::RuntimeException)
 {
     if( commandAvailable( URL.Complete ))
         m_xDispatch->dispatch( URL, Arguments );
@@ -750,7 +749,6 @@ void SAL_CALL ControllerCommandDispatch::disposing()
 
 // ____ XEventListener (base of XModifyListener) ____
 void SAL_CALL ControllerCommandDispatch::disposing( const lang::EventObject& /* Source */ )
-    throw (uno::RuntimeException)
 {
     m_xController.clear();
     m_xDispatch.clear();
@@ -759,7 +757,6 @@ void SAL_CALL ControllerCommandDispatch::disposing( const lang::EventObject& /* 
 
 // ____ XModifyListener ____
 void SAL_CALL ControllerCommandDispatch::modified( const lang::EventObject& aEvent )
-    throw (uno::RuntimeException)
 {
     bool bUpdateCommandAvailability = false;
 
@@ -786,7 +783,6 @@ void SAL_CALL ControllerCommandDispatch::modified( const lang::EventObject& aEve
 
 // ____ XSelectionChangeListener ____
 void SAL_CALL ControllerCommandDispatch::selectionChanged( const lang::EventObject& aEvent )
-    throw (uno::RuntimeException)
 {
     // Update the "ControllerState" Struct.
     if( m_apControllerState.get() && m_xController.is())

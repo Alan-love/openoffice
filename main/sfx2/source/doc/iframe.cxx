@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -27,6 +27,8 @@
 #include "iframe.hxx"
 #include <sfx2/sfxdlg.hxx>
 #include <sfx2/sfxsids.hrc>
+#include <com/sun/star/document/XLinkAuthorizer.hpp>
+#include <com/sun/star/frame/XDesktop.hpp>
 #include <com/sun/star/frame/XDispatchProvider.hpp>
 #include <com/sun/star/frame/XDispatch.hpp>
 #include <com/sun/star/frame/XFramesSupplier.hpp>
@@ -36,6 +38,7 @@
 #include <tools/debug.hxx>
 #include <rtl/ustring.hxx>
 #include <toolkit/helper/vclunohelper.hxx>
+#include <ucbhelper/simpleinteractionrequest.hxx>
 #include <svtools/miscopt.hxx>
 #include <vcl/window.hxx>
 
@@ -129,20 +132,34 @@ IFrameObject::~IFrameObject()
 }
 
 
-void SAL_CALL IFrameObject::initialize( const uno::Sequence< uno::Any >& aArguments ) throw ( uno::Exception, uno::RuntimeException )
+void SAL_CALL IFrameObject::initialize( const uno::Sequence< uno::Any >& aArguments )
 {
 	if ( aArguments.getLength() )
         aArguments[0] >>= mxObj;
 }
 
-sal_Bool SAL_CALL IFrameObject::load( 
+sal_Bool SAL_CALL IFrameObject::load(
     const uno::Sequence < com::sun::star::beans::PropertyValue >& /*lDescriptor*/,
-    const uno::Reference < frame::XFrame >& xFrame ) 
-throw( uno::RuntimeException )
+    const uno::Reference < frame::XFrame >& xFrame )
 {
     if ( SvtMiscOptions().IsPluginsEnabled() )
     {
         DBG_ASSERT( !mxFrame.is(), "Frame already existing!" );
+        ::rtl::OUString sURL( maFrmDescr.GetURL().GetMainURL( INetURLObject::NO_DECODE ) );
+        // Obtain authorization from the current document, that is: our mxObj'x "client site"
+        uno::Reference< com::sun::star::document::XLinkAuthorizer > xLinkAuthorizer;
+        uno::Reference< com::sun::star::lang::XComponent > xComponent;
+        uno::Reference< com::sun::star::embed::XComponentSupplier > xCompSupplier( mxObj->getClientSite(), uno::UNO_QUERY );
+        if ( xCompSupplier.is() ) {
+            xComponent.set( xCompSupplier->getComponent(), uno::UNO_QUERY );
+            if ( xComponent.is() ) {
+                xLinkAuthorizer.set( xComponent, uno::UNO_QUERY );
+            }
+        }
+        if ( xLinkAuthorizer.is() ) {
+            if ( !xLinkAuthorizer->authorizeLinks( sURL ) )
+                return sal_False;
+        }
         Window* pParent = VCLUnoHelper::GetWindow( xFrame->getContainerWindow() );
         IFrameWindow_Impl* pWin = new IFrameWindow_Impl( pParent, maFrmDescr.IsFrameBorderOn() );
         pWin->SetSizePixel( pParent->GetOutputSizePixel() );
@@ -168,7 +185,7 @@ throw( uno::RuntimeException )
         uno::Reference< frame::XDispatchProvider > xProv( mxFrame, uno::UNO_QUERY );
 
         util::URL aTargetURL;
-        aTargetURL.Complete = ::rtl::OUString( maFrmDescr.GetURL().GetMainURL( INetURLObject::NO_DECODE ) );
+        aTargetURL.Complete = sURL;
         uno::Reference < util::XURLTransformer > xTrans( mxFact->createInstance( rtl::OUString::createFromAscii("com.sun.star.util.URLTransformer" )), uno::UNO_QUERY );
         xTrans->parseStrict( aTargetURL );
 
@@ -187,7 +204,7 @@ throw( uno::RuntimeException )
     return sal_False;
 }
 
-void SAL_CALL IFrameObject::cancel() throw( com::sun::star::uno::RuntimeException )
+void SAL_CALL IFrameObject::cancel()
 {
     try
     {
@@ -200,31 +217,30 @@ void SAL_CALL IFrameObject::cancel() throw( com::sun::star::uno::RuntimeExceptio
     {}
 }
 
-void SAL_CALL IFrameObject::close( sal_Bool /*bDeliverOwnership*/ ) throw( com::sun::star::util::CloseVetoException, com::sun::star::uno::RuntimeException )
+void SAL_CALL IFrameObject::close( sal_Bool /*bDeliverOwnership*/ )
 {
 }
 
-void SAL_CALL IFrameObject::addCloseListener( const com::sun::star::uno::Reference < com::sun::star::util::XCloseListener >& ) throw( com::sun::star::uno::RuntimeException )
+void SAL_CALL IFrameObject::addCloseListener( const com::sun::star::uno::Reference < com::sun::star::util::XCloseListener >& )
 {
 }
 
-void SAL_CALL IFrameObject::removeCloseListener( const com::sun::star::uno::Reference < com::sun::star::util::XCloseListener >& ) throw( com::sun::star::uno::RuntimeException )
+void SAL_CALL IFrameObject::removeCloseListener( const com::sun::star::uno::Reference < com::sun::star::util::XCloseListener >& )
 {
 }
 
-void SAL_CALL IFrameObject::disposing( const com::sun::star::lang::EventObject& ) throw (com::sun::star::uno::RuntimeException)
+void SAL_CALL IFrameObject::disposing( const com::sun::star::lang::EventObject& )
 {
     cancel();
 }
 
-uno::Reference< beans::XPropertySetInfo > SAL_CALL IFrameObject::getPropertySetInfo() throw( ::com::sun::star::uno::RuntimeException )
+uno::Reference< beans::XPropertySetInfo > SAL_CALL IFrameObject::getPropertySetInfo()
 {
     static uno::Reference< beans::XPropertySetInfo > xInfo = new SfxItemPropertySetInfo( &maPropMap );
     return xInfo;
 }
 
 void SAL_CALL IFrameObject::setPropertyValue(const ::rtl::OUString& aPropertyName, const uno::Any& aAny)
-    throw ( beans::UnknownPropertyException, beans::PropertyVetoException, lang::IllegalArgumentException, lang::WrappedTargetException, uno::RuntimeException)
 {
     const SfxItemPropertySimpleEntry*  pEntry = maPropMap.getByName( aPropertyName );
     if( !pEntry )
@@ -245,7 +261,7 @@ void SAL_CALL IFrameObject::setPropertyValue(const ::rtl::OUString& aPropertyNam
             maFrmDescr.SetName( aName );
     }
     break;
-    case WID_FRAME_IS_AUTO_SCROLL: 
+    case WID_FRAME_IS_AUTO_SCROLL:
     {
         sal_Bool bIsAutoScroll = sal_Bool();
         if ( (aAny >>= bIsAutoScroll) && bIsAutoScroll )
@@ -259,14 +275,14 @@ void SAL_CALL IFrameObject::setPropertyValue(const ::rtl::OUString& aPropertyNam
             maFrmDescr.SetScrollingMode( bIsScroll ? ScrollingYes : ScrollingNo );
     }
     break;
-    case WID_FRAME_IS_BORDER: 
+    case WID_FRAME_IS_BORDER:
     {
         sal_Bool bIsBorder = sal_Bool();
         if ( aAny >>= bIsBorder )
             maFrmDescr.SetFrameBorder( bIsBorder );
     }
     break;
-    case WID_FRAME_IS_AUTO_BORDER: 
+    case WID_FRAME_IS_AUTO_BORDER:
     {
         sal_Bool bIsAutoBorder = sal_Bool();
         if ( (aAny >>= bIsAutoBorder) )
@@ -289,7 +305,7 @@ void SAL_CALL IFrameObject::setPropertyValue(const ::rtl::OUString& aPropertyNam
         }
     }
     break;
-    case WID_FRAME_MARGIN_HEIGHT: 
+    case WID_FRAME_MARGIN_HEIGHT:
     {
         sal_Int32 nMargin = 0;
         Size aSize = maFrmDescr.GetMargin();
@@ -305,7 +321,6 @@ void SAL_CALL IFrameObject::setPropertyValue(const ::rtl::OUString& aPropertyNam
 }
 
 uno::Any SAL_CALL IFrameObject::getPropertyValue(const ::rtl::OUString& aPropertyName)
-        throw ( beans::UnknownPropertyException, lang::WrappedTargetException, uno::RuntimeException)
 {
     const SfxItemPropertySimpleEntry*  pEntry = maPropMap.getByName( aPropertyName );
     if( !pEntry )
@@ -313,7 +328,7 @@ uno::Any SAL_CALL IFrameObject::getPropertyValue(const ::rtl::OUString& aPropert
     uno::Any aAny;
     switch( pEntry->nWID )
     {
-    case WID_FRAME_URL: 
+    case WID_FRAME_URL:
     {
         aAny <<= ::rtl::OUString( maFrmDescr.GetURL().GetMainURL( INetURLObject::NO_DECODE ) );
     }
@@ -323,7 +338,7 @@ uno::Any SAL_CALL IFrameObject::getPropertyValue(const ::rtl::OUString& aPropert
         aAny <<= ::rtl::OUString( maFrmDescr.GetName() );
     }
     break;
-    case WID_FRAME_IS_AUTO_SCROLL: 
+    case WID_FRAME_IS_AUTO_SCROLL:
     {
         sal_Bool bIsAutoScroll = ( maFrmDescr.GetScrollingMode() == ScrollingAuto );
         aAny <<= bIsAutoScroll;
@@ -347,12 +362,12 @@ uno::Any SAL_CALL IFrameObject::getPropertyValue(const ::rtl::OUString& aPropert
         aAny <<= bIsAutoBorder;
     }
     break;
-    case WID_FRAME_MARGIN_WIDTH: 
+    case WID_FRAME_MARGIN_WIDTH:
     {
         aAny <<= (sal_Int32 ) maFrmDescr.GetMargin().Width();
     }
     break;
-    case WID_FRAME_MARGIN_HEIGHT: 
+    case WID_FRAME_MARGIN_HEIGHT:
     {
         aAny <<= (sal_Int32 ) maFrmDescr.GetMargin().Height();
     }
@@ -361,23 +376,23 @@ uno::Any SAL_CALL IFrameObject::getPropertyValue(const ::rtl::OUString& aPropert
     return aAny;
 }
 
-void SAL_CALL IFrameObject::addPropertyChangeListener(const ::rtl::OUString&, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener > & ) throw( ::com::sun::star::uno::RuntimeException )
+void SAL_CALL IFrameObject::addPropertyChangeListener(const ::rtl::OUString&, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener > & )
 {
 }
 
-void SAL_CALL IFrameObject::removePropertyChangeListener(const ::rtl::OUString&, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener > & ) throw( ::com::sun::star::uno::RuntimeException )
+void SAL_CALL IFrameObject::removePropertyChangeListener(const ::rtl::OUString&, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertyChangeListener > & )
 {
 }
 
-void SAL_CALL IFrameObject::addVetoableChangeListener(const ::rtl::OUString&, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XVetoableChangeListener > & ) throw( ::com::sun::star::uno::RuntimeException )
+void SAL_CALL IFrameObject::addVetoableChangeListener(const ::rtl::OUString&, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XVetoableChangeListener > & )
 {
 }
 
-void SAL_CALL IFrameObject::removeVetoableChangeListener(const ::rtl::OUString&, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XVetoableChangeListener > & ) throw( ::com::sun::star::uno::RuntimeException )
+void SAL_CALL IFrameObject::removeVetoableChangeListener(const ::rtl::OUString&, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XVetoableChangeListener > & )
 {
 }
 
-::sal_Int16 SAL_CALL IFrameObject::execute() throw (::com::sun::star::uno::RuntimeException)
+::sal_Int16 SAL_CALL IFrameObject::execute()
 {
     SfxAbstractDialogFactory* pFact = SfxAbstractDialogFactory::Create();
     VclAbstractDialog* pDlg = pFact->CreateEditObjectDialog( NULL, rtl::OUString::createFromAscii(".uno:InsertObjectFloatingFrame"), mxObj );
@@ -386,7 +401,7 @@ void SAL_CALL IFrameObject::removeVetoableChangeListener(const ::rtl::OUString&,
     return 0;
 }
 
-void SAL_CALL IFrameObject::setTitle( const ::rtl::OUString& ) throw (::com::sun::star::uno::RuntimeException)
+void SAL_CALL IFrameObject::setTitle( const ::rtl::OUString& )
 {
 }
 

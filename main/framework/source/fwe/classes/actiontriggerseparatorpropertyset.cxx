@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -66,7 +66,6 @@ ActionTriggerSeparatorPropertySet::~ActionTriggerSeparatorPropertySet()
 
 // XInterface
 Any SAL_CALL ActionTriggerSeparatorPropertySet::queryInterface( const Type& aType )
-throw ( RuntimeException )
 {
 	Any a = ::cppu::queryInterface(
 				aType ,
@@ -98,13 +97,11 @@ void ActionTriggerSeparatorPropertySet::release() throw()
 
 // XServiceInfo
 ::rtl::OUString SAL_CALL ActionTriggerSeparatorPropertySet::getImplementationName()
-throw ( RuntimeException )
 {
 	return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( IMPLEMENTATIONNAME_ACTIONTRIGGERSEPARATOR ));
 }
 
 sal_Bool SAL_CALL ActionTriggerSeparatorPropertySet::supportsService( const ::rtl::OUString& ServiceName )
-throw ( RuntimeException )
 {
 	if ( ServiceName.equalsAscii( SERVICENAME_ACTIONTRIGGERSEPARATOR ))
 		return sal_True;
@@ -113,7 +110,6 @@ throw ( RuntimeException )
 }
 
 Sequence< ::rtl::OUString > SAL_CALL ActionTriggerSeparatorPropertySet::getSupportedServiceNames()
-throw ( RuntimeException )
 {
     Sequence< ::rtl::OUString > seqServiceNames( 1 );
 	seqServiceNames[0] = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( SERVICENAME_ACTIONTRIGGERSEPARATOR ));
@@ -121,7 +117,7 @@ throw ( RuntimeException )
 }
 
 // XTypeProvider
-Sequence< Type > SAL_CALL ActionTriggerSeparatorPropertySet::getTypes() throw ( RuntimeException )
+Sequence< Type > SAL_CALL ActionTriggerSeparatorPropertySet::getTypes()
 {
 	// Optimize this method !
 	// We initialize a static variable only one time. And we don't must use a mutex at every call!
@@ -152,7 +148,7 @@ Sequence< Type > SAL_CALL ActionTriggerSeparatorPropertySet::getTypes() throw ( 
 	return pTypeCollection->getTypes() ;
 }
 
-Sequence< sal_Int8 > SAL_CALL ActionTriggerSeparatorPropertySet::getImplementationId() throw ( RuntimeException )
+Sequence< sal_Int8 > SAL_CALL ActionTriggerSeparatorPropertySet::getImplementationId()
 {
 	// Create one Id for all instances of this class.
 	// Use ethernet address to do this! (sal_True)
@@ -189,7 +185,6 @@ sal_Bool SAL_CALL ActionTriggerSeparatorPropertySet::convertFastPropertyValue(
 	Any&		aOldValue,
 	sal_Int32	nHandle,
 	const Any&	aValue	)
-throw( IllegalArgumentException )
 {
 	//	Check, if value of property will changed in method "setFastPropertyValue_NoBroadcast()".
 	//	Return sal_True, if changed - else return sal_False.
@@ -212,7 +207,6 @@ throw( IllegalArgumentException )
 
 void SAL_CALL ActionTriggerSeparatorPropertySet::setFastPropertyValue_NoBroadcast(
 	sal_Int32 nHandle, const Any& aValue )
-throw( Exception )
 {
 	::osl::MutexGuard aGuard( LockHelper::getGlobalLock().getShareableOslMutex() );
 
@@ -265,7 +259,6 @@ void SAL_CALL ActionTriggerSeparatorPropertySet::getFastPropertyValue(
 }
 
 Reference< XPropertySetInfo > SAL_CALL ActionTriggerSeparatorPropertySet::getPropertySetInfo()
-throw ( RuntimeException )
 {
 	// Optimize this method !
 	// We initialize a static variable only one time. And we don't must use a mutex at every call!
@@ -312,7 +305,6 @@ sal_Bool ActionTriggerSeparatorPropertySet::impl_tryToChangeProperty(
 	const	Any&		aNewValue		,
 	Any&				aOldValue		,
 	Any&				aConvertedValue	)
-throw( IllegalArgumentException )
 {
 	// Set default return value if method failed.
 	sal_Bool bReturn = sal_False;
@@ -343,4 +335,3 @@ throw( IllegalArgumentException )
 }
 
 }
-

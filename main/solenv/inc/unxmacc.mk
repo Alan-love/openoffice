@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -36,11 +36,18 @@ LINKOUTPUT_FILTER=
 #  compiling STLport sources too, either internally or externally.
 CDEFS+=-DGLIBC=2 -D_PTHREADS -D_REENTRANT -DNO_PTHREAD_PRIORITY $(PROCESSOR_DEFINES) -D_USE_NAMESPACE=1
 
-.IF "$(MACOSX_DEPLOYMENT_TARGET)" != ""
-	CDEFS += -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_$(subst,.,_ $(MACOSX_DEPLOYMENT_TARGET))
-.ENDIF
+# Do NOT force MAC_OS_X_VERSION_MAX_ALLOWED.  Apple renamed the constants at
+# macOS 11: the old MAC_OS_X_VERSION_<v> family stops at 10_15, and 11+ uses
+# MAC_OS_VERSION_<v> (no "_X_").  The old code emitted
+# -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_$(target), which for an 11.0+
+# deployment target references an undefined macro (expands to 0) and trips
+# AvailabilityMacros.h's "MAC_OS_X_VERSION_MAX_ALLOWED must be >=
+# MAC_OS_X_VERSION_MIN_REQUIRED" #error.  Leaving it unset lets the SDK derive
+# the correct value, max(14.0, MIN_REQUIRED).  Nothing in the tree reads this
+# macro (the lone consumer, vcl PictToBmpFlt.cxx, checks the distinct
+# __MAC_OS_X_VERSION_MAX_ALLOWED), so dropping the -D is safe on old SDKs too.
 
-CDEFS+=-DQUARTZ 
+CDEFS+=-DQUARTZ
 EXTRA_CDEFS*=-isysroot $(MACOSX_SDK_PATH)
 
 # Name of library where static data members are initialized
@@ -87,7 +94,12 @@ CFLAGS+=-Wno-deprecated-declarations
 #  Compilation flags
 # ---------------------------------
 # Normal C compilation flags
-CFLAGSCC=-pipe -fsigned-char
+# Clang 16+ (Xcode 15+) removed support for K&R-style function definitions and
+# implicit-int, turning them from warnings into hard errors. Much of the
+# in-tree C is old-style, so pin the C dialect to gnu89 (symmetric with the
+# gnu++98 C++ pin). gnu89 still permits later constructs as GNU extensions, so
+# it does not break modern C modules.
+CFLAGSCC=-pipe -fsigned-char -std=gnu89
 
 # Normal Objective C compilation flags
 #OBJCFLAGS=-no-precomp
@@ -173,6 +185,7 @@ LINKFLAGSRUNPATH_UREBIN=
 LINKFLAGSRUNPATH_OOO=-install_name '@_______OOO/$(@:f)'
 LINKFLAGSRUNPATH_SDK=
 LINKFLAGSRUNPATH_BRAND=
+LINKFLAGSRUNPATH_BRANDBIN=
 LINKFLAGSRUNPATH_OXT=
 LINKFLAGSRUNPATH_BOXT=
 LINKFLAGSRUNPATH_NONE=-install_name '@_______NONE/$(@:f)'

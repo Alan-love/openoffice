@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -69,7 +69,7 @@ BibToolBarListener::~BibToolBarListener()
 {
 }
 
-void BibToolBarListener::statusChanged(const ::com::sun::star::frame::FeatureStateEvent& rEvt)throw( ::com::sun::star::uno::RuntimeException )
+void BibToolBarListener::statusChanged(const ::com::sun::star::frame::FeatureStateEvent& rEvt)
 {
 	if(rEvt.FeatureURL.Complete == aCommand)
 	{
@@ -104,7 +104,7 @@ BibTBListBoxListener::~BibTBListBoxListener()
 {
 }
 
-void BibTBListBoxListener::statusChanged(const ::com::sun::star::frame::FeatureStateEvent& rEvt)throw( ::com::sun::star::uno::RuntimeException )
+void BibTBListBoxListener::statusChanged(const ::com::sun::star::frame::FeatureStateEvent& rEvt)
 {
 	if(rEvt.FeatureURL.Complete == GetCommand())
 	{
@@ -144,7 +144,7 @@ BibTBQueryMenuListener::~BibTBQueryMenuListener()
 {
 }
 
-void BibTBQueryMenuListener::statusChanged(const frame::FeatureStateEvent& rEvt)throw( uno::RuntimeException )
+void BibTBQueryMenuListener::statusChanged(const frame::FeatureStateEvent& rEvt)
 {
 	if(rEvt.FeatureURL.Complete == GetCommand())
 	{
@@ -182,7 +182,7 @@ BibTBEditListener::~BibTBEditListener()
 {
 }
 
-void BibTBEditListener::statusChanged(const frame::FeatureStateEvent& rEvt)throw( uno::RuntimeException )
+void BibTBEditListener::statusChanged(const frame::FeatureStateEvent& rEvt)
 {
 	if(rEvt.FeatureURL.Complete == GetCommand())
 	{
@@ -230,7 +230,7 @@ BibToolBar::BibToolBar(Window* pParent, Link aLink, WinBits nStyle):
 	aLBSource.SetDropDownLineCount(9);
 	aLBSource.Show();
 	aLBSource.SetSelectHdl(LINK( this, BibToolBar, SelHdl));
-	
+
     SvtMiscOptions().AddListenerLink( LINK( this, BibToolBar, OptionsChanged_Impl ) );
     Application::AddEventListener( LINK( this, BibToolBar, SettingsChanged_Impl ) );
 
@@ -496,7 +496,7 @@ IMPL_LINK( BibToolBar, SendSelHdl, Timer*,/*pT*/)
 	Sequence<PropertyValue> aPropVal(1);
 	PropertyValue* pPropertyVal = (PropertyValue*)aPropVal.getConstArray();
 	pPropertyVal[0].Name = C2U("DataSourceName");
-	String aEntry( MnemonicGenerator::EraseAllMnemonicChars( aLBSource.GetSelectEntry() ) ); 
+	String aEntry( MnemonicGenerator::EraseAllMnemonicChars( aLBSource.GetSelectEntry() ) );
 	rtl::OUString aSelection = aEntry;
 	pPropertyVal[0].Value <<= aSelection;
 	SendDispatch(TBC_LB_SOURCE,aPropVal);
@@ -542,7 +542,6 @@ IMPL_LINK( BibToolBar, MenuHdl, ToolBox*, /*pToolbox*/)
 }
 //-----------------------------------------------------------------------------
 void	BibToolBar::statusChanged(const frame::FeatureStateEvent& rEvent)
-											throw( uno::RuntimeException )
 {
 	for(sal_uInt16 i = 0; i < aListenerArr.Count(); i++)
 	{
@@ -578,7 +577,7 @@ IMPL_LINK( BibToolBar, OptionsChanged_Impl, void*, /*pVoid*/ )
         SetOutStyle( nOutStyle );
         bRebuildToolBar = sal_True;
     }
-    
+
     if ( bRebuildToolBar )
         RebuildToolbar();
 
@@ -596,7 +595,7 @@ IMPL_LINK( BibToolBar, SettingsChanged_Impl, void*, /*pVoid*/ )
         nSymbolsSize = eSymbolsSize;
         RebuildToolbar();
     }
-    
+
     return 0L;
 }
 
@@ -612,10 +611,10 @@ void BibToolBar::RebuildToolbar()
 
 void BibToolBar::ApplyImageList()
 {
-    ImageList& rList = ( nSymbolsSize == SFX_SYMBOLS_SIZE_SMALL ) ? 
+    ImageList& rList = ( nSymbolsSize == SFX_SYMBOLS_SIZE_SMALL ) ?
                        ( GetSettings().GetStyleSettings().GetHighContrastMode() ? aImgLstHC : aImgLst ) :
                        ( GetSettings().GetStyleSettings().GetHighContrastMode() ? aBigImgLstHC : aBigImgLst );
-    
+
     SetItemImage(TBC_BT_AUTOFILTER  , rList.GetImage(SID_FM_AUTOFILTER));
     SetItemImage(TBC_BT_FILTERCRIT  , rList.GetImage(SID_FM_FILTERCRIT));
     SetItemImage(TBC_BT_REMOVEFILTER, rList.GetImage(SID_FM_REMOVE_FILTER_SORT ));

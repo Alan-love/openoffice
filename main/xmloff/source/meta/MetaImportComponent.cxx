@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -79,7 +79,6 @@ SvXMLImportContext* XMLMetaImportComponent::CreateContext(
 
 void SAL_CALL XMLMetaImportComponent::setTargetDocument(
     const uno::Reference< lang::XComponent >& xDoc )
-    throw(lang::IllegalArgumentException, uno::RuntimeException)
 {
     mxDocProps = uno::Reference< document::XDocumentProperties >::query( xDoc );
     if( !mxDocProps.is() )
@@ -105,10 +104,8 @@ rtl::OUString SAL_CALL XMLMetaImportComponent_getImplementationName() throw()
 
 uno::Reference< uno::XInterface > SAL_CALL XMLMetaImportComponent_createInstance(
         const uno::Reference< lang::XMultiServiceFactory > & rSMgr)
-    throw( uno::Exception )
 {
     // #110680#
     // return (cppu::OWeakObject*)new XMLMetaImportComponent;
     return (cppu::OWeakObject*)new XMLMetaImportComponent(rSMgr);
 }
-

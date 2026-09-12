@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -58,7 +58,7 @@ XMLVersionListExport::XMLVersionListExport(
     const OUString &rFileName,
     Reference< XDocumentHandler > &rHandler )
 :   SvXMLExport( xServiceFactory, rFileName, rHandler ),
-	maVersions( rVersions ) 
+	maVersions( rVersions )
 {
     _GetNamespaceMap().AddAtIndex( XML_NAMESPACE_DC_IDX, xmloff::token::GetXMLToken(xmloff::token::XML_NP_DC),
                                    xmloff::token::GetXMLToken(xmloff::token::XML_N_DC), XML_NAMESPACE_DC );
@@ -353,7 +353,6 @@ sal_Bool XMLVersionContext::ParseISODateTimeString(
 // ------------------------------------------------------------------------
 
 void SAL_CALL XMLVersionListPersistence::store( const uno::Reference< embed::XStorage >& xRoot, const uno::Sequence< util::RevisionTag >& rVersions )
-    throw (::com::sun::star::io::IOException, ::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException)
 {
     // no storage, no version list!
     if ( xRoot.is() )
@@ -394,7 +393,7 @@ void SAL_CALL XMLVersionListPersistence::store( const uno::Reference< embed::XSt
 
         	Reference< io::XOutputStream > xOut = xVerStream->getOutputStream();
 			if ( !xOut.is() )
-				throw uno::RuntimeException(); // the stream was successfuly opened for writing already
+				throw uno::RuntimeException(); // the stream was successfully opened for writing already
 
         	Reference< io::XActiveDataSource > xSrc( xWriter, uno::UNO_QUERY );
         	xSrc->setOutputStream(xOut);
@@ -419,7 +418,6 @@ void SAL_CALL XMLVersionListPersistence::store( const uno::Reference< embed::XSt
 
 // ------------------------------------------------------------------------
 uno::Sequence< util::RevisionTag > SAL_CALL XMLVersionListPersistence::load( const uno::Reference< embed::XStorage >& xRoot )
-        throw (::com::sun::star::container::NoSuchElementException, ::com::sun::star::io::IOException, ::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException)
 {
     com::sun::star::uno::Sequence < com::sun::star::util::RevisionTag > aVersions;
 
@@ -457,7 +455,7 @@ uno::Sequence< util::RevisionTag > SAL_CALL XMLVersionListPersistence::load( con
 
         	aParserInput.aInputStream = xDocStream->getInputStream();
 			OSL_ENSURE( aParserInput.aInputStream.is(),
-						"The stream was successfuly opened for reading, the input part must be accessible!\n" );
+						"The stream was successfully opened for reading, the input part must be accessible!\n" );
 			if ( !aParserInput.aInputStream.is() )
 				throw uno::RuntimeException();
 
@@ -509,7 +507,6 @@ rtl::OUString SAL_CALL XMLVersionListPersistence_getImplementationName() throw()
 
 uno::Reference< uno::XInterface > SAL_CALL XMLVersionListPersistence_createInstance(
 		const uno::Reference< lang::XMultiServiceFactory > &)
-	throw( uno::Exception )
 {
     return (cppu::OWeakObject*)new XMLVersionListPersistence;
 }
@@ -530,8 +527,6 @@ rtl::OUString SAL_CALL XMLVersionImExportOOO_getImplementationName() throw()
 
 uno::Reference< uno::XInterface > SAL_CALL XMLVersionImExportOOO_createInstance(
 		const uno::Reference< lang::XMultiServiceFactory > &)
-	throw( uno::Exception )
 {
     return (cppu::OWeakObject*)new XMLVersionListPersistence;
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -350,7 +350,7 @@ sal_uInt32 ImplEESdrWriter::ImplWriteShape( ImplEESdrObject& rObj,
 			{
 				mpEscherEx->OpenContainer( ESCHER_SpContainer );
 				ADD_SHAPE( ESCHER_ShpInst_Ellipse, 0xa00 );			// Flags: Connector | HasSpt
-				aPropOpt.CreateFillProperties( rObj.mXPropSet, sal_True );;
+				aPropOpt.CreateFillProperties( rObj.mXPropSet, sal_True );
 			}
 			else
 			{
@@ -664,7 +664,7 @@ sal_uInt32 ImplEESdrWriter::ImplWriteShape( ImplEESdrObject& rObj,
 			}
 			else
 			{
-				//2do: could be made an option in HostAppData whether OLE object should be written or not
+				// TODO: could be made an option in HostAppData whether OLE object should be written or not
 				sal_Bool bAppOLE = sal_True;
 				ADD_SHAPE( ESCHER_ShpInst_PictureFrame,
 					0xa00 | (bAppOLE ? SHAPEFLAG_OLESHAPE : 0) );
@@ -779,7 +779,7 @@ void ImplEESdrWriter::ImplWriteAdditionalText( ImplEESdrObject& rObj,
 		sal_Int32 nAngle = rObj.GetAngle();
 		if( rObj.GetType().EqualsAscii( "drawing.Line" ))
 		{
-//2do: this does not work right
+// TODO: this does not work right
 			double fDist = hypot( rObj.GetRect().GetWidth(),
 									rObj.GetRect().GetHeight() );
 			rObj.SetRect( Rectangle( rTextRefPoint,
@@ -1135,7 +1135,7 @@ ImplEESdrObject::ImplEESdrObject( ImplEscherExSdr& rEx,
     {
         // why not declare a const parameter if the object will
         // not be modified?
-        mXShape = uno::Reference< drawing::XShape >::query( ((SdrObject*)&rObj)->getUnoShape() );;
+        mXShape = uno::Reference< drawing::XShape >::query( ((SdrObject*)&rObj)->getUnoShape() );
         Init( rEx );
     }
 }
@@ -1196,7 +1196,7 @@ basegfx::B2DRange getUnrotatedGroupBoundRange(const Reference< XShape >& rxShape
                 if(mXPropSet.is())
                 {
                     const Any aAny = mXPropSet->getPropertyValue(OUString(RTL_CONSTASCII_USTRINGPARAM("Transformation")));
-                    
+
                     if(aAny.hasValue())
                     {
                         HomogenMatrix3 aMatrix;
@@ -1218,7 +1218,7 @@ basegfx::B2DRange getUnrotatedGroupBoundRange(const Reference< XShape >& rxShape
                             basegfx::B2DVector aScale, aTranslate;
                             double fRotate, fShearX;
 
-                            // decopose transformation
+                            // decompose transformation
                             aHomogenMatrix.decompose(aScale, aTranslate, fRotate, fShearX);
 
                             // check if rotation needs to be corrected
@@ -1374,4 +1374,3 @@ sal_Bool ImplEESdrObject::ImplHasText() const
 	Reference< XText > xXText( mXShape, UNO_QUERY );
 	return xXText.is() && xXText->getString().getLength();
 }
-

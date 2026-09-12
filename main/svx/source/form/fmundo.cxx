@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -85,35 +85,35 @@ typedef cppu::WeakImplHelper1< XScriptListener > ScriptEventListener_BASE;
 class ScriptEventListenerWrapper : public ScriptEventListener_BASE
 {
 public:
-	ScriptEventListenerWrapper( FmFormModel& _rModel) throw ( RuntimeException )
+	ScriptEventListenerWrapper( FmFormModel& _rModel)
 		:m_rModel( _rModel )
 		,m_attemptedListenerCreation( false )
 	{
 
 	}
     // XEventListener
-    virtual void SAL_CALL disposing(const EventObject& ) throw( RuntimeException ){}
+    virtual void SAL_CALL disposing(const EventObject& ){}
 
     // XScriptListener
-    virtual void SAL_CALL firing(const  ScriptEvent& evt) throw(RuntimeException)	
+    virtual void SAL_CALL firing(const  ScriptEvent& evt)
 	{
 		attemptListenerCreation();
 		if ( m_vbaListener.is() )
 		{
-			m_vbaListener->firing( evt );	
+			m_vbaListener->firing( evt );
 		}
 	}
 
-    virtual Any SAL_CALL approveFiring(const ScriptEvent& evt) throw( com::sun::star::reflection::InvocationTargetException, RuntimeException)
+    virtual Any SAL_CALL approveFiring(const ScriptEvent& evt)
 	{
 		attemptListenerCreation();
 		if ( m_vbaListener.is() )
 		{
-			return m_vbaListener->approveFiring( evt );	
+			return m_vbaListener->approveFiring( evt );
 		}
-		return Any();	
+		return Any();
 	}
-    
+
 private:
 	void attemptListenerCreation()
 	{
@@ -202,7 +202,7 @@ FmXUndoEnvironment::~FmXUndoEnvironment()
 {
 	DBG_DTOR(FmXUndoEnvironment,NULL);
 	if ( !m_bDisposed )   // i120746, call FormScriptingEnvironment::dispose to avoid memory leak
-		m_pScriptingEnv->dispose(); 
+		m_pScriptingEnv->dispose();
 
 	if (m_pPropertySetCache)
 		delete static_cast<PropertySetInfoCache*>(m_pPropertySetCache);
@@ -532,7 +532,7 @@ void FmXUndoEnvironment::Removed(FmFormObj* pObj)
 
 //	XEventListener
 //------------------------------------------------------------------------------
-void SAL_CALL FmXUndoEnvironment::disposing(const EventObject& e) throw( RuntimeException )
+void SAL_CALL FmXUndoEnvironment::disposing(const EventObject& e)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "FmXUndoEnvironment::disposing" );
 	// check if it's an object we have cached informations about
@@ -551,7 +551,7 @@ void SAL_CALL FmXUndoEnvironment::disposing(const EventObject& e) throw( Runtime
 
 // XPropertyChangeListener
 //------------------------------------------------------------------------------
-void SAL_CALL FmXUndoEnvironment::propertyChange(const PropertyChangeEvent& evt) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL FmXUndoEnvironment::propertyChange(const PropertyChangeEvent& evt)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "FmXUndoEnvironment::propertyChange" );
     ::osl::ClearableMutexGuard aGuard( m_aMutex );
@@ -747,7 +747,7 @@ void SAL_CALL FmXUndoEnvironment::propertyChange(const PropertyChangeEvent& evt)
 
 // XContainerListener
 //------------------------------------------------------------------------------
-void SAL_CALL FmXUndoEnvironment::elementInserted(const ContainerEvent& evt) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL FmXUndoEnvironment::elementInserted(const ContainerEvent& evt)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "FmXUndoEnvironment::elementInserted" );
 	::vos::OClearableGuard aSolarGuard( Application::GetSolarMutex() );
@@ -773,7 +773,7 @@ void FmXUndoEnvironment::implSetModified()
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL FmXUndoEnvironment::elementReplaced(const ContainerEvent& evt) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL FmXUndoEnvironment::elementReplaced(const ContainerEvent& evt)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "FmXUndoEnvironment::elementReplaced" );
 	::vos::OClearableGuard aSolarGuard( Application::GetSolarMutex() );
@@ -791,7 +791,7 @@ void SAL_CALL FmXUndoEnvironment::elementReplaced(const ContainerEvent& evt) thr
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL FmXUndoEnvironment::elementRemoved(const ContainerEvent& evt) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL FmXUndoEnvironment::elementRemoved(const ContainerEvent& evt)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "FmXUndoEnvironment::elementRemoved" );
 	::vos::OClearableGuard aSolarGuard( Application::GetSolarMutex() );
@@ -805,7 +805,7 @@ void SAL_CALL FmXUndoEnvironment::elementRemoved(const ContainerEvent& evt) thro
 }
 
 //------------------------------------------------------------------------------
-void SAL_CALL FmXUndoEnvironment::modified( const EventObject& /*aEvent*/ ) throw (RuntimeException)
+void SAL_CALL FmXUndoEnvironment::modified( const EventObject& /*aEvent*/ )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "FmXUndoEnvironment::modified" );
     implSetModified();
@@ -1059,7 +1059,7 @@ String FmUndoPropertyAction::GetComment() const
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "FmUndoPropertyAction::GetComment" );
 	String aStr(static_STR_UNDO_PROPERTY);
-	
+
 	aStr.SearchAndReplace( '#', aPropertyName );
 	return aStr;
 }
@@ -1128,7 +1128,7 @@ void FmUndoContainerAction::DisposeElement( const Reference< XInterface > & xEle
 }
 
 //------------------------------------------------------------------------------
-void FmUndoContainerAction::implReInsert( ) SAL_THROW( ( Exception ) )
+void FmUndoContainerAction::implReInsert( )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "FmUndoContainerAction::implReInsert" );
 	if ( m_xContainer->getCount() >= m_nIndex )
@@ -1158,7 +1158,7 @@ void FmUndoContainerAction::implReInsert( ) SAL_THROW( ( Exception ) )
 }
 
 //------------------------------------------------------------------------------
-void FmUndoContainerAction::implReRemove( ) SAL_THROW( ( Exception ) )
+void FmUndoContainerAction::implReRemove( )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "svx", "Ocke.Janssen@sun.com", "FmUndoContainerAction::implReRemove" );
     Reference< XInterface > xElement;

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 #include "LineChartType.hxx"
 #include "PropertyHelper.hxx"
 #include "macros.hxx"
@@ -91,7 +91,7 @@ private:
         // todo: check whether order 3 means polygons of order 3 or 2. (see
         // http://www.people.nnov.ru/fractal/Splines/Basis.htm )
         ::chart::PropertyHelper::setPropertyValueDefault< sal_Int32 >( rOutMap, PROP_LINECHARTTYPE_SPLINE_ORDER, 3 );
-    }    
+    }
 };
 
 struct StaticLineChartTypeDefaults : public rtl::StaticAggregate< ::chart::tPropertyValueMap, StaticLineChartTypeDefaults_Initializer >
@@ -159,14 +159,12 @@ LineChartType::~LineChartType()
 
 // ____ XCloneable ____
 uno::Reference< util::XCloneable > SAL_CALL LineChartType::createClone()
-    throw (uno::RuntimeException)
 {
     return uno::Reference< util::XCloneable >( new LineChartType( *this ));
 }
 
 // ____ XChartType ____
 ::rtl::OUString SAL_CALL LineChartType::getChartType()
-    throw (uno::RuntimeException)
 {
     return CHART2_SERVICE_NAME_CHARTTYPE_LINE;
 }
@@ -174,7 +172,6 @@ uno::Reference< util::XCloneable > SAL_CALL LineChartType::createClone()
 
 // ____ OPropertySet ____
 uno::Any LineChartType::GetDefaultValue( sal_Int32 nHandle ) const
-    throw(beans::UnknownPropertyException)
 {
     const tPropertyValueMap& rStaticDefaults = *StaticLineChartTypeDefaults::get();
     tPropertyValueMap::const_iterator aFound( rStaticDefaults.find( nHandle ) );
@@ -190,7 +187,6 @@ uno::Any LineChartType::GetDefaultValue( sal_Int32 nHandle ) const
 
 // ____ XPropertySet ____
 uno::Reference< beans::XPropertySetInfo > SAL_CALL LineChartType::getPropertySetInfo()
-    throw (uno::RuntimeException)
 {
     return *StaticLineChartTypeInfo::get();
 }

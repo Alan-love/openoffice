@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -32,7 +32,7 @@
 using namespace ooo::vba;
 using namespace com::sun::star;
 
-ScVbaLineFormat::ScVbaLineFormat( const uno::Reference< ov::XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext >& xContext, const uno::Reference< drawing::XShape > xShape ) : ScVbaLineFormat_BASE( xParent, xContext ), m_xShape( xShape ) 
+ScVbaLineFormat::ScVbaLineFormat( const uno::Reference< ov::XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext >& xContext, const uno::Reference< drawing::XShape > xShape ) : ScVbaLineFormat_BASE( xParent, xContext ), m_xShape( xShape )
 {
     m_xPropertySet.set( xShape, uno::UNO_QUERY_THROW );
     m_nLineDashStyle = office::MsoLineDashStyle::msoLineSolid;
@@ -94,8 +94,8 @@ ScVbaLineFormat::convertLineStartEndNameToArrowheadStyle( rtl::OUString sLineNam
     return nLineType;
 }
 
-rtl::OUString 
-ScVbaLineFormat::convertArrowheadStyleToLineStartEndName( sal_Int32 nArrowheadStyle ) throw (uno::RuntimeException)
+rtl::OUString
+ScVbaLineFormat::convertArrowheadStyleToLineStartEndName( sal_Int32 nArrowheadStyle )
 {
     switch( nArrowheadStyle )
     {
@@ -117,8 +117,8 @@ ScVbaLineFormat::convertArrowheadStyleToLineStartEndName( sal_Int32 nArrowheadSt
 }
 
 // Attributes
-sal_Int32 SAL_CALL 
-ScVbaLineFormat::getBeginArrowheadStyle() throw (uno::RuntimeException)
+sal_Int32 SAL_CALL
+ScVbaLineFormat::getBeginArrowheadStyle()
 {
     sal_Int32 nLineType = office::MsoArrowheadStyle::msoArrowheadNone;
     rtl::OUString sLineName;
@@ -137,74 +137,74 @@ ScVbaLineFormat::getBeginArrowheadStyle() throw (uno::RuntimeException)
     return nLineType;
 }
 
-void SAL_CALL 
-ScVbaLineFormat::setBeginArrowheadStyle( sal_Int32 _beginarrowheadstyle ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaLineFormat::setBeginArrowheadStyle( sal_Int32 _beginarrowheadstyle )
 {
     rtl::OUString sArrayName = convertArrowheadStyleToLineStartEndName( _beginarrowheadstyle );
     m_xPropertySet->setPropertyValue( rtl::OUString::createFromAscii( "LineStartName" ), uno::makeAny( sArrayName ) );
 }
 
-sal_Int32 SAL_CALL 
-ScVbaLineFormat::getBeginArrowheadLength() throw (uno::RuntimeException)
+sal_Int32 SAL_CALL
+ScVbaLineFormat::getBeginArrowheadLength()
 {
     throw uno::RuntimeException( rtl::OUString::createFromAscii("Property 'EndArrowheadWidth' is not supported."), uno::Reference< uno::XInterface >() );
 }
 
-void SAL_CALL 
-ScVbaLineFormat::setBeginArrowheadLength( sal_Int32 /*_beginarrowheadlength*/ ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaLineFormat::setBeginArrowheadLength( sal_Int32 /*_beginarrowheadlength*/ )
 {
     throw uno::RuntimeException( rtl::OUString::createFromAscii("Property 'EndArrowheadWidth' is not supported."), uno::Reference< uno::XInterface >() );
 }
 
-sal_Int32 SAL_CALL 
-ScVbaLineFormat::getBeginArrowheadWidth() throw (uno::RuntimeException)
+sal_Int32 SAL_CALL
+ScVbaLineFormat::getBeginArrowheadWidth()
 {
     throw uno::RuntimeException( rtl::OUString::createFromAscii("Property 'EndArrowheadWidth' is not supported."), uno::Reference< uno::XInterface >() );
 }
 
-void SAL_CALL 
-ScVbaLineFormat::setBeginArrowheadWidth( sal_Int32 /*_beginarrowheadwidth*/ ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaLineFormat::setBeginArrowheadWidth( sal_Int32 /*_beginarrowheadwidth*/ )
 {
     throw uno::RuntimeException( rtl::OUString::createFromAscii("Property 'EndArrowheadWidth' is not supported."), uno::Reference< uno::XInterface >() );
 }
 
-sal_Int32 SAL_CALL 
-ScVbaLineFormat::getEndArrowheadStylel() throw (uno::RuntimeException)
+sal_Int32 SAL_CALL
+ScVbaLineFormat::getEndArrowheadStylel()
 {
     return 0;
 }
 
-void SAL_CALL 
-ScVbaLineFormat::setEndArrowheadStylel( sal_Int32 /*_endarrowheadstylel*/ ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaLineFormat::setEndArrowheadStylel( sal_Int32 /*_endarrowheadstylel*/ )
 {
 }
 
-sal_Int32 SAL_CALL 
-ScVbaLineFormat::getEndArrowheadLength() throw (uno::RuntimeException)
-{
-    throw uno::RuntimeException( rtl::OUString::createFromAscii("Property 'EndArrowheadWidth' is not supported."), uno::Reference< uno::XInterface >() );
-}
-
-void SAL_CALL 
-ScVbaLineFormat::setEndArrowheadLength( sal_Int32 /*_endarrowheadlength*/ ) throw (uno::RuntimeException)
+sal_Int32 SAL_CALL
+ScVbaLineFormat::getEndArrowheadLength()
 {
     throw uno::RuntimeException( rtl::OUString::createFromAscii("Property 'EndArrowheadWidth' is not supported."), uno::Reference< uno::XInterface >() );
 }
 
-sal_Int32 SAL_CALL 
-ScVbaLineFormat::getEndArrowheadWidth() throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaLineFormat::setEndArrowheadLength( sal_Int32 /*_endarrowheadlength*/ )
 {
     throw uno::RuntimeException( rtl::OUString::createFromAscii("Property 'EndArrowheadWidth' is not supported."), uno::Reference< uno::XInterface >() );
 }
 
-void SAL_CALL 
-ScVbaLineFormat::setEndArrowheadWidth( sal_Int32 /*_endarrowheadwidth*/ ) throw (uno::RuntimeException)
+sal_Int32 SAL_CALL
+ScVbaLineFormat::getEndArrowheadWidth()
 {
     throw uno::RuntimeException( rtl::OUString::createFromAscii("Property 'EndArrowheadWidth' is not supported."), uno::Reference< uno::XInterface >() );
 }
 
-double SAL_CALL 
-ScVbaLineFormat::getWeight() throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaLineFormat::setEndArrowheadWidth( sal_Int32 /*_endarrowheadwidth*/ )
+{
+    throw uno::RuntimeException( rtl::OUString::createFromAscii("Property 'EndArrowheadWidth' is not supported."), uno::Reference< uno::XInterface >() );
+}
+
+double SAL_CALL
+ScVbaLineFormat::getWeight()
 {
     sal_Int32 nLineWidth=0;
     m_xPropertySet->getPropertyValue( rtl::OUString::createFromAscii( "LineWidth") ) >>= nLineWidth;
@@ -212,8 +212,8 @@ ScVbaLineFormat::getWeight() throw (uno::RuntimeException)
     return dLineWidth;
 }
 
-void SAL_CALL 
-ScVbaLineFormat::setWeight( double _weight ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaLineFormat::setWeight( double _weight )
 {
     if( _weight < 0 )
         throw uno::RuntimeException( rtl::OUString::createFromAscii("Parameter: Must be positv."), uno::Reference< uno::XInterface >() );
@@ -222,14 +222,14 @@ ScVbaLineFormat::setWeight( double _weight ) throw (uno::RuntimeException)
     m_nLineWeight = _weight;
     Millimeter aMillimeter;
     aMillimeter.setInPoints( _weight );
-        
+
     sal_Int32 nLineWidth = static_cast<sal_Int32>( aMillimeter.getInHundredthsOfOneMillimeter() );
     m_xPropertySet->setPropertyValue( rtl::OUString::createFromAscii( "LineWidth" ), uno::makeAny( nLineWidth ) );
     setDashStyle( m_nLineDashStyle );
 }
 
-sal_Bool SAL_CALL 
-ScVbaLineFormat::getVisible() throw (uno::RuntimeException)
+sal_Bool SAL_CALL
+ScVbaLineFormat::getVisible()
 {
     drawing::LineStyle aLineStyle;
     m_xPropertySet->getPropertyValue( rtl::OUString::createFromAscii( "LineStyle" ) ) >>= aLineStyle;
@@ -240,8 +240,8 @@ ScVbaLineFormat::getVisible() throw (uno::RuntimeException)
     return sal_True;
 }
 
-void SAL_CALL 
-ScVbaLineFormat::setVisible( sal_Bool _visible ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaLineFormat::setVisible( sal_Bool _visible )
 {
     drawing::LineStyle aLineStyle;
     m_xPropertySet->getPropertyValue( rtl::OUString::createFromAscii( "LineStyle" ) ) >>= aLineStyle;
@@ -259,8 +259,8 @@ ScVbaLineFormat::setVisible( sal_Bool _visible ) throw (uno::RuntimeException)
     }
 }
 
-double SAL_CALL 
-ScVbaLineFormat::getTransparency() throw (uno::RuntimeException)
+double SAL_CALL
+ScVbaLineFormat::getTransparency()
 {
     sal_Int16 nTransparency = 0;
     m_xPropertySet->getPropertyValue( rtl::OUString::createFromAscii( "LineTransparence" ) ) >>= nTransparency;
@@ -268,23 +268,23 @@ ScVbaLineFormat::getTransparency() throw (uno::RuntimeException)
     return fTransparency / 100;
 }
 
-void SAL_CALL 
-ScVbaLineFormat::setTransparency( double _transparency ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaLineFormat::setTransparency( double _transparency )
 {
     sal_Int16 nTransparency = static_cast<sal_Int16>( _transparency * 100 );
     m_xPropertySet->setPropertyValue( rtl::OUString::createFromAscii( "LineTransparence" ), uno::makeAny( nTransparency ) );
 }
 
-sal_Int16 SAL_CALL 
-ScVbaLineFormat::getStyle() throw (uno::RuntimeException)
+sal_Int16 SAL_CALL
+ScVbaLineFormat::getStyle()
 {
     //OpenOffice.org only supports one LineStyle (other than the DashStyles)
     //Therefore we can only return the SingleLine
     return 1;
 }
 
-void SAL_CALL 
-ScVbaLineFormat::setStyle( sal_Int16 /*_style */) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaLineFormat::setStyle( sal_Int16 /*_style */)
 {
     //OpenOffice.org only supports one LineStyle (other than the DashStyles)
     //Therefore we do not set the LineStyle, because it maybe is already set
@@ -292,8 +292,8 @@ ScVbaLineFormat::setStyle( sal_Int16 /*_style */) throw (uno::RuntimeException)
     //will be done with the according methods.
 }
 
-sal_Int32 SAL_CALL 
-ScVbaLineFormat::getDashStyle() throw (uno::RuntimeException)
+sal_Int32 SAL_CALL
+ScVbaLineFormat::getDashStyle()
 {
     drawing::LineStyle eLineStyle;
     //LineStyle integer in Xray
@@ -343,8 +343,8 @@ ScVbaLineFormat::getDashStyle() throw (uno::RuntimeException)
     return m_nLineDashStyle;
 }
 
-void SAL_CALL 
-ScVbaLineFormat::setDashStyle( sal_Int32 _dashstyle ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaLineFormat::setDashStyle( sal_Int32 _dashstyle )
 {
     m_nLineDashStyle = _dashstyle;
     if( _dashstyle == office::MsoLineDashStyle::msoLineSolid )
@@ -417,26 +417,26 @@ ScVbaLineFormat::setDashStyle( sal_Int32 _dashstyle ) throw (uno::RuntimeExcepti
 
 // Methods
 uno::Reference< msforms::XColorFormat > SAL_CALL
-ScVbaLineFormat::BackColor() throw (uno::RuntimeException)
+ScVbaLineFormat::BackColor()
 {
     return uno::Reference< msforms::XColorFormat >( new ScVbaColorFormat( getParent(), mxContext, this, m_xShape, ::ColorFormatType::LINEFORMAT_BACKCOLOR ) );
 }
 
 uno::Reference< msforms::XColorFormat > SAL_CALL
-ScVbaLineFormat::ForeColor() throw (uno::RuntimeException)
+ScVbaLineFormat::ForeColor()
 {
     return uno::Reference< msforms::XColorFormat >( new ScVbaColorFormat( getParent(), mxContext, this, m_xShape, ::ColorFormatType::LINEFORMAT_FORECOLOR ) );
 }
 
 
-rtl::OUString& 
+rtl::OUString&
 ScVbaLineFormat::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("ScVbaLineFormat") );
 	return sImplName;
 }
 
-uno::Sequence< rtl::OUString > 
+uno::Sequence< rtl::OUString >
 ScVbaLineFormat::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > aServiceNames;
@@ -447,5 +447,3 @@ ScVbaLineFormat::getServiceNames()
 	}
 	return aServiceNames;
 }
-
-

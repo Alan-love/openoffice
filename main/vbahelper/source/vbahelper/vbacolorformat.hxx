@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -91,7 +91,7 @@ struct MsoColorIndizes
     const static sal_Int32 HAPICOLOR_GRAY_80_PERCENT = 3355443;
 
     static sal_Int32 getColorIndex( sal_Int32 nIndex );
-    
+
 };
 
 class ScVbaColorFormat : public ScVbaColorFormat_BASE
@@ -111,10 +111,10 @@ public:
     ScVbaColorFormat( const css::uno::Reference< ov::XHelperInterface >& xParent, const css::uno::Reference< css::uno::XComponentContext >& xContext, const css::uno::Reference< ov::XHelperInterface > xInternalParent, const css::uno::Reference< css::drawing::XShape > xShape, const sal_Int16 nColorFormatType );
 
     // Attributes
-    virtual sal_Int32 SAL_CALL getRGB() throw (css::uno::RuntimeException);
-    virtual void SAL_CALL setRGB( sal_Int32 _rgb ) throw (css::uno::RuntimeException);
-    virtual sal_Int32 SAL_CALL getSchemeColor() throw (css::uno::RuntimeException);
-    virtual void SAL_CALL setSchemeColor( sal_Int32 _schemecolor ) throw (css::uno::RuntimeException);
+    virtual sal_Int32 SAL_CALL getRGB();
+    virtual void SAL_CALL setRGB( sal_Int32 _rgb );
+    virtual sal_Int32 SAL_CALL getSchemeColor();
+    virtual void SAL_CALL setSchemeColor( sal_Int32 _schemecolor );
 
 };
 

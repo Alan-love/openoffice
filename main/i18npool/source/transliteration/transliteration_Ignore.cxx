@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -38,7 +38,7 @@ inline sal_Int32 Min( sal_Int32 a, sal_Int32 b ) { return a > b ? b : a; }
 
 sal_Bool SAL_CALL
 transliteration_Ignore::equals(const OUString& str1, sal_Int32 pos1, sal_Int32 nCount1, sal_Int32& nMatch1,
-        const OUString& str2, sal_Int32 pos2, sal_Int32 nCount2, sal_Int32& nMatch2 ) throw(RuntimeException)
+        const OUString& str2, sal_Int32 pos2, sal_Int32 nCount2, sal_Int32& nMatch2 )
 {
         Sequence< sal_Int32 > offset1;
         Sequence< sal_Int32 > offset2;
@@ -70,7 +70,7 @@ transliteration_Ignore::equals(const OUString& str1, sal_Int32 pos1, sal_Int32 n
 
 
 Sequence< OUString > SAL_CALL
-transliteration_Ignore::transliterateRange( const OUString& str1, const OUString& str2 ) throw(RuntimeException)
+transliteration_Ignore::transliterateRange( const OUString& str1, const OUString& str2 )
 {
         if (str1.getLength() < 1 || str2.getLength() < 1)
             throw RuntimeException();
@@ -83,7 +83,7 @@ transliteration_Ignore::transliterateRange( const OUString& str1, const OUString
 
 
 sal_Int16 SAL_CALL
-transliteration_Ignore::getType() throw(RuntimeException)
+transliteration_Ignore::getType()
 {
         // The type is also defined in com/sun/star/util/TransliterationType.hdl
         return TransliterationType::IGNORE;
@@ -92,15 +92,15 @@ transliteration_Ignore::getType() throw(RuntimeException)
 
 OUString SAL_CALL
 transliteration_Ignore::transliterate( const OUString& inStr, sal_Int32 startPos, sal_Int32 nCount,
-        Sequence< sal_Int32 >& offset  ) throw(RuntimeException)
+        Sequence< sal_Int32 >& offset  )
 {
         // The method folding is defined in a sub class.
         return this->folding( inStr, startPos, nCount, offset);
 }
 
 Sequence< OUString > SAL_CALL
-transliteration_Ignore::transliterateRange( const OUString& str1, const OUString& str2, 
-        XTransliteration& t1, XTransliteration& t2 ) throw(RuntimeException)
+transliteration_Ignore::transliterateRange( const OUString& str1, const OUString& str2,
+        XTransliteration& t1, XTransliteration& t2 )
 {
         if (str1.getLength() < 1 || str2.getLength() < 1)
             throw RuntimeException();
@@ -126,14 +126,13 @@ transliteration_Ignore::transliterateRange( const OUString& str1, const OUString
         return r;
 }
 
-OUString SAL_CALL 
-transliteration_Ignore::folding( const OUString& inStr, sal_Int32 startPos, 
-    sal_Int32 nCount, Sequence< sal_Int32 >& offset) 
-    throw(RuntimeException)
+OUString SAL_CALL
+transliteration_Ignore::folding( const OUString& inStr, sal_Int32 startPos,
+    sal_Int32 nCount, Sequence< sal_Int32 >& offset)
 {
     // Create a string buffer which can hold nCount + 1 characters.
     // The reference count is 0 now.
-    rtl_uString * newStr = x_rtl_uString_new_WithLength( nCount ); // defined in x_rtl_ustring.h  
+    rtl_uString * newStr = x_rtl_uString_new_WithLength( nCount ); // defined in x_rtl_ustring.h
     sal_Unicode * dst = newStr->buffer;
     const sal_Unicode * src = inStr.getStr() + startPos;
 
@@ -207,8 +206,8 @@ transliteration_Ignore::folding( const OUString& inStr, sal_Int32 startPos,
     return OUString( newStr, SAL_NO_ACQUIRE ); // take over ownership of <newStr>
 }
 
-sal_Unicode SAL_CALL 
-transliteration_Ignore::transliterateChar2Char( sal_Unicode inChar) throw(RuntimeException, MultipleCharsOutputException)
+sal_Unicode SAL_CALL
+transliteration_Ignore::transliterateChar2Char( sal_Unicode inChar)
 {
     return func ? func( inChar) : table ? (*table)[ inChar ] : inChar;
 }

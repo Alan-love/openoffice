@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -48,12 +48,12 @@ using namespace linguistic;
 
 ///////////////////////////////////////////////////////////////////////////
 
-static sal_Bool SvcListHasLanguage( 
-        const Sequence< Reference< XThesaurus > > &rRefs, 
+static sal_Bool SvcListHasLanguage(
+        const Sequence< Reference< XThesaurus > > &rRefs,
         const Locale &rLocale )
 {
     sal_Bool bHasLanguage = sal_False;
-    
+
     const Reference< XThesaurus > *pRef = rRefs.getConstArray();
     sal_Int32 nLen = rRefs.getLength();
     for (sal_Int32 k = 0;  k < nLen  &&  !bHasLanguage;  ++k)
@@ -61,7 +61,7 @@ static sal_Bool SvcListHasLanguage(
         if (pRef[k].is())
             bHasLanguage = pRef[k]->hasLocale( rLocale );
     }
-    
+
     return bHasLanguage;
 }
 
@@ -89,7 +89,6 @@ void ThesaurusDispatcher::ClearSvcList()
 
 Sequence< Locale > SAL_CALL
 	ThesaurusDispatcher::getLocales()
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -99,14 +98,13 @@ Sequence< Locale > SAL_CALL
     for (aIt = aSvcMap.begin();  aIt != aSvcMap.end();  ++aIt)
     {
         *pLocales++ = CreateLocale( aIt->first );
-    }    
+    }
     return aLocales;
 }
 
 
 sal_Bool SAL_CALL
     ThesaurusDispatcher::hasLocale( const Locale& rLocale )
-		throw(RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
     ThesSvcByLangMap_t::const_iterator aIt( aSvcMap.find( LocaleToLanguage( rLocale ) ) );
@@ -118,7 +116,6 @@ Sequence< Reference< XMeaning > > SAL_CALL
 	ThesaurusDispatcher::queryMeanings(
 			const OUString& rTerm, const Locale& rLocale,
 			const PropertyValues& rProperties )
-		throw(IllegalArgumentException, RuntimeException)
 {
 	MutexGuard	aGuard( GetLinguMutex() );
 
@@ -202,7 +199,7 @@ Sequence< Reference< XMeaning > > SAL_CALL
                     pEntry->nLastTriedSvcIndex = (sal_Int16) i;
 					++i;
 				}
-                
+
                 // if language is not supported by any of the services
                 // remove it from the list.
                 if (i == nLen  &&  aMeanings.getLength() == 0)
@@ -275,4 +272,3 @@ LinguDispatcher::DspType ThesaurusDispatcher::GetDspType() const
 
 
 ///////////////////////////////////////////////////////////////////////////
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -116,12 +116,10 @@ namespace dbaccess
 				, const ::rtl::OUString& _rName
 				,const ::rtl::OUString& _rType
 				, const ::rtl::OUString& _rDesc
-				,const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess >& _rxColumnDefinitions)
-			throw(::com::sun::star::sdbc::SQLException);
+				,const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess >& _rxColumnDefinitions);
 
 		ODBTable(connectivity::sdbcx::OCollection* _pTables
-				,const ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XConnection >& _rxConn)
-				throw(::com::sun::star::sdbc::SQLException);
+				,const ::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XConnection >& _rxConn);
 		virtual ~ODBTable();
 
 		// ODescriptor
@@ -130,8 +128,8 @@ namespace dbaccess
 		//XInterface
 		DECLARE_XINTERFACE()
 		//XTypeProvider
-		virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL getTypes(  ) throw(::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::uno::Sequence< sal_Int8 > SAL_CALL getImplementationId() throw (::com::sun::star::uno::RuntimeException);
+		virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL getTypes(  );
+		virtual ::com::sun::star::uno::Sequence< sal_Int8 > SAL_CALL getImplementationId();
 		static ::com::sun::star::uno::Sequence< sal_Int8 > getUnoTunnelImplementationId();
 
 	// ::com::sun::star::lang::XServiceInfo
@@ -142,13 +140,13 @@ namespace dbaccess
 		virtual void SAL_CALL getFastPropertyValue(::com::sun::star::uno::Any& rValue, sal_Int32 nHandle) const;
 
 	// ::com::sun::star::sdbcx::XRename,
-		virtual void SAL_CALL rename( const ::rtl::OUString& _rNewName ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::container::ElementExistException, ::com::sun::star::uno::RuntimeException);
+		virtual void SAL_CALL rename( const ::rtl::OUString& _rNewName );
 
 	// ::com::sun::star::sdbcx::XAlterTable,
-		virtual void SAL_CALL alterColumnByName( const ::rtl::OUString& _rName, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet >& _rxDescriptor ) throw(::com::sun::star::sdbc::SQLException, ::com::sun::star::container::NoSuchElementException, ::com::sun::star::uno::RuntimeException);
+		virtual void SAL_CALL alterColumnByName( const ::rtl::OUString& _rName, const ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet >& _rxDescriptor );
 
 		// com::sun::star::lang::XUnoTunnel
-        virtual sal_Int64 SAL_CALL getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier ) throw(::com::sun::star::uno::RuntimeException);
+        virtual sal_Int64 SAL_CALL getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier );
 
     private:
         using OTable_Base::createArrayHelper;
@@ -156,5 +154,3 @@ namespace dbaccess
 	};
 }
 #endif // _DBA_CORE_TABLE_HXX_
-
-

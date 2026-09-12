@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -92,27 +92,27 @@ namespace sdbtools
     }
 
     //--------------------------------------------------------------------
-    Reference< XTableName > SAL_CALL ConnectionTools::createTableName() throw (RuntimeException)
+    Reference< XTableName > SAL_CALL ConnectionTools::createTableName()
     {
         EntryGuard aGuard( *this );
         return new TableName( getContext(), getConnection() );
     }
-    
+
     //--------------------------------------------------------------------
-    Reference< XObjectNames > SAL_CALL ConnectionTools::getObjectNames() throw (RuntimeException)
+    Reference< XObjectNames > SAL_CALL ConnectionTools::getObjectNames()
     {
         EntryGuard aGuard( *this );
         return new ObjectNames( getContext(), getConnection() );
     }
-    
+
     //--------------------------------------------------------------------
-    Reference< XDataSourceMetaData > SAL_CALL ConnectionTools::getDataSourceMetaData() throw (RuntimeException)
+    Reference< XDataSourceMetaData > SAL_CALL ConnectionTools::getDataSourceMetaData()
     {
         EntryGuard aGuard( *this );
         return new DataSourceMetaData( getContext(), getConnection() );
     }
     //--------------------------------------------------------------------
-    Reference< container::XNameAccess > SAL_CALL ConnectionTools::getFieldsByCommandDescriptor( ::sal_Int32 commandType, const ::rtl::OUString& command, Reference< lang::XComponent >& keepFieldsAlive ) throw (sdbc::SQLException, RuntimeException)
+    Reference< container::XNameAccess > SAL_CALL ConnectionTools::getFieldsByCommandDescriptor( ::sal_Int32 commandType, const ::rtl::OUString& command, Reference< lang::XComponent >& keepFieldsAlive )
     {
         EntryGuard aGuard( *this );
         ::dbtools::SQLExceptionInfo aErrorInfo;
@@ -122,7 +122,7 @@ namespace sdbtools
         return xRet;
     }
     //--------------------------------------------------------------------
-    Reference< sdb::XSingleSelectQueryComposer > SAL_CALL ConnectionTools::getComposer( ::sal_Int32 commandType, const ::rtl::OUString& command ) throw (::com::sun::star::uno::RuntimeException)
+    Reference< sdb::XSingleSelectQueryComposer > SAL_CALL ConnectionTools::getComposer( ::sal_Int32 commandType, const ::rtl::OUString& command )
     {
         EntryGuard aGuard( *this );
         dbtools::StatementComposer aComposer(getConnection(), command, commandType, sal_True );
@@ -131,22 +131,22 @@ namespace sdbtools
     }
 
     //--------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL ConnectionTools::getImplementationName() throw (RuntimeException)
+    ::rtl::OUString SAL_CALL ConnectionTools::getImplementationName()
     {
         return getImplementationName_static();
     }
-    
+
     //--------------------------------------------------------------------
-    ::sal_Bool SAL_CALL ConnectionTools::supportsService(const ::rtl::OUString & _ServiceName) throw (RuntimeException)
+    ::sal_Bool SAL_CALL ConnectionTools::supportsService(const ::rtl::OUString & _ServiceName)
     {
         Sequence< ::rtl::OUString > aSupported( getSupportedServiceNames() );
         const ::rtl::OUString* begin = aSupported.getConstArray();
         const ::rtl::OUString* end = aSupported.getConstArray() + aSupported.getLength();
         return ::std::find( begin, end, _ServiceName ) != end;
     }
-    
+
     //--------------------------------------------------------------------
-    Sequence< ::rtl::OUString > SAL_CALL ConnectionTools::getSupportedServiceNames() throw (RuntimeException)
+    Sequence< ::rtl::OUString > SAL_CALL ConnectionTools::getSupportedServiceNames()
     {
         return getSupportedServiceNames_static();
     }
@@ -156,7 +156,7 @@ namespace sdbtools
     {
         return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.comp.dbaccess.ConnectionTools" ) );
     }
-    
+
     //--------------------------------------------------------------------
     Sequence< ::rtl::OUString > SAL_CALL ConnectionTools::getSupportedServiceNames_static()
     {
@@ -164,15 +164,15 @@ namespace sdbtools
         aSupported[0] = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.sdb.tools.ConnectionTools" ) );
         return aSupported;
     }
-    
+
     //--------------------------------------------------------------------
 	Reference< XInterface > SAL_CALL ConnectionTools::Create(const Reference< XComponentContext >& _rxContext )
     {
         return *( new ConnectionTools( ::comphelper::ComponentContext( _rxContext ) ) );
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL ConnectionTools::initialize(const Sequence< Any > & _rArguments) throw (RuntimeException, Exception)
+    void SAL_CALL ConnectionTools::initialize(const Sequence< Any > & _rArguments)
     {
         ::osl::MutexGuard aGuard( getMutex() );
 
@@ -190,4 +190,3 @@ namespace sdbtools
 //........................................................................
 } // namespace sdbtools
 //........................................................................
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -44,7 +44,7 @@ namespace sw { namespace sidebarwindows {
 
 // =============================================================================
 // declaration and implementation of <SvxEditSource>
-// for <::accessibiliy::AccessibleTextHelper> instance
+// for <::accessibility::AccessibleTextHelper> instance
 // =============================================================================
 class SidebarTextEditSource : public SvxEditSource,
                               public SfxBroadcaster
@@ -146,11 +146,9 @@ class SidebarTxtControlAccessibleContext : public VCLXAccessibleComponent
         virtual ~SidebarTxtControlAccessibleContext();
 
         virtual sal_Int32 SAL_CALL
-                getAccessibleChildCount()
-                throw (::com::sun::star::uno::RuntimeException);
+                getAccessibleChildCount();
         virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible > SAL_CALL
-                getAccessibleChild( sal_Int32 i )
-                throw (::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::uno::RuntimeException);
+                getAccessibleChild( sal_Int32 i );
 
         using WeakAggComponentImplHelperBase::addEventListener;
         using WeakAggComponentImplHelperBase::removeEventListener;
@@ -158,13 +156,11 @@ class SidebarTxtControlAccessibleContext : public VCLXAccessibleComponent
         virtual void SAL_CALL
                 addEventListener (
                     const ::com::sun::star::uno::Reference<
-                        ::com::sun::star::accessibility::XAccessibleEventListener >& xListener)
-                throw (::com::sun::star::uno::RuntimeException);
+                        ::com::sun::star::accessibility::XAccessibleEventListener >& xListener);
         virtual void SAL_CALL
                 removeEventListener (
                     const ::com::sun::star::uno::Reference<
-                        ::com::sun::star::accessibility::XAccessibleEventListener >& xListener)
-                throw (::com::sun::star::uno::RuntimeException);
+                        ::com::sun::star::accessibility::XAccessibleEventListener >& xListener);
 
     protected:
         virtual void ProcessWindowEvent( const VclWindowEvent& rVclWindowEvent );
@@ -202,7 +198,6 @@ void SidebarTxtControlAccessibleContext::defunc()
 }
 
 sal_Int32 SAL_CALL SidebarTxtControlAccessibleContext::getAccessibleChildCount()
-    throw (::com::sun::star::uno::RuntimeException)
 {
     vos::OGuard aGuard( maMutex );
 
@@ -217,7 +212,6 @@ sal_Int32 SAL_CALL SidebarTxtControlAccessibleContext::getAccessibleChildCount()
 }
 
 css::uno::Reference< css::accessibility::XAccessible > SAL_CALL SidebarTxtControlAccessibleContext::getAccessibleChild( sal_Int32 i )
-    throw ( css::lang::IndexOutOfBoundsException, css::uno::RuntimeException )
 {
     vos::OGuard aGuard( maMutex );
 
@@ -233,7 +227,6 @@ css::uno::Reference< css::accessibility::XAccessible > SAL_CALL SidebarTxtContro
 
 void SAL_CALL SidebarTxtControlAccessibleContext::addEventListener (
     const css::uno::Reference< css::accessibility::XAccessibleEventListener >& xListener)
-    throw (css::uno::RuntimeException)
 {
     vos::OGuard aGuard( maMutex );
 
@@ -245,7 +238,6 @@ void SAL_CALL SidebarTxtControlAccessibleContext::addEventListener (
 
 void SAL_CALL SidebarTxtControlAccessibleContext::removeEventListener (
     const css::uno::Reference< css::accessibility::XAccessibleEventListener >& xListener)
-    throw (css::uno::RuntimeException)
 {
     vos::OGuard aGuard( maMutex );
 
@@ -285,7 +277,7 @@ void SidebarTxtControlAccessibleContext::ProcessWindowEvent( const VclWindowEven
 }
 
 // =============================================================================
-// implementaion of accessible for <SidebarTxtControl> instance
+// implementation of accessible for <SidebarTxtControl> instance
 // =============================================================================
 SidebarTxtControlAccessible::SidebarTxtControlAccessible( SidebarTxtControl& rSidebarTxtControl )
     : VCLXWindow()
@@ -307,4 +299,3 @@ css::uno::Reference< css::accessibility::XAccessibleContext > SidebarTxtControlA
 }
 
 } } // end of namespace sw::sidebarwindows
-

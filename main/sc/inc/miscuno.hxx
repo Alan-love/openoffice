@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -35,18 +35,15 @@
 
 #define SC_SIMPLE_SERVICE_INFO( ClassName, ClassNameAscii, ServiceAscii )			 \
 ::rtl::OUString SAL_CALL ClassName::getImplementationName()						 \
-	throw(::com::sun::star::uno::RuntimeException)									 \
 {																					 \
 	return ::rtl::OUString::createFromAscii(ClassNameAscii);						 \
 }																					 \
 sal_Bool SAL_CALL ClassName::supportsService( const ::rtl::OUString& ServiceName ) \
-	throw(::com::sun::star::uno::RuntimeException)									 \
 {																					 \
 	return !ServiceName.compareToAscii(ServiceAscii);								 \
 }																					 \
 ::com::sun::star::uno::Sequence< ::rtl::OUString >									 \
 	SAL_CALL ClassName::getSupportedServiceNames(void)							 \
-	throw(::com::sun::star::uno::RuntimeException)									 \
 {																					 \
 	::com::sun::star::uno::Sequence< ::rtl::OUString > aRet(1);						 \
 	::rtl::OUString* pArray = aRet.getArray();										 \
@@ -57,23 +54,15 @@ sal_Bool SAL_CALL ClassName::supportsService( const ::rtl::OUString& ServiceName
 #define SC_IMPL_DUMMY_PROPERTY_LISTENER( ClassName )								\
 	void SAL_CALL ClassName::addPropertyChangeListener( const rtl::OUString&,		\
 							const uno::Reference<beans::XPropertyChangeListener>&)	\
-							throw(beans::UnknownPropertyException,					\
-							lang::WrappedTargetException, uno::RuntimeException)	\
 	{ DBG_ERROR("not implemented"); }												\
 	void SAL_CALL ClassName::removePropertyChangeListener( const rtl::OUString&,	\
 							const uno::Reference<beans::XPropertyChangeListener>&)	\
-							throw(beans::UnknownPropertyException,					\
-							lang::WrappedTargetException, uno::RuntimeException)	\
 	{ DBG_ERROR("not implemented"); }												\
 	void SAL_CALL ClassName::addVetoableChangeListener( const rtl::OUString&,		\
 							const uno::Reference<beans::XVetoableChangeListener>&)	\
-							throw(beans::UnknownPropertyException,					\
-							lang::WrappedTargetException, uno::RuntimeException)	\
 	{ DBG_ERROR("not implemented"); }												\
 	void SAL_CALL ClassName::removeVetoableChangeListener( const rtl::OUString&,	\
 							const uno::Reference<beans::XVetoableChangeListener>&)	\
-							throw(beans::UnknownPropertyException,					\
-							lang::WrappedTargetException, uno::RuntimeException)	\
 	{ DBG_ERROR("not implemented"); }
 
 
@@ -104,19 +93,13 @@ public:
 	virtual					~ScIndexEnumeration();
 
 							// XEnumeration
-	virtual sal_Bool SAL_CALL hasMoreElements() throw(::com::sun::star::uno::RuntimeException);
-	virtual ::com::sun::star::uno::Any SAL_CALL nextElement()
-								throw(::com::sun::star::container::NoSuchElementException,
-										::com::sun::star::lang::WrappedTargetException,
-										::com::sun::star::uno::RuntimeException);
+	virtual sal_Bool SAL_CALL hasMoreElements();
+	virtual ::com::sun::star::uno::Any SAL_CALL nextElement();
 
 							// XServiceInfo
-	virtual ::rtl::OUString SAL_CALL getImplementationName(  )
-								throw(::com::sun::star::uno::RuntimeException);
-	virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName )
-								throw(::com::sun::star::uno::RuntimeException);
-	virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  )
-								throw(::com::sun::star::uno::RuntimeException);
+	virtual ::rtl::OUString SAL_CALL getImplementationName(  );
+	virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName );
+	virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  );
 };
 
 //UNUSED2008-05  class ScEmptyEnumerationAccess : public cppu::WeakImplHelper2<
@@ -126,16 +109,16 @@ public:
 //UNUSED2008-05  public:
 //UNUSED2008-05                              ScEmptyEnumerationAccess();
 //UNUSED2008-05      virtual                 ~ScEmptyEnumerationAccess();
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05                              // XEnumerationAccess
 //UNUSED2008-05      virtual ::com::sun::star::uno::Reference< ::com::sun::star::container::XEnumeration > SAL_CALL
 //UNUSED2008-05                              createEnumeration() throw(::com::sun::star::uno::RuntimeException);
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05                              // XElementAccess
 //UNUSED2008-05      virtual ::com::sun::star::uno::Type SAL_CALL getElementType()
 //UNUSED2008-05                                  throw(::com::sun::star::uno::RuntimeException);
 //UNUSED2008-05      virtual sal_Bool SAL_CALL hasElements() throw(::com::sun::star::uno::RuntimeException);
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05                              // XServiceInfo
 //UNUSED2008-05      virtual ::rtl::OUString SAL_CALL getImplementationName(  )
 //UNUSED2008-05                                  throw(::com::sun::star::uno::RuntimeException);
@@ -152,14 +135,14 @@ public:
 //UNUSED2008-05  public:
 //UNUSED2008-05                              ScEmptyEnumeration();
 //UNUSED2008-05      virtual                 ~ScEmptyEnumeration();
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05                              // XEnumeration
 //UNUSED2008-05      virtual sal_Bool SAL_CALL hasMoreElements() throw(::com::sun::star::uno::RuntimeException);
 //UNUSED2008-05      virtual ::com::sun::star::uno::Any SAL_CALL nextElement()
 //UNUSED2008-05                                  throw(::com::sun::star::container::NoSuchElementException,
 //UNUSED2008-05                                          ::com::sun::star::lang::WrappedTargetException,
 //UNUSED2008-05                                          ::com::sun::star::uno::RuntimeException);
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05                              // XServiceInfo
 //UNUSED2008-05      virtual ::rtl::OUString SAL_CALL getImplementationName(  )
 //UNUSED2008-05                                  throw(::com::sun::star::uno::RuntimeException);
@@ -185,24 +168,17 @@ public:
 	virtual					~ScNameToIndexAccess();
 
 							// XIndexAccess
-	virtual sal_Int32 SAL_CALL getCount(  ) throw(::com::sun::star::uno::RuntimeException);
-	virtual ::com::sun::star::uno::Any SAL_CALL getByIndex( sal_Int32 Index )
-								throw(::com::sun::star::lang::IndexOutOfBoundsException,
-										::com::sun::star::lang::WrappedTargetException,
-										::com::sun::star::uno::RuntimeException);
+	virtual sal_Int32 SAL_CALL getCount(  );
+	virtual ::com::sun::star::uno::Any SAL_CALL getByIndex( sal_Int32 Index );
 
 							// XElementAccess
-	virtual ::com::sun::star::uno::Type SAL_CALL getElementType(  )
-								throw(::com::sun::star::uno::RuntimeException);
-	virtual sal_Bool SAL_CALL hasElements(  ) throw(::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Type SAL_CALL getElementType(  );
+	virtual sal_Bool SAL_CALL hasElements(  );
 
 							// XServiceInfo
-	virtual ::rtl::OUString SAL_CALL getImplementationName(  )
-								throw(::com::sun::star::uno::RuntimeException);
-	virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName )
-								throw(::com::sun::star::uno::RuntimeException);
-	virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  )
-								throw(::com::sun::star::uno::RuntimeException);
+	virtual ::rtl::OUString SAL_CALL getImplementationName(  );
+	virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName );
+	virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  );
 };
 
 //UNUSED2008-05  class ScPrintSettingsObj : public cppu::WeakImplHelper2<
@@ -212,7 +188,7 @@ public:
 //UNUSED2008-05  public:
 //UNUSED2008-05                              ScPrintSettingsObj();
 //UNUSED2008-05      virtual                 ~ScPrintSettingsObj();
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05                              // XPropertySet
 //UNUSED2008-05      virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo >
 //UNUSED2008-05                              SAL_CALL getPropertySetInfo()
@@ -253,7 +229,7 @@ public:
 //UNUSED2008-05                                  throw(::com::sun::star::beans::UnknownPropertyException,
 //UNUSED2008-05                                      ::com::sun::star::lang::WrappedTargetException,
 //UNUSED2008-05                                      ::com::sun::star::uno::RuntimeException);
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05                              // XServiceInfo
 //UNUSED2008-05      virtual ::rtl::OUString SAL_CALL getImplementationName(  )
 //UNUSED2008-05                                  throw(::com::sun::star::uno::RuntimeException);
@@ -306,4 +282,3 @@ public:
 
 
 #endif
-

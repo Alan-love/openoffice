@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -58,7 +58,7 @@ ODataSourcePropertyDialog::ODataSourcePropertyDialog(const Reference< XMultiServ
 {
 }
 //-------------------------------------------------------------------------
-Sequence<sal_Int8> SAL_CALL ODataSourcePropertyDialog::getImplementationId(  ) throw(RuntimeException)
+Sequence<sal_Int8> SAL_CALL ODataSourcePropertyDialog::getImplementationId(  )
 {
 	static ::cppu::OImplementationId aId;
 	return aId.getImplementationId();
@@ -71,25 +71,25 @@ Reference< XInterface > SAL_CALL ODataSourcePropertyDialog::Create(const Referen
 }
 
 //-------------------------------------------------------------------------
-::rtl::OUString SAL_CALL ODataSourcePropertyDialog::getImplementationName() throw(RuntimeException)
+::rtl::OUString SAL_CALL ODataSourcePropertyDialog::getImplementationName()
 {
 	return getImplementationName_Static();
 }
 
 //-------------------------------------------------------------------------
-::rtl::OUString ODataSourcePropertyDialog::getImplementationName_Static() throw(RuntimeException)
+::rtl::OUString ODataSourcePropertyDialog::getImplementationName_Static()
 {
 	return ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("org.openoffice.comp.dbu.ODatasourceAdministrationDialog"));
 }
 
 //-------------------------------------------------------------------------
-::comphelper::StringSequence SAL_CALL ODataSourcePropertyDialog::getSupportedServiceNames() throw(RuntimeException)
+::comphelper::StringSequence SAL_CALL ODataSourcePropertyDialog::getSupportedServiceNames()
 {
 	return getSupportedServiceNames_Static();
 }
 
 //-------------------------------------------------------------------------
-::comphelper::StringSequence ODataSourcePropertyDialog::getSupportedServiceNames_Static() throw(RuntimeException)
+::comphelper::StringSequence ODataSourcePropertyDialog::getSupportedServiceNames_Static()
 {
 	::comphelper::StringSequence aSupported(1);
 	aSupported.getArray()[0] = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.sdb.DatasourceAdministrationDialog"));
@@ -97,7 +97,7 @@ Reference< XInterface > SAL_CALL ODataSourcePropertyDialog::Create(const Referen
 }
 
 //-------------------------------------------------------------------------
-Reference<XPropertySetInfo>  SAL_CALL ODataSourcePropertyDialog::getPropertySetInfo() throw(RuntimeException)
+Reference<XPropertySetInfo>  SAL_CALL ODataSourcePropertyDialog::getPropertySetInfo()
 {
 	Reference<XPropertySetInfo>  xInfo( createPropertySetInfo( getInfoHelper() ) );
 	return xInfo;
@@ -119,7 +119,7 @@ Reference<XPropertySetInfo>  SAL_CALL ODataSourcePropertyDialog::getPropertySetI
 //------------------------------------------------------------------------------
 Dialog*	ODataSourcePropertyDialog::createDialog(Window* _pParent)
 {
-	
+
 	ODbAdminDialog* pDialog = new ODbAdminDialog(_pParent, m_pDatasourceItems, m_aContext.getLegacyServiceFactory());
 
 	// the initial selection
@@ -132,4 +132,3 @@ Dialog*	ODataSourcePropertyDialog::createDialog(Window* _pParent)
 //.........................................................................
 }	// namespace dbaui
 //.........................................................................
-

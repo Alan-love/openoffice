@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -44,12 +44,12 @@ union largest
     uno_Any a;
 };
 
-System::Object* Bridge::call_uno(uno_Interface * pUnoI,
+System::Object ^ Bridge::call_uno(uno_Interface * pUnoI,
                       typelib_TypeDescription* member_td,
                       typelib_TypeDescriptionReference * return_type,
                       sal_Int32 nParams, typelib_MethodParameter const * pParams,
-                      System::Object * args[], System::Type* argTypes[],
-                      System::Object** ppExc) const
+                      cli::array< System::Object ^ > ^ args, cli::array< System::Type ^ > ^ argTypes,
+                      System::Object ^* ppExc) const
 {
     // return mem
     sal_Int32 return_size = sizeof (largest);
@@ -61,7 +61,7 @@ System::Object* Bridge::call_uno(uno_Interface * pUnoI,
         if (return_td.get()->nSize > sizeof (largest))
             return_size = return_td.get()->nSize;
     }
-    //Prepare memory that contains all converted arguments and return valuse
+    //Prepare memory that contains all converted arguments and return values
     //The memory block contains first pointers to the arguments which are in the same block
     // For example, 2 arguments, 1 ret.
     //
@@ -73,7 +73,7 @@ System::Object* Bridge::call_uno(uno_Interface * pUnoI,
     //
     // If an argument is larger then union largest, such as some structures, then the pointer
     // points to an extra block of memory. The same goes for a big return value.
-    
+
     char * mem = (char *)alloca(
         (nParams * sizeof (void *)) + return_size + (nParams * sizeof (largest)) );
     //array of pointers to args
@@ -84,12 +84,12 @@ System::Object* Bridge::call_uno(uno_Interface * pUnoI,
         uno_ret = (mem + (nParams * sizeof (void *)));
     largest * uno_args_mem = (largest *)(mem + (nParams * sizeof (void *)) + return_size);
 
-    OSL_ASSERT( (0 == nParams) || (nParams == args->get_Length()) );
+    OSL_ASSERT( (0 == nParams) || (nParams == args->Length) );
     for ( sal_Int32 nPos = 0; nPos < nParams; ++nPos )
     {
         typelib_MethodParameter const & param = pParams[ nPos ];
         typelib_TypeDescriptionReference * type = param.pTypeRef;
-        
+
         uno_args[ nPos ] = &uno_args_mem[ nPos ];
         if (typelib_TypeClass_STRUCT == type->eTypeClass ||
             typelib_TypeClass_EXCEPTION == type->eTypeClass)
@@ -98,7 +98,7 @@ System::Object* Bridge::call_uno(uno_Interface * pUnoI,
             if (td.get()->nSize > sizeof (largest))
                 uno_args[ nPos ] = alloca( td.get()->nSize );
         }
-        
+
         if (param.bIn)
         {
             try
@@ -139,9 +139,13 @@ System::Object* Bridge::call_uno(uno_Interface * pUnoI,
             {
                 try
                 {
+                    // A cli::array element has no native address, so the
+                    // out-parameter goes through a local and is assigned back.
+                    System::Object ^ cliArg = nullptr;
                     map_to_cli(
-                        &args[nPos], uno_args[nPos], param.pTypeRef,
-                        argTypes != NULL ? argTypes[nPos] : NULL, false );
+                        &cliArg, uno_args[nPos], param.pTypeRef,
+                        argTypes != nullptr ? argTypes[nPos] : nullptr, false );
+                    args[nPos] = cliArg;
                 }
                 catch (...)
                 {
@@ -162,16 +166,16 @@ System::Object* Bridge::call_uno(uno_Interface * pUnoI,
                 uno_type_destructData(uno_args[nPos], type, 0);
             }
         }
-        
+
         if ((0 != return_type) &&
             (typelib_TypeClass_VOID != return_type->eTypeClass))
         {
             // convert uno return value
             try
             {
-                System::Object* cli_ret;
+                System::Object ^ cli_ret;
                  map_to_cli(
-                     &cli_ret, uno_ret, return_type, 0, false);
+                     &cli_ret, uno_ret, return_type, nullptr, false);
 				 uno_type_destructData(uno_ret, return_type, 0);
                 return cli_ret;
             }
@@ -195,51 +199,53 @@ System::Object* Bridge::call_uno(uno_Interface * pUnoI,
             }
         }
         map_to_cli(ppExc, uno_exc_holder.pData,
-                uno_exc_holder.pType, NULL, false);
+                uno_exc_holder.pType, nullptr, false);
         return 0;
     }
 }
 
 void Bridge::call_cli(
-    System::Object* cliI,
-    sr::MethodInfo* method, 
+    System::Object ^ cliI,
+    sr::MethodInfo ^ method,
     typelib_TypeDescriptionReference * return_type,
     typelib_MethodParameter * params, int nParams,
     void * uno_ret, void * uno_args [], uno_Any ** uno_exc ) const
-{   
-    System::Object *args[]=  new System::Object*[nParams];
+{
+    cli::array< System::Object ^ > ^ args =  gcnew cli::array< System::Object ^ >( nParams );
     for (int nPos= 0; nPos < nParams; nPos++)
     {
         typelib_MethodParameter const & param= params[nPos];
         if (param.bIn)
         {
-            map_to_cli( &args[nPos],
-                uno_args[nPos], param.pTypeRef, 0, false);
+            System::Object ^ cliArg = nullptr;
+            map_to_cli( &cliArg,
+                uno_args[nPos], param.pTypeRef, nullptr, false);
+            args[nPos] = cliArg;
         }
     }
-    System::Object* retInvoke= NULL;
+    System::Object ^ retInvoke= nullptr;
     try
     {
         retInvoke= method->Invoke(cliI, args);
     }
-    catch (sr::TargetInvocationException* e)
+    catch (sr::TargetInvocationException ^ e)
     {
-        System::Exception* exc= e->get_InnerException();
+        System::Exception ^ exc= e->InnerException;
         css::uno::TypeDescription td(mapCliType(exc->GetType()));
         // memory for exception
         std::auto_ptr< rtl_mem > memExc(rtl_mem::allocate(td.get()->nSize));
         map_to_uno(memExc.get(), exc, td.get()->pWeakRef, false);
         (*uno_exc)->pType= td.get()->pWeakRef;
 		(*uno_exc)->pData= memExc.release();
-        return;        
+        return;
     }
-    catch (System::Exception* e)
+    catch (System::Exception ^ e)
     {
         OUStringBuffer buf( 128 );
         buf.appendAscii( RTL_CONSTASCII_STRINGPARAM(
-                             "Unexspected exception during invocation of cli object. "
+                             "Unexpected exception during invocation of cli object. "
                              "Original message is: \n") );
-        buf.append(mapCliString(e->get_Message()));
+        buf.append(mapCliString(e->Message));
         throw BridgeRuntimeError( buf.makeStringAndClear() );
     }
 
@@ -247,7 +253,7 @@ void Bridge::call_cli(
     for (int nPos = 0; nPos < nParams; ++nPos )
     {
         typelib_MethodParameter const & param = params[ nPos ];
-            
+
         if (param.bOut)
         {
             try
@@ -271,11 +277,11 @@ void Bridge::call_cli(
         }
     }
     // return value
-    if (0 != return_type) 
+    if (0 != return_type)
     {
         map_to_uno(
             uno_ret, retInvoke, return_type, false /* no assign */);
-    }        
+    }
     // no exception occurred
     *uno_exc = 0;
 }

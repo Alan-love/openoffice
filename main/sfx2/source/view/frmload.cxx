@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -516,7 +516,6 @@ Reference< XController2 > SfxFrameLoader_Impl::impl_createDocumentView( const Re
 // --------------------------------------------------------------------------------------------------------------------
 sal_Bool SAL_CALL SfxFrameLoader_Impl::load( const Sequence< PropertyValue >& rArgs,
                                              const Reference< XFrame >& _rTargetFrame )
-    throw( RuntimeException )
 {
     ENSURE_OR_THROW( _rTargetFrame.is(), "illegal NULL frame" );
 
@@ -653,20 +652,20 @@ sal_Bool SAL_CALL SfxFrameLoader_Impl::load( const Sequence< PropertyValue >& rA
 	return bLoadSuccess;
 }
 
-void SfxFrameLoader_Impl::cancel() throw( RuntimeException )
+void SfxFrameLoader_Impl::cancel()
 {
 }
 
 SFX_IMPL_SINGLEFACTORY( SfxFrameLoader_Impl )
 
 /* XServiceInfo */
-UNOOUSTRING SAL_CALL SfxFrameLoader_Impl::getImplementationName() throw( RuntimeException )
+UNOOUSTRING SAL_CALL SfxFrameLoader_Impl::getImplementationName()
 {
     return impl_getStaticImplementationName();
 }
                                                                                                                                 \
 /* XServiceInfo */
-sal_Bool SAL_CALL SfxFrameLoader_Impl::supportsService( const UNOOUSTRING& sServiceName ) throw( RuntimeException )
+sal_Bool SAL_CALL SfxFrameLoader_Impl::supportsService( const UNOOUSTRING& sServiceName )
 {
     UNOSEQUENCE< UNOOUSTRING >  seqServiceNames =   getSupportedServiceNames();
     const UNOOUSTRING*          pArray          =   seqServiceNames.getConstArray();
@@ -681,7 +680,7 @@ sal_Bool SAL_CALL SfxFrameLoader_Impl::supportsService( const UNOOUSTRING& sServ
 }
 
 /* XServiceInfo */
-UNOSEQUENCE< UNOOUSTRING > SAL_CALL SfxFrameLoader_Impl::getSupportedServiceNames() throw( RuntimeException )
+UNOSEQUENCE< UNOOUSTRING > SAL_CALL SfxFrameLoader_Impl::getSupportedServiceNames()
 {
     return impl_getStaticSupportedServiceNames();
 }
@@ -702,8 +701,7 @@ UNOOUSTRING SfxFrameLoader_Impl::impl_getStaticImplementationName()
 }
 
 /* Helper for registry */
-UNOREFERENCE< UNOXINTERFACE > SAL_CALL SfxFrameLoader_Impl::impl_createInstance( const UNOREFERENCE< UNOXMULTISERVICEFACTORY >& xServiceManager ) throw( UNOEXCEPTION )
+UNOREFERENCE< UNOXINTERFACE > SAL_CALL SfxFrameLoader_Impl::impl_createInstance( const UNOREFERENCE< UNOXMULTISERVICEFACTORY >& xServiceManager )
 {
     return UNOREFERENCE< UNOXINTERFACE >( *new SfxFrameLoader_Impl( xServiceManager ) );
 }
-

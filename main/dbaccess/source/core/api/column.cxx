@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -92,7 +92,7 @@ OColumn::~OColumn()
 
 // com::sun::star::lang::XTypeProvider
 //--------------------------------------------------------------------------
-Sequence< Type > OColumn::getTypes() throw (RuntimeException)
+Sequence< Type > OColumn::getTypes()
 {
 	return ::comphelper::concatSequences(
 		OColumnBase::getTypes(),
@@ -105,19 +105,19 @@ IMPLEMENT_FORWARD_XINTERFACE2( OColumn, OColumnBase, ::comphelper::OPropertyCont
 
 // ::com::sun::star::lang::XServiceInfo
 //------------------------------------------------------------------------------
-rtl::OUString OColumn::getImplementationName(  ) throw(RuntimeException)
+rtl::OUString OColumn::getImplementationName(  )
 {
 	return rtl::OUString::createFromAscii("com.sun.star.sdb.OColumn");
 }
 
 //------------------------------------------------------------------------------
-sal_Bool OColumn::supportsService( const ::rtl::OUString& _rServiceName ) throw (RuntimeException)
+sal_Bool OColumn::supportsService( const ::rtl::OUString& _rServiceName )
 {
 	return ::comphelper::findValue(getSupportedServiceNames(), _rServiceName, sal_True).getLength() != 0;
 }
 
 //------------------------------------------------------------------------------
-Sequence< ::rtl::OUString > OColumn::getSupportedServiceNames(  ) throw (RuntimeException)
+Sequence< ::rtl::OUString > OColumn::getSupportedServiceNames(  )
 {
 	Sequence< ::rtl::OUString > aSNS( 1 );
 	aSNS[0] = SERVICE_SDBCX_COLUMN;
@@ -133,18 +133,18 @@ void OColumn::disposing()
 
 // com::sun::star::beans::XPropertySet
 //------------------------------------------------------------------------------
-Reference< XPropertySetInfo > OColumn::getPropertySetInfo() throw (RuntimeException)
+Reference< XPropertySetInfo > OColumn::getPropertySetInfo()
 {
 	return createPropertySetInfo( getInfoHelper() ) ;
 }
 
 // -----------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OColumn::getName(  ) throw(::com::sun::star::uno::RuntimeException)
+::rtl::OUString SAL_CALL OColumn::getName(  )
 {
 	return m_sName;
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OColumn::setName( const ::rtl::OUString& _rName ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL OColumn::setName( const ::rtl::OUString& _rName )
 {
 	m_sName = _rName;
 }
@@ -227,19 +227,19 @@ OColumns::~OColumns()
 
 // XServiceInfo
 //------------------------------------------------------------------------------
-rtl::OUString OColumns::getImplementationName(  ) throw(RuntimeException)
+rtl::OUString OColumns::getImplementationName(  )
 {
 	return rtl::OUString::createFromAscii("com.sun.star.sdb.OColumns");
 }
 
 //------------------------------------------------------------------------------
-sal_Bool OColumns::supportsService( const ::rtl::OUString& _rServiceName ) throw (RuntimeException)
+sal_Bool OColumns::supportsService( const ::rtl::OUString& _rServiceName )
 {
 	return ::comphelper::findValue(getSupportedServiceNames(), _rServiceName, sal_True).getLength() != 0;
 }
 
 //------------------------------------------------------------------------------
-Sequence< ::rtl::OUString > OColumns::getSupportedServiceNames(  ) throw (RuntimeException)
+Sequence< ::rtl::OUString > OColumns::getSupportedServiceNames(  )
 {
 	Sequence< ::rtl::OUString > aSNS( 1 );
 	aSNS[0] = SERVICE_SDBCX_CONTAINER;
@@ -278,7 +278,7 @@ void SAL_CALL OColumns::disposing(void)
 }
 
 // -------------------------------------------------------------------------
-void OColumns::impl_refresh() throw(::com::sun::star::uno::RuntimeException)
+void OColumns::impl_refresh()
 {
 	if (m_pRefreshColumns)
 		m_pRefreshColumns->refreshColumns();
@@ -319,15 +319,15 @@ Reference< XPropertySet > OColumns::createDescriptor()
 		return Reference< XPropertySet >();
 }
 // -------------------------------------------------------------------------
-Any SAL_CALL OColumns::queryInterface( const Type & rType ) throw(RuntimeException)
+Any SAL_CALL OColumns::queryInterface( const Type & rType )
 {
 	Any aRet;
 	if(m_xDrvColumns.is())
 	{
 		aRet = m_xDrvColumns->queryInterface(rType);
-		if ( aRet.hasValue() ) 
+		if ( aRet.hasValue() )
 			aRet = OColumns_BASE::queryInterface( rType);
-		if ( !aRet.hasValue() ) 
+		if ( !aRet.hasValue() )
 			aRet = TXChild::queryInterface( rType);
 		return aRet;
 	}
@@ -340,12 +340,12 @@ Any SAL_CALL OColumns::queryInterface( const Type & rType ) throw(RuntimeExcepti
 	}
 
 	aRet = OColumns_BASE::queryInterface( rType);
-	if ( !aRet.hasValue() ) 
+	if ( !aRet.hasValue() )
 		aRet = TXChild::queryInterface( rType);
 	return aRet;
 }
 // -------------------------------------------------------------------------
-Sequence< Type > SAL_CALL OColumns::getTypes(  ) throw(RuntimeException)
+Sequence< Type > SAL_CALL OColumns::getTypes(  )
 {
 	sal_Bool bAppendFound = sal_False,bDropFound = sal_False;
 
@@ -463,13 +463,13 @@ void OColumns::dropObject(sal_Int32 _nPos,const ::rtl::OUString _sElementName)
 }
 // -----------------------------------------------------------------------------
 
-Reference< XInterface > SAL_CALL OColumns::getParent(  ) throw (RuntimeException)
+Reference< XInterface > SAL_CALL OColumns::getParent(  )
 {
 	::osl::MutexGuard aGuard(m_rMutex);
 	return m_xParent;
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OColumns::setParent( const Reference< XInterface >& _xParent ) throw (NoSupportException, RuntimeException)
+void SAL_CALL OColumns::setParent( const Reference< XInterface >& _xParent )
 {
 	::osl::MutexGuard aGuard(m_rMutex);
 	m_xParent = _xParent;

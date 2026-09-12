@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -38,7 +38,7 @@ namespace cppu
     (e.g. xxx.dll).  You can give parameter rPath to force lookup of the library in a specific
     directory.  The resulting path of the library will be checked against environment variable
     CPLD_ACCESSPATH if set.
-	
+
 	@param rLibName name of the library
 	@param rPath optional path
 	@param rImplName implementation to be retrieved from the library
@@ -54,8 +54,7 @@ SAL_CALL loadSharedLibComponentFactory(
 	::rtl::OUString const & rLibName, ::rtl::OUString const & rPath,
 	::rtl::OUString const & rImplName,
 	::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > const & xMgr,
-	::com::sun::star::uno::Reference< ::com::sun::star::registry::XRegistryKey > const & xKey )
-	SAL_THROW( (::com::sun::star::loader::CannotActivateFactoryException) );
+	::com::sun::star::uno::Reference< ::com::sun::star::registry::XRegistryKey > const & xKey );
 
 /** Invokes component_writeInfo() function of specified component library.  You can give either
     a fully qualified libname or single lib name. The libname need not be pre/postfixed
@@ -75,8 +74,7 @@ void
 SAL_CALL writeSharedLibComponentInfo(
 	::rtl::OUString const & rLibName, ::rtl::OUString const & rPath,
 	::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > const & xMgr,
-	::com::sun::star::uno::Reference< ::com::sun::star::registry::XRegistryKey > const & xKey )
-	SAL_THROW( (::com::sun::star::registry::CannotRegisterImplementationException) );
+	::com::sun::star::uno::Reference< ::com::sun::star::registry::XRegistryKey > const & xKey );
 
 } // end namespace cppu
 

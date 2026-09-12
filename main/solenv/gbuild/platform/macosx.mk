@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -64,6 +64,8 @@ ifeq ($(CPUNAME),POWERPC)
 gb_CPUDEFS += -DPOWERPC -DPPC
 else ifeq ($(CPUNAME),INTEL)
 gb_CPUDEFS += -DX86
+else ifeq ($(CPUNAME),AARCH64)
+gb_CPUDEFS += -DARM64
 endif
 
 ifeq ($(strip $(SYSBASE)),)
@@ -108,9 +110,12 @@ endif
 gb_OBJCFLAGS := -x objective-c -fobjc-exceptions
 gb_OBJCXXFLAGS := -x objective-c++ -fobjc-exceptions
 
-ifneq ($(MACOSX_DEPLOYMENT_TARGET),)
-	gb_CXXFLAGS += -DMAC_OS_X_VERSION_MAX_ALLOWED=MAC_OS_X_VERSION_$(subst .,_,$(MACOSX_DEPLOYMENT_TARGET))
-endif
+# Do NOT force MAC_OS_X_VERSION_MAX_ALLOWED.  Apple renamed the constants at
+# macOS 11: the old MAC_OS_X_VERSION_<v> family stops at 10_15, and 11+ uses
+# MAC_OS_VERSION_<v> (no "_X_").  Forcing MAC_OS_X_VERSION_11_0 references an
+# undefined macro (expands to 0) and trips AvailabilityMacros.h's
+# "MAX_ALLOWED must be >= MIN_REQUIRED" #error.  Letting it default makes the
+# SDK derive max(14.0, MIN_REQUIRED).  (Mirrors solenv/inc/unxmacc.mk.)
 
 ifneq ($(EXTERNAL_WARNINGS_NOT_ERRORS),TRUE)
 gb_CFLAGS_WERROR := -Werror -Wno-error=deprecated
@@ -154,14 +159,14 @@ gb_COMPILERNOOPTFLAGS := -O0
 
 gb_Helper_abbreviate_dirs_native = $(gb_Helper_abbreviate_dirs)
 
-# convert parametters filesystem root to native notation
+# convert parameters filesystem root to native notation
 # does some real work only on windows, make sure not to
 # break the dummy implementations on unx*
 define gb_Helper_convert_native
 $(1)
 endef
 
-# convert parametters filesystem root to native notation
+# convert parameters filesystem root to native notation
 # does some real work only on windows, make sure not to
 # break the dummy implementations on unx*
 define gb_Helper_convert_native
@@ -337,6 +342,8 @@ $(call gb_Helper_abbreviate_dirs,\
 	$(if $(filter Library,$(TARGETTYPE)),\
 		$(PERL) $(SOLARENV)/bin/macosx-change-install-names.pl Library $(LAYER) $(1) && \
 		$(if $(filter %.dylib,$(1)),ln -shf $(1) $(patsubst %.dylib,%.jnilib,$(1)) &&)) \
+	$(if $(and $(filter Executable,$(TARGETTYPE)),$(LAYER)),\
+		$(PERL) $(SOLARENV)/bin/macosx-change-install-names.pl Executable $(LAYER) $(1) &&) \
 	rm -f $${DYLIB_FILE})
 endef
 
@@ -474,7 +481,7 @@ endef
 
 define gb_JunitTest_JunitTest_platform
 $(call gb_JunitTest_get_target,$(1)) : DEFS := \
-	-Dorg.openoffice.test.arg.soffice="$$$${OOO_TEST_SOFFICE:-path:$(SRCDIR)/instsetoo_native/$(INPATH)/Apache_OpenOffice/installed/install/en-US/openoffice4/program/soffice}" \
+	-Dorg.openoffice.test.arg.soffice="$$$${OOO_TEST_SOFFICE:-path:$(SRCDIR)/instsetoo_native/$(INPATH)/Apache_OpenOffice/installed/install/en-US/openoffice5/program/soffice}" \
     -Dorg.openoffice.test.arg.env=DYLD_LIBRARY_PATH \
     -Dorg.openoffice.test.arg.user=file://$(call gb_JunitTest_get_userdir,$(1)) \
 
@@ -521,6 +528,9 @@ gb_Library_COMPONENTPREFIXES := \
     OOO:vnd.sun.star.expand:\dOOO_BASE_DIR/program/ \
     URELIB:vnd.sun.star.expand:\dURE_INTERNAL_LIB_DIR/ \
     NONE:vnd.sun.star.expand:\dOOO_INBUILD_SHAREDLIB_DIR/ \
+
+# Configuration
+gb_CFGEXPRECOMMAND := DYLD_LIBRARY_PATH=$(OUTDIR)/lib
 
 # UnoApiTarget
 

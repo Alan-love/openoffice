@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -63,19 +63,19 @@ public:
     explicit CEvent();
 
     virtual ~CEvent();
-    virtual OUString SAL_CALL getType() throw (RuntimeException);
-    virtual Reference< XEventTarget > SAL_CALL getTarget() throw (RuntimeException);
-    virtual Reference< XEventTarget > SAL_CALL getCurrentTarget() throw (RuntimeException);
-    virtual PhaseType SAL_CALL getEventPhase() throw (RuntimeException);
-    virtual sal_Bool SAL_CALL getBubbles() throw (RuntimeException);
-    virtual sal_Bool SAL_CALL getCancelable() throw (RuntimeException);
-    virtual com::sun::star::util::Time SAL_CALL getTimeStamp() throw (RuntimeException);
-    virtual void SAL_CALL stopPropagation() throw (RuntimeException);
-    virtual void SAL_CALL preventDefault() throw (RuntimeException);
+    virtual OUString SAL_CALL getType();
+    virtual Reference< XEventTarget > SAL_CALL getTarget();
+    virtual Reference< XEventTarget > SAL_CALL getCurrentTarget();
+    virtual PhaseType SAL_CALL getEventPhase();
+    virtual sal_Bool SAL_CALL getBubbles();
+    virtual sal_Bool SAL_CALL getCancelable();
+    virtual com::sun::star::util::Time SAL_CALL getTimeStamp();
+    virtual void SAL_CALL stopPropagation();
+    virtual void SAL_CALL preventDefault();
     virtual void SAL_CALL initEvent(
         const OUString& eventTypeArg,
         sal_Bool canBubbleArg,
-        sal_Bool cancelableArg)  throw (RuntimeException);
+        sal_Bool cancelableArg);
 };
 }}
 #endif

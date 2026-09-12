@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 
 #include "DataInterpreter.hxx"
 #include "DataSeries.hxx"
@@ -75,7 +75,6 @@ InterpretedData SAL_CALL DataInterpreter::interpretDataSource(
     const Reference< data::XDataSource >& xSource,
     const Sequence< beans::PropertyValue >& aArguments,
     const Sequence< Reference< XDataSeries > >& aSeriesToReUse )
-    throw (uno::RuntimeException)
 {
     if( ! xSource.is())
         return InterpretedData();
@@ -150,7 +149,6 @@ InterpretedData SAL_CALL DataInterpreter::interpretDataSource(
 
 InterpretedData SAL_CALL DataInterpreter::reinterpretDataSeries(
     const InterpretedData& aInterpretedData )
-    throw (uno::RuntimeException)
 {
     InterpretedData aResult( aInterpretedData );
 
@@ -207,7 +205,6 @@ InterpretedData SAL_CALL DataInterpreter::reinterpretDataSeries(
 // criterion: all series must have exactly one data::XLabeledDataSequence
 sal_Bool SAL_CALL DataInterpreter::isDataCompatible(
     const chart2::InterpretedData& aInterpretedData )
-    throw (uno::RuntimeException)
 {
     Sequence< Reference< XDataSeries > > aSeries( FlattenSequence( aInterpretedData.Series ));
     for( sal_Int32 i=0; i<aSeries.getLength(); ++i )
@@ -283,7 +280,6 @@ private:
 
 Reference< data::XDataSource > SAL_CALL DataInterpreter::mergeInterpretedData(
     const InterpretedData& aInterpretedData )
-    throw (uno::RuntimeException)
 {
     vector< Reference< data::XLabeledDataSequence > > aResultVec;
     aResultVec.reserve( aInterpretedData.Series.getLength() +

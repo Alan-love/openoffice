@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -37,7 +37,7 @@ using namespace rtl;
 
 namespace com { namespace sun { namespace star { namespace i18n {
 
-sal_Int16 SAL_CALL TextToPronounce_zh::getType() throw (RuntimeException)
+sal_Int16 SAL_CALL TextToPronounce_zh::getType()
 {
     return TransliterationType::ONE_TO_ONE| TransliterationType::IGNORE;
 }
@@ -56,7 +56,7 @@ TextToPronounce_zh::getPronounce(const sal_Unicode ch)
 
 OUString SAL_CALL
 TextToPronounce_zh::folding(const OUString & inStr, sal_Int32 startPos,
-        sal_Int32 nCount, Sequence< sal_Int32 > & offset) throw (RuntimeException)
+        sal_Int32 nCount, Sequence< sal_Int32 > & offset)
 {
     OUStringBuffer sb;
     const sal_Unicode * chArr = inStr.getStr() + startPos;
@@ -79,13 +79,13 @@ TextToPronounce_zh::folding(const OUString & inStr, sal_Int32 startPos,
 }
 
 OUString SAL_CALL
-TextToPronounce_zh::transliterateChar2String( sal_Unicode inChar) throw(RuntimeException)
+TextToPronounce_zh::transliterateChar2String( sal_Unicode inChar)
 {
     return OUString(getPronounce(inChar));
 }
 
 sal_Unicode SAL_CALL
-TextToPronounce_zh::transliterateChar2Char( sal_Unicode inChar) throw(RuntimeException, MultipleCharsOutputException)
+TextToPronounce_zh::transliterateChar2Char( sal_Unicode inChar)
 {
     const sal_Unicode* pron=getPronounce(inChar);
     if (!pron || !pron[0])
@@ -98,7 +98,6 @@ TextToPronounce_zh::transliterateChar2Char( sal_Unicode inChar) throw(RuntimeExc
 sal_Bool SAL_CALL
 TextToPronounce_zh::equals( const OUString & str1, sal_Int32 pos1, sal_Int32 nCount1, sal_Int32 & nMatch1,
         const OUString & str2, sal_Int32 pos2, sal_Int32 nCount2, sal_Int32 & nMatch2)
-        throw (RuntimeException) 
 {
     sal_Int32 realCount;
     int i;  // loop variable

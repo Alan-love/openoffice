@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -52,9 +52,8 @@ fullwidthToHalfwidth::fullwidthToHalfwidth()
  * The output is a reference of OUString. You MUST delete this object when you do not need to use it any more
  * The output string contains a transliterated string only, not whole string.
  */
-OUString SAL_CALL 
+OUString SAL_CALL
 fullwidthToHalfwidth::transliterate( const OUString& inStr, sal_Int32 startPos, sal_Int32 nCount, Sequence< sal_Int32 >& offset )
-  throw(RuntimeException)
 {
     // Decomposition: GA --> KA + voice-mark
     const OUString& newStr = widthfolding::decompose_ja_voiced_sound_marks (inStr, startPos, nCount, offset, useOffset);
@@ -66,9 +65,8 @@ fullwidthToHalfwidth::transliterate( const OUString& inStr, sal_Int32 startPos, 
     return tmp;
 }
 
-sal_Unicode SAL_CALL 
+sal_Unicode SAL_CALL
 fullwidthToHalfwidth::transliterateChar2Char( sal_Unicode inChar)
-  throw(RuntimeException, MultipleCharsOutputException)
 {
     sal_Unicode newChar = widthfolding::decompose_ja_voiced_sound_marksChar2Char (inChar);
     if (newChar == 0xFFFF)
@@ -87,9 +85,8 @@ fullwidthKatakanaToHalfwidthKatakana::fullwidthKatakanaToHalfwidthKatakana()
 /**
  * Transliterate fullwidth katakana to halfwidth katakana.
  */
-OUString SAL_CALL 
+OUString SAL_CALL
 fullwidthKatakanaToHalfwidthKatakana::transliterate( const OUString& inStr, sal_Int32 startPos, sal_Int32 nCount, Sequence< sal_Int32 >& offset )
-  throw(RuntimeException)
 {
     // Decomposition: GA --> KA + voice-mark
     const OUString& newStr = widthfolding::decompose_ja_voiced_sound_marks (inStr, startPos, nCount, offset, useOffset);
@@ -101,9 +98,8 @@ fullwidthKatakanaToHalfwidthKatakana::transliterate( const OUString& inStr, sal_
     return tmp;
 }
 
-sal_Unicode SAL_CALL 
+sal_Unicode SAL_CALL
 fullwidthKatakanaToHalfwidthKatakana::transliterateChar2Char( sal_Unicode inChar )
-  throw(RuntimeException, MultipleCharsOutputException)
 {
     sal_Unicode newChar = widthfolding::decompose_ja_voiced_sound_marksChar2Char (inChar);
     if (newChar == 0xFFFF)
@@ -122,9 +118,8 @@ fullwidthToHalfwidthLikeASC::fullwidthToHalfwidthLikeASC()
 /**
  * Transliterate fullwidth to halfwidth like Excel's ASC function.
  */
-OUString SAL_CALL 
+OUString SAL_CALL
 fullwidthToHalfwidthLikeASC::transliterate( const OUString& inStr, sal_Int32 startPos, sal_Int32 nCount, Sequence< sal_Int32 >& offset )
-  throw(RuntimeException)
 {
     // Decomposition: GA --> KA + voice-mark
     const OUString& newStr = widthfolding::decompose_ja_voiced_sound_marks (inStr, startPos, nCount, offset, useOffset);
@@ -137,9 +132,8 @@ fullwidthToHalfwidthLikeASC::transliterate( const OUString& inStr, sal_Int32 sta
     return tmp;
 }
 
-sal_Unicode SAL_CALL 
+sal_Unicode SAL_CALL
 fullwidthToHalfwidthLikeASC::transliterateChar2Char( sal_Unicode inChar )
-  throw(RuntimeException, MultipleCharsOutputException)
 {
     sal_Unicode newChar = widthfolding::decompose_ja_voiced_sound_marksChar2Char (inChar);
     if (newChar == 0xFFFF)
@@ -148,4 +142,3 @@ fullwidthToHalfwidthLikeASC::transliterateChar2Char( sal_Unicode inChar )
 }
 
 } } } }
-

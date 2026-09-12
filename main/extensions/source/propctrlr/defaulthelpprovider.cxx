@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -83,13 +83,13 @@ namespace pcr
     }
 
 	//------------------------------------------------------------------------
-	::rtl::OUString DefaultHelpProvider::getImplementationName_static(  ) throw(RuntimeException)
+	::rtl::OUString DefaultHelpProvider::getImplementationName_static(  )
 	{
 		return ::rtl::OUString::createFromAscii( "org.openoffice.comp.extensions.DefaultHelpProvider");
 	}
 
 	//------------------------------------------------------------------------
-	Sequence< ::rtl::OUString > DefaultHelpProvider::getSupportedServiceNames_static(  ) throw(RuntimeException)
+	Sequence< ::rtl::OUString > DefaultHelpProvider::getSupportedServiceNames_static(  )
 	{
 		Sequence< ::rtl::OUString > aSupported(1);
 		aSupported[0] = ::rtl::OUString::createFromAscii( "com.sun.star.inspection.DefaultHelpProvider" );
@@ -103,7 +103,7 @@ namespace pcr
 	}
 
     //--------------------------------------------------------------------
-    void SAL_CALL DefaultHelpProvider::focusGained( const Reference< XPropertyControl >& _Control ) throw (RuntimeException)
+    void SAL_CALL DefaultHelpProvider::focusGained( const Reference< XPropertyControl >& _Control )
     {
         if ( !m_xInspectorUI.is() )
             throw RuntimeException( ::rtl::OUString(), *this );
@@ -117,15 +117,15 @@ namespace pcr
         	DBG_UNHANDLED_EXCEPTION();
         }
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL DefaultHelpProvider::valueChanged( const Reference< XPropertyControl >& /*_Control*/ ) throw (RuntimeException)
+    void SAL_CALL DefaultHelpProvider::valueChanged( const Reference< XPropertyControl >& /*_Control*/ )
     {
         // not interested in
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL DefaultHelpProvider::initialize( const Sequence< Any >& _arguments ) throw (Exception, RuntimeException)
+    void SAL_CALL DefaultHelpProvider::initialize( const Sequence< Any >& _arguments )
     {
         if ( m_bConstructed )
             throw AlreadyInitializedException();

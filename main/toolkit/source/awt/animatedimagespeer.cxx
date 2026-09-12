@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -306,7 +306,7 @@ namespace toolkit
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL AnimatedImagesPeer::startAnimation(  ) throw (RuntimeException)
+    void SAL_CALL AnimatedImagesPeer::startAnimation(  )
     {
         ::vos::OGuard aGuard( GetMutex() );
         Throbber* pThrobber( dynamic_cast< Throbber* >( GetWindow() ) );
@@ -315,7 +315,7 @@ namespace toolkit
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL AnimatedImagesPeer::stopAnimation(  ) throw (RuntimeException)
+    void SAL_CALL AnimatedImagesPeer::stopAnimation(  )
     {
         ::vos::OGuard aGuard( GetMutex() );
         Throbber* pThrobber( dynamic_cast< Throbber* >( GetWindow() ) );
@@ -324,7 +324,7 @@ namespace toolkit
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-    ::sal_Bool SAL_CALL AnimatedImagesPeer::isAnimationRunning(  ) throw (RuntimeException)
+    ::sal_Bool SAL_CALL AnimatedImagesPeer::isAnimationRunning(  )
     {
         ::vos::OGuard aGuard( GetMutex() );
         Throbber* pThrobber( dynamic_cast< Throbber* >( GetWindow() ) );
@@ -334,7 +334,7 @@ namespace toolkit
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL AnimatedImagesPeer::setProperty( const ::rtl::OUString& i_propertyName, const Any& i_value ) throw(RuntimeException)
+    void SAL_CALL AnimatedImagesPeer::setProperty( const ::rtl::OUString& i_propertyName, const Any& i_value )
     {
 	    ::vos::OGuard aGuard( GetMutex() );
 
@@ -381,7 +381,7 @@ namespace toolkit
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-    Any SAL_CALL AnimatedImagesPeer::getProperty( const ::rtl::OUString& i_propertyName ) throw(RuntimeException)
+    Any SAL_CALL AnimatedImagesPeer::getProperty( const ::rtl::OUString& i_propertyName )
     {
         ::vos::OGuard aGuard( GetMutex() );
 
@@ -439,7 +439,7 @@ namespace toolkit
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL AnimatedImagesPeer::elementInserted( const ContainerEvent& i_event ) throw (RuntimeException)
+    void SAL_CALL AnimatedImagesPeer::elementInserted( const ContainerEvent& i_event )
     {
         ::vos::OGuard aGuard( GetMutex() );
         Reference< XAnimatedImages > xAnimatedImages( i_event.Source, UNO_QUERY_THROW );
@@ -460,9 +460,9 @@ namespace toolkit
         m_pData->aCachedImageSets.insert( m_pData->aCachedImageSets.begin() + position, aImages );
         lcl_updateImageList_nothrow( *m_pData );
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL AnimatedImagesPeer::elementRemoved( const ContainerEvent& i_event ) throw (RuntimeException)
+    void SAL_CALL AnimatedImagesPeer::elementRemoved( const ContainerEvent& i_event )
     {
         ::vos::OGuard aGuard( GetMutex() );
         Reference< XAnimatedImages > xAnimatedImages( i_event.Source, UNO_QUERY_THROW );
@@ -479,9 +479,9 @@ namespace toolkit
         m_pData->aCachedImageSets.erase( m_pData->aCachedImageSets.begin() + position );
         lcl_updateImageList_nothrow( *m_pData );
     }
-    
+
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL AnimatedImagesPeer::elementReplaced( const ContainerEvent& i_event ) throw (RuntimeException)
+    void SAL_CALL AnimatedImagesPeer::elementReplaced( const ContainerEvent& i_event )
     {
         ::vos::OGuard aGuard( GetMutex() );
         Reference< XAnimatedImages > xAnimatedImages( i_event.Source, UNO_QUERY_THROW );
@@ -504,19 +504,19 @@ namespace toolkit
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL AnimatedImagesPeer::disposing( const EventObject& i_event ) throw (RuntimeException)
+    void SAL_CALL AnimatedImagesPeer::disposing( const EventObject& i_event )
     {
         VCLXWindow::disposing( i_event );
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL AnimatedImagesPeer::modified( const EventObject& i_event ) throw (RuntimeException)
+    void SAL_CALL AnimatedImagesPeer::modified( const EventObject& i_event )
     {
         impl_updateImages_nolck( i_event.Source );
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL AnimatedImagesPeer::dispose(  ) throw(RuntimeException)
+    void SAL_CALL AnimatedImagesPeer::dispose(  )
     {
         AnimatedImagesPeer_Base::dispose();
         ::vos::OGuard aGuard( GetMutex() );

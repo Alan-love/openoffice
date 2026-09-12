@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_calc.hxx"
 
 
 #include "calc/CDatabaseMetaData.hxx"
@@ -153,7 +153,7 @@ Reference< XResultSet > OCalcDatabaseMetaData::impl_getTypeInfo_throw(  )
 
 Reference< XResultSet > SAL_CALL OCalcDatabaseMetaData::getColumns(
 	const Any& /*catalog*/, const ::rtl::OUString& /*schemaPattern*/, const ::rtl::OUString& tableNamePattern,
-        const ::rtl::OUString& columnNamePattern ) throw(SQLException, RuntimeException)
+        const ::rtl::OUString& columnNamePattern )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "calc", "Ocke.Janssen@sun.com", "OCalcDatabaseMetaData::getColumns" );
 	::osl::MutexGuard aGuard( m_aMutex );
@@ -249,7 +249,7 @@ Reference< XResultSet > SAL_CALL OCalcDatabaseMetaData::getColumns(
 
 // -------------------------------------------------------------------------
 
-::rtl::OUString SAL_CALL OCalcDatabaseMetaData::getURL(  ) throw(SQLException, RuntimeException)
+::rtl::OUString SAL_CALL OCalcDatabaseMetaData::getURL(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "calc", "Ocke.Janssen@sun.com", "OCalcDatabaseMetaData::getURL" );
 	::osl::MutexGuard aGuard( m_aMutex );
@@ -259,7 +259,7 @@ Reference< XResultSet > SAL_CALL OCalcDatabaseMetaData::getColumns(
 
 // -------------------------------------------------------------------------
 
-sal_Int32 SAL_CALL OCalcDatabaseMetaData::getMaxBinaryLiteralLength(  ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL OCalcDatabaseMetaData::getMaxBinaryLiteralLength(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "calc", "Ocke.Janssen@sun.com", "OCalcDatabaseMetaData::getMaxBinaryLiteralLength" );
 	return STRING_MAXLEN;
@@ -267,25 +267,25 @@ sal_Int32 SAL_CALL OCalcDatabaseMetaData::getMaxBinaryLiteralLength(  ) throw(SQ
 
 // -------------------------------------------------------------------------
 
-sal_Int32 SAL_CALL OCalcDatabaseMetaData::getMaxCharLiteralLength(  ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL OCalcDatabaseMetaData::getMaxCharLiteralLength(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "calc", "Ocke.Janssen@sun.com", "OCalcDatabaseMetaData::getMaxCharLiteralLength" );
 	return STRING_MAXLEN;
 }
 // -------------------------------------------------------------------------
-sal_Int32 SAL_CALL OCalcDatabaseMetaData::getMaxColumnNameLength(  ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL OCalcDatabaseMetaData::getMaxColumnNameLength(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "calc", "Ocke.Janssen@sun.com", "OCalcDatabaseMetaData::getMaxColumnNameLength" );
 	return STRING_MAXLEN;
 }
 // -------------------------------------------------------------------------
-sal_Int32 SAL_CALL OCalcDatabaseMetaData::getMaxColumnsInIndex(  ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL OCalcDatabaseMetaData::getMaxColumnsInIndex(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "calc", "Ocke.Janssen@sun.com", "OCalcDatabaseMetaData::getMaxColumnsInIndex" );
 	return 1;
 }
 // -------------------------------------------------------------------------
-sal_Int32 SAL_CALL OCalcDatabaseMetaData::getMaxColumnsInTable(  ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL OCalcDatabaseMetaData::getMaxColumnsInTable(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "calc", "Ocke.Janssen@sun.com", "OCalcDatabaseMetaData::getMaxColumnsInTable" );
 	return 256;
@@ -309,7 +309,7 @@ sal_Bool lcl_IsEmptyOrHidden( const Reference<XSpreadsheets>& xSheets, const ::r
 			if ( aVisAny >>= bVisible )
 				if (!bVisible)
 					return sal_True;				// hidden
-		}		
+		}
 
 #if 0
 		//	test if whole sheet is empty
@@ -378,7 +378,7 @@ sal_Bool lcl_IsUnnamed( const Reference<XDatabaseRanges>& xRanges, const ::rtl::
 			catch ( UnknownPropertyException& )
 			{
 				// optional property
-			}			
+			}
 		}
 	}
 
@@ -390,7 +390,6 @@ sal_Bool lcl_IsUnnamed( const Reference<XDatabaseRanges>& xRanges, const ::rtl::
 Reference< XResultSet > SAL_CALL OCalcDatabaseMetaData::getTables(
         const Any& /*catalog*/, const ::rtl::OUString& /*schemaPattern*/,
         const ::rtl::OUString& tableNamePattern, const Sequence< ::rtl::OUString >& types )
-        throw(SQLException, RuntimeException)
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "calc", "Ocke.Janssen@sun.com", "OCalcDatabaseMetaData::getTables" );
 	::osl::MutexGuard aGuard( m_aMutex );
@@ -408,7 +407,7 @@ Reference< XResultSet > SAL_CALL OCalcDatabaseMetaData::getTables(
 	if(nLength)
 	{
 		bTableFound = sal_False;
-		
+
 		const ::rtl::OUString* pIter = types.getConstArray();
 		const ::rtl::OUString* pEnd	= pIter + nLength;
 		for(;pIter != pEnd;++pIter)
@@ -482,5 +481,3 @@ Reference< XResultSet > SAL_CALL OCalcDatabaseMetaData::getTables(
 	return xRef;
 }
 // -----------------------------------------------------------------------------
-
-

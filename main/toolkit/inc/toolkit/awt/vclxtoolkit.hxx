@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -73,7 +73,7 @@ protected:
 	::osl::Mutex	maMutex;
 };
 
-class VCLXToolkit :	public VCLXToolkit_Impl, 
+class VCLXToolkit :	public VCLXToolkit_Impl,
 					public cppu::WeakComponentImplHelper7<
 					::com::sun::star::awt::XToolkit,
 					::com::sun::star::lang::XServiceInfo,
@@ -118,96 +118,84 @@ protected:
 	Window*	ImplCreateWindow( VCLXWindow** ppNewComp, const ::com::sun::star::awt::WindowDescriptor& rDescriptor, Window* pParent, WinBits nWinBits );
     ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer > ImplCreateWindow( const ::com::sun::star::awt::WindowDescriptor& Descriptor, WinBits nWinBits );
 
-public:	
+public:
 
 	VCLXToolkit( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > & );
 	~VCLXToolkit();
-	
+
 	// ::com::sun::star::awt::XToolkit
-    ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer >	SAL_CALL getDesktopWindow(  ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::awt::Rectangle										SAL_CALL getWorkArea(  ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer >	SAL_CALL createWindow( const ::com::sun::star::awt::WindowDescriptor& Descriptor ) throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer > > SAL_CALL createWindows( const ::com::sun::star::uno::Sequence< ::com::sun::star::awt::WindowDescriptor >& Descriptors ) throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::uno::Reference< ::com::sun::star::awt::XDevice >		SAL_CALL createScreenCompatibleDevice( sal_Int32 Width, sal_Int32 Height ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::uno::Reference< ::com::sun::star::awt::XRegion >		SAL_CALL createRegion(  ) throw(::com::sun::star::uno::RuntimeException);
+    ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer >	SAL_CALL getDesktopWindow(  );
+    ::com::sun::star::awt::Rectangle										SAL_CALL getWorkArea(  );
+    ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer >	SAL_CALL createWindow( const ::com::sun::star::awt::WindowDescriptor& Descriptor );
+    ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer > > SAL_CALL createWindows( const ::com::sun::star::uno::Sequence< ::com::sun::star::awt::WindowDescriptor >& Descriptors );
+    ::com::sun::star::uno::Reference< ::com::sun::star::awt::XDevice >		SAL_CALL createScreenCompatibleDevice( sal_Int32 Width, sal_Int32 Height );
+    ::com::sun::star::uno::Reference< ::com::sun::star::awt::XRegion >		SAL_CALL createRegion(  );
 
     // ::com::sun::star::awt::XSystemChildFactory
-	::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer > SAL_CALL createSystemChild( const ::com::sun::star::uno::Any& Parent, const ::com::sun::star::uno::Sequence< sal_Int8 >& ProcessId, sal_Int16 SystemType ) throw(::com::sun::star::uno::RuntimeException);
+	::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer > SAL_CALL createSystemChild( const ::com::sun::star::uno::Any& Parent, const ::com::sun::star::uno::Sequence< sal_Int8 >& ProcessId, sal_Int16 SystemType );
 
     // ::com::sun::star::awt::XMessageBoxFactory
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::awt::XMessageBox > SAL_CALL createMessageBox( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer >& aParent, ::com::sun::star::awt::MessageBoxType eType, ::sal_Int32 nButtons, const ::rtl::OUString& sTitle, const ::rtl::OUString& sMessage ) throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::awt::XMessageBox > SAL_CALL createMessageBox( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer >& aParent, ::com::sun::star::awt::MessageBoxType eType, ::sal_Int32 nButtons, const ::rtl::OUString& sTitle, const ::rtl::OUString& sMessage );
 
     // ::com::sun::star::awt::XDataTransfer
-	::com::sun::star::uno::Reference< ::com::sun::star::datatransfer::dnd::XDragGestureRecognizer > SAL_CALL getDragGestureRecognizer( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow >& window ) throw(::com::sun::star::uno::RuntimeException);
-	::com::sun::star::uno::Reference< ::com::sun::star::datatransfer::dnd::XDragSource > SAL_CALL getDragSource( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow >& window ) throw(::com::sun::star::uno::RuntimeException);
-	::com::sun::star::uno::Reference< ::com::sun::star::datatransfer::dnd::XDropTarget > SAL_CALL getDropTarget( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow >& window ) throw(::com::sun::star::uno::RuntimeException);
-	::com::sun::star::uno::Reference< ::com::sun::star::datatransfer::clipboard::XClipboard > SAL_CALL getClipboard( const ::rtl::OUString& clipboardName ) throw(::com::sun::star::uno::RuntimeException);  
+	::com::sun::star::uno::Reference< ::com::sun::star::datatransfer::dnd::XDragGestureRecognizer > SAL_CALL getDragGestureRecognizer( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow >& window );
+	::com::sun::star::uno::Reference< ::com::sun::star::datatransfer::dnd::XDragSource > SAL_CALL getDragSource( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow >& window );
+	::com::sun::star::uno::Reference< ::com::sun::star::datatransfer::dnd::XDropTarget > SAL_CALL getDropTarget( const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindow >& window );
+	::com::sun::star::uno::Reference< ::com::sun::star::datatransfer::clipboard::XClipboard > SAL_CALL getClipboard( const ::rtl::OUString& clipboardName );
 
 	// ::com::sun::star::lang::XServiceInfo
-    ::rtl::OUString SAL_CALL getImplementationName(  ) throw(::com::sun::star::uno::RuntimeException);
-    sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName ) throw(::com::sun::star::uno::RuntimeException);
-    ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  ) throw(::com::sun::star::uno::RuntimeException);
+    ::rtl::OUString SAL_CALL getImplementationName(  );
+    sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName );
+    ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  );
 
     // ::com::sun::star::awt::XExtendedToolkit:
 
-    virtual ::sal_Int32 SAL_CALL getTopWindowCount()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::sal_Int32 SAL_CALL getTopWindowCount();
 
     virtual
     ::com::sun::star::uno::Reference< ::com::sun::star::awt::XTopWindow >
-    SAL_CALL getTopWindow(::sal_Int32 nIndex)
-        throw (::com::sun::star::uno::RuntimeException);
+    SAL_CALL getTopWindow(::sal_Int32 nIndex);
 
     virtual
     ::com::sun::star::uno::Reference< ::com::sun::star::awt::XTopWindow >
-    SAL_CALL getActiveTopWindow()
-        throw (::com::sun::star::uno::RuntimeException);
+    SAL_CALL getActiveTopWindow();
 
     virtual void SAL_CALL addTopWindowListener(
         ::com::sun::star::uno::Reference<
-        ::com::sun::star::awt::XTopWindowListener > const & rListener)
-        throw (::com::sun::star::uno::RuntimeException);
+        ::com::sun::star::awt::XTopWindowListener > const & rListener);
 
     virtual void SAL_CALL removeTopWindowListener(
         ::com::sun::star::uno::Reference<
-        ::com::sun::star::awt::XTopWindowListener > const & rListener)
-        throw (::com::sun::star::uno::RuntimeException);
+        ::com::sun::star::awt::XTopWindowListener > const & rListener);
 
     virtual void SAL_CALL addKeyHandler(
         ::com::sun::star::uno::Reference<
-        ::com::sun::star::awt::XKeyHandler > const & rHandler)
-        throw (::com::sun::star::uno::RuntimeException);
+        ::com::sun::star::awt::XKeyHandler > const & rHandler);
 
     virtual void SAL_CALL removeKeyHandler(
         ::com::sun::star::uno::Reference<
-        ::com::sun::star::awt::XKeyHandler > const & rHandler)
-        throw (::com::sun::star::uno::RuntimeException);
+        ::com::sun::star::awt::XKeyHandler > const & rHandler);
 
     virtual void SAL_CALL addFocusListener(
         ::com::sun::star::uno::Reference<
-        ::com::sun::star::awt::XFocusListener > const & rListener)
-        throw (::com::sun::star::uno::RuntimeException);
+        ::com::sun::star::awt::XFocusListener > const & rListener);
 
     virtual void SAL_CALL removeFocusListener(
         ::com::sun::star::uno::Reference<
-        ::com::sun::star::awt::XFocusListener > const & rListener)
-        throw (::com::sun::star::uno::RuntimeException);
+        ::com::sun::star::awt::XFocusListener > const & rListener);
 
-    virtual void SAL_CALL fireFocusGained( 
-        ::com::sun::star::uno::Reference< 
-        ::com::sun::star::uno::XInterface > const & source) 
-        throw (::com::sun::star::uno::RuntimeException);
-        
-    virtual void SAL_CALL fireFocusLost( 
-        ::com::sun::star::uno::Reference< 
-        ::com::sun::star::uno::XInterface > const & source) 
-        throw (::com::sun::star::uno::RuntimeException);
-        
+    virtual void SAL_CALL fireFocusGained(
+        ::com::sun::star::uno::Reference<
+        ::com::sun::star::uno::XInterface > const & source);
+
+    virtual void SAL_CALL fireFocusLost(
+        ::com::sun::star::uno::Reference<
+        ::com::sun::star::uno::XInterface > const & source);
+
     // ::com::sun::star::awt::XReschedule:
-    virtual void SAL_CALL reschedule()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL reschedule();
 
-        
+
 };
 
 #endif // _TOOLKIT_AWT_VCLXTOOLKIT_HXX_

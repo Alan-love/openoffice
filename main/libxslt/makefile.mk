@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -49,7 +49,8 @@ TARFILE_MD5=db8765c8d076f1b6caafd9f2542a304a
 
 # libxslt-internal-symbols: #i112480#: Solaris ld requires symbols to be defined
 PATCH_FILES=libxslt-configure.patch \
-            libxslt-win_manifest.patch
+            libxslt-win_manifest.patch \
+            libxslt-stdlib-getenv.patch
 
 # This is only for UNX environment now
 .IF "$(OS)"=="WNT"
@@ -106,7 +107,21 @@ CPPFLAGS+:=$(ARCH_FLAGS) -xc99=none
 .ENDIF                  # "$(COMNAME)"=="sunpro5"
 CONFIGURE_DIR=
 CONFIGURE_ACTION=.$/configure
+.IF "$(OS)"=="MACOSX"
+# Community builds bundle a static libxslt/libexslt rather than a dylib --
+# see main/xmlsecurity/util/makefile.mk and main/forms/util/makefile.mk
+# for the analogous libxml2 case.
+#
+# libxslt's own configure otherwise discovers libxml2 via pkg-config,
+# which resolves to whatever libxml2 a package manager (MacPorts,
+# Homebrew, ...) has registered there -- not the bundled copy this
+# module just built. --with-libxml-prefix pins it to the bundled
+# xml2-config instead, matching the consumer-side fix in xmlsecurity/
+# forms.
+CONFIGURE_FLAGS=--enable-ipv6=no --without-crypto --without-python --enable-static=yes --enable-shared=no --with-sax1=yes --with-libxml-prefix=$(SOLARVERSION)/$(INPATH) ac_cv_func_clock_gettime=false
+.ELSE
 CONFIGURE_FLAGS=--enable-ipv6=no --without-crypto --without-python --enable-static=no --with-sax1=yes ac_cv_func_clock_gettime=false
+.ENDIF
 BUILD_ACTION=chmod 777 xslt-config && $(GNUMAKE)
 BUILD_FLAGS+= -j$(EXTMAXPROCESS)
 BUILD_DIR=$(CONFIGURE_DIR)
@@ -115,9 +130,11 @@ BUILD_DIR=$(CONFIGURE_DIR)
 OUT2INC=libxslt$/*.h
 
 .IF "$(OS)"=="MACOSX"
-OUT2LIB+=libxslt$/.libs$/libxslt.*.dylib
-OUT2LIB+=libexslt$/.libs$/libexslt.*.dylib
-OUT2BIN+=xsltproc$/.libs$/xsltproc
+OUT2LIB+=libxslt$/.libs$/libxslt.a
+OUT2LIB+=libexslt$/.libs$/libexslt.a
+# With --enable-shared=no, libtool links xsltproc directly (no .libs
+# wrapper dir, unlike the static .a archives above).
+OUT2BIN+=xsltproc$/xsltproc
 OUT2BIN+=xslt-config
 .ELIF "$(OS)"=="WNT"
 .IF "$(COM)"=="GCC"
@@ -144,4 +161,3 @@ OUT2BIN+=xslt-config
 .INCLUDE : set_ext.mk
 .INCLUDE : target.mk
 .INCLUDE : tg_ext.mk
-

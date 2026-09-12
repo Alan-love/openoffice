@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -55,29 +55,23 @@ public:
         css::uno::Reference< css::uno::XComponentContext > const & xComponentContext );
 
     // XServiceInfo
-    virtual ::rtl::OUString SAL_CALL getImplementationName()
-        throw ( css::uno::RuntimeException );
+    virtual ::rtl::OUString SAL_CALL getImplementationName();
 
     virtual sal_Bool SAL_CALL
-        supportsService( ::rtl::OUString const & serviceName )
-            throw ( css::uno::RuntimeException );
+        supportsService( ::rtl::OUString const & serviceName );
 
     virtual css::uno::Sequence< ::rtl::OUString > SAL_CALL
-        getSupportedServiceNames()
-            throw ( css::uno::RuntimeException );
+        getSupportedServiceNames();
 
     // XBrowseNodeFactory
     virtual css::uno::Reference< css::script::browse::XBrowseNode > SAL_CALL
-        createView( sal_Int16 viewType )
-            throw ( css::uno::RuntimeException );
+        createView( sal_Int16 viewType );
     private:
     css::uno::Reference< css::script::browse::XBrowseNode >
-        getSelectorHierarchy()
-            throw ( css::uno::RuntimeException );
+        getSelectorHierarchy();
 
     css::uno::Reference< css::script::browse::XBrowseNode >
-        getOrganizerHierarchy()
-            throw ( css::uno::RuntimeException );
+        getOrganizerHierarchy();
 };
 
 

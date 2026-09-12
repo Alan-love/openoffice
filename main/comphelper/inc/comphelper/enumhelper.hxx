@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -73,11 +73,10 @@ public:
                        const staruno::Sequence< ::rtl::OUString >&             _aNames  );
     virtual ~OEnumerationByName();
 
-	virtual sal_Bool SAL_CALL hasMoreElements(  ) throw(staruno::RuntimeException);
-    virtual staruno::Any SAL_CALL nextElement(  )
-		throw(starcontainer::NoSuchElementException, starlang::WrappedTargetException, staruno::RuntimeException);
+	virtual sal_Bool SAL_CALL hasMoreElements(  );
+    virtual staruno::Any SAL_CALL nextElement(  );
 
-    virtual void SAL_CALL disposing(const starlang::EventObject& aEvent) throw(staruno::RuntimeException);
+    virtual void SAL_CALL disposing(const starlang::EventObject& aEvent);
 
 private:
     COMPHELPER_DLLPRIVATE void impl_startDisposeListening();
@@ -102,11 +101,10 @@ public:
     OEnumerationByIndex(const staruno::Reference< starcontainer::XIndexAccess >& _rxAccess);
     virtual ~OEnumerationByIndex();
 
-	virtual sal_Bool SAL_CALL hasMoreElements(  ) throw(staruno::RuntimeException);
-    virtual staruno::Any SAL_CALL nextElement(  )
-		throw(starcontainer::NoSuchElementException, starlang::WrappedTargetException, staruno::RuntimeException);
+	virtual sal_Bool SAL_CALL hasMoreElements(  );
+    virtual staruno::Any SAL_CALL nextElement(  );
 
-    virtual void SAL_CALL disposing(const starlang::EventObject& aEvent) throw(staruno::RuntimeException);
+    virtual void SAL_CALL disposing(const starlang::EventObject& aEvent);
 
 private:
     COMPHELPER_DLLPRIVATE void impl_startDisposeListening();
@@ -118,7 +116,7 @@ private:
 //==================================================================
 /** provides an <type scope="com.sun.star.container">XEnumeration</type>
     for an outside set vector of Any's.
-	
+
 */
 class COMPHELPER_DLLPUBLIC OAnyEnumeration : private OEnumerationLock
                                            , public  ::cppu::WeakImplHelper1< starcontainer::XEnumeration >
@@ -130,9 +128,8 @@ public:
     OAnyEnumeration(const staruno::Sequence< staruno::Any >& lItems);
     virtual ~OAnyEnumeration();
 
-	virtual sal_Bool SAL_CALL hasMoreElements(  ) throw(staruno::RuntimeException);
-    virtual staruno::Any SAL_CALL nextElement(  )
-		throw(starcontainer::NoSuchElementException, starlang::WrappedTargetException, staruno::RuntimeException);
+	virtual sal_Bool SAL_CALL hasMoreElements(  );
+    virtual staruno::Any SAL_CALL nextElement(  );
 
 };
 
@@ -141,6 +138,3 @@ public:
 //... namespace comphelper .......................................................
 
 #endif // _COMPHELPER_ENUMHELPER_HXX_
-
-
-

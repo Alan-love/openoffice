@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 #include "ColumnLineChartTypeTemplate.hxx"
 #include "macros.hxx"
 #include "CommonConverters.hxx"
@@ -84,7 +84,7 @@ private:
     void lcl_AddDefaultsToMap( ::chart::tPropertyValueMap & rOutMap )
     {
         ::chart::PropertyHelper::setPropertyValueDefault< sal_Int32 >( rOutMap, PROP_COL_LINE_NUMBER_OF_LINES, 1 );
-    }    
+    }
 };
 
 struct StaticColumnLineChartTypeTemplateDefaults : public rtl::StaticAggregate< ::chart::tPropertyValueMap, StaticColumnLineChartTypeTemplateDefaults_Initializer >
@@ -154,7 +154,6 @@ ColumnLineChartTypeTemplate::~ColumnLineChartTypeTemplate()
 
 // ____ OPropertySet ____
 uno::Any ColumnLineChartTypeTemplate::GetDefaultValue( sal_Int32 nHandle ) const
-    throw(beans::UnknownPropertyException)
 {
     const tPropertyValueMap& rStaticDefaults = *StaticColumnLineChartTypeTemplateDefaults::get();
     tPropertyValueMap::const_iterator aFound( rStaticDefaults.find( nHandle ) );
@@ -170,7 +169,6 @@ uno::Any ColumnLineChartTypeTemplate::GetDefaultValue( sal_Int32 nHandle ) const
 
 // ____ XPropertySet ____
 uno::Reference< beans::XPropertySetInfo > SAL_CALL ColumnLineChartTypeTemplate::getPropertySetInfo()
-    throw (uno::RuntimeException)
 {
     return *StaticColumnLineChartTypeTemplateInfo::get();
 }
@@ -258,7 +256,6 @@ void SAL_CALL ColumnLineChartTypeTemplate::applyStyle(
     ::sal_Int32 nChartTypeIndex,
     ::sal_Int32 nSeriesIndex,
     ::sal_Int32 nSeriesCount )
-    throw (uno::RuntimeException)
 {
     ChartTypeTemplate::applyStyle( xSeries, nChartTypeIndex, nSeriesIndex, nSeriesCount );
 
@@ -289,7 +286,6 @@ StackMode ColumnLineChartTypeTemplate::getStackMode( sal_Int32 nChartTypeIndex )
 sal_Bool SAL_CALL ColumnLineChartTypeTemplate::matchesTemplate(
     const uno::Reference< XDiagram >& xDiagram,
     sal_Bool bAdaptProperties )
-    throw (uno::RuntimeException)
 {
     sal_Bool bResult = sal_False;
 
@@ -386,7 +382,6 @@ Reference< chart2::XChartType > ColumnLineChartTypeTemplate::getChartTypeForInde
 
 Reference< XChartType > SAL_CALL ColumnLineChartTypeTemplate::getChartTypeForNewSeries(
         const uno::Sequence< Reference< chart2::XChartType > >& aFormerlyUsedChartTypes )
-    throw (uno::RuntimeException)
 {
     Reference< chart2::XChartType > xResult;
 
@@ -407,7 +402,6 @@ Reference< XChartType > SAL_CALL ColumnLineChartTypeTemplate::getChartTypeForNew
 }
 
 Reference< XDataInterpreter > SAL_CALL ColumnLineChartTypeTemplate::getDataInterpreter()
-    throw (uno::RuntimeException)
 {
     if( ! m_xDataInterpreter.is())
     {
@@ -419,7 +413,7 @@ Reference< XDataInterpreter > SAL_CALL ColumnLineChartTypeTemplate::getDataInter
     {
         //todo...
         OSL_ENSURE( false, "number of lines may not be valid anymore in the datainterpreter" );
-    
+
     }
 
     return m_xDataInterpreter;

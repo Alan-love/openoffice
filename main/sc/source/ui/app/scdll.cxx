@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,27 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_sc.hxx"
 
-
-
 #include <editeng/eeitem.hxx>
-
 
 #ifndef _FM_FMOBJFAC_HXX
 #include <svx/fmobjfac.hxx>
@@ -36,7 +31,6 @@
 #include <svx/tbxcolor.hxx>
 
 #include <sot/clsids.hxx>
-#include <sfx2/taskpane.hxx>
 #include <sfx2/sidebar/SidebarChildWindow.hxx>
 #include <sfx2/docfilt.hxx>
 #include <sfx2/fcontnr.hxx>
@@ -53,7 +47,7 @@
 #include <sot/formats.hxx>
 #define SOT_FORMATSTR_ID_STARCALC_30 SOT_FORMATSTR_ID_STARCALC
 
-#include "scitems.hxx"		// fuer tbxctrls etc.
+#include "scitems.hxx" // for tbxctrls etc.
 #include "scmod.hxx"
 #include "scresid.hxx"
 #include "sc.hrc"
@@ -129,19 +123,19 @@
 
 //UNUSED2008-05  //	filter detection can't use ScFilterOptions (in sc-dll),
 //UNUSED2008-05  //	so access to wk3 flag must be implemented here again
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  class ScLibOptions : public utl::ConfigItem
 //UNUSED2008-05  {
 //UNUSED2008-05      sal_Bool        bWK3Flag;
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  public:
 //UNUSED2008-05                  ScLibOptions();
 //UNUSED2008-05      sal_Bool        GetWK3Flag() const          { return bWK3Flag; }
 //UNUSED2008-05  };
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  #define CFGPATH_LIBFILTER		"Office.Calc/Filter/Import/Lotus123"
 //UNUSED2008-05  #define ENTRYSTR_WK3			"WK3"
-//UNUSED2008-05  
+//UNUSED2008-05
 //UNUSED2008-05  ScLibOptions::ScLibOptions() :
 //UNUSED2008-05      ConfigItem( rtl::OUString::createFromAscii( CFGPATH_LIBFILTER ) ),
 //UNUSED2008-05      bWK3Flag( sal_False )
@@ -262,9 +256,8 @@ void ScDLL::Init()
 	::avmedia::MediaToolBoxControl::RegisterControl( SID_AVMEDIA_TOOLBOX, pMod );
 
     // common SFX controller
-    ::sfx2::TaskPaneWrapper::RegisterChildWindow( sal_False, pMod );
     ::sfx2::sidebar::SidebarChildWindow::RegisterChildWindow(sal_False, pMod);
-    
+
 	// Svx-StatusBar-Controller
 	SvxInsertStatusBarControl		::RegisterControl(SID_ATTR_INSERT,		pMod);
 	SvxSelectionModeControl			::RegisterControl(SID_STATUS_SELMODE,	pMod);
@@ -323,7 +316,7 @@ void ScDLL::Init()
 	//<!--Added by PengYunQuan for Validity Cell Range Picker
 	ScValidityRefChildWin::RegisterChildWindow(sal_False, pMod);
 	//-->Added by PengYunQuan for Validity Cell Range Picker
-		
+
 	//	Edit-Engine-Felder, soweit nicht schon in OfficeApplication::Init
 
 	SvClassManager& rClassManager = SvxFieldItem::GetClassManager();

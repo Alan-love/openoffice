@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #ifndef __MACCESSIBLE_H_
@@ -58,7 +58,7 @@ using namespace rtl;
 /**
  *This class implements IMAccessible interface, which inherits from IAccessible2, and
  *in turn inherits from IAccessible. So its methods include the methods defined only in
- *IAccessible, plus the methods defined only in IAccessible2, plus the methods defined 
+ *IAccessible, plus the methods defined only in IAccessible2, plus the methods defined
  *only in IMAccessible.
  */
 class ATL_NO_VTABLE CMAccessible :
@@ -200,12 +200,12 @@ public:
     STDMETHOD(Put_XAccParent)(IMAccessible __RPC_FAR *pIParent);
     STDMETHOD(Put_XAccWindowHandle)(HWND hwnd);
     STDMETHOD(Put_XAccChildID)(long dChildID);
-    STDMETHOD(Put_XAccAgent)(long pAgent);
+    STDMETHOD(Put_XAccAgent)(LONG_PTR pAgent);
     STDMETHOD(NotifyDestroy)(BOOL isDestroy);
     STDMETHOD(Put_ActionDescription)( const OLECHAR* szAction);
-    STDMETHOD(SetDefaultAction)(long pAction);
-    STDMETHOD(GetUNOInterface)(long*);
-    STDMETHOD(SetXAccessible)(long);
+    STDMETHOD(SetDefaultAction)(LONG_PTR pAction);
+    STDMETHOD(GetUNOInterface)(LONG_PTR*);
+    STDMETHOD(SetXAccessible)(LONG_PTR);
 
 private:
     OLECHAR* m_pszName;
@@ -271,12 +271,12 @@ public:
     // implement some specific MSAA methods,such as accSelection,accNavigate
     static AccObjectManagerAgent* g_pAgent;
 
-    static BOOL get_IAccessibleFromXAccessible(long pXAcc,IAccessible** ppIA);
+    static BOOL get_IAccessibleFromXAccessible(LONG_PTR pXAcc,IAccessible** ppIA);
     BOOL m_bRequiresSave;
     XGUIDToComObjHash m_containedObjects;
 
     static HRESULT WINAPI _SmartQI(void* pv,
-                                   REFIID iid, void** ppvObject, DWORD)
+                                   REFIID iid, void** ppvObject, DWORD_PTR)
     {
         return ((CMAccessible*)pv)->SmartQI(pv,iid,ppvObject);
     }

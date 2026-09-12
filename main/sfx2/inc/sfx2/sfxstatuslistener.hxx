@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -47,7 +47,7 @@ class SFX2_DLLPUBLIC SfxStatusListener :
                           public ::com::sun::star::frame::XStatusListener	,
 					      public ::com::sun::star::lang::XTypeProvider      ,
                           public ::com::sun::star::lang::XComponent         ,
-					      public ::cppu::OWeakObject 
+					      public ::cppu::OWeakObject
 {
     public:
 	    SFX_DECL_XINTERFACE_XTYPEPROVIDER
@@ -65,15 +65,15 @@ class SFX2_DLLPUBLIC SfxStatusListener :
         virtual void StateChanged( sal_uInt16 nSID, SfxItemState eState, const SfxPoolItem* pState );
 
         // XComponent
-        virtual void SAL_CALL dispose() throw( ::com::sun::star::uno::RuntimeException );
-        virtual void SAL_CALL addEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& xListener ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL removeEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& aListener ) throw (::com::sun::star::uno::RuntimeException);
+        virtual void SAL_CALL dispose();
+        virtual void SAL_CALL addEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& xListener );
+        virtual void SAL_CALL removeEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& aListener );
 
         // XEventListener
-	    virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& Source) throw( ::com::sun::star::uno::RuntimeException );
+	    virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& Source);
 
         // XStatusListener
-	    virtual void SAL_CALL statusChanged(const ::com::sun::star::frame::FeatureStateEvent& Event) throw( ::com::sun::star::uno::RuntimeException );
+	    virtual void SAL_CALL statusChanged(const ::com::sun::star::frame::FeatureStateEvent& Event);
 
     private:
         SfxStatusListener( const SfxStatusListener& );

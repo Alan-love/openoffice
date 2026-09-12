@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -66,7 +66,7 @@ public:
                             ::com::sun::star::uno::XComponentContext > const & xContext );
 	virtual ~XMLFilter();
 
-    /// establish methods for factory instatiation
+    /// establish methods for factory instantiation
     APPHELPER_SERVICE_FACTORY_HELPER( XMLFilter )
     /// XServiceInfo declarations
     APPHELPER_XSERVICEINFO_DECL()
@@ -75,24 +75,18 @@ protected:
     // ____ XFilter ____
     virtual sal_Bool SAL_CALL filter(
         const ::com::sun::star::uno::Sequence<
-            ::com::sun::star::beans::PropertyValue >& aDescriptor )
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL cancel()
-        throw (::com::sun::star::uno::RuntimeException);
+            ::com::sun::star::beans::PropertyValue >& aDescriptor );
+    virtual void SAL_CALL cancel();
 
     // ____ XImporter ____
     virtual void SAL_CALL setTargetDocument(
         const ::com::sun::star::uno::Reference<
-            ::com::sun::star::lang::XComponent >& Document )
-        throw (::com::sun::star::lang::IllegalArgumentException,
-               ::com::sun::star::uno::RuntimeException);
+            ::com::sun::star::lang::XComponent >& Document );
 
     // ____ XExporter ____
     virtual void SAL_CALL setSourceDocument(
         const ::com::sun::star::uno::Reference<
-            ::com::sun::star::lang::XComponent >& Document )
-        throw (::com::sun::star::lang::IllegalArgumentException,
-               ::com::sun::star::uno::RuntimeException);
+            ::com::sun::star::lang::XComponent >& Document );
 
     inline ::rtl::OUString getDocumentHandler() const { return m_sDocumentHandler; }
     inline void setDocumentHandler(const ::rtl::OUString& _sDocumentHandler) { m_sDocumentHandler = _sDocumentHandler; }
@@ -101,8 +95,8 @@ protected:
 
     /** fills the oasis flag only when a filtername was set
     *
-    * \param _rMediaDescriptor 
-    * \param _rOutOASIS 
+    * \param _rMediaDescriptor
+    * \param _rOutOASIS
     */
     virtual void isOasisFormat(const ::com::sun::star::uno::Sequence<
             ::com::sun::star::beans::PropertyValue >& _rMediaDescriptor, bool & _rOutOASIS );
@@ -171,20 +165,19 @@ public:
                             ::com::sun::star::uno::XComponentContext > const & _xContext )
                             :XMLFilter(_xContext)
     {}
-    /// establish methods for factory instatiation
-    static ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface > SAL_CALL	create( 
-        ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext > const & xContext) throw(::com::sun::star::uno::Exception)									
-    {																			
-	    return (::cppu::OWeakObject *)new XMLReportFilterHelper( xContext );					
+    /// establish methods for factory instantiation
+    static ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface > SAL_CALL	create(
+        ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext > const & xContext)
+    {
+	    return (::cppu::OWeakObject *)new XMLReportFilterHelper( xContext );
     }
     static ::rtl::OUString getImplementationName_Static()
     {
         return ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.comp.chart2.report.XMLFilter" ));
     }
 protected:
-    virtual ::rtl::OUString SAL_CALL							
-		getImplementationName()                                 
-			throw( ::com::sun::star::uno::RuntimeException )
+    virtual ::rtl::OUString SAL_CALL
+		getImplementationName()
     {
         return getImplementationName_Static();
     }
@@ -192,8 +185,6 @@ protected:
     virtual void SAL_CALL setTargetDocument(
         const ::com::sun::star::uno::Reference<
             ::com::sun::star::lang::XComponent >& Document )
-        throw (::com::sun::star::lang::IllegalArgumentException,
-               ::com::sun::star::uno::RuntimeException)
     {
         setDocumentHandler(::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.comp.report.ImportDocumentHandler")));
         XMLFilter::setTargetDocument(Document);
@@ -203,8 +194,6 @@ protected:
     virtual void SAL_CALL setSourceDocument(
         const ::com::sun::star::uno::Reference<
             ::com::sun::star::lang::XComponent >& Document )
-        throw (::com::sun::star::lang::IllegalArgumentException,
-               ::com::sun::star::uno::RuntimeException)
     {
         setDocumentHandler(::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.comp.report.ExportDocumentHandler")));
         XMLFilter::setSourceDocument(Document);

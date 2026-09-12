@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_dbtools.hxx"
 #include "connectivity/sdbcx/VIndex.hxx"
 #include <com/sun/star/lang/DisposedException.hpp>
 #include "connectivity/sdbcx/VColumn.hxx"
@@ -44,14 +44,14 @@ using namespace ::com::sun::star::container;
 using namespace ::com::sun::star::lang;
 
 // -----------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OIndex::getImplementationName(  ) throw (::com::sun::star::uno::RuntimeException)
+::rtl::OUString SAL_CALL OIndex::getImplementationName(  )
 {
 	if(isNew())
 		return ::rtl::OUString::createFromAscii("com.sun.star.sdbcx.VIndexDescriptor");
 	return ::rtl::OUString::createFromAscii("com.sun.star.sdbcx.VIndex");
 }
 // -----------------------------------------------------------------------------
-::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL OIndex::getSupportedServiceNames(  ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL OIndex::getSupportedServiceNames(  )
 {
 	::com::sun::star::uno::Sequence< ::rtl::OUString > aSupported(1);
 	if(isNew())
@@ -62,7 +62,7 @@ using namespace ::com::sun::star::lang;
 	return aSupported;
 }
 // -----------------------------------------------------------------------------
-sal_Bool SAL_CALL OIndex::supportsService( const ::rtl::OUString& _rServiceName ) throw(::com::sun::star::uno::RuntimeException)
+sal_Bool SAL_CALL OIndex::supportsService( const ::rtl::OUString& _rServiceName )
 {
 	Sequence< ::rtl::OUString > aSupported(getSupportedServiceNames());
 	const ::rtl::OUString* pSupported = aSupported.getConstArray();
@@ -113,7 +113,7 @@ OIndex::~OIndex( )
 	return *OIndex_PROP::getArrayHelper(isNew() ? 1 : 0);
 }
 // -------------------------------------------------------------------------
-Any SAL_CALL OIndex::queryInterface( const Type & rType ) throw(RuntimeException)
+Any SAL_CALL OIndex::queryInterface( const Type & rType )
 {
     Any aRet = ODescriptor::queryInterface( rType);
 	if(!aRet.hasValue())
@@ -126,7 +126,7 @@ Any SAL_CALL OIndex::queryInterface( const Type & rType ) throw(RuntimeException
 	return aRet;
 }
 // -------------------------------------------------------------------------
-Sequence< Type > SAL_CALL OIndex::getTypes(  ) throw(RuntimeException)
+Sequence< Type > SAL_CALL OIndex::getTypes(  )
 {
 	if(isNew())
 		return ::comphelper::concatSequences(ODescriptor::getTypes(),ODescriptor_BASE::getTypes());
@@ -155,7 +155,7 @@ void OIndex::disposing(void)
 		m_pColumns->disposing();
 }
 // -------------------------------------------------------------------------
-Reference< ::com::sun::star::container::XNameAccess > SAL_CALL OIndex::getColumns(  ) throw(RuntimeException)
+Reference< ::com::sun::star::container::XNameAccess > SAL_CALL OIndex::getColumns(  )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	checkDisposed(ODescriptor_BASE::rBHelper.bDisposed);
@@ -178,7 +178,7 @@ Reference< ::com::sun::star::container::XNameAccess > SAL_CALL OIndex::getColumn
 	return const_cast<OIndex*>(this)->m_pColumns;
 }
 // -------------------------------------------------------------------------
-Reference< XPropertySet > SAL_CALL OIndex::createDataDescriptor(  ) throw(RuntimeException)
+Reference< XPropertySet > SAL_CALL OIndex::createDataDescriptor(  )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	checkDisposed(ODescriptor_BASE::rBHelper.bDisposed);
@@ -187,17 +187,17 @@ Reference< XPropertySet > SAL_CALL OIndex::createDataDescriptor(  ) throw(Runtim
 	return this;
 }
 // -----------------------------------------------------------------------------
-::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL OIndex::getPropertySetInfo(  ) throw(::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL OIndex::getPropertySetInfo(  )
 {
 	return ::cppu::OPropertySetHelper::createPropertySetInfo(getInfoHelper());
 }
 // -----------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OIndex::getName(  ) throw(::com::sun::star::uno::RuntimeException)
+::rtl::OUString SAL_CALL OIndex::getName(  )
 {
 	return m_Name;
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OIndex::setName( const ::rtl::OUString& /*aName*/ ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL OIndex::setName( const ::rtl::OUString& /*aName*/ )
 {
 }
 // -----------------------------------------------------------------------------
@@ -216,4 +216,3 @@ void OIndex::refreshColumns()
 {
 }
 // -----------------------------------------------------------------------------
-

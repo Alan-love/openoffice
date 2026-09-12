@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -68,7 +68,7 @@ import lib.TestEnvironment;
 *  <li> <code>'Desktop'</code> (of type <code>Object</code>):
 *  if exsists, then desktop component is tested</li>
 * </ul> <p>
-* Test is <b> NOT </b> multithread compilant. <p>
+* Test is <b> NOT </b> multithread compliant. <p>
 * @see com.sun.star.frame.XFrame
 */
 public class _XFrame extends MultiMethodTest {
@@ -178,7 +178,7 @@ public class _XFrame extends MultiMethodTest {
     /**
     * Test calls the method. Then frame status (activated/deactivated) is
     * changed, and the listener is checked.<p>
-    * Has <b> OK </b> status if isDesktop() method returnes true, or if the
+    * Has <b> OK </b> status if isDesktop() method returns true, or if the
     * listener was called and frame was activated.
     */
     public void _addFrameActionListener() {
@@ -286,7 +286,7 @@ public class _XFrame extends MultiMethodTest {
         boolean result = true;
 
         XWindow win = oObj.getComponentWindow() ;
-        
+
         if (tEnv.getTestCase().getObjectName().equals("Desktop")) {
             log.println("Desktop has no component window");
             tRes.tested("getComponentWindow()", true) ;
@@ -407,7 +407,7 @@ public class _XFrame extends MultiMethodTest {
     /**
     * At first new listener is added, then test calls the method and result
     * is checked. <p>
-    * Has <b> OK </b> status if isDesktop() method returnes true or if the
+    * Has <b> OK </b> status if isDesktop() method returns true or if the
     * listener was called and proper event past to listener.
     */
     public void _contextChanged() {
@@ -499,7 +499,7 @@ public class _XFrame extends MultiMethodTest {
         requiredMethod("setCreator()") ;
 
         boolean result = true;
-        
+
         XWindow oldWindow = oObj.getComponentWindow();
         XController oldController = oObj.getController();
         boolean rs = oObj.setComponent(null, null);
@@ -523,10 +523,10 @@ public class _XFrame extends MultiMethodTest {
     /**
      * Test calls the method. <p>
      * Has <b> OK </b> status if the method successfully returns.
-     * In case a frame should initialised twice, a 
+     * In case a frame should initialised twice, a
      * <CODE>com.sun.star.uno.RuntimeException</CODE> was thron. This is ok. But since
      * a com.sun.star.uno.RuntimeException could thrown in any state the message of
-     * the exception must contain a defined string. In this case the test get an 
+     * the exception must contain a defined string. In this case the test get an
      * <CODE>OK</CODE> status.
      * The following method tests are to be completed successfully before :
      * <ul>
@@ -549,7 +549,7 @@ public class _XFrame extends MultiMethodTest {
                 log.println(e.toString());
                 bOK=false;
             }
-                
+
         }
         tRes.tested("initialize()", bOK) ;
     }
@@ -569,7 +569,7 @@ public class _XFrame extends MultiMethodTest {
             return false;
         }
     }
-    
+
     /**
     * Forces environment recreation.
     */

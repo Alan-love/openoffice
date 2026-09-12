@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -132,7 +132,7 @@ class OComponentAccess	:	private ThreadHelpBase                      ,   // Must
 			@onerror	-
 		*//*-*****************************************************************************************************/
 
-	    virtual css::uno::Reference< css::container::XEnumeration > SAL_CALL createEnumeration() throw( css::uno::RuntimeException );
+	    virtual css::uno::Reference< css::container::XEnumeration > SAL_CALL createEnumeration();
 
 		//---------------------------------------------------------------------------------------------------------
 		//	XElementAccess
@@ -151,7 +151,7 @@ class OComponentAccess	:	private ThreadHelpBase                      ,   // Must
 			@onerror	-
 		*//*-*****************************************************************************************************/
 
-		virtual css::uno::Type SAL_CALL getElementType() throw( css::uno::RuntimeException );
+		virtual css::uno::Type SAL_CALL getElementType();
 
 		/*-****************************************************************************************************//**
 			@short		get state of componentlist of enumeration.
@@ -166,7 +166,7 @@ class OComponentAccess	:	private ThreadHelpBase                      ,   // Must
 			@onerror	-
 		*//*-*****************************************************************************************************/
 
-    	virtual sal_Bool SAL_CALL hasElements() throw( css::uno::RuntimeException );
+    	virtual sal_Bool SAL_CALL hasElements();
 
 	//-------------------------------------------------------------------------------------------------------------
 	//	protected methods
@@ -234,7 +234,7 @@ class OComponentAccess	:	private ThreadHelpBase                      ,   // Must
 	//-------------------------------------------------------------------------------------------------------------
 
 		/*-****************************************************************************************************//**
-			@short		debug-method to check incoming parameter of some other mehods of this class
+			@short		debug-method to check incoming parameter of some other methods of this class
 			@descr		The following methods are used to check parameters for other methods
 						of this class. The return value is used directly for an ASSERT(...).
 

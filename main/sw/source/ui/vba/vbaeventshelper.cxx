@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,7 +49,7 @@ SwVbaEventsHelper::~SwVbaEventsHelper()
 }
 
 bool SwVbaEventsHelper::implPrepareEvent( EventQueue& rEventQueue,
-        const EventHandlerInfo& rInfo, const uno::Sequence< uno::Any >& /*rArgs*/ ) throw (uno::RuntimeException)
+        const EventHandlerInfo& rInfo, const uno::Sequence< uno::Any >& /*rArgs*/ )
 {
     switch( rInfo.mnEventId )
     {
@@ -67,20 +67,20 @@ bool SwVbaEventsHelper::implPrepareEvent( EventQueue& rEventQueue,
 }
 
 uno::Sequence< uno::Any > SwVbaEventsHelper::implBuildArgumentList( const EventHandlerInfo& /*rInfo*/,
-        const uno::Sequence< uno::Any >& /*rArgs*/ ) throw (lang::IllegalArgumentException)
+        const uno::Sequence< uno::Any >& /*rArgs*/ )
 {
     // no event handler expects any arguments
     return uno::Sequence< uno::Any >();
 }
 
 void SwVbaEventsHelper::implPostProcessEvent( EventQueue& /*rEventQueue*/,
-        const EventHandlerInfo& /*rInfo*/, bool /*bCancel*/ ) throw (uno::RuntimeException)
+        const EventHandlerInfo& /*rInfo*/, bool /*bCancel*/ )
 {
     // nothing to do after any event
 }
 
 ::rtl::OUString SwVbaEventsHelper::implGetDocumentModuleName( const EventHandlerInfo& /*rInfo*/,
-        const uno::Sequence< uno::Any >& /*rArgs*/ ) const throw (lang::IllegalArgumentException)
+        const uno::Sequence< uno::Any >& /*rArgs*/ ) const
 {
     // TODO: get actual codename from document
     return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "ThisDocument" ) );

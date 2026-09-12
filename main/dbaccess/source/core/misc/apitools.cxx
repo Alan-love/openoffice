@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -72,7 +72,7 @@ OSubComponent::~OSubComponent()
 
 // com::sun::star::lang::XTypeProvider
 //--------------------------------------------------------------------------
-Sequence< Type > OSubComponent::getTypes() throw (RuntimeException)
+Sequence< Type > OSubComponent::getTypes()
 {
 	OTypeCollection aTypes(::getCppuType( (const Reference< XComponent > *)0 ),
 						   ::getCppuType( (const Reference< XTypeProvider > *)0 ),
@@ -112,7 +112,7 @@ void OSubComponent::release() throw ( )
 				}
 
                 OSL_ENSURE( m_refCount == 1, "OSubComponent::release: invalid ref count (before dispose)!" );
-                
+
 				// First dispose
 				dispose();
 
@@ -139,7 +139,7 @@ void OSubComponent::release() throw ( )
 }
 
 //--------------------------------------------------------------------------
-Any OSubComponent::queryInterface( const Type & rType ) throw(RuntimeException)
+Any OSubComponent::queryInterface( const Type & rType )
 {
 	Any aReturn;
 	if (!rType.equals(::getCppuType(static_cast< Reference< XAggregation >* >(NULL))))
@@ -147,5 +147,3 @@ Any OSubComponent::queryInterface( const Type & rType ) throw(RuntimeException)
 
 	return aReturn;
 }
-
-

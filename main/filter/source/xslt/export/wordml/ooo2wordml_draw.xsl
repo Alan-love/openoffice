@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--***********************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -8,16 +8,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  ***********************************************************-->
 
 
@@ -327,7 +327,7 @@
 			</xsl:call-template>
 		</xsl:variable>
 		<xsl:choose>
-			<!-- if we got to the last node, return it directly, or return the max window of current one and follwing ones -->
+			<!-- if we got to the last node, return it directly, or return the max window of current one and following ones -->
 			<xsl:when test="$CurrPos = count($nodeSet)">
 				<xsl:value-of select="$CurrNodeWindow"/>
 			</xsl:when>
@@ -1405,7 +1405,7 @@
 			<!-- end line special attribute-->
 			<!-- polyline and polygon special attribute-->
 			<xsl:if test="$ooshapename='polyline' or $ooshapename='polygon' ">
-				<!-- translate ' '  to in '  tranclate ',' to 'in,' -->
+				<!-- translate ' '  to in '  translate ',' to 'in,' -->
 				<xsl:variable name="points">
 					<xsl:call-template name="points2points">
 						<xsl:with-param name="input_x" select="$x"/>

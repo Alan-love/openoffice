@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -115,8 +115,8 @@ public:
 	static void DisposeElement( const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >& xElem );
 
 protected:
-    void    implReInsert( ) SAL_THROW( ( ::com::sun::star::uno::Exception ) );
-    void    implReRemove( ) SAL_THROW( ( ::com::sun::star::uno::Exception ) );
+    void    implReInsert( );
+    void    implReRemove( );
 };
 
 //==================================================================
@@ -183,18 +183,18 @@ public:
 
 protected:
     // XEventListener
-    virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& Source) throw( ::com::sun::star::uno::RuntimeException );
+    virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& Source);
 
     // XPropertyChangeListener
-    virtual void SAL_CALL propertyChange(const ::com::sun::star::beans::PropertyChangeEvent& evt) throw(::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL propertyChange(const ::com::sun::star::beans::PropertyChangeEvent& evt);
 
     // XContainerListener
-    virtual void SAL_CALL elementInserted(const ::com::sun::star::container::ContainerEvent& rEvent) throw(::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL elementReplaced(const ::com::sun::star::container::ContainerEvent& rEvent) throw(::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL elementRemoved(const ::com::sun::star::container::ContainerEvent& rEvent) throw(::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL elementInserted(const ::com::sun::star::container::ContainerEvent& rEvent);
+    virtual void SAL_CALL elementReplaced(const ::com::sun::star::container::ContainerEvent& rEvent);
+    virtual void SAL_CALL elementRemoved(const ::com::sun::star::container::ContainerEvent& rEvent);
 
     // XModifyListener
-    virtual void SAL_CALL modified( const ::com::sun::star::lang::EventObject& aEvent ) throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL modified( const ::com::sun::star::lang::EventObject& aEvent );
 
 	void ModeChanged();
 	void dispose();
@@ -223,4 +223,3 @@ public:
 
 
 #endif	//_SVX_FMUNDO_HXX
-

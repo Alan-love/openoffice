@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -74,7 +74,7 @@
 #endif
 /** === end UNO includes === **/
 
-#ifndef _COMPHELPER_TYPES_HXX_ 
+#ifndef _COMPHELPER_TYPES_HXX_
 #include <comphelper/types.hxx>
 #endif
 #ifndef _COMPHELPER_PROPERTY_HXX_
@@ -278,7 +278,7 @@ IMPLEMENT_SERVICE_INFO3(OQuery, "com.sun.star.sdb.dbaccess.OQuery", SERVICE_SDB_
 
 // ::com::sun::star::beans::XPropertyChangeListener
 //--------------------------------------------------------------------------
-void SAL_CALL OQuery::propertyChange( const PropertyChangeEvent& _rSource ) throw(RuntimeException)
+void SAL_CALL OQuery::propertyChange( const PropertyChangeEvent& _rSource )
 {
 	sal_Int32 nOwnHandle = -1;
 	{
@@ -311,7 +311,7 @@ void SAL_CALL OQuery::propertyChange( const PropertyChangeEvent& _rSource ) thro
 }
 
 //--------------------------------------------------------------------------
-void SAL_CALL OQuery::disposing( const EventObject& _rSource ) throw (RuntimeException)
+void SAL_CALL OQuery::disposing( const EventObject& _rSource )
 {
 	MutexGuard aGuard(m_aMutex);
 
@@ -325,7 +325,7 @@ void SAL_CALL OQuery::disposing( const EventObject& _rSource ) throw (RuntimeExc
 
 // XDataDescriptorFactory
 //--------------------------------------------------------------------------
-Reference< XPropertySet > SAL_CALL OQuery::createDataDescriptor(  ) throw(RuntimeException)
+Reference< XPropertySet > SAL_CALL OQuery::createDataDescriptor(  )
 {
 	return new OQueryDescriptor(*this);
 }
@@ -346,12 +346,12 @@ void SAL_CALL OQuery::disposing()
 }
 
 //--------------------------------------------------------------------------
-void OQuery::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue ) throw (Exception)
+void OQuery::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _rValue )
 {
 	ODataSettings::setFastPropertyValue_NoBroadcast(_nHandle, _rValue);
 	::rtl::OUString sAggPropName;
 	sal_Int16 nAttr = 0;
-	if (getInfoHelper().fillPropertyMembersByHandle(&sAggPropName,&nAttr,_nHandle) && 
+	if (getInfoHelper().fillPropertyMembersByHandle(&sAggPropName,&nAttr,_nHandle) &&
 		m_xCommandPropInfo.is() &&
 		m_xCommandPropInfo->hasPropertyByName(sAggPropName))
 	{	// the base class holds the property values itself, but we have to forward this to our CommandDefinition
@@ -368,7 +368,7 @@ void OQuery::setFastPropertyValue_NoBroadcast( sal_Int32 _nHandle, const Any& _r
 }
 
 //--------------------------------------------------------------------------
-Reference< XPropertySetInfo > SAL_CALL OQuery::getPropertySetInfo(	) throw(RuntimeException)
+Reference< XPropertySetInfo > SAL_CALL OQuery::getPropertySetInfo(	)
 {
 	return createPropertySetInfo( getInfoHelper() ) ;
 }
@@ -393,7 +393,7 @@ OColumn* OQuery::createColumn(const ::rtl::OUString& /*_rName*/) const
 	return NULL;
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OQuery::rename( const ::rtl::OUString& newName ) throw (SQLException, ElementExistException, RuntimeException)
+void SAL_CALL OQuery::rename( const ::rtl::OUString& newName )
 {
 	MutexGuard aGuard(m_aMutex);
 	Reference<XRename> xRename(m_xCommandDefinition,UNO_QUERY);
@@ -438,4 +438,3 @@ void OQuery::registerProperties()
 //........................................................................
 }	// namespace dbaccess
 //........................................................................
-

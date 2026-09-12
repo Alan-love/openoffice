@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -51,7 +51,7 @@ namespace {
 
 
 /** The PresenerPaneFactory provides a fixed set of panes.
-    
+
     In order to make the presener screen more easily extendable in the
     future the set of supported panes could be made extendable on demand.
 */
@@ -83,25 +83,21 @@ public:
     static ::rtl::OUString getImplementationName_static (void);
     static css::uno::Sequence< ::rtl::OUString > getSupportedServiceNames_static (void);
     static css::uno::Reference<css::uno::XInterface> Create(
-        const css::uno::Reference<css::uno::XComponentContext>& rxContext)
-        SAL_THROW((css::uno::Exception));
+        const css::uno::Reference<css::uno::XComponentContext>& rxContext);
 
-    virtual void SAL_CALL disposing (void)
-        throw (css::uno::RuntimeException);
+    virtual void SAL_CALL disposing (void);
 
     // XResourceFactory
-    
+
     virtual css::uno::Reference<css::drawing::framework::XResource>
         SAL_CALL createResource (
             const ::com::sun::star::uno::Reference<
-                com::sun::star::drawing::framework::XResourceId>& rxPaneId)
-        throw (::com::sun::star::uno::RuntimeException, ::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::WrappedTargetException);
+                com::sun::star::drawing::framework::XResourceId>& rxPaneId);
 
     virtual void SAL_CALL
         releaseResource (
             const ::com::sun::star::uno::Reference<com::sun::star::drawing::framework::XResource>&
-                rxPane)
-        throw (::com::sun::star::uno::RuntimeException);
+                rxPane);
 
 private:
     css::uno::WeakReference<css::uno::XComponentContext> mxComponentContextWeak;
@@ -117,7 +113,7 @@ private:
         const ::rtl::Reference<PresenterController>& rpPresenterController);
 
     void Register (const css::uno::Reference<css::frame::XController>& rxController);
-    
+
     css::uno::Reference<css::drawing::framework::XResource> CreatePane (
         const css::uno::Reference<css::drawing::framework::XResourceId>& rxPaneId,
         const ::rtl::OUString& rsTitle);
@@ -127,7 +123,7 @@ private:
         const css::uno::Reference<css::drawing::framework::XPane>& rxParentPane,
         const bool bIsSpritePane);
 
-    void ThrowIfDisposed (void) const throw (::com::sun::star::lang::DisposedException);
+    void ThrowIfDisposed (void) const;
 };
 
 } }

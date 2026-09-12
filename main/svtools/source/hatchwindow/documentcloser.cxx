@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -151,7 +151,6 @@ ODocumentCloser::~ODocumentCloser()
 // XComponent
 // --------------------------------------------------------
 void SAL_CALL ODocumentCloser::dispose()
-	throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 
@@ -175,7 +174,6 @@ void SAL_CALL ODocumentCloser::dispose()
 
 // --------------------------------------------------------
 void SAL_CALL ODocumentCloser::addEventListener( const uno::Reference< lang::XEventListener >& xListener )
-	throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_bDisposed )
@@ -189,7 +187,6 @@ void SAL_CALL ODocumentCloser::addEventListener( const uno::Reference< lang::XEv
 
 // --------------------------------------------------------
 void SAL_CALL ODocumentCloser::removeEventListener( const uno::Reference< lang::XEventListener >& xListener )
-	throw (uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_pListenersContainer )
@@ -199,7 +196,6 @@ void SAL_CALL ODocumentCloser::removeEventListener( const uno::Reference< lang::
 // XInitialization
 // --------------------------------------------------------
 void SAL_CALL ODocumentCloser::initialize( const uno::Sequence< uno::Any >& aArguments )
-	throw (uno::Exception, uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	if ( m_bInitialized )
@@ -207,7 +203,7 @@ void SAL_CALL ODocumentCloser::initialize( const uno::Sequence< uno::Any >& aArg
 
 	if ( m_bDisposed )
 		throw lang::DisposedException(); // TODO
-	
+
 	if ( !m_refCount )
 		throw uno::RuntimeException(); // the object must be refcounted already!
 
@@ -231,14 +227,12 @@ void SAL_CALL ODocumentCloser::initialize( const uno::Sequence< uno::Any >& aArg
 // XServiceInfo
 // --------------------------------------------------------
 ::rtl::OUString SAL_CALL ODocumentCloser::getImplementationName(  )
-	throw (uno::RuntimeException)
 {
 	return impl_staticGetImplementationName();
 }
 
 // --------------------------------------------------------
 ::sal_Bool SAL_CALL ODocumentCloser::supportsService( const ::rtl::OUString& ServiceName )
-	throw (uno::RuntimeException)
 {
 	uno::Sequence< ::rtl::OUString > aSeq = impl_staticGetSupportedServiceNames();
 
@@ -251,7 +245,6 @@ void SAL_CALL ODocumentCloser::initialize( const uno::Sequence< uno::Any >& aArg
 
 // --------------------------------------------------------
 uno::Sequence< ::rtl::OUString > SAL_CALL ODocumentCloser::getSupportedServiceNames()
-	throw (uno::RuntimeException)
 {
 	return impl_staticGetSupportedServiceNames();
 }
@@ -288,4 +281,3 @@ uno::Reference< uno::XInterface > SAL_CALL ODocumentCloser::impl_staticCreateSel
 
     return static_cast< cppu::OWeakObject * >( new ODocumentCloser( xContext ) );
 }
-

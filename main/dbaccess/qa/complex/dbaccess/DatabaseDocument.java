@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -417,7 +417,7 @@ public class DatabaseDocument extends TestCase implements com.sun.star.document.
         assertEquals("wrong URL after loading the document", documentURL, databaseDoc.getURL());
         impl_checkDocumentInitState(databaseDoc, true);
 
-        // and while we are here ... initilizing the same document again should not be possible
+        // and while we are here ... initializing the same document again should not be possible
         assureException( databaseDoc, XLoadable.class, "initNew", new Object[0],
             DoubleInitializationException.class );
         assureException( databaseDoc, XLoadable.class, "load", new Object[] { new PropertyValue[0] },
@@ -942,7 +942,7 @@ public class DatabaseDocument extends TestCase implements com.sun.star.document.
     {
         if ("OnTitleChanged".equals(_Event.EventName))
         // OnTitleChanged events are notified too often. This is known, and accepted.
-        // (the deeper reason is that it's diffult to determine, in the DatabaseDocument implementatin,
+        // (the deeper reason is that it's difficult to determine, in the DatabaseDocument implementation,
         // when the title actually changed. In particular, when we do a saveAsURL, and then ask for a
         // title *before* the TitleHelper got the document's OnSaveAsDone event, then the wrong (old)
         // title is obtained.

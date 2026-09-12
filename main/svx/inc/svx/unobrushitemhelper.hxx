@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #ifndef _UNOBRUSHITEMHELPER_HXX
@@ -25,12 +25,12 @@
 #include "svx/svxdllapi.h"
 #include <editeng/brshitem.hxx>
 
-//UUUU Helper function definintions for UNO API fallbacks to replace SvxBrushItem. The
+//UUUU Helper function definitions for UNO API fallbacks to replace SvxBrushItem. The
 // idea is to have fallbacks to create a SvxBrushItem if needed for backwards compatibility
 // if needed from the SfxItemSet and vice versa. This is used in cases where e.g. UNO API
 // accesses to slots in the SvxBrushItem are used (see cases in SvxBrushItem::QueryValue
 // and SvxBrushItem::PutValue as MID_BACK_COLOR and similar).
-// To make this work, a cycle of creating a SvxBrushItem from a SfxItemSet, changing a value 
+// To make this work, a cycle of creating a SvxBrushItem from a SfxItemSet, changing a value
 // using PutValue, putting back to the SfxItemSet should create the *same* SvxBrushItem
 // the next time this will be created using getSvxBrushItemFromSourceSet. For more details,
 // see comments at the implementations of that two methods.
@@ -39,7 +39,7 @@
 // SfxItemSet to create the same FillStyle as is expressed by the given SvxBrushItem.
 // This method will reset all items in the XATTR_FILL_* range first.
 void SVX_DLLPUBLIC setSvxBrushItemAsFillAttributesToTargetSet(
-    const SvxBrushItem& rBrush, 
+    const SvxBrushItem& rBrush,
     SfxItemSet& rToSet);
 
 // Create a SvxBrushItem as close as possible to the settings in the DrawingLayer
@@ -47,7 +47,7 @@ void SVX_DLLPUBLIC setSvxBrushItemAsFillAttributesToTargetSet(
 // representable this may lead to reduced data. With nBackgroundID a Which-ID for the
 // to-be-created SvxBrushItem has to be given (default should be 99 as in RES_BACKGROUND).
 SvxBrushItem SVX_DLLPUBLIC getSvxBrushItemFromSourceSet(
-    const SfxItemSet& rSourceSet, 
+    const SfxItemSet& rSourceSet,
     sal_uInt16 nBackgroundID,
     sal_Bool bSearchInParents = sal_True);
 

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,23 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_dbaxml.hxx"
+#include <iterator>
 
 #include "xmlExport.hxx"
 #include "xmlAutoStyle.hxx"
@@ -69,15 +70,15 @@ namespace dbaxml
 	class ODBExportHelper
 	{
 	public:
-		static ::rtl::OUString SAL_CALL getImplementationName_Static(  ) throw (RuntimeException);
-		static Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames_Static(  ) throw(RuntimeException);
+		static ::rtl::OUString SAL_CALL getImplementationName_Static(  );
+		static Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames_Static(  );
 		static Reference< XInterface > SAL_CALL Create(const Reference< ::com::sun::star::lang::XMultiServiceFactory >&);
 	};
 	class ODBFullExportHelper
 	{
 	public:
-		static ::rtl::OUString SAL_CALL getImplementationName_Static(  ) throw (RuntimeException);
-		static Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames_Static(  ) throw(RuntimeException);
+		static ::rtl::OUString SAL_CALL getImplementationName_Static(  );
+		static Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames_Static(  );
 		static Reference< XInterface > SAL_CALL Create(const Reference< ::com::sun::star::lang::XMultiServiceFactory >&);
 	};
 }
@@ -110,12 +111,12 @@ namespace dbaxml
 		return static_cast< XServiceInfo* >(new ODBExport(_rxORB,EXPORT_SETTINGS | EXPORT_PRETTY ));
 	}
 	//---------------------------------------------------------------------
-	::rtl::OUString SAL_CALL ODBExportHelper::getImplementationName_Static(  ) throw (RuntimeException)
+	::rtl::OUString SAL_CALL ODBExportHelper::getImplementationName_Static(  )
 	{
 		return ::rtl::OUString::createFromAscii("com.sun.star.comp.sdb.XMLSettingsExporter");
 	}
 	//---------------------------------------------------------------------
-	Sequence< ::rtl::OUString > SAL_CALL ODBExportHelper::getSupportedServiceNames_Static(  ) throw(RuntimeException)
+	Sequence< ::rtl::OUString > SAL_CALL ODBExportHelper::getSupportedServiceNames_Static(  )
 	{
 		Sequence< ::rtl::OUString > aSupported(1);
 		aSupported[0] = ::rtl::OUString::createFromAscii("com.sun.star.document.ExportFilter");
@@ -129,12 +130,12 @@ namespace dbaxml
 		return static_cast< XServiceInfo* >(new ODBExport(_rxORB,EXPORT_ALL));
 	}
 	//---------------------------------------------------------------------
-	::rtl::OUString SAL_CALL ODBFullExportHelper::getImplementationName_Static(  ) throw (RuntimeException)
+	::rtl::OUString SAL_CALL ODBFullExportHelper::getImplementationName_Static(  )
 	{
 		return ::rtl::OUString::createFromAscii("com.sun.star.comp.sdb.XMLFullExporter");
 	}
 	//---------------------------------------------------------------------
-	Sequence< ::rtl::OUString > SAL_CALL ODBFullExportHelper::getSupportedServiceNames_Static(  ) throw(RuntimeException)
+	Sequence< ::rtl::OUString > SAL_CALL ODBFullExportHelper::getSupportedServiceNames_Static(  )
 	{
 		Sequence< ::rtl::OUString > aSupported(1);
 		aSupported[0] = ::rtl::OUString::createFromAscii("com.sun.star.document.ExportFilter");
@@ -1112,7 +1113,7 @@ void ODBExport::exportQueries(sal_Bool _bExportContext)
 		    Reference< XNameAccess > xCollection = xSup->getQueryDefinitions();
 		    if ( xCollection.is() && xCollection->hasElements() )
 		    {
-			    ::std::auto_ptr< ::comphelper::mem_fun1_t<ODBExport,XPropertySet* > > pMemFunc; 
+			    ::std::auto_ptr< ::comphelper::mem_fun1_t<ODBExport,XPropertySet* > > pMemFunc;
 			    if ( _bExportContext )
 				    pMemFunc.reset( new ::comphelper::mem_fun1_t<ODBExport,XPropertySet* >(&ODBExport::exportQuery) );
 			    else
@@ -1420,7 +1421,7 @@ SvXMLAutoStylePoolP* ODBExport::CreateAutoStylePool()
 	return new OXMLAutoStylePoolP(*this);
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL ODBExport::setSourceDocument( const Reference< XComponent >& xDoc ) throw(IllegalArgumentException, RuntimeException)
+void SAL_CALL ODBExport::setSourceDocument( const Reference< XComponent >& xDoc )
 {
 	Reference<XOfficeDatabaseDocument> xOfficeDoc(xDoc,UNO_QUERY_THROW);
 	m_xDataSource.set(xOfficeDoc->getDataSource(),UNO_QUERY_THROW);

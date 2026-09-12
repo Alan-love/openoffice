@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -86,16 +86,16 @@ SmPrintUIOptions::SmPrintUIOptions()
     DBG_ASSERT( pConfig, "SmConfig not found" );
     if (!pConfig)
         return;
-    
+
     // create sequence of print UI options
     // (Actually IsIgnoreSpacesRight is a parser option. Without it we need only 8 properties here.)
     m_aUIProperties.realloc( 9 );
-    
+
     // create Section for formula (results in an extra tab page in dialog)
     SvtModuleOptions aOpt;
     String aAppGroupname( aLocalizedStrings.GetString( 0 ) );
     aAppGroupname.SearchAndReplace( String( RTL_CONSTASCII_USTRINGPARAM( "%s" ) ),
-                                    aOpt.GetModuleName( SvtModuleOptions::E_SMATH ) ); 
+                                    aOpt.GetModuleName( SvtModuleOptions::E_SMATH ) );
     m_aUIProperties[0].Value = getGroupControlOpt( aAppGroupname, rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( ".HelpID:vcl:PrintDialog:TabPage:AppPage" ) ) );
 
     // create subgroup for print options
@@ -135,7 +135,7 @@ SmPrintUIOptions::SmPrintUIOptions()
                                                     aPrintFormatProp,
                                                     aChoices, static_cast< sal_Int32 >(pConfig->GetPrintSize())
                                                     );
-    
+
     // create a numeric box for scale dependent on PrintFormat = "Scaling" (matches to SID_PRINTZOOM)
     vcl::PrinterOptionsHelper::UIControlOptions aRangeOpt( aPrintFormatProp, 2, sal_True );
     m_aUIProperties[ 7 ].Value = getRangeControlOpt( rtl::OUString(),
@@ -145,7 +145,7 @@ SmPrintUIOptions::SmPrintUIOptions()
                                                      10,     // min value
                                                      1000,   // max value
                                                      aRangeOpt );
-    
+
     Sequence< PropertyValue > aHintNoLayoutPage( 1 );
     aHintNoLayoutPage[0].Name = rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "HintNoLayoutPage" ) );
     aHintNoLayoutPage[0].Value = makeAny( sal_True );
@@ -337,7 +337,7 @@ SmModel::~SmModel() throw ()
 /*-- 28.03.00 14:18:17---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-uno::Any SAL_CALL SmModel::queryInterface( const uno::Type& rType ) throw(uno::RuntimeException)
+uno::Any SAL_CALL SmModel::queryInterface( const uno::Type& rType )
 {
     uno::Any aRet =  ::cppu::queryInterface ( rType,
 									// OWeakObject interfaces
@@ -371,7 +371,7 @@ void SAL_CALL SmModel::release() throw()
 /*-- 28.03.00 14:18:19---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-uno::Sequence< uno::Type > SAL_CALL SmModel::getTypes(  ) throw(uno::RuntimeException)
+uno::Sequence< uno::Type > SAL_CALL SmModel::getTypes(  )
 {
 	::vos::OGuard aGuard(Application::GetSolarMutex());
     uno::Sequence< uno::Type > aTypes = SfxBaseModel::getTypes();
@@ -408,7 +408,6 @@ const uno::Sequence< sal_Int8 > & SmModel::getUnoTunnelId()
 
  ---------------------------------------------------------------------------*/
 sal_Int64 SAL_CALL SmModel::getSomething( const uno::Sequence< sal_Int8 >& rId )
-	throw(uno::RuntimeException)
 {
     if( rId.getLength() == 16
         && 0 == rtl_compareMemory( getUnoTunnelId().getConstArray(),
@@ -440,7 +439,7 @@ sal_Int16 lcl_AnyToINT16(const uno::Any& rAny)
 }
 //-----------------------------------------------------------------------------
 
-OUString SmModel::getImplementationName(void) throw( uno::RuntimeException )
+OUString SmModel::getImplementationName(void)
 {
 	return getImplementationName_Static();
 }
@@ -454,7 +453,7 @@ OUString SmModel::getImplementationName(void) throw( uno::RuntimeException )
 /*-- 20.01.04 11:21:00---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-sal_Bool SmModel::supportsService(const OUString& rServiceName) throw( uno::RuntimeException )
+sal_Bool SmModel::supportsService(const OUString& rServiceName)
 {
     return (
             rServiceName == A2OU("com.sun.star.document.OfficeDocument"  ) ||
@@ -464,7 +463,7 @@ sal_Bool SmModel::supportsService(const OUString& rServiceName) throw( uno::Runt
 /*-- 20.01.04 11:21:00---------------------------------------------------
 
   -----------------------------------------------------------------------*/
-uno::Sequence< OUString > SmModel::getSupportedServiceNames(void) throw( uno::RuntimeException )
+uno::Sequence< OUString > SmModel::getSupportedServiceNames(void)
 {
 	return getSupportedServiceNames_Static();
 }
@@ -481,7 +480,6 @@ uno::Sequence< OUString > SmModel::getSupportedServiceNames_Static(void)
 }
 
 void SmModel::_setPropertyValues(const PropertyMapEntry** ppEntries, const Any* pValues)
-	throw( UnknownPropertyException, PropertyVetoException, IllegalArgumentException, WrappedTargetException)
 {
 	::vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -765,7 +763,6 @@ void SmModel::_setPropertyValues(const PropertyMapEntry** ppEntries, const Any* 
 }
 
 void SmModel::_getPropertyValues( const PropertyMapEntry **ppEntries, Any *pValue )
-	throw( UnknownPropertyException, WrappedTargetException )
 {
 	SmDocShell *pDocSh = static_cast < SmDocShell * > (GetObjectShell());
 
@@ -923,7 +920,7 @@ void SmModel::_getPropertyValues( const PropertyMapEntry **ppEntries, Any *pValu
 				{
                     const SmSym * pSymbol = aSymbols[ i ];
                     const bool bIsUsedSymbol = rUsedSymbols.find( pSymbol->GetName() ) != rUsedSymbols.end();
-					if (pSymbol && !pSymbol->IsPredefined() && 
+					if (pSymbol && !pSymbol->IsPredefined() &&
                         (!bUsedSymbolsOnly || bIsUsedSymbol))
 					{
 						aVector.push_back ( pSymbol );
@@ -977,7 +974,7 @@ void SmModel::_getPropertyValues( const PropertyMapEntry **ppEntries, Any *pValu
                 {
                     if ( !pDocSh->IsFormulaArranged() )
                         pDocSh->ArrangeFormula();
-                    
+
                     *pValue <<= static_cast<sal_Int32>( pDocSh->pTree->GetFormulaBaseline() );
                 }
             }
@@ -992,7 +989,6 @@ void SmModel::_getPropertyValues( const PropertyMapEntry **ppEntries, Any *pValu
 sal_Int32 SAL_CALL SmModel::getRendererCount(
         const uno::Any& /*rSelection*/,
         const uno::Sequence< beans::PropertyValue >& /*xOptions*/ )
-    throw (IllegalArgumentException, RuntimeException)
 {
 	::vos::OGuard aGuard(Application::GetSolarMutex());
     return 1;
@@ -1025,7 +1021,6 @@ uno::Sequence< beans::PropertyValue > SAL_CALL SmModel::getRenderer(
         sal_Int32 nRenderer,
         const uno::Any& /*rSelection*/,
         const uno::Sequence< beans::PropertyValue >& /*rxOptions*/ )
-    throw (IllegalArgumentException, RuntimeException)
 {
 	::vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -1055,7 +1050,7 @@ uno::Sequence< beans::PropertyValue > SAL_CALL SmModel::getRenderer(
     if (!m_pPrintUIOptions)
         m_pPrintUIOptions = new SmPrintUIOptions();
     m_pPrintUIOptions->appendPrintUIOptions( aRenderer );
-    
+
     return aRenderer;
 }
 
@@ -1063,7 +1058,6 @@ void SAL_CALL SmModel::render(
         sal_Int32 nRenderer,
         const uno::Any& rSelection,
         const uno::Sequence< beans::PropertyValue >& rxOptions )
-    throw (IllegalArgumentException, RuntimeException)
 {
 	::vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -1160,7 +1154,6 @@ void SAL_CALL SmModel::render(
 }
 
 void SAL_CALL SmModel::setParent( const uno::Reference< uno::XInterface >& xParent)
-        throw( lang::NoSupportException, uno::RuntimeException )
 {
     ::vos::OGuard aGuard( Application::GetSolarMutex() );
     SfxBaseModel::setParent( xParent );
@@ -1174,4 +1167,3 @@ void SAL_CALL SmModel::setParent( const uno::Reference< uno::XInterface >& xPare
             GetObjectShell()->OnDocumentPrinterChanged( pDoc->GetDocumentPrinter() );
     }
 }
-

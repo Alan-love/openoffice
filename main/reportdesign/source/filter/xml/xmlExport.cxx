@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,21 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 #include "precompiled_rptxml.hxx"
- 
+#include <iterator>
+
 #include "xmlExport.hxx"
 #include "xmlAutoStyle.hxx"
 #include <xmloff/ProgressBarHelper.hxx>
@@ -80,12 +81,12 @@ namespace rptxml
 		return static_cast< XServiceInfo* >(new ORptExport(Reference< XMultiServiceFactory >(xContext->getServiceManager(),UNO_QUERY),EXPORT_SETTINGS ));
 	}
 	//---------------------------------------------------------------------
-	::rtl::OUString ORptExportHelper::getImplementationName_Static(  ) throw (RuntimeException)
+	::rtl::OUString ORptExportHelper::getImplementationName_Static(  )
 	{
 		return ::rtl::OUString::createFromAscii("com.sun.star.comp.report.XMLSettingsExporter");
 	}
 	//---------------------------------------------------------------------
-	Sequence< ::rtl::OUString > ORptExportHelper::getSupportedServiceNames_Static(  ) throw(RuntimeException)
+	Sequence< ::rtl::OUString > ORptExportHelper::getSupportedServiceNames_Static(  )
 	{
 		Sequence< ::rtl::OUString > aSupported(1);
 		aSupported[0] = ::rtl::OUString::createFromAscii("com.sun.star.document.ExportFilter");
@@ -97,12 +98,12 @@ namespace rptxml
 		return static_cast< XServiceInfo* >(new ORptExport(Reference< XMultiServiceFactory >(xContext->getServiceManager(),UNO_QUERY),EXPORT_CONTENT ));
 	}
 	//---------------------------------------------------------------------
-	::rtl::OUString ORptContentExportHelper::getImplementationName_Static(  ) throw (RuntimeException)
+	::rtl::OUString ORptContentExportHelper::getImplementationName_Static(  )
 	{
 		return ::rtl::OUString::createFromAscii("com.sun.star.comp.report.XMLContentExporter");
 	}
 	//---------------------------------------------------------------------
-	Sequence< ::rtl::OUString > ORptContentExportHelper::getSupportedServiceNames_Static(  ) throw(RuntimeException)
+	Sequence< ::rtl::OUString > ORptContentExportHelper::getSupportedServiceNames_Static(  )
 	{
 		Sequence< ::rtl::OUString > aSupported(1);
 		aSupported[0] = ::rtl::OUString::createFromAscii("com.sun.star.document.ExportFilter");
@@ -116,12 +117,12 @@ namespace rptxml
     		EXPORT_FONTDECLS|EXPORT_OASIS ));
 	}
 	//---------------------------------------------------------------------
-	::rtl::OUString ORptStylesExportHelper::getImplementationName_Static(  ) throw (RuntimeException)
+	::rtl::OUString ORptStylesExportHelper::getImplementationName_Static(  )
 	{
 		return ::rtl::OUString::createFromAscii("com.sun.star.comp.report.XMLStylesExporter");
 	}
 	//---------------------------------------------------------------------
-    Sequence< ::rtl::OUString > ORptStylesExportHelper::getSupportedServiceNames_Static(  ) throw(RuntimeException)
+    Sequence< ::rtl::OUString > ORptStylesExportHelper::getSupportedServiceNames_Static(  )
 	{
 		Sequence< ::rtl::OUString > aSupported(1);
 		aSupported[0] = ::rtl::OUString::createFromAscii("com.sun.star.document.ExportFilter");
@@ -134,36 +135,36 @@ namespace rptxml
 		return static_cast< XServiceInfo* >(new ORptExport(Reference< XMultiServiceFactory >(xContext->getServiceManager(),UNO_QUERY),EXPORT_META ));
 	}
 	//---------------------------------------------------------------------
-	::rtl::OUString ORptMetaExportHelper::getImplementationName_Static(  ) throw (RuntimeException)
+	::rtl::OUString ORptMetaExportHelper::getImplementationName_Static(  )
 	{
 		return ::rtl::OUString::createFromAscii("com.sun.star.comp.report.XMLMetaExporter");
 	}
 	//---------------------------------------------------------------------
-	Sequence< ::rtl::OUString > ORptMetaExportHelper::getSupportedServiceNames_Static(  ) throw(RuntimeException)
+	Sequence< ::rtl::OUString > ORptMetaExportHelper::getSupportedServiceNames_Static(  )
 	{
 		Sequence< ::rtl::OUString > aSupported(1);
 		aSupported[0] = ::rtl::OUString::createFromAscii("com.sun.star.document.ExportFilter");
 		return aSupported;
 	}
-	
+
 	//---------------------------------------------------------------------
 	Reference< XInterface > ODBFullExportHelper::create(Reference< XComponentContext > const & xContext)
 	{
 		return static_cast< XServiceInfo* >(new ORptExport(Reference< XMultiServiceFactory >(xContext->getServiceManager(),UNO_QUERY),EXPORT_ALL));
 	}
 	//---------------------------------------------------------------------
-	::rtl::OUString ODBFullExportHelper::getImplementationName_Static(  ) throw (RuntimeException)
+	::rtl::OUString ODBFullExportHelper::getImplementationName_Static(  )
 	{
 		return ::rtl::OUString::createFromAscii("com.sun.star.comp.report.XMLFullExporter");
 	}
 	//---------------------------------------------------------------------
-	Sequence< ::rtl::OUString > ODBFullExportHelper::getSupportedServiceNames_Static(  ) throw(RuntimeException)
+	Sequence< ::rtl::OUString > ODBFullExportHelper::getSupportedServiceNames_Static(  )
 	{
 		Sequence< ::rtl::OUString > aSupported(1);
 		aSupported[0] = ::rtl::OUString::createFromAscii("com.sun.star.document.ExportFilter");
 		return aSupported;
 	}
-	
+
 	//---------------------------------------------------------------------
 
 	class OSpecialHanldeXMLExportPropertyMapper : public SvXMLExportPropertyMapper
@@ -234,8 +235,8 @@ ORptExport::ORptExport(const Reference< XMultiServiceFactory >& _rxMSF,sal_uInt1
 	_GetNamespaceMap().Add( GetXMLToken(XML_NP_FORM), GetXMLToken(XML_N_FORM), XML_NAMESPACE_FORM );
 	_GetNamespaceMap().Add( GetXMLToken(XML_NP_DRAW), GetXMLToken(XML_N_DRAW), XML_NAMESPACE_DRAW );
     _GetNamespaceMap().Add( GetXMLToken(XML_NP_TEXT), GetXMLToken(XML_N_TEXT), XML_NAMESPACE_TEXT );
-    
-	
+
+
 	if( (getExportFlags() & (EXPORT_STYLES|EXPORT_MASTERSTYLES|EXPORT_AUTOSTYLES|EXPORT_FONTDECLS) ) != 0 )
         _GetNamespaceMap().Add( GetXMLToken(XML_NP_FO), GetXMLToken(XML_N_FO_COMPAT), XML_NAMESPACE_FO );
 
@@ -269,14 +270,14 @@ ORptExport::ORptExport(const Reference< XMultiServiceFactory >& _rxMSF,sal_uInt1
     m_sTableStyle = GetNamespaceMap().GetQNameByKey( XML_NAMESPACE_TABLE, GetXMLToken(XML_STYLE_NAME) );
     m_sColumnStyle = GetNamespaceMap().GetQNameByKey( XML_NAMESPACE_TABLE, GetXMLToken(XML_COLUMN) );
     m_sCellStyle = GetNamespaceMap().GetQNameByKey( XML_NAMESPACE_REPORT, GetXMLToken(XML_STYLE_NAME) );
-    
+
 
     m_xPropHdlFactory = new OXMLRptPropHdlFactory();
     UniReference < XMLPropertyHandlerFactory> xFac = new ::xmloff::OControlPropertyHandlerFactory();
     UniReference < XMLPropertySetMapper > xTableStylesPropertySetMapper1 = new XMLPropertySetMapper(OXMLHelper::GetTableStyleProps(),xFac);
     UniReference < XMLPropertySetMapper > xTableStylesPropertySetMapper2 = new XMLTextPropertySetMapper(TEXT_PROP_MAP_TABLE_DEFAULTS );
     xTableStylesPropertySetMapper1->AddMapperEntry(xTableStylesPropertySetMapper2);
-    
+
     m_xTableStylesExportPropertySetMapper = new SvXMLExportPropertyMapper(xTableStylesPropertySetMapper1);
     //m_xTableStylesExportPropertySetMapper->ChainExportMapper(xTableStylesPropertySetMapper2);
 
@@ -315,31 +316,31 @@ Reference< XInterface > ORptExport::create(Reference< XComponentContext > const 
 }
 
 // -----------------------------------------------------------------------------
-::rtl::OUString ORptExport::getImplementationName_Static(  ) throw(uno::RuntimeException)
+::rtl::OUString ORptExport::getImplementationName_Static(  )
 {
 	return ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.comp.report.ExportFilter"));
 }
 
 //--------------------------------------------------------------------------
-::rtl::OUString SAL_CALL ORptExport::getImplementationName(  ) throw(uno::RuntimeException)
+::rtl::OUString SAL_CALL ORptExport::getImplementationName(  )
 {
 	return getImplementationName_Static();
 }
 //--------------------------------------------------------------------------
-uno::Sequence< ::rtl::OUString > ORptExport::getSupportedServiceNames_Static(  ) throw(uno::RuntimeException)
+uno::Sequence< ::rtl::OUString > ORptExport::getSupportedServiceNames_Static(  )
 {
 	uno::Sequence< ::rtl::OUString > aServices(1);
 	aServices.getArray()[0] = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.document.ExportFilter"));
-	
+
 	return aServices;
 }
 //--------------------------------------------------------------------------
-uno::Sequence< ::rtl::OUString > SAL_CALL ORptExport::getSupportedServiceNames(  ) throw(uno::RuntimeException)
+uno::Sequence< ::rtl::OUString > SAL_CALL ORptExport::getSupportedServiceNames(  )
 {
 	return getSupportedServiceNames_Static();
 }
 //------------------------------------------------------------------------------
-sal_Bool SAL_CALL ORptExport::supportsService(const ::rtl::OUString& ServiceName) throw( uno::RuntimeException )
+sal_Bool SAL_CALL ORptExport::supportsService(const ::rtl::OUString& ServiceName)
 {
     return ::comphelper::existsValue(ServiceName,getSupportedServiceNames_Static());
 }
@@ -392,7 +393,7 @@ void ORptExport::exportMasterDetailFields(const Reference<XReportComponent>& _xR
         }
     }
 }
-// -----------------------------------------------------------------------------	
+// -----------------------------------------------------------------------------
 void ORptExport::exportReport(const Reference<XReportDefinition>& _xReportDefinition)
 {
 	if ( _xReportDefinition.is() )
@@ -400,7 +401,7 @@ void ORptExport::exportReport(const Reference<XReportDefinition>& _xReportDefini
         exportFunctions(_xReportDefinition->getFunctions().get());
         exportGroupsExpressionAsFunction(_xReportDefinition->getGroups());
         //exportMasterDetailFields(_xReportDefinition.get());
-		
+
 		if ( _xReportDefinition->getReportHeaderOn() )
 		{
 			SvXMLElementExport aGroupSection(*this,XML_NAMESPACE_REPORT, XML_REPORT_HEADER, sal_True, sal_True);
@@ -413,7 +414,7 @@ void ORptExport::exportReport(const Reference<XReportDefinition>& _xReportDefini
 		    const SvXMLEnumMapEntry* aXML_EnumMap = OXMLHelper::GetReportPrintOptions();
 		    if ( SvXMLUnitConverter::convertEnum( sValue, nRet,aXML_EnumMap ) )
 			    AddAttribute(XML_NAMESPACE_REPORT, XML_PAGE_PRINT_OPTION,sValue.makeStringAndClear());
-		
+
 			SvXMLElementExport aGroupSection(*this,XML_NAMESPACE_REPORT, XML_PAGE_HEADER, sal_True, sal_True);
 			exportSection(_xReportDefinition->getPageHeader(),true);
 		} // if ( _xReportDefinition->getPageHeaderOn() )
@@ -435,7 +436,7 @@ void ORptExport::exportReport(const Reference<XReportDefinition>& _xReportDefini
 			SvXMLElementExport aGroupSection(*this,XML_NAMESPACE_REPORT, XML_REPORT_FOOTER, sal_True, sal_True);
 			exportSection(_xReportDefinition->getReportFooter());
 		} // if ( _xReportDefinition->getReportFooterOn() )
-	}	
+	}
 }
 // -----------------------------------------------------------------------------
 void ORptExport::exportComponent(const Reference<XReportComponent>& _xReportComponent)
@@ -445,7 +446,7 @@ void ORptExport::exportComponent(const Reference<XReportComponent>& _xReportComp
 		return;
 
 	AddAttribute(XML_NAMESPACE_DRAW, XML_NAME,_xReportComponent->getName());
-	
+
 	SvXMLElementExport aElem(*this,XML_NAMESPACE_REPORT, XML_REPORT_COMPONENT, sal_False, sal_False);
 }
 // -----------------------------------------------------------------------------
@@ -467,7 +468,7 @@ void ORptExport::exportFormatConditions(const Reference<XReportControlModel>& _x
 			exportStyleName(xCond.get(),GetAttrList(),m_sCellStyle);
 			SvXMLElementExport aElem(*this,XML_NAMESPACE_REPORT, XML_FORMAT_CONDITION, sal_True, sal_True);
 		} // for (sal_Int32 i = 0; i < nCount ; ++i)
-	} 
+	}
 	catch(uno::Exception&)
 	{
 		OSL_ENSURE(0,"Can not access format condition!");
@@ -485,7 +486,7 @@ void ORptExport::exportReportElement(const Reference<XReportControlModel>& _xRep
 
 	SvXMLElementExport aElem(*this,XML_NAMESPACE_REPORT, XML_REPORT_ELEMENT, sal_True, sal_True);
     if ( _xReportElement->getCount() )
-    {	    
+    {
         exportFormatConditions(_xReportElement);
     }
 
@@ -552,7 +553,7 @@ void ORptExport::exportSectionAutoStyle(const Reference<XSection>& _xProp)
     aRowPos.reserve(2*(nCount + 1));
     aRowPos.push_back(0);
     aRowPos.push_back(_xProp->getHeight());
-    
+
     sal_Int32 i;
 	for (i = 0 ; i< nCount ; ++i)
 	{
@@ -609,7 +610,7 @@ void ORptExport::exportSectionAutoStyle(const Reference<XSection>& _xProp)
 	sal_Int32 xi = 0;
 	sal_Int32 yi = 0;
 	bool isOverlap = false;
-	
+
 	for (i = 0 ; i< nCount ; ++i)
 	{
 		Reference<XReportComponent> xReportElement(_xProp->getByIndex(i),uno::UNO_QUERY);
@@ -669,7 +670,7 @@ void ORptExport::exportSectionAutoStyle(const Reference<XSection>& _xProp)
 
                 sal_Int32 nColSpan = x2 - x1;
                 sal_Int32 nRowSpan = y2 - y1;
-				aInsert->second[y1].second[x1] = 
+				aInsert->second[y1].second[x1] =
 					TCell(
 						aElementSize.Width , // -1 why?
 						aElementSize.Height, // -1 why?
@@ -714,7 +715,7 @@ void ORptExport::exportReportComponentAutoStyles(const Reference<XSection>& _xPr
 					    uno::Reference< report::XFormatCondition > xCond(xFormattedField->getByIndex(j),uno::UNO_QUERY);
 					    exportAutoStyle(xCond.get(),xFormattedField);
 				    } // for (sal_Int32 j = 0; j < nCount ; ++j)
-			    } 
+			    }
 			    catch(uno::Exception&)
 			    {
 				    OSL_ENSURE(0,"Can not access format condition!");
@@ -729,7 +730,7 @@ void ORptExport::exportSection(const Reference<XSection>& _xSection,bool bHeader
 	OSL_ENSURE(_xSection.is(),"Section is NULL -> GPF");
 	::rtl::OUStringBuffer sValue;
 	AddAttribute(XML_NAMESPACE_TABLE, XML_NAME,_xSection->getName());
-	
+
 	if ( !_xSection->getVisible() )
 		AddAttribute(XML_NAMESPACE_REPORT, XML_VISIBLE,XML_FALSE);
 
@@ -746,12 +747,12 @@ void ORptExport::exportSection(const Reference<XSection>& _xSection,bool bHeader
         if ( _xSection->getKeepTogether() )
 		    AddAttribute(XML_NAMESPACE_REPORT, XML_KEEP_TOGETHER, XML_TRUE );
     }
-	
+
 	exportStyleName(_xSection.get(),GetAttrList(),m_sTableStyle);
 
     /// TODO export as table layout
 	SvXMLElementExport aComponents(*this,XML_NAMESPACE_TABLE, XML_TABLE, sal_True, sal_True);
-    
+
 	::rtl::OUString sExpr = _xSection->getConditionalPrintExpression();
 	if ( sExpr.getLength() )
 	{
@@ -791,7 +792,7 @@ void ORptExport::exportContainer(const Reference< XSection>& _xSection)
         return;
     TGrid::iterator aRowIter = aFind->second.begin();
     TGrid::iterator aRowEnd = aFind->second.end();
-   
+
     sal_Int32 nEmptyCellColSpan = 0;
     TGridStyleMap::iterator aRowFind = m_aRowStyleNames.find(_xSection.get());
     TStringVec::iterator aHeightIter = aRowFind->second.begin();
@@ -807,7 +808,7 @@ void ORptExport::exportContainer(const Reference< XSection>& _xSection)
         {
             ::std::vector< TCell >::iterator aColIter = aRowIter->second.begin();
             ::std::vector< TCell >::iterator aColEnd = aRowIter->second.end();
-            nEmptyCellColSpan = 0;            
+            nEmptyCellColSpan = 0;
             for (; aColIter != aColEnd; ++aColIter)
 	        {
                 sal_Bool bCoveredCell = sal_False;
@@ -825,10 +826,10 @@ void ORptExport::exportContainer(const Reference< XSection>& _xSection)
                     nColSpan = 1;
                     if ( !--(aRowSpanFind->second) )
                         aRowSpan.erase(aRowSpanFind);
-                    
+
                     if ( aColIter->nColSpan > 1 )
                         nColSpan += aColIter->nColSpan - 1;
-                    
+
                     bCoveredCell = sal_True;
                     aColIter = aColIter + (aColIter->nColSpan - 1);
                 }
@@ -856,7 +857,7 @@ void ORptExport::exportContainer(const Reference< XSection>& _xSection)
                     }
                     if ( aColIter->xElement.is() )
                         exportStyleName(aColIter->xElement.get(),GetAttrList(),m_sTableStyle);
-                    
+
                     // start <table:table-cell>
                     Reference<XFormattedField> xFormattedField(aColIter->xElement,uno::UNO_QUERY);
                     if ( xFormattedField.is() )
@@ -895,7 +896,7 @@ void ORptExport::exportContainer(const Reference< XSection>& _xSection)
                             Reference<XReportDefinition> xReportDefinition(xElement,uno::UNO_QUERY);
                             Reference< XImageControl > xImage(xElement,uno::UNO_QUERY);
                             Reference<XSection> xSection(xElement,uno::UNO_QUERY);
-                            
+
 		                    XMLTokenEnum eToken = XML_SECTION;
                             sal_Bool bExportData = sal_False;
 		                    if ( xElement->supportsService(SERVICE_FIXEDTEXT) )
@@ -972,8 +973,8 @@ void ORptExport::exportContainer(const Reference< XSection>& _xSection)
                         exportShapes(_xSection);
                     }
                     aColIter = aColIter + (aColIter->nColSpan - 1);
-				} 
-                else 
+				}
+                else
 					++nEmptyCellColSpan;
                 if ( bCoveredCell )
                 {
@@ -981,7 +982,7 @@ void ORptExport::exportContainer(const Reference< XSection>& _xSection)
                     {
                         SvXMLElementExport aCell(*this,XML_NAMESPACE_TABLE, XML_COVERED_TABLE_CELL, sal_True, sal_True);
                     }
-                    
+
                 }
 	        } // for (sal_Int32 i = 0 ; i< nCount ; ++i)
             if ( nEmptyCellColSpan )
@@ -1044,7 +1045,7 @@ void ORptExport::exportContainer(const Reference< XSection>& _xSection)
     //    if ( bFormula )
     //        sFormula = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("rpt:")) + _sFormula.copy(nPos,nLength);
     //    else
-    //        sFormula = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("field:[")) + _sFormula.copy(nPos,nLength) + ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("]"));;
+    //        sFormula = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("field:[")) + _sFormula.copy(nPos,nLength) + ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("]"));
     //}
     return sFormula;
 }
@@ -1059,7 +1060,7 @@ bool ORptExport::exportFormula(enum ::xmloff::token::XMLTokenEnum eName,const ::
     bool bRet = nPageNumberIndex != -1 || nPageCountIndex != -1;
     if ( !bRet )
         AddAttribute(XML_NAMESPACE_REPORT, eName,sFieldData);
-    
+
     return bRet;
 }
 // -----------------------------------------------------------------------------
@@ -1132,7 +1133,7 @@ sal_Bool ORptExport::exportGroup(const Reference<XReportDefinition>& _xReportDef
 					const SvXMLEnumMapEntry* aXML_KeepTogetherEnumMap = OXMLHelper::GetKeepTogetherOptions();
 					if ( SvXMLUnitConverter::convertEnum( sValue, nRet,aXML_KeepTogetherEnumMap ) )
 						AddAttribute(XML_NAMESPACE_REPORT, XML_KEEP_TOGETHER,sValue.makeStringAndClear());
-				
+
 					SvXMLElementExport aGroup(*this,XML_NAMESPACE_REPORT, XML_GROUP, sal_True, sal_True);
                     exportFunctions(xGroup->getFunctions().get());
 					if ( xGroup->getHeaderOn() )
@@ -1300,8 +1301,8 @@ void ORptExport::exportAutoStyle(XPropertySet* _xProp,const Reference<XFormatted
             }
         }
     }
-    
-	
+
+
 	if ( !aPropertyStates.empty() )
 		m_aAutoStyleNames.insert( TPropertyStyleMap::value_type(_xProp,GetAutoStylePool()->Add( XML_STYLE_FAMILY_TABLE_CELL, aPropertyStates )));
 }
@@ -1320,7 +1321,7 @@ void ORptExport::SetBodyAttributes()
 }
 // -----------------------------------------------------------------------------
 void ORptExport::exportReportAttributes(const Reference<XReportDefinition>& _xReport)
-{	
+{
 	if ( _xReport.is() )
 	{
         ::rtl::OUStringBuffer sValue;
@@ -1373,7 +1374,7 @@ void ORptExport::collectComponentStyles()
 		uno::Reference< report::XSection> xParent(xProp->getParent(),uno::UNO_QUERY);
 		if ( xParent.is() )
 			exportAutoStyle(xProp.get());
-		
+
 		if ( xProp->getReportHeaderOn() )
 			exportSectionAutoStyle(xProp->getReportHeader());
 		if ( xProp->getPageHeaderOn() )
@@ -1409,14 +1410,14 @@ void ORptExport::_ExportAutoStyles()
 										,GetMM100UnitConverter()
 										,GetNamespaceMap()
         );
-		
+
         GetAutoStylePool()->exportXML(XML_STYLE_FAMILY_TABLE_CELL
 										,GetDocHandler()
 										,GetMM100UnitConverter()
 										,GetNamespaceMap()
         );
-        
-        
+
+
 		/*GetAutoStylePool()->exportXML(XML_STYLE_FAMILY_REPORT_ID
 										,GetDocHandler()
 										,GetMM100UnitConverter()
@@ -1462,7 +1463,7 @@ SvXMLAutoStylePoolP* ORptExport::CreateAutoStylePool()
 	return new OXMLAutoStylePoolP(*this);
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL ORptExport::setSourceDocument( const Reference< XComponent >& xDoc ) throw(IllegalArgumentException, RuntimeException)
+void SAL_CALL ORptExport::setSourceDocument( const Reference< XComponent >& xDoc )
 {
 	m_xReportDefinition.set(xDoc,UNO_QUERY_THROW);
 	OSL_ENSURE(m_xReportDefinition.is(),"DataSource is NULL!");
@@ -1514,17 +1515,17 @@ void ORptExport::exportParagraph(const Reference< XReportControlModel >& _xRepor
                     }
                     else
                     {
-                        
+
                         if ( sToken.indexOf('"') == 0 && sToken.lastIndexOf('"') == sToken.getLength()-1 )
                             sToken = sToken.copy(1,sToken.getLength()-2);
-                                                            
+
                         sal_Bool bPrevCharIsSpace = sal_False;
                         GetTextParagraphExport()->exportText(sToken,bPrevCharIsSpace);
                     }
                 }
             }
             while ( nIndex >= 0 );
-        }                                    
+        }
     }
     Reference< XFixedText > xFT(_xReportElement,UNO_QUERY);
     if ( xFT.is() )
@@ -1563,7 +1564,7 @@ void ORptExport::exportShapes(const Reference< XSection>& _xSection,bool _bAddPa
             {
                 pSubDocument.reset(new SvXMLElementExport(*this,XML_NAMESPACE_REPORT, XML_SUB_DOCUMENT, sal_False, sal_False));
                 exportMasterDetailFields(xShape.get());
-                exportReportElement(xShape.get());                
+                exportReportElement(xShape.get());
             }
 
             AddAttribute( XML_NAMESPACE_TEXT, XML_ANCHOR_TYPE, XML_PARAGRAPH );
@@ -1647,7 +1648,7 @@ void ORptExport::exportGroupsExpressionAsFunction(const Reference< XGroups>& _xG
                     sFunction += ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("(["));
                     sFunction += sExpression;
                     sFunction += ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("]"));
-    
+
                     if ( sPrefix.getLength() )
                         sFunction += sPrefix;
                     sFunction += ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(")"));
@@ -1665,4 +1666,3 @@ void ORptExport::exportGroupsExpressionAsFunction(const Reference< XGroups>& _xG
 // -----------------------------------------------------------------------------
 }// rptxml
 // -----------------------------------------------------------------------------
-

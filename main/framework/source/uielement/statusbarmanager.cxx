@@ -142,7 +142,7 @@ static sal_uInt16 impl_convertItemStyleToItemBits( sal_Int16 nStyle )
         nItemBits |= SIB_AUTOSIZE;
     if ( nStyle & css_ui::ItemStyle::OWNER_DRAW )
         nItemBits |= SIB_USERDRAW;
-    
+
     return nItemBits;
 }
 
@@ -167,9 +167,9 @@ DEFINE_XTYPEPROVIDER_5                  (   StatusBarManager                    
 											lang::XEventListener
 										)
 
-StatusBarManager::StatusBarManager( 
-    const uno::Reference< lang::XMultiServiceFactory >& rServiceManager, 
-    const uno::Reference< frame::XFrame >& rFrame, 
+StatusBarManager::StatusBarManager(
+    const uno::Reference< lang::XMultiServiceFactory >& rServiceManager,
+    const uno::Reference< frame::XFrame >& rFrame,
     const rtl::OUString& rResourceName,
     StatusBar* pStatusBar ) :
     ThreadHelpBase( &Application::GetSolarMutex() ),
@@ -203,9 +203,8 @@ StatusBar* StatusBarManager::GetStatusBar() const
     ResetableGuard aGuard( m_aLock );
     return m_pStatusBar;
 }
-        
+
 void StatusBarManager::frameAction( const frame::FrameActionEvent& Action )
-throw ( uno::RuntimeException )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "StatusBarManager::frameAction" );
     ResetableGuard aGuard( m_aLock );
@@ -213,7 +212,7 @@ throw ( uno::RuntimeException )
         UpdateControllers();
 }
 
-void SAL_CALL StatusBarManager::disposing( const lang::EventObject& Source ) throw ( uno::RuntimeException )
+void SAL_CALL StatusBarManager::disposing( const lang::EventObject& Source )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "StatusBarManager::disposing" );
     {
@@ -228,16 +227,16 @@ void SAL_CALL StatusBarManager::disposing( const lang::EventObject& Source ) thr
 	    ResetableGuard aGuard( m_aLock );
         if ( Source.Source == uno::Reference< uno::XInterface >( m_xFrame, uno::UNO_QUERY ))
             m_xFrame.clear();
-        
+
         m_xServiceManager.clear();
     }
 }
 
 // XComponent
-void SAL_CALL StatusBarManager::dispose() throw( uno::RuntimeException )
+void SAL_CALL StatusBarManager::dispose()
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "StatusBarManager::dispose" );
-    uno::Reference< lang::XComponent > xThis( 
+    uno::Reference< lang::XComponent > xThis(
         static_cast< OWeakObject* >(this), uno::UNO_QUERY );
 
     lang::EventObject aEvent( xThis );
@@ -265,8 +264,8 @@ void SAL_CALL StatusBarManager::dispose() throw( uno::RuntimeException )
             {
                 try
                 {
-                    m_xFrame->removeFrameActionListener( uno::Reference< frame::XFrameActionListener >( 
-                                                            static_cast< ::cppu::OWeakObject *>( this ), 
+                    m_xFrame->removeFrameActionListener( uno::Reference< frame::XFrameActionListener >(
+                                                            static_cast< ::cppu::OWeakObject *>( this ),
                                                             uno::UNO_QUERY ));
                 }
                 catch ( uno::Exception& )
@@ -282,7 +281,7 @@ void SAL_CALL StatusBarManager::dispose() throw( uno::RuntimeException )
     }
 }
 
-void SAL_CALL StatusBarManager::addEventListener( const uno::Reference< lang::XEventListener >& xListener ) throw( uno::RuntimeException )
+void SAL_CALL StatusBarManager::addEventListener( const uno::Reference< lang::XEventListener >& xListener )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "StatusBarManager::addEventListener" );
     ResetableGuard aGuard( m_aLock );
@@ -290,20 +289,20 @@ void SAL_CALL StatusBarManager::addEventListener( const uno::Reference< lang::XE
 	/* SAFE AREA ----------------------------------------------------------------------------------------------- */
     if ( m_bDisposed )
         throw lang::DisposedException();
-        
-    m_aListenerContainer.addInterface( ::getCppuType( 
+
+    m_aListenerContainer.addInterface( ::getCppuType(
         ( const uno::Reference< lang::XEventListener >* ) NULL ), xListener );
 }
 
-void SAL_CALL StatusBarManager::removeEventListener( const uno::Reference< lang::XEventListener >& xListener ) throw( uno::RuntimeException )
+void SAL_CALL StatusBarManager::removeEventListener( const uno::Reference< lang::XEventListener >& xListener )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "StatusBarManager::removeEventListener" );
-    m_aListenerContainer.removeInterface( ::getCppuType( 
+    m_aListenerContainer.removeInterface( ::getCppuType(
         ( const uno::Reference< lang::XEventListener >* ) NULL ), xListener );
 }
 
 // XUIConfigurationListener
-void SAL_CALL StatusBarManager::elementInserted( const css::ui::ConfigurationEvent& ) throw ( uno::RuntimeException )
+void SAL_CALL StatusBarManager::elementInserted( const css::ui::ConfigurationEvent& )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "StatusBarManager::elementInserted" );
     ResetableGuard aGuard( m_aLock );
@@ -312,7 +311,7 @@ void SAL_CALL StatusBarManager::elementInserted( const css::ui::ConfigurationEve
         return;
 }
 
-void SAL_CALL StatusBarManager::elementRemoved( const css::ui::ConfigurationEvent& ) throw ( uno::RuntimeException )
+void SAL_CALL StatusBarManager::elementRemoved( const css::ui::ConfigurationEvent& )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "StatusBarManager::elementRemoved" );
     ResetableGuard aGuard( m_aLock );
@@ -321,7 +320,7 @@ void SAL_CALL StatusBarManager::elementRemoved( const css::ui::ConfigurationEven
         return;
 }
 
-void SAL_CALL StatusBarManager::elementReplaced( const css::ui::ConfigurationEvent& ) throw ( uno::RuntimeException )
+void SAL_CALL StatusBarManager::elementReplaced( const css::ui::ConfigurationEvent& )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "StatusBarManager::elementReplaced" );
     ResetableGuard aGuard( m_aLock );
@@ -457,7 +456,7 @@ void StatusBarManager::CreateControllers()
 
             if ( pController )
                 xController = uno::Reference< frame::XStatusbarController >(
-                                static_cast< ::cppu::OWeakObject *>( pController ), 
+                                static_cast< ::cppu::OWeakObject *>( pController ),
                                 uno::UNO_QUERY );
         }
 
@@ -470,22 +469,22 @@ void StatusBarManager::CreateControllers()
 
     AddFrameActionListener();
 }
-    
+
 void StatusBarManager::AddFrameActionListener()
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "StatusBarManager::AddFrameActionListener" );
     if ( !m_bFrameActionRegistered && m_xFrame.is() )
     {
         m_bFrameActionRegistered = sal_True;
-        m_xFrame->addFrameActionListener( uno::Reference< frame::XFrameActionListener >( 
+        m_xFrame->addFrameActionListener( uno::Reference< frame::XFrameActionListener >(
             static_cast< ::cppu::OWeakObject *>( this ), uno::UNO_QUERY ));
     }
 }
 
 void StatusBarManager::FillStatusBar( const uno::Reference< container::XIndexAccess >& rItemContainer )
-{    
+{
     RTL_LOGFILE_CONTEXT( aLog, "framework (cd100003) ::StatusBarManager::FillStatusbar" );
-    
+
     ResetableGuard aGuard( m_aLock );
 
     if ( m_bDisposed || !m_pStatusBar )
@@ -496,7 +495,7 @@ void StatusBarManager::FillStatusBar( const uno::Reference< container::XIndexAcc
 
     RemoveControllers();
 
-    // reset and fill command map 
+    // reset and fill command map
     m_pStatusBar->Clear();
     m_aControllerMap.clear();// TODO already done in RemoveControllers
 
@@ -618,7 +617,7 @@ void StatusBarManager::DataChanged( const DataChangedEvent& rDCEvt )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "framework", "Ocke.Janssen@sun.com", "StatusBarManager::DataChanged" );
     ResetableGuard aGuard( m_aLock );
-	
+
     if ((( rDCEvt.GetType() == DATACHANGED_SETTINGS	        ) ||
          ( rDCEvt.GetType() == DATACHANGED_FONTS            ) ||
 		 ( rDCEvt.GetType() == DATACHANGED_FONTSUBSTITUTION ) ||

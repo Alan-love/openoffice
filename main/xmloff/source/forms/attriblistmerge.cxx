@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -85,7 +85,7 @@ namespace xmloff
 	}
 
 	//---------------------------------------------------------------------
-	sal_Int16 SAL_CALL OAttribListMerger::getLength(  ) throw(RuntimeException)
+	sal_Int16 SAL_CALL OAttribListMerger::getLength(  )
 	{
 		sal_Int16 nCount = 0;
 		for (	ConstAttributeListArrayIterator aAccumulate = m_aLists.begin();
@@ -97,7 +97,7 @@ namespace xmloff
 	}
 
 	//---------------------------------------------------------------------
-	::rtl::OUString SAL_CALL OAttribListMerger::getNameByIndex( sal_Int16 i ) throw(RuntimeException)
+	::rtl::OUString SAL_CALL OAttribListMerger::getNameByIndex( sal_Int16 i )
 	{
 		Reference< sax::XAttributeList > xSubList;
 		sal_Int16 nLocalIndex;
@@ -109,7 +109,7 @@ namespace xmloff
 	}
 
 	//---------------------------------------------------------------------
-	::rtl::OUString SAL_CALL OAttribListMerger::getTypeByIndex( sal_Int16 i ) throw(RuntimeException)
+	::rtl::OUString SAL_CALL OAttribListMerger::getTypeByIndex( sal_Int16 i )
 	{
 		Reference< sax::XAttributeList > xSubList;
 		sal_Int16 nLocalIndex;
@@ -121,7 +121,7 @@ namespace xmloff
 	}
 
 	//---------------------------------------------------------------------
-	::rtl::OUString SAL_CALL OAttribListMerger::getTypeByName( const ::rtl::OUString& _rName ) throw(RuntimeException)
+	::rtl::OUString SAL_CALL OAttribListMerger::getTypeByName( const ::rtl::OUString& _rName )
 	{
 		Reference< sax::XAttributeList > xSubList;
 		sal_Int16 nLocalIndex;
@@ -135,7 +135,7 @@ namespace xmloff
 	}
 
 	//---------------------------------------------------------------------
-	::rtl::OUString SAL_CALL OAttribListMerger::getValueByIndex( sal_Int16 i ) throw(RuntimeException)
+	::rtl::OUString SAL_CALL OAttribListMerger::getValueByIndex( sal_Int16 i )
 	{
 		Reference< sax::XAttributeList > xSubList;
 		sal_Int16 nLocalIndex;
@@ -147,7 +147,7 @@ namespace xmloff
 	}
 
 	//---------------------------------------------------------------------
-	::rtl::OUString SAL_CALL OAttribListMerger::getValueByName( const ::rtl::OUString& _rName ) throw(RuntimeException)
+	::rtl::OUString SAL_CALL OAttribListMerger::getValueByName( const ::rtl::OUString& _rName )
 	{
 		Reference< sax::XAttributeList > xSubList;
 		sal_Int16 nLocalIndex;
@@ -163,4 +163,3 @@ namespace xmloff
 //.........................................................................
 }	// namespace xmloff
 //.........................................................................
-

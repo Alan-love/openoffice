@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,20 +7,19 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil -*- */
 
 #ifndef _WW8PAR_HXX
 #define _WW8PAR_HXX
@@ -987,7 +986,7 @@ private:
     as they are encountered, and so their end point is normally unimportant.
     But hyperlink fields need to be applied as attributes to text and it is
     far easier and safer to set the end point of an attribute when we
-    encounter the end marker of the field instead of caculating in advance
+    encounter the end marker of the field instead of calculating in advance
     where the end point will fall, to do so fully correctly duplicates the
     main logic of the filter itself.
     */
@@ -1763,7 +1762,7 @@ void UseListIndent(SwWW8StyInf &rStyle, const SwNumFmt &rFmt);
 void SetStyleIndent(SwWW8StyInf &rStyleInfo, const SwNumFmt &rFmt);
 // --> OD 2010-05-06 #i103711#
 // --> OD 2010-05-11 #i105414#
-void SyncIndentWithList( SvxLRSpaceItem &rLR, 
+void SyncIndentWithList( SvxLRSpaceItem &rLR,
                          const SwNumFmt &rFmt,
                          const bool bFirstLineOfStSet,
                          const bool bLeftIndentSet );

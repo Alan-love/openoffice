@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -287,7 +287,7 @@ OGroupManager::~OGroupManager()
 
 // XPropertyChangeListener
 //------------------------------------------------------------------
-void OGroupManager::disposing(const EventObject& evt) throw( RuntimeException )
+void OGroupManager::disposing(const EventObject& evt)
 {
 	Reference<XContainer>  xContainer(evt.Source, UNO_QUERY);
 	if (xContainer.get() == m_xContainer.get())
@@ -338,7 +338,7 @@ void OGroupManager::removeFromGroupMap(const ::rtl::OUString& _sGroupName,const 
 		_xSet->removePropertyChangeListener( PROPERTY_TABINDEX, this );
 }
 //------------------------------------------------------------------
-void SAL_CALL OGroupManager::propertyChange(const PropertyChangeEvent& evt) throw ( ::com::sun::star::uno::RuntimeException)
+void SAL_CALL OGroupManager::propertyChange(const PropertyChangeEvent& evt)
 {
 	Reference<XPropertySet>  xSet(evt.Source, UNO_QUERY);
 
@@ -357,7 +357,7 @@ void SAL_CALL OGroupManager::propertyChange(const PropertyChangeEvent& evt) thro
 
 // XContainerListener
 //------------------------------------------------------------------
-void SAL_CALL OGroupManager::elementInserted(const ContainerEvent& Event) throw ( ::com::sun::star::uno::RuntimeException)
+void SAL_CALL OGroupManager::elementInserted(const ContainerEvent& Event)
 {
 	Reference< XPropertySet > xProps;
 	Event.Element >>= xProps;
@@ -366,7 +366,7 @@ void SAL_CALL OGroupManager::elementInserted(const ContainerEvent& Event) throw 
 }
 
 //------------------------------------------------------------------
-void SAL_CALL OGroupManager::elementRemoved(const ContainerEvent& Event) throw ( ::com::sun::star::uno::RuntimeException)
+void SAL_CALL OGroupManager::elementRemoved(const ContainerEvent& Event)
 {
 	Reference<XPropertySet> xProps;
 	Event.Element >>= xProps;
@@ -375,7 +375,7 @@ void SAL_CALL OGroupManager::elementRemoved(const ContainerEvent& Event) throw (
 }
 
 //------------------------------------------------------------------
-void SAL_CALL OGroupManager::elementReplaced(const ContainerEvent& Event) throw ( ::com::sun::star::uno::RuntimeException)
+void SAL_CALL OGroupManager::elementReplaced(const ContainerEvent& Event)
 {
 	Reference<XPropertySet> xProps;
 	Event.ReplacedElement >>= xProps;
@@ -494,4 +494,3 @@ void OGroupManager::RemoveElement( const Reference<XPropertySet>& xSet )
 //.........................................................................
 }	// namespace frm
 //.........................................................................
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -102,7 +102,6 @@ sal_Bool ScAddressConversionObj::ParseUIString( const String& rUIString, ::formu
 // XPropertySet
 
 uno::Reference<beans::XPropertySetInfo> SAL_CALL ScAddressConversionObj::getPropertySetInfo()
-                                                        throw(uno::RuntimeException)
 {
     ScUnoGuard aGuard;
 
@@ -137,9 +136,6 @@ uno::Reference<beans::XPropertySetInfo> SAL_CALL ScAddressConversionObj::getProp
 }
 
 void SAL_CALL ScAddressConversionObj::setPropertyValue( const rtl::OUString& aPropertyName, const uno::Any& aValue )
-                throw(beans::UnknownPropertyException, beans::PropertyVetoException,
-                        lang::IllegalArgumentException, lang::WrappedTargetException,
-                        uno::RuntimeException)
 {
     if ( !pDocShell )
         throw uno::RuntimeException();
@@ -224,8 +220,6 @@ void SAL_CALL ScAddressConversionObj::setPropertyValue( const rtl::OUString& aPr
 }
 
 uno::Any SAL_CALL ScAddressConversionObj::getPropertyValue( const rtl::OUString& aPropertyName )
-                throw(beans::UnknownPropertyException, lang::WrappedTargetException,
-                        uno::RuntimeException)
 {
     if ( !pDocShell )
         throw uno::RuntimeException();
@@ -297,13 +291,12 @@ SC_IMPL_DUMMY_PROPERTY_LISTENER( ScAddressConversionObj )
 
 // lang::XServiceInfo
 
-rtl::OUString SAL_CALL ScAddressConversionObj::getImplementationName() throw(uno::RuntimeException)
+rtl::OUString SAL_CALL ScAddressConversionObj::getImplementationName()
 {
     return rtl::OUString::createFromAscii( "ScAddressConversionObj" );
 }
 
 sal_Bool SAL_CALL ScAddressConversionObj::supportsService( const rtl::OUString& rServiceName )
-                                                    throw(uno::RuntimeException)
 {
     String aServiceStr( rServiceName );
     return aServiceStr.EqualsAscii( bIsRange ? SC_SERVICENAME_RANGEADDRESS
@@ -311,7 +304,6 @@ sal_Bool SAL_CALL ScAddressConversionObj::supportsService( const rtl::OUString& 
 }
 
 uno::Sequence<rtl::OUString> SAL_CALL ScAddressConversionObj::getSupportedServiceNames()
-                                                    throw(uno::RuntimeException)
 {
     uno::Sequence<rtl::OUString> aRet(1);
     rtl::OUString* pArray = aRet.getArray();
@@ -319,4 +311,3 @@ uno::Sequence<rtl::OUString> SAL_CALL ScAddressConversionObj::getSupportedServic
                                                          : SC_SERVICENAME_CELLADDRESS );
     return aRet;
 }
-

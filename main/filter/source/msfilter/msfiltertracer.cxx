@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -111,7 +111,7 @@ MSFilterTracer::MSFilterTracer( const ::rtl::OUString& rConfigPath, uno::Sequenc
 				utl::OOutputStreamWrapper* pHelper = new ::utl::OOutputStreamWrapper( *mpStream );
 				uno::Reference< io::XOutputStream > xOutputStream( pHelper );
 
-				// instanciating the DocumentHandler, then setting the OutputStream
+				// instantiating the DocumentHandler, then setting the OutputStream
 				mxHandler = uno::Reference< xml::sax::XDocumentHandler >( xMgr->createInstance( rtl::OUString::createFromAscii( "com.sun.star.xml.sax.Writer" ) ), uno::UNO_QUERY );
 				uno::Reference< io::XActiveDataSource > xDocSrc( mxHandler, uno::UNO_QUERY );
 				xDocSrc->setOutputStream( xOutputStream );
@@ -135,7 +135,7 @@ MSFilterTracer::MSFilterTracer( const ::rtl::OUString& rConfigPath, uno::Sequenc
 			aArgument[ 0 ] <<= aPropValues;
 			mxFilterTracer = xMgr->createInstanceWithArguments( rtl::OUString::createFromAscii( "com.sun.star.util.FilterTracer" ), aArgument );
 			if ( mxFilterTracer.is() )
-			{				
+			{
 				mxTextSearch = uno::Reference< util::XTextSearch >( mxFilterTracer, uno::UNO_QUERY );
 				mxLogger = uno::Reference< util::logging::XLogger >( mxFilterTracer, uno::UNO_QUERY );
 				if ( mxTextSearch.is() )
@@ -244,4 +244,3 @@ void MSFilterTracer::SetProperty( const ::rtl::OUString& rPropName, const uno::A
 {
 	mpCfgItem->WriteAny( rPropName, rProperty );
 }
-

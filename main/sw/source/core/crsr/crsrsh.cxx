@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -450,7 +450,7 @@ void SwCrsrShell::FireSectionChangeEvent(sal_uInt16 nOldSection, sal_uInt16 nNew
 }
 bool SwCrsrShell::bColumnChange()
 {
-	
+
 	SwFrm* pCurrFrm = GetCurrFrm(sal_False);
 
 	if (pCurrFrm == NULL)
@@ -1942,7 +1942,7 @@ void SwCrsrShell::RefreshBlockCursor()
         {
             // The order of the SwSelectionList has to be preserved but
             // the order inside the ring created by CreateCrsr() is not like
-            // exspected => First create the selections before the last one
+            // expected => First create the selections before the last one
             // downto the first selection.
             // At least create the cursor for the last selection
             --pPam;
@@ -3172,7 +3172,7 @@ bool SwCrsrShell::SelectHiddenRange()
     return bRet;
 }
 
-/*  */
+/* */
 
 	// die Suchfunktionen
 sal_uLong SwCrsrShell::Find( const SearchOptions& rSearchOpt, sal_Bool bSearchInNotes,
@@ -3515,7 +3515,7 @@ void SwCrsrShell::GetSmartTagTerm( const Point& rPt, SwRect& rSelectRect,
             // get smarttag word
             String aText( pNode->GetTxt().Copy( nBegin, nLen ) );
 
-            //save the start and end positons of the line and the starting point
+            //save the start and end positions of the line and the starting point
             Push();
             LeftMargin();
             xub_StrLen nLineStart = GetCrsr()->GetPoint()->nContent.GetIndex();
@@ -3565,4 +3565,3 @@ void SwCrsrShell::GetSmartTagTerm( const Point& rPt, SwRect& rSelectRect,
         }
     }
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -92,17 +92,17 @@ namespace rptui
 TYPEINIT1( OCommentUndoAction,          SdrUndoAction );
 DBG_NAME(rpt_OCommentUndoAction)
 //----------------------------------------------------------------------------
-OCommentUndoAction::OCommentUndoAction(SdrModel& _rMod,sal_uInt16 nCommentID) 
+OCommentUndoAction::OCommentUndoAction(SdrModel& _rMod,sal_uInt16 nCommentID)
 	:SdrUndoAction(_rMod)
-{ 
-    DBG_CTOR(rpt_OCommentUndoAction,NULL);    
+{
+    DBG_CTOR(rpt_OCommentUndoAction,NULL);
     m_pController = static_cast< OReportModel& >( _rMod ).getController();
 	if ( nCommentID )
-        m_strComment = String(ModuleRes(nCommentID)); 
+        m_strComment = String(ModuleRes(nCommentID));
 }
 OCommentUndoAction::~OCommentUndoAction()
 {
-    DBG_DTOR(rpt_OCommentUndoAction,NULL);    
+    DBG_DTOR(rpt_OCommentUndoAction,NULL);
 }
 //----------------------------------------------------------------------------
 void OCommentUndoAction::Undo()
@@ -164,8 +164,8 @@ OUndoContainerAction::~OUndoContainerAction()
 	DBG_DTOR( rpt_OUndoContainerAction,NULL);
 }
 //------------------------------------------------------------------------------
-void OUndoContainerAction::implReInsert( ) SAL_THROW( ( Exception ) )
-{	
+void OUndoContainerAction::implReInsert( )
+{
 	if ( m_xContainer.is() )
 	{
         // insert the element
@@ -176,7 +176,7 @@ void OUndoContainerAction::implReInsert( ) SAL_THROW( ( Exception ) )
 }
 
 //------------------------------------------------------------------------------
-void OUndoContainerAction::implReRemove( ) SAL_THROW( ( Exception ) )
+void OUndoContainerAction::implReRemove( )
 {
     OXUndoEnvironment& rEnv = static_cast< OReportModel& >( rMod ).GetUndoEnv();
     try
@@ -271,8 +271,8 @@ OUndoGroupSectionAction::OUndoGroupSectionAction(SdrModel& _rMod
 {
 }
 //------------------------------------------------------------------------------
-void OUndoGroupSectionAction::implReInsert( ) SAL_THROW( ( Exception ) )
-{	
+void OUndoGroupSectionAction::implReInsert( )
+{
     OXUndoEnvironment& rEnv = static_cast< OReportModel& >( rMod ).GetUndoEnv();
     try
     {
@@ -288,7 +288,7 @@ void OUndoGroupSectionAction::implReInsert( ) SAL_THROW( ( Exception ) )
 }
 
 //------------------------------------------------------------------------------
-void OUndoGroupSectionAction::implReRemove( ) SAL_THROW( ( Exception ) )
+void OUndoGroupSectionAction::implReRemove( )
 {
         OXUndoEnvironment& rEnv = static_cast< OReportModel& >( rMod ).GetUndoEnv();
     try
@@ -317,8 +317,8 @@ OUndoReportSectionAction::OUndoReportSectionAction(SdrModel& _rMod
 {
 }
 //------------------------------------------------------------------------------
-void OUndoReportSectionAction::implReInsert( ) SAL_THROW( ( Exception ) )
-{	
+void OUndoReportSectionAction::implReInsert( )
+{
     OXUndoEnvironment& rEnv = static_cast< OReportModel& >( rMod ).GetUndoEnv();
     try
     {
@@ -340,7 +340,7 @@ void OUndoReportSectionAction::implReInsert( ) SAL_THROW( ( Exception ) )
 }
 
 //------------------------------------------------------------------------------
-void OUndoReportSectionAction::implReRemove( ) SAL_THROW( ( Exception ) )
+void OUndoReportSectionAction::implReRemove( )
 {
     OXUndoEnvironment& rEnv = static_cast< OReportModel& >( rMod ).GetUndoEnv();
     try
@@ -401,7 +401,7 @@ void ORptUndoPropertyAction::setProperty(sal_Bool _bOld)
 String ORptUndoPropertyAction::GetComment() const
 {
 	String aStr(ModuleRes(RID_STR_UNDO_PROPERTY));
-	
+
 	aStr.SearchAndReplace( '#', m_aPropertyName );
 	return aStr;
 }
@@ -442,4 +442,3 @@ Reference< XPropertySet> OUndoPropertyReportSectionAction::getObject()
 //============================================================================
 } // rptui
 //============================================================================
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -278,7 +278,7 @@ namespace accessibility
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-	sal_Int32 SAL_CALL AccessibleToolPanelDeck::getAccessibleChildCount(  ) throw (RuntimeException)
+	sal_Int32 SAL_CALL AccessibleToolPanelDeck::getAccessibleChildCount(  )
     {
         MethodGuard aGuard( *m_pImpl );
 
@@ -292,7 +292,7 @@ namespace accessibility
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-	Reference< XAccessible > SAL_CALL AccessibleToolPanelDeck::getAccessibleChild( sal_Int32 i_nIndex ) throw (IndexOutOfBoundsException, RuntimeException)
+	Reference< XAccessible > SAL_CALL AccessibleToolPanelDeck::getAccessibleChild( sal_Int32 i_nIndex )
     {
         MethodGuard aGuard( *m_pImpl );
 
@@ -313,7 +313,7 @@ namespace accessibility
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-	Reference< XAccessible > SAL_CALL AccessibleToolPanelDeck::getAccessibleParent(  ) throw (RuntimeException)
+	Reference< XAccessible > SAL_CALL AccessibleToolPanelDeck::getAccessibleParent(  )
     {
         MethodGuard aGuard( *m_pImpl );
         const Reference< XAccessible > xParent = implGetForeignControlledParent();
@@ -323,14 +323,14 @@ namespace accessibility
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-	sal_Int16 SAL_CALL AccessibleToolPanelDeck::getAccessibleRole(  ) throw (RuntimeException)
+	sal_Int16 SAL_CALL AccessibleToolPanelDeck::getAccessibleRole(  )
     {
         MethodGuard aGuard( *m_pImpl );
         return AccessibleRole::PANEL;
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-    Reference< XAccessible > SAL_CALL AccessibleToolPanelDeck::getAccessibleAtPoint( const UnoPoint& i_rPoint ) throw (RuntimeException)
+    Reference< XAccessible > SAL_CALL AccessibleToolPanelDeck::getAccessibleAtPoint( const UnoPoint& i_rPoint )
     {
         MethodGuard aGuard( *m_pImpl );
 
@@ -363,17 +363,17 @@ namespace accessibility
         {
         	DBG_UNHANDLED_EXCEPTION();
         }
-        
+
         return NULL;
     }
-    
+
 	//------------------------------------------------------------------------------------------------------------------
-    void SAL_CALL AccessibleToolPanelDeck::grabFocus(  ) throw (RuntimeException)
+    void SAL_CALL AccessibleToolPanelDeck::grabFocus(  )
     {
         MethodGuard aGuard( *m_pImpl );
         m_pImpl->m_pPanelDeck->GrabFocus();
     }
-    
+
 	//------------------------------------------------------------------------------------------------------------------
     void SAL_CALL AccessibleToolPanelDeck::disposing()
     {

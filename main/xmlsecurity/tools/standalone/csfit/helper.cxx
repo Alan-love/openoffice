@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -43,7 +43,7 @@ Reference< XInputStream > createStreamFromFile( const OUString sFile )
 	if( pcFile != NULL ) {
 		FILE *f = fopen( pcFile , "rb" );
 		Reference<  XInputStream >  r;
-	
+
 		if( f ) {
 			fseek( f , 0 , SEEK_END );
 			int nLength = ftell( f );
@@ -53,7 +53,7 @@ Reference< XInputStream > createStreamFromFile( const OUString sFile )
 			fread( seqIn.getArray() , nLength , 1 , f );
 
 			r = Reference< XInputStream > ( new OInputStream( seqIn ) );
-			fclose( f );				
+			fclose( f );
 		}
 		return r;
 	} else {
@@ -82,7 +82,7 @@ Reference< XOutputStream > createStreamToFile( const OUString sFile )
 /*-
  * Helper : get service manager and context
  */
-Reference< XMultiComponentFactory > serviceManager( Reference< XComponentContext >& xContext , OUString sUnoUrl , OUString sRdbUrl ) throw( RuntimeException , Exception )
+Reference< XMultiComponentFactory > serviceManager( Reference< XComponentContext >& xContext , OUString sUnoUrl , OUString sRdbUrl )
 {
 	Reference< XMultiComponentFactory > xLocalServiceManager = NULL ;
 	Reference< XComponentContext > xLocalComponentContext = NULL ;
@@ -98,7 +98,7 @@ Reference< XMultiComponentFactory > serviceManager( Reference< XComponentContext
 		"No rdb URI specified" ) ;
 
 	if( sUnoUrl.equalsAscii( "local" ) ) {
-		Reference< XSimpleRegistry > xSimpleRegistry = createSimpleRegistry(); 
+		Reference< XSimpleRegistry > xSimpleRegistry = createSimpleRegistry();
 		OSL_ENSURE( xSimpleRegistry.is() ,
 			"serviceManager - "
 			"Cannot create simple registry" ) ;
@@ -112,15 +112,15 @@ Reference< XMultiComponentFactory > serviceManager( Reference< XComponentContext
 		xLocalComponentContext = bootstrap_InitialComponentContext( xSimpleRegistry ) ;
 		OSL_ENSURE( xLocalComponentContext.is() ,
 			"serviceManager - "
-			"Cannot create intial component context" ) ;
+			"Cannot create initial component context" ) ;
 
 		xLocalServiceManager = xLocalComponentContext->getServiceManager() ;
 		OSL_ENSURE( xLocalServiceManager.is() ,
 			"serviceManager - "
-			"Cannot create intial service manager" ) ;
+			"Cannot create initial service manager" ) ;
 
 		/*-
-		 * Because of the exception rasied from
+		 * Because of the exception raised from
 		 * ucbhelper/source/provider/provconf.cxx, lin 323
 		 * I do not use the content broker at present
 		 ********************************************************************
@@ -259,4 +259,3 @@ char* PriPK11PasswordFunc(
 
 	return passwd ;
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -96,7 +96,7 @@ namespace drawinglayer
 					const basegfx::B3DPoint aCenter(aRange.getCenter());
 					aFill = basegfx::tools::applyDefaultTextureCoordinatesSphere(aFill, aCenter, bSphereX, bSphereY);
 				}
-				
+
 				if(bObjectSpecificX || bObjectSpecificY)
 				{
 					// object-specific
@@ -114,7 +114,7 @@ namespace drawinglayer
 								{
 									aPoint.setX((1L == b || 2L == b) ? 1.0 : 0.0);
 								}
-								
+
 								if(bObjectSpecificY)
 								{
 									aPoint.setY((2L == b || 3L == b) ? 1.0 : 0.0);
@@ -146,20 +146,20 @@ namespace drawinglayer
 			{
 				// add fill
 				aRetval = create3DPolyPolygonFillPrimitives(
-					a3DPolyPolygonVector, 
-					getTransform(), 
-					getTextureSize(), 
-					getSdr3DObjectAttribute(), 
-					getSdrLFSAttribute().getFill(), 
+					a3DPolyPolygonVector,
+					getTransform(),
+					getTextureSize(),
+					getSdr3DObjectAttribute(),
+					getSdrLFSAttribute().getFill(),
 					getSdrLFSAttribute().getFillFloatTransGradient());
 			}
 			else
 			{
 				// create simplified 3d hit test geometry
                 aRetval = createHiddenGeometryPrimitives3D(
-				    a3DPolyPolygonVector, 
-				    getTransform(), 
-				    getTextureSize(), 
+				    a3DPolyPolygonVector,
+				    getTransform(),
+				    getTextureSize(),
 				    getSdr3DObjectAttribute());
 			}
 
@@ -184,7 +184,7 @@ namespace drawinglayer
 		}
 
 		SdrCubePrimitive3D::SdrCubePrimitive3D(
-			const basegfx::B3DHomMatrix& rTransform, 
+			const basegfx::B3DHomMatrix& rTransform,
 			const basegfx::B2DVector& rTextureSize,
 			const attribute::SdrLineFillShadowAttribute3D& rSdrLFSAttribute,
 			const attribute::Sdr3DObjectAttribute& rSdr3DObjectAttribute)
@@ -199,9 +199,9 @@ namespace drawinglayer
 
 		basegfx::B3DRange SdrCubePrimitive3D::getB3DRange(const geometry::ViewInformation3D& /*rViewInformation*/) const
 		{
-			// use defaut from sdrPrimitive3D which uses transformation expanded by line width/2.
+			// use default from sdrPrimitive3D which uses transformation expanded by line width/2.
 			// The parent implementation which uses the ranges of the decomposition would be more
-			// corrcet, but for historical reasons it is necessary to do the old method: To get
+			// correct, but for historical reasons it is necessary to do the old method: To get
 			// the range of the non-transformed geometry and transform it then. This leads to different
 			// ranges where the new method is more correct, but the need to keep the old behaviour
 			// has priority here.

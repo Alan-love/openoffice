@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -63,7 +63,12 @@ typedef enum
 
 typedef sal_uInt32 oslThreadIdentifier;
 
-typedef sal_uInt32 oslThreadKey;
+/* oslThreadKey holds a pointer (the w32 impl returns a PTLS*, the unx impl a
+ * pthread_key_t/index); it MUST be pointer-width or the w32 osl_createThreadKey
+ * pointer is truncated on Win64 (LLP64) → osl_getThreadKeyData derefs a bad
+ * pointer and crashes (first seen: cppu getIdContainer during InitVCL).
+ * sal_uIntPtr == sal_uInt32 on x86 (unchanged) / sal_uInt64 on x64. */
+typedef sal_uIntPtr oslThreadKey;
 
 /** Create the thread, using the function-ptr pWorker as
 	its main (worker) function. This functions receives in
@@ -186,7 +191,7 @@ sal_Bool SAL_CALL osl_setThreadKeyData(oslThreadKey Key, void *pData);
 /** Get the current thread local text encoding. */
 rtl_TextEncoding SAL_CALL osl_getThreadTextEncoding(void);
 
-/** Set the thread local text encoding. 
+/** Set the thread local text encoding.
 	@return the old text encoding.
 */
 rtl_TextEncoding SAL_CALL osl_setThreadTextEncoding(rtl_TextEncoding Encoding);
@@ -196,4 +201,3 @@ rtl_TextEncoding SAL_CALL osl_setThreadTextEncoding(rtl_TextEncoding Encoding);
 #endif
 
 #endif	/* _OSL_THREAD_H_ */
-

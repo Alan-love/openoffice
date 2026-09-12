@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -93,7 +93,7 @@ void Svx3DSceneObject::Create( SdrObject* pNewObj, SvxDrawPage* pNewPage )
 }
 
 //----------------------------------------------------------------------
-uno::Any SAL_CALL Svx3DSceneObject::queryAggregation( const uno::Type & rType ) throw(uno::RuntimeException)
+uno::Any SAL_CALL Svx3DSceneObject::queryAggregation( const uno::Type & rType )
 {
 	uno::Any aAny;
 
@@ -106,7 +106,7 @@ uno::Any SAL_CALL Svx3DSceneObject::queryAggregation( const uno::Type & rType ) 
 	return aAny;
 }
 
-uno::Any SAL_CALL Svx3DSceneObject::queryInterface( const uno::Type & rType ) throw( uno::RuntimeException )
+uno::Any SAL_CALL Svx3DSceneObject::queryInterface( const uno::Type & rType )
 {
 	return SvxShape::queryInterface( rType );
 }
@@ -124,14 +124,12 @@ void SAL_CALL Svx3DSceneObject::release() throw ( )
 // XTypeProvider
 
 uno::Sequence< uno::Type > SAL_CALL Svx3DSceneObject::getTypes()
-	throw (uno::RuntimeException)
 {
 
 	return SvxShape::getTypes();
 }
 
 uno::Sequence< sal_Int8 > SAL_CALL Svx3DSceneObject::getImplementationId()
-	throw (uno::RuntimeException)
 {
 	static uno::Sequence< sal_Int8 > aId;
 	if( aId.getLength() == 0 )
@@ -144,7 +142,6 @@ uno::Sequence< sal_Int8 > SAL_CALL Svx3DSceneObject::getImplementationId()
 
 //----------------------------------------------------------------------
 void SAL_CALL Svx3DSceneObject::add( const Reference< drawing::XShape >& xShape )
-	throw( uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -173,7 +170,6 @@ void SAL_CALL Svx3DSceneObject::add( const Reference< drawing::XShape >& xShape 
 
 //----------------------------------------------------------------------
 void SAL_CALL Svx3DSceneObject::remove( const Reference< drawing::XShape >& xShape )
-	throw( uno::RuntimeException )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -214,7 +210,6 @@ void SAL_CALL Svx3DSceneObject::remove( const Reference< drawing::XShape >& xSha
 
 //----------------------------------------------------------------------
 sal_Int32 SAL_CALL Svx3DSceneObject::getCount()
-	throw( uno::RuntimeException )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -228,7 +223,6 @@ sal_Int32 SAL_CALL Svx3DSceneObject::getCount()
 //----------------------------------------------------------------------
 
 uno::Any SAL_CALL Svx3DSceneObject::getByIndex( sal_Int32 Index )
-	throw( lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -252,14 +246,12 @@ uno::Any SAL_CALL Svx3DSceneObject::getByIndex( sal_Int32 Index )
 // ::com::sun::star::container::XElementAccess
 
 uno::Type SAL_CALL Svx3DSceneObject::getElementType()
-	throw( uno::RuntimeException )
 {
 	return ::getCppuType(( const Reference< drawing::XShape>*)0);
 }
 
 //----------------------------------------------------------------------
 sal_Bool SAL_CALL Svx3DSceneObject::hasElements()
-	throw( uno::RuntimeException )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -328,7 +320,7 @@ struct ImpRememberTransAndRect
 	Rectangle					maRect;
 };
 
-bool Svx3DSceneObject::setPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, const ::com::sun::star::uno::Any& rValue ) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::beans::PropertyVetoException, ::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException)
+bool Svx3DSceneObject::setPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, const ::com::sun::star::uno::Any& rValue )
 {
 	switch( pProperty->nWID )
 	{
@@ -385,9 +377,9 @@ bool Svx3DSceneObject::setPropertyValueImpl( const ::rtl::OUString& rName, const
 			double fH = rVolume.getHeight();
 
 			const SfxItemSet& rSceneSet = pScene->GetMergedItemSet();
-			double fCamPosZ = 
+			double fCamPosZ =
 				(double)((const SfxUInt32Item&)rSceneSet.Get(SDRATTR_3DSCENE_DISTANCE)).GetValue();
-			double fCamFocal = 
+			double fCamFocal =
 				(double)((const SfxUInt32Item&)rSceneSet.Get(SDRATTR_3DSCENE_FOCAL_LENGTH)).GetValue();
 
 			aCam.SetAutoAdjustProjection(sal_False);
@@ -440,7 +432,7 @@ bool Svx3DSceneObject::setPropertyValueImpl( const ::rtl::OUString& rName, const
 
 //----------------------------------------------------------------------
 
-bool Svx3DSceneObject::getPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, ::com::sun::star::uno::Any& rValue ) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException)
+bool Svx3DSceneObject::getPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, ::com::sun::star::uno::Any& rValue )
 {
 	switch( pProperty->nWID )
 	{
@@ -485,7 +477,6 @@ bool Svx3DSceneObject::getPropertyValueImpl( const ::rtl::OUString& rName, const
 
 // ::com::sun::star::lang::XServiceInfo
 uno::Sequence< OUString > SAL_CALL Svx3DSceneObject::getSupportedServiceNames()
-	throw(uno::RuntimeException)
 {
 	uno::Sequence< OUString > aSeq( SvxShape::getSupportedServiceNames() );
 	comphelper::ServiceInfoHelper::addToSequence( aSeq, 1, "com.sun.star.drawing.Shape3DScene" );
@@ -508,7 +499,7 @@ Svx3DCubeObject::~Svx3DCubeObject() throw()
 }
 
 //----------------------------------------------------------------------
-bool Svx3DCubeObject::setPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, const ::com::sun::star::uno::Any& rValue ) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::beans::PropertyVetoException, ::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException)
+bool Svx3DCubeObject::setPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, const ::com::sun::star::uno::Any& rValue )
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 
@@ -521,7 +512,7 @@ bool Svx3DCubeObject::setPropertyValueImpl( const ::rtl::OUString& rName, const 
 			return true;
 		break;
 	}
-	case OWN_ATTR_3D_VALUE_POSITION: 
+	case OWN_ATTR_3D_VALUE_POSITION:
 	{
 		// Position in das Objekt packen
 		drawing::Position3D aUnoPos;
@@ -565,7 +556,7 @@ bool Svx3DCubeObject::setPropertyValueImpl( const ::rtl::OUString& rName, const 
 
 //----------------------------------------------------------------------
 
-bool Svx3DCubeObject::getPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, ::com::sun::star::uno::Any& rValue ) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException)
+bool Svx3DCubeObject::getPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, ::com::sun::star::uno::Any& rValue )
 {
 	switch( pProperty->nWID )
 	{
@@ -615,7 +606,6 @@ bool Svx3DCubeObject::getPropertyValueImpl( const ::rtl::OUString& rName, const 
 
 // ::com::sun::star::lang::XServiceInfo
 uno::Sequence< OUString > SAL_CALL Svx3DCubeObject::getSupportedServiceNames()
-	throw(uno::RuntimeException)
 {
 	uno::Sequence< OUString > aSeq( SvxShape::getSupportedServiceNames() );
 	comphelper::ServiceInfoHelper::addToSequence( aSeq, 2, "com.sun.star.drawing.Shape3D",
@@ -640,7 +630,7 @@ Svx3DSphereObject::~Svx3DSphereObject() throw()
 
 //----------------------------------------------------------------------
 
-bool Svx3DSphereObject::setPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, const ::com::sun::star::uno::Any& rValue ) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::beans::PropertyVetoException, ::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException)
+bool Svx3DSphereObject::setPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, const ::com::sun::star::uno::Any& rValue )
 {
 	switch( pProperty->nWID )
 	{
@@ -686,7 +676,7 @@ bool Svx3DSphereObject::setPropertyValueImpl( const ::rtl::OUString& rName, cons
 
 //----------------------------------------------------------------------
 
-bool Svx3DSphereObject::getPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, ::com::sun::star::uno::Any& rValue ) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException)
+bool Svx3DSphereObject::getPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, ::com::sun::star::uno::Any& rValue )
 {
 	switch( pProperty->nWID )
 	{
@@ -731,7 +721,6 @@ bool Svx3DSphereObject::getPropertyValueImpl( const ::rtl::OUString& rName, cons
 
 // ::com::sun::star::lang::XServiceInfo
 uno::Sequence< OUString > SAL_CALL Svx3DSphereObject::getSupportedServiceNames()
-	throw(uno::RuntimeException)
 {
 	uno::Sequence< OUString > aSeq( SvxShape::getSupportedServiceNames() );
 	comphelper::ServiceInfoHelper::addToSequence( aSeq, 2, "com.sun.star.drawing.Shape3D",
@@ -754,8 +743,8 @@ Svx3DLatheObject::~Svx3DLatheObject() throw()
 {
 }
 
-bool PolyPolygonShape3D_to_B3dPolyPolygon( 
-	const Any& rValue, 
+bool PolyPolygonShape3D_to_B3dPolyPolygon(
+	const Any& rValue,
 	basegfx::B3DPolyPolygon& rResultPolygon,
 	bool bCorrectPolygon)
 {
@@ -844,7 +833,7 @@ static void B3dPolyPolygon_to_PolyPolygonShape3D( const basegfx::B3DPolyPolygon&
 
 //----------------------------------------------------------------------
 
-bool Svx3DLatheObject::setPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, const ::com::sun::star::uno::Any& rValue ) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::beans::PropertyVetoException, ::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException)
+bool Svx3DLatheObject::setPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, const ::com::sun::star::uno::Any& rValue )
 {
 	switch( pProperty->nWID )
 	{
@@ -891,33 +880,33 @@ bool Svx3DLatheObject::setPropertyValueImpl( const ::rtl::OUString& rName, const
 }
 
 //----------------------------------------------------------------------
-bool Svx3DLatheObject::getPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, ::com::sun::star::uno::Any& rValue ) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException)
+bool Svx3DLatheObject::getPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, ::com::sun::star::uno::Any& rValue )
 {
 	switch( pProperty->nWID )
 	{
 	case OWN_ATTR_3D_VALUE_TRANSFORM_MATRIX:
 	{
 		// Transformation in eine homogene Matrix packen
-		drawing::HomogenMatrix aHomMat; 
-		basegfx::B3DHomMatrix aMat = static_cast<E3dObject*>(mpObj.get())->GetTransform(); 
+		drawing::HomogenMatrix aHomMat;
+		basegfx::B3DHomMatrix aMat = static_cast<E3dObject*>(mpObj.get())->GetTransform();
 
 		// pack evtl. transformed matrix to output
-		aHomMat.Line1.Column1 = aMat.get(0, 0); 
-		aHomMat.Line1.Column2 = aMat.get(0, 1); 
-		aHomMat.Line1.Column3 = aMat.get(0, 2); 
-		aHomMat.Line1.Column4 = aMat.get(0, 3); 
-		aHomMat.Line2.Column1 = aMat.get(1, 0); 
-		aHomMat.Line2.Column2 = aMat.get(1, 1); 
-		aHomMat.Line2.Column3 = aMat.get(1, 2); 
-		aHomMat.Line2.Column4 = aMat.get(1, 3); 
-		aHomMat.Line3.Column1 = aMat.get(2, 0); 
-		aHomMat.Line3.Column2 = aMat.get(2, 1); 
-		aHomMat.Line3.Column3 = aMat.get(2, 2); 
-		aHomMat.Line3.Column4 = aMat.get(2, 3); 
-		aHomMat.Line4.Column1 = aMat.get(3, 0); 
-		aHomMat.Line4.Column2 = aMat.get(3, 1); 
-		aHomMat.Line4.Column3 = aMat.get(3, 2); 
-		aHomMat.Line4.Column4 = aMat.get(3, 3); 
+		aHomMat.Line1.Column1 = aMat.get(0, 0);
+		aHomMat.Line1.Column2 = aMat.get(0, 1);
+		aHomMat.Line1.Column3 = aMat.get(0, 2);
+		aHomMat.Line1.Column4 = aMat.get(0, 3);
+		aHomMat.Line2.Column1 = aMat.get(1, 0);
+		aHomMat.Line2.Column2 = aMat.get(1, 1);
+		aHomMat.Line2.Column3 = aMat.get(1, 2);
+		aHomMat.Line2.Column4 = aMat.get(1, 3);
+		aHomMat.Line3.Column1 = aMat.get(2, 0);
+		aHomMat.Line3.Column2 = aMat.get(2, 1);
+		aHomMat.Line3.Column3 = aMat.get(2, 2);
+		aHomMat.Line3.Column4 = aMat.get(2, 3);
+		aHomMat.Line4.Column1 = aMat.get(3, 0);
+		aHomMat.Line4.Column2 = aMat.get(3, 1);
+		aHomMat.Line4.Column3 = aMat.get(3, 2);
+		aHomMat.Line4.Column4 = aMat.get(3, 3);
 
 		rValue <<= aHomMat;
 		break;
@@ -939,7 +928,6 @@ bool Svx3DLatheObject::getPropertyValueImpl( const ::rtl::OUString& rName, const
 
 // ::com::sun::star::lang::XServiceInfo
 uno::Sequence< OUString > SAL_CALL Svx3DLatheObject::getSupportedServiceNames()
-	throw(uno::RuntimeException)
 {
 	uno::Sequence< OUString > aSeq( SvxShape::getSupportedServiceNames() );
 	comphelper::ServiceInfoHelper::addToSequence( aSeq, 2, "com.sun.star.drawing.Shape3D",
@@ -963,7 +951,7 @@ Svx3DExtrudeObject::~Svx3DExtrudeObject() throw()
 
 //----------------------------------------------------------------------
 
-bool Svx3DExtrudeObject::setPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, const ::com::sun::star::uno::Any& rValue ) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::beans::PropertyVetoException, ::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException)
+bool Svx3DExtrudeObject::setPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, const ::com::sun::star::uno::Any& rValue )
 {
 	switch( pProperty->nWID )
 	{
@@ -1000,33 +988,33 @@ bool Svx3DExtrudeObject::setPropertyValueImpl( const ::rtl::OUString& rName, con
 
 //----------------------------------------------------------------------
 
-bool Svx3DExtrudeObject::getPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, ::com::sun::star::uno::Any& rValue ) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException)
+bool Svx3DExtrudeObject::getPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, ::com::sun::star::uno::Any& rValue )
 {
 	switch( pProperty->nWID )
 	{
 	case OWN_ATTR_3D_VALUE_TRANSFORM_MATRIX:
 	{
 		// Transformation in eine homogene Matrix packen
-		drawing::HomogenMatrix aHomMat; 
-		basegfx::B3DHomMatrix aMat = ((E3dObject*)mpObj.get())->GetTransform(); 
+		drawing::HomogenMatrix aHomMat;
+		basegfx::B3DHomMatrix aMat = ((E3dObject*)mpObj.get())->GetTransform();
 
 		// pack evtl. transformed matrix to output
-		aHomMat.Line1.Column1 = aMat.get(0, 0); 
-		aHomMat.Line1.Column2 = aMat.get(0, 1); 
-		aHomMat.Line1.Column3 = aMat.get(0, 2); 
-		aHomMat.Line1.Column4 = aMat.get(0, 3); 
-		aHomMat.Line2.Column1 = aMat.get(1, 0); 
-		aHomMat.Line2.Column2 = aMat.get(1, 1); 
-		aHomMat.Line2.Column3 = aMat.get(1, 2); 
-		aHomMat.Line2.Column4 = aMat.get(1, 3); 
-		aHomMat.Line3.Column1 = aMat.get(2, 0); 
-		aHomMat.Line3.Column2 = aMat.get(2, 1); 
-		aHomMat.Line3.Column3 = aMat.get(2, 2); 
-		aHomMat.Line3.Column4 = aMat.get(2, 3); 
-		aHomMat.Line4.Column1 = aMat.get(3, 0); 
-		aHomMat.Line4.Column2 = aMat.get(3, 1); 
-		aHomMat.Line4.Column3 = aMat.get(3, 2); 
-		aHomMat.Line4.Column4 = aMat.get(3, 3); 
+		aHomMat.Line1.Column1 = aMat.get(0, 0);
+		aHomMat.Line1.Column2 = aMat.get(0, 1);
+		aHomMat.Line1.Column3 = aMat.get(0, 2);
+		aHomMat.Line1.Column4 = aMat.get(0, 3);
+		aHomMat.Line2.Column1 = aMat.get(1, 0);
+		aHomMat.Line2.Column2 = aMat.get(1, 1);
+		aHomMat.Line2.Column3 = aMat.get(1, 2);
+		aHomMat.Line2.Column4 = aMat.get(1, 3);
+		aHomMat.Line3.Column1 = aMat.get(2, 0);
+		aHomMat.Line3.Column2 = aMat.get(2, 1);
+		aHomMat.Line3.Column3 = aMat.get(2, 2);
+		aHomMat.Line3.Column4 = aMat.get(2, 3);
+		aHomMat.Line4.Column1 = aMat.get(3, 0);
+		aHomMat.Line4.Column2 = aMat.get(3, 1);
+		aHomMat.Line4.Column3 = aMat.get(3, 2);
+		aHomMat.Line4.Column4 = aMat.get(3, 3);
 
 		rValue <<= aHomMat;
 		break;
@@ -1050,7 +1038,6 @@ bool Svx3DExtrudeObject::getPropertyValueImpl( const ::rtl::OUString& rName, con
 
 // ::com::sun::star::lang::XServiceInfo
 uno::Sequence< OUString > SAL_CALL Svx3DExtrudeObject::getSupportedServiceNames()
-	throw(uno::RuntimeException)
 {
 	uno::Sequence< OUString > aSeq( SvxShape::getSupportedServiceNames() );
 	comphelper::ServiceInfoHelper::addToSequence( aSeq, 2, "com.sun.star.drawing.Shape3D",
@@ -1074,7 +1061,7 @@ Svx3DPolygonObject::~Svx3DPolygonObject() throw()
 }
 
 //----------------------------------------------------------------------
-bool Svx3DPolygonObject::setPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, const ::com::sun::star::uno::Any& rValue ) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::beans::PropertyVetoException, ::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException)
+bool Svx3DPolygonObject::setPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, const ::com::sun::star::uno::Any& rValue )
 {
 	switch( pProperty->nWID )
 	{
@@ -1148,7 +1135,7 @@ bool Svx3DPolygonObject::setPropertyValueImpl( const ::rtl::OUString& rName, con
 }
 
 //----------------------------------------------------------------------
-bool Svx3DPolygonObject::getPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, ::com::sun::star::uno::Any& rValue ) throw(::com::sun::star::beans::UnknownPropertyException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException)
+bool Svx3DPolygonObject::getPropertyValueImpl( const ::rtl::OUString& rName, const SfxItemPropertySimpleEntry* pProperty, ::com::sun::star::uno::Any& rValue )
 {
 	switch( pProperty->nWID )
 	{
@@ -1157,7 +1144,7 @@ bool Svx3DPolygonObject::getPropertyValueImpl( const ::rtl::OUString& rName, con
 		ConvertObjectToHomogenMatric( static_cast< E3dObject* >( mpObj.get() ), rValue );
 		break;
 	}
-	
+
 	case OWN_ATTR_3D_VALUE_POLYPOLYGON3D:
 	{
 		B3dPolyPolygon_to_PolyPolygonShape3D(static_cast<E3dPolygonObj*>(mpObj.get())->GetPolyPolygon3D(),rValue);
@@ -1195,7 +1182,6 @@ bool Svx3DPolygonObject::getPropertyValueImpl( const ::rtl::OUString& rName, con
 
 // ::com::sun::star::lang::XServiceInfo
 uno::Sequence< OUString > SAL_CALL Svx3DPolygonObject::getSupportedServiceNames()
-	throw(uno::RuntimeException)
 {
 	Sequence< OUString > aSeq( SvxShape::getSupportedServiceNames() );
 	comphelper::ServiceInfoHelper::addToSequence( aSeq, 2, "com.sun.star.drawing.Shape3D",

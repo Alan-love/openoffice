@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #ifndef MYSQLC_CONNECTION_HXX
@@ -103,7 +103,7 @@ namespace connectivity
 			::com::sun::star::uno::Reference< com::sun::star::container::XNameAccess > m_typeMap;
             ::com::sun::star::uno::Reference< com::sun::star::util::XStringSubstitution > m_xParameterSubstitution;
 		protected:
-			
+
 			//====================================================================
 			// Data attributes
 			//====================================================================
@@ -124,21 +124,18 @@ namespace connectivity
 			sal_Bool	m_bUseOldDateFormat;
 
 
-			void		buildTypeInfo() throw(SQLException);
+			void		buildTypeInfo();
 		public:
-			OUString getMysqlVariable(const char *varname)
-																throw(SQLException, RuntimeException);
+			OUString getMysqlVariable(const char *varname);
 
-			sal_Int32 getMysqlVersion() 
-																throw(SQLException, RuntimeException);
+			sal_Int32 getMysqlVersion();
 
-			virtual void construct(const OUString& url,const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& info)
-																throw(SQLException);
+			virtual void construct(const OUString& url,const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& info);
 
 			OConnection(MysqlCDriver& _rDriver, sql::Driver * cppDriver);
 			virtual ~OConnection();
 
-			void closeAllStatements ()							throw(SQLException);
+			void closeAllStatements ();
 
 
 			rtl_TextEncoding getConnectionEncoding() { return m_settings.encoding; }
@@ -153,73 +150,52 @@ namespace connectivity
 			// XServiceInfo
 			DECLARE_SERVICE_INFO();
 			// XConnection
-			my_XStatementRef SAL_CALL createStatement()
-																throw(SQLException, RuntimeException);
+			my_XStatementRef SAL_CALL createStatement();
 
-			my_XPreparedStatementRef SAL_CALL prepareStatement(const OUString& sql)
-																throw(SQLException, RuntimeException);
+			my_XPreparedStatementRef SAL_CALL prepareStatement(const OUString& sql);
 
-			my_XPreparedStatementRef SAL_CALL prepareCall(const OUString& sql)
-																throw(SQLException, RuntimeException);
+			my_XPreparedStatementRef SAL_CALL prepareCall(const OUString& sql);
 
-			OUString SAL_CALL nativeSQL(const OUString& sql)
-																throw(SQLException, RuntimeException);
+			OUString SAL_CALL nativeSQL(const OUString& sql);
 
-			void SAL_CALL setAutoCommit(sal_Bool autoCommit)
-																throw(SQLException, RuntimeException);
+			void SAL_CALL setAutoCommit(sal_Bool autoCommit);
 
-			sal_Bool SAL_CALL getAutoCommit()
-																throw(SQLException, RuntimeException);
+			sal_Bool SAL_CALL getAutoCommit();
 
-			void SAL_CALL commit()
-																throw(SQLException, RuntimeException);
+			void SAL_CALL commit();
 
-			void SAL_CALL rollback()
-																throw(SQLException, RuntimeException);
+			void SAL_CALL rollback();
 
-			sal_Bool SAL_CALL isClosed()
-																throw(SQLException, RuntimeException);
+			sal_Bool SAL_CALL isClosed();
 
-			my_XDatabaseMetaDataRef SAL_CALL getMetaData()
-																throw(SQLException, RuntimeException);
+			my_XDatabaseMetaDataRef SAL_CALL getMetaData();
 
-			void SAL_CALL setReadOnly(sal_Bool readOnly)
-																throw(SQLException, RuntimeException);
+			void SAL_CALL setReadOnly(sal_Bool readOnly);
 
-			sal_Bool SAL_CALL isReadOnly()
-																throw(SQLException, RuntimeException);
+			sal_Bool SAL_CALL isReadOnly();
 
-			void SAL_CALL setCatalog(const OUString& catalog)
-																throw(SQLException, RuntimeException);
+			void SAL_CALL setCatalog(const OUString& catalog);
 
-			OUString SAL_CALL getCatalog()
-																throw(SQLException, RuntimeException);
+			OUString SAL_CALL getCatalog();
 
-			void SAL_CALL setTransactionIsolation(sal_Int32 level)
-																throw(SQLException, RuntimeException);
+			void SAL_CALL setTransactionIsolation(sal_Int32 level);
 
-			sal_Int32 SAL_CALL getTransactionIsolation()
-																throw(SQLException, RuntimeException);
+			sal_Int32 SAL_CALL getTransactionIsolation();
 
-			my_XNameAccessRef SAL_CALL getTypeMap()
-																throw(SQLException, RuntimeException);
+			my_XNameAccessRef SAL_CALL getTypeMap();
 
-			void SAL_CALL setTypeMap(const my_XNameAccessRef& typeMap)
-																throw(SQLException, RuntimeException);
+			void SAL_CALL setTypeMap(const my_XNameAccessRef& typeMap);
 			// XCloseable
-			void SAL_CALL close()
-																throw(SQLException, RuntimeException);
+			void SAL_CALL close();
 			// XWarningsSupplier
-			::com::sun::star::uno::Any SAL_CALL getWarnings()
-																throw(SQLException, RuntimeException);
-			void SAL_CALL clearWarnings()
-																throw(SQLException, RuntimeException);
+			::com::sun::star::uno::Any SAL_CALL getWarnings();
+			void SAL_CALL clearWarnings();
 
             // TODO: Not used
 			//sal_Int32 sdbcColumnType(OUString typeName);
             inline const ConnectionSettings& getConnectionSettings() const { return m_settings; }
             ::rtl::OUString transFormPreparedStatement(const ::rtl::OUString& _sSQL);
-			
+
 			// should we use the catalog on filebased databases
             inline sal_Bool			    isCatalogUsed()     const { return m_bUseCatalog; }
             inline OUString			    getUserName()       const { return m_sUser; }
@@ -241,4 +217,3 @@ namespace connectivity
  * vim600: noet sw=4 ts=4 fdm=marker
  * vim<600: noet sw=4 ts=4
  */
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -35,6 +35,7 @@
 #include <functional>
 #include <algorithm>
 #include <map>
+#include <iterator>
 
 //........................................................................
 namespace pcr
@@ -79,7 +80,7 @@ namespace pcr
             ::std::copy( _rBag.begin(), _rBag.end(), _rArray.getArray() );
         }
     }
-        
+
     //====================================================================
     //= PropertyComposer
 	//====================================================================
@@ -116,7 +117,7 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL PropertyComposer::inspect( const Reference< XInterface >& _rxIntrospectee ) throw (RuntimeException, NullPointerException)
+    void SAL_CALL PropertyComposer::inspect( const Reference< XInterface >& _rxIntrospectee )
     {
         MethodGuard aGuard( *this );
 
@@ -130,35 +131,35 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    Any SAL_CALL PropertyComposer::getPropertyValue( const ::rtl::OUString& _rPropertyName ) throw (UnknownPropertyException, RuntimeException)
+    Any SAL_CALL PropertyComposer::getPropertyValue( const ::rtl::OUString& _rPropertyName )
     {
         MethodGuard aGuard( *this );
         return m_aSlaveHandlers[0]->getPropertyValue( _rPropertyName );
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL PropertyComposer::setPropertyValue( const ::rtl::OUString& _rPropertyName, const Any& _rValue ) throw (UnknownPropertyException, RuntimeException)
+    void SAL_CALL PropertyComposer::setPropertyValue( const ::rtl::OUString& _rPropertyName, const Any& _rValue )
     {
         MethodGuard aGuard( *this );
         ::std::for_each( m_aSlaveHandlers.begin(), m_aSlaveHandlers.end(), SetPropertyValue( _rPropertyName, _rValue ) );
     }
-    
+
     //--------------------------------------------------------------------
-    Any SAL_CALL PropertyComposer::convertToPropertyValue( const ::rtl::OUString& _rPropertyName, const Any& _rControlValue ) throw (UnknownPropertyException, RuntimeException)
+    Any SAL_CALL PropertyComposer::convertToPropertyValue( const ::rtl::OUString& _rPropertyName, const Any& _rControlValue )
     {
         MethodGuard aGuard( *this );
         return m_aSlaveHandlers[0]->convertToPropertyValue( _rPropertyName, _rControlValue );
     }
-    
+
     //--------------------------------------------------------------------
-    Any SAL_CALL PropertyComposer::convertToControlValue( const ::rtl::OUString& _rPropertyName, const Any& _rPropertyValue, const Type& _rControlValueType ) throw (UnknownPropertyException, RuntimeException)
+    Any SAL_CALL PropertyComposer::convertToControlValue( const ::rtl::OUString& _rPropertyName, const Any& _rPropertyValue, const Type& _rControlValueType )
     {
         MethodGuard aGuard( *this );
         return m_aSlaveHandlers[0]->convertToControlValue( _rPropertyName, _rPropertyValue, _rControlValueType );
     }
-    
+
     //--------------------------------------------------------------------
-    PropertyState SAL_CALL PropertyComposer::getPropertyState( const ::rtl::OUString& _rPropertyName ) throw (UnknownPropertyException, RuntimeException)
+    PropertyState SAL_CALL PropertyComposer::getPropertyState( const ::rtl::OUString& _rPropertyName )
     {
         MethodGuard aGuard( *this );
 
@@ -195,23 +196,23 @@ namespace pcr
 
         return eState;
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL PropertyComposer::addPropertyChangeListener( const Reference< XPropertyChangeListener >& _rxListener ) throw (RuntimeException)
+    void SAL_CALL PropertyComposer::addPropertyChangeListener( const Reference< XPropertyChangeListener >& _rxListener )
     {
         MethodGuard aGuard( *this );
         m_aPropertyListeners.addListener( _rxListener );
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL PropertyComposer::removePropertyChangeListener( const Reference< XPropertyChangeListener >& _rxListener ) throw (RuntimeException)
+    void SAL_CALL PropertyComposer::removePropertyChangeListener( const Reference< XPropertyChangeListener >& _rxListener )
     {
         MethodGuard aGuard( *this );
         m_aPropertyListeners.removeListener( _rxListener );
     }
-    
+
     //--------------------------------------------------------------------
-    Sequence< Property > SAL_CALL PropertyComposer::getSupportedProperties() throw (RuntimeException)
+    Sequence< Property > SAL_CALL PropertyComposer::getSupportedProperties()
     {
         MethodGuard aGuard( *this );
 
@@ -265,7 +266,7 @@ namespace pcr
         copyBagToArray( m_aSupportedProperties, aSurvived );
         return aSurvived;
     }
-    
+
     //--------------------------------------------------------------------
     void uniteStringArrays( const PropertyComposer::HandlerArray& _rHandlers, Sequence< ::rtl::OUString > (SAL_CALL XPropertyHandler::*pGetter)( void ),
         Sequence< ::rtl::OUString >& /* [out] */ _rUnion )
@@ -286,7 +287,7 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    Sequence< ::rtl::OUString > SAL_CALL PropertyComposer::getSupersededProperties( ) throw (RuntimeException)
+    Sequence< ::rtl::OUString > SAL_CALL PropertyComposer::getSupersededProperties( )
     {
         MethodGuard aGuard( *this );
 
@@ -295,9 +296,9 @@ namespace pcr
         uniteStringArrays( m_aSlaveHandlers, &XPropertyHandler::getSupersededProperties, aSuperseded );
         return aSuperseded;
     }
-    
+
     //--------------------------------------------------------------------
-    Sequence< ::rtl::OUString > SAL_CALL PropertyComposer::getActuatingProperties( ) throw (RuntimeException)
+    Sequence< ::rtl::OUString > SAL_CALL PropertyComposer::getActuatingProperties( )
     {
         MethodGuard aGuard( *this );
 
@@ -306,25 +307,24 @@ namespace pcr
         uniteStringArrays( m_aSlaveHandlers, &XPropertyHandler::getActuatingProperties, aActuating );
         return aActuating;
     }
-    
+
     //--------------------------------------------------------------------
     LineDescriptor SAL_CALL PropertyComposer::describePropertyLine( const ::rtl::OUString& _rPropertyName,
         const Reference< XPropertyControlFactory >& _rxControlFactory )
-        throw (UnknownPropertyException, NullPointerException, RuntimeException)
     {
         MethodGuard aGuard( *this );
         return m_aSlaveHandlers[0]->describePropertyLine( _rPropertyName, _rxControlFactory );
     }
-    
+
     //--------------------------------------------------------------------
-    ::sal_Bool SAL_CALL PropertyComposer::isComposable( const ::rtl::OUString& _rPropertyName ) throw (UnknownPropertyException, RuntimeException)
+    ::sal_Bool SAL_CALL PropertyComposer::isComposable( const ::rtl::OUString& _rPropertyName )
     {
         MethodGuard aGuard( *this );
         return m_aSlaveHandlers[0]->isComposable( _rPropertyName );
     }
 
     //--------------------------------------------------------------------
-    InteractiveSelectionResult SAL_CALL PropertyComposer::onInteractivePropertySelection( const ::rtl::OUString& _rPropertyName, sal_Bool _bPrimary, Any& _rData, const Reference< XObjectInspectorUI >& _rxInspectorUI ) throw (UnknownPropertyException, NullPointerException, RuntimeException)
+    InteractiveSelectionResult SAL_CALL PropertyComposer::onInteractivePropertySelection( const ::rtl::OUString& _rPropertyName, sal_Bool _bPrimary, Any& _rData, const Reference< XObjectInspectorUI >& _rxInspectorUI )
     {
         if ( !_rxInspectorUI.is() )
             throw NullPointerException();
@@ -373,7 +373,7 @@ namespace pcr
 
         return eResult;
     }
-    
+
     //--------------------------------------------------------------------
     void PropertyComposer::impl_ensureUIRequestComposer( const Reference< XObjectInspectorUI >& _rxInspectorUI )
     {
@@ -385,7 +385,7 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL PropertyComposer::actuatingPropertyChanged( const ::rtl::OUString& _rActuatingPropertyName, const Any& _rNewValue, const Any& _rOldValue, const Reference< XObjectInspectorUI >& _rxInspectorUI, sal_Bool _bFirstTimeInit ) throw (NullPointerException, RuntimeException)
+    void SAL_CALL PropertyComposer::actuatingPropertyChanged( const ::rtl::OUString& _rActuatingPropertyName, const Any& _rNewValue, const Any& _rOldValue, const Reference< XObjectInspectorUI >& _rxInspectorUI, sal_Bool _bFirstTimeInit )
     {
         if ( !_rxInspectorUI.is() )
             throw NullPointerException();
@@ -446,7 +446,7 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL PropertyComposer::propertyChange( const PropertyChangeEvent& evt ) throw (RuntimeException)
+    void SAL_CALL PropertyComposer::propertyChange( const PropertyChangeEvent& evt )
     {
         if ( !impl_isSupportedProperty_nothrow( evt.PropertyName ) )
             // A slave handler might fire events for more properties than we support. Ignore those.
@@ -465,14 +465,14 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL PropertyComposer::disposing( const EventObject& Source ) throw (RuntimeException)
+    void SAL_CALL PropertyComposer::disposing( const EventObject& Source )
     {
         MethodGuard aGuard( *this );
         m_aPropertyListeners.disposing( Source );
     }
 
     //--------------------------------------------------------------------
-    sal_Bool SAL_CALL PropertyComposer::suspend( sal_Bool _bSuspend ) throw (RuntimeException)
+    sal_Bool SAL_CALL PropertyComposer::suspend( sal_Bool _bSuspend )
     {
         MethodGuard aGuard( *this );
         for ( PropertyComposer::HandlerArray::const_iterator loop = m_aSlaveHandlers.begin();
@@ -501,7 +501,7 @@ namespace pcr
     }
 
     //--------------------------------------------------------------------
-    sal_Bool SAL_CALL PropertyComposer::hasPropertyByName( const ::rtl::OUString& _rName ) throw (RuntimeException)
+    sal_Bool SAL_CALL PropertyComposer::hasPropertyByName( const ::rtl::OUString& _rName )
     {
         return impl_isSupportedProperty_nothrow( _rName );
     }
@@ -509,4 +509,3 @@ namespace pcr
 //........................................................................
 } // namespace pcr
 //........................................................................
-

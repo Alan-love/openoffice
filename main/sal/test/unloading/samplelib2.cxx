@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -65,9 +65,9 @@ OUString m_serviceName;
 public:
 	TestService( OUString implName, OUString serviceName);
 	~TestService();
-	virtual OUString SAL_CALL getImplementationName(  )  throw (RuntimeException);
-    virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName ) throw (RuntimeException);
-    virtual Sequence<OUString > SAL_CALL getSupportedServiceNames(  ) throw (RuntimeException);
+	virtual OUString SAL_CALL getImplementationName(  );
+    virtual sal_Bool SAL_CALL supportsService( const OUString& ServiceName );
+    virtual Sequence<OUString > SAL_CALL getSupportedServiceNames(  );
 };
 
 TestService::TestService( OUString implName, OUString serviceName):
@@ -81,15 +81,15 @@ TestService::~TestService()
 	globalModuleCount.modCnt.release( &globalModuleCount.modCnt);
 }
 
-OUString SAL_CALL TestService::getImplementationName(  )  throw (RuntimeException)
+OUString SAL_CALL TestService::getImplementationName(  )
 {
 	return m_implName;
 }
-sal_Bool SAL_CALL TestService::supportsService( const OUString& ServiceName ) throw (RuntimeException)
+sal_Bool SAL_CALL TestService::supportsService( const OUString& ServiceName )
 {
 	return ServiceName.equals( m_serviceName);
 }
-Sequence<OUString > SAL_CALL TestService::getSupportedServiceNames(  ) throw (RuntimeException)
+Sequence<OUString > SAL_CALL TestService::getSupportedServiceNames(  )
 {
 	return Sequence<OUString>( &m_serviceName, 1);
 }
@@ -97,21 +97,18 @@ Sequence<OUString > SAL_CALL TestService::getSupportedServiceNames(  ) throw (Ru
 
 // Creator functions for Services -------------------------------------------------
 static Reference<XInterface> SAL_CALL test21_createInstance(const Reference<XMultiServiceFactory> & rSMgr)
-		throw (RuntimeException)
 {
 	return Reference<XInterface>( static_cast<XWeak*>( new TestService(
 		OUString( RTL_CONSTASCII_USTRINGPARAM( IMPLNAME1)),
 		OUString( RTL_CONSTASCII_USTRINGPARAM( SERVICENAME1)) )), UNO_QUERY);
 }
 static Reference<XInterface> SAL_CALL test22_createInstance(const Reference<XMultiServiceFactory> & rSMgr)
-		throw (RuntimeException)
 {
 	return Reference<XInterface>( static_cast<XWeak*>( new TestService(
 		OUString( RTL_CONSTASCII_USTRINGPARAM( IMPLNAME2)),
 		OUString( RTL_CONSTASCII_USTRINGPARAM( SERVICENAME2)) )), UNO_QUERY);
 }
 static Reference<XInterface> SAL_CALL test23_createInstance(const Reference<XMultiServiceFactory> & rSMgr)
-		throw (RuntimeException)
 {
 	return Reference<XInterface>( static_cast<XWeak*>( new TestService(
 		OUString( RTL_CONSTASCII_USTRINGPARAM( IMPLNAME3)),
@@ -137,17 +134,17 @@ extern "C" {
 
 				xNewKey->createKey( OUString( RTL_CONSTASCII_USTRINGPARAM( SERVICENAME1)));
 
-				xNewKey= 
+				xNewKey=
 					reinterpret_cast< XRegistryKey * >( pRegistryKey )->createKey(
 						OUString::createFromAscii( "/" IMPLNAME2 "/UNO/SERVICES" ) );
 
 				xNewKey->createKey(OUString( RTL_CONSTASCII_USTRINGPARAM( SERVICENAME2)));
-				xNewKey= 
+				xNewKey=
 					reinterpret_cast< XRegistryKey * >( pRegistryKey )->createKey(
 						OUString::createFromAscii( "/" IMPLNAME3 "/UNO/SERVICES" )   );
 
 				xNewKey->createKey(OUString( RTL_CONSTASCII_USTRINGPARAM( SERVICENAME3)));
-				
+
 				return sal_True;
 			}
 			catch (InvalidRegistryException &)
@@ -158,10 +155,10 @@ extern "C" {
 		return sal_False;
 	}
 
-	void * SAL_CALL component_getFactory(const sal_Char * pImplName, void * pServiceManager, void * pRegistryKey) throw() 
+	void * SAL_CALL component_getFactory(const sal_Char * pImplName, void * pServiceManager, void * pRegistryKey) throw()
 	{
 		void * pRet = 0;
-	
+
 
 		OUString implname1( RTL_CONSTASCII_USTRINGPARAM( IMPLNAME1) );
 		OUString serviceName1( RTL_CONSTASCII_USTRINGPARAM( SERVICENAME1) );
@@ -180,7 +177,7 @@ extern "C" {
 				Sequence<OUString>( &serviceName1, 1),
 				&globalModuleCount.modCnt
 				));
-		
+
 			if (xFactory.is())
 			{
 				xFactory->acquire();
@@ -197,7 +194,7 @@ extern "C" {
 				Sequence<OUString>( &serviceName2, 1),
 				&globalModuleCount.modCnt
 				));
-		
+
 			if (xFactory.is())
 			{
 				xFactory->acquire();
@@ -214,14 +211,14 @@ extern "C" {
 				Sequence<OUString>( &serviceName3, 1),
 				&globalModuleCount.modCnt
 				));
-		
+
 			if (xFactory.is())
 			{
 				xFactory->acquire();
 				pRet = xFactory.get();
 			}
 		}
-	
+
 		return pRet;
 	}
 

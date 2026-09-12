@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -408,7 +408,7 @@ void SfxVirtualMenu::CreateFromSVMenu()
 
         if ( pPopup )
 		{
-            
+
             SfxMenuControl *pMnuCtrl =
 				SfxMenuControl::CreateControl(nSlotId, *pPopup, *pBindings);
 
@@ -470,7 +470,7 @@ void SfxVirtualMenu::CreateFromSVMenu()
 					String aCmd( pSVMenu->GetItemCommand( nSlotId ) );
                     if ( aCmd.Len() && (( nSlotId < SID_SFX_START ) || ( nSlotId > SHRT_MAX )) )
 					{
-                        // try to create control via comand name
+                        // try to create control via command name
                         pMnuCtrl = SfxMenuControl::CreateControl( aCmd, nSlotId, *pSVMenu, sItemText, sHelpText, *pBindings, this );
 						if ( pMnuCtrl )
 						{
@@ -1332,4 +1332,3 @@ void SfxVirtualMenu::SetHelpIds( ResMgr *pRes )
 {
 	pResMgr = pRes;
 }
-

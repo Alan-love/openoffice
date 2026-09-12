@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -67,53 +67,52 @@ namespace XPath
     /**
         get object type
     */
-    virtual XPathObjectType SAL_CALL getObjectType() throw (RuntimeException);
+    virtual XPathObjectType SAL_CALL getObjectType();
 
     /**
         get the nodes from a nodelist type object
     */
-    virtual Reference< XNodeList > SAL_CALL getNodeList()
-        throw (RuntimeException);
+    virtual Reference< XNodeList > SAL_CALL getNodeList();
 
      /**
         get value of a boolean object
      */
-     virtual sal_Bool SAL_CALL getBoolean() throw (RuntimeException);
+     virtual sal_Bool SAL_CALL getBoolean();
 
     /**
         get number as byte
     */
-    virtual sal_Int8 SAL_CALL getByte() throw (RuntimeException);
+    virtual sal_Int8 SAL_CALL getByte();
 
     /**
         get number as short
     */
-    virtual sal_Int16 SAL_CALL getShort() throw (RuntimeException);
+    virtual sal_Int16 SAL_CALL getShort();
 
     /**
         get number as long
     */
-    virtual sal_Int32 SAL_CALL getLong() throw (RuntimeException);
+    virtual sal_Int32 SAL_CALL getLong();
 
     /**
         get number as hyper
     */
-    virtual sal_Int64 SAL_CALL getHyper() throw (RuntimeException);
+    virtual sal_Int64 SAL_CALL getHyper();
 
     /**
         get number as float
     */
-    virtual float SAL_CALL getFloat() throw (RuntimeException);
+    virtual float SAL_CALL getFloat();
 
     /**
         get number as double
     */
-    virtual double SAL_CALL getDouble() throw (RuntimeException);
+    virtual double SAL_CALL getDouble();
 
     /**
         get string value
     */
-    virtual OUString SAL_CALL getString() throw (RuntimeException);
+    virtual OUString SAL_CALL getString();
 
     };
 }

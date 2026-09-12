@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -36,11 +36,11 @@ class SwVbaField : public SwVbaField_BASE
     css::uno::Reference< css::text::XTextDocument > mxTextDocument;
     css::uno::Reference< css::text::XTextField > mxTextField;
 public:
-    SwVbaField( const css::uno::Reference< ooo::vba::XHelperInterface >& rParent, const css::uno::Reference< css::uno::XComponentContext >& rContext, const css::uno::Reference< css::text::XTextDocument >& rDocument, const css::uno::Reference< css::text::XTextField >& xTextField) throw ( css::uno::RuntimeException);
+    SwVbaField( const css::uno::Reference< ooo::vba::XHelperInterface >& rParent, const css::uno::Reference< css::uno::XComponentContext >& rContext, const css::uno::Reference< css::text::XTextDocument >& rDocument, const css::uno::Reference< css::text::XTextField >& xTextField);
 
     // XHelperInterface
     virtual rtl::OUString& getServiceImplName();
-    virtual css::uno::Sequence<rtl::OUString> getServiceNames();  
+    virtual css::uno::Sequence<rtl::OUString> getServiceNames();
 };
 
 // *** SwVbaFields ***********************************************
@@ -52,22 +52,22 @@ class SwVbaFields : public SwVbaFields_BASE
     css::uno::Reference< css::frame::XModel > mxModel;
     css::uno::Reference< css::lang::XMultiServiceFactory > mxMSF;
 private:
-    css::uno::Reference< css::text::XTextField > Create_Field_FileName( const rtl::OUString _text ) throw (css::uno::RuntimeException);
+    css::uno::Reference< css::text::XTextField > Create_Field_FileName( const rtl::OUString _text );
 
 public:
     SwVbaFields( const css::uno::Reference< ov::XHelperInterface >& xParent, const css::uno::Reference< css::uno::XComponentContext > & xContext, const css::uno::Reference< css::frame::XModel >& xModel );
     // XFields
-    virtual css::uno::Reference< ::ooo::vba::word::XField > SAL_CALL Add( const css::uno::Reference< ::ooo::vba::word::XRange >& Range, const css::uno::Any& Type, const css::uno::Any& Text, const css::uno::Any& PreserveFormatting ) throw (css::uno::RuntimeException);
-    virtual sal_Int32 SAL_CALL Update() throw (css::uno::RuntimeException);
+    virtual css::uno::Reference< ::ooo::vba::word::XField > SAL_CALL Add( const css::uno::Reference< ::ooo::vba::word::XRange >& Range, const css::uno::Any& Type, const css::uno::Any& Text, const css::uno::Any& PreserveFormatting );
+    virtual sal_Int32 SAL_CALL Update();
     // XEnumerationAccess
-    virtual css::uno::Type SAL_CALL getElementType() throw (css::uno::RuntimeException);
-    virtual css::uno::Reference< css::container::XEnumeration > SAL_CALL createEnumeration() throw (css::uno::RuntimeException);
-    // ScVbaCollectionBaseImpl      
+    virtual css::uno::Type SAL_CALL getElementType();
+    virtual css::uno::Reference< css::container::XEnumeration > SAL_CALL createEnumeration();
+    // ScVbaCollectionBaseImpl
     virtual css::uno::Any createCollectionObject( const css::uno::Any& aSource );
 
     // XHelperInterface
     virtual rtl::OUString& getServiceImplName();
-    virtual css::uno::Sequence<rtl::OUString> getServiceNames();    
+    virtual css::uno::Sequence<rtl::OUString> getServiceNames();
 };
 
 #endif

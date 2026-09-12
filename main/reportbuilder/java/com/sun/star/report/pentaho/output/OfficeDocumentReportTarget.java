@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -37,7 +37,6 @@ import com.sun.star.report.pentaho.model.OfficeStyles;
 import com.sun.star.report.pentaho.model.OfficeStylesCollection;
 import com.sun.star.report.pentaho.styles.LengthCalculator;
 import com.sun.star.report.pentaho.styles.StyleMapper;
-import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.transform.OutputKeys;
@@ -45,6 +44,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -1054,9 +1054,8 @@ public abstract class OfficeDocumentReportTarget extends AbstractReportTarget
             try
             {
                 inputStream = getInputRepository().createInputStream("meta.xml");
-                DOMParser dOMParser = new DOMParser();
-                dOMParser.parse(new InputSource(inputStream));
-                Document document = dOMParser.getDocument();
+                Document document = DocumentBuilderFactory.newInstance()
+                        .newDocumentBuilder().parse(new InputSource(inputStream));
                 NodeList nl = document.getElementsByTagName("document-meta/meta/generator");
                 Node node = document.getFirstChild().getFirstChild().getFirstChild().getFirstChild();
                 String creator = node.getNodeValue();

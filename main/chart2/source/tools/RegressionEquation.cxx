@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_charttools.hxx"
 
 #include "RegressionEquation.hxx"
 #include "LineProperties.hxx"
@@ -141,7 +141,7 @@ private:
         ::chart::PropertyHelper::setPropertyValue( rOutMap, ::chart::CharacterProperties::PROP_CHAR_CHAR_HEIGHT, fDefaultCharHeight );
         ::chart::PropertyHelper::setPropertyValue( rOutMap, ::chart::CharacterProperties::PROP_CHAR_ASIAN_CHAR_HEIGHT, fDefaultCharHeight );
         ::chart::PropertyHelper::setPropertyValue( rOutMap, ::chart::CharacterProperties::PROP_CHAR_COMPLEX_CHAR_HEIGHT, fDefaultCharHeight );
-    }    
+    }
 };
 
 struct StaticRegressionEquationDefaults : public rtl::StaticAggregate< ::chart::tPropertyValueMap, StaticRegressionEquationDefaults_Initializer >
@@ -218,14 +218,12 @@ RegressionEquation::~RegressionEquation()
 
 // ____ XCloneable ____
 uno::Reference< util::XCloneable > SAL_CALL RegressionEquation::createClone()
-    throw (uno::RuntimeException)
 {
     return uno::Reference< util::XCloneable >( new RegressionEquation( *this ));
 }
 
 // ____ OPropertySet ____
 uno::Any RegressionEquation::GetDefaultValue( sal_Int32 nHandle ) const
-    throw(beans::UnknownPropertyException)
 {
     const tPropertyValueMap& rStaticDefaults = *StaticRegressionEquationDefaults::get();
     tPropertyValueMap::const_iterator aFound( rStaticDefaults.find( nHandle ) );
@@ -241,14 +239,12 @@ uno::Any RegressionEquation::GetDefaultValue( sal_Int32 nHandle ) const
 
 // ____ XPropertySet ____
 Reference< beans::XPropertySetInfo > SAL_CALL RegressionEquation::getPropertySetInfo()
-    throw (uno::RuntimeException)
 {
     return *StaticRegressionEquationInfo::get();
 }
 
 // ____ XModifyBroadcaster ____
 void SAL_CALL RegressionEquation::addModifyListener( const uno::Reference< util::XModifyListener >& aListener )
-    throw (uno::RuntimeException)
 {
     try
     {
@@ -262,7 +258,6 @@ void SAL_CALL RegressionEquation::addModifyListener( const uno::Reference< util:
 }
 
 void SAL_CALL RegressionEquation::removeModifyListener( const uno::Reference< util::XModifyListener >& aListener )
-    throw (uno::RuntimeException)
 {
     try
     {
@@ -277,14 +272,12 @@ void SAL_CALL RegressionEquation::removeModifyListener( const uno::Reference< ut
 
 // ____ XModifyListener ____
 void SAL_CALL RegressionEquation::modified( const lang::EventObject& aEvent )
-    throw (uno::RuntimeException)
 {
     m_xModifyEventForwarder->modified( aEvent );
 }
 
 // ____ XEventListener (base of XModifyListener) ____
 void SAL_CALL RegressionEquation::disposing( const lang::EventObject& /* Source */ )
-    throw (uno::RuntimeException)
 {
     // nothing
 }
@@ -304,7 +297,6 @@ void RegressionEquation::fireModifyEvent()
 
 // ____ XTitle ____
 uno::Sequence< uno::Reference< chart2::XFormattedString > > SAL_CALL RegressionEquation::getText()
-    throw (uno::RuntimeException)
 {
     // /--
     MutexGuard aGuard( GetMutex() );
@@ -313,7 +305,6 @@ uno::Sequence< uno::Reference< chart2::XFormattedString > > SAL_CALL RegressionE
 }
 
 void SAL_CALL RegressionEquation::setText( const uno::Sequence< uno::Reference< chart2::XFormattedString > >& Strings )
-    throw (uno::RuntimeException)
 {
     // /--
     MutexGuard aGuard( GetMutex() );

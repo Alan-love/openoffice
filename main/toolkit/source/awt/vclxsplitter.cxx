@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -99,7 +99,7 @@ VCLXSplitter::getChild( int i )
     return 0;
 }
 
-void SAL_CALL VCLXSplitter::dispose() throw(RuntimeException)
+void SAL_CALL VCLXSplitter::dispose()
 {
     {
         ::vos::OGuard aGuard( GetMutex() );
@@ -124,7 +124,6 @@ void VCLXSplitter::ensureSplitter()
 
 void SAL_CALL VCLXSplitter::addChild(
     const ::com::sun::star::uno::Reference< ::com::sun::star::awt::XLayoutConstrains > &xChild )
-    throw (::com::sun::star::uno::RuntimeException, ::com::sun::star::awt::MaxChildrenException)
 {
     if ( maChildren.size() == 2 )
         throw css::awt::MaxChildrenException();
@@ -133,7 +132,6 @@ void SAL_CALL VCLXSplitter::addChild(
 
 void SAL_CALL VCLXSplitter::allocateArea(
     const ::com::sun::star::awt::Rectangle &rArea )
-    throw (::com::sun::star::uno::RuntimeException)
 {
     ensureSplitter();  // shouldn't be needed...
     getMinimumSize();
@@ -189,7 +187,6 @@ void SAL_CALL VCLXSplitter::allocateArea(
 }
 
 ::com::sun::star::awt::Size SAL_CALL VCLXSplitter::getMinimumSize()
-    throw(::com::sun::star::uno::RuntimeException)
 {
     ensureSplitter();
 
@@ -221,12 +218,12 @@ void VCLXSplitter::ProcessWindowEvent( const VclWindowEvent& _rVclWindowEvent )
     VCLXWindow::ProcessWindowEvent( _rVclWindowEvent );
 }
 
-void SAL_CALL VCLXSplitter::setProperty( const ::rtl::OUString& PropertyName, const Any &Value ) throw(RuntimeException)
+void SAL_CALL VCLXSplitter::setProperty( const ::rtl::OUString& PropertyName, const Any &Value )
 {
     VCLXWindow::setProperty( PropertyName, Value );
 }
 
-Any SAL_CALL VCLXSplitter::getProperty( const ::rtl::OUString& PropertyName ) throw(RuntimeException)
+Any SAL_CALL VCLXSplitter::getProperty( const ::rtl::OUString& PropertyName )
 {
     return VCLXWindow::getProperty( PropertyName );
 }

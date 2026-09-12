@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -118,7 +118,7 @@ public class PathSubstitutionTest
                 System.out.println("Substitute '" + substString + "'");
                 String newValue = oObj.substituteVariables(substString, true);
                 System.out.println("Return value '" + newValue + "'");
-                // 2do: better check for correct substitution
+                // TODO: better check for correct substitution
                 assertTrue("Did not substitute '"
                         + substString + "' to '" + newValue
                         + "' correctly:", newValue.startsWith(substVal));
@@ -132,7 +132,7 @@ public class PathSubstitutionTest
                     System.out.println("Substitute backwards '" + substString + "'");
                     newValue = oObj.reSubstituteVariables(substString);
                     System.out.println("Return value '" + newValue + "'");
-                    // 2do: better check for correct substitution
+                    // TODO: better check for correct substitution
                     assertTrue("Did not reSubstitute '"
                             + substString + "' to '" + newValue
                             + "' correctly:", checkResubstitute(newValue, var));

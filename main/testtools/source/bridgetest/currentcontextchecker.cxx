@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -58,8 +58,7 @@ public:
 
     virtual ~CurrentContext();
 
-    virtual css::uno::Any SAL_CALL getValueByName(::rtl::OUString const & Name)
-        throw (css::uno::RuntimeException);
+    virtual css::uno::Any SAL_CALL getValueByName(::rtl::OUString const & Name);
 
 private:
     CurrentContext(CurrentContext &); // not defined
@@ -71,7 +70,6 @@ CurrentContext::CurrentContext() {}
 CurrentContext::~CurrentContext() {}
 
 css::uno::Any CurrentContext::getValueByName(::rtl::OUString const & Name)
-    throw (css::uno::RuntimeException)
 {
     return Name.equalsAsciiL(RTL_CONSTASCII_STRINGPARAM(KEY))
         ? css::uno::makeAny(::rtl::OUString::createFromAscii(VALUE))
@@ -88,7 +86,6 @@ testtools::bridgetest::CurrentContextChecker::~CurrentContextChecker() {}
     css::uno::Reference<
         ::test::testtools::bridgetest::XCurrentContextChecker > const & other,
     ::sal_Int32 setSteps, ::sal_Int32 checkSteps)
-    throw (css::uno::RuntimeException)
 {
     if (setSteps == 0) {
         css::uno::ContextLayer layer(new CurrentContext);

@@ -47,6 +47,7 @@
 
 #include <cppuhelper/typeprovider.hxx>
 #include <cppuhelper/factory.hxx>
+#include <cppuhelper/implementationentry.hxx>
 
 //_________________________________________________________________________________________________________________
 //	namespace
@@ -82,7 +83,7 @@ void SAL_CALL SoundHandler::release() throw()
        OWeakObject::release();
 }
 
-css::uno::Any SAL_CALL SoundHandler::queryInterface( const css::uno::Type& aType ) throw( css::uno::RuntimeException )
+css::uno::Any SAL_CALL SoundHandler::queryInterface( const css::uno::Type& aType )
 {
        /* Attention: Don't use mutex or guard in this method!!! It's a method of XInterface. */
         /* Ask for my own supported interfaces ...*/
@@ -102,7 +103,7 @@ css::uno::Any SAL_CALL SoundHandler::queryInterface( const css::uno::Type& aType
        return aReturn;
 }
 
-css::uno::Sequence< sal_Int8 > SAL_CALL SoundHandler::getImplementationId() throw( css::uno::RuntimeException )
+css::uno::Sequence< sal_Int8 > SAL_CALL SoundHandler::getImplementationId()
 {
     /* Create one Id for all instances of this class.                                               */
     /* Use ethernet address to do this! (sal_True)                                                  */
@@ -126,7 +127,7 @@ css::uno::Sequence< sal_Int8 > SAL_CALL SoundHandler::getImplementationId() thro
     return pID->getImplementationId();
 }
 
-css::uno::Sequence< css::uno::Type > SAL_CALL SoundHandler::getTypes() throw( css::uno::RuntimeException )
+css::uno::Sequence< css::uno::Type > SAL_CALL SoundHandler::getTypes()
 {
     /* Optimize this method !                                       */
     /* We initialize a static variable only one time.               */
@@ -166,7 +167,7 @@ css::uno::Sequence< css::uno::Type > SAL_CALL SoundHandler::getTypes() throw( cs
 /*===========================================================================================================*/
 /* XServiceInfo */
 /*===========================================================================================================*/
-::rtl::OUString SAL_CALL SoundHandler::getImplementationName() throw( css::uno::RuntimeException )
+::rtl::OUString SAL_CALL SoundHandler::getImplementationName()
 {
     return impl_getStaticImplementationName();
 }
@@ -174,7 +175,7 @@ css::uno::Sequence< css::uno::Type > SAL_CALL SoundHandler::getTypes() throw( cs
 /*===========================================================================================================*/
 /* XServiceInfo */
 /*===========================================================================================================*/
-sal_Bool SAL_CALL SoundHandler::supportsService( const ::rtl::OUString& sServiceName ) throw( css::uno::RuntimeException )
+sal_Bool SAL_CALL SoundHandler::supportsService( const ::rtl::OUString& sServiceName )
 {
     /* Set default return value. */
     sal_Bool bReturn = sal_False ;
@@ -204,7 +205,7 @@ sal_Bool SAL_CALL SoundHandler::supportsService( const ::rtl::OUString& sService
 /*===========================================================================================================*/
 /* XServiceInfo */
 /*===========================================================================================================*/
-css::uno::Sequence< ::rtl::OUString > SAL_CALL SoundHandler::getSupportedServiceNames() throw( css::uno::RuntimeException )
+css::uno::Sequence< ::rtl::OUString > SAL_CALL SoundHandler::getSupportedServiceNames()
 {
     return impl_getStaticSupportedServiceNames();
 }
@@ -227,10 +228,10 @@ css::uno::Sequence< ::rtl::OUString > SoundHandler::impl_getStaticSupportedServi
     return IMPLEMENTATIONNAME_SOUNDHANDLER;
 }
 
-css::uno::Reference< css::uno::XInterface > SAL_CALL SoundHandler::impl_createInstance( const css::uno::Reference< css::lang::XMultiServiceFactory >& xServiceManager ) throw( css::uno::Exception )
+css::uno::Reference< css::uno::XInterface > SAL_CALL SoundHandler::impl_createInstance( const css::uno::Reference< css::uno::XComponentContext >& xContext )
 {
     /* create new instance of service */
-    SoundHandler* pClass = new SoundHandler( xServiceManager );
+    SoundHandler* pClass = new SoundHandler( xContext );
     /* hold it alive by increasing his ref count!!! */
     css::uno::Reference< css::uno::XInterface > xService( static_cast< ::cppu::OWeakObject* >(pClass), css::uno::UNO_QUERY );
     /* initialize new service instance ... he can use his own refcount ... we hold it! */
@@ -239,17 +240,18 @@ css::uno::Reference< css::uno::XInterface > SAL_CALL SoundHandler::impl_createIn
     return xService;
 }
 
-css::uno::Reference< css::lang::XSingleServiceFactory > SoundHandler::impl_createFactory( const css::uno::Reference< css::lang::XMultiServiceFactory >& xServiceManager )
+static struct ::cppu::ImplementationEntry g_component_entries[] =
 {
-    css::uno::Reference< css::lang::XSingleServiceFactory > xReturn ( cppu::createSingleFactory (
-       xServiceManager,
-        SoundHandler::impl_getStaticImplementationName(),
+    {
         SoundHandler::impl_createInstance,
-        SoundHandler::impl_getStaticSupportedServiceNames()
-        )
-    );
-    return xReturn;
-}
+        SoundHandler::impl_getStaticImplementationName,
+        SoundHandler::impl_getStaticSupportedServiceNames,
+        ::cppu::createSingleComponentFactory,
+        0,
+        0
+    },
+    { 0, 0, 0, 0, 0, 0 }
+};
 
 void SAL_CALL SoundHandler::impl_initService()
 {
@@ -262,19 +264,19 @@ void SAL_CALL SoundHandler::impl_initService()
 
     @seealso    using at owner
 
-    @param      "xFactory", reference to service manager for creation of new services
+    @param      "xContext", reference to component context for creation of new services
     @return     -
 
     @onerror    Show an assertion and do nothing else.
     @threadsafe yes
 *//*-*************************************************************************************************************/
-SoundHandler::SoundHandler( const css::uno::Reference< css::lang::XMultiServiceFactory >& xFactory )
+SoundHandler::SoundHandler( const css::uno::Reference< css::uno::XComponentContext >& xContext )
 		//	Init baseclasses first
         :   ThreadHelpBase      (          )
         ,   ::cppu::OWeakObject (          )
         // Init member
 	,   m_bError		( false    )
-        ,   m_xFactory          ( xFactory )
+        ,   m_xContext          ( xContext )
 {
     m_aUpdateTimer.SetTimeoutHdl(LINK(this, SoundHandler, implts_PlayerNotify));
 }
@@ -326,7 +328,7 @@ SoundHandler::~SoundHandler()
 *//*-*************************************************************************************************************/
 void SAL_CALL SoundHandler::dispatchWithNotification(const css::util::URL&                                             aURL      ,
                                                      const css::uno::Sequence< css::beans::PropertyValue >&            lDescriptor,
-                                                     const css::uno::Reference< css::frame::XDispatchResultListener >& xListener ) throw(css::uno::RuntimeException)
+                                                     const css::uno::Reference< css::frame::XDispatchResultListener >& xListener )
 {
     // SAFE {
     const ::vos::OGuard aLock( m_aLock );
@@ -376,7 +378,7 @@ void SAL_CALL SoundHandler::dispatchWithNotification(const css::util::URL&      
 }
 
 void SAL_CALL SoundHandler::dispatch( const css::util::URL&                                  aURL       ,
-                                      const css::uno::Sequence< css::beans::PropertyValue >& lArguments ) throw( css::uno::RuntimeException )
+                                      const css::uno::Sequence< css::beans::PropertyValue >& lArguments )
 {
     dispatchWithNotification(aURL, lArguments, css::uno::Reference< css::frame::XDispatchResultListener >());
 }
@@ -405,7 +407,7 @@ void SAL_CALL SoundHandler::dispatch( const css::util::URL&                     
     @onerror    We return nothing.
     @threadsafe yes
 *//*-*************************************************************************************************************/
-::rtl::OUString SAL_CALL SoundHandler::detect( css::uno::Sequence< css::beans::PropertyValue >& lDescriptor ) throw( css::uno::RuntimeException )
+::rtl::OUString SAL_CALL SoundHandler::detect( css::uno::Sequence< css::beans::PropertyValue >& lDescriptor )
 {
     // Our default is "nothing". So we can return it, if detection failed or file type is really unknown.
     ::rtl::OUString sTypeName;
@@ -497,25 +499,7 @@ extern "C" SAL_DLLPUBLIC_EXPORT void SAL_CALL component_getImplementationEnviron
 // - component_getFactory -
 // ------------------------
 
-extern "C" SAL_DLLPUBLIC_EXPORT void* SAL_CALL component_getFactory(const sal_Char* pImplementationName, void* pServiceManager, void* /*pRegistryKey*/ )
+extern "C" SAL_DLLPUBLIC_EXPORT void* SAL_CALL component_getFactory(const sal_Char* pImplementationName, void* pServiceManager, void* pRegistryKey )
 {
-    void* pReturn = NULL;
-    if  (pServiceManager != NULL )
-    {
-        /* Define variables which are used in following macros. */
-        css::uno::Reference< ::com::sun::star::lang::XSingleServiceFactory > xFactory;
-        css::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > xServiceManager;
-            xServiceManager = reinterpret_cast< ::com::sun::star::lang::XMultiServiceFactory* >( pServiceManager ) ;
-
-        if ( avmedia::SoundHandler::impl_getStaticImplementationName().equals( ::rtl::OUString::createFromAscii( pImplementationName ) ) )
-            xFactory = avmedia::SoundHandler::impl_createFactory( xServiceManager );
-
-        if ( xFactory.is() == sal_True )
-        {
-            xFactory->acquire();
-            pReturn = xFactory.get();
-        }
-    }
-    /* Return with result of this operation. */
-    return pReturn;
+    return ::cppu::component_getFactoryHelper( pImplementationName, pServiceManager, pRegistryKey, avmedia::g_component_entries );
 }

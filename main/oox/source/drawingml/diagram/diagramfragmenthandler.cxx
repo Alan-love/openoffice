@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,7 +49,6 @@ DiagramDataFragmentHandler::~DiagramDataFragmentHandler( ) throw ()
 }
 
 void SAL_CALL DiagramDataFragmentHandler::endDocument()
-	throw (SAXException, RuntimeException)
 {
 
 }
@@ -58,7 +57,6 @@ void SAL_CALL DiagramDataFragmentHandler::endDocument()
 Reference< XFastContextHandler > SAL_CALL
 DiagramDataFragmentHandler::createFastChildContext( ::sal_Int32 aElement,
 													const Reference< XFastAttributeList >& )
-	throw ( SAXException, RuntimeException)
 {
 	Reference< XFastContextHandler > xRet;
 
@@ -94,7 +92,6 @@ DiagramLayoutFragmentHandler::~DiagramLayoutFragmentHandler( ) throw ()
 }
 
 void SAL_CALL DiagramLayoutFragmentHandler::endDocument()
-	throw (SAXException, RuntimeException)
 {
 
 }
@@ -103,7 +100,6 @@ void SAL_CALL DiagramLayoutFragmentHandler::endDocument()
 Reference< XFastContextHandler > SAL_CALL
 DiagramLayoutFragmentHandler::createFastChildContext( ::sal_Int32 aElement,
 													  const Reference< XFastAttributeList >& xAttribs )
-	throw ( SAXException, RuntimeException)
 {
 	Reference< XFastContextHandler > xRet;
 
@@ -139,7 +135,6 @@ DiagramQStylesFragmentHandler::~DiagramQStylesFragmentHandler( ) throw ()
 }
 
 void SAL_CALL DiagramQStylesFragmentHandler::endDocument()
-	throw (SAXException, RuntimeException)
 {
 
 }
@@ -148,7 +143,6 @@ void SAL_CALL DiagramQStylesFragmentHandler::endDocument()
 Reference< XFastContextHandler > SAL_CALL
 DiagramQStylesFragmentHandler::createFastChildContext( ::sal_Int32 aElement,
 													const Reference< XFastAttributeList >& )
-	throw ( SAXException, RuntimeException)
 {
 	Reference< XFastContextHandler > xRet;
 
@@ -184,7 +178,6 @@ DiagramColorsFragmentHandler::~DiagramColorsFragmentHandler( ) throw ()
 }
 
 void SAL_CALL DiagramColorsFragmentHandler::endDocument()
-	throw (SAXException, RuntimeException)
 {
 
 }
@@ -193,7 +186,6 @@ void SAL_CALL DiagramColorsFragmentHandler::endDocument()
 Reference< XFastContextHandler > SAL_CALL
 DiagramColorsFragmentHandler::createFastChildContext( ::sal_Int32 aElement,
 													const Reference< XFastAttributeList >& )
-	throw ( SAXException, RuntimeException)
 {
 	Reference< XFastContextHandler > xRet;
 

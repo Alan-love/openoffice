@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -41,25 +41,24 @@ class SfxScriptLibraryContainer : public SfxLibraryContainer, public OldBasicPas
 	::rtl::OUString maScriptLanguage;
     ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameAccess > mxCodeNameAccess;
 
-	// Methods to distinguish between deffirent library types
+	// Methods to distinguish between different library types
 	virtual SfxLibrary* SAL_CALL implCreateLibrary( const ::rtl::OUString& aName );
     virtual SfxLibrary* SAL_CALL implCreateLibraryLink
-		( const ::rtl::OUString& aName, const ::rtl::OUString& aLibInfoFileURL, 
+		( const ::rtl::OUString& aName, const ::rtl::OUString& aLibInfoFileURL,
           const ::rtl::OUString& StorageURL, sal_Bool ReadOnly );
 	virtual ::com::sun::star::uno::Any SAL_CALL createEmptyLibraryElement( void );
 	virtual bool SAL_CALL isLibraryElementValid( ::com::sun::star::uno::Any aElement ) const;
 	virtual void SAL_CALL writeLibraryElement
-	( 
+	(
 		const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameContainer>& xLibrary,
-		const ::rtl::OUString& aElementName, 
-		const ::com::sun::star::uno::Reference< ::com::sun::star::io::XOutputStream >& xOutput 
-	)
-		throw(::com::sun::star::uno::Exception);
+		const ::rtl::OUString& aElementName,
+		const ::com::sun::star::uno::Reference< ::com::sun::star::io::XOutputStream >& xOutput
+	);
 
 	virtual ::com::sun::star::uno::Any SAL_CALL importLibraryElement
-	( 
+	(
 		const ::com::sun::star::uno::Reference< ::com::sun::star::container::XNameContainer>& xLibrary,
-		const ::rtl::OUString& aElementName, 
+		const ::rtl::OUString& aElementName,
 		const ::rtl::OUString& aFile,
 		const ::com::sun::star::uno::Reference< ::com::sun::star::io::XInputStream >& xElementStream );
 
@@ -69,19 +68,17 @@ class SfxScriptLibraryContainer : public SfxLibraryContainer, public OldBasicPas
 
 
     // Password encryption
-	virtual sal_Bool implStorePasswordLibrary( SfxLibrary* pLib, const ::rtl::OUString& aName, 
+	virtual sal_Bool implStorePasswordLibrary( SfxLibrary* pLib, const ::rtl::OUString& aName,
         				const ::com::sun::star::uno::Reference< ::com::sun::star::embed::XStorage>& xStorage, const ::com::sun::star::uno::Reference< ::com::sun::star::task::XInteractionHandler >& Handler );
 
 	// New variant for library export
-	virtual sal_Bool implStorePasswordLibrary( SfxLibrary* pLib, const ::rtl::OUString& aName, 
+	virtual sal_Bool implStorePasswordLibrary( SfxLibrary* pLib, const ::rtl::OUString& aName,
         				const ::com::sun::star::uno::Reference< ::com::sun::star::embed::XStorage >& xStorage,
-						const ::rtl::OUString& aTargetURL, 
+						const ::rtl::OUString& aTargetURL,
 						const ::com::sun::star::uno::Reference< ::com::sun::star::ucb::XSimpleFileAccess > xToUseSFI, const ::com::sun::star::uno::Reference< ::com::sun::star::task::XInteractionHandler >& Handler );
 
     virtual sal_Bool implLoadPasswordLibrary( SfxLibrary* pLib, const ::rtl::OUString& Name,
-        sal_Bool bVerifyPasswordOnly=false ) 
-		    throw(::com::sun::star::lang::WrappedTargetException, 
-			      ::com::sun::star::uno::RuntimeException);
+        sal_Bool bVerifyPasswordOnly=false );
 
 	virtual void onNewRootStorage();
 
@@ -91,7 +88,7 @@ class SfxScriptLibraryContainer : public SfxLibraryContainer, public OldBasicPas
     virtual String getLibraryPassword( const String& rLibraryName );
     virtual void clearLibraryPassword( const String& rLibraryName );
     virtual sal_Bool hasLibraryPassword( const String& rLibraryName );
-    
+
     virtual const sal_Char* SAL_CALL    getInfoFileName() const;
     virtual const sal_Char* SAL_CALL    getOldInfoFileName() const;
     virtual const sal_Char* SAL_CALL    getLibElementFileExtension() const;
@@ -103,35 +100,21 @@ public:
 
 
     // Methods XLibraryContainerPassword
-    virtual sal_Bool SAL_CALL isLibraryPasswordProtected( const ::rtl::OUString& Name ) 
-        throw (::com::sun::star::container::NoSuchElementException, 
-               ::com::sun::star::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL isLibraryPasswordVerified( const ::rtl::OUString& Name ) 
-        throw (::com::sun::star::lang::IllegalArgumentException, 
-               ::com::sun::star::container::NoSuchElementException, 
-               ::com::sun::star::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL verifyLibraryPassword( const ::rtl::OUString& Name, const ::rtl::OUString& Password ) 
-        throw (::com::sun::star::lang::IllegalArgumentException, 
-               ::com::sun::star::container::NoSuchElementException, 
-               ::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL changeLibraryPassword( const ::rtl::OUString& Name, 
-        const ::rtl::OUString& OldPassword, const ::rtl::OUString& NewPassword ) 
-        throw (::com::sun::star::lang::IllegalArgumentException, 
-               ::com::sun::star::container::NoSuchElementException, 
-               ::com::sun::star::uno::RuntimeException);
+    virtual sal_Bool SAL_CALL isLibraryPasswordProtected( const ::rtl::OUString& Name );
+    virtual sal_Bool SAL_CALL isLibraryPasswordVerified( const ::rtl::OUString& Name );
+    virtual sal_Bool SAL_CALL verifyLibraryPassword( const ::rtl::OUString& Name, const ::rtl::OUString& Password );
+    virtual void SAL_CALL changeLibraryPassword( const ::rtl::OUString& Name,
+        const ::rtl::OUString& OldPassword, const ::rtl::OUString& NewPassword );
 
     // Methods XServiceInfo
-    virtual ::rtl::OUString SAL_CALL getImplementationName( )
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames( )
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getImplementationName( );
+    virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames( );
 
 	// Service
 	static ::com::sun::star::uno::Sequence< ::rtl::OUString > getSupportedServiceNames_static();
 	static ::rtl::OUString getImplementationName_static();
 	static ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface > SAL_CALL Create
-        ( const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext >& xServiceManager ) 
-            throw( ::com::sun::star::uno::Exception );
+        ( const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext >& xServiceManager );
 
 };
 
@@ -178,10 +161,10 @@ public:
     DECLARE_XTYPEPROVIDER()
 
     // XVBAModuleInfo
-    virtual ::com::sun::star::script::ModuleInfo SAL_CALL getModuleInfo( const ::rtl::OUString& ModuleName ) throw (::com::sun::star::container::NoSuchElementException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL hasModuleInfo( const ::rtl::OUString& ModuleName ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL insertModuleInfo( const ::rtl::OUString& ModuleName, const ::com::sun::star::script::ModuleInfo& ModuleInfo ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::container::ElementExistException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL removeModuleInfo( const ::rtl::OUString& ModuleName ) throw (::com::sun::star::container::NoSuchElementException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::script::ModuleInfo SAL_CALL getModuleInfo( const ::rtl::OUString& ModuleName );
+    virtual sal_Bool SAL_CALL hasModuleInfo( const ::rtl::OUString& ModuleName );
+    virtual void SAL_CALL insertModuleInfo( const ::rtl::OUString& ModuleName, const ::com::sun::star::script::ModuleInfo& ModuleInfo );
+    virtual void SAL_CALL removeModuleInfo( const ::rtl::OUString& ModuleName );
 
     static bool containsValidModule( const ::com::sun::star::uno::Any& _rElement );
 
@@ -194,4 +177,3 @@ protected:
 }   // namespace basic
 
 #endif
-

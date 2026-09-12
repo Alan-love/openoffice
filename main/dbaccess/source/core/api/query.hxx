@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -79,7 +79,7 @@ class OQuery	:public OContentHelper
 	friend struct TRelease;
 
 public:
-	typedef ::std::map< ::rtl::OUString,OColumn*,::comphelper::UStringMixLess> TNameColumnMap;	
+	typedef ::std::map< ::rtl::OUString,OColumn*,::comphelper::UStringMixLess> TNameColumnMap;
 
 protected:
 //	TNameColumnMap		m_aColumnMap; // contains all columnnames to columns
@@ -128,7 +128,7 @@ public:
 	DECLARE_XINTERFACE( )
 
 // ::com::sun::star::beans::XPropertySet
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL getPropertySetInfo(  ) throw(::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL getPropertySetInfo(  );
 
 // OPropertySetHelper
 	virtual ::cppu::IPropertyArrayHelper& SAL_CALL getInfoHelper();
@@ -137,19 +137,18 @@ public:
 	DECLARE_SERVICE_INFO();
 
 // ::com::sun::star::sdbcx::XDataDescriptorFactory
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet > SAL_CALL createDataDescriptor(  ) throw(::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet > SAL_CALL createDataDescriptor(  );
 
 // ::com::sun::star::beans::XPropertyChangeListener
-    virtual void SAL_CALL propertyChange( const ::com::sun::star::beans::PropertyChangeEvent& evt ) throw(::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL propertyChange( const ::com::sun::star::beans::PropertyChangeEvent& evt );
 
 // ::com::sun::star::lang::XEventListener
-        virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& _rSource ) throw (::com::sun::star::uno::RuntimeException);
+        virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& _rSource );
 
 // OPropertySetHelper
 	virtual void SAL_CALL setFastPropertyValue_NoBroadcast(
 					sal_Int32 nHandle,
-					const ::com::sun::star::uno::Any& rValue )
-			throw (::com::sun::star::uno::Exception);
+					const ::com::sun::star::uno::Any& rValue );
 
 public:
 	// the caller is responsible for the lifetime!
@@ -157,7 +156,7 @@ public:
     ::dbtools::IWarningsContainer*  getWarningsContainer( )	const                                       { return m_pWarnings; }
 
 	// XRename
-	virtual void SAL_CALL rename( const ::rtl::OUString& newName ) throw (::com::sun::star::sdbc::SQLException, ::com::sun::star::container::ElementExistException, ::com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL rename( const ::rtl::OUString& newName );
 
 protected:
 	virtual void SAL_CALL disposing();
@@ -178,5 +177,3 @@ private:
 //........................................................................
 
 #endif // _DBA_COREAPI_QUERY_HXX_
-
-

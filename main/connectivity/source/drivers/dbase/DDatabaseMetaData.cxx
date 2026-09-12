@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_dbase.hxx"
 
 
 #ifndef _CONNECTIVITY_DBASE_ODbaseDatabaseMetaData_HXX_
@@ -72,7 +72,7 @@ Reference< XResultSet > ODbaseDatabaseMetaData::impl_getTypeInfo_throw(  )
 
 	::connectivity::ODatabaseMetaDataResultSet* pResult = new ::connectivity::ODatabaseMetaDataResultSet(::connectivity::ODatabaseMetaDataResultSet::eTypeInfo);
     Reference< XResultSet > xRef = pResult;
-	
+
 	static ODatabaseMetaDataResultSet::ORows aRows;
 	if(aRows.empty())
 	{
@@ -167,7 +167,7 @@ Reference< XResultSet > ODbaseDatabaseMetaData::impl_getTypeInfo_throw(  )
 // -------------------------------------------------------------------------
 Reference< XResultSet > SAL_CALL ODbaseDatabaseMetaData::getColumns(
 	const Any& /*catalog*/, const ::rtl::OUString& /*schemaPattern*/, const ::rtl::OUString& tableNamePattern,
-        const ::rtl::OUString& columnNamePattern ) throw(SQLException, RuntimeException)
+        const ::rtl::OUString& columnNamePattern )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseDatabaseMetaData::getColumns" );
 	::osl::MutexGuard aGuard( m_aMutex );
@@ -258,7 +258,7 @@ Reference< XResultSet > SAL_CALL ODbaseDatabaseMetaData::getColumns(
 // -------------------------------------------------------------------------
 Reference< XResultSet > SAL_CALL ODbaseDatabaseMetaData::getIndexInfo(
 	const Any& /*catalog*/, const ::rtl::OUString& /*schema*/, const ::rtl::OUString& table,
-        sal_Bool unique, sal_Bool /*approximate*/ ) throw(SQLException, RuntimeException)
+        sal_Bool unique, sal_Bool /*approximate*/ )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseDatabaseMetaData::getIndexInfo" );
 	::osl::MutexGuard aGuard( m_aMutex );
@@ -334,56 +334,56 @@ Reference< XResultSet > SAL_CALL ODbaseDatabaseMetaData::getIndexInfo(
 	return xRef;
 }
 // -------------------------------------------------------------------------
-::rtl::OUString SAL_CALL ODbaseDatabaseMetaData::getURL(  ) throw(SQLException, RuntimeException)
+::rtl::OUString SAL_CALL ODbaseDatabaseMetaData::getURL(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseDatabaseMetaData::getURL" );
 	::osl::MutexGuard aGuard( m_aMutex );
 	return ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("sdbc:dbase:")) + m_pConnection->getURL();
 }
 // -------------------------------------------------------------------------
-sal_Int32 SAL_CALL ODbaseDatabaseMetaData::getMaxBinaryLiteralLength(  ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL ODbaseDatabaseMetaData::getMaxBinaryLiteralLength(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseDatabaseMetaData::getMaxBinaryLiteralLength" );
 	return STRING_MAXLEN;
 }
 // -------------------------------------------------------------------------
-sal_Int32 SAL_CALL ODbaseDatabaseMetaData::getMaxCharLiteralLength(  ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL ODbaseDatabaseMetaData::getMaxCharLiteralLength(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseDatabaseMetaData::getMaxCharLiteralLength" );
 	return 254;
 }
 // -------------------------------------------------------------------------
-sal_Int32 SAL_CALL ODbaseDatabaseMetaData::getMaxColumnNameLength(  ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL ODbaseDatabaseMetaData::getMaxColumnNameLength(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseDatabaseMetaData::getMaxColumnNameLength" );
 	return 10;
 }
 // -------------------------------------------------------------------------
-sal_Int32 SAL_CALL ODbaseDatabaseMetaData::getMaxColumnsInIndex(  ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL ODbaseDatabaseMetaData::getMaxColumnsInIndex(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseDatabaseMetaData::getMaxColumnsInIndex" );
 	return 1;
 }
 // -------------------------------------------------------------------------
-sal_Int32 SAL_CALL ODbaseDatabaseMetaData::getMaxColumnsInTable(  ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL ODbaseDatabaseMetaData::getMaxColumnsInTable(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseDatabaseMetaData::getMaxColumnsInTable" );
 	return 128;
 }
 // -----------------------------------------------------------------------------
-sal_Bool SAL_CALL ODbaseDatabaseMetaData::supportsAlterTableWithAddColumn(  ) throw(SQLException, RuntimeException)
+sal_Bool SAL_CALL ODbaseDatabaseMetaData::supportsAlterTableWithAddColumn(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseDatabaseMetaData::supportsAlterTableWithAddColumn" );
 	return sal_True;
 }
 // -------------------------------------------------------------------------
-sal_Bool SAL_CALL ODbaseDatabaseMetaData::supportsAlterTableWithDropColumn(  ) throw(SQLException, RuntimeException)
+sal_Bool SAL_CALL ODbaseDatabaseMetaData::supportsAlterTableWithDropColumn(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseDatabaseMetaData::supportsAlterTableWithDropColumn" );
 	return sal_False;
 }
 // -----------------------------------------------------------------------------
-sal_Bool SAL_CALL ODbaseDatabaseMetaData::isReadOnly(  ) throw(SQLException, RuntimeException)
+sal_Bool SAL_CALL ODbaseDatabaseMetaData::isReadOnly(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseDatabaseMetaData::isReadOnly" );
 	::osl::MutexGuard aGuard( m_aMutex );
@@ -396,7 +396,7 @@ sal_Bool SAL_CALL ODbaseDatabaseMetaData::isReadOnly(  ) throw(SQLException, Run
 	return bReadOnly;
 }
 // -----------------------------------------------------------------------------
-sal_Bool ODbaseDatabaseMetaData::impl_storesMixedCaseQuotedIdentifiers_throw(  ) 
+sal_Bool ODbaseDatabaseMetaData::impl_storesMixedCaseQuotedIdentifiers_throw(  )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "dbase", "Ocke.Janssen@sun.com", "ODbaseDatabaseMetaData::impl_storesMixedCaseQuotedIdentifiers_throw" );
 	return sal_True;
@@ -408,5 +408,3 @@ sal_Bool ODbaseDatabaseMetaData::impl_supportsMixedCaseQuotedIdentifiers_throw( 
 	return sal_True;
 }
 // -----------------------------------------------------------------------------
-
-

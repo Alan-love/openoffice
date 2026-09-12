@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -514,9 +514,20 @@ endif
 
 ifeq ($(OS),WNT)
 ifeq ($(USE_MINGW),)
+ifeq ($(CPUNAME),INTEL)
 $(eval $(call gb_Library_add_ldflags,vcl,\
 	/ENTRY:LibMain@12 \
 ))
+endif
+ifeq ($(CPUNAME),X86_64)
+# LibMain is WINAPI (__stdcall): x86 decorates it LibMain@12; x64 has no
+# stdcall @N decoration at all, so the entry symbol is the undecorated
+# LibMain -- not LibMain@16.  (vcl/util/makefile.mk, the dmake path, already
+# gets this right; this is the gbuild half.)
+$(eval $(call gb_Library_add_ldflags,vcl,\
+	/ENTRY:LibMain \
+))
+endif
 endif
 $(eval $(call gb_Library_add_linked_libs,vcl,\
 	advapi32 \
@@ -529,6 +540,7 @@ $(eval $(call gb_Library_add_linked_libs,vcl,\
 	shell32 \
 	user32 \
 	uuid \
+	version \
 	winspool \
 	$(gb_STDLIBS) \
 ))

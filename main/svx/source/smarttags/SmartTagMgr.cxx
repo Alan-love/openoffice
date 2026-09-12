@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -292,7 +292,7 @@ void SmartTagMgr::WriteConfiguration( const bool* pIsLabelTextWithSmartTags,
 }
 
 // ::com::sun::star::util::XModifyListener
-void SmartTagMgr::modified( const lang::EventObject& )	throw( RuntimeException )
+void SmartTagMgr::modified( const lang::EventObject& )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -304,7 +304,7 @@ void SmartTagMgr::modified( const lang::EventObject& )	throw( RuntimeException )
 }
 
 // ::com::sun::star::lang::XEventListener
-void SmartTagMgr::disposing( const lang::EventObject& rEvent ) throw( RuntimeException )
+void SmartTagMgr::disposing( const lang::EventObject& rEvent )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -331,7 +331,7 @@ void SmartTagMgr::disposing( const lang::EventObject& rEvent ) throw( RuntimeExc
 }
 
 // ::com::sun::star::util::XChangesListener
-void SmartTagMgr::changesOccurred( const util::ChangesEvent& rEvent ) throw( RuntimeException)
+void SmartTagMgr::changesOccurred( const util::ChangesEvent& rEvent )
 {
 	vos::OGuard aGuard(Application::GetSolarMutex());
 
@@ -582,4 +582,3 @@ void SmartTagMgr::AssociateActionsWithRecognizers()
         }
     }
 }
-

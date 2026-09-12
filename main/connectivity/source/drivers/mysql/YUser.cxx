@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_mysql.hxx"
 #include "mysql/YUser.hxx"
 #include <com/sun/star/sdbc/XRow.hpp>
 #include <com/sun/star/sdbc/XResultSet.hpp>
@@ -84,7 +84,7 @@ cppu::IPropertyArrayHelper & OUserExtend::getInfoHelper()
 }
 typedef connectivity::sdbcx::OUser_BASE OUser_BASE_RBHELPER;
 // -----------------------------------------------------------------------------
-sal_Int32 SAL_CALL OMySQLUser::getPrivileges( const ::rtl::OUString& objName, sal_Int32 objType ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL OMySQLUser::getPrivileges( const ::rtl::OUString& objName, sal_Int32 objType )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	checkDisposed(OUser_BASE_RBHELPER::rBHelper.bDisposed);
@@ -94,7 +94,7 @@ sal_Int32 SAL_CALL OMySQLUser::getPrivileges( const ::rtl::OUString& objName, sa
 	return nRights;
 }
 // -----------------------------------------------------------------------------
-void OMySQLUser::findPrivilegesAndGrantPrivileges(const ::rtl::OUString& objName, sal_Int32 objType,sal_Int32& nRights,sal_Int32& nRightsWithGrant) throw(SQLException, RuntimeException)
+void OMySQLUser::findPrivilegesAndGrantPrivileges(const ::rtl::OUString& objName, sal_Int32 objType,sal_Int32& nRights,sal_Int32& nRightsWithGrant)
 {
 	nRightsWithGrant = nRights = 0;
 	// first we need to create the sql stmt to select the privs
@@ -113,7 +113,7 @@ void OMySQLUser::findPrivilegesAndGrantPrivileges(const ::rtl::OUString& objName
 				xRes = xMeta->getTablePrivileges(aCatalog,sSchema,sTable);
 			}
 			break;
-		
+
 		case PrivilegeObject::COLUMN:
 			{
 				Any aCatalog;
@@ -123,7 +123,7 @@ void OMySQLUser::findPrivilegesAndGrantPrivileges(const ::rtl::OUString& objName
 			}
 			break;
 	}
-	
+
 	if ( xRes.is() )
 	{
 		static const ::rtl::OUString sSELECT	= ::rtl::OUString::createFromAscii("SELECT");
@@ -145,7 +145,7 @@ void OMySQLUser::findPrivilegesAndGrantPrivileges(const ::rtl::OUString& objName
 			::rtl::OUString sGrantee	= xCurrentRow->getString(5);
 			::rtl::OUString sPrivilege	= xCurrentRow->getString(6);
 			::rtl::OUString sGrantable	= xCurrentRow->getString(7);
-			
+
 			if (!m_Name.equalsIgnoreAsciiCase(sGrantee))
 				continue;
 
@@ -208,17 +208,17 @@ void OMySQLUser::findPrivilegesAndGrantPrivileges(const ::rtl::OUString& objName
 	}
 }
 // -------------------------------------------------------------------------
-sal_Int32 SAL_CALL OMySQLUser::getGrantablePrivileges( const ::rtl::OUString& objName, sal_Int32 objType ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL OMySQLUser::getGrantablePrivileges( const ::rtl::OUString& objName, sal_Int32 objType )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	checkDisposed(OUser_BASE_RBHELPER::rBHelper.bDisposed);
-    
+
 	sal_Int32 nRights,nRightsWithGrant;
 	findPrivilegesAndGrantPrivileges(objName,objType,nRights,nRightsWithGrant);
 	return nRightsWithGrant;
 }
 // -------------------------------------------------------------------------
-void SAL_CALL OMySQLUser::grantPrivileges( const ::rtl::OUString& objName, sal_Int32 objType, sal_Int32 objPrivileges ) throw(SQLException, RuntimeException)
+void SAL_CALL OMySQLUser::grantPrivileges( const ::rtl::OUString& objName, sal_Int32 objType, sal_Int32 objPrivileges )
 {
     if ( objType != PrivilegeObject::TABLE )
     {
@@ -240,7 +240,7 @@ void SAL_CALL OMySQLUser::grantPrivileges( const ::rtl::OUString& objName, sal_I
 		sGrant += ::dbtools::quoteTableName(xMeta,objName,::dbtools::eInDataManipulation);
 		sGrant += ::rtl::OUString::createFromAscii(" TO ");
 		sGrant += m_Name;
-		
+
 		Reference<XStatement> xStmt = m_xConnection->createStatement();
 		if(xStmt.is())
 			xStmt->execute(sGrant);
@@ -248,7 +248,7 @@ void SAL_CALL OMySQLUser::grantPrivileges( const ::rtl::OUString& objName, sal_I
 	}
 }
 // -------------------------------------------------------------------------
-void SAL_CALL OMySQLUser::revokePrivileges( const ::rtl::OUString& objName, sal_Int32 objType, sal_Int32 objPrivileges ) throw(SQLException, RuntimeException)
+void SAL_CALL OMySQLUser::revokePrivileges( const ::rtl::OUString& objName, sal_Int32 objType, sal_Int32 objPrivileges )
 {
     if ( objType != PrivilegeObject::TABLE )
     {
@@ -270,7 +270,7 @@ void SAL_CALL OMySQLUser::revokePrivileges( const ::rtl::OUString& objName, sal_
 		sGrant += ::dbtools::quoteTableName(xMeta,objName,::dbtools::eInDataManipulation);
 		sGrant += ::rtl::OUString::createFromAscii(" FROM ");
 		sGrant += m_Name;
-		
+
 		Reference<XStatement> xStmt = m_xConnection->createStatement();
 		if(xStmt.is())
 			xStmt->execute(sGrant);
@@ -279,7 +279,7 @@ void SAL_CALL OMySQLUser::revokePrivileges( const ::rtl::OUString& objName, sal_
 }
 // -----------------------------------------------------------------------------
 // XUser
-void SAL_CALL OMySQLUser::changePassword( const ::rtl::OUString& /*oldPassword*/, const ::rtl::OUString& newPassword ) throw(SQLException, RuntimeException)
+void SAL_CALL OMySQLUser::changePassword( const ::rtl::OUString& /*oldPassword*/, const ::rtl::OUString& newPassword )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	checkDisposed(OUser_BASE_RBHELPER::rBHelper.bDisposed);
@@ -290,7 +290,7 @@ void SAL_CALL OMySQLUser::changePassword( const ::rtl::OUString& /*oldPassword*/
 	sAlterPwd += newPassword;
 	sAlterPwd += ::rtl::OUString::createFromAscii("')") ;
 
-	
+
 	Reference<XStatement> xStmt = m_xConnection->createStatement();
 	if ( xStmt.is() )
 	{
@@ -304,35 +304,35 @@ void SAL_CALL OMySQLUser::changePassword( const ::rtl::OUString& /*oldPassword*/
 	::rtl::OUString sPrivs;
 	if((nRights & Privilege::INSERT) == Privilege::INSERT)
 		sPrivs += ::rtl::OUString::createFromAscii("INSERT");
-	
+
 	if((nRights & Privilege::DELETE) == Privilege::DELETE)
 	{
 		if(sPrivs.getLength())
 			sPrivs += ::rtl::OUString::createFromAscii(",");
 		sPrivs += ::rtl::OUString::createFromAscii("DELETE");
 	}
-	
+
 	if((nRights & Privilege::UPDATE) == Privilege::UPDATE)
 	{
 		if(sPrivs.getLength())
 			sPrivs += ::rtl::OUString::createFromAscii(",");
 		sPrivs += ::rtl::OUString::createFromAscii("UPDATE");
 	}
-	
+
 	if((nRights & Privilege::ALTER) == Privilege::ALTER)
 	{
 		if(sPrivs.getLength())
 			sPrivs += ::rtl::OUString::createFromAscii(",");
 		sPrivs += ::rtl::OUString::createFromAscii("ALTER");
 	}
-	
+
 	if((nRights & Privilege::SELECT) == Privilege::SELECT)
 	{
 		if(sPrivs.getLength())
 			sPrivs += ::rtl::OUString::createFromAscii(",");
 		sPrivs += ::rtl::OUString::createFromAscii("SELECT");
 	}
-	
+
 	if((nRights & Privilege::REFERENCE) == Privilege::REFERENCE)
 	{
 		if(sPrivs.getLength())
@@ -343,4 +343,3 @@ void SAL_CALL OMySQLUser::changePassword( const ::rtl::OUString& /*oldPassword*/
 	return sPrivs;
 }
 // -----------------------------------------------------------------------------
-

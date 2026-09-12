@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -303,7 +303,7 @@ bool SfxSaveTabPage::AcceptFilter( sal_uInt16 nPos )
         {
             bAlien = pImpl->aAlienArr[nPos][nFilter];
             bODF = pImpl->aODFArr[nPos][nFilter];
-            sUIName = pUIFilters[nFilter];;
+            sUIName = pUIFilters[nFilter];
             break;
         }
     }
@@ -390,7 +390,7 @@ sal_Bool SfxSaveTabPage::FillItemSet( SfxItemSet& rSet )
         rSet.Put( SfxBoolItem( GetWhich( SID_ATTR_ODFENCRYPTION ), aODFEncryptionCB.IsChecked() ) );
 		bModified |= sal_True;
 	}
-   
+
     if ( aSizeOptimizationCB.IsChecked() != aSizeOptimizationCB.GetSavedValue() )
 	{
         rSet.Put( SfxBoolItem( GetWhich( SID_ATTR_PRETTYPRINTING ), !aSizeOptimizationCB.IsChecked() ) );
@@ -781,4 +781,3 @@ IMPL_LINK( SfxSaveTabPage, ODFVersionHdl_Impl, ListBox *, EMPTYARG )
 
     return 0;
 }
-

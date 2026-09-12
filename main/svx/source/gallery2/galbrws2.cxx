@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -150,8 +150,8 @@ public:
 
     void ExecutePopup( Window *pParent, const ::Point &aPos );
 
-    virtual void SAL_CALL statusChanged( const css::frame::FeatureStateEvent &rEvent) throw ( css::uno::RuntimeException );
-    virtual void SAL_CALL disposing( const css::lang::EventObject &rSource) throw ( css::uno::RuntimeException );
+    virtual void SAL_CALL statusChanged( const css::frame::FeatureStateEvent &rEvent);
+    virtual void SAL_CALL disposing( const css::lang::EventObject &rSource);
 };
 
 DBG_NAME(GalleryThemePopup)
@@ -195,7 +195,6 @@ GalleryThemePopup::~GalleryThemePopup()
 
 void SAL_CALL GalleryThemePopup::statusChanged(
     const css::frame::FeatureStateEvent &rEvent )
-throw ( css::uno::RuntimeException )
 {
     const OUString &rURL = rEvent.FeatureURL.Complete;
     if ( rURL.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM( CMD_SID_GALLERY_ENABLE_ADDCOPY ) ) )
@@ -233,7 +232,6 @@ throw ( css::uno::RuntimeException )
 
 void SAL_CALL GalleryThemePopup::disposing(
     const css::lang::EventObject &/*rSource*/)
-throw ( css::uno::RuntimeException )
 {
 }
 
@@ -467,7 +465,7 @@ GalleryBrowser2::GalleryBrowser2( Window* pParent, const ResId& rResId, Gallery*
 	mpIconView          ( new GalleryIconView( this, NULL ) ),
     mpListView          ( new GalleryListView( this, NULL ) ),
 	mpPreview           ( new GalleryPreview( this, NULL ) ),
-    maViewBox           ( this ), 
+    maViewBox           ( this ),
     maSeparator         ( this, WB_VERT ),
 	maInfoBar			( this, WB_LEFT | WB_VCENTER ),
 	mnCurActionPos		( 0xffffffff ),
@@ -488,7 +486,7 @@ GalleryBrowser2::GalleryBrowser2( Window* pParent, const ResId& rResId, Gallery*
     Font        aInfoFont( maInfoBar.GetControlFont() );
 
 	maMiscOptions.AddListenerLink( LINK( this, GalleryBrowser2, MiscHdl ) );
-	
+
     maViewBox.InsertItem( TBX_ID_ICON, aDummyImage );
     maViewBox.SetItemBits( TBX_ID_ICON, TIB_RADIOCHECK | TIB_AUTOCHECK );
     maViewBox.SetHelpId( TBX_ID_ICON, HID_GALLERY_ICONVIEW );
@@ -529,7 +527,7 @@ GalleryBrowser2::GalleryBrowser2( Window* pParent, const ResId& rResId, Gallery*
 GalleryBrowser2::~GalleryBrowser2()
 {
     maMiscOptions.RemoveListenerLink( LINK( this, GalleryBrowser2, MiscHdl ) );
-	
+
 	delete mpPreview;
     delete mpListView;
 	delete mpIconView;
@@ -549,7 +547,7 @@ void GalleryBrowser2::InitSettings()
     aInfoFont.SetWeight( WEIGHT_BOLD );
     aInfoFont.SetColor( GALLERY_FG_COLOR );
     maInfoBar.SetControlFont( aInfoFont );
-	
+
     maInfoBar.SetBackground( Wallpaper( GALLERY_DLG_COLOR ) );
 	maInfoBar.SetControlBackground( GALLERY_DLG_COLOR );
 
@@ -576,7 +574,7 @@ void GalleryBrowser2::Resize()
 
 	mpIconView->Hide();
     mpListView->Hide();
-    mpPreview->Hide(); 
+    mpPreview->Hide();
 
 	const Size	aOutSize( GetOutputSizePixel() );
     const Size  aBoxSize( maViewBox.GetOutputSizePixel() );
@@ -584,10 +582,10 @@ void GalleryBrowser2::Resize()
     const long  nInfoBarX = aBoxSize.Width() + ( nOffset * 3 ) + nSepWidth;
 	const Point	aPt( 0, aBoxSize.Height() + 3 );
 	const Size	aSz( aOutSize.Width(), aOutSize.Height() - aPt.Y() );
-	
+
     maSeparator.SetPosSizePixel( Point( aBoxSize.Width() + nOffset, 0 ), Size( nSepWidth, aBoxSize.Height() ) );
     maInfoBar.SetPosSizePixel( Point( nInfoBarX, 0 ), Size( aOutSize.Width() - nInfoBarX, aBoxSize.Height() ) );
-	
+
     mpIconView->SetPosSizePixel( aPt, aSz );
     mpListView->SetPosSizePixel( aPt, aSz );
 	mpPreview->SetPosSizePixel( aPt, aSz );
@@ -745,7 +743,7 @@ sal_Bool GalleryBrowser2::KeyInput( const KeyEvent& rKEvt, Window* pWindow )
         INetURLObject       aURL;
 
         const_cast< GalleryTheme* >( mpCurTheme )->GetURL( nItemId - 1, aURL );
-        
+
         const sal_Bool  bValidURL = ( aURL.GetProtocol() != INET_PROT_NOT_VALID );
         sal_Bool        bPreview = bValidURL;
         sal_Bool        bAdd = bValidURL;
@@ -825,12 +823,12 @@ void GalleryBrowser2::SelectTheme( const String& rThemeName )
 	delete mpIconView, mpIconView = NULL;
     delete mpListView, mpListView = NULL;
 	delete mpPreview, mpPreview = NULL;
-	
+
 	if( mpCurTheme )
 		mpGallery->ReleaseTheme( mpCurTheme, *this );
 
 	mpCurTheme = mpGallery->AcquireTheme( rThemeName, *this );
-	
+
 	mpIconView = new GalleryIconView( this, mpCurTheme );
     mpListView = new GalleryListView( this, mpCurTheme );
 	mpPreview = new GalleryPreview( this, mpCurTheme );
@@ -922,7 +920,7 @@ void GalleryBrowser2::SetMode( GalleryBrowserMode eMode )
 
                     if( mpCurTheme )
     			        mpCurTheme->GetGraphic( nPos, aGraphic );
-				    
+
                     mpPreview->SetGraphic( aGraphic );
  					mpPreview->Show();
 
@@ -1019,7 +1017,7 @@ void GalleryBrowser2::ImplUpdateViews( sal_uInt16 nSelectionId )
 {
 	mpIconView->Hide();
     mpListView->Hide();
-    mpPreview->Hide(); 
+    mpPreview->Hide();
 
 	mpIconView->Clear();
     mpListView->Clear();
@@ -1087,11 +1085,11 @@ sal_uIntPtr GalleryBrowser2::ImplGetSelectedItemId( const Point* pSelPos, Point&
 {
 	const Size  aOutputSizePixel( GetOutputSizePixel() );
     sal_uIntPtr       nRet = 0;
-    
+
     if( GALLERYBROWSERMODE_PREVIEW == GetMode() )
     {
         nRet = ( ( GALLERYBROWSERMODE_ICON == meLastMode ) ? mpIconView->GetSelectItemId() : ( mpListView->FirstSelectedRow() + 1 ) );
-	        
+
 	    if( pSelPos )
 	        rSelPos = GetPointerPosPixel();
 	    else
@@ -1126,7 +1124,7 @@ sal_uIntPtr GalleryBrowser2::ImplGetSelectedItemId( const Point* pSelPos, Point&
 
 	rSelPos.X() = Max( Min( rSelPos.X(), aOutputSizePixel.Width() - 1L ), 0L );
 	rSelPos.Y() = Max( Min( rSelPos.Y(), aOutputSizePixel.Height() - 1L ), 0L );
-    
+
     if( nRet && ( !mpCurTheme || ( nRet > mpCurTheme->GetObjectCount() ) ) )
     {
         nRet = 0;
@@ -1329,7 +1327,7 @@ void GalleryBrowser2::Execute( sal_uInt16 nId )
 						}
 
 						mpCurTheme->ReleaseObject( pObj );
-						delete aDlg; //add CHINA001 
+						delete aDlg; //add CHINA001
 					}
 				}
 			}
@@ -1421,7 +1419,7 @@ String GalleryBrowser2::GetItemText( const GalleryTheme& rTheme, const SgaObject
         if( aPath.Len() && ( nItemTextFlags & GALLERY_ITEM_TITLE ) )
             aRet += ')';
     }
-    
+
 	return aRet;
 }
 
@@ -1452,7 +1450,7 @@ String GalleryBrowser2::GetFilterName() const
 			GraphicFilter*		pFilter = GraphicFilter::GetGraphicFilter();
 			INetURLObject		aURL; mpCurTheme->GetURL( mnCurActionPos, aURL );
 			sal_uInt16			nFilter = pFilter->GetImportFormatNumberForShortName( aURL.GetExtension() );
-			
+
 			if( GRFILTER_FORMAT_DONTKNOW != nFilter )
 				aFilterName = pFilter->GetImportFormatName( nFilter );
 		}
@@ -1510,24 +1508,24 @@ IMPL_LINK( GalleryBrowser2, SelectTbxHdl, ToolBox*, pBox )
 IMPL_LINK( GalleryBrowser2, MiscHdl, void*, EMPTYARG )
 {
 	const sal_Bool  bHC = maViewBox.GetSettings().GetStyleSettings().GetHighContrastMode();
- 
+
     maViewBox.SetOutStyle( maMiscOptions.GetToolboxStyle() );
-	
+
 	BitmapEx aIconBmpEx = BitmapEx( Image( GAL_RESID( bHC? RID_SVXIMG_GALLERY_VIEW_ICON_HC : RID_SVXIMG_GALLERY_VIEW_ICON ) ).GetBitmapEx() );
 	BitmapEx aListBmpEx = BitmapEx( Image( GAL_RESID( bHC? RID_SVXIMG_GALLERY_VIEW_LIST_HC : RID_SVXIMG_GALLERY_VIEW_LIST ) ).GetBitmapEx() );
-	
+
 	if( maMiscOptions.AreCurrentSymbolsLarge() )
 	{
 		const Size aLargeSize( 24, 24);
-	
+
 		aIconBmpEx.Scale( aLargeSize );
 		aListBmpEx.Scale( aLargeSize );
 	}
-	
+
     maViewBox.SetItemImage( TBX_ID_ICON, aIconBmpEx );
     maViewBox.SetItemImage( TBX_ID_LIST, aListBmpEx );
     maViewBox.SetSizePixel( maViewBox.CalcWindowSizePixel() );
-    
+
 	Resize();
 
     return 0L;

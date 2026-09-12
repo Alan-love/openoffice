@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -809,7 +809,7 @@ void unoToSbxValue( SbxVariable* pVar, const Any& aValue )
 			// SbUnoObject instanzieren
 			String aName;
 			SbUnoObject* pSbUnoObject = new SbUnoObject( aName, aValue );
-			//If this is called externally e.g. from the scripting 
+			//If this is called externally e.g. from the scripting
 			//framework then there is no 'active' runtime the default property will not be set up
 			//only a vba object will have XDefaultProp set anyway so... this
 			//test seems a bit of overkill
@@ -1775,7 +1775,7 @@ bool checkUnoObjectType( SbUnoObject* pUnoObj, const ::rtl::OUString& rClass )
 					xInv->getValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("$GetTypeName") ) ) >>= sTypeName;
 					if ( sTypeName.isEmpty() || sTypeName.equals(  rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("IDispatch") ) ) )
 						// can't check type, leave it pass
-						result = true;	
+						result = true;
 					else
 						result = sTypeName.equals( rClass );
 				}
@@ -2357,7 +2357,7 @@ void SbUnoObject::SFX_NOTIFY( SfxBroadcaster& rBC, const TypeId& rBCType,
                         Reference< XDirectInvocation > xDirectInvoke;
                         if ( pMeth->needsDirectInvocation() )
                             xDirectInvoke.set( mxInvocation, UNO_QUERY );
-                        
+
                         Any aRetAny;
                         if ( xDirectInvoke.is() )
                             aRetAny = xDirectInvoke->directInvoke( pMeth->GetName(), args );
@@ -2594,7 +2594,7 @@ void clearUnoMethodsForBasic( StarBASIC* pBasic )
 	{
         SbxObject* pObject = dynamic_cast< SbxObject* >( pMeth->GetParent() );
         if ( pObject )
-        { 
+        {
             StarBASIC* pModBasic = dynamic_cast< StarBASIC* >( pObject->GetParent() );
             if ( pModBasic == pBasic )
             {
@@ -2603,7 +2603,7 @@ void clearUnoMethodsForBasic( StarBASIC* pBasic )
                 // we should either set module parent to NULL without clearing it, or even
                 // set the new StarBASIC as the parent of the module
                 // pObject->SetParent( NULL );
-                
+
                 if( pMeth == pFirst )
                     pFirst = pMeth->pNext;
                 else if( pMeth->pPrev )
@@ -3135,7 +3135,7 @@ void RTL_Impl_CreateUnoServiceWithArguments( StarBASIC* pBasic, SbxArray& rPar, 
 {
     (void)pBasic;
     (void)bWrite;
-    
+
 	// Wir brauchen mindestens 2 Parameter
 	if ( rPar.Count() < 3 )
 	{
@@ -3622,7 +3622,7 @@ SbxVariable* SbUnoService::Find( const String& rName, SbxClassType )
 			for( int i = 0 ; i < nCtorCount ; ++i )
 			{
 				Reference< XServiceConstructorDescription > xCtor = pCtorSeq[i];
-				
+
 				String aName( xCtor->getName() );
 				if( !aName.Len() )
 				{
@@ -3767,7 +3767,7 @@ void SbUnoService::SFX_NOTIFY( SfxBroadcaster& rBC, const TypeId& rBCType,
 					Reference < XPropertySet > xProps( ::comphelper::getProcessServiceFactory(), UNO_QUERY_THROW );
 					xContext.set( xProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "DefaultContext" )) ), UNO_QUERY_THROW );
 				}
-				Reference< XMultiComponentFactory > xServiceMgr( xContext->getServiceManager() ); 
+				Reference< XMultiComponentFactory > xServiceMgr( xContext->getServiceManager() );
 
 				Any aRetAny;
 				if( xServiceMgr.is() )
@@ -3924,7 +3924,7 @@ void SbUnoSingleton::SFX_NOTIFY( SfxBroadcaster& rBC, const TypeId& rBCType,
 		SbxObject::SFX_NOTIFY( rBC, rBCType, rHint, rHintType );
 }
 
- 
+
 //========================================================================
 //========================================================================
 //========================================================================
@@ -3946,11 +3946,11 @@ public:
 	//virtual sal_Bool queryInterface( Uik aUik, Reference< XInterface > & rOut );
 
 	// Methoden von XAllListener
-	virtual void SAL_CALL firing(const AllEventObject& Event) throw ( RuntimeException );
-	virtual Any SAL_CALL approveFiring(const AllEventObject& Event) throw ( RuntimeException );
+	virtual void SAL_CALL firing(const AllEventObject& Event);
+	virtual Any SAL_CALL approveFiring(const AllEventObject& Event);
 
 	// Methoden von XEventListener
-	virtual void SAL_CALL disposing(const EventObject& Source) throw ( RuntimeException );
+	virtual void SAL_CALL disposing(const EventObject& Source);
 };
 
 
@@ -4021,12 +4021,12 @@ void BasicAllListener_Impl::firing_impl( const AllEventObject& Event, Any* pRet 
 
 
 // Methoden von XAllListener
-void BasicAllListener_Impl::firing( const AllEventObject& Event ) throw ( RuntimeException )
+void BasicAllListener_Impl::firing( const AllEventObject& Event )
 {
 	firing_impl( Event, NULL );
 }
 
-Any BasicAllListener_Impl::approveFiring( const AllEventObject& Event ) throw ( RuntimeException )
+Any BasicAllListener_Impl::approveFiring( const AllEventObject& Event )
 {
 	Any aRetAny;
 	firing_impl( Event, &aRetAny );
@@ -4035,7 +4035,7 @@ Any BasicAllListener_Impl::approveFiring( const AllEventObject& Event ) throw ( 
 
 //========================================================================
 // Methoden von XEventListener
-void BasicAllListener_Impl ::disposing(const EventObject& ) throw ( RuntimeException )
+void BasicAllListener_Impl ::disposing(const EventObject& )
 {
 	vos::OGuard guard( Application::GetSolarMutex() );
 
@@ -4055,14 +4055,12 @@ public:
 		const Reference< XAllListener >& AllListener, const Any& Helper );
 
 	// XInvocation
-    virtual Reference< XIntrospectionAccess > SAL_CALL getIntrospection(void) throw( RuntimeException );
-    virtual Any SAL_CALL invoke(const ::rtl::OUString& FunctionName, const Sequence< Any >& Params, Sequence< sal_Int16 >& OutParamIndex, Sequence< Any >& OutParam)
-		throw( IllegalArgumentException, CannotConvertException, InvocationTargetException, RuntimeException );
-    virtual void SAL_CALL setValue(const ::rtl::OUString& PropertyName, const Any& Value)
-		throw( UnknownPropertyException, CannotConvertException, InvocationTargetException, RuntimeException );
-    virtual Any SAL_CALL getValue(const ::rtl::OUString& PropertyName) throw( UnknownPropertyException, RuntimeException );
-    virtual sal_Bool SAL_CALL hasMethod(const ::rtl::OUString& Name) throw( RuntimeException );
-    virtual sal_Bool SAL_CALL hasProperty(const ::rtl::OUString& Name) throw( RuntimeException );
+    virtual Reference< XIntrospectionAccess > SAL_CALL getIntrospection(void);
+    virtual Any SAL_CALL invoke(const ::rtl::OUString& FunctionName, const Sequence< Any >& Params, Sequence< sal_Int16 >& OutParamIndex, Sequence< Any >& OutParam);
+    virtual void SAL_CALL setValue(const ::rtl::OUString& PropertyName, const Any& Value);
+    virtual Any SAL_CALL getValue(const ::rtl::OUString& PropertyName);
+    virtual sal_Bool SAL_CALL hasMethod(const ::rtl::OUString& Name);
+    virtual sal_Bool SAL_CALL hasProperty(const ::rtl::OUString& Name);
 
 private:
 	Reference< XIdlReflection >  m_xCoreReflection;
@@ -4105,7 +4103,6 @@ InvocationToAllListenerMapper::InvocationToAllListenerMapper
 
 //*************************************************************************
 Reference< XIntrospectionAccess > SAL_CALL InvocationToAllListenerMapper::getIntrospection(void)
-	throw( RuntimeException )
 {
 	return Reference< XIntrospectionAccess >();
 }
@@ -4113,8 +4110,6 @@ Reference< XIntrospectionAccess > SAL_CALL InvocationToAllListenerMapper::getInt
 //*************************************************************************
 Any SAL_CALL InvocationToAllListenerMapper::invoke(const ::rtl::OUString& FunctionName, const Sequence< Any >& Params,
 	Sequence< sal_Int16 >& OutParamIndex, Sequence< Any >& OutParam)
-		throw( IllegalArgumentException, CannotConvertException,
-		InvocationTargetException, RuntimeException )
 {
     (void)OutParamIndex;
     (void)OutParam     ;
@@ -4166,8 +4161,6 @@ Any SAL_CALL InvocationToAllListenerMapper::invoke(const ::rtl::OUString& Functi
 
 //*************************************************************************
 void SAL_CALL InvocationToAllListenerMapper::setValue(const ::rtl::OUString& PropertyName, const Any& Value)
-	throw( UnknownPropertyException, CannotConvertException,
-		   InvocationTargetException, RuntimeException )
 {
     (void)PropertyName;
     (void)Value;
@@ -4175,7 +4168,6 @@ void SAL_CALL InvocationToAllListenerMapper::setValue(const ::rtl::OUString& Pro
 
 //*************************************************************************
 Any SAL_CALL InvocationToAllListenerMapper::getValue(const ::rtl::OUString& PropertyName)
-	throw( UnknownPropertyException, RuntimeException )
 {
     (void)PropertyName;
 
@@ -4184,7 +4176,6 @@ Any SAL_CALL InvocationToAllListenerMapper::getValue(const ::rtl::OUString& Prop
 
 //*************************************************************************
 sal_Bool SAL_CALL InvocationToAllListenerMapper::hasMethod(const ::rtl::OUString& Name)
-	throw( RuntimeException )
 {
 	Reference< XIdlMethod > xMethod = m_xListenerType->getMethod( Name );
 	return xMethod.is();
@@ -4192,7 +4183,6 @@ sal_Bool SAL_CALL InvocationToAllListenerMapper::hasMethod(const ::rtl::OUString
 
 //*************************************************************************
 sal_Bool SAL_CALL InvocationToAllListenerMapper::hasProperty(const ::rtl::OUString& Name)
-	throw( RuntimeException )
 {
 	Reference< XIdlField > xField = m_xListenerType->getField( Name );
 	return xField.is();
@@ -4429,23 +4419,20 @@ public:
 
 	// XInvocation
     virtual Reference< XIntrospectionAccess > SAL_CALL getIntrospection() throw();
-    virtual void SAL_CALL setValue( const ::rtl::OUString& rProperty, const Any& rValue )
-        throw( UnknownPropertyException );
-    virtual Any SAL_CALL getValue( const ::rtl::OUString& rProperty )
-        throw( UnknownPropertyException );
+    virtual void SAL_CALL setValue( const ::rtl::OUString& rProperty, const Any& rValue );
+    virtual Any SAL_CALL getValue( const ::rtl::OUString& rProperty );
     virtual sal_Bool SAL_CALL hasMethod( const ::rtl::OUString& rName ) throw();
     virtual sal_Bool SAL_CALL hasProperty( const ::rtl::OUString& rProp ) throw();
-    
+
     virtual Any SAL_CALL invoke( const ::rtl::OUString& rFunction,
                                  const Sequence< Any >& rParams,
                                  Sequence< sal_Int16 >& rOutParamIndex,
-                                 Sequence< Any >& rOutParam )
-        throw( CannotConvertException, InvocationTargetException );
+                                 Sequence< Any >& rOutParam );
 
     // XComponent
-    virtual void SAL_CALL dispose() throw(RuntimeException);
-    virtual void SAL_CALL addEventListener( const Reference< XEventListener >& xListener ) throw (RuntimeException);
-    virtual void SAL_CALL removeEventListener( const Reference< XEventListener >& aListener ) throw (RuntimeException);
+    virtual void SAL_CALL dispose();
+    virtual void SAL_CALL addEventListener( const Reference< XEventListener >& xListener );
+    virtual void SAL_CALL removeEventListener( const Reference< XEventListener >& aListener );
 };
 
 ModuleInvocationProxy::ModuleInvocationProxy( const ::rtl::OUString& aPrefix, SbxObjectRef xScopeObj )
@@ -4461,7 +4448,7 @@ Reference< XIntrospectionAccess > SAL_CALL ModuleInvocationProxy::getIntrospecti
     return Reference< XIntrospectionAccess >();
 }
 
-void SAL_CALL ModuleInvocationProxy::setValue( const ::rtl::OUString& rProperty, const Any& rValue ) throw( UnknownPropertyException )
+void SAL_CALL ModuleInvocationProxy::setValue( const ::rtl::OUString& rProperty, const Any& rValue )
 {
 	if( !m_bProxyIsClassModuleObject )
 		throw UnknownPropertyException();
@@ -4502,7 +4489,7 @@ void SAL_CALL ModuleInvocationProxy::setValue( const ::rtl::OUString& rProperty,
 
 }
 
-Any SAL_CALL ModuleInvocationProxy::getValue( const ::rtl::OUString& rProperty ) throw( UnknownPropertyException )
+Any SAL_CALL ModuleInvocationProxy::getValue( const ::rtl::OUString& rProperty )
 {
 	if( !m_bProxyIsClassModuleObject )
 	    throw UnknownPropertyException();
@@ -4543,7 +4530,6 @@ Any SAL_CALL ModuleInvocationProxy::invoke( const ::rtl::OUString& rFunction,
 											const Sequence< Any >& rParams,
 											Sequence< sal_Int16 >&,
 											Sequence< Any >& )
-    throw( CannotConvertException, InvocationTargetException )
 {
 	vos::OGuard guard( Application::GetSolarMutex() );
 
@@ -4609,7 +4595,6 @@ Any SAL_CALL ModuleInvocationProxy::invoke( const ::rtl::OUString& rFunction,
 }
 
 void SAL_CALL ModuleInvocationProxy::dispose()
-    throw(RuntimeException)
 {
     ::osl::MutexGuard aGuard( m_aMutex );
 
@@ -4620,13 +4605,11 @@ void SAL_CALL ModuleInvocationProxy::dispose()
 }
 
 void SAL_CALL ModuleInvocationProxy::addEventListener( const Reference< XEventListener >& xListener )
-    throw (RuntimeException)
 {
     m_aListeners.addInterface( xListener );
 }
 
 void SAL_CALL ModuleInvocationProxy::removeEventListener( const Reference< XEventListener >& xListener )
-    throw (RuntimeException)
 {
     m_aListeners.removeInterface( xListener );
 }
@@ -4638,7 +4621,7 @@ Reference< XInterface > createComListener( const Any& aControlAny, const ::rtl::
 	Reference< XInterface > xRet;
 
 	Reference< XComponentContext > xContext = getComponentContext_Impl();
-	Reference< XMultiComponentFactory > xServiceMgr( xContext->getServiceManager() ); 
+	Reference< XMultiComponentFactory > xServiceMgr( xContext->getServiceManager() );
 
 	Reference< XInvocation > xProxy = new ModuleInvocationProxy( aPrefix, xScopeObj );
 
@@ -4759,7 +4742,7 @@ bool SbModule::createCOMWrapperForIface( Any& o_rRetAny, SbClassModuleObject* pP
 	// TODO: Check if support for multiple interfaces is needed
 
 	Reference< XComponentContext > xContext = getComponentContext_Impl();
-	Reference< XMultiComponentFactory > xServiceMgr( xContext->getServiceManager() ); 
+	Reference< XMultiComponentFactory > xServiceMgr( xContext->getServiceManager() );
 	Reference< XSingleServiceFactory > xComImplementsFactory
 	(
         xServiceMgr->createInstanceWithContext(
@@ -4857,4 +4840,3 @@ bool handleToStringForCOMObjects( SbxObject* pObj, SbxValue* pVal )
 	}
 	return bSuccess;
 }
-

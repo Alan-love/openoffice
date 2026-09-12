@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -36,7 +36,7 @@
 #ifndef _COMPHELPER_UNO3_HXX_
 #include <comphelper/uno3.hxx>
 #endif
-#ifndef _URLOBJ_HXX 
+#ifndef _URLOBJ_HXX
 #include <tools/urlobj.hxx>
 #endif
 #include <memory>
@@ -102,7 +102,7 @@ private:
     String                  m_sWorkPath;
     OGeneralPage*           m_pGeneralPage;
 	OMySQLIntroPageSetup*	m_pMySQLIntroPage;
-    ::dbaccess::ODsnTypeCollection*	    
+    ::dbaccess::ODsnTypeCollection*
                             m_pCollection;	/// the DSN type collection instance
 
 
@@ -158,7 +158,7 @@ protected:
 
 	enum ApplyResult
 	{
-		AR_LEAVE_MODIFIED,		// somthing was modified and has successfully been committed
+		AR_LEAVE_MODIFIED,		// something was modified and has successfully been committed
 		AR_LEAVE_UNCHANGED,		// no changes were made
 		AR_KEEP					// don't leave the page (e.g. because an error occurred)
 	};
@@ -204,4 +204,3 @@ private:
 //.........................................................................
 
 #endif // DBAUI_DBWIZ2_HXX
-

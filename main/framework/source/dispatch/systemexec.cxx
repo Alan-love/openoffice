@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -122,7 +122,7 @@ SystemExec::~SystemExec()
 
 css::uno::Reference< css::frame::XDispatch > SAL_CALL SystemExec::queryDispatch( const css::util::URL&  aURL    ,
                                                                                  const ::rtl::OUString&,
-                                                                                       sal_Int32 ) throw( css::uno::RuntimeException )
+                                                                                       sal_Int32 )
 {
     css::uno::Reference< css::frame::XDispatch > xDispatcher;
     if (aURL.Complete.compareToAscii(PROTOCOL_VALUE,PROTOCOL_LENGTH)==0)
@@ -132,7 +132,7 @@ css::uno::Reference< css::frame::XDispatch > SAL_CALL SystemExec::queryDispatch(
 
 //_________________________________________________________________________________________________________________
 
-css::uno::Sequence< css::uno::Reference< css::frame::XDispatch > > SAL_CALL SystemExec::queryDispatches( const css::uno::Sequence< css::frame::DispatchDescriptor >& lDescriptor ) throw( css::uno::RuntimeException )
+css::uno::Sequence< css::uno::Reference< css::frame::XDispatch > > SAL_CALL SystemExec::queryDispatches( const css::uno::Sequence< css::frame::DispatchDescriptor >& lDescriptor )
 {
     sal_Int32 nCount = lDescriptor.getLength();
     css::uno::Sequence< css::uno::Reference< css::frame::XDispatch > > lDispatcher( nCount );
@@ -149,7 +149,7 @@ css::uno::Sequence< css::uno::Reference< css::frame::XDispatch > > SAL_CALL Syst
 //_________________________________________________________________________________________________________________
 
 void SAL_CALL SystemExec::dispatch( const css::util::URL&                                  aURL       ,
-                                    const css::uno::Sequence< css::beans::PropertyValue >& lArguments ) throw( css::uno::RuntimeException )
+                                    const css::uno::Sequence< css::beans::PropertyValue >& lArguments )
 {
     dispatchWithNotification(aURL, lArguments, css::uno::Reference< css::frame::XDispatchResultListener >());
 }
@@ -158,7 +158,7 @@ void SAL_CALL SystemExec::dispatch( const css::util::URL&                       
 
 void SAL_CALL SystemExec::dispatchWithNotification( const css::util::URL&                                             aURL      ,
                                                     const css::uno::Sequence< css::beans::PropertyValue >&,
-                                                    const css::uno::Reference< css::frame::XDispatchResultListener >& xListener ) throw( css::uno::RuntimeException )
+                                                    const css::uno::Reference< css::frame::XDispatchResultListener >& xListener )
 {
     // convert "systemexec:file:///c:/temp/test.html" => "file:///c:/temp/test.html"
     sal_Int32 c = aURL.Complete.getLength()-PROTOCOL_LENGTH;
@@ -201,17 +201,17 @@ void SAL_CALL SystemExec::dispatchWithNotification( const css::util::URL&       
 //_________________________________________________________________________________________________________________
 
 void SAL_CALL SystemExec::addStatusListener( const css::uno::Reference< css::frame::XStatusListener >&,
-                                             const css::util::URL& ) throw( css::uno::RuntimeException )
+                                             const css::util::URL& )
 {
-    // not suported yet
+    // not supported yet
 }
 
 //_________________________________________________________________________________________________________________
 
 void SAL_CALL SystemExec::removeStatusListener( const css::uno::Reference< css::frame::XStatusListener >&,
-                                                const css::util::URL& ) throw( css::uno::RuntimeException )
+                                                const css::util::URL& )
 {
-    // not suported yet
+    // not supported yet
 }
 
 //_________________________________________________________________________________________________________________

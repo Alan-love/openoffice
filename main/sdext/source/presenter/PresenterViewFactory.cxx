@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -86,9 +86,9 @@ public:
 
     // XView
 
-    virtual Reference<XResourceId> SAL_CALL getResourceId (void) throw (RuntimeException)
+    virtual Reference<XResourceId> SAL_CALL getResourceId (void)
     { return mxResourceId; };
-    
+
 private:
     Reference<XResourceId> mxResourceId;
 };
@@ -113,7 +113,6 @@ public:
     virtual ~NextSlidePreview (void) {}
     virtual void SAL_CALL setCurrentPage (
         const css::uno::Reference<css::drawing::XDrawPage>& rxSlide)
-        throw (css::uno::RuntimeException)
     {
         Reference<presentation::XSlideShowController> xSlideShowController (
             mpPresenterController->GetSlideShowController());
@@ -232,7 +231,6 @@ PresenterViewFactory::~PresenterViewFactory (void)
 
 
 void SAL_CALL PresenterViewFactory::disposing (void)
-    throw (RuntimeException)
 {
     if (mxConfigurationController.is())
         mxConfigurationController->removeResourceFactoryForReference(this);
@@ -263,15 +261,14 @@ void SAL_CALL PresenterViewFactory::disposing (void)
 
 
 //----- XViewFactory ----------------------------------------------------------
-    
+
 Reference<XResource> SAL_CALL PresenterViewFactory::createResource (
     const Reference<XResourceId>& rxViewId)
-    throw (RuntimeException)
 {
     ThrowIfDisposed();
 
     Reference<XResource> xView;
-    
+
     if (rxViewId.is())
     {
         Reference<XPane> xAnchorPane (
@@ -287,7 +284,7 @@ Reference<XResource> SAL_CALL PresenterViewFactory::createResource (
         if (pDescriptor.get() != NULL)
             pDescriptor->SetActivationState(true);
     }
-    
+
     return xView;
 }
 
@@ -295,7 +292,6 @@ Reference<XResource> SAL_CALL PresenterViewFactory::createResource (
 
 
 void SAL_CALL PresenterViewFactory::releaseResource (const Reference<XResource>& rxView)
-    throw (RuntimeException)
 {
     ThrowIfDisposed();
 
@@ -393,7 +389,7 @@ Reference<XResource> PresenterViewFactory::CreateView(
     const Reference<XPane>& rxAnchorPane)
 {
     Reference<XView> xView;
-    
+
     try
     {
         const OUString sResourceURL (rxViewId->getResourceURL());
@@ -422,7 +418,7 @@ Reference<XResource> PresenterViewFactory::CreateView(
         {
             xView = CreateHelpView(rxViewId);
         }
-        
+
         // Activate it.
         CachablePresenterView* pView = dynamic_cast<CachablePresenterView*>(xView.get());
         if (pView != NULL)
@@ -443,12 +439,12 @@ Reference<XView> PresenterViewFactory::CreateSlideShowView(
     const Reference<XResourceId>& rxViewId) const
 {
     Reference<XView> xView;
-     
+
     if ( ! mxConfigurationController.is())
         return xView;
     if ( ! mxComponentContext.is())
         return xView;
-    
+
     try
     {
         rtl::Reference<PresenterSlideShowView> pShowView (
@@ -476,12 +472,12 @@ Reference<XView> PresenterViewFactory::CreateSlidePreviewView(
     const Reference<XPane>& rxAnchorPane) const
 {
     Reference<XView> xView;
-    
+
     if ( ! mxConfigurationController.is())
         return xView;
     if ( ! mxComponentContext.is())
         return xView;
-    
+
     try
     {
         xView = Reference<XView>(
@@ -522,12 +518,12 @@ Reference<XView> PresenterViewFactory::CreateNotesView(
 {
     (void)rxAnchorPane;
     Reference<XView> xView;
-    
+
     if ( ! mxConfigurationController.is())
         return xView;
     if ( ! mxComponentContext.is())
         return xView;
-    
+
     try
     {
         xView = Reference<XView>(static_cast<XWeak*>(
@@ -553,12 +549,12 @@ Reference<XView> PresenterViewFactory::CreateSlideSorterView(
     const Reference<XResourceId>& rxViewId) const
 {
     Reference<XView> xView;
-    
+
     if ( ! mxConfigurationController.is())
         return xView;
     if ( ! mxComponentContext.is())
         return xView;
-    
+
     try
     {
         rtl::Reference<PresenterSlideSorter> pView (
@@ -600,7 +596,6 @@ Reference<XView> PresenterViewFactory::CreateHelpView(
 
 
 void PresenterViewFactory::ThrowIfDisposed (void) const
-    throw (::com::sun::star::lang::DisposedException)
 {
 	if (rBHelper.bDisposed || rBHelper.bInDispose)
 	{

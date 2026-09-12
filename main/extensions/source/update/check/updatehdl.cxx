@@ -65,6 +65,9 @@
 #include "updatehdl.hrc"
 #include <tools/urlobj.hxx>
 
+#include <vcl/svapp.hxx>
+#include <vos/mutex.hxx>
+
 #define UNISTRING(s) rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(s))
 
 #define COMMAND_CLOSE       UNISTRING("close")
@@ -175,6 +178,7 @@ bool UpdateHandler::isVisible() const
 {
     if ( !mxUpdDlg.is() ) return false;
 
+    ::vos::OGuard aGuard( Application::GetSolarMutex() );
     uno::Reference< awt::XWindow2 > xWindow( mxUpdDlg, uno::UNO_QUERY );
 
     if ( xWindow.is() )
@@ -201,6 +205,7 @@ void UpdateHandler::setVisible( bool bVisible )
 
         updateState( meCurState );
 
+        ::vos::OGuard aGuard( Application::GetSolarMutex() );
         uno::Reference< awt::XWindow > xWindow( mxUpdDlg, uno::UNO_QUERY );
 
         if ( xWindow.is() )
@@ -219,6 +224,7 @@ void UpdateHandler::setVisible( bool bVisible )
     }
     else if ( mxUpdDlg.is() )
     {
+        ::vos::OGuard aGuard( Application::GetSolarMutex() );
         uno::Reference< awt::XWindow > xWindow( mxUpdDlg, uno::UNO_QUERY );
 
         if ( xWindow.is() )
@@ -307,7 +313,6 @@ rtl::OUString UpdateHandler::getDefaultInstErrMsg()
 // XActionListener
 //--------------------------------------------------------------------
 void SAL_CALL UpdateHandler::disposing( const lang::EventObject& rEvt )
-    throw( uno::RuntimeException )
 {
     if ( rEvt.Source == mxUpdDlg )
         mxUpdDlg.clear();
@@ -315,7 +320,6 @@ void SAL_CALL UpdateHandler::disposing( const lang::EventObject& rEvt )
 
 //--------------------------------------------------------------------
 void SAL_CALL UpdateHandler::actionPerformed( awt::ActionEvent const & rEvent )
-    throw( uno::RuntimeException )
 {
     DialogControls eButton = BUTTON_COUNT;
     for ( int i = 0; i < BUTTON_COUNT; i++ )
@@ -380,14 +384,13 @@ void SAL_CALL UpdateHandler::actionPerformed( awt::ActionEvent const & rEvent )
 // XTopWindowListener
 //--------------------------------------------------------------------
 void SAL_CALL UpdateHandler::windowOpened( const lang::EventObject& )
-    throw( uno::RuntimeException )
 {
 }
 
 //--------------------------------------------------------------------
 void SAL_CALL UpdateHandler::windowClosing( const lang::EventObject& e )
-    throw( uno::RuntimeException )
 {
+    ::vos::OGuard aGuard( Application::GetSolarMutex() );
     awt::ActionEvent aActionEvt;
     aActionEvt.ActionCommand = COMMAND_CLOSE;
     aActionEvt.Source = e.Source;
@@ -397,40 +400,34 @@ void SAL_CALL UpdateHandler::windowClosing( const lang::EventObject& e )
 
 //--------------------------------------------------------------------
 void SAL_CALL UpdateHandler::windowClosed( const lang::EventObject& )
-    throw( uno::RuntimeException )
 {
 }
 
 //--------------------------------------------------------------------
 void SAL_CALL UpdateHandler::windowMinimized( const lang::EventObject& )
-    throw( uno::RuntimeException )
 {
     mbMinimized = true;
 }
 
 //--------------------------------------------------------------------
 void SAL_CALL UpdateHandler::windowNormalized( const lang::EventObject& )
-    throw( uno::RuntimeException )
 {
     mbMinimized = false;
 }
 
 //--------------------------------------------------------------------
 void SAL_CALL UpdateHandler::windowActivated( const lang::EventObject& )
-    throw( uno::RuntimeException )
 {
 }
 
 //--------------------------------------------------------------------
 void SAL_CALL UpdateHandler::windowDeactivated( const lang::EventObject& )
-    throw( uno::RuntimeException )
 {
 }
 
 // XInteractionHandler
 //------------------------------------------------------------------------------
 void SAL_CALL UpdateHandler::handle( uno::Reference< task::XInteractionRequest > const & rRequest)
-    throw (uno::RuntimeException)
 {
     if ( !mxInteractionHdl.is() )
     {
@@ -478,10 +475,10 @@ void SAL_CALL UpdateHandler::handle( uno::Reference< task::XInteractionRequest >
 // XTerminateListener
 //------------------------------------------------------------------------------
 void SAL_CALL UpdateHandler::queryTermination( const lang::EventObject& )
-    throw ( frame::TerminationVetoException, uno::RuntimeException )
 {
     if ( mbShowsMessageBox )
     {
+        ::vos::OGuard aGuard( Application::GetSolarMutex() );
         uno::Reference< awt::XTopWindow > xTopWindow( mxUpdDlg, uno::UNO_QUERY );
         if ( xTopWindow.is() )
             xTopWindow->toFront();
@@ -496,12 +493,12 @@ void SAL_CALL UpdateHandler::queryTermination( const lang::EventObject& )
 
 //------------------------------------------------------------------------------
 void SAL_CALL UpdateHandler::notifyTermination( const lang::EventObject& )
-    throw ( uno::RuntimeException )
 {
     osl::MutexGuard aGuard( maMutex );
 
     if ( mxUpdDlg.is() )
     {
+        ::vos::OGuard aGuard( Application::GetSolarMutex() );
         uno::Reference< awt::XTopWindow > xTopWindow( mxUpdDlg, uno::UNO_QUERY );
         if ( xTopWindow.is() )
             xTopWindow->removeTopWindowListener( this );
@@ -752,6 +749,7 @@ void UpdateHandler::loadStrings()
 //--------------------------------------------------------------------
 void UpdateHandler::startThrobber( bool bStart )
 {
+    ::vos::OGuard aGuard( Application::GetSolarMutex() );
     uno::Reference< awt::XControlContainer > xContainer( mxUpdDlg, uno::UNO_QUERY );
     uno::Reference< awt::XAnimation > xThrobber( xContainer->getControl( CTRL_THROBBER ), uno::UNO_QUERY );
 
@@ -775,6 +773,7 @@ void UpdateHandler::setControlProperty( const rtl::OUString &rCtrlName,
 {
     if ( !mxUpdDlg.is() ) return;
 
+    ::vos::OGuard aGuard( Application::GetSolarMutex() );
     uno::Reference< awt::XControlContainer > xContainer( mxUpdDlg, uno::UNO_QUERY );
     uno::Reference< awt::XControl > xControl( xContainer->getControl( rCtrlName ), uno::UNO_QUERY_THROW );
     uno::Reference< awt::XControlModel > xControlModel( xControl->getModel(), uno::UNO_QUERY_THROW );
@@ -792,6 +791,7 @@ void UpdateHandler::setControlProperty( const rtl::OUString &rCtrlName,
 //--------------------------------------------------------------------
 void UpdateHandler::showControl( const rtl::OUString &rCtrlName, bool bShow )
 {
+    ::vos::OGuard aGuard( Application::GetSolarMutex() );
     uno::Reference< awt::XControlContainer > xContainer( mxUpdDlg, uno::UNO_QUERY );
 
     if ( !xContainer.is() )
@@ -808,6 +808,7 @@ void UpdateHandler::showControl( const rtl::OUString &rCtrlName, bool bShow )
 //--------------------------------------------------------------------
 void UpdateHandler::focusControl( DialogControls eID )
 {
+    ::vos::OGuard aGuard( Application::GetSolarMutex() );
     uno::Reference< awt::XControlContainer > xContainer( mxUpdDlg, uno::UNO_QUERY );
 
     if ( !xContainer.is() )
@@ -824,6 +825,7 @@ void UpdateHandler::focusControl( DialogControls eID )
 }
 
 //--------------------------------------------------------------------
+// Requires the Solar Mutex to be locked
 void UpdateHandler::insertControlModel( uno::Reference< awt::XControlModel > & rxDialogModel,
                                         rtl::OUString const & rServiceName,
                                         rtl::OUString const & rControlName,
@@ -934,6 +936,7 @@ bool UpdateHandler::showWarning( const rtl::OUString &rWarningText ) const
 {
     bool bRet = false;
 
+    ::vos::OGuard aGuard( Application::GetSolarMutex() );
     uno::Reference< awt::XControl > xControl( mxUpdDlg, uno::UNO_QUERY );
     if ( !xControl.is() ) return bRet;
 
@@ -983,6 +986,7 @@ bool UpdateHandler::showWarning( const rtl::OUString &rWarningText,
 {
 	bool bRet = false;
 
+	::vos::OGuard aGuard( Application::GetSolarMutex() );
 	uno::Reference< awt::XControl > xControl( mxUpdDlg, uno::UNO_QUERY );
 	if ( !xControl.is() ) return bRet;
 
@@ -1151,6 +1155,7 @@ void UpdateHandler::createDialog()
 
     loadStrings();
 
+    ::vos::OGuard aGuard( Application::GetSolarMutex() );
     uno::Reference< lang::XMultiComponentFactory > xFactory( mxContext->getServiceManager(), uno::UNO_QUERY_THROW );
     uno::Reference< awt::XControlModel > xControlModel( xFactory->createInstanceWithContext(
                                                          UNISTRING("com.sun.star.awt.UnoControlDialogModel"),

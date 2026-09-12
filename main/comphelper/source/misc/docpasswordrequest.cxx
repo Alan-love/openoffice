@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -60,7 +60,7 @@ public:
     inline sal_Bool     isSelected() const { return mbSelected; }
     inline void         reset() { mbSelected = false; }
 
-    virtual void SAL_CALL select() throw( RuntimeException ) { mbSelected = true; }
+    virtual void SAL_CALL select() { mbSelected = true; }
 
 private:
     sal_Bool            mbSelected;
@@ -76,16 +76,16 @@ public:
     inline sal_Bool     isSelected() const { return mbSelected; }
     inline void         reset() { mbSelected = sal_False; }
 
-    virtual void SAL_CALL select() throw( RuntimeException ) { mbSelected = sal_True; }
+    virtual void SAL_CALL select() { mbSelected = sal_True; }
 
-    virtual void SAL_CALL setPassword( const OUString& rPass ) throw( RuntimeException ) { maPassword = rPass; }
-    virtual OUString SAL_CALL getPassword() throw( RuntimeException ) { return maPassword; }
+    virtual void SAL_CALL setPassword( const OUString& rPass ) { maPassword = rPass; }
+    virtual OUString SAL_CALL getPassword() { return maPassword; }
 
-    virtual void SAL_CALL setPasswordToModify( const OUString& rPass ) throw( RuntimeException ) { maModifyPassword = rPass; }
-    virtual OUString SAL_CALL getPasswordToModify() throw( RuntimeException ) { return maModifyPassword; }
+    virtual void SAL_CALL setPasswordToModify( const OUString& rPass ) { maModifyPassword = rPass; }
+    virtual OUString SAL_CALL getPasswordToModify() { return maModifyPassword; }
 
-    virtual void SAL_CALL setRecommendReadOnly( sal_Bool bReadOnly ) throw( RuntimeException ) { mbReadOnly = bReadOnly; }
-    virtual sal_Bool SAL_CALL getRecommendReadOnly() throw( RuntimeException ) { return mbReadOnly; }
+    virtual void SAL_CALL setRecommendReadOnly( sal_Bool bReadOnly ) { mbReadOnly = bReadOnly; }
+    virtual sal_Bool SAL_CALL getRecommendReadOnly() { return mbReadOnly; }
 
 private:
     OUString            maPassword;
@@ -103,7 +103,7 @@ SimplePasswordRequest::SimplePasswordRequest( PasswordRequestMode eMode )
     PasswordRequest aRequest( OUString(), Reference< XInterface >(),
         InteractionClassification_QUERY, eMode );
     maRequest <<= aRequest;
-    
+
     maContinuations.realloc( 2 );
     maContinuations[ 0 ].set( mpAbort = new AbortContinuation );
     maContinuations[ 1 ].set( mpPassword = new PasswordContinuation );
@@ -113,7 +113,7 @@ SimplePasswordRequest::~SimplePasswordRequest()
 {
 }
 
-/*uno::*/Any SAL_CALL SimplePasswordRequest::queryInterface( const /*uno::*/Type& rType ) throw (RuntimeException)
+/*uno::*/Any SAL_CALL SimplePasswordRequest::queryInterface( const /*uno::*/Type& rType )
 {
     return ::cppu::queryInterface ( rType,
             // OWeakObject interfaces
@@ -121,7 +121,7 @@ SimplePasswordRequest::~SimplePasswordRequest()
             static_cast< XWeak* > ( this ),
             // my own interfaces
             static_cast< XInteractionRequest*  > ( this ) );
-}    
+}
 
 void SAL_CALL SimplePasswordRequest::acquire(  ) throw ()
 {
@@ -131,7 +131,7 @@ void SAL_CALL SimplePasswordRequest::acquire(  ) throw ()
 void SAL_CALL SimplePasswordRequest::release(  ) throw ()
 {
     OWeakObject::release();
-}    
+}
 
 sal_Bool SimplePasswordRequest::isAbort() const
 {
@@ -148,12 +148,12 @@ OUString SimplePasswordRequest::getPassword() const
     return mpPassword->getPassword();
 }
 
-Any SAL_CALL SimplePasswordRequest::getRequest() throw( RuntimeException )
+Any SAL_CALL SimplePasswordRequest::getRequest()
 {
     return maRequest;
 }
 
-Sequence< Reference< XInteractionContinuation > > SAL_CALL SimplePasswordRequest::getContinuations() throw( RuntimeException )
+Sequence< Reference< XInteractionContinuation > > SAL_CALL SimplePasswordRequest::getContinuations()
 {
     return maContinuations;
 }
@@ -194,7 +194,7 @@ DocPasswordRequest::~DocPasswordRequest()
 {
 }
 
-/*uno::*/Any SAL_CALL DocPasswordRequest::queryInterface( const /*uno::*/Type& rType ) throw (RuntimeException)
+/*uno::*/Any SAL_CALL DocPasswordRequest::queryInterface( const /*uno::*/Type& rType )
 {
     return ::cppu::queryInterface ( rType,
             // OWeakObject interfaces
@@ -202,7 +202,7 @@ DocPasswordRequest::~DocPasswordRequest()
             static_cast< XWeak* > ( this ),
             // my own interfaces
             static_cast< XInteractionRequest*  > ( this ) );
-}    
+}
 
 void SAL_CALL DocPasswordRequest::acquire(  ) throw ()
 {
@@ -212,7 +212,7 @@ void SAL_CALL DocPasswordRequest::acquire(  ) throw ()
 void SAL_CALL DocPasswordRequest::release(  ) throw ()
 {
     OWeakObject::release();
-}    
+}
 
 sal_Bool DocPasswordRequest::isAbort() const
 {
@@ -239,12 +239,12 @@ sal_Bool DocPasswordRequest::getRecommendReadOnly() const
     return mpPassword->getRecommendReadOnly();
 }
 
-Any SAL_CALL DocPasswordRequest::getRequest() throw( RuntimeException )
+Any SAL_CALL DocPasswordRequest::getRequest()
 {
     return maRequest;
 }
 
-Sequence< Reference< XInteractionContinuation > > SAL_CALL DocPasswordRequest::getContinuations() throw( RuntimeException )
+Sequence< Reference< XInteractionContinuation > > SAL_CALL DocPasswordRequest::getContinuations()
 {
     return maContinuations;
 }
@@ -252,4 +252,3 @@ Sequence< Reference< XInteractionContinuation > > SAL_CALL DocPasswordRequest::g
 // ============================================================================
 
 } // namespace comphelper
-

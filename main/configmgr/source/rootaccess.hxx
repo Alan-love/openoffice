@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -108,29 +108,21 @@ private:
     virtual void clearListeners() throw ();
 
     virtual com::sun::star::uno::Any SAL_CALL queryInterface(
-        com::sun::star::uno::Type const & aType)
-        throw (com::sun::star::uno::RuntimeException);
+        com::sun::star::uno::Type const & aType);
 
     virtual void SAL_CALL addChangesListener(
         com::sun::star::uno::Reference< com::sun::star::util::XChangesListener >
-            const & aListener)
-        throw (com::sun::star::uno::RuntimeException);
+            const & aListener);
 
     virtual void SAL_CALL removeChangesListener(
         com::sun::star::uno::Reference< com::sun::star::util::XChangesListener >
-            const & aListener)
-        throw (com::sun::star::uno::RuntimeException);
+            const & aListener);
 
-    virtual void SAL_CALL commitChanges()
-        throw (
-            com::sun::star::lang::WrappedTargetException,
-            com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL commitChanges();
 
-    virtual sal_Bool SAL_CALL hasPendingChanges()
-        throw (com::sun::star::uno::RuntimeException);
+    virtual sal_Bool SAL_CALL hasPendingChanges();
 
-    virtual com::sun::star::util::ChangesSet SAL_CALL getPendingChanges()
-        throw (com::sun::star::uno::RuntimeException);
+    virtual com::sun::star::util::ChangesSet SAL_CALL getPendingChanges();
 
     typedef
         std::multiset<

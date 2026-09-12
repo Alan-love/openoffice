@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -86,35 +86,35 @@ namespace basegfx
         // convert SourcePolyPolygon to trapezoids. The trapezoids will be appended to
         // ro_Result. ro_Result will not be cleared. If SourcePolyPolygon contains curves,
         // it's default AdaptiveSubdivision will be used.
-        // CAUTION: Trapezoids are oreintation-dependent in the sense that the upper and lower
+        // CAUTION: Trapezoids are orientation-dependent in the sense that the upper and lower
         // lines have to be parallel to the X-Axis, thus this subdivision is NOT simply usable
         // for primitive decompositions. To use it, the shear and rotate parts of the
         // involved transformations HAVE to be taken into account.
 		BASEGFX_DLLPUBLIC void trapezoidSubdivide(
-            B2DTrapezoidVector& ro_Result, 
+            B2DTrapezoidVector& ro_Result,
             const B2DPolyPolygon& rSourcePolyPolygon);
 
         // directly create trapezoids from given edge. Depending on the given geometry,
         // none up to three trapezoids will be created
         BASEGFX_DLLPUBLIC void createLineTrapezoidFromEdge(
-            B2DTrapezoidVector& ro_Result, 
-            const B2DPoint& rPointA, 
-            const B2DPoint& rPointB, 
+            B2DTrapezoidVector& ro_Result,
+            const B2DPoint& rPointA,
+            const B2DPoint& rPointB,
             double fLineWidth = 1.0);
 
         // create trapezoids for all edges of the given polygon. The closed state of
-        // the polygon is taken into account. If curves are contaned, the default
+        // the polygon is taken into account. If curves are contained, the default
         // AdaptiveSubdivision will be used.
         BASEGFX_DLLPUBLIC void createLineTrapezoidFromB2DPolygon(
-            B2DTrapezoidVector& ro_Result, 
+            B2DTrapezoidVector& ro_Result,
             const B2DPolygon& rPolygon,
             double fLineWidth = 1.0);
 
         // create trapezoids for all edges of the given polyPolygon. The closed state of
-        // the PolyPolygon is taken into account. If curves are contaned, the default
+        // the PolyPolygon is taken into account. If curves are contained, the default
         // AdaptiveSubdivision will be used.
         BASEGFX_DLLPUBLIC void createLineTrapezoidFromB2DPolyPolygon(
-            B2DTrapezoidVector& ro_Result, 
+            B2DTrapezoidVector& ro_Result,
             const B2DPolyPolygon& rPolyPolygon,
             double fLineWidth = 1.0);
 

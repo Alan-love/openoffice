@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -111,7 +111,7 @@ public:
 	static FontWidth 								ConvertFontWidth( float f );
 	static float 									ConvertFontWeight( FontWeight eWeight );
 	static FontWeight 								ConvertFontWeight( float f );
-	
+
 	// Rectangle
 	static sal_Bool									IsZero( ::com::sun::star::awt::Rectangle rRect );
 
@@ -130,8 +130,8 @@ public:
     static sal_Int16                                ConvertToMeasurementUnit( FieldUnit _nFieldUnit, sal_Int16 _rFieldToUNOValueFactor );
     static FieldUnit                                ConvertToFieldUnit( sal_Int16 _nMeasurementUnit, sal_Int16& _rFieldToUNOValueFactor );
 
-    static MapUnit /* MapModeUnit */ ConvertToMapModeUnit(sal_Int16 /* com.sun.star.util.MeasureUnit.* */ _nMeasureUnit) throw (::com::sun::star::lang::IllegalArgumentException);
-    static sal_Int16 /* com.sun.star.util.MeasureUnit.* */ ConvertToMeasurementUnit(MapUnit /* MapModeUnit */ _nMapModeUnit) throw (::com::sun::star::lang::IllegalArgumentException);
+    static MapUnit /* MapModeUnit */ ConvertToMapModeUnit(sal_Int16 /* com.sun.star.util.MeasureUnit.* */ _nMeasureUnit);
+    static sal_Int16 /* com.sun.star.util.MeasureUnit.* */ ConvertToMeasurementUnit(MapUnit /* MapModeUnit */ _nMapModeUnit);
 
     static ::Size /* VCLSize */ ConvertToVCLSize(::com::sun::star::awt::Size const& _aSize);
     static ::com::sun::star::awt::Size ConvertToAWTSize(::Size /* VCLSize */ const& _aSize);

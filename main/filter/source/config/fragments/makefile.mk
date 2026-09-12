@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -142,7 +142,13 @@ $(ALL_FLAGS) : $(INCLUDE_FRAGMENTS)
 .IF "$(SOLAR_JAVA)"==""
 #cmc, hack to workaround the java build requirement
 .IF "$(SYSTEM_PYTHON)" == "YES"
-MERGE:=python ../tools/merge/pyAltFCFGMerge
+# PYTHON_BIN is the interpreter configure located and checked against the
+# 3.11 floor; fall back to PATH only if the environment does not carry it.
+.IF "$(PYTHON_BIN)"==""
+MERGE:=python3 ../tools/merge/pyAltFCFGMerge
+.ELSE
+MERGE:=$(PYTHON_BIN) ../tools/merge/pyAltFCFGMerge
+.ENDIF
 .ELSE
 MERGE:=$(AUGMENT_LIBRARY_PATH) $(SOLARBINDIR)/python ../tools/merge/pyAltFCFGMerge
 .ENDIF
@@ -212,4 +218,3 @@ $(INTERNALFILTERPACKAGES_FILTERS_FLAG) : $$(FILTERS_4$$(@:b))
      @echo ===================================================================
      -$(MKDIRHIER) $(DIR_MODPACKS)
      $(MERGE) fragmentsdir=. tempdir=$(TEMP) outdir=$(DIR_MODPACKS) pkg=$(DIR_MODPACKS)$/$(@:b)_filters.xcu xmlpackage=GraphicFilter fcfg=$(mktmp items=$(FILTERS_4$(@:b):b:t",":s/.xcu//)) subdir_filters=internalgraphicfilters && $(TOUCH) $@
-

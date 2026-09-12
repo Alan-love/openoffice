@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,7 +49,7 @@
 class DropTarget;
 class AquaSalFrame;
 
-/* The functions declared in this protocol are actually 
+/* The functions declared in this protocol are actually
    declared in vcl/aqua/inc/salframe.h. Because we want
    to avoid importing VCL headers in UNO services and
    on the other hand want to avoid warnings caused by
@@ -81,8 +81,8 @@ class AquaSalFrame;
 
 
 class DropTarget: public cppu::BaseMutex,
-				  public cppu::WeakComponentImplHelper5< com::sun::star::lang::XInitialization, 
-														 com::sun::star::datatransfer::dnd::XDropTarget, 
+				  public cppu::WeakComponentImplHelper5< com::sun::star::lang::XInitialization,
+														 com::sun::star::datatransfer::dnd::XDropTarget,
 														 com::sun::star::datatransfer::dnd::XDropTargetDragContext,
 														 com::sun::star::datatransfer::dnd::XDropTargetDropContext,
 														 com::sun::star::lang::XServiceInfo >,
@@ -98,35 +98,32 @@ public:
   virtual void SAL_CALL disposing();
 
   // XInitialization
-  virtual void SAL_CALL initialize( const com::sun::star::uno::Sequence< com::sun::star::uno::Any >& aArguments )
-	throw(com::sun::star::uno::Exception);
+  virtual void SAL_CALL initialize( const com::sun::star::uno::Sequence< com::sun::star::uno::Any >& aArguments );
 
   // XDropTarget
-  virtual void SAL_CALL addDropTargetListener( const com::sun::star::uno::Reference< com::sun::star::datatransfer::dnd::XDropTargetListener >& dtl )
-	throw(com::sun::star::uno::RuntimeException);
+  virtual void SAL_CALL addDropTargetListener( const com::sun::star::uno::Reference< com::sun::star::datatransfer::dnd::XDropTargetListener >& dtl );
 
-  virtual void SAL_CALL removeDropTargetListener( const com::sun::star::uno::Reference<  com::sun::star::datatransfer::dnd::XDropTargetListener >& dtl )
-	throw(com::sun::star::uno::RuntimeException);
+  virtual void SAL_CALL removeDropTargetListener( const com::sun::star::uno::Reference<  com::sun::star::datatransfer::dnd::XDropTargetListener >& dtl );
 
   // Default is not active
-  virtual sal_Bool SAL_CALL isActive() throw(com::sun::star::uno::RuntimeException);
-  virtual void SAL_CALL setActive(sal_Bool isActive) throw(com::sun::star::uno::RuntimeException);
-  virtual sal_Int8 SAL_CALL getDefaultActions() throw(com::sun::star::uno::RuntimeException);
-  virtual void SAL_CALL setDefaultActions(sal_Int8 actions) throw(com::sun::star::uno::RuntimeException);
+  virtual sal_Bool SAL_CALL isActive();
+  virtual void SAL_CALL setActive(sal_Bool isActive);
+  virtual sal_Int8 SAL_CALL getDefaultActions();
+  virtual void SAL_CALL setDefaultActions(sal_Int8 actions);
 
   // XDropTargetDragContext
-  virtual void SAL_CALL acceptDrag(sal_Int8 dragOperation) throw(com::sun::star::uno::RuntimeException);
-  virtual void SAL_CALL rejectDrag() throw(com::sun::star::uno::RuntimeException);
+  virtual void SAL_CALL acceptDrag(sal_Int8 dragOperation);
+  virtual void SAL_CALL rejectDrag();
 
-  // XDropTargetDragContext 
-  virtual void SAL_CALL acceptDrop(sal_Int8 dropOperation) throw (com::sun::star::uno::RuntimeException);
-  virtual void SAL_CALL rejectDrop() throw (com::sun::star::uno::RuntimeException);
-  virtual void SAL_CALL dropComplete(sal_Bool success) throw (com::sun::star::uno::RuntimeException);
+  // XDropTargetDragContext
+  virtual void SAL_CALL acceptDrop(sal_Int8 dropOperation);
+  virtual void SAL_CALL rejectDrop();
+  virtual void SAL_CALL dropComplete(sal_Bool success);
 
   // XServiceInfo
-  virtual rtl::OUString SAL_CALL getImplementationName() throw (com::sun::star::uno::RuntimeException);
-  virtual sal_Bool SAL_CALL supportsService(const rtl::OUString& ServiceName) throw (com::sun::star::uno::RuntimeException);
-  virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames() throw (com::sun::star::uno::RuntimeException);
+  virtual rtl::OUString SAL_CALL getImplementationName();
+  virtual sal_Bool SAL_CALL supportsService(const rtl::OUString& ServiceName);
+  virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames();
 
   // NSDraggingDestination protocol functions
   virtual NSDragOperation draggingEntered(id sender);

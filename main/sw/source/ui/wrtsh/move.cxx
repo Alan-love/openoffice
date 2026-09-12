@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,23 +7,20 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_sw.hxx"
-
 
 #include <sfx2/bindings.hxx>
 #include <wrtsh.hxx>
@@ -34,7 +31,7 @@
 #include <crsskip.hxx>
 
 /*	Immer:
-	-	Zuruecksetzen des Cursorstacks
+	-	Zurücksetzen des Cursorstacks
 	-	Timer nachtriggern
 	-	gfs. GCAttr
 
@@ -62,8 +59,8 @@ public:
 	{
 		if( bAct )
 		{
-			//Die Action wird fuer das Scrollen in "einabsaetzigen" Rahmen mit
-			//fester Hoehe gebraucht.
+			//Die Action wird für das Scrollen in "einabsaetzigen" Rahmen mit
+			//fester Höhe gebraucht.
 			pSh->StartAllAction();
 			pSh->EndAllAction();
 		}
@@ -546,8 +543,8 @@ sal_Bool SwWrtShell::PopCrsr(sal_Bool bUpdate, sal_Bool bSelect)
 	const sal_Bool bValidPos = pCrsrStack->bValidCurPos;
 	if( bUpdate && bValidPos )
 	{
-			// falls ein Vorgaenger auf dem Stack steht, dessen Flag fuer eine
-			// gueltige Position verwenden.
+			// falls ein Vorgänger auf dem Stack steht, dessen Flag für eine
+			// gültige Position verwenden.
 		SwRect aTmpArea(VisArea());
 		aTmpArea.Pos().Y() -= pCrsrStack->lOffset;
 		if( aTmpArea.IsInside( pCrsrStack->aDocPos ) )
@@ -675,7 +672,7 @@ sal_Bool SwWrtShell::SelectTxtAttr( sal_uInt16 nWhich, const SwTxtAttr* pAttr )
 {
     sal_Bool bRet;
     {
-        MV_KONTEXT(this);
+        MV_CONTEXT(this);
         SttSelect();
         bRet = SwCrsrShell::SelectTxtAttr( nWhich, sal_False, pAttr );
     }
@@ -683,5 +680,4 @@ sal_Bool SwWrtShell::SelectTxtAttr( sal_uInt16 nWhich, const SwTxtAttr* pAttr )
     return bRet;
 }
 
-
-
+/* vim: set noet sw=4 ts=4: */

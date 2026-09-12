@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -90,7 +90,7 @@ namespace dbaui
 
 		// ----------------------------------------------------------------
 		// asking for connection-related stuff
-		
+
 		sal_Bool	isConnected() const;
 
 		::com::sun::star::uno::Reference< ::com::sun::star::sdbc::XDatabaseMetaData >
@@ -135,7 +135,7 @@ namespace dbaui
         */
         void displayError();
 
-		/** shows an info box with the string conntection lost.
+		/** shows an info box with the string connection lost.
 		*/
 		void connectionLostMessage() const;
 
@@ -151,22 +151,22 @@ namespace dbaui
 		::com::sun::star::uno::Reference< ::com::sun::star::util::XNumberFormatter > 	getNumberFormatter() const;
 
 		// ::com::sun::star::frame::XController
-		virtual sal_Bool SAL_CALL suspend(sal_Bool bSuspend) throw( ::com::sun::star::uno::RuntimeException );
-		virtual sal_Bool SAL_CALL attachModel(const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XModel > & xModel) throw( ::com::sun::star::uno::RuntimeException );
+		virtual sal_Bool SAL_CALL suspend(sal_Bool bSuspend);
+		virtual sal_Bool SAL_CALL attachModel(const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XModel > & xModel);
 
         // XScriptInvocationContext
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::document::XEmbeddedScripts > SAL_CALL getScriptContainer() throw (::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::document::XEmbeddedScripts > SAL_CALL getScriptContainer();
 
         // XModifiable
-        virtual ::sal_Bool SAL_CALL isModified(  ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL setModified( ::sal_Bool bModified ) throw (::com::sun::star::beans::PropertyVetoException, ::com::sun::star::uno::RuntimeException);
+        virtual ::sal_Bool SAL_CALL isModified(  );
+        virtual void SAL_CALL setModified( ::sal_Bool bModified );
 
         // XModifyBroadcaster
-        virtual void SAL_CALL addModifyListener( const ::com::sun::star::uno::Reference< ::com::sun::star::util::XModifyListener >& aListener ) throw (::com::sun::star::uno::RuntimeException);
-        virtual void SAL_CALL removeModifyListener( const ::com::sun::star::uno::Reference< ::com::sun::star::util::XModifyListener >& aListener ) throw (::com::sun::star::uno::RuntimeException);
+        virtual void SAL_CALL addModifyListener( const ::com::sun::star::uno::Reference< ::com::sun::star::util::XModifyListener >& aListener );
+        virtual void SAL_CALL removeModifyListener( const ::com::sun::star::uno::Reference< ::com::sun::star::util::XModifyListener >& aListener );
 
         // XTitle
-        virtual ::rtl::OUString SAL_CALL getTitle(  ) throw (::com::sun::star::uno::RuntimeException);
+        virtual ::rtl::OUString SAL_CALL getTitle(  );
 
 	protected:
 		DBSubComponentController(const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory>& _rxORB);
@@ -183,16 +183,16 @@ namespace dbaui
 
 	protected:
 		// XEventListener
-		virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& Source) throw( ::com::sun::star::uno::RuntimeException );
+		virtual void SAL_CALL disposing(const ::com::sun::star::lang::EventObject& Source);
 
 		// OComponentHelper
 		virtual void SAL_CALL disposing();
 
 		// XInterface
-		virtual ::com::sun::star::uno::Any	SAL_CALL queryInterface(const ::com::sun::star::uno::Type& _rType) throw (::com::sun::star::uno::RuntimeException);
+		virtual ::com::sun::star::uno::Any	SAL_CALL queryInterface(const ::com::sun::star::uno::Type& _rType);
 
 		// XTypeProvider
-		virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL getTypes(  ) throw (::com::sun::star::uno::RuntimeException);
+		virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL getTypes(  );
 
     protected:
         sal_Int32 getCurrentStartNumber() const;
@@ -206,4 +206,3 @@ namespace dbaui
 //........................................................................
 
 #endif // DBAUI_SUBCOMPONENTCONTROLLER_HXX
-

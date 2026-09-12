@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -115,10 +115,10 @@ void IndexerPreProcessor::processDocument
 #ifdef WNT     //We need _wfopen to support long file paths on Windows XP
             FILE* pFile_docURL = _wfopen(
                 fsCaptionPureTextFile_docURL.native_file_string_w(), L"w" );
-#else            
+#else
             FILE* pFile_docURL = fopen(
                 fsCaptionPureTextFile_docURL.native_file_string().c_str(), "w" );
-#endif            
+#endif
             if( pFile_docURL )
             {
                 fprintf( pFile_docURL, "%s\n", pResNodeCaption->content );
@@ -138,10 +138,10 @@ void IndexerPreProcessor::processDocument
 #ifdef WNT     //We need _wfopen to support long file paths on Windows XP
             FILE* pFile_docURL = _wfopen(
                 fsContentPureTextFile_docURL.native_file_string_w(), L"w" );
-#else            
+#else
             FILE* pFile_docURL = fopen(
                 fsContentPureTextFile_docURL.native_file_string().c_str(), "w" );
-#endif            
+#endif
             if( pFile_docURL )
             {
                 fprintf( pFile_docURL, "%s\n", pResNodeContent->content );
@@ -213,9 +213,9 @@ public:
     {
 #ifdef WNT     //We need _wfopen to support long file paths on Windows XP
         FILE* pFile = _wfopen( rFileName.native_file_string_w(), L"wb" );
-#else        
+#else
         FILE* pFile = fopen( rFileName.native_file_string().c_str(), "wb" );
-#endif        
+#endif
         if( pFile == NULL )
             return;
 
@@ -233,9 +233,7 @@ public:
     void main(std::vector<std::string> &args,
               std::string* pExtensionPath = NULL,
               std::string* pDestination = NULL,
-              const rtl::OUString* pOfficeHelpPath = NULL )
-
-            throw( HelpProcessingException );
+              const rtl::OUString* pOfficeHelpPath = NULL );
 
     HelpLinker()
         : init(true)
@@ -266,7 +264,7 @@ private:
     bool init;
     IndexerPreProcessor* m_pIndexerPreProcessor;
     void initIndexerPreProcessor();
-    void link() throw( HelpProcessingException );
+    void link();
     void addBookmark( FILE* pFile_DBHelp, std::string thishid,
         const std::string& fileB, const std::string& anchorB,
         const std::string& jarfileB, const std::string& titleB );
@@ -348,7 +346,7 @@ void HelpLinker::initIndexerPreProcessor()
 /**
 *
 */
-void HelpLinker::link() throw( HelpProcessingException )
+void HelpLinker::link()
 {
     bool bIndexForExtension = true;
 
@@ -383,7 +381,7 @@ void HelpLinker::link() throw( HelpProcessingException )
     FILE* pFileHelpText_DBHelp = _wfopen
         ( helpTextFileName_DBHelp.native_file_string_w(), L"wb" );
 #else
-    
+
     FILE* pFileHelpText_DBHelp = fopen
         ( helpTextFileName_DBHelp.native_file_string().c_str(), "wb" );
 #endif
@@ -393,10 +391,10 @@ void HelpLinker::link() throw( HelpProcessingException )
     //We need _wfopen to support long file paths on Windows XP
     FILE* pFileDbBase_DBHelp = _wfopen
         ( dbBaseFileName_DBHelp.native_file_string_w(), L"wb" );
-#else    
+#else
     FILE* pFileDbBase_DBHelp = fopen
         ( dbBaseFileName_DBHelp.native_file_string().c_str(), "wb" );
-#endif    
+#endif
 
     fs::path keyWordFileName_DBHelp(indexDirParentName / (mod + (bUse_ ? ".key_" : ".key")));
 
@@ -631,7 +629,6 @@ void HelpLinker::link() throw( HelpProcessingException )
 void HelpLinker::main( std::vector<std::string> &args,
                        std::string* pExtensionPath, std::string* pDestination,
                        const rtl::OUString* pOfficeHelpPath )
-    throw( HelpProcessingException )
 {
     bExtensionMode = false;
     helpFiles.clear();
@@ -1080,9 +1077,9 @@ HELPLINKER_DLLPUBLIC bool compileExtensionHelp
         {
             XML_Error nError = XML_GetErrorCode( parser );
             o_rHelpProcessingErrorInfo.m_eErrorClass = HELPPROCESSING_XMLPARSING_ERROR;
-            o_rHelpProcessingErrorInfo.m_aErrorMsg = rtl::OUString::createFromAscii( XML_ErrorString( nError ) );;
+            o_rHelpProcessingErrorInfo.m_aErrorMsg = rtl::OUString::createFromAscii( XML_ErrorString( nError ) );
             o_rHelpProcessingErrorInfo.m_aXMLParsingFile = aTreeFileURL;
-            // CRAHSES!!! o_rHelpProcessingErrorInfo.m_nXMLParsingLine = XML_GetCurrentLineNumber( parser );
+            // CRASHES!!! o_rHelpProcessingErrorInfo.m_nXMLParsingLine = XML_GetCurrentLineNumber( parser );
             bSuccess = false;
         }
 
@@ -1092,4 +1089,3 @@ HELPLINKER_DLLPUBLIC bool compileExtensionHelp
 
     return bSuccess;
 }
-

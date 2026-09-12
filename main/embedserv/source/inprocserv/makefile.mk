@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -34,7 +34,12 @@ use_shl_versions=
 
 LIBTARGET=NO
 USE_DEFFILE=YES
-LIBCMT=libcmt.lib
+# The static CRT, deliberately, and replacing LIBCMT rather than adding to it:
+# this DLL is loaded into a foreign process and cannot rely on that process
+# having ours.  $(LIBCRTEXTRA_STATIC) is the rest of the static CRT on the UCRT
+# generation, where it comes in three pieces rather than one; it is undefined,
+# and so expands to nothing, on VC9.
+LIBCMT=libcmt.lib $(LIBCRTEXTRA_STATIC)
 UWINAPILIB=
 
 # --- Files -------------------------------------
@@ -73,4 +78,3 @@ DEF1EXPORTFILE=	exports.dxp
 # --- Targets ----------------------------------
 
 .INCLUDE : target.mk
-

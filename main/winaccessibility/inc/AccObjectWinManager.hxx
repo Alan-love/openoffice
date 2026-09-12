@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 #ifndef __ACCOBJECTWINMANAGER_HXX
@@ -40,7 +40,7 @@ class AccObject;
 /*******************************************************************
 AccObjectWinManager complete the functions:
 1. Insert, delete,query,update Acc objects
-2. Create, delete,fire AccEventLister, the lifecycle of AccEventListener is as same as 
+2. Create, delete,fire AccEventLister, the lifecycle of AccEventListener is as same as
    Acc Object
  3.Return COM interface for AT,by the call back in salframe
  4.Pass accessible information to Acc objects
@@ -54,14 +54,14 @@ private:
     {
         bool operator()(const void*  s1, const void*  s2) const
         {
-            return long(s1)<long(s2);
+            return LONG_PTR(s1)<LONG_PTR(s2);
         }
     };
     struct ltstr2
     {
         bool operator()(const HWND  s1, const HWND  s2) const
         {
-            return long(s1)<long(s2);
+            return LONG_PTR(s1)<LONG_PTR(s2);
         }
     };
     struct ltstr3
@@ -75,7 +75,7 @@ private:
     typedef std::map< HWND,void*,ltstr2 > XHWNDToXAccHash;
     typedef std::map< const long, AccObject*,ltstr3 > XResIdToAccObjHash;
 
-    typedef std::map< const long, com::sun::star::accessibility::XAccessible*,ltstr3 > XHWNDToDocumentHash;
+    typedef std::map< HWND, com::sun::star::accessibility::XAccessible*,ltstr2 > XHWNDToDocumentHash;
 
 
     //XAccessible to AccObject
@@ -109,7 +109,7 @@ private:
 
     AccObject* GetTopWindowAccObj(HWND hWnd);
 
-    com::sun::star::accessibility::XAccessible* GetAccDocByHWND( long pWnd );
+    com::sun::star::accessibility::XAccessible* GetAccDocByHWND( HWND pWnd );
 
     void       DeleteAccListener( AccObject* pAccObj );
     void       InsertAccChildNode(AccObject* pCurObj,AccObject* pParentObj,HWND pWnd);
@@ -129,7 +129,7 @@ public:
 
     sal_Bool NotifyAccEvent( com::sun::star::accessibility::XAccessible* pXAcc,short state = 0 );
 
-    long Get_ToATInterface( HWND hWnd, long lParam, long wParam);
+    LRESULT Get_ToATInterface( HWND hWnd, LPARAM lParam, WPARAM wParam);
 
     void  DecreaseState( com::sun::star::accessibility::XAccessible* pXAcc,unsigned short pState );
     void  IncreaseState( com::sun::star::accessibility::XAccessible* pXAcc,unsigned short pState );

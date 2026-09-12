@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -56,8 +56,7 @@ public:
     ScriptImpl(
         const css::uno::Reference< css::beans::XPropertySet > & scriptingContext,
         const css::uno::Reference< dcsssf::runtime::XScriptInvocation > & runtimeMgr,
-        const ::rtl::OUString& scriptURI )
-    throw ( css::uno::RuntimeException );
+        const ::rtl::OUString& scriptURI );
 
     /*************************************************************
       ScriptImpl Destructor
@@ -71,29 +70,25 @@ public:
       @param aOutParamIndex out indices
       @param aOutParam out parameters
 
-      @returns 
+      @returns
             the value returned from the function being invoked
 
-      @throws IllegalArgumentException 
+      @throws IllegalArgumentException
             if there is no matching script name
 
-      @throws CannotConvertException 
-            if args do not match or cannot be converted the those 
+      @throws CannotConvertException
+            if args do not match or cannot be converted the those
             of the invokee
-            
-      @throws InvocationTargetException 
+
+      @throws InvocationTargetException
             if the running script throws an exception this information is captured and
-            rethrown as this exception type.  
+            rethrown as this exception type.
 
     */
     virtual css::uno::Any SAL_CALL invoke(
         const css::uno::Sequence< css::uno::Any > & aParams,
         css::uno::Sequence< sal_Int16 > & aOutParamIndex,
-        css::uno::Sequence< css::uno::Any > & aOutParam )
-    throw ( css::lang::IllegalArgumentException,
-            css::script::CannotConvertException,
-            css::reflection::InvocationTargetException,
-            css::uno::RuntimeException );
+        css::uno::Sequence< css::uno::Any > & aOutParam );
 
 private:
     css::uno::Reference< css::beans::XPropertySet > m_XScriptingContext;

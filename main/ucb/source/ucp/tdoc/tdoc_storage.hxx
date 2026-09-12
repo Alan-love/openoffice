@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -54,49 +54,24 @@ namespace tdoc_ucp {
         ~StorageElementFactory();
 
         com::sun::star::uno::Reference< com::sun::star::embed::XStorage >
-		createTemporaryStorage()
-            throw ( com::sun::star::uno::Exception,
-            		com::sun::star::uno::RuntimeException );
+		createTemporaryStorage();
 
         com::sun::star::uno::Reference< com::sun::star::embed::XStorage >
-        createStorage( const rtl::OUString & rUri, StorageAccessMode eMode )
-            throw ( com::sun::star::embed::InvalidStorageException,
-                    com::sun::star::lang::IllegalArgumentException,
-                    com::sun::star::io::IOException,
-                    com::sun::star::embed::StorageWrappedTargetException,
-                    com::sun::star::uno::RuntimeException );
+        createStorage( const rtl::OUString & rUri, StorageAccessMode eMode );
 
         com::sun::star::uno::Reference< com::sun::star::io::XInputStream >
         createInputStream( const rtl::OUString & rUri,
-                           const rtl::OUString & rPassword )
-            throw ( com::sun::star::embed::InvalidStorageException,
-                    com::sun::star::lang::IllegalArgumentException,
-                    com::sun::star::io::IOException,
-                    com::sun::star::embed::StorageWrappedTargetException,
-                    com::sun::star::packages::WrongPasswordException,
-                    com::sun::star::uno::RuntimeException );
+                           const rtl::OUString & rPassword );
 
         com::sun::star::uno::Reference< com::sun::star::io::XOutputStream >
         createOutputStream( const rtl::OUString & rUri,
                             const rtl::OUString & rPassword,
-                            bool bTruncate )
-            throw ( com::sun::star::embed::InvalidStorageException,
-                    com::sun::star::lang::IllegalArgumentException,
-                    com::sun::star::io::IOException,
-                    com::sun::star::embed::StorageWrappedTargetException,
-                    com::sun::star::packages::WrongPasswordException,
-                    com::sun::star::uno::RuntimeException );
+                            bool bTruncate );
 
         com::sun::star::uno::Reference< com::sun::star::io::XStream >
         createStream( const rtl::OUString & rUri,
                       const rtl::OUString & rPassword,
-                      bool bTruncate )
-            throw ( com::sun::star::embed::InvalidStorageException,
-                    com::sun::star::lang::IllegalArgumentException,
-                    com::sun::star::io::IOException,
-                    com::sun::star::embed::StorageWrappedTargetException,
-                    com::sun::star::packages::WrongPasswordException,
-                    com::sun::star::uno::RuntimeException );
+                      bool bTruncate );
 
     private:
         friend class Storage;
@@ -105,23 +80,13 @@ namespace tdoc_ucp {
 
         com::sun::star::uno::Reference< com::sun::star::embed::XStorage >
         queryParentStorage( const rtl::OUString & rUri,
-                            StorageAccessMode eMode )
-            throw ( com::sun::star::embed::InvalidStorageException,
-                    com::sun::star::lang::IllegalArgumentException,
-                    com::sun::star::io::IOException,
-                    com::sun::star::embed::StorageWrappedTargetException,
-                    com::sun::star::uno::RuntimeException );
+                            StorageAccessMode eMode );
 
         com::sun::star::uno::Reference< com::sun::star::embed::XStorage >
         queryStorage( const com::sun::star::uno::Reference<
                         com::sun::star::embed::XStorage > & xParentStorage,
                       const rtl::OUString & rUri,
-                      StorageAccessMode eMode )
-            throw ( com::sun::star::embed::InvalidStorageException,
-                    com::sun::star::lang::IllegalArgumentException,
-                    com::sun::star::io::IOException,
-                    com::sun::star::embed::StorageWrappedTargetException,
-                    com::sun::star::uno::RuntimeException );
+                      StorageAccessMode eMode );
 
         com::sun::star::uno::Reference< com::sun::star::io::XStream >
         queryStream( const com::sun::star::uno::Reference<
@@ -129,13 +94,7 @@ namespace tdoc_ucp {
                      const rtl::OUString & rPassword,
                      const rtl::OUString & rUri,
                      StorageAccessMode eMode,
-                     bool bTruncate /* ignored for read-only streams */ )
-            throw ( com::sun::star::embed::InvalidStorageException,
-                    com::sun::star::lang::IllegalArgumentException,
-                    com::sun::star::io::IOException,
-                    com::sun::star::embed::StorageWrappedTargetException,
-                    com::sun::star::packages::WrongPasswordException,
-                    com::sun::star::uno::RuntimeException );
+                     bool bTruncate /* ignored for read-only streams */ );
 
         struct ltstrbool
         {

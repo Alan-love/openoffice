@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -111,13 +111,13 @@ uno::Sequence< sal_Int32 > OleEmbeddedObject::GetIntermediateVerbsSequence_Impl(
 {
 	OSL_ENSURE( m_nObjectState != embed::EmbedStates::LOADED, "Loaded object is switched to running state without verbs using!" );
 
-	// actually there will be only one verb 
+	// actually there will be only one verb
 	if ( m_nObjectState == embed::EmbedStates::RUNNING && nNewState == embed::EmbedStates::ACTIVE )
 	{
 		uno::Sequence< sal_Int32 > aVerbs( 1 );
 		aVerbs[0] = embed::EmbedVerbs::MS_OLEVERB_OPEN;
 	}
-	
+
 	return uno::Sequence< sal_Int32 >();
 }
 #endif
@@ -345,7 +345,7 @@ sal_Bool OleEmbeddedObject::TryToConvertToOOo()
 
 	            if ( !aEmbedFactory.getLength() )
                     throw uno::RuntimeException();
-        
+
                 uno::Reference< uno::XInterface > xFact = m_xFactory->createInstance( aEmbedFactory );
 
 		        uno::Reference< embed::XEmbedObjectCreator > xEmbCreator( xFact, uno::UNO_QUERY_THROW );
@@ -397,7 +397,7 @@ sal_Bool OleEmbeddedObject::TryToConvertToOOo()
                     try {
                         close( sal_True );
                     } catch( uno::Exception& ) {}
-                    
+
                     m_xParentStorage->dispose(); // ??? the storage has information loss, it should be closed without committing!
                     throw uno::RuntimeException(); // the repairing is not possible
                 }
@@ -447,10 +447,6 @@ sal_Bool OleEmbeddedObject::TryToConvertToOOo()
 
 //----------------------------------------------
 void SAL_CALL OleEmbeddedObject::changeState( sal_Int32 nNewState )
-		throw ( embed::UnreachableStateException,
-				embed::WrongStateException,
-				uno::Exception,
-				uno::RuntimeException )
 {
 	RTL_LOGFILE_CONTEXT( aLog, "embeddedobj (mv76033) OleEmbeddedObject::changeState" );
 
@@ -473,7 +469,7 @@ void SAL_CALL OleEmbeddedObject::changeState( sal_Int32 nNewState )
 		throw embed::WrongStateException( ::rtl::OUString::createFromAscii( "The object has no persistence!\n" ),
 										uno::Reference< uno::XInterface >( static_cast< ::cppu::OWeakObject* >(this) ) );
 
-	// in case the object is already in requested state 
+	// in case the object is already in requested state
 	if ( m_nObjectState == nNewState )
 		return;
 
@@ -527,7 +523,7 @@ void SAL_CALL OleEmbeddedObject::changeState( sal_Int32 nNewState )
 				{
 					// if the target object is in loaded state and a different state is specified
 					// as a new one the object first must be switched to running state.
-					
+
 					// the component can exist already in nonrunning state
 					// it can be created during loading to detect type of object
 					CreateOleComponentAndLoad_Impl( m_pOleComponent );
@@ -552,7 +548,7 @@ void SAL_CALL OleEmbeddedObject::changeState( sal_Int32 nNewState )
 					if ( m_nObjectState == nNewState )
 						return;
 				}
-		
+
 				// so now the object is either switched from Active to Running state or vise versa
 				// the notification about object state change will be done asynchronously
 				if ( m_nObjectState == embed::EmbedStates::RUNNING && nNewState == embed::EmbedStates::ACTIVE )
@@ -596,7 +592,7 @@ void SAL_CALL OleEmbeddedObject::changeState( sal_Int32 nNewState )
 		{
 			aGuard.clear();
 			StateChangeNotification_Impl( sal_False, nOldState, m_nObjectState );
-			throw;	
+			throw;
 		}
 	}
 	else
@@ -608,8 +604,6 @@ void SAL_CALL OleEmbeddedObject::changeState( sal_Int32 nNewState )
 
 //----------------------------------------------
 uno::Sequence< sal_Int32 > SAL_CALL OleEmbeddedObject::getReachableStates()
-		throw ( embed::WrongStateException,
-				uno::RuntimeException )
 {
 	RTL_LOGFILE_CONTEXT( aLog, "embeddedobj (mv76033) OleEmbeddedObject::getReachableStates" );
 
@@ -652,8 +646,6 @@ uno::Sequence< sal_Int32 > SAL_CALL OleEmbeddedObject::getReachableStates()
 
 //----------------------------------------------
 sal_Int32 SAL_CALL OleEmbeddedObject::getCurrentState()
-		throw ( embed::WrongStateException,
-				uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XEmbeddedObject > xWrappedObject = m_xWrappedObject;
@@ -716,7 +708,7 @@ namespace
             xFactory->createInstanceWithArguments(
                 ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.embed.OLESimpleStorage")),
                 aArgs ), uno::UNO_QUERY_THROW );
-        
+
         uno::Reference< io::XStream > xCONTENTS;
         xNameContainer->getByName(::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("CONTENTS"))) >>= xCONTENTS;
 
@@ -757,11 +749,6 @@ namespace
 
 //----------------------------------------------
 void SAL_CALL OleEmbeddedObject::doVerb( sal_Int32 nVerbID )
-		throw ( lang::IllegalArgumentException,
-				embed::WrongStateException,
-				embed::UnreachableStateException,
-				uno::Exception,
-				uno::RuntimeException )
 {
 	RTL_LOGFILE_CONTEXT( aLog, "embeddedobj (mv76033) OleEmbeddedObject::doVerb" );
 
@@ -897,8 +884,6 @@ void SAL_CALL OleEmbeddedObject::doVerb( sal_Int32 nVerbID )
 
 //----------------------------------------------
 uno::Sequence< embed::VerbDescriptor > SAL_CALL OleEmbeddedObject::getSupportedVerbs()
-		throw ( embed::WrongStateException,
-				uno::RuntimeException )
 {
 	RTL_LOGFILE_CONTEXT( aLog, "embeddedobj (mv76033) OleEmbeddedObject::getSupportedVerb" );
 
@@ -940,8 +925,6 @@ uno::Sequence< embed::VerbDescriptor > SAL_CALL OleEmbeddedObject::getSupportedV
 //----------------------------------------------
 void SAL_CALL OleEmbeddedObject::setClientSite(
 				const uno::Reference< embed::XEmbeddedClient >& xClient )
-		throw ( embed::WrongStateException,
-				uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XEmbeddedObject > xWrappedObject = m_xWrappedObject;
@@ -970,8 +953,6 @@ void SAL_CALL OleEmbeddedObject::setClientSite(
 
 //----------------------------------------------
 uno::Reference< embed::XEmbeddedClient > SAL_CALL OleEmbeddedObject::getClientSite()
-		throw ( embed::WrongStateException,
-				uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XEmbeddedObject > xWrappedObject = m_xWrappedObject;
@@ -989,15 +970,12 @@ uno::Reference< embed::XEmbeddedClient > SAL_CALL OleEmbeddedObject::getClientSi
 	if ( m_nObjectState == -1 )
 		throw embed::WrongStateException( ::rtl::OUString::createFromAscii( "The object has no persistence!\n" ),
 										uno::Reference< uno::XInterface >( static_cast< ::cppu::OWeakObject* >(this) ) );
-	
+
 	return m_xClientSite;
 }
 
 //----------------------------------------------
 void SAL_CALL OleEmbeddedObject::update()
-		throw ( embed::WrongStateException,
-				uno::Exception,
-				uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XEmbeddedObject > xWrappedObject = m_xWrappedObject;
@@ -1016,7 +994,7 @@ void SAL_CALL OleEmbeddedObject::update()
 	if ( m_nObjectState == -1 )
 		throw embed::WrongStateException( ::rtl::OUString::createFromAscii( "The object has no persistence!\n" ),
 										uno::Reference< uno::XInterface >( static_cast< ::cppu::OWeakObject* >(this) ) );
-	
+
 	if ( m_nUpdateMode == embed::EmbedUpdateModes::EXPLICIT_UPDATE )
 	{
 		// TODO: update view representation
@@ -1030,8 +1008,6 @@ void SAL_CALL OleEmbeddedObject::update()
 
 //----------------------------------------------
 void SAL_CALL OleEmbeddedObject::setUpdateMode( sal_Int32 nMode )
-		throw ( embed::WrongStateException,
-				uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XEmbeddedObject > xWrappedObject = m_xWrappedObject;
@@ -1050,7 +1026,7 @@ void SAL_CALL OleEmbeddedObject::setUpdateMode( sal_Int32 nMode )
 	if ( m_nObjectState == -1 )
 		throw embed::WrongStateException( ::rtl::OUString::createFromAscii( "The object has no persistence!\n" ),
 										uno::Reference< uno::XInterface >( static_cast< ::cppu::OWeakObject* >(this) ) );
-	
+
 	OSL_ENSURE( nMode == embed::EmbedUpdateModes::ALWAYS_UPDATE
 					|| nMode == embed::EmbedUpdateModes::EXPLICIT_UPDATE,
 				"Unknown update mode!\n" );
@@ -1061,8 +1037,6 @@ void SAL_CALL OleEmbeddedObject::setUpdateMode( sal_Int32 nMode )
 sal_Int64 SAL_CALL OleEmbeddedObject::getStatus( sal_Int64
     nAspect
 )
-		throw ( embed::WrongStateException,
-				uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XEmbeddedObject > xWrappedObject = m_xWrappedObject;
@@ -1105,7 +1079,6 @@ sal_Int64 SAL_CALL OleEmbeddedObject::getStatus( sal_Int64
 
 //----------------------------------------------
 void SAL_CALL OleEmbeddedObject::setContainerName( const ::rtl::OUString& sName )
-		throw ( uno::RuntimeException )
 {
     // begin wrapping related part ====================
     uno::Reference< embed::XEmbeddedObject > xWrappedObject = m_xWrappedObject;
@@ -1123,5 +1096,3 @@ void SAL_CALL OleEmbeddedObject::setContainerName( const ::rtl::OUString& sName 
 
 	m_aContainerName = sName;
 }
-
-

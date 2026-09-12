@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -47,8 +47,8 @@ public:
     AnnotationEnumeration( const AnnotationVector& rAnnotations );
 
     // ::com::sun::star::office::XAnnotationEnumeration:
-    virtual ::sal_Bool SAL_CALL hasMoreElements() throw (css::uno::RuntimeException);
-    virtual css::uno::Reference< css::office::XAnnotation > SAL_CALL nextElement() throw (css::uno::RuntimeException, css::container::NoSuchElementException);
+    virtual ::sal_Bool SAL_CALL hasMoreElements();
+    virtual css::uno::Reference< css::office::XAnnotation > SAL_CALL nextElement();
 
 private:
     AnnotationEnumeration(const AnnotationEnumeration &); // not defined
@@ -72,12 +72,12 @@ AnnotationEnumeration::AnnotationEnumeration( const AnnotationVector& rAnnotatio
 }
 
 // ::com::sun::star::office::XAnnotationEnumeration:
-::sal_Bool SAL_CALL AnnotationEnumeration::hasMoreElements() throw (css::uno::RuntimeException)
+::sal_Bool SAL_CALL AnnotationEnumeration::hasMoreElements()
 {
 	return maIter != maAnnotations.end() ? sal_True : sal_False;
 }
 
-css::uno::Reference< css::office::XAnnotation > SAL_CALL AnnotationEnumeration::nextElement() throw (css::uno::RuntimeException, css::container::NoSuchElementException)
+css::uno::Reference< css::office::XAnnotation > SAL_CALL AnnotationEnumeration::nextElement()
 {
 	if( maIter == maAnnotations.end() )
 		throw css::container::NoSuchElementException();
@@ -86,4 +86,3 @@ css::uno::Reference< css::office::XAnnotation > SAL_CALL AnnotationEnumeration::
 }
 
 } // namespace sd
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_adabas.hxx"
 #include "adabas/BTable.hxx"
 #include "adabas/BTables.hxx"
 #include "adabas/BIndexes.hxx"
@@ -112,7 +112,7 @@ Sequence< sal_Int8 > OAdabasTable::getUnoTunnelImplementationId()
 
 // com::sun::star::lang::XUnoTunnel
 //------------------------------------------------------------------
-sal_Int64 OAdabasTable::getSomething( const Sequence< sal_Int8 > & rId ) throw (RuntimeException)
+sal_Int64 OAdabasTable::getSomething( const Sequence< sal_Int8 > & rId )
 {
 	return (rId.getLength() == 16 && 0 == rtl_compareMemory(getUnoTunnelImplementationId().getConstArray(),  rId.getConstArray(), 16 ) )
 				? reinterpret_cast< sal_Int64 >( this )
@@ -120,7 +120,7 @@ sal_Int64 OAdabasTable::getSomething( const Sequence< sal_Int8 > & rId ) throw (
 }
 // -------------------------------------------------------------------------
 // XAlterTable
-void SAL_CALL OAdabasTable::alterColumnByName( const ::rtl::OUString& colName, const Reference< XPropertySet >& descriptor ) throw(SQLException, NoSuchElementException, RuntimeException)
+void SAL_CALL OAdabasTable::alterColumnByName( const ::rtl::OUString& colName, const Reference< XPropertySet >& descriptor )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	checkDisposed(
@@ -221,7 +221,7 @@ void SAL_CALL OAdabasTable::alterColumnByName( const ::rtl::OUString& colName, c
 
 }
 // -------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OAdabasTable::getName() throw(::com::sun::star::uno::RuntimeException)
+::rtl::OUString SAL_CALL OAdabasTable::getName()
 {
 	::rtl::OUString sName = m_SchemaName;
 	if(m_SchemaName.getLength())
@@ -367,6 +367,3 @@ void OAdabasTable::rollbackTransAction()
 	return sSql;
 }
 // -----------------------------------------------------------------------------
-
-
-

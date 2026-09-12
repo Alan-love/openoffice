@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -79,7 +79,7 @@ public:
         const css::awt::Rectangle& rInnerBox,
         const css::drawing::framework::BorderType eBorderType) const;
 
-    /** Transorm the outer bounding box of a window to the bounding box of
+    /** Transform the outer bounding box of a window to the bounding box of
         the inner content area.
         @param rsPaneURL
             Specifies the pane style that is used to determine the border sizes.
@@ -101,39 +101,34 @@ public:
     class Renderer;
 
     // XPaneBorderPainter
-    
+
     virtual css::awt::Rectangle SAL_CALL addBorder (
         const rtl::OUString& rsPaneBorderStyleName,
         const css::awt::Rectangle& rRectangle,
-        css::drawing::framework::BorderType eBorderType)
-        throw(css::uno::RuntimeException);
+        css::drawing::framework::BorderType eBorderType);
 
     virtual css::awt::Rectangle SAL_CALL removeBorder (
         const rtl::OUString& rsPaneBorderStyleName,
         const css::awt::Rectangle& rRectangle,
-        css::drawing::framework::BorderType eBorderType)
-        throw(css::uno::RuntimeException);
+        css::drawing::framework::BorderType eBorderType);
 
     virtual void SAL_CALL paintBorder (
         const rtl::OUString& rsPaneBorderStyleName,
         const css::uno::Reference<css::rendering::XCanvas>& rxCanvas,
         const css::awt::Rectangle& rOuterBorderRectangle,
         const css::awt::Rectangle& rRepaintArea,
-        const rtl::OUString& rsTitle)
-        throw(css::uno::RuntimeException);
-    
+        const rtl::OUString& rsTitle);
+
     virtual void SAL_CALL paintBorderWithCallout (
         const rtl::OUString& rsPaneBorderStyleName,
         const css::uno::Reference<css::rendering::XCanvas>& rxCanvas,
         const css::awt::Rectangle& rOuterBorderRectangle,
         const css::awt::Rectangle& rRepaintArea,
         const rtl::OUString& rsTitle,
-        const css::awt::Point& rCalloutAnchor)
-        throw(css::uno::RuntimeException);
+        const css::awt::Point& rCalloutAnchor);
 
     virtual css::awt::Point SAL_CALL getCalloutOffset (
-        const rtl::OUString& rsPaneBorderStyleName)
-        throw(css::uno::RuntimeException);
+        const rtl::OUString& rsPaneBorderStyleName);
 
 private:
     css::uno::Reference<css::uno::XComponentContext> mxContext;
@@ -150,8 +145,7 @@ private:
         const css::uno::Reference<css::rendering::XCanvas>& rxCanvas);
     bool ProvideTheme (void);
 
-    void ThrowIfDisposed (void) const
-        throw (::com::sun::star::lang::DisposedException);
+    void ThrowIfDisposed (void) const;
 };
 
 } } // end of namespace ::sd::presenter

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -46,7 +46,7 @@ namespace svt { namespace table
 {
 //........................................................................
 
-	
+
 	//====================================================================
 	//= ScrollbarVisibility
 	//====================================================================
@@ -254,7 +254,7 @@ namespace svt { namespace table
         /** returns the width of the column, in app-font unitss
 
             The returned value must be a positive ->TableMetrics value.
-            
+
             @see setWidth
             @see getMinWidth
             @see getMaxWidth
@@ -320,7 +320,7 @@ namespace svt { namespace table
     //====================================================================
 	//= ITableModel
 	//====================================================================
-    /** declares the interface to implement by an abtract table model
+    /** declares the interface to implement by an abstract table model
     */
 	class SAL_NO_VTABLE SVT_DLLPUBLIC ITableModel
 	{
@@ -352,7 +352,7 @@ namespace svt { namespace table
         virtual bool        hasRowHeaders() const = 0;
 
         /** determines whether the given cell is editable
-        
+
             @see ICellEditor
             @todo
         */
@@ -410,11 +410,11 @@ namespace svt { namespace table
         */
         virtual TableMetrics    getRowHeaderWidth() const = 0;
 
-        /** returns the visibilit mode of the vertical scrollbar
+        /** returns the visibility mode of the vertical scrollbar
         */
         virtual ScrollbarVisibility getVerticalScrollbarVisibility() const = 0;
 
-        /** returns the visibilit mode of the horizontal scrollbar
+        /** returns the visibility mode of the horizontal scrollbar
         */
         virtual ScrollbarVisibility getHorizontalScrollbarVisibility() const = 0;
 
@@ -528,7 +528,7 @@ namespace svt { namespace table
             It is legitimate to return <NULL/> here, in this case, the table model does not support sorting.
         */
         virtual ITableDataSort* getSortAdapter() = 0;
-        
+
         /** returns enabled state.
         */
         virtual bool isEnabled() const = 0;
@@ -536,7 +536,7 @@ namespace svt { namespace table
         /// destroys the table model instance
         virtual ~ITableModel() { }
 	};
-	typedef ::boost::shared_ptr< ITableModel > PTableModel;    
+	typedef ::boost::shared_ptr< ITableModel > PTableModel;
 
 //........................................................................
 } } // namespace svt::table

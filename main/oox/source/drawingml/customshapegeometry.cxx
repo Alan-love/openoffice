@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -283,7 +283,7 @@ static EnhancedCustomShapeParameter GetAdjCoordinate( CustomShapeProperties& rCu
 
 				aRet.Value = Any( CustomShapeProperties::SetCustomShapeGuideValue( rCustomShapeProperties.getGuideList(), aGuide ) );
 				aRet.Type = EnhancedCustomShapeParameterType::EQUATION;
-			}		
+			}
 			break;
 
 			case XML_t :
@@ -314,7 +314,7 @@ static EnhancedCustomShapeParameter GetAdjCoordinate( CustomShapeProperties& rCu
 				aRet.Type = EnhancedCustomShapeParameterType::EQUATION;
 			}
 			break;
-			case XML_ssd8 : // */ ss 1.0 8.0			
+			case XML_ssd8 : // */ ss 1.0 8.0
 				nVal += 2;
 			case XML_ssd6 : // */ ss 1.0 6.0
 				nVal += 2;
@@ -443,7 +443,7 @@ class GeomGuideListContext : public ContextHandler
 {
 public:
 	GeomGuideListContext( ContextHandler& rParent, CustomShapeProperties& rCustomShapeProperties, std::vector< CustomShapeGuide >& rGuideList );
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs ) throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs );
 
 protected:
     std::vector< CustomShapeGuide >&	mrGuideList;
@@ -622,7 +622,7 @@ static rtl::OUString convertToOOEquation( CustomShapeProperties& rCustomShapePro
 	return aEquation;
 }
 
-Reference< XFastContextHandler > GeomGuideListContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > GeomGuideListContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	if ( aElementToken == A_TOKEN( gd ) )	// CT_GeomGuide
 	{
@@ -662,7 +662,7 @@ class XYAdjustHandleContext : public ContextHandler
 {
 public:
     XYAdjustHandleContext( ContextHandler& rParent, const Reference< XFastAttributeList >& xAttribs, CustomShapeProperties& rCustomShapeProperties, AdjustHandle& rAdjustHandle );
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs ) throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs );
 
 protected:
     AdjustHandle& mrAdjustHandle;
@@ -702,7 +702,7 @@ XYAdjustHandleContext::XYAdjustHandleContext( ContextHandler& rParent, const Ref
 	}
 }
 
-Reference< XFastContextHandler > XYAdjustHandleContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > XYAdjustHandleContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xContext;
 	if ( aElementToken == A_TOKEN( pos ) )
@@ -716,7 +716,7 @@ class PolarAdjustHandleContext : public ContextHandler
 {
 public:
     PolarAdjustHandleContext( ContextHandler& rParent, const Reference< XFastAttributeList >& xAttribs, CustomShapeProperties& rCustomShapeProperties, AdjustHandle& rAdjustHandle );
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs ) throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs );
 
 protected:
     AdjustHandle& mrAdjustHandle;
@@ -756,7 +756,7 @@ PolarAdjustHandleContext::PolarAdjustHandleContext( ContextHandler& rParent, con
 	}
 }
 
-Reference< XFastContextHandler > PolarAdjustHandleContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > PolarAdjustHandleContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xContext;
 	if ( aElementToken == A_TOKEN( pos ) )
@@ -770,7 +770,7 @@ class AdjustHandleListContext : public ContextHandler
 {
 public:
     AdjustHandleListContext( ContextHandler& rParent, CustomShapeProperties& rCustomShapeProperties, std::vector< AdjustHandle >& rAdjustHandleList );
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs ) throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs );
 
 protected:
     std::vector< AdjustHandle >& mrAdjustHandleList;
@@ -784,7 +784,7 @@ AdjustHandleListContext::AdjustHandleListContext( ContextHandler& rParent, Custo
 {
 }
 
-Reference< XFastContextHandler > AdjustHandleListContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > AdjustHandleListContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xContext;
 	if ( aElementToken == A_TOKEN( ahXY ) )			// CT_XYAdjustHandle
@@ -808,7 +808,7 @@ class ConnectionSiteContext : public ContextHandler
 {
 public:
     ConnectionSiteContext( ContextHandler& rParent, const Reference< XFastAttributeList >& xAttribs, CustomShapeProperties& rCustomShapeProperties, ConnectionSite& rConnectionSite );
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs ) throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs );
 
 protected:
     ConnectionSite& mrConnectionSite;
@@ -823,7 +823,7 @@ ConnectionSiteContext::ConnectionSiteContext( ContextHandler& rParent, const Ref
 	mrConnectionSite.ang = GetAdjAngle( mrCustomShapeProperties, xAttribs->getOptionalValue( XML_ang ) );
 }
 
-Reference< XFastContextHandler > ConnectionSiteContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > ConnectionSiteContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xContext;
 	if ( aElementToken == A_TOKEN( pos ) )
@@ -837,7 +837,7 @@ class Path2DMoveToContext : public ContextHandler
 {
 public:
     Path2DMoveToContext( ContextHandler& rParent, CustomShapeProperties& rCustomShapeProperties, EnhancedCustomShapeParameterPair& rAdjPoint2D );
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs ) throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs );
 
 protected:
     EnhancedCustomShapeParameterPair& mrAdjPoint2D;
@@ -851,7 +851,7 @@ Path2DMoveToContext::Path2DMoveToContext( ContextHandler& rParent, CustomShapePr
 {
 }
 
-Reference< XFastContextHandler > Path2DMoveToContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > Path2DMoveToContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xContext;
 	if ( aElementToken == A_TOKEN( pt ) )
@@ -865,7 +865,7 @@ class Path2DLineToContext : public ContextHandler
 {
 public:
     Path2DLineToContext( ContextHandler& rParent, CustomShapeProperties& rCustomShapeProperties, EnhancedCustomShapeParameterPair& rAdjPoint2D );
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs ) throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs );
 
 protected:
     EnhancedCustomShapeParameterPair& mrAdjPoint2D;
@@ -879,7 +879,7 @@ Path2DLineToContext::Path2DLineToContext( ContextHandler& rParent, CustomShapePr
 {
 }
 
-Reference< XFastContextHandler > Path2DLineToContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > Path2DLineToContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xContext;
 	if ( aElementToken == A_TOKEN( pt ) )
@@ -893,7 +893,7 @@ class Path2DQuadBezierToContext : public ContextHandler
 {
 public:
     Path2DQuadBezierToContext( ContextHandler& rParent, CustomShapeProperties& rCustomShapeProperties, EnhancedCustomShapeParameterPair& rPt1, EnhancedCustomShapeParameterPair& rPt2 );
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs ) throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs );
 
 protected:
     EnhancedCustomShapeParameterPair& mrPt1;
@@ -914,7 +914,7 @@ Path2DQuadBezierToContext::Path2DQuadBezierToContext( ContextHandler& rParent,
 {
 }
 
-Reference< XFastContextHandler > Path2DQuadBezierToContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > Path2DQuadBezierToContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xContext;
 	if ( aElementToken == A_TOKEN( pt ) )
@@ -929,7 +929,7 @@ class Path2DCubicBezierToContext : public ContextHandler
 public:
     Path2DCubicBezierToContext( ContextHandler& rParent, CustomShapeProperties& rCustomShapeProperties,
 		EnhancedCustomShapeParameterPair&, EnhancedCustomShapeParameterPair&, EnhancedCustomShapeParameterPair& );
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs ) throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs );
 
 protected:
 	CustomShapeProperties& mrCustomShapeProperties;
@@ -941,7 +941,7 @@ protected:
 
 Path2DCubicBezierToContext::Path2DCubicBezierToContext( ContextHandler& rParent, CustomShapeProperties& rCustomShapeProperties,
 	EnhancedCustomShapeParameterPair& rControlPt1,
-		EnhancedCustomShapeParameterPair& rControlPt2, 
+		EnhancedCustomShapeParameterPair& rControlPt2,
 			EnhancedCustomShapeParameterPair& rEndPt )
 : ContextHandler( rParent )
 , mrCustomShapeProperties( rCustomShapeProperties )
@@ -952,7 +952,7 @@ Path2DCubicBezierToContext::Path2DCubicBezierToContext( ContextHandler& rParent,
 {
 }
 
-Reference< XFastContextHandler > Path2DCubicBezierToContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > Path2DCubicBezierToContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xContext;
 	if ( aElementToken == A_TOKEN( pt ) )
@@ -969,8 +969,7 @@ public:
     Path2DContext( ContextHandler& rParent, const Reference< XFastAttributeList >& xAttribs, CustomShapeProperties& rCustomShapeProperties, std::vector< com::sun::star::drawing::EnhancedCustomShapeSegment >& rSegments, Path2D& rPath2D );
 	virtual ~Path2DContext();
 	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL
-		createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs )
-			throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException);
+		createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs );
 
 protected:
 	Path2D& mrPath2D;
@@ -1009,7 +1008,7 @@ Path2DContext::~Path2DContext()
 }
 
 Reference< XFastContextHandler > Path2DContext::createFastChildContext( sal_Int32 aElementToken,
-	const Reference< XFastAttributeList >& xAttribs ) throw ( SAXException, RuntimeException )
+	const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xContext;
 	switch( aElementToken )
@@ -1131,8 +1130,8 @@ class Path2DListContext : public ContextHandler
 public:
 	Path2DListContext( ContextHandler& rParent, CustomShapeProperties& rCustomShapeProperties, std::vector< EnhancedCustomShapeSegment >& rSegments,
 		std::vector< Path2D >& rPath2DList );
-	
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs ) throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException);
+
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs );
 
 protected:
 
@@ -1150,7 +1149,7 @@ Path2DListContext::Path2DListContext( ContextHandler& rParent, CustomShapeProper
 {
 }
 
-::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL Path2DListContext::createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs ) throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException)
+::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastContextHandler > SAL_CALL Path2DListContext::createFastChildContext( sal_Int32 aElementToken, const ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xContext;
 	if ( aElementToken == A_TOKEN( path ) )
@@ -1251,7 +1250,7 @@ OUString GetShapeType( sal_Int32 nType )
             static const OUString sPlaque = CREATE_OUSTRING( "mso-spt21" );
 			sType = sPlaque;
 			} break;
-		case XML_teardrop:{                
+		case XML_teardrop:{
             static const OUString sTearDrop = CREATE_OUSTRING( "teardrop" );
 			sType = sTearDrop;
 			} break;
@@ -1974,7 +1973,7 @@ CustomShapeGeometryContext::CustomShapeGeometryContext( ContextHandler& rParent,
 {
 }
 
-Reference< XFastContextHandler > CustomShapeGeometryContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > CustomShapeGeometryContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xContext;
 	switch( aElementToken )
@@ -2031,7 +2030,7 @@ PresetShapeGeometryContext::PresetShapeGeometryContext( ContextHandler& rParent,
 	mrCustomShapeProperties.setShapePresetType( sShapeType );
 }
 
-Reference< XFastContextHandler > PresetShapeGeometryContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > PresetShapeGeometryContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& )
 {
 	if ( aElementToken == A_TOKEN( avLst ) )
         return new GeomGuideListContext( *this, mrCustomShapeProperties, mrCustomShapeProperties.getAdjustmentGuideList() );
@@ -2053,7 +2052,7 @@ PresetTextShapeContext::PresetTextShapeContext( ContextHandler& rParent, const R
 	mrCustomShapeProperties.setShapePresetType( sShapeType );
 }
 
-Reference< XFastContextHandler > PresetTextShapeContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > PresetTextShapeContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& )
 {
 	if ( aElementToken == A_TOKEN( avLst ) )
         return new GeomGuideListContext( *this, mrCustomShapeProperties, mrCustomShapeProperties.getAdjustmentGuideList() );

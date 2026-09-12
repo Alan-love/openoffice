@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -123,7 +123,6 @@ OfficeInstallationDirectories::~OfficeInstallationDirectories()
 // virtual
 rtl::OUString SAL_CALL
 OfficeInstallationDirectories::getOfficeInstallationDirectoryURL()
-    throw ( uno::RuntimeException )
 {
     initDirs();
     return rtl::OUString( *m_pOfficeBrandDir );
@@ -133,7 +132,6 @@ OfficeInstallationDirectories::getOfficeInstallationDirectoryURL()
 // virtual
 rtl::OUString SAL_CALL
 OfficeInstallationDirectories::getOfficeUserDataDirectoryURL()
-    throw ( uno::RuntimeException )
 {
     initDirs();
     return rtl::OUString( *m_pUserDir );
@@ -144,7 +142,6 @@ OfficeInstallationDirectories::getOfficeUserDataDirectoryURL()
 // virtual
 rtl::OUString SAL_CALL
 OfficeInstallationDirectories::makeRelocatableURL( const rtl::OUString& URL )
-    throw ( uno::RuntimeException )
 {
     if ( !URL.isEmpty() )
     {
@@ -191,7 +188,6 @@ OfficeInstallationDirectories::makeRelocatableURL( const rtl::OUString& URL )
 // virtual
 rtl::OUString SAL_CALL
 OfficeInstallationDirectories::makeAbsoluteURL( const rtl::OUString& URL )
-    throw ( uno::RuntimeException )
 {
     if ( !URL.isEmpty() )
     {
@@ -242,7 +238,6 @@ OfficeInstallationDirectories::makeAbsoluteURL( const rtl::OUString& URL )
 // virtual
 rtl::OUString SAL_CALL
 OfficeInstallationDirectories::getImplementationName()
-    throw ( uno::RuntimeException )
 {
     return getImplementationName_static();
 }
@@ -251,7 +246,6 @@ OfficeInstallationDirectories::getImplementationName()
 // virtual
 sal_Bool SAL_CALL
 OfficeInstallationDirectories::supportsService( const rtl::OUString& ServiceName )
-    throw ( uno::RuntimeException )
 {
     const uno::Sequence< rtl::OUString > & aNames
         = getSupportedServiceNames();
@@ -269,7 +263,6 @@ OfficeInstallationDirectories::supportsService( const rtl::OUString& ServiceName
 // virtual
 uno::Sequence< ::rtl::OUString > SAL_CALL
 OfficeInstallationDirectories::getSupportedServiceNames()
-    throw ( uno::RuntimeException )
 {
     return getSupportedServiceNames_static();
 }

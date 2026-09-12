@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -94,7 +94,7 @@ public:
 
     ContainerListenerImpl( BasicIDEShell* pShell ) : mpShell( pShell ) {}
 
-    ~ContainerListenerImpl() 
+    ~ContainerListenerImpl()
     {
     }
 
@@ -126,17 +126,17 @@ public:
     }
 
     // XEventListener
-    virtual void SAL_CALL disposing( const lang::EventObject& ) throw( uno::RuntimeException ) {}
+    virtual void SAL_CALL disposing( const lang::EventObject& ) {}
 
     // XContainerListener
-    virtual void SAL_CALL elementInserted( const container::ContainerEvent& Event ) throw( uno::RuntimeException )
+    virtual void SAL_CALL elementInserted( const container::ContainerEvent& Event )
     {
         rtl::OUString sModuleName;
         if( mpShell && ( Event.Accessor >>= sModuleName ) )
             mpShell->FindBasWin( mpShell->m_aCurDocument, mpShell->m_aCurLibName, sModuleName, sal_True, sal_False );
     }
-    virtual void SAL_CALL elementReplaced( const container::ContainerEvent& ) throw( com::sun::star::uno::RuntimeException ) { }
-    virtual void SAL_CALL elementRemoved( const container::ContainerEvent& Event ) throw( com::sun::star::uno::RuntimeException )
+    virtual void SAL_CALL elementReplaced( const container::ContainerEvent& ) { }
+    virtual void SAL_CALL elementRemoved( const container::ContainerEvent& Event )
     {
         rtl::OUString sModuleName;
         if( mpShell  && ( Event.Accessor >>= sModuleName ) )
@@ -278,7 +278,7 @@ __EXPORT BasicIDEShell::~BasicIDEShell()
         // Destroy all ContainerListeners for Basic Container.
         if ( pListener )
             pListener->removeContainerListener( m_aCurDocument, m_aCurLibName );
-    
+
 	// MI: Das gab einen GPF im SDT beim Schliessen da dann der ViewFrame die
 	// ObjSh loslaesst. Es wusste auch keiner mehr wozu das gut war.
 	// GetViewFrame()->GetObjectShell()->Broadcast( SfxSimpleHint( SFX_HINT_DYING ) );
@@ -1009,7 +1009,7 @@ void BasicIDEShell::SetCurLib( const ScriptDocument& rDocument, String aLibName,
         	pListener->removeContainerListener( m_aCurDocument, m_aCurLibName );
 
         m_aCurDocument = rDocument;
-    
+
         pListener->addContainerListener( m_aCurDocument, aLibName );
 
         m_aCurLibName = aLibName;
@@ -1056,5 +1056,3 @@ void BasicIDEShell::ImplStartListening( StarBASIC* pBasic )
 {
 	StartListening( pBasic->GetBroadcaster(), sal_True /* Nur einmal anmelden */ );
 }
-
-

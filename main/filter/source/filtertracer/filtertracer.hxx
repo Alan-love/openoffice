@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -61,7 +61,7 @@
 
 
 #define REF( _def_Obj )         NMSP_UNO::Reference< _def_Obj >
-#define SEQ( _def_Obj )         NMSP_UNO::Sequence< _def_Obj > 
+#define SEQ( _def_Obj )         NMSP_UNO::Sequence< _def_Obj >
 #define B2UCONST( _def_pChar )  (rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(_def_pChar )))
 
 // ----------------
@@ -72,7 +72,7 @@
 /** Some options of the FilterTracer can be initialized
     via XInitialization interface.
 
-	Therefore the first sequence of	PropertyValues that 
+	Therefore the first sequence of	PropertyValues that
 	is given in the argument list is used.
 
 	Following Properties are supported:
@@ -112,7 +112,7 @@
 */
 
 class FilterTracer : public cppu::WeakImplHelper4
-< 
+<
 	NMSP_LOGGING::XLogger,
 	NMSP_LANG::XInitialization,
 	NMSP_LANG::XServiceInfo,
@@ -139,44 +139,37 @@ class FilterTracer : public cppu::WeakImplHelper4
 public:
 							FilterTracer( const REF( NMSP_LANG::XMultiServiceFactory )& rxMgr );
 	virtual 				~FilterTracer();
-											
-	// XInterface							
+
+	// XInterface
     virtual void SAL_CALL	acquire() throw();
     virtual void SAL_CALL	release() throw();
-    
+
 	// XInitialization
-    virtual void SAL_CALL initialize( const SEQ( NMSP_UNO::Any )& aArguments ) 
-		throw ( NMSP_UNO::Exception, NMSP_UNO::RuntimeException );
+    virtual void SAL_CALL initialize( const SEQ( NMSP_UNO::Any )& aArguments );
 
 	// XServiceInfo
-    virtual rtl::OUString SAL_CALL getImplementationName() 
-		throw ( NMSP_UNO::RuntimeException );
-    virtual sal_Bool SAL_CALL supportsService( const rtl::OUString& rServiceName ) 
-		throw ( NMSP_UNO::RuntimeException );
-    virtual SEQ( rtl::OUString ) SAL_CALL getSupportedServiceNames() 
-		throw ( NMSP_UNO::RuntimeException );
+    virtual rtl::OUString SAL_CALL getImplementationName();
+    virtual sal_Bool SAL_CALL supportsService( const rtl::OUString& rServiceName );
+    virtual SEQ( rtl::OUString ) SAL_CALL getSupportedServiceNames();
 
 	// XLogger
-    virtual REF( NMSP_LOGGING::XLogger ) SAL_CALL getLogger( const rtl::OUString& rName ) throw (::com::sun::star::uno::RuntimeException);
-    virtual sal_Int32 SAL_CALL getLevel() throw (::com::sun::star::uno::RuntimeException);
-	virtual rtl::OUString SAL_CALL getName() throw (::com::sun::star::uno::RuntimeException);
-	virtual sal_Bool SAL_CALL isLoggable( sal_Int32 nLevel ) throw (::com::sun::star::uno::RuntimeException);
+    virtual REF( NMSP_LOGGING::XLogger ) SAL_CALL getLogger( const rtl::OUString& rName );
+    virtual sal_Int32 SAL_CALL getLevel();
+	virtual rtl::OUString SAL_CALL getName();
+	virtual sal_Bool SAL_CALL isLoggable( sal_Int32 nLevel );
 	virtual void SAL_CALL logp( sal_Int32 nLevel, const rtl::OUString& rSourceClass,
-					const rtl::OUString& rSourceMethod, const rtl::OUString& rMessage ) throw (::com::sun::star::uno::RuntimeException);
+					const rtl::OUString& rSourceMethod, const rtl::OUString& rMessage );
 
 	// XTextSearch
-	virtual void SAL_CALL setOptions( const NMSP_UTIL::SearchOptions& ) throw (::com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL setOptions( const NMSP_UTIL::SearchOptions& );
 	virtual NMSP_UTIL::SearchResult SAL_CALL searchForward( const rtl::OUString& rSearchStr,
-		sal_Int32 nStartPos, sal_Int32 nEndPos ) throw (::com::sun::star::uno::RuntimeException);
+		sal_Int32 nStartPos, sal_Int32 nEndPos );
 	virtual NMSP_UTIL::SearchResult SAL_CALL searchBackward( const rtl::OUString& rSearchStr,
-		sal_Int32 nStartPos, sal_Int32 nEndPos ) throw (::com::sun::star::uno::RuntimeException);
+		sal_Int32 nStartPos, sal_Int32 nEndPos );
 };
 
-rtl::OUString FilterTracer_getImplementationName()
-	throw ( NMSP_UNO::RuntimeException );
-sal_Bool SAL_CALL FilterTracer_supportsService( const rtl::OUString& rServiceName )
-	throw( NMSP_UNO::RuntimeException );
-SEQ( rtl::OUString ) SAL_CALL FilterTracer_getSupportedServiceNames() 
-	throw( NMSP_UNO::RuntimeException );
+rtl::OUString FilterTracer_getImplementationName();
+sal_Bool SAL_CALL FilterTracer_supportsService( const rtl::OUString& rServiceName );
+SEQ( rtl::OUString ) SAL_CALL FilterTracer_getSupportedServiceNames();
 
 #endif

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -37,24 +37,20 @@ public:
 	IndexEntrySupplier_Unicode( const com::sun::star::uno::Reference < com::sun::star::lang::XMultiServiceFactory >& rxMSF );
 	~IndexEntrySupplier_Unicode();
 
-	virtual sal_Bool SAL_CALL loadAlgorithm( 
+	virtual sal_Bool SAL_CALL loadAlgorithm(
 		const com::sun::star::lang::Locale& rLocale,
-		const rtl::OUString& SortAlgorithm, sal_Int32 collatorOptions ) 
-		throw (com::sun::star::uno::RuntimeException);
+		const rtl::OUString& SortAlgorithm, sal_Int32 collatorOptions );
 
 	virtual rtl::OUString SAL_CALL getIndexKey( const rtl::OUString& IndexEntry,
-		const rtl::OUString& PhoneticEntry, const com::sun::star::lang::Locale& rLocale ) 
-		throw (com::sun::star::uno::RuntimeException);
+		const rtl::OUString& PhoneticEntry, const com::sun::star::lang::Locale& rLocale );
 
 	virtual sal_Int16 SAL_CALL compareIndexEntry( const rtl::OUString& IndexEntry1,
 		const rtl::OUString& PhoneticEntry1, const com::sun::star::lang::Locale& rLocale1,
-		const rtl::OUString& IndexEntry2, const ::rtl::OUString& PhoneticEntry2, 
-		const com::sun::star::lang::Locale& rLocale2 )
-		throw (com::sun::star::uno::RuntimeException);
+		const rtl::OUString& IndexEntry2, const ::rtl::OUString& PhoneticEntry2,
+		const com::sun::star::lang::Locale& rLocale2 );
 
 	virtual rtl::OUString SAL_CALL getIndexCharacter( const rtl::OUString& rIndexEntry,
-		const com::sun::star::lang::Locale& rLocale, const rtl::OUString& rSortAlgorithm )
-		throw (com::sun::star::uno::RuntimeException);
+		const com::sun::star::lang::Locale& rLocale, const rtl::OUString& rSortAlgorithm );
 
 private:
     Index *index;
@@ -82,15 +78,15 @@ public:
 #define MAX_KEYS 0xff
 #define MAX_TABLES 20
 
-class Index 
+class Index
 {
 public:
     Index(const com::sun::star::uno::Reference < com::sun::star::lang::XMultiServiceFactory >& rxMSF);
     ~Index();
 
-    void init(const com::sun::star::lang::Locale& rLocale, const rtl::OUString& algorithm) throw (com::sun::star::uno::RuntimeException);
+    void init(const com::sun::star::lang::Locale& rLocale, const rtl::OUString& algorithm);
 
-    void makeIndexKeys(const com::sun::star::lang::Locale &rLocale, const rtl::OUString &algorithm) throw (com::sun::star::uno::RuntimeException);
+    void makeIndexKeys(const com::sun::star::lang::Locale &rLocale, const rtl::OUString &algorithm);
     sal_Int16 getIndexWeight(const rtl::OUString& rIndexEntry);
     rtl::OUString getIndexDescription(const rtl::OUString& rIndexEntry);
 

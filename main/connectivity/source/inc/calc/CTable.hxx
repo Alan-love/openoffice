@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -26,7 +26,7 @@
 
 #include "file/FTable.hxx"
 #include <tools/date.hxx>
- 
+
 namespace com { namespace sun { namespace star { namespace sheet {
 	class XSpreadsheet;
     class XSpreadsheetDocument;
@@ -50,7 +50,7 @@ namespace connectivity
 
 		class OCalcTable :	public OCalcTable_BASE
 		{
-		private:					
+		private:
 			::std::vector<sal_Int32> m_aTypes;		// holds all type for columns just to avoid to ask the propertyset
 			::std::vector<sal_Int32> m_aPrecisions;	// same as aboth
 			::std::vector<sal_Int32> m_aScales;
@@ -85,13 +85,13 @@ namespace connectivity
 			virtual sal_Bool seekRow(IResultSetHelper::Movement eCursorPosition, sal_Int32 nOffset, sal_Int32& nCurPos);
 			virtual sal_Bool fetchRow(OValueRefRow& _rRow,const OSQLColumns& _rCols, sal_Bool _bUseTableDefs,sal_Bool bRetrieveData);
 
-			virtual ::com::sun::star::uno::Any SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType ) throw(::com::sun::star::uno::RuntimeException);
+			virtual ::com::sun::star::uno::Any SAL_CALL queryInterface( const ::com::sun::star::uno::Type & rType );
 			//XTypeProvider
-			virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL getTypes(  ) throw(::com::sun::star::uno::RuntimeException);
+			virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Type > SAL_CALL getTypes(  );
 			virtual void SAL_CALL disposing(void);
 
 			// com::sun::star::lang::XUnoTunnel
-			virtual sal_Int64 SAL_CALL getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier ) throw(::com::sun::star::uno::RuntimeException);
+			virtual sal_Int64 SAL_CALL getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier );
 			static ::com::sun::star::uno::Sequence< sal_Int8 > getUnoTunnelImplementationId();
 
             void construct();
@@ -100,4 +100,3 @@ namespace connectivity
 }
 
 #endif // _CONNECTIVITY_CALC_TABLE_HXX_
-

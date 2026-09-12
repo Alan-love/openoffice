@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -67,20 +67,20 @@ namespace svt
 
 	public:
 		// XTypeProvider
-		virtual Sequence<sal_Int8> SAL_CALL getImplementationId(  ) throw(RuntimeException);
+		virtual Sequence<sal_Int8> SAL_CALL getImplementationId(  );
 
 		// XServiceInfo
-		virtual ::rtl::OUString SAL_CALL getImplementationName() throw(RuntimeException);
-		virtual ::comphelper::StringSequence SAL_CALL getSupportedServiceNames() throw(RuntimeException);
+		virtual ::rtl::OUString SAL_CALL getImplementationName();
+		virtual ::comphelper::StringSequence SAL_CALL getSupportedServiceNames();
 
 		// XServiceInfo - static methods
-		static Sequence< ::rtl::OUString > getSupportedServiceNames_Static(void) throw( RuntimeException );
-		static ::rtl::OUString getImplementationName_Static(void) throw( RuntimeException );
+		static Sequence< ::rtl::OUString > getSupportedServiceNames_Static(void);
+		static ::rtl::OUString getImplementationName_Static(void);
 		static Reference< XInterface >
 				SAL_CALL Create(const Reference< com::sun::star::lang::XMultiServiceFactory >&);
 
 		// XPropertySet
-		virtual Reference< XPropertySetInfo>  SAL_CALL getPropertySetInfo() throw(RuntimeException);
+		virtual Reference< XPropertySetInfo>  SAL_CALL getPropertySetInfo();
 		virtual ::cppu::IPropertyArrayHelper& SAL_CALL getInfoHelper();
 
 		// OPropertyArrayUsageHelper
@@ -113,7 +113,7 @@ namespace svt
 	}
 
 	//-------------------------------------------------------------------------
-	Sequence<sal_Int8> SAL_CALL OAddressBookSourceDialogUno::getImplementationId(  ) throw(RuntimeException)
+	Sequence<sal_Int8> SAL_CALL OAddressBookSourceDialogUno::getImplementationId(  )
 	{
 		static ::cppu::OImplementationId aId;
 		return aId.getImplementationId();
@@ -126,25 +126,25 @@ namespace svt
 	}
 
 	//-------------------------------------------------------------------------
-	::rtl::OUString SAL_CALL OAddressBookSourceDialogUno::getImplementationName() throw(RuntimeException)
+	::rtl::OUString SAL_CALL OAddressBookSourceDialogUno::getImplementationName()
 	{
 		return getImplementationName_Static();
 	}
 
 	//-------------------------------------------------------------------------
-	::rtl::OUString OAddressBookSourceDialogUno::getImplementationName_Static() throw(RuntimeException)
+	::rtl::OUString OAddressBookSourceDialogUno::getImplementationName_Static()
 	{
 		return ::rtl::OUString::createFromAscii("com.sun.star.comp.svtools.OAddressBookSourceDialogUno");
 	}
 
 	//-------------------------------------------------------------------------
-	::comphelper::StringSequence SAL_CALL OAddressBookSourceDialogUno::getSupportedServiceNames() throw(RuntimeException)
+	::comphelper::StringSequence SAL_CALL OAddressBookSourceDialogUno::getSupportedServiceNames()
 	{
 		return getSupportedServiceNames_Static();
 	}
 
 	//-------------------------------------------------------------------------
-	::comphelper::StringSequence OAddressBookSourceDialogUno::getSupportedServiceNames_Static() throw(RuntimeException)
+	::comphelper::StringSequence OAddressBookSourceDialogUno::getSupportedServiceNames_Static()
 	{
 		::comphelper::StringSequence aSupported(1);
 		aSupported.getArray()[0] = ::rtl::OUString::createFromAscii("com.sun.star.ui.AddressBookSourceDialog");
@@ -152,7 +152,7 @@ namespace svt
 	}
 
 	//-------------------------------------------------------------------------
-	Reference<XPropertySetInfo>  SAL_CALL OAddressBookSourceDialogUno::getPropertySetInfo() throw(RuntimeException)
+	Reference<XPropertySetInfo>  SAL_CALL OAddressBookSourceDialogUno::getPropertySetInfo()
 	{
 		Reference<XPropertySetInfo>  xInfo( createPropertySetInfo( getInfoHelper() ) );
 		return xInfo;
@@ -234,4 +234,3 @@ namespace svt
 // .......................................................................
 }	// namespace svt
 // .......................................................................
-

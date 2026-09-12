@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -171,7 +171,7 @@ protected:
 
 protected:
     /** Additionally to our own approvals which new elements must pass, derived classes
-        can specifiy an additional approval instance here.
+        can specify an additional approval instance here.
 
         Every time a new element is inserted into the container (or an element is replaced
         with a new one), this new element must pass our own internal approval, plus the approval
@@ -208,47 +208,47 @@ public:
 	DECLARE_TYPEPROVIDER( );
 
 // ::com::sun::star::lang::XServiceInfo
-	virtual ::rtl::OUString SAL_CALL getImplementationName(  ) throw(::com::sun::star::uno::RuntimeException);
-	virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  ) throw(::com::sun::star::uno::RuntimeException);
+	virtual ::rtl::OUString SAL_CALL getImplementationName(  );
+	virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  );
 
 // ::com::sun::star::container::XElementAccess
-	virtual ::com::sun::star::uno::Type SAL_CALL getElementType(  ) throw(::com::sun::star::uno::RuntimeException);
-	virtual sal_Bool SAL_CALL hasElements(  ) throw(::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Type SAL_CALL getElementType(  );
+	virtual sal_Bool SAL_CALL hasElements(  );
 
 // ::com::sun::star::container::XEnumerationAccess
-	virtual ::com::sun::star::uno::Reference< ::com::sun::star::container::XEnumeration > SAL_CALL createEnumeration(  ) throw(::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Reference< ::com::sun::star::container::XEnumeration > SAL_CALL createEnumeration(  );
 
 // ::com::sun::star::container::XIndexAccess
-	virtual sal_Int32 SAL_CALL getCount(  ) throw(::com::sun::star::uno::RuntimeException);
-	virtual ::com::sun::star::uno::Any SAL_CALL getByIndex( sal_Int32 _nIndex ) throw(::com::sun::star::lang::IndexOutOfBoundsException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
+	virtual sal_Int32 SAL_CALL getCount(  );
+	virtual ::com::sun::star::uno::Any SAL_CALL getByIndex( sal_Int32 _nIndex );
 
 // ::com::sun::star::container::XNameContainer
-    virtual void SAL_CALL insertByName( const ::rtl::OUString& _rName, const ::com::sun::star::uno::Any& aElement ) throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::container::ElementExistException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL removeByName( const ::rtl::OUString& _rName ) throw(::com::sun::star::container::NoSuchElementException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL insertByName( const ::rtl::OUString& _rName, const ::com::sun::star::uno::Any& aElement );
+    virtual void SAL_CALL removeByName( const ::rtl::OUString& _rName );
 
 // ::com::sun::star::container::XNameReplace
-    virtual void SAL_CALL replaceByName( const ::rtl::OUString& _rName, const ::com::sun::star::uno::Any& aElement ) throw(::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::container::NoSuchElementException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL replaceByName( const ::rtl::OUString& _rName, const ::com::sun::star::uno::Any& aElement );
 
 // ::com::sun::star::container::XNameAccess
-	virtual ::com::sun::star::uno::Any SAL_CALL getByName( const ::rtl::OUString& aName ) throw(::com::sun::star::container::NoSuchElementException, ::com::sun::star::lang::WrappedTargetException, ::com::sun::star::uno::RuntimeException);
-	virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getElementNames(  ) throw(::com::sun::star::uno::RuntimeException);
-	virtual sal_Bool SAL_CALL hasByName( const ::rtl::OUString& aName ) throw(::com::sun::star::uno::RuntimeException);
+	virtual ::com::sun::star::uno::Any SAL_CALL getByName( const ::rtl::OUString& aName );
+	virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getElementNames(  );
+	virtual sal_Bool SAL_CALL hasByName( const ::rtl::OUString& aName );
 
 // ::com::sun::star::container::XContainer
-    virtual void SAL_CALL addContainerListener( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XContainerListener >& xListener ) throw(::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL removeContainerListener( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XContainerListener >& xListener ) throw(::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL addContainerListener( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XContainerListener >& xListener );
+    virtual void SAL_CALL removeContainerListener( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XContainerListener >& xListener );
 
     // XContainerApproveBroadcaster
-    virtual void SAL_CALL addContainerApproveListener( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XContainerApproveListener >& Listener ) throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL removeContainerApproveListener( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XContainerApproveListener >& Listener ) throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL addContainerApproveListener( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XContainerApproveListener >& Listener );
+    virtual void SAL_CALL removeContainerApproveListener( const ::com::sun::star::uno::Reference< ::com::sun::star::container::XContainerApproveListener >& Listener );
 
 // ::com::sun::star::lang::XEventListener
-	virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source ) throw(::com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source );
 
 	// XPropertyChangeListener
-	virtual void SAL_CALL propertyChange( const ::com::sun::star::beans::PropertyChangeEvent& evt ) throw (::com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL propertyChange( const ::com::sun::star::beans::PropertyChangeEvent& evt );
 	// XVetoableChangeListener
-	virtual void SAL_CALL vetoableChange( const ::com::sun::star::beans::PropertyChangeEvent& aEvent ) throw (::com::sun::star::beans::PropertyVetoException, ::com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL vetoableChange( const ::com::sun::star::beans::PropertyChangeEvent& aEvent );
 
 protected:
 	// helper
@@ -256,7 +256,7 @@ protected:
 
 	/** create a object from it's persistent data within the configuration. To be overwritten by derived classes.
 		@param		_rName			the name the object has within the container
-		@return						the newly created object or an empty reference if somthing went wrong
+		@return						the newly created object or an empty reference if something went wrong
 	*/
 	virtual ::com::sun::star::uno::Reference< ::com::sun::star::ucb::XContent > createObject(
 		const ::rtl::OUString& _rName) = 0;
@@ -270,7 +270,7 @@ protected:
 		@see	createObject
 	*/
 	virtual ::com::sun::star::uno::Reference< ::com::sun::star::ucb::XContent >
-				implGetByName(const ::rtl::OUString& _rName, sal_Bool _bCreateIfNecessary) throw (::com::sun::star::container::NoSuchElementException);
+				implGetByName(const ::rtl::OUString& _rName, sal_Bool _bCreateIfNecessary);
 
 	/** quickly checks if there already is an element with a given name. No access to the configuration occurs, i.e.
 		if there is such an object which is not already loaded, it won't be loaded now.
@@ -368,4 +368,3 @@ private:
 //........................................................................
 
 #endif // _DBA_CORE_DEFINITIONCONTAINER_HXX_
-

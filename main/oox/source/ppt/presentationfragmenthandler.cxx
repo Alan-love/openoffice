@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -73,7 +73,7 @@ PresentationFragmentHandler::~PresentationFragmentHandler() throw()
 {
 
 }
-void PresentationFragmentHandler::startDocument() throw (SAXException, RuntimeException)
+void PresentationFragmentHandler::startDocument()
 {
 }
 
@@ -124,7 +124,7 @@ void ResolveTextFields( XmlFilterBase& rFilter )
 							aURL = CREATE_OUSTRING( "#" ).concat( xNamed->getName() );
 							xPropSet->setPropertyValue( sURL, Any( aURL ) );
 							Reference< text::XTextContent > xContent( rTextField.xTextField, UNO_QUERY);
-							Reference< text::XTextRange > xTextRange( rTextField.xTextCursor, UNO_QUERY );						
+							Reference< text::XTextRange > xTextRange( rTextField.xTextCursor, UNO_QUERY );
 							rTextField.xText->insertTextContent( xTextRange, xContent, sal_True );
 						}
 						catch( uno::Exception& )
@@ -132,12 +132,12 @@ void ResolveTextFields( XmlFilterBase& rFilter )
 						}
 					}
 				}
-			}		
+			}
 		}
 	}
 }
 
-void PresentationFragmentHandler::endDocument() throw (SAXException, RuntimeException)
+void PresentationFragmentHandler::endDocument()
 {
 	// todo: localized progress bar text
 	const Reference< task::XStatusIndicator >& rxStatusIndicator( getFilter().getStatusIndicator() );
@@ -275,7 +275,7 @@ void PresentationFragmentHandler::endDocument() throw (SAXException, RuntimeExce
 							FragmentHandlerRef xNotesMasterFragmentHandler( new SlideFragmentHandler( getFilter(), aNotesMasterFragmentPath, pNotesMasterPersistPtr, Slide ) );
 
                             // TODO: Theme support is missing, theme pointer in SlidePersist is null and used later
-                            
+
 							importSlide( xNotesMasterFragmentHandler, pNotesMasterPersistPtr );
 							pNotesMasterPersistPtr->createXShapes( rFilter );
 							pNotesPersistPtr->setMasterPersist(pNotesMasterPersistPtr);
@@ -289,7 +289,7 @@ void PresentationFragmentHandler::endDocument() throw (SAXException, RuntimeExce
 				}
 			}
 		}
-		ResolveTextFields( rFilter ); 
+		ResolveTextFields( rFilter );
 	}
 	catch( uno::Exception& )
 	{
@@ -308,7 +308,7 @@ void PresentationFragmentHandler::endDocument() throw (SAXException, RuntimeExce
 }
 
 // CT_Presentation
-Reference< XFastContextHandler > PresentationFragmentHandler::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > PresentationFragmentHandler::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xRet;
 	switch( aElementToken )
@@ -386,7 +386,7 @@ bool PresentationFragmentHandler::importSlide( const FragmentHandlerRef& rxSlide
 				xPropertySet->setPropertyValue( sIsHeaderVisible, Any( aHeaderFooter.mbHeader ) );
 			xPropertySet->setPropertyValue( sIsFooterVisible, Any( aHeaderFooter.mbFooter ) );
 			xPropertySet->setPropertyValue( sIsDateTimeVisible, Any( aHeaderFooter.mbDateTime ) );
-			xPropertySet->setPropertyValue( sIsPageNumberVisible, Any( aHeaderFooter.mbSlideNumber ) );	
+			xPropertySet->setPropertyValue( sIsPageNumberVisible, Any( aHeaderFooter.mbSlideNumber ) );
 		}
 		catch( uno::Exception& )
 		{
@@ -397,4 +397,3 @@ bool PresentationFragmentHandler::importSlide( const FragmentHandlerRef& rxSlide
 }
 
 } }
-

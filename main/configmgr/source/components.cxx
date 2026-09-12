@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -91,8 +91,6 @@ typedef std::list< UnresolvedListItem > UnresolvedList;
 void parseXcsFile(
     rtl::OUString const & url, int layer, Data & data, Partial const * partial,
     Modifications * modifications, Additions * additions)
-    SAL_THROW((
-        css::container::NoSuchElementException, css::uno::RuntimeException))
 {
     OSL_ASSERT(partial == 0 && modifications == 0 && additions == 0);
     (void) partial; (void) modifications; (void) additions;
@@ -104,8 +102,6 @@ void parseXcsFile(
 void parseXcuFile(
     rtl::OUString const & url, int layer, Data & data, Partial const * partial,
     Modifications * modifications, Additions * additions)
-    SAL_THROW((
-        css::container::NoSuchElementException, css::uno::RuntimeException))
 {
     OSL_VERIFY(
         rtl::Reference< ParseManager >(
@@ -278,7 +274,7 @@ void Components::initGlobalBroadcaster(
                         mods = 0;
                         break;
                     }
-                    mods = &k->second;
+                    mods = k->second.get();
                 }
                 //TODO: If the complete tree of which root is a part is deleted,
                 // or replaced, mods will be null, but some of the listeners

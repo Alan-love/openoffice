@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -61,7 +61,6 @@ executeLoginDialog(
     Window * pParent,
     LoginErrorInfo & rInfo,
     rtl::OUString const & rRealm)
-    SAL_THROW((uno::RuntimeException))
 {
     try
     {
@@ -195,7 +194,6 @@ handleAuthenticationRequest_(
     uno::Sequence< uno::Reference< task::XInteractionContinuation > > const &
         rContinuations,
     const rtl::OUString & rURL)
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Reference< task::XInteractionRetry > xRetry;
     uno::Reference< task::XInteractionAbort > xAbort;
@@ -413,7 +411,6 @@ executeMasterPasswordDialog(
     Window * pParent,
     LoginErrorInfo & rInfo,
     task::PasswordRequestMode nMode)
-        SAL_THROW((uno::RuntimeException))
 {
     rtl::OString aMaster;
     try
@@ -473,7 +470,6 @@ handleMasterPasswordRequest_(
     task::PasswordRequestMode nMode,
     uno::Sequence< uno::Reference< task::XInteractionContinuation > > const &
         rContinuations)
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Reference< task::XInteractionRetry > xRetry;
     uno::Reference< task::XInteractionAbort > xAbort;
@@ -517,7 +513,6 @@ executePasswordDialog(
     bool bMSCryptoMode,
     bool bIsPasswordToModify,
     bool bIsSimplePasswordRequest )
-       SAL_THROW((uno::RuntimeException))
 {
     try
     {
@@ -530,7 +525,7 @@ executePasswordDialog(
             if (bIsSimplePasswordRequest)
             {
                 std::auto_ptr< PasswordDialog > pDialog(
-                    new PasswordDialog( pParent, nMode, xManager.get(), aDocName, 
+                    new PasswordDialog( pParent, nMode, xManager.get(), aDocName,
                     bIsPasswordToModify, bIsSimplePasswordRequest ) );
                 pDialog->SetMinLen(0);
 
@@ -554,7 +549,7 @@ executePasswordDialog(
         else // enter password or reenter password
         {
             std::auto_ptr< PasswordDialog > pDialog(
-                new PasswordDialog( pParent, nMode, xManager.get(), aDocName, 
+                new PasswordDialog( pParent, nMode, xManager.get(), aDocName,
                 bIsPasswordToModify, bIsSimplePasswordRequest ) );
             pDialog->SetMinLen(0);
 
@@ -581,7 +576,6 @@ handlePasswordRequest_(
     bool bMSCryptoMode,
     bool bIsPasswordToModify,
     bool bIsSimplePasswordRequest = false )
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Reference< task::XInteractionRetry > xRetry;
     uno::Reference< task::XInteractionAbort > xAbort;
@@ -631,7 +625,6 @@ handlePasswordRequest_(
 bool
 UUIInteractionHelper::handleAuthenticationRequest(
     uno::Reference< task::XInteractionRequest > const & rRequest)
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Any aAnyRequest(rRequest->getRequest());
 
@@ -664,7 +657,6 @@ UUIInteractionHelper::handleAuthenticationRequest(
 bool
 UUIInteractionHelper::handleMasterPasswordRequest(
     uno::Reference< task::XInteractionRequest > const & rRequest)
-    SAL_THROW((uno::RuntimeException))
 {
     uno::Any aAnyRequest(rRequest->getRequest());
 
@@ -682,7 +674,6 @@ UUIInteractionHelper::handleMasterPasswordRequest(
 bool
 UUIInteractionHelper::handlePasswordRequest(
     uno::Reference< task::XInteractionRequest > const & rRequest)
-    SAL_THROW((uno::RuntimeException))
 {
     // parameters to be filled for the call to handlePasswordRequest_
     Window * pParent = getParentProperty();
@@ -691,7 +682,7 @@ UUIInteractionHelper::handlePasswordRequest(
     ::rtl::OUString aDocumentName;
     bool bMSCryptoMode          = false;
     bool bIsPasswordToModify    = false;
-    
+
     bool bDoHandleRequest = false;
 
     uno::Any aAnyRequest(rRequest->getRequest());
@@ -728,7 +719,7 @@ UUIInteractionHelper::handlePasswordRequest(
 
         bDoHandleRequest = true;
     }
-    
+
     task::DocumentMSPasswordRequest aDocumentMSPasswordRequest;
     if (!bDoHandleRequest && (aAnyRequest >>= aDocumentMSPasswordRequest))
     {
@@ -742,7 +733,7 @@ UUIInteractionHelper::handlePasswordRequest(
 
     if (bDoHandleRequest)
     {
-        handlePasswordRequest_( pParent, nMode, rContinuations, 
+        handlePasswordRequest_( pParent, nMode, rContinuations,
                 aDocumentName, bMSCryptoMode, bIsPasswordToModify );
         return true;
     }
@@ -762,4 +753,3 @@ UUIInteractionHelper::handlePasswordRequest(
 
     return false;
 }
-

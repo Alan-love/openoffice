@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -74,31 +74,24 @@ class OTextOutputStream : public TextOutputStreamHelper
 	rtl_UnicodeToTextContext   	mContextUnicode2Text;
 
 	Sequence<sal_Int8> implConvert( const OUString& rSource );
-    void checkOutputStream() throw(IOException);
-    
+    void checkOutputStream();
+
 public:
 	OTextOutputStream();
 	~OTextOutputStream();
 
     // Methods XTextOutputStream
-    virtual void SAL_CALL writeString( const OUString& aString ) 
-		throw(IOException, RuntimeException);
-    virtual void SAL_CALL setEncoding( const OUString& Encoding ) 
-		throw(RuntimeException);
+    virtual void SAL_CALL writeString( const OUString& aString );
+    virtual void SAL_CALL setEncoding( const OUString& Encoding );
 
     // Methods XOutputStream
-    virtual void SAL_CALL writeBytes( const Sequence< sal_Int8 >& aData ) 
-		throw(NotConnectedException, BufferSizeExceededException, IOException, RuntimeException);
-    virtual void SAL_CALL flush(  ) 
-		throw(NotConnectedException, BufferSizeExceededException, IOException, RuntimeException);
-    virtual void SAL_CALL closeOutput(  ) 
-		throw(NotConnectedException, BufferSizeExceededException, IOException, RuntimeException);
+    virtual void SAL_CALL writeBytes( const Sequence< sal_Int8 >& aData );
+    virtual void SAL_CALL flush(  );
+    virtual void SAL_CALL closeOutput(  );
 
     // Methods XActiveDataSource
-    virtual void SAL_CALL setOutputStream( const Reference< XOutputStream >& aStream ) 
-		throw(RuntimeException);
-    virtual Reference< XOutputStream > SAL_CALL getOutputStream(  ) 
-		throw(RuntimeException);
+    virtual void SAL_CALL setOutputStream( const Reference< XOutputStream >& aStream );
+    virtual Reference< XOutputStream > SAL_CALL getOutputStream(  );
 
 	// Methods XServiceInfo
         virtual OUString              SAL_CALL getImplementationName() throw();
@@ -127,7 +120,7 @@ Sequence<sal_Int8> OTextOutputStream::implConvert( const OUString& rSource )
 
 	sal_Size nTargetCount = 0;
 	sal_Size nSourceCount = 0;
-	
+
 	sal_uInt32 uiInfo;
 	sal_Size nSrcCvtChars;
 
@@ -138,7 +131,7 @@ Sequence<sal_Int8> OTextOutputStream::implConvert( const OUString& rSource )
 
 	Sequence<sal_Int8> seqText( nSeqSize );
 	sal_Char *pTarget = (sal_Char *) seqText.getArray();
-	while( sal_True ) 
+	while( sal_True )
 	{
 		nTargetCount += rtl_convertUnicodeToText(
 									mConvUnicode2Text,
@@ -152,8 +145,8 @@ Sequence<sal_Int8> OTextOutputStream::implConvert( const OUString& rSource )
 									&uiInfo,
 									&nSrcCvtChars);
 		nSourceCount += nSrcCvtChars;
-		
-		if( uiInfo & RTL_UNICODETOTEXT_INFO_DESTBUFFERTOSMALL ) 
+
+		if( uiInfo & RTL_UNICODETOTEXT_INFO_DESTBUFFERTOSMALL )
 		{
 			nSeqSize *= 2;
 			seqText.realloc( nSeqSize );  // double array size
@@ -172,8 +165,7 @@ Sequence<sal_Int8> OTextOutputStream::implConvert( const OUString& rSource )
 //===========================================================================
 // XTextOutputStream
 
-void OTextOutputStream::writeString( const OUString& aString ) 
-	throw(IOException, RuntimeException)
+void OTextOutputStream::writeString( const OUString& aString )
 {
     checkOutputStream();
 	if( !mbEncodingInitialized )
@@ -188,12 +180,11 @@ void OTextOutputStream::writeString( const OUString& aString )
 	mxStream->writeBytes( aByteSeq );
 }
 
-void OTextOutputStream::setEncoding( const OUString& Encoding ) 
-	throw(RuntimeException)
+void OTextOutputStream::setEncoding( const OUString& Encoding )
 {
 	OString aOEncodingStr = OUStringToOString( Encoding, RTL_TEXTENCODING_ASCII_US );
 	rtl_TextEncoding encoding = rtl_getTextEncodingFromMimeCharset( aOEncodingStr.getStr() );
-	if( RTL_TEXTENCODING_DONTKNOW == encoding ) 
+	if( RTL_TEXTENCODING_DONTKNOW == encoding )
 		return;
 
 	mbEncodingInitialized = true;
@@ -204,22 +195,19 @@ void OTextOutputStream::setEncoding( const OUString& Encoding )
 
 //===========================================================================
 // XOutputStream
-void OTextOutputStream::writeBytes( const Sequence< sal_Int8 >& aData ) 
-	throw(NotConnectedException, BufferSizeExceededException, IOException, RuntimeException)
+void OTextOutputStream::writeBytes( const Sequence< sal_Int8 >& aData )
 {
     checkOutputStream();
 	mxStream->writeBytes( aData );
 }
 
-void OTextOutputStream::flush(  ) 
-	throw(NotConnectedException, BufferSizeExceededException, IOException, RuntimeException)
+void OTextOutputStream::flush(  )
 {
     checkOutputStream();
 	mxStream->flush();
 }
 
-void OTextOutputStream::closeOutput(  ) 
-	throw(NotConnectedException, BufferSizeExceededException, IOException, RuntimeException)
+void OTextOutputStream::closeOutput(  )
 {
     checkOutputStream();
 	mxStream->closeOutput();
@@ -227,7 +215,6 @@ void OTextOutputStream::closeOutput(  )
 
 
 void OTextOutputStream::checkOutputStream()
-    throw(IOException)
 {
     if (! mxStream.is() )
         throw IOException(
@@ -239,14 +226,12 @@ void OTextOutputStream::checkOutputStream()
 //===========================================================================
 // XActiveDataSource
 
-void OTextOutputStream::setOutputStream( const Reference< XOutputStream >& aStream ) 
-	throw(RuntimeException)
+void OTextOutputStream::setOutputStream( const Reference< XOutputStream >& aStream )
 {
 	mxStream = aStream;
 }
 
 Reference< XOutputStream > OTextOutputStream::getOutputStream()
-	throw(RuntimeException)
 {
 	return mxStream;
 }
@@ -288,11 +273,11 @@ sal_Bool OTextOutputStream::supportsService(const OUString& ServiceName) throw()
 {
 	Sequence< OUString > aSNL = getSupportedServiceNames();
 	const OUString * pArray = aSNL.getConstArray();
-	
+
 	for( sal_Int32 i = 0; i < aSNL.getLength(); i++ )
 		if( pArray[i] == ServiceName )
 			return sal_True;
-		
+
 	return sal_False;
 }
 
@@ -336,5 +321,3 @@ SAL_DLLPUBLIC_EXPORT void * SAL_CALL component_getFactory(
 	return component_getFactoryHelper( pImplName, pServiceManager, pRegistryKey , g_entries );
 }
 }
-
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -78,17 +78,14 @@ namespace DOM
     }
 
     OUString SAL_CALL CAttr::getNodeName()
-        throw (RuntimeException)
     {
         return getName();
     }
     OUString SAL_CALL CAttr::getNodeValue()
-        throw (RuntimeException)
     {
         return getValue();
     }
     OUString SAL_CALL CAttr::getLocalName()
-        throw (RuntimeException)
     {
         return getName();
     }
@@ -97,7 +94,7 @@ namespace DOM
     /**
     Returns the name of this attribute.
     */
-    OUString SAL_CALL CAttr::getName() throw (RuntimeException)
+    OUString SAL_CALL CAttr::getName()
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -114,7 +111,6 @@ namespace DOM
     attribute is not in use.
     */
     Reference< XElement > SAL_CALL CAttr::getOwnerElement()
-        throw (RuntimeException)
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -136,9 +132,8 @@ namespace DOM
     document, this is true; otherwise, it is false.
     */
     sal_Bool SAL_CALL CAttr::getSpecified()
-        throw (RuntimeException)
     {
-        // FIXME if this DOM implemenatation supported DTDs it would need
+        // FIXME if this DOM implementation supported DTDs it would need
         // to check that this attribute is not default or something
         return sal_True;
     }
@@ -147,7 +142,6 @@ namespace DOM
     On retrieval, the value of the attribute is returned as a string.
     */
     OUString SAL_CALL CAttr::getValue()
-        throw (RuntimeException)
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -168,7 +162,6 @@ namespace DOM
     Sets the value of the attribute from a string.
     */
     void SAL_CALL CAttr::setValue(const OUString& value)
-        throw (RuntimeException, DOMException)
     {
         ::osl::ClearableMutexGuard guard(m_rMutex);
 
@@ -216,7 +209,6 @@ namespace DOM
     }
 
     void SAL_CALL CAttr::setPrefix(const OUString& prefix)
-        throw (RuntimeException, DOMException)
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -232,7 +224,6 @@ namespace DOM
     }
 
     OUString SAL_CALL CAttr::getPrefix()
-        throw (RuntimeException)
     {
         ::osl::MutexGuard const g(m_rMutex);
 
@@ -249,7 +240,6 @@ namespace DOM
     }
 
     OUString SAL_CALL CAttr::getNamespaceURI()
-        throw (RuntimeException)
     {
         ::osl::MutexGuard const g(m_rMutex);
 

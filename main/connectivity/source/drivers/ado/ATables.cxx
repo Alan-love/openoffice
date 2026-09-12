@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_ado.hxx"
 #include "ado/ATables.hxx"
 #include "ado/ATable.hxx"
 #include <com/sun/star/sdbc/XRow.hpp>
@@ -58,7 +58,7 @@ sdbcx::ObjectType OTables::createObject(const ::rtl::OUString& _rName)
 	return new OAdoTable(this,isCaseSensitive(),m_pCatalog,m_aCollection.GetItem(_rName));
 }
 // -------------------------------------------------------------------------
-void OTables::impl_refresh(  ) throw(RuntimeException)
+void OTables::impl_refresh(  )
 {
 	OSL_ENSURE(m_aCollection.IsValid(),"Collection isn't valid");
 	m_aCollection.Refresh();
@@ -107,5 +107,3 @@ void OTables::appendNew(const ::rtl::OUString& _rsNewTable)
 		static_cast<XContainerListener*>(aListenerLoop.next())->elementInserted(aEvent);
 }
 // -----------------------------------------------------------------------------
-
-

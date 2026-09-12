@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_jdbc.hxx"
 #include "java/io/Reader.hxx"
 #ifndef _INC_MEMORY
 //#include <memory.h>
@@ -52,22 +52,22 @@ jclass java_io_Reader::getMyClass() const
 	return theClass;
 }
 
-sal_Int32 SAL_CALL java_io_Reader::readSomeBytes( ::com::sun::star::uno::Sequence< sal_Int8 >& aData, sal_Int32 nMaxBytesToRead ) throw(::com::sun::star::io::NotConnectedException, ::com::sun::star::io::BufferSizeExceededException, ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException)
+sal_Int32 SAL_CALL java_io_Reader::readSomeBytes( ::com::sun::star::uno::Sequence< sal_Int8 >& aData, sal_Int32 nMaxBytesToRead )
 {
 	return readBytes(aData,nMaxBytesToRead);
 }
 
-void SAL_CALL java_io_Reader::skipBytes( sal_Int32 nBytesToSkip ) throw(::com::sun::star::io::NotConnectedException, ::com::sun::star::io::BufferSizeExceededException, ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException)
+void SAL_CALL java_io_Reader::skipBytes( sal_Int32 nBytesToSkip )
 {
     static jmethodID mID(NULL);
     callIntMethodWithIntArg("skip",mID,nBytesToSkip);
 }
 
-sal_Int32 SAL_CALL java_io_Reader::available(  ) throw(::com::sun::star::io::NotConnectedException, ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException)
+sal_Int32 SAL_CALL java_io_Reader::available(  )
 {
 	jboolean out(sal_False);
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
-	
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
+
 	{
 		static const char * cSignature = "()Z";
 		static const char * cMethodName = "available";
@@ -80,18 +80,18 @@ sal_Int32 SAL_CALL java_io_Reader::available(  ) throw(::com::sun::star::io::Not
 	return out;
 }
 
-void SAL_CALL java_io_Reader::closeInput(  ) throw(::com::sun::star::io::NotConnectedException, ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException)
+void SAL_CALL java_io_Reader::closeInput(  )
 {
     static jmethodID mID(NULL);
     callVoidMethod("close",mID);
 }
 // -----------------------------------------------------
-sal_Int32 SAL_CALL java_io_Reader::readBytes( ::com::sun::star::uno::Sequence< sal_Int8 >& aData, sal_Int32 nBytesToRead ) throw(::com::sun::star::io::NotConnectedException, ::com::sun::star::io::BufferSizeExceededException, ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException)
+sal_Int32 SAL_CALL java_io_Reader::readBytes( ::com::sun::star::uno::Sequence< sal_Int8 >& aData, sal_Int32 nBytesToRead )
 {
 	OSL_ENSURE(aData.getLength() < nBytesToRead," Sequence is smaller than BytesToRead");
 	jint out(0);
-    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Enviroment geloescht worden!");
-	
+    SDBThreadAttach t; OSL_ENSURE(t.pEnv,"Java Environment been deleted!");
+
 	{
 		jcharArray pCharArray = t.pEnv->NewCharArray(nBytesToRead);
 		static const char * cSignature = "([CII)I";
@@ -114,4 +114,3 @@ sal_Int32 SAL_CALL java_io_Reader::readBytes( ::com::sun::star::uno::Sequence< s
 	} //t.pEnv
 	return out;
 }
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -190,11 +190,11 @@ void LayoutManagerListener::setFrame( const css::uno::Reference< css::frame::XFr
                         xLayoutManager->addLayoutManagerEventListener(
                             css::uno::Reference< css::frame::XLayoutManagerListener >(
                                 static_cast< OWeakObject* >( this ), css::uno::UNO_QUERY ));
-                    
+
                     xPropSet = css::uno::Reference< css::beans::XPropertySet >( xLayoutManager, UNO_QUERY );
                     if ( xPropSet.is() )
                     {
-                        aValue = xPropSet->getPropertyValue( 
+                        aValue = xPropSet->getPropertyValue(
                             ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "LockCount" )) );
                         aValue >>= m_pWrkWin->m_nLock;
                     }
@@ -219,20 +219,17 @@ void LayoutManagerListener::setFrame( const css::uno::Reference< css::frame::XFr
 //---------------------------------------------------------------------------------------------------------
 void SAL_CALL LayoutManagerListener::addEventListener(
     const css::uno::Reference< css::lang::XEventListener >& )
-throw (::com::sun::star::uno::RuntimeException)
 {
     // do nothing, only internal class
 }
 
 void SAL_CALL LayoutManagerListener::removeEventListener(
     const css::uno::Reference< css::lang::XEventListener >& )
-throw (::com::sun::star::uno::RuntimeException)
 {
     // do nothing, only internal class
 }
 
 void SAL_CALL LayoutManagerListener::dispose()
-throw( css::uno::RuntimeException )
 {
     ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -279,7 +276,6 @@ throw( css::uno::RuntimeException )
 //---------------------------------------------------------------------------------------------------------
 void SAL_CALL LayoutManagerListener::disposing(
     const css::lang::EventObject& )
-throw( css::uno::RuntimeException )
 {
     ::vos::OGuard aGuard( Application::GetSolarMutex() );
     m_pWrkWin = 0;
@@ -294,7 +290,6 @@ void SAL_CALL LayoutManagerListener::layoutEvent(
     const css::lang::EventObject&,
     ::sal_Int16                   eLayoutEvent,
     const css::uno::Any&                        )
-throw (css::uno::RuntimeException)
 {
     ::vos::OGuard aGuard( Application::GetSolarMutex() );
     if ( m_pWrkWin )
@@ -1139,13 +1134,13 @@ void SfxWorkWindow::ShowChilds_Impl()
 	DBG_CHKTHIS(SfxWorkWindow, 0);
 
     bool bInvisible = ( !IsVisible_Impl() || ( !pWorkWin->IsReallyVisible() && !pWorkWin->IsReallyShown() ));
-	
+
     SfxChild_Impl *pCli = 0;
 	for ( sal_uInt16 nPos = 0; nPos < pChilds->Count(); ++nPos )
 	{
         SfxChildWin_Impl* pCW = 0;
 		pCli = (*pChilds)[nPos];
-        
+
         if ( pCli && pCli->pWin )
         {
             // We have to find the SfxChildWin_Impl to retrieve the
@@ -1160,7 +1155,7 @@ void SfxWorkWindow::ShowChilds_Impl()
                     break;
                 }
             }
-        
+
             bool bVisible( !bInvisible );
             if ( pCW )
 		    {
@@ -1170,7 +1165,7 @@ void SfxWorkWindow::ShowChilds_Impl()
                 sal_uInt16 nFlags = pCW->aInfo.nFlags;
                 bVisible = !bInvisible || ( bInvisible & (( nFlags & SFX_CHILDWIN_NEVERHIDE ) != 0 ));
             }
-                
+
             if ( CHILD_VISIBLE == (pCli->nVisible & CHILD_VISIBLE) && bVisible )
 		    {
 			    sal_uInt16 nFlags = pCli->bSetFocus ? 0 : SHOW_NOFOCUSCHANGE | SHOW_NOACTIVATE;
@@ -3135,4 +3130,3 @@ void SfxWorkWindow::DataChanged_Impl( const DataChangedEvent& )
 
     ArrangeChilds_Impl();
 }
-

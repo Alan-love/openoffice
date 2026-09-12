@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -33,6 +33,7 @@
 #include <sfx2/fcontnr.hxx>
 #include <sfx2/sfxsids.hrc>
 #include <sfx2/linkmgr.hxx>
+#include <sfx2/viewfrm.hxx>
 #include <svl/stritem.hxx>
 #include <vcl/msgbox.hxx>
 
@@ -242,6 +243,22 @@ sal_Bool ScAreaLink::Refresh( const String& rNewFile, const String& rNewFilter,
 
 	if (!rNewFile.Len() || !rNewFilter.Len())
 		return sal_False;
+
+	// Request for authorization
+	sfx2::LinkManager* pLinkMgr = pImpl->m_pDocSh->GetDocument()->GetLinkManager();
+	if ( pLinkMgr ) {
+		if ( pLinkMgr->urlIsVendor( rNewFile ) )
+			return sal_False;
+		SfxViewFrame* pFrame = SfxViewFrame::GetFirst( pImpl->m_pDocSh );
+		if ( pFrame ) {
+			Window* pWindow = &pFrame->GetWindow();
+			if ( pWindow ) {
+				if ( !pLinkMgr->GetUserAllowsLinkUpdate( pWindow ) ) {
+					return sal_False;
+				}
+			}
+		}
+	}
 
     String aNewUrl( ScGlobal::GetAbsDocName( rNewFile, pImpl->m_pDocSh ) );
 	sal_Bool bNewUrlName = (aNewUrl != aFileName);
@@ -523,4 +540,3 @@ IMPL_LINK( ScAreaLink, AreaEndEditHdl, void*, EMPTYARG )
 
     return 0;
 }
-

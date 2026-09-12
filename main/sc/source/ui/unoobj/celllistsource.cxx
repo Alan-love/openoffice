@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -133,7 +133,7 @@ namespace calc
     }
 
     //--------------------------------------------------------------------
-    Reference< XPropertySetInfo > SAL_CALL OCellListSource::getPropertySetInfo(  ) throw(RuntimeException)
+    Reference< XPropertySetInfo > SAL_CALL OCellListSource::getPropertySetInfo(  )
     {
         DBG_CHKTHIS( OCellListSource, checkConsistency_static );
     	return createPropertySetInfo( getInfoHelper() ) ;
@@ -165,7 +165,7 @@ namespace calc
     }
 
     //--------------------------------------------------------------------
-    void OCellListSource::checkDisposed( ) const SAL_THROW( ( DisposedException ) )
+    void OCellListSource::checkDisposed( ) const
     {
         if ( OCellListSource_Base::rBHelper.bInDispose || OCellListSource_Base::rBHelper.bDisposed )
             throw DisposedException();
@@ -173,7 +173,7 @@ namespace calc
     }
 
     //--------------------------------------------------------------------
-    void OCellListSource::checkInitialized() SAL_THROW( ( RuntimeException ) )
+    void OCellListSource::checkInitialized()
     {
         if ( !m_bInitialized )
             throw RuntimeException();
@@ -181,13 +181,13 @@ namespace calc
     }
 
     //--------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL OCellListSource::getImplementationName(  ) throw (RuntimeException)
+    ::rtl::OUString SAL_CALL OCellListSource::getImplementationName(  )
     {
         return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.comp.sheet.OCellListSource" ) );
     }
-        
+
     //--------------------------------------------------------------------
-    sal_Bool SAL_CALL OCellListSource::supportsService( const ::rtl::OUString& _rServiceName ) throw (RuntimeException)
+    sal_Bool SAL_CALL OCellListSource::supportsService( const ::rtl::OUString& _rServiceName )
     {
         Sequence< ::rtl::OUString > aSupportedServices( getSupportedServiceNames() );
         const ::rtl::OUString* pLookup = aSupportedServices.getConstArray();
@@ -198,9 +198,9 @@ namespace calc
 
         return sal_False;
     }
-        
+
     //--------------------------------------------------------------------
-    Sequence< ::rtl::OUString > SAL_CALL OCellListSource::getSupportedServiceNames(  ) throw (RuntimeException)
+    Sequence< ::rtl::OUString > SAL_CALL OCellListSource::getSupportedServiceNames(  )
     {
         Sequence< ::rtl::OUString > aServices( 2 );
         aServices[ 0 ] =  ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.table.CellRangeListSource" ) );
@@ -235,7 +235,7 @@ namespace calc
     }
 
     //--------------------------------------------------------------------
-    sal_Int32 SAL_CALL OCellListSource::getListEntryCount(  ) throw (RuntimeException)
+    sal_Int32 SAL_CALL OCellListSource::getListEntryCount(  )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
         DBG_CHKTHIS( OCellListSource, checkConsistency_static );
@@ -245,9 +245,9 @@ namespace calc
         CellRangeAddress aAddress( getRangeAddress( ) );
         return aAddress.EndRow - aAddress.StartRow + 1;
     }
-    
+
     //--------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL OCellListSource::getListEntry( sal_Int32 _nPosition ) throw (IndexOutOfBoundsException, RuntimeException)
+    ::rtl::OUString SAL_CALL OCellListSource::getListEntry( sal_Int32 _nPosition )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
         DBG_CHKTHIS( OCellListSource, checkConsistency_static );
@@ -259,9 +259,9 @@ namespace calc
 
         return getCellTextContent_noCheck( 0, _nPosition );
     }
-    
+
     //--------------------------------------------------------------------
-    Sequence< ::rtl::OUString > SAL_CALL OCellListSource::getAllListEntries(  ) throw (RuntimeException)
+    Sequence< ::rtl::OUString > SAL_CALL OCellListSource::getAllListEntries(  )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
         DBG_CHKTHIS( OCellListSource, checkConsistency_static );
@@ -277,9 +277,9 @@ namespace calc
 
         return aAllEntries;
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL OCellListSource::addListEntryListener( const Reference< XListEntryListener >& _rxListener ) throw (NullPointerException, RuntimeException)
+    void SAL_CALL OCellListSource::addListEntryListener( const Reference< XListEntryListener >& _rxListener )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
         DBG_CHKTHIS( OCellListSource, checkConsistency_static );
@@ -291,9 +291,9 @@ namespace calc
 
         m_aListEntryListeners.addInterface( _rxListener );
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL OCellListSource::removeListEntryListener( const Reference< XListEntryListener >& _rxListener ) throw (NullPointerException, RuntimeException)
+    void SAL_CALL OCellListSource::removeListEntryListener( const Reference< XListEntryListener >& _rxListener )
     {
         ::osl::MutexGuard aGuard( m_aMutex );
         DBG_CHKTHIS( OCellListSource, checkConsistency_static );
@@ -307,7 +307,7 @@ namespace calc
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL OCellListSource::modified( const EventObject& /* aEvent */ ) throw (RuntimeException)
+    void SAL_CALL OCellListSource::modified( const EventObject& /* aEvent */ )
     {
         DBG_CHKTHIS( OCellListSource, checkConsistency_static );
 
@@ -340,7 +340,7 @@ namespace calc
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL OCellListSource::disposing( const EventObject& aEvent ) throw (RuntimeException)
+    void SAL_CALL OCellListSource::disposing( const EventObject& aEvent )
     {
         DBG_CHKTHIS( OCellListSource, checkConsistency_static );
 
@@ -353,7 +353,7 @@ namespace calc
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL OCellListSource::initialize( const Sequence< Any >& _rArguments ) throw (Exception, RuntimeException)
+    void SAL_CALL OCellListSource::initialize( const Sequence< Any >& _rArguments )
     {
         if ( m_bInitialized )
             throw Exception();

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -128,7 +128,7 @@ enum FSysPathStyle
 // FSysAction
 typedef int FSysAction;
 #define FSYS_ACTION_COPYFILE		0x01	// not only create hardlink
-#define FSYS_ACTION_RECURSIVE		0x02	// deep through dircetory structure
+#define FSYS_ACTION_RECURSIVE		0x02	// deep through directory structure
 #define FSYS_ACTION_USERECYCLEBIN	0x04	// move to recycle bin
 #define FSYS_ACTION_MOVE			0x08	// delete after copy (=> move)
 #define FSYS_ACTION_CONTINUE		0x10	// continue on error
@@ -498,7 +498,7 @@ public:
 /** FSysRedirector is an abstract base class for a hook to redirect
 	mirrored directory trees.
 
-	<P>One instance of a subclass can be instanciated and registered
+	<P>One instance of a subclass can be instantiated and registered
 	using the method FSysRedirector::Register(FSysRedirector*).
  */
 
@@ -557,4 +557,3 @@ void FSysTest();
 #endif
 
 #endif // #ifndef _FSYS_HXX
-

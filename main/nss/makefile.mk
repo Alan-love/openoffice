@@ -75,6 +75,11 @@ PATCH_FILES+=nss_linux.patch
 BUILD_ACTION+=NSS_DISABLE_GTESTS=1
 .ENDIF
 
+.IF "$(OS)"=="MACOSX"
+# clang 13+ warns on unused-but-set variables, fatal under NSS's default -Werror
+BUILD_ACTION+=NSS_DISABLE_GTESTS=1 NSS_ENABLE_WERROR=0
+.ENDIF
+
 
 .IF "$(GUI)"=="WNT"
 
@@ -117,6 +122,14 @@ OUT2LIB= \
 MOZ_MSVCVERSION= 9
 .EXPORT : MOZ_MSVCVERSION
 PATCH_FILES+=nss_win.patch
+# NSPR's configure takes the architecture from config.guess, which reports the
+# HOST -- and every Windows build host is x86_64 now, whatever is being built.
+# Listed for both architectures on purpose: it keys on --enable-64bit, which
+# the x64 branch below already causes to be passed, so it is inert there.
+PATCH_FILES+=nss_win_hostarch.patch
+.IF "$(CPU)" == "X"
+PATCH_FILES+=nss_win64.patch
+.ENDIF
 moz_build:=$(shell cygpath -p $(MOZILLABUILD))
 
 # Using WINNT will cause at least that nspr4.dll, plc4.dll, plds4.dll
@@ -131,8 +144,13 @@ EXT_USE_STLPORT=TRUE
 
 # To build nss one has to call "make nss_build_all" in nss
 NSS_BUILD_DIR= $(subst,\,/ $(PWD)/$(MISC)/build/$(TARFILE_ROOTDIR)/nss)
+.IF "$(CPU)" == "I"
 BUILD_ACTION= PATH="$(PATH):$(moz_build)/msys/bin:$(moz_build)/bin:$(moz_build)/msys/local/bin:$(moz_build)/moztools/bin" && $(subst,/,$/ $(MOZILLABUILD)/msys/bin/bash) -i \
 	-c "cd $(NSS_BUILD_DIR) && make nss_build_all NSS_DISABLE_GTESTS=1"
+.ELIF "$(CPU)" == "X"
+BUILD_ACTION= PATH="$(PATH):$(moz_build)/msys/bin:$(moz_build)/bin:$(moz_build)/msys/local/bin:$(moz_build)/moztools/bin" && $(subst,/,$/ $(MOZILLABUILD)/msys/bin/bash) -i \
+	-c "cd $(NSS_BUILD_DIR) && make nss_build_all NSS_DISABLE_GTESTS=1 USE_64=1"
+.ENDIF
 
 OUT2LIB= \
 	dist$/*.OBJ$/lib$/libnspr4.lib \

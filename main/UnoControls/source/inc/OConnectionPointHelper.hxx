@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -131,7 +131,7 @@ public:
 		@onerror	A RuntimeException is thrown.
 	*/
 
-	virtual UNO3_ANY SAL_CALL queryInterface( const UNO3_TYPE& aType ) throw( UNO3_RUNTIMEEXCEPTION );
+	virtual UNO3_ANY SAL_CALL queryInterface( const UNO3_TYPE& aType );
 
 	/**_______________________________________________________________________________________________________
 		@short		increment refcount
@@ -182,7 +182,7 @@ public:
 		@onerror
 	*/
 
-    virtual UNO3_TYPE SAL_CALL getConnectionType() throw( UNO3_RUNTIMEEXCEPTION );
+    virtual UNO3_TYPE SAL_CALL getConnectionType();
 
 	/**_________________________________________________________________________________________________________
 		@short
@@ -197,7 +197,7 @@ public:
 		@onerror
 	*/
 
-    virtual UNO3_REFERENCE< UNO3_XCONNECTIONPOINTCONTAINER > SAL_CALL getConnectionPointContainer() throw( UNO3_RUNTIMEEXCEPTION );
+    virtual UNO3_REFERENCE< UNO3_XCONNECTIONPOINTCONTAINER > SAL_CALL getConnectionPointContainer();
 
 	/**_________________________________________________________________________________________________________
 		@short
@@ -212,9 +212,7 @@ public:
 		@onerror
 	*/
 
-    virtual void SAL_CALL advise( const UNO3_REFERENCE< UNO3_XINTERFACE >& xListener ) throw(	UNO3_LISTENEREXISTEXCEPTION		,
-																								UNO3_INVALIDLISTENEREXCEPTION	,
-																								UNO3_RUNTIMEEXCEPTION			);
+    virtual void SAL_CALL advise( const UNO3_REFERENCE< UNO3_XINTERFACE >& xListener );
 
 	/**_________________________________________________________________________________________________________
 		@short
@@ -229,7 +227,7 @@ public:
 		@onerror
 	*/
 
-    virtual void SAL_CALL unadvise( const UNO3_REFERENCE< UNO3_XINTERFACE >& xListener ) throw( UNO3_RUNTIMEEXCEPTION );
+    virtual void SAL_CALL unadvise( const UNO3_REFERENCE< UNO3_XINTERFACE >& xListener );
 
 	/**_________________________________________________________________________________________________________
 		@short
@@ -244,7 +242,7 @@ public:
 		@onerror
 	*/
 
-    virtual UNO3_SEQUENCE< UNO3_REFERENCE< UNO3_XINTERFACE > > SAL_CALL getConnections() throw( UNO3_RUNTIMEEXCEPTION );
+    virtual UNO3_SEQUENCE< UNO3_REFERENCE< UNO3_XINTERFACE > > SAL_CALL getConnections();
 
 //______________________________________________________________________________________________________________
 //	private methods

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
@@ -148,35 +148,35 @@ String DecodeSpaces_Impl( const String& rSource );
 // ------------------------------------------------------------------------
 // XFilePickerListener Methods
 // ------------------------------------------------------------------------
-void SAL_CALL FileDialogHelper_Impl::fileSelectionChanged( const FilePickerEvent& aEvent ) throw ( RuntimeException )
+void SAL_CALL FileDialogHelper_Impl::fileSelectionChanged( const FilePickerEvent& aEvent )
 {
 	::vos::OGuard aGuard( Application::GetSolarMutex() );
 	mpAntiImpl->FileSelectionChanged( aEvent );
 }
 
 // ------------------------------------------------------------------------
-void SAL_CALL FileDialogHelper_Impl::directoryChanged( const FilePickerEvent& aEvent ) throw ( RuntimeException )
+void SAL_CALL FileDialogHelper_Impl::directoryChanged( const FilePickerEvent& aEvent )
 {
 	::vos::OGuard aGuard( Application::GetSolarMutex() );
 	mpAntiImpl->DirectoryChanged( aEvent );
 }
 
 // ------------------------------------------------------------------------
-OUString SAL_CALL FileDialogHelper_Impl::helpRequested( const FilePickerEvent& aEvent ) throw ( RuntimeException )
+OUString SAL_CALL FileDialogHelper_Impl::helpRequested( const FilePickerEvent& aEvent )
 {
 	::vos::OGuard aGuard( Application::GetSolarMutex() );
 	return mpAntiImpl->HelpRequested( aEvent );
 }
 
 // ------------------------------------------------------------------------
-void SAL_CALL FileDialogHelper_Impl::controlStateChanged( const FilePickerEvent& aEvent ) throw ( RuntimeException )
+void SAL_CALL FileDialogHelper_Impl::controlStateChanged( const FilePickerEvent& aEvent )
 {
 	::vos::OGuard aGuard( Application::GetSolarMutex() );
 	mpAntiImpl->ControlStateChanged( aEvent );
 }
 
 // ------------------------------------------------------------------------
-void SAL_CALL FileDialogHelper_Impl::dialogSizeChanged() throw ( RuntimeException )
+void SAL_CALL FileDialogHelper_Impl::dialogSizeChanged()
 {
 	::vos::OGuard aGuard( Application::GetSolarMutex() );
 	mpAntiImpl->DialogSizeChanged();
@@ -185,7 +185,7 @@ void SAL_CALL FileDialogHelper_Impl::dialogSizeChanged() throw ( RuntimeExceptio
 // ------------------------------------------------------------------------
 // XDialogClosedListener Methods
 // ------------------------------------------------------------------------
-void SAL_CALL FileDialogHelper_Impl::dialogClosed( const DialogClosedEvent& _rEvent ) throw ( RuntimeException )
+void SAL_CALL FileDialogHelper_Impl::dialogClosed( const DialogClosedEvent& _rEvent )
 {
     ::vos::OGuard aGuard( Application::GetSolarMutex() );
     mpAntiImpl->DialogClosed( _rEvent );
@@ -308,7 +308,7 @@ void FileDialogHelper_Impl::handleDialogSizeChanged()
 // ------------------------------------------------------------------------
 // XEventListener Methods
 // ------------------------------------------------------------------------
-void SAL_CALL FileDialogHelper_Impl::disposing( const EventObject& ) throw ( RuntimeException )
+void SAL_CALL FileDialogHelper_Impl::disposing( const EventObject& )
 {
 	::vos::OGuard aGuard( Application::GetSolarMutex() );
 	dispose();
@@ -560,7 +560,7 @@ void FileDialogHelper_Impl::enablePasswordBox( sal_Bool bInit )
 
 	if( bInit )
 	{
-		// in case of inintialization previous state is not interesting
+		// in case of initialization previous state is not interesting
 		if( mbIsPwdEnabled )
 		{
 			uno::Reference< XFilePickerControlAccess > xCtrlAccess( mxFileDlg, UNO_QUERY );
@@ -849,7 +849,7 @@ ErrCode FileDialogHelper_Impl::getGraphic( Graphic& rGraphic ) const
 
 	if ( ! maGraphic )
 	{
-		OUString aPath;;
+		OUString aPath;
 		Sequence < OUString > aPathSeq = mxFileDlg->getFiles();
 
 		if ( aPathSeq.getLength() == 1 )
@@ -1896,7 +1896,7 @@ void FileDialogHelper_Impl::addFilters( sal_Int64 nFlags,
         xResult = xFilterCont->createSubSetEnumerationByQuery(sQuery.makeStringAndClear());
     }
     catch( uno::Exception& )
-    {    
+    {
         DBG_ERRORFILE( "Could not get filters from the configuration!" );
     }
 
@@ -2107,7 +2107,7 @@ void FileDialogHelper_Impl::saveConfig()
 				bWriteConfig = sal_True;
 			}
 		}
-		
+
 		if( mbHasSelectionBox && mbSelectionFltrEnabled )
 		{
 			try
@@ -2249,7 +2249,7 @@ void FileDialogHelper_Impl::loadConfig()
 			}
 			catch( IllegalArgumentException ){}
 		}
-		
+
 		if( mbHasSelectionBox )
 		{
 			sal_Int32 nFlag = aUserData.GetToken( 2, ' ' ).ToInt32();
@@ -2657,7 +2657,7 @@ Sequence< ::rtl::OUString > FileDialogHelper::GetSelectedFiles() const
         if ( nFiles > 1 )
         {
             aResultSeq = Sequence< ::rtl::OUString >( nFiles-1 );
-            
+
             INetURLObject aPath( lFiles[0] );
             aPath.setFinalSlash();
 
@@ -2674,7 +2674,7 @@ Sequence< ::rtl::OUString > FileDialogHelper::GetSelectedFiles() const
         else
             aResultSeq = lFiles;
     }
-    
+
     return aResultSeq;
 }
 
@@ -2910,4 +2910,3 @@ String DecodeSpaces_Impl( const String& rSource )
 // ------------------------------------------------------------------------
 
 }	// end of namespace sfx2
-

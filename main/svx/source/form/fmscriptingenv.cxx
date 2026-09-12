@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -92,10 +92,10 @@ namespace svxform
         FormScriptListener( const ::rtl::Reference< FormScriptingEnvironment >& _pScriptExecutor );
 
         // XScriptListener
-        virtual void SAL_CALL firing( const ScriptEvent& aEvent ) throw (RuntimeException);
-        virtual Any SAL_CALL approveFiring( const ScriptEvent& aEvent ) throw (InvocationTargetException, RuntimeException);
+        virtual void SAL_CALL firing( const ScriptEvent& aEvent );
+        virtual Any SAL_CALL approveFiring( const ScriptEvent& aEvent );
         // XEventListener
-        virtual void SAL_CALL disposing( const EventObject& Source ) throw (RuntimeException);
+        virtual void SAL_CALL disposing( const EventObject& Source );
 
         // lifetime control
         void SAL_CALL dispose();
@@ -140,7 +140,7 @@ namespace svxform
     private:
         DECL_LINK( OnAsyncScriptEvent, ScriptEvent* );
     };
-									
+
 	//====================================================================
 	//= FormScriptingEnvironment
 	//====================================================================
@@ -229,14 +229,14 @@ namespace svxform
     }
 
     //--------------------------------------------------------------------
-    void SAL_CALL FormScriptListener::firing( const ScriptEvent& _rEvent ) throw (RuntimeException)
+    void SAL_CALL FormScriptListener::firing( const ScriptEvent& _rEvent )
     {
         ::osl::ClearableMutexGuard aGuard( m_aMutex );
        static const ::rtl::OUString vbaInterOp =
            ::rtl::OUString::createFromAscii("VBAInterop");
        if ( _rEvent.ScriptType.equals(vbaInterOp) )
            return; // not handled here
-	
+
         if ( impl_isDisposed_nothrow() )
             return;
 
@@ -249,9 +249,9 @@ namespace svxform
         acquire();
         Application::PostUserEvent( LINK( this, FormScriptListener, OnAsyncScriptEvent ), new ScriptEvent( _rEvent ) );
     }
-    
+
     //--------------------------------------------------------------------
-    Any SAL_CALL FormScriptListener::approveFiring( const ScriptEvent& _rEvent ) throw (InvocationTargetException, RuntimeException)
+    Any SAL_CALL FormScriptListener::approveFiring( const ScriptEvent& _rEvent )
     {
         Any aResult;
 
@@ -261,9 +261,9 @@ namespace svxform
 
 	    return aResult;
     }
-    
+
     //--------------------------------------------------------------------
-    void SAL_CALL FormScriptListener::disposing( const EventObject& /*Source*/ ) throw (RuntimeException)
+    void SAL_CALL FormScriptListener::disposing( const EventObject& /*Source*/ )
     {
         // not interested in
     }
@@ -344,19 +344,19 @@ namespace svxform
     {
         impl_registerOrRevoke_throw( _rxManager, true );
     }
-    
+
     //--------------------------------------------------------------------
     void FormScriptingEnvironment::revokeEventAttacherManager( const Reference< XEventAttacherManager >& _rxManager )
     {
         impl_registerOrRevoke_throw( _rxManager, false );
     }
-    
+
     //--------------------------------------------------------------------
     oslInterlockedCount SAL_CALL FormScriptingEnvironment::acquire()
     {
         return osl_incrementInterlockedCount( &m_refCount );
     }
-    
+
     //--------------------------------------------------------------------
     oslInterlockedCount SAL_CALL FormScriptingEnvironment::release()
     {
@@ -515,4 +515,3 @@ namespace svxform
 //........................................................................
 } // namespace svxform
 //........................................................................
-

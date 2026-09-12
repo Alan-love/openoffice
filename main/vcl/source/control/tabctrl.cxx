@@ -33,7 +33,6 @@
 #include "vcl/tabpage.hxx"
 #include "vcl/tabctrl.hxx"
 #include "vcl/controllayout.hxx"
-#include "vcl/sound.hxx"
 #include "vcl/lstbox.hxx"
 
 #include "controldata.hxx"
@@ -90,7 +89,7 @@ struct ImplTabCtrlData
 #define TAB_BORDER_RIGHT	2
 #define TAB_BORDER_BOTTOM	2
 
-// Fuer die Ermittlung von den Tab-Positionen
+// Für die Ermittlung von den Tab-Positionen
 #define TAB_PAGERECT		0xFFFF
 
 // =======================================================================
@@ -119,7 +118,6 @@ void TabControl::ImplInit( Window* pParent, WinBits nStyle )
 	mbExtraSpace				= sal_False;
 	mpTabCtrlData				= new ImplTabCtrlData;
 	mpTabCtrlData->mpListBox	= NULL;
-
 
 	ImplInitSettings( sal_True, sal_True, sal_True );
 
@@ -255,7 +253,7 @@ TabControl::~TabControl()
 
 	ImplFreeLayoutData();
 
-	// TabCtrl-Daten loeschen
+	// TabCtrl-Daten löschen
 	if ( mpTabCtrlData )
 	{
 		if( mpTabCtrlData->mpListBox )
@@ -316,7 +314,7 @@ Size TabControl::ImplGetItemSize( ImplTabItem* pItem, long nMaxWidth )
 	else if ( pItem->maFormatText.Len() < TAB_EXTRASPACE_X )
 		aSize.Width() += TAB_EXTRASPACE_X-pItem->maFormatText.Len();
 
-	// Evtl. den Text kuerzen
+	// Evtl. den Text kürzen
 	if ( aSize.Width()+4 >= nMaxWidth )
 	{
 		XubString aAppendStr( RTL_CONSTASCII_USTRINGPARAM( "..." ) );
@@ -396,7 +394,7 @@ Rectangle TabControl::ImplGetTabRect( sal_uInt16 nItemPos, long nWidth, long nHe
 		aLightFont.SetWeight( WEIGHT_LIGHT );
 
 		// If Bold and none Bold strings have the same width, we
-		// add in the calculation extra space, so that the tabs
+		// add in the calculation extra space, so that the tab
 		// looks better. This could be the case on systems without
 		// an bold UI font and without synthetic bold support
 		XubString aTestStr( RTL_CONSTASCII_USTRINGPARAM( "Abc." ) );
@@ -435,7 +433,7 @@ Rectangle TabControl::ImplGetTabRect( sal_uInt16 nItemPos, long nWidth, long nHe
 				if ( nLines == 99 )
 					break;
 
-				nX  = nOffsetX;
+				nX = nOffsetX;
 				nY += aSize.Height();
 				nLines++;
 				nLineWidthAry[nLines] = 0;
@@ -781,7 +779,7 @@ void TabControl::ImplDrawItem( ImplTabItem* pItem, const Rectangle& rCurRect, bo
 	else
 		nOff = 0;
 
-	// Wenn wir die aktuelle Page sind, muessen wir etwas mehr zeichnen
+	// Wenn wir die aktuelle Page sind, müssen wir etwas mehr zeichnen
 	if ( pItem->mnId == mnCurPageId )
 	{
 		nOff2 = 2;
@@ -982,7 +980,6 @@ long TabControl::ImplHandleKeyEvent( const KeyEvent& rKeyEvent )
 	return nRet;
 }
 
-
 // -----------------------------------------------------------------------
 
 IMPL_LINK( TabControl, ImplListBoxSelectHdl, ListBox*, EMPTYARG )
@@ -998,7 +995,7 @@ IMPL_LINK( TabControl, ImplWindowEventListener, VclSimpleEvent*, pEvent )
 	if ( pEvent && pEvent->ISA( VclWindowEvent ) && (pEvent->GetId() == VCLEVENT_WINDOW_KEYINPUT) )
 	{
 		VclWindowEvent* pWindowEvent = static_cast< VclWindowEvent* >(pEvent);
-		// Do not handle events from TabControl or it's children, which is done in Notify(), where the events can be consumed.
+		// Do not handle events from TabControl or its children, which is done in Notify(), where the events can be consumed.
 		if ( !IsWindowOrChild( pWindowEvent->GetWindow() ) )
 		{
 			KeyEvent* pKeyEvent = static_cast< KeyEvent* >(pWindowEvent->GetData());
@@ -1007,7 +1004,6 @@ IMPL_LINK( TabControl, ImplWindowEventListener, VclSimpleEvent*, pEvent )
 	}
 	return 0;
 }
-
 
 // -----------------------------------------------------------------------
 
@@ -1351,7 +1347,7 @@ void TabControl::RequestHelp( const HelpEvent& rHEvt )
 			rtl::OUString aHelpId( rtl::OStringToOUString( GetHelpId( nItemId ), RTL_TEXTENCODING_UTF8 ) );
 			if ( aHelpId.getLength() )
 			{
-				// Wenn eine Hilfe existiert, dann ausloesen
+				// Wenn eine Hilfe existiert, dann auslösen
 				Help* pHelp = Application::GetHelp();
 				if ( pHelp )
 					pHelp->Start( aHelpId, this );
@@ -1711,7 +1707,7 @@ void TabControl::RemovePage( sal_uInt16 nPageId )
 	// does the item exist?
 	if ( nPos != TAB_PAGE_NOTFOUND )
 	{
-		//remove page item
+		// remove page item
 		std::vector< ImplTabItem >::iterator it = mpTabCtrlData->maItemList.begin() + nPos;
 		bool bIsCurrentPage = (it->mnId == mnCurPageId);
 		mpTabCtrlData->maItemList.erase( it );
@@ -1721,7 +1717,7 @@ void TabControl::RemovePage( sal_uInt16 nPageId )
 			mpTabCtrlData->mpListBox->SetDropDownLineCount( mpTabCtrlData->mpListBox->GetEntryCount() );
 		}
 
-		// If current page is removed, than first page gets the current page
+		// If current page is removed, then first page gets the current page
 		if ( bIsCurrentPage )
 		{
 			mnCurPageId = 0;
@@ -1895,7 +1891,7 @@ void TabControl::SelectTabPage( sal_uInt16 nPageId )
 		{
 			mnActPageId = nPageId;
 			ActivatePage();
-			// Page könnte im Activate-Handler umgeschaltet wurden sein
+			// Page könnte im Activate-Handler umgeschaltet worden sein
 			nPageId = mnActPageId;
 			mnActPageId = 0;
 			SetCurPageId( nPageId );

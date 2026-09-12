@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -66,81 +66,66 @@ private:
 	 * the Id of the encryption, which is used for the result listener to
 	 * identify the encryption.
 	 */
-	sal_Int32 m_nEncryptionId;  
-        
+	sal_Int32 m_nEncryptionId;
+
 	/*
 	 * the Id of the element to be encrypted.
 	 */
 	sal_Int32 m_nReferenceId;
-        
+
 	/*
 	 * the decryption result,
 	 * remembers whether the encryption succeeds.
 	 */
 	bool      m_bEncryptionSucceed;
-	
-	com::sun::star::uno::Reference< 
+
+	com::sun::star::uno::Reference<
 		com::sun::star::xml::crypto::XSecurityEnvironment > m_xSecurityEnvironment;
-	
-	virtual void notifyResultListener() const
-		throw (com::sun::star::uno::Exception, com::sun::star::uno::RuntimeException);
+
+	virtual void notifyResultListener() const;
 	virtual bool checkReady() const;
-	virtual void startEngine( const com::sun::star::uno::Reference< 
+	virtual void startEngine( const com::sun::star::uno::Reference<
 		com::sun::star::xml::crypto::XXMLEncryptionTemplate >&
-		xEncryptionTemplate)
-		throw (com::sun::star::uno::Exception, com::sun::star::uno::RuntimeException);
-	
+		xEncryptionTemplate);
+
 public:
-	explicit EncryptorImpl( const com::sun::star::uno::Reference< 
+	explicit EncryptorImpl( const com::sun::star::uno::Reference<
 		com::sun::star::lang::XMultiServiceFactory >& rxMSF);
 	virtual ~EncryptorImpl();
 
 	/* XEncryptionResultBroadcaster */
 	virtual void SAL_CALL addEncryptionResultListener(
-		const com::sun::star::uno::Reference< 
+		const com::sun::star::uno::Reference<
 			com::sun::star::xml::crypto::sax::XEncryptionResultListener >&
-			listener )
-    		throw (com::sun::star::uno::Exception, com::sun::star::uno::RuntimeException);
-    	virtual void SAL_CALL removeEncryptionResultListener( 
-    		const com::sun::star::uno::Reference< 
-    			com::sun::star::xml::crypto::sax::XEncryptionResultListener >& 
-    			listener )
-    		throw (com::sun::star::uno::RuntimeException);
+			listener );
+    	virtual void SAL_CALL removeEncryptionResultListener(
+    		const com::sun::star::uno::Reference<
+    			com::sun::star::xml::crypto::sax::XEncryptionResultListener >&
+    			listener );
 
 	/* XReferenceCollector */
-	virtual void SAL_CALL setReferenceCount( sal_Int32 count )
-		throw (com::sun::star::uno::Exception, com::sun::star::uno::RuntimeException);
-    		
-	virtual void SAL_CALL setReferenceId( sal_Int32 id )
-		throw (com::sun::star::uno::Exception, com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL setReferenceCount( sal_Int32 count );
+
+	virtual void SAL_CALL setReferenceId( sal_Int32 id );
 
 	/* XInitialization */
-	virtual void SAL_CALL initialize( 
-		const com::sun::star::uno::Sequence< com::sun::star::uno::Any >& aArguments ) 
-		throw (com::sun::star::uno::Exception, com::sun::star::uno::RuntimeException);
+	virtual void SAL_CALL initialize(
+		const com::sun::star::uno::Sequence< com::sun::star::uno::Any >& aArguments );
 
 	/* XServiceInfo */
-	virtual rtl::OUString SAL_CALL getImplementationName(  ) 
-		throw (com::sun::star::uno::RuntimeException);
-	virtual sal_Bool SAL_CALL supportsService( const rtl::OUString& ServiceName ) 
-		throw (com::sun::star::uno::RuntimeException);
-	virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames(  ) 
-		throw (com::sun::star::uno::RuntimeException);
+	virtual rtl::OUString SAL_CALL getImplementationName(  );
+	virtual sal_Bool SAL_CALL supportsService( const rtl::OUString& ServiceName );
+	virtual com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL getSupportedServiceNames(  );
 };
 
-rtl::OUString EncryptorImpl_getImplementationName()
-	throw ( com::sun::star::uno::RuntimeException );
+rtl::OUString EncryptorImpl_getImplementationName();
 
-sal_Bool SAL_CALL EncryptorImpl_supportsService( const rtl::OUString& ServiceName ) 
-	throw ( com::sun::star::uno::RuntimeException );
+sal_Bool SAL_CALL EncryptorImpl_supportsService( const rtl::OUString& ServiceName );
 
-com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL EncryptorImpl_getSupportedServiceNames(  ) 
-	throw ( com::sun::star::uno::RuntimeException );
+com::sun::star::uno::Sequence< rtl::OUString > SAL_CALL EncryptorImpl_getSupportedServiceNames(  );
 
 com::sun::star::uno::Reference< com::sun::star::uno::XInterface >
-SAL_CALL EncryptorImpl_createInstance( 
-	const com::sun::star::uno::Reference< com::sun::star::lang::XMultiServiceFactory >& rSMgr)
-	throw ( com::sun::star::uno::Exception );
+SAL_CALL EncryptorImpl_createInstance(
+	const com::sun::star::uno::Reference< com::sun::star::lang::XMultiServiceFactory >& rSMgr);
 
 #endif
-

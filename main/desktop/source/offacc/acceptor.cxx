@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -63,7 +63,7 @@ Acceptor::Acceptor( const Reference< XMultiServiceFactory >& rFactory )
 	, m_aConnectString()
 	, m_aProtocol()
 	, m_bInit(sal_False)
-    , m_bDying(false)  
+    , m_bDying(false)
 {
 	m_rSMgr = rFactory;
 	m_rAcceptor = Reference< XAcceptor > (m_rSMgr->createInstance(
@@ -152,7 +152,6 @@ void SAL_CALL Acceptor::run()
 
 // XInitialize
 void SAL_CALL Acceptor::initialize( const Sequence<Any>& aArguments )
-	throw( Exception )
 {
 	// prevent multiple initialization
 	ClearableMutexGuard	aGuard(	m_aMutex );
@@ -189,7 +188,7 @@ void SAL_CALL Acceptor::initialize( const Sequence<Any>& aArguments )
 	// do we want to enable accepting?
 	sal_Bool bEnable = sal_False;
     if (((nArgs == 1 && (aArguments[0] >>= bEnable)) ||
-         (nArgs == 2 && (aArguments[1] >>= bEnable))) && 
+         (nArgs == 2 && (aArguments[1] >>= bEnable))) &&
         bEnable )
 	{
 		m_cEnable.set();
@@ -212,7 +211,6 @@ OUString Acceptor::impl_getImplementationName()
 	return OUString::createFromAscii( implementationName );
 }
 OUString SAL_CALL Acceptor::getImplementationName()
-	throw (RuntimeException)
 {
 	return Acceptor::impl_getImplementationName();
 }
@@ -226,12 +224,10 @@ Sequence<OUString> Acceptor::impl_getSupportedServiceNames()
 	return aSequence;
 }
 Sequence<OUString> SAL_CALL Acceptor::getSupportedServiceNames()
-	throw (RuntimeException)
 {
 	return Acceptor::impl_getSupportedServiceNames();
 }
 sal_Bool SAL_CALL Acceptor::supportsService( const OUString&)
-	throw (RuntimeException)
 {
 	return sal_False;
 }
@@ -258,7 +254,6 @@ AccInstanceProvider::~AccInstanceProvider()
 }
 
 Reference<XInterface> SAL_CALL AccInstanceProvider::getInstance (const OUString& aName )
-        throw ( NoSuchElementException )
 {
 
 	Reference<XInterface> rInstance;

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -129,7 +129,6 @@ void ScFormulaParserObj::SetCompilerFlags( ScCompiler& rCompiler ) const
 
 uno::Sequence<sheet::FormulaToken> SAL_CALL ScFormulaParserObj::parseFormula(
         const rtl::OUString& aFormula, const table::CellAddress& rReferencePos )
-                                throw (uno::RuntimeException)
 {
     ScUnoGuard aGuard;
     uno::Sequence<sheet::FormulaToken> aRet;
@@ -155,7 +154,6 @@ uno::Sequence<sheet::FormulaToken> SAL_CALL ScFormulaParserObj::parseFormula(
 
 rtl::OUString SAL_CALL ScFormulaParserObj::printFormula(
         const uno::Sequence<sheet::FormulaToken>& aTokens, const table::CellAddress& rReferencePos )
-                                throw (uno::RuntimeException)
 {
     ScUnoGuard aGuard;
     rtl::OUString aRet;
@@ -182,7 +180,6 @@ rtl::OUString SAL_CALL ScFormulaParserObj::printFormula(
 // XPropertySet
 
 uno::Reference<beans::XPropertySetInfo> SAL_CALL ScFormulaParserObj::getPropertySetInfo()
-                                                        throw(uno::RuntimeException)
 {
     ScUnoGuard aGuard;
     static uno::Reference< beans::XPropertySetInfo > aRef(new SfxItemPropertySetInfo( lcl_GetFormulaParserMap() ));
@@ -191,9 +188,6 @@ uno::Reference<beans::XPropertySetInfo> SAL_CALL ScFormulaParserObj::getProperty
 
 void SAL_CALL ScFormulaParserObj::setPropertyValue(
                         const rtl::OUString& aPropertyName, const uno::Any& aValue )
-                throw(beans::UnknownPropertyException, beans::PropertyVetoException,
-                        lang::IllegalArgumentException, lang::WrappedTargetException,
-                        uno::RuntimeException)
 {
     ScUnoGuard aGuard;
     String aString(aPropertyName);
@@ -250,8 +244,6 @@ void SAL_CALL ScFormulaParserObj::setPropertyValue(
 }
 
 uno::Any SAL_CALL ScFormulaParserObj::getPropertyValue( const rtl::OUString& aPropertyName )
-                throw(beans::UnknownPropertyException, lang::WrappedTargetException,
-                        uno::RuntimeException)
 {
     ScUnoGuard aGuard;
     uno::Any aRet;
@@ -460,4 +452,3 @@ ScFormulaOpCodeMapperObj::ScFormulaOpCodeMapperObj(::std::auto_ptr<formula::Form
 }
 
 // ============================================================================
-

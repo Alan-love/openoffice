@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 #include "Legend.hxx"
 #include "macros.hxx"
 #include "LineProperties.hxx"
@@ -136,7 +136,7 @@ private:
         ::chart::PropertyHelper::setPropertyValue( rOutMap, ::chart::CharacterProperties::PROP_CHAR_CHAR_HEIGHT, fDefaultCharHeight );
         ::chart::PropertyHelper::setPropertyValue( rOutMap, ::chart::CharacterProperties::PROP_CHAR_ASIAN_CHAR_HEIGHT, fDefaultCharHeight );
         ::chart::PropertyHelper::setPropertyValue( rOutMap, ::chart::CharacterProperties::PROP_CHAR_COMPLEX_CHAR_HEIGHT, fDefaultCharHeight );
-    }    
+    }
 };
 
 struct StaticLegendDefaults : public rtl::StaticAggregate< ::chart::tPropertyValueMap, StaticLegendDefaults_Initializer >
@@ -211,14 +211,12 @@ Legend::~Legend()
 
 // ____ XCloneable ____
 Reference< util::XCloneable > SAL_CALL Legend::createClone()
-    throw (uno::RuntimeException)
 {
     return Reference< util::XCloneable >( new Legend( *this ));
 }
 
 // ____ XModifyBroadcaster ____
 void SAL_CALL Legend::addModifyListener( const Reference< util::XModifyListener >& aListener )
-    throw (uno::RuntimeException)
 {
     try
     {
@@ -232,7 +230,6 @@ void SAL_CALL Legend::addModifyListener( const Reference< util::XModifyListener 
 }
 
 void SAL_CALL Legend::removeModifyListener( const Reference< util::XModifyListener >& aListener )
-    throw (uno::RuntimeException)
 {
     try
     {
@@ -247,14 +244,12 @@ void SAL_CALL Legend::removeModifyListener( const Reference< util::XModifyListen
 
 // ____ XModifyListener ____
 void SAL_CALL Legend::modified( const lang::EventObject& aEvent )
-    throw (uno::RuntimeException)
 {
     m_xModifyEventForwarder->modified( aEvent );
 }
 
 // ____ XEventListener (base of XModifyListener) ____
 void SAL_CALL Legend::disposing( const lang::EventObject& /* Source */ )
-    throw (uno::RuntimeException)
 {
     // nothing
 }
@@ -289,7 +284,6 @@ Sequence< OUString > Legend::getSupportedServiceNames_Static()
 
 // ____ OPropertySet ____
 Any Legend::GetDefaultValue( sal_Int32 nHandle ) const
-    throw(beans::UnknownPropertyException)
 {
     const tPropertyValueMap& rStaticDefaults = *StaticLegendDefaults::get();
     tPropertyValueMap::const_iterator aFound( rStaticDefaults.find( nHandle ) );
@@ -305,7 +299,6 @@ Any Legend::GetDefaultValue( sal_Int32 nHandle ) const
 
 // ____ XPropertySet ____
 Reference< beans::XPropertySetInfo > SAL_CALL Legend::getPropertySetInfo()
-    throw (uno::RuntimeException)
 {
     return *StaticLegendInfo::get();
 }

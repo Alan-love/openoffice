@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -147,12 +147,12 @@ namespace basprov
                 Reference< lang::XMultiComponentFactory > xSMgr( m_xContext->getServiceManager() );
                 if ( xSMgr.is() )
                 {
-                    xUriFac.set( xSMgr->createInstanceWithContext( ::rtl::OUString::createFromAscii( 
+                    xUriFac.set( xSMgr->createInstanceWithContext( ::rtl::OUString::createFromAscii(
                         "com.sun.star.uri.UriReferenceFactory" ), m_xContext ), UNO_QUERY );
                 }
 
                 if ( xUriFac.is() )
-                {        
+                {
                     ::rtl::OUString aLinkURL( xLibContainer->getLibraryLinkURL( rLibName ) );
                     Reference<  uri::XUriReference > xUriRef( xUriFac->parse( aLinkURL ), UNO_QUERY );
 
@@ -170,10 +170,10 @@ namespace basprov
                             {
                                 ::rtl::OUString aDecodedURL( aAuthority.copy( sizeof ( "vnd.sun.star.expand:" ) - 1 ) );
                                 aDecodedURL = ::rtl::Uri::decode( aDecodedURL, rtl_UriDecodeWithCharset, RTL_TEXTENCODING_UTF8 );
-                                Reference<util::XMacroExpander> xMacroExpander( 
-                                    m_xContext->getValueByName(                
+                                Reference<util::XMacroExpander> xMacroExpander(
+                                    m_xContext->getValueByName(
                                     ::rtl::OUString::createFromAscii( "/singletons/com.sun.star.util.theMacroExpander" ) ),
-                                    UNO_QUERY );                                
+                                    UNO_QUERY );
                                 if ( xMacroExpander.is() )
                                     aFileURL = xMacroExpander->expandMacros( aDecodedURL );
                             }
@@ -192,7 +192,7 @@ namespace basprov
 
                 ::rtl::OUString aSearchURL1( RTL_CONSTASCII_USTRINGPARAM( "share/basic" ) );
 				::rtl::OUString aSearchURL2( RTL_CONSTASCII_USTRINGPARAM( "share/uno_packages" ) );
-				if( aCanonicalFileURL.indexOf( aSearchURL1 ) != -1 || aCanonicalFileURL.indexOf( aSearchURL2 ) != -1 ) 
+				if( aCanonicalFileURL.indexOf( aSearchURL1 ) != -1 || aCanonicalFileURL.indexOf( aSearchURL2 ) != -1 )
                     bIsShared = true;
             }
         }
@@ -204,14 +204,14 @@ namespace basprov
     // XServiceInfo
     // -----------------------------------------------------------------------------
 
-    ::rtl::OUString BasicProviderImpl::getImplementationName(  ) throw (RuntimeException)
+    ::rtl::OUString BasicProviderImpl::getImplementationName(  )
     {
         return getImplementationName_BasicProviderImpl();
     }
 
     // -----------------------------------------------------------------------------
 
-    sal_Bool BasicProviderImpl::supportsService( const ::rtl::OUString& rServiceName ) throw (RuntimeException)
+    sal_Bool BasicProviderImpl::supportsService( const ::rtl::OUString& rServiceName )
     {
 	    Sequence< ::rtl::OUString > aNames( getSupportedServiceNames() );
 	    const ::rtl::OUString* pNames = aNames.getConstArray();
@@ -224,7 +224,7 @@ namespace basprov
 
     // -----------------------------------------------------------------------------
 
-    Sequence< ::rtl::OUString > BasicProviderImpl::getSupportedServiceNames(  ) throw (RuntimeException)
+    Sequence< ::rtl::OUString > BasicProviderImpl::getSupportedServiceNames(  )
     {
         return getSupportedServiceNames_BasicProviderImpl();
     }
@@ -233,7 +233,7 @@ namespace basprov
     // XInitialization
     // -----------------------------------------------------------------------------
 
-    void BasicProviderImpl::initialize( const Sequence< Any >& aArguments ) throw (Exception, RuntimeException)
+    void BasicProviderImpl::initialize( const Sequence< Any >& aArguments )
     {
         // TODO
 
@@ -250,7 +250,7 @@ namespace basprov
 
         Reference< frame::XModel > xModel;
 
-        m_xInvocationContext.set( aArguments[0], UNO_QUERY );;
+        m_xInvocationContext.set( aArguments[0], UNO_QUERY );
         if ( m_xInvocationContext.is() )
         {
             xModel.set( m_xInvocationContext->getScriptContainer(), UNO_QUERY );
@@ -325,8 +325,7 @@ namespace basprov
     // XScriptProvider
     // -----------------------------------------------------------------------------
 
-    Reference < provider::XScript > BasicProviderImpl::getScript( const ::rtl::OUString& scriptURI ) 
-        throw ( provider::ScriptFrameworkErrorException, RuntimeException)
+    Reference < provider::XScript > BasicProviderImpl::getScript( const ::rtl::OUString& scriptURI )
     {
         // TODO
 
@@ -345,7 +344,7 @@ namespace basprov
                 scriptURI, OUSTR("Basic"),
                 provider::ScriptFrameworkErrorType::UNKNOWN );
         }
-        
+
         Reference<  uri::XUriReference > uriRef(
             xFac->parse( scriptURI ), UNO_QUERY );
 
@@ -353,7 +352,7 @@ namespace basprov
 
         if ( !uriRef.is() || !sfUri.is() )
         {
-            ::rtl::OUString errorMsg = ::rtl::OUString::createFromAscii( "BasicProviderImpl::getScript: failed to parse URI: " ); 
+            ::rtl::OUString errorMsg = ::rtl::OUString::createFromAscii( "BasicProviderImpl::getScript: failed to parse URI: " );
             errorMsg = errorMsg.concat( scriptURI );
             throw provider::ScriptFrameworkErrorException(
                 errorMsg, Reference< XInterface >(),
@@ -361,9 +360,9 @@ namespace basprov
                 provider::ScriptFrameworkErrorType::MALFORMED_URL );
         }
 
-        
+
         ::rtl::OUString aDescription = sfUri->getName();
-        ::rtl::OUString aLocation = sfUri->getParameter( 
+        ::rtl::OUString aLocation = sfUri->getParameter(
             ::rtl::OUString::createFromAscii( "location" ) );
 
         sal_Int32 nIndex = 0;
@@ -443,7 +442,7 @@ namespace basprov
     // XBrowseNode
     // -----------------------------------------------------------------------------
 
-    ::rtl::OUString BasicProviderImpl::getName(  ) throw (RuntimeException)
+    ::rtl::OUString BasicProviderImpl::getName(  )
     {
         // TODO
 
@@ -454,7 +453,7 @@ namespace basprov
 
     // -----------------------------------------------------------------------------
 
-    Sequence< Reference< browse::XBrowseNode > > BasicProviderImpl::getChildNodes(  ) throw (RuntimeException)
+    Sequence< Reference< browse::XBrowseNode > > BasicProviderImpl::getChildNodes(  )
     {
         ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -463,7 +462,7 @@ namespace basprov
 
         if ( m_bIsAppScriptCtx )
         {
-            xLibContainer = m_xLibContainerApp; 
+            xLibContainer = m_xLibContainerApp;
             pBasicManager = m_pAppBasicManager;
         }
         else
@@ -472,7 +471,7 @@ namespace basprov
             pBasicManager = m_pDocBasicManager;
         }
 
-        Sequence< Reference< browse::XBrowseNode > > aChildNodes; 
+        Sequence< Reference< browse::XBrowseNode > > aChildNodes;
 
         if ( pBasicManager && xLibContainer.is() )
         {
@@ -498,7 +497,7 @@ namespace basprov
                 }
                 if ( bCreate )
                 {
-                    pChildNodes[childsFound++] = static_cast< browse::XBrowseNode* >( new BasicLibraryNodeImpl( 
+                    pChildNodes[childsFound++] = static_cast< browse::XBrowseNode* >( new BasicLibraryNodeImpl(
                         m_xContext, m_sScriptingContext, pBasicManager, xLibContainer, pLibNames[i], m_bIsAppScriptCtx ) );
                 }
             }
@@ -512,7 +511,7 @@ namespace basprov
 
     // -----------------------------------------------------------------------------
 
-    sal_Bool BasicProviderImpl::hasChildNodes(  ) throw (RuntimeException)
+    sal_Bool BasicProviderImpl::hasChildNodes(  )
     {
         ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -520,7 +519,7 @@ namespace basprov
         Reference< script::XLibraryContainer > xLibContainer;
         if ( m_bIsAppScriptCtx )
         {
-            xLibContainer = m_xLibContainerApp; 
+            xLibContainer = m_xLibContainerApp;
         }
         else
         {
@@ -534,7 +533,7 @@ namespace basprov
 
     // -----------------------------------------------------------------------------
 
-    sal_Int16 BasicProviderImpl::getType(  ) throw (RuntimeException)
+    sal_Int16 BasicProviderImpl::getType(  )
     {
         ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -577,7 +576,7 @@ namespace basprov
 
 extern "C"
 {
-    SAL_DLLPUBLIC_EXPORT void SAL_CALL component_getImplementationEnvironment( 
+    SAL_DLLPUBLIC_EXPORT void SAL_CALL component_getImplementationEnvironment(
         const sal_Char ** ppEnvTypeName, uno_Environment ** ppEnv )
     {
 		(void)ppEnv;
@@ -585,11 +584,11 @@ extern "C"
         *ppEnvTypeName = CPPU_CURRENT_LANGUAGE_BINDING_NAME;
     }
 
-    SAL_DLLPUBLIC_EXPORT void * SAL_CALL component_getFactory( 
+    SAL_DLLPUBLIC_EXPORT void * SAL_CALL component_getFactory(
         const sal_Char * pImplName, lang::XMultiServiceFactory * pServiceManager,
         registry::XRegistryKey * pRegistryKey )
     {
-        return ::cppu::component_getFactoryHelper( 
+        return ::cppu::component_getFactoryHelper(
             pImplName, pServiceManager, pRegistryKey, ::basprov::s_component_entries );
     }
 }

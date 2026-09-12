@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -72,9 +72,7 @@
 #include "doubleref.hxx"
 #include "queryparam.hxx"
 
-#include <boost/math/special_functions/acosh.hpp>
-#include <boost/math/special_functions/asinh.hpp>
-#include <boost/math/special_functions/atanh.hpp>
+#include <cmath>
 
 #define SC_DOUBLE_MAXVALUE  1.7e307
 
@@ -330,7 +328,7 @@ void lcl_AdjustJumpMatrix( ScJumpMatrix* pJumpM, ScMatrixRef& pResMat, SCSIZE nP
     SCSIZE nAdjustCols, nAdjustRows;
     pJumpM->GetDimensions( nJumpCols, nJumpRows );
     pJumpM->GetResMatDimensions( nResCols, nResRows );
-    if (( nJumpCols == 1 && nParmCols > nResCols ) || 
+    if (( nJumpCols == 1 && nParmCols > nResCols ) ||
         ( nJumpRows == 1 && nParmRows > nResRows ))
     {
         if ( nJumpCols == 1 && nJumpRows == 1 )
@@ -639,8 +637,8 @@ ScCompareOptions::ScCompareOptions( ScDocument* pDoc, const ScQueryEntry& rEntry
     bIgnoreCase(true)
 {
     bRegEx = (bRegEx && (aQueryEntry.eOp == SC_EQUAL || aQueryEntry.eOp == SC_NOT_EQUAL));
-    // Interpreter functions usually are case insensitive, except the simple 
-    // comparison operators, for which these options aren't used. Override in 
+    // Interpreter functions usually are case insensitive, except the simple
+    // comparison operators, for which these options aren't used. Override in
     // struct if needed.
 }
 
@@ -727,8 +725,8 @@ double ScInterpreter::CompareFunc( const ScCompare& rComp, ScCompareOptions* pOp
         // Both strings.
         if (pOptions)
         {
-            // All similar to ScTable::ValidQuery(), *rComp.pVal[1] actually 
-            // is/must be identical to *rEntry.pStr, which is essential for 
+            // All similar to ScTable::ValidQuery(), *rComp.pVal[1] actually
+            // is/must be identical to *rEntry.pStr, which is essential for
             // regex to work through GetSearchTextPtr().
             ScQueryEntry& rEntry = pOptions->aQueryEntry;
             DBG_ASSERT( *rComp.pVal[1] == *rEntry.pStr, "ScInterpreter::CompareFunc: broken options");
@@ -736,8 +734,8 @@ double ScInterpreter::CompareFunc( const ScCompare& rComp, ScCompareOptions* pOp
             {
                 xub_StrLen nStart = 0;
                 xub_StrLen nStop  = rComp.pVal[0]->Len();
-                bool bMatch = rEntry.GetSearchTextPtr( 
-                        !pOptions->bIgnoreCase)->SearchFrwrd( *rComp.pVal[0], 
+                bool bMatch = rEntry.GetSearchTextPtr(
+                        !pOptions->bIgnoreCase)->SearchFrwrd( *rComp.pVal[0],
                             &nStart, &nStop);
                 if (bMatch && pOptions->bMatchWholeCell && (nStart != 0 || nStop != rComp.pVal[0]->Len()))
                     bMatch = false;     // RegEx must match entire string.
@@ -745,19 +743,19 @@ double ScInterpreter::CompareFunc( const ScCompare& rComp, ScCompareOptions* pOp
             }
             else if (rEntry.eOp == SC_EQUAL || rEntry.eOp == SC_NOT_EQUAL)
             {
-                ::utl::TransliterationWrapper* pTransliteration = 
-                    (pOptions->bIgnoreCase ? ScGlobal::GetpTransliteration() : 
+                ::utl::TransliterationWrapper* pTransliteration =
+                    (pOptions->bIgnoreCase ? ScGlobal::GetpTransliteration() :
                      ScGlobal::GetCaseTransliteration());
                 bool bMatch;
                 if (pOptions->bMatchWholeCell)
                     bMatch = pTransliteration->isEqual( *rComp.pVal[0], *rComp.pVal[1]);
                 else
                 {
-                    String aCell( pTransliteration->transliterate( 
-                                *rComp.pVal[0], ScGlobal::eLnge, 0, 
+                    String aCell( pTransliteration->transliterate(
+                                *rComp.pVal[0], ScGlobal::eLnge, 0,
                                 rComp.pVal[0]->Len(), NULL));
-                    String aQuer( pTransliteration->transliterate( 
-                                *rComp.pVal[1], ScGlobal::eLnge, 0, 
+                    String aQuer( pTransliteration->transliterate(
+                                *rComp.pVal[1], ScGlobal::eLnge, 0,
                                 rComp.pVal[1]->Len(), NULL));
                     bMatch = (aCell.Search( aQuer ) != STRING_NOTFOUND);
                 }
@@ -783,7 +781,7 @@ double ScInterpreter::CompareFunc( const ScCompare& rComp, ScCompareOptions* pOp
         if (!rEntry.bQueryByString && rEntry.pStr->Len() &&
                 (rEntry.eOp == SC_EQUAL || rEntry.eOp == SC_NOT_EQUAL))
         {
-            // As in ScTable::ValidQuery() match a numeric string for a 
+            // As in ScTable::ValidQuery() match a numeric string for a
             // number query that originated from a string, e.g. in SUMIF
             // and COUNTIF. Transliteration is not needed here.
             bool bEqual = rComp.pVal[nStringQuery-1]->Equals( *rEntry.pStr);
@@ -1146,64 +1144,64 @@ void ScInterpreter::ScBitAnd() {
 }
 
 void ScInterpreter::ScBitOr() {
-    ScBitArithmeticOps(bitOperations::BITOR);   
+    ScBitArithmeticOps(bitOperations::BITOR);
 }
 
 void ScInterpreter::ScBitXor() {
-    ScBitArithmeticOps(bitOperations::BITXOR);   
+    ScBitArithmeticOps(bitOperations::BITXOR);
 }
 
 /* Helper function that calculates the result in bitwise arithmetic operations helping avoid code repetition */
 static void doOperation( sal_uInt64 val, ScInterpreter::bitOperations::bitArithmetic bitOp, sal_uInt64 &res, sal_Bool &first )
-{  
-    if ( first ) 
+{
+    if ( first )
     {
         res = val;
         first = sal_False;
-    } 
-    else 
-    {   
+    }
+    else
+    {
         if (bitOp == ScInterpreter::bitOperations::BITAND)
             res = res & val;
-        else if (bitOp == ScInterpreter::bitOperations::BITOR) 
+        else if (bitOp == ScInterpreter::bitOperations::BITOR)
             res = res | val;
-        else if (bitOp == ScInterpreter::bitOperations::BITXOR) 
+        else if (bitOp == ScInterpreter::bitOperations::BITXOR)
             res = res ^ val;
     }
 }
 
-void ScInterpreter::ScBitArithmeticOps(bitOperations::bitArithmetic bitOp) 
-{   
+void ScInterpreter::ScBitArithmeticOps(bitOperations::bitArithmetic bitOp)
+{
     nFuncFmtType = NUMBERFORMAT_NUMBER;
     short nParamCount = GetByte();
     static const sal_uInt64 max_val = SAL_CONST_UINT64( 281474976710656 );
     static const int NUMBER_OF_ARGUMENTS = 2;
 
-    if ( MustHaveParamCount( nParamCount, NUMBER_OF_ARGUMENTS ) ) 
-    {   
+    if ( MustHaveParamCount( nParamCount, NUMBER_OF_ARGUMENTS ) )
+    {
         double *arguments = new double[NUMBER_OF_ARGUMENTS];
 
-        for (int i=0; i<NUMBER_OF_ARGUMENTS; i++) 
+        for (int i=0; i<NUMBER_OF_ARGUMENTS; i++)
         {
             arguments[i] = ::rtl::math::approxFloor( GetDouble() );
-            if ( arguments[i] < 0 || arguments[i] > max_val ) 
+            if ( arguments[i] < 0 || arguments[i] > max_val )
             {
                 PushIllegalArgument();
-            } 
+            }
         }
 
         sal_uInt64 res = 0;
         sal_Bool first = sal_True;
 
-      
-        for (int i=0; i<NUMBER_OF_ARGUMENTS; i++) 
+
+        for (int i=0; i<NUMBER_OF_ARGUMENTS; i++)
         {
             doOperation( ( sal_uInt64 )arguments[i], bitOp, res, first );
         }
 
         delete[] arguments;
-        PushDouble( (double) res ); 
-    
+        PushDouble( (double) res );
+
     }
 }
 
@@ -1221,7 +1219,7 @@ void ScInterpreter::ScBitShiftOps(bitOperations::bitShift bitOp) {
         double n = ::rtl::math::approxFloor( GetDouble() );
         double val = ::rtl::math::approxFloor( GetDouble() );
 
-        if ( val < 0 ) 
+        if ( val < 0 )
         {
             PushIllegalArgument();
         }
@@ -1234,16 +1232,16 @@ void ScInterpreter::ScBitShiftOps(bitOperations::bitShift bitOp) {
                     result = (sal_uInt64) val >> (sal_uInt64) -n;
                 else
                     result = (sal_uInt64) val << (sal_uInt64) -n;
-            }   
-            else if( n == 0) 
+            }
+            else if( n == 0)
                 result = val;
-            else 
+            else
             {
-                if (bitOp == bitOperations::BITLSHIFT) 
+                if (bitOp == bitOperations::BITLSHIFT)
                     result = (sal_uInt64) val << (sal_uInt64) n;
                 else
                     result = (sal_uInt64) val >> (sal_uInt64) n;
-                
+
             }
             PushDouble( result );
         }
@@ -1811,7 +1809,7 @@ void ScInterpreter::ScCotHyp()
 void ScInterpreter::ScArcSinHyp()
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "sc", "er", "ScInterpreter::ScArcSinHyp" );
-    PushDouble( ::boost::math::asinh( GetDouble()));
+    PushDouble( std::asinh( GetDouble()));
 }
 
 void ScInterpreter::ScArcCosHyp()
@@ -1821,7 +1819,7 @@ void ScInterpreter::ScArcCosHyp()
     if (fVal < 1.0)
         PushIllegalArgument();
     else
-        PushDouble( ::boost::math::acosh( fVal));
+        PushDouble( std::acosh( fVal));
 }
 
 void ScInterpreter::ScArcTanHyp()
@@ -1831,7 +1829,7 @@ void ScInterpreter::ScArcTanHyp()
     if (fabs(fVal) >= 1.0)
         PushIllegalArgument();
     else
-        PushDouble( ::boost::math::atanh( fVal));
+        PushDouble( std::atanh( fVal));
 }
 
 
@@ -2216,7 +2214,7 @@ void ScInterpreter::ScCell()
             else if( aInfoType.EqualsAscii( "COORD" ) )
             {   // address, lotus 1-2-3 formatted: $TABLE:$COL$ROW
                 // Yes, passing tab as col is intentional!
-                ScAddress( static_cast<SCCOL>(aCellPos.Tab()), 0, 0 ).Format( 
+                ScAddress( static_cast<SCCOL>(aCellPos.Tab()), 0, 0 ).Format(
                     aFuncResult, (SCA_COL_ABSOLUTE|SCA_VALID_COL), NULL, pDok->GetAddressConvention() );
                 aFuncResult += ':';
                 String aCellStr;
@@ -2771,7 +2769,7 @@ void ScInterpreter::ScN()
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "sc", "er", "ScInterpreter::ScN" );
     sal_uInt16 nErr = nGlobalError;
     nGlobalError = 0;
-    // Temporarily override the ConvertStringToValue() error for 
+    // Temporarily override the ConvertStringToValue() error for
     // GetCellValue() / GetCellValueOrZero()
     sal_uInt16 nSErr = mnStringNoValueError;
     mnStringNoValueError = errCellNoValue;
@@ -2815,7 +2813,7 @@ void ScInterpreter::ScUpper()
 void ScInterpreter::ScPropper()
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "sc", "er", "ScInterpreter::ScPropper" );
-//2do: what to do with I18N-CJK ?!?
+// TODO: what to do with I18N-CJK ?!?
     String aStr( GetString() );
     const xub_StrLen nLen = aStr.Len();
     // #i82487# don't try to write to empty string's BufferAccess
@@ -2993,7 +2991,7 @@ void ScInterpreter::ScValue()
 }
 
 
-//2do: this should be a proper unicode string method
+// TODO: this should be a proper unicode string method
 inline sal_Bool lcl_ScInterpreter_IsPrintable( sal_Unicode c )
 {
     return 0x20 <= c && c != 0x7f;
@@ -3015,7 +3013,7 @@ void ScInterpreter::ScClean()
 void ScInterpreter::ScCode()
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "sc", "er", "ScInterpreter::ScCode" );
-//2do: make it full range unicode?
+// TODO: make it full range unicode?
     const String& rStr = GetString();
     PushInt( (sal_uChar) ByteString::ConvertFromUnicode( rStr.GetChar(0), gsl_getSystemTextEncoding() ) );
 }
@@ -3024,7 +3022,7 @@ void ScInterpreter::ScCode()
 void ScInterpreter::ScChar()
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "sc", "er", "ScInterpreter::ScChar" );
-//2do: make it full range unicode?
+// TODO: make it full range unicode?
     double fVal = GetDouble();
     if (fVal < 0.0 || fVal >= 256.0)
         PushIllegalArgument();
@@ -3065,7 +3063,7 @@ static ::rtl::OUString lcl_convertIntoFullWidth( const ::rtl::OUString & rStr )
     {
         aTrans.loadModuleByImplName( ::rtl::OUString::createFromAscii( "HALFWIDTH_FULLWIDTH_LIKE_JIS" ), LANGUAGE_SYSTEM );
         bFirstJISCall = false;
-    }    
+    }
 
     return aTrans.transliterate( rStr, 0, sal_uInt16( rStr.getLength() ), NULL );
 }
@@ -3124,7 +3122,7 @@ void ScInterpreter::ScUnichar()
     if ( MustHaveParamCount( GetByte(), 1 ) )
     {
         double dVal = ::rtl::math::approxFloor( GetDouble() );
-        if ((dVal < 0x000000) || (dVal > 0x10FFFF)) 
+        if ((dVal < 0x000000) || (dVal > 0x10FFFF))
             PushIllegalArgument();
         else
         {
@@ -3500,7 +3498,7 @@ double ScInterpreter::IterateParameters( ScIterFunc eFunc, sal_Bool bTextAsZero 
                             case ifPRODUCT: fRes *= fVal; break;
                             case ifCOUNT:
                                 if ( nGlobalError )
-                                {    
+                                {
                                     nGlobalError = 0;
                                     nCount--;
                                 }
@@ -4909,7 +4907,7 @@ double ScInterpreter::IterateParametersIf( ScIterFuncIf eFunc )
                         {
                             for (SCROW nRow = nRow1; nRow <= nRow2; ++nRow)
                             {
-                                if (pResultMatrix->IsValue( nCol, nRow) && 
+                                if (pResultMatrix->IsValue( nCol, nRow) &&
                                         pResultMatrix->GetDouble( nCol, nRow))
                                 {
                                     SCSIZE nC = nCol + nColDiff;
@@ -5198,7 +5196,7 @@ void ScInterpreter::ScCountIf()
                     SCSIZE nSize = pResultMatrix->GetElementCount();
                     for (SCSIZE nIndex = 0; nIndex < nSize; ++nIndex)
                     {
-                        if (pResultMatrix->IsValue( nIndex) && 
+                        if (pResultMatrix->IsValue( nIndex) &&
                                 pResultMatrix->GetDouble( nIndex))
                             ++fCount;
                     }
@@ -5655,9 +5653,9 @@ void ScInterpreter::ScLookup()
             case svDoubleRef:
             {
                 SCTAB nTabJunk;
-                PopDoubleRef(nResCol1, nResRow1, nResTab, 
+                PopDoubleRef(nResCol1, nResRow1, nResTab,
                              nResCol2, nResRow2, nTabJunk);
-                if (nResTab != nTabJunk || 
+                if (nResTab != nTabJunk ||
                     ((nResRow2 - nResRow1) > 0 && (nResCol2 - nResCol1) > 0))
                 {
                     // The result array must be a vector.
@@ -5791,7 +5789,7 @@ void ScInterpreter::ScLookup()
     {
         // Delta position for a single value is always 0.
 
-        // Found if data <= query, but not if query is string and found data is 
+        // Found if data <= query, but not if query is string and found data is
         // numeric or vice versa. This is how Excel does it but doesn't
         // document it.
 
@@ -5950,7 +5948,7 @@ void ScInterpreter::ScLookup()
         }
 
         // With 0-9 < A-Z, if query is numeric and data found is string, or
-        // vice versa, the (yet another undocumented) Excel behavior is to 
+        // vice versa, the (yet another undocumented) Excel behavior is to
         // return #N/A instead.
 
         if (bFound)
@@ -6595,7 +6593,7 @@ ScDBQueryParamBase* ScInterpreter::GetDBParams( sal_Bool& rMissingField )
             else
                 SetError( errIllegalParameter );
         }
-        
+
         if (nGlobalError)
             return NULL;
 
@@ -6606,7 +6604,7 @@ ScDBQueryParamBase* ScInterpreter::GetDBParams( sal_Bool& rMissingField )
             nField = pDBRef->findFieldColumn(static_cast<SCCOL>(nVal));
         else
         {
-            sal_uInt16 nErr = 0;    
+            sal_uInt16 nErr = 0;
             nField = pDBRef->findFieldColumn(aStr, &nErr);
             SetError(nErr);
         }
@@ -6757,7 +6755,7 @@ void ScInterpreter::ScDBCount()
                 do
                 {
                     nCount++;
-                } 
+                }
                 while ( aValIter.GetNext(aValue) && !aValue.mnError );
             }
             SetError(aValue.mnError);
@@ -6785,7 +6783,7 @@ void ScInterpreter::ScDBCount2()
             do
             {
                 nCount++;
-            } 
+            }
             while ( aValIter.GetNext(aValue) && !aValue.mnError );
         }
         SetError(aValue.mnError);
@@ -6855,7 +6853,7 @@ void ScInterpreter::GetDBStVarParams( double& rVal, double& rValCount )
         SetError( errIllegalParameter);
 
     vMean = fSum / values.size();
-    
+
     for (size_t i = 0; i < values.size(); i++)
         vSum += (values[i] - vMean) * (values[i] - vMean);
 
@@ -6899,8 +6897,8 @@ void ScInterpreter::ScDBVarP()
 }
 
 
-FormulaSubroutineToken* lcl_CreateExternalRefSubroutine( const ScAddress& rPos, ScDocument* pDoc, 
-        const ScAddress::ExternalInfo& rExtInfo, const ScRefAddress& rRefAd1, 
+FormulaSubroutineToken* lcl_CreateExternalRefSubroutine( const ScAddress& rPos, ScDocument* pDoc,
+        const ScAddress::ExternalInfo& rExtInfo, const ScRefAddress& rRefAd1,
         const ScRefAddress* pRefAd2 )
 {
     ScExternalRefManager* pRefMgr = pDoc->GetExternalRefManager();
@@ -6934,10 +6932,10 @@ FormulaSubroutineToken* lcl_CreateExternalRefSubroutine( const ScAddress& rPos, 
         pTokenArray->AddExternalSingleReference( rExtInfo.mnFileId,
                 (pRealTab ? *pRealTab : rExtInfo.maTabName), aRef);
     }
-    // The indirect usage of the external table can't be detected during the 
-    // store-to-file cycle, mark it as permanently referenced so it gets stored 
+    // The indirect usage of the external table can't be detected during the
+    // store-to-file cycle, mark it as permanently referenced so it gets stored
     // even if not directly referenced anywhere.
-    pRefMgr->setCacheTableReferencedPermanently( rExtInfo.mnFileId, 
+    pRefMgr->setCacheTableReferencedPermanently( rExtInfo.mnFileId,
             rExtInfo.maTabName, nSheets);
     ScCompiler aComp( pDoc, rPos, *pTokenArray);
     aComp.CompileTokenArray();
@@ -6970,9 +6968,9 @@ void ScInterpreter::ScIndirect()
         {
             if (aExtInfo.mbExternal)
             {
-                // Push a subroutine that resolves the external reference as 
+                // Push a subroutine that resolves the external reference as
                 // the next instruction.
-                PushTempToken( lcl_CreateExternalRefSubroutine( aPos, pDok, 
+                PushTempToken( lcl_CreateExternalRefSubroutine( aPos, pDok,
                             aExtInfo, aRefAd, &aRefAd2));
             }
             else
@@ -6985,9 +6983,9 @@ void ScInterpreter::ScIndirect()
         {
             if (aExtInfo.mbExternal)
             {
-                // Push a subroutine that resolves the external reference as 
+                // Push a subroutine that resolves the external reference as
                 // the next instruction.
-                PushTempToken( lcl_CreateExternalRefSubroutine( aPos, pDok, 
+                PushTempToken( lcl_CreateExternalRefSubroutine( aPos, pDok,
                             aExtInfo, aRefAd, NULL));
             }
             else
@@ -7002,7 +7000,7 @@ void ScInterpreter::ScIndirect()
                     break;
 
                 sal_uInt16 nPos = 0;
-                if (!pNames->SearchName( sRefStr, nPos)) 
+                if (!pNames->SearchName( sRefStr, nPos))
                     break;
 
                 ScRangeData* rData = (*pNames)[nPos];
@@ -7016,12 +7014,12 @@ void ScInterpreter::ScIndirect()
 #if 0
                 // This is some really odd Excel behavior and renders named
                 // ranges containing relative references totally useless.
-                if (!rData->IsReference(aRange, ScAddress( aPos.Tab(), 0, 0))) 
+                if (!rData->IsReference(aRange, ScAddress( aPos.Tab(), 0, 0)))
                     break;
 #else
                 // This is the usual way to treat named ranges containing
                 // relative references.
-                if (!rData->IsReference( aRange, aPos)) 
+                if (!rData->IsReference( aRange, aPos))
                     break;
 #endif
 
@@ -7122,7 +7120,7 @@ void ScInterpreter::ScAddressFunc()
                 sTabStr.Erase( 0, nPos+1);
             }
         }
-        /* TODO: yet unsupported external reference in CONV_XL_R1C1 syntax may 
+        /* TODO: yet unsupported external reference in CONV_XL_R1C1 syntax may
          * need some extra handling to isolate Tab from Doc. */
         if (sTabStr.GetChar(0) != '\'' || sTabStr.GetChar(sTabStr.Len()-1) != '\'')
             ScCompiler::CheckTabQuotes( sTabStr, eConv);
@@ -7137,15 +7135,15 @@ void ScInterpreter::ScAddressFunc()
 }
 
 
-FormulaSubroutineToken* lcl_CreateExternalRefSubroutine( const ScAddress& rPos, 
+FormulaSubroutineToken* lcl_CreateExternalRefSubroutine( const ScAddress& rPos,
         ScDocument* pDoc, const FormulaTokenRef& xExtRef )
 {
-    // The exact usage (which cell range) of the external table can't be 
-    // detected during the store-to-file cycle, mark it as permanently 
+    // The exact usage (which cell range) of the external table can't be
+    // detected during the store-to-file cycle, mark it as permanently
     // referenced so it gets stored even if not directly referenced anywhere.
     ScExternalRefManager* pRefMgr = pDoc->GetExternalRefManager();
     pRefMgr->setCacheTableReferencedPermanently(
-            static_cast<const ScToken*>(xExtRef.get())->GetIndex(), 
+            static_cast<const ScToken*>(xExtRef.get())->GetIndex(),
             static_cast<const ScToken*>(xExtRef.get())->GetString(), 1);
     ScTokenArray* pTokenArray = new ScTokenArray;
     pTokenArray->AddToken( *xExtRef);
@@ -7210,7 +7208,7 @@ void ScInterpreter::ScOffset()
                             rData.nRow = nRow1;
                             rData.nTab = nTab1;
                             rData.CalcRelFromAbs( aPos);
-                            // Push a subroutine that resolves the external 
+                            // Push a subroutine that resolves the external
                             // reference as the next instruction.
                             PushTempToken( lcl_CreateExternalRefSubroutine( aPos, pDok, xExtRef));
                         }
@@ -7233,7 +7231,7 @@ void ScInterpreter::ScOffset()
                         else if (xExtRef)
                         {
                             // Convert SingleRef to DoubleRef.
-                            xExtRef = new ScExternalDoubleRefToken( 
+                            xExtRef = new ScExternalDoubleRefToken(
                                     *static_cast<const ScExternalSingleRefToken*>(xExtRef.get()));
                             ScComplexRefData& rData = static_cast<ScToken*>(xExtRef.get())->GetDoubleRef();
                             rData.Ref1.nCol = nCol1;
@@ -7243,7 +7241,7 @@ void ScInterpreter::ScOffset()
                             rData.Ref2.nRow = nRow2;
                             rData.Ref2.nTab = nTab1;
                             rData.CalcRelFromAbs( aPos);
-                            // Push a subroutine that resolves the external 
+                            // Push a subroutine that resolves the external
                             // reference as the next instruction.
                             PushTempToken( lcl_CreateExternalRefSubroutine( aPos, pDok, xExtRef));
                         }
@@ -7291,7 +7289,7 @@ void ScInterpreter::ScOffset()
                         rData.Ref2.nRow = nRow2;
                         rData.Ref2.nTab = nTab1;
                         rData.CalcRelFromAbs( aPos);
-                        // Push a subroutine that resolves the external 
+                        // Push a subroutine that resolves the external
                         // reference as the next instruction.
                         PushTempToken( lcl_CreateExternalRefSubroutine( aPos, pDok, xExtRef));
                     }
@@ -7800,7 +7798,7 @@ static UBlockScript scriptList[] = {
 bool SAL_CALL lcl_getScriptClass(sal_uInt32 currentChar)
 {
 	// for the locale of ja-JP, character U+0x005c and U+0x20ac should be ScriptType::Asian
-	if( (currentChar == 0x005c || currentChar == 0x20ac) && 
+	if( (currentChar == 0x005c || currentChar == 0x20ac) &&
 		  (MsLangId::getSystemLanguage() == LANGUAGE_JAPANESE) )
 		return true;
 	sal_uInt16 i;
@@ -7949,7 +7947,7 @@ void ScInterpreter::ScMidB()
             PushIllegalArgument();
         else
 		{
-			
+
 			lcl_LeftB(rStr, (xub_StrLen)fAnfang + (xub_StrLen)fAnz - 1);
 			sal_Int32 nCnt = getLengthB(rStr) - (xub_StrLen)fAnfang + 1;
 			lcl_RightB(rStr, nCnt>0 ? nCnt:0);
@@ -8066,7 +8064,7 @@ void ScInterpreter::ScText()
                     if (!nGlobalError)
                     {
                         PushTempToken( xTok);
-                        // Temporarily override the ConvertStringToValue() 
+                        // Temporarily override the ConvertStringToValue()
                         // error for GetCellValue() / GetCellValueOrZero()
                         sal_uInt16 nSErr = mnStringNoValueError;
                         mnStringNoValueError = errNotNumericString;
@@ -8099,7 +8097,7 @@ void ScInterpreter::ScText()
                 eCellLang = ScGlobal::eLnge;
             if (bString)
             {
-                if (!pFormatter->GetPreviewString( sFormatString, aStr, 
+                if (!pFormatter->GetPreviewString( sFormatString, aStr,
                             aResult, &pColor, eCellLang))
                     PushIllegalArgument();
                 else
@@ -8107,7 +8105,7 @@ void ScInterpreter::ScText()
             }
             else
             {
-                if (!pFormatter->GetPreviewStringGuess( sFormatString, fVal, 
+                if (!pFormatter->GetPreviewStringGuess( sFormatString, fVal,
                             aResult, &pColor, eCellLang))
                     PushIllegalArgument();
                 else

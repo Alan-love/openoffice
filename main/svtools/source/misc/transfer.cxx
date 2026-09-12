@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
@@ -309,19 +309,19 @@ TransferableHelper::TerminateListener::~TerminateListener()
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TransferableHelper::TerminateListener::disposing( const EventObject& ) throw( RuntimeException )
+void SAL_CALL TransferableHelper::TerminateListener::disposing( const EventObject& )
 {
 }
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TransferableHelper::TerminateListener::queryTermination( const EventObject& ) throw( TerminationVetoException, RuntimeException )
+void SAL_CALL TransferableHelper::TerminateListener::queryTermination( const EventObject& )
 {
 }
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TransferableHelper::TerminateListener::notifyTermination( const EventObject& ) throw( RuntimeException )
+void SAL_CALL TransferableHelper::TerminateListener::notifyTermination( const EventObject& )
 {
 	mrParent.ImplFlush();
 }
@@ -346,7 +346,7 @@ TransferableHelper::~TransferableHelper()
 
 // -----------------------------------------------------------------------------
 
-Any SAL_CALL TransferableHelper::getTransferData( const DataFlavor& rFlavor ) throw( UnsupportedFlavorException, IOException, RuntimeException )
+Any SAL_CALL TransferableHelper::getTransferData( const DataFlavor& rFlavor )
 {
 	if( !maAny.hasValue() || !mpFormats->size() || ( maLastFormat != rFlavor.MimeType ) )
 	{
@@ -371,7 +371,7 @@ Any SAL_CALL TransferableHelper::getTransferData( const DataFlavor& rFlavor ) th
 			    GetData( aSubstFlavor );
                 bDone = maAny.hasValue();
             }
-            else if(SotExchange::GetFormatDataFlavor(SOT_FORMATSTR_ID_BMP, aSubstFlavor ) 
+            else if(SotExchange::GetFormatDataFlavor(SOT_FORMATSTR_ID_BMP, aSubstFlavor )
                 && TransferableDataHelper::IsEqual( aSubstFlavor, rFlavor )
                 && SotExchange::GetFormatDataFlavor(FORMAT_BITMAP, aSubstFlavor))
             {
@@ -427,7 +427,7 @@ Any SAL_CALL TransferableHelper::getTransferData( const DataFlavor& rFlavor ) th
 					    delete pSrcStm;
 
 					    SvMemoryStream	aDstStm( 65535, 65535 );
-						
+
 						// taking wmf without file header
 						if ( ConvertGDIMetaFileToWMF( aMtf, aDstStm, NULL, sal_False ) )
                         {
@@ -495,7 +495,7 @@ Any SAL_CALL TransferableHelper::getTransferData( const DataFlavor& rFlavor ) th
 
 // -----------------------------------------------------------------------------
 
-Sequence< DataFlavor > SAL_CALL TransferableHelper::getTransferDataFlavors() throw( RuntimeException )
+Sequence< DataFlavor > SAL_CALL TransferableHelper::getTransferDataFlavors()
 {
 	const ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -522,7 +522,7 @@ Sequence< DataFlavor > SAL_CALL TransferableHelper::getTransferDataFlavors() thr
 
 // -----------------------------------------------------------------------------
 
-sal_Bool SAL_CALL TransferableHelper::isDataFlavorSupported( const DataFlavor& rFlavor ) throw( RuntimeException )
+sal_Bool SAL_CALL TransferableHelper::isDataFlavorSupported( const DataFlavor& rFlavor )
 {
 	const ::vos::OGuard aGuard( Application::GetSolarMutex() );
 	sal_Bool			bRet = sal_False;
@@ -554,7 +554,7 @@ sal_Bool SAL_CALL TransferableHelper::isDataFlavorSupported( const DataFlavor& r
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TransferableHelper::lostOwnership( const Reference< XClipboard >&, const Reference< XTransferable >& ) throw( RuntimeException )
+void SAL_CALL TransferableHelper::lostOwnership( const Reference< XClipboard >&, const Reference< XTransferable >& )
 {
 	const ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -584,13 +584,13 @@ void SAL_CALL TransferableHelper::lostOwnership( const Reference< XClipboard >&,
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TransferableHelper::disposing( const EventObject& ) throw( RuntimeException )
+void SAL_CALL TransferableHelper::disposing( const EventObject& )
 {
 }
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TransferableHelper::dragDropEnd( const DragSourceDropEvent& rDSDE ) throw( RuntimeException )
+void SAL_CALL TransferableHelper::dragDropEnd( const DragSourceDropEvent& rDSDE )
 {
 	const ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -606,31 +606,31 @@ void SAL_CALL TransferableHelper::dragDropEnd( const DragSourceDropEvent& rDSDE 
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TransferableHelper::dragEnter( const DragSourceDragEvent& ) throw( RuntimeException )
+void SAL_CALL TransferableHelper::dragEnter( const DragSourceDragEvent& )
 {
 }
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TransferableHelper::dragExit( const DragSourceEvent& ) throw( RuntimeException )
+void SAL_CALL TransferableHelper::dragExit( const DragSourceEvent& )
 {
 }
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TransferableHelper::dragOver( const DragSourceDragEvent& ) throw( RuntimeException )
+void SAL_CALL TransferableHelper::dragOver( const DragSourceDragEvent& )
 {
 }
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TransferableHelper::dropActionChanged( const DragSourceDragEvent& ) throw( RuntimeException )
+void SAL_CALL TransferableHelper::dropActionChanged( const DragSourceDragEvent& )
 {
 }
 
 // -----------------------------------------------------------------------------
 
-sal_Int64 SAL_CALL TransferableHelper::getSomething( const Sequence< sal_Int8 >& rId ) throw( RuntimeException )
+sal_Int64 SAL_CALL TransferableHelper::getSomething( const Sequence< sal_Int8 >& rId )
 {
     sal_Int64 nRet;
 
@@ -1218,11 +1218,11 @@ void TransferableHelper::StartDrag( Window* pWindow, sal_Int8 nDnDSourceActions,
 
 		// On Mac OS X we are forced to execute 'startDrag' synchronously
 		// contrary to the XDragSource interface specification because
-		// we can receive drag events from the system only in the main 
+		// we can receive drag events from the system only in the main
 		// thread
 #if !defined(QUARTZ)
 		const sal_uInt32 nRef = Application::ReleaseSolarMutex();
-#endif 
+#endif
 
 		try
 		{
@@ -1241,7 +1241,7 @@ void TransferableHelper::StartDrag( Window* pWindow, sal_Int8 nDnDSourceActions,
 		// See above for the reason of this define
 #if !defined(QUARTZ)
 		Application::AcquireSolarMutex( nRef );
-#endif 
+#endif
 	}
 }
 
@@ -1300,10 +1300,10 @@ private:
 
 protected:
 	// XClipboardListener
-    virtual void SAL_CALL changedContents( const clipboard::ClipboardEvent& event ) throw (RuntimeException);
+    virtual void SAL_CALL changedContents( const clipboard::ClipboardEvent& event );
 
     // XEventListener
-    virtual void SAL_CALL disposing( const EventObject& Source ) throw (RuntimeException);
+    virtual void SAL_CALL disposing( const EventObject& Source );
 
 public:
     TransferableClipboardNotifier( const Reference< XClipboard >& _rxClipboard, TransferableDataHelper& _rListener, ::osl::Mutex& _rMutex );
@@ -1338,7 +1338,7 @@ TransferableClipboardNotifier::TransferableClipboardNotifier( const Reference< X
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TransferableClipboardNotifier::changedContents( const clipboard::ClipboardEvent& event ) throw (RuntimeException)
+void SAL_CALL TransferableClipboardNotifier::changedContents( const clipboard::ClipboardEvent& event )
 {
 	::vos::OGuard aSolarGuard( Application::GetSolarMutex() );
         // the SolarMutex here is necessary, since
@@ -1352,7 +1352,7 @@ void SAL_CALL TransferableClipboardNotifier::changedContents( const clipboard::C
 
 // -----------------------------------------------------------------------------
 
-void SAL_CALL TransferableClipboardNotifier::disposing( const EventObject& ) throw (RuntimeException)
+void SAL_CALL TransferableClipboardNotifier::disposing( const EventObject& )
 {
     // clipboard is being disposed. Hmm. Okay, become disfunctional myself.
 	dispose();
@@ -1891,7 +1891,7 @@ sal_Bool TransferableDataHelper::GetBitmapEx( const DataFlavor& rFlavor, BitmapE
            and nYPelsPerMeter of the bitmap fileheader isn't including the correct value.
            Due to this reason the following code assumes that bitmaps with a logical size
            greater than 50 cm aren't having the correct mapmode set.
-        
+
            The following code should be removed if DDBs and DIBs are supported via clipboard
            properly.
         */
@@ -2016,7 +2016,7 @@ sal_Bool TransferableDataHelper::GetGraphic( const ::com::sun::star::datatransfe
 	DataFlavor	aFlavor;
 	sal_Bool	bRet = sal_False;
 
-    if(SotExchange::GetFormatDataFlavor(SOT_FORMATSTR_ID_PNG, aFlavor) && 
+    if(SotExchange::GetFormatDataFlavor(SOT_FORMATSTR_ID_PNG, aFlavor) &&
         TransferableDataHelper::IsEqual(aFlavor, rFlavor))
 	{
         // try to get PNG first

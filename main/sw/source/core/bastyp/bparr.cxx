@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -437,6 +437,15 @@ void BigPtrArray::Remove( sal_uLong pos, sal_uLong n )
 				--nBlk1;
 		}
 		BlockDel( nBlkdel );			// es wurden Bloecke geloescht
+
+		// If the deleted block(s) reached the very end of the array, the
+		// branch above (which backs nBlk1 up to the block before the gap)
+		// never runs, so nBlk1 can be left one-or-more past the now-
+		// shrunk nBlock. ppInf[nBlk1] is then stale/uninitialized, and
+		// both UpdIndex() and the nCur cache below dereference it via
+		// that index. Clamp to the last real block, or 0 if now empty.
+		if( nBlk1 >= nBlock )
+			nBlk1 = nBlock ? nBlock - 1 : 0;
 	}
 
 	nSize -= n;
@@ -572,5 +581,3 @@ sal_uInt16 BigPtrArray::Compress( short nMax )
 
 	return nFirstChgPos;
 }
-
-

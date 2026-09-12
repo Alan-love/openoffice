@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -47,7 +47,7 @@ namespace basprov
     // BasicLibraryNodeImpl
     // =============================================================================
 
-    BasicLibraryNodeImpl::BasicLibraryNodeImpl( const Reference< XComponentContext >& rxContext,         
+    BasicLibraryNodeImpl::BasicLibraryNodeImpl( const Reference< XComponentContext >& rxContext,
          const ::rtl::OUString& sScriptingContext, BasicManager* pBasicManager,
         const Reference< script::XLibraryContainer >& xLibContainer, const ::rtl::OUString& sLibName, bool isAppScript )
         :m_xContext( rxContext )
@@ -74,7 +74,7 @@ namespace basprov
     // XBrowseNode
     // -----------------------------------------------------------------------------
 
-    ::rtl::OUString BasicLibraryNodeImpl::getName(  ) throw (RuntimeException)
+    ::rtl::OUString BasicLibraryNodeImpl::getName(  )
     {
         ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -83,11 +83,11 @@ namespace basprov
 
     // -----------------------------------------------------------------------------
 
-    Sequence< Reference< browse::XBrowseNode > > BasicLibraryNodeImpl::getChildNodes(  ) throw (RuntimeException)
+    Sequence< Reference< browse::XBrowseNode > > BasicLibraryNodeImpl::getChildNodes(  )
     {
         ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
-        Sequence< Reference< browse::XBrowseNode > > aChildNodes; 
+        Sequence< Reference< browse::XBrowseNode > > aChildNodes;
 
         if ( m_xLibContainer.is() && m_xLibContainer->hasByName( m_sLibName ) && !m_xLibContainer->isLibraryLoaded( m_sLibName ) )
             m_xLibContainer->loadLibrary( m_sLibName );
@@ -117,7 +117,7 @@ namespace basprov
 
     // -----------------------------------------------------------------------------
 
-    sal_Bool BasicLibraryNodeImpl::hasChildNodes(  ) throw (RuntimeException)
+    sal_Bool BasicLibraryNodeImpl::hasChildNodes(  )
     {
         ::vos::OGuard aGuard( Application::GetSolarMutex() );
 
@@ -130,7 +130,7 @@ namespace basprov
 
     // -----------------------------------------------------------------------------
 
-    sal_Int16 BasicLibraryNodeImpl::getType(  ) throw (RuntimeException)
+    sal_Int16 BasicLibraryNodeImpl::getType(  )
     {
         ::vos::OGuard aGuard( Application::GetSolarMutex() );
 

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartview.hxx"
 #include "DateScaling.hxx"
 #include <com/sun/star/chart/TimeUnit.hpp>
 #include <rtl/math.hxx>
@@ -66,7 +66,6 @@ DateScaling::~DateScaling()
 }
 
 double SAL_CALL DateScaling::doScaling( double value )
-    throw (uno::RuntimeException)
 {
     double fResult(value);
     if( ::rtl::math::isNan( value ) || ::rtl::math::isInf( value ) )
@@ -107,13 +106,11 @@ double SAL_CALL DateScaling::doScaling( double value )
 }
 
 uno::Reference< XScaling > SAL_CALL DateScaling::getInverseScaling()
-    throw (uno::RuntimeException)
 {
     return new InverseDateScaling( m_aNullDate, m_nTimeUnit, m_bShifted );
 }
 
 ::rtl::OUString SAL_CALL DateScaling::getServiceName()
-    throw (uno::RuntimeException)
 {
     return lcl_aServiceName_DateScaling;
 }
@@ -140,7 +137,6 @@ InverseDateScaling::~InverseDateScaling()
 }
 
 double SAL_CALL InverseDateScaling::doScaling( double value )
-    throw (uno::RuntimeException)
 {
     double fResult(value);
     if( ::rtl::math::isNan( value ) || ::rtl::math::isInf( value ) )
@@ -188,13 +184,11 @@ double SAL_CALL InverseDateScaling::doScaling( double value )
 }
 
 uno::Reference< XScaling > SAL_CALL InverseDateScaling::getInverseScaling()
-    throw (uno::RuntimeException)
 {
     return new DateScaling( m_aNullDate, m_nTimeUnit, m_bShifted );
 }
 
 ::rtl::OUString SAL_CALL InverseDateScaling::getServiceName()
-    throw (uno::RuntimeException)
 {
     return lcl_aServiceName_InverseDateScaling;
 }

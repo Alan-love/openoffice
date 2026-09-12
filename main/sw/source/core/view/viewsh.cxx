@@ -1581,8 +1581,8 @@ sal_Bool ViewShell::SmoothScroll( long lXDiff, long lYDiff, const Rectangle *pRe
 
 							mpTargetPaintWindow->GetTargetOutputDevice().DrawOutDev(aUpdateTopLeft, aUpdateSize, aUpdateTopLeft, aUpdateSize, *pVout);
 
-							// #i75172# Corret repaint end
-							// Note: This also correcty creates the overlay, thus smooth scroll will
+							// #i75172# Correct repaint end
+							// Note: This also correctly creates the overlay, thus smooth scroll will
 							// also be allowed now wth selection (see big IF above)
 							DLPostPaint2(true);
 						}
@@ -2605,7 +2605,7 @@ SwAccessibleMap* ViewShell::GetAccessibleMap()
 /* -----------------------------06.05.2002 13:23------------------------------
 
  ---------------------------------------------------------------------------*/
-void ViewShell::ApplyAccessiblityOptions(SvtAccessibilityOptions& rAccessibilityOptions)
+void ViewShell::ApplyAccessibilityOptions(SvtAccessibilityOptions& rAccessibilityOptions)
 {
     if(pOpt->IsPagePreview() && !rAccessibilityOptions.GetIsForPagePreviews())
     {

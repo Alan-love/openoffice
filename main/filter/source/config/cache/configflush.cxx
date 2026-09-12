@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -57,7 +57,6 @@ ConfigFlush::~ConfigFlush()
 
 //-----------------------------------------------
 ::rtl::OUString SAL_CALL ConfigFlush::getImplementationName()
-    throw (css::uno::RuntimeException)
 {
     return impl_getImplementationName();
     // <- SAFE
@@ -65,7 +64,6 @@ ConfigFlush::~ConfigFlush()
 
 //-----------------------------------------------
 sal_Bool SAL_CALL ConfigFlush::supportsService(const ::rtl::OUString& sServiceName)
-    throw (css::uno::RuntimeException)
 {
           css::uno::Sequence< ::rtl::OUString > lServiceNames = impl_getSupportedServiceNames();
           sal_Int32                             c             = lServiceNames.getLength();
@@ -80,14 +78,12 @@ sal_Bool SAL_CALL ConfigFlush::supportsService(const ::rtl::OUString& sServiceNa
 
 //-----------------------------------------------
 css::uno::Sequence< ::rtl::OUString > SAL_CALL ConfigFlush::getSupportedServiceNames()
-    throw (css::uno::RuntimeException)
 {
     return impl_getSupportedServiceNames();
 }
 
 //-----------------------------------------------
 void SAL_CALL ConfigFlush::refresh()
-    throw(css::uno::RuntimeException)
 {
     // notify listener outside the lock!
     // The used listener helper lives if we live
@@ -120,7 +116,6 @@ void SAL_CALL ConfigFlush::refresh()
 
 //-----------------------------------------------
 void SAL_CALL ConfigFlush::addRefreshListener(const css::uno::Reference< css::util::XRefreshListener >& xListener)
-    throw(css::uno::RuntimeException)
 {
     // no locks necessary
     // used helper lives if we live and is threadsafe by itself ...
@@ -130,7 +125,6 @@ void SAL_CALL ConfigFlush::addRefreshListener(const css::uno::Reference< css::ut
 
 //-----------------------------------------------
 void SAL_CALL ConfigFlush::removeRefreshListener(const css::uno::Reference< css::util::XRefreshListener >& xListener)
-    throw(css::uno::RuntimeException)
 {
     // no locks necessary
     // used helper lives if we live and is threadsafe by itself ...

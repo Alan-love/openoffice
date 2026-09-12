@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -37,8 +37,7 @@
 
 using namespace rtl;
 
-sal_Bool JavaOptions::initOptions(int ac, char* av[], sal_Bool bCmdFile) 
-	throw( IllegalArgument )
+sal_Bool JavaOptions::initOptions(int ac, char* av[], sal_Bool bCmdFile)
 {
 	sal_Bool 	ret = sal_True;
 	sal_uInt16	i=0;
@@ -46,7 +45,7 @@ sal_Bool JavaOptions::initOptions(int ac, char* av[], sal_Bool bCmdFile)
 	if (!bCmdFile)
 	{
 		bCmdFile = sal_True;
-		
+
 		OString name(av[0]);
 		sal_Int32 index = name.lastIndexOf(SEPARATOR);
 		m_program = name.copy((index > 0 ? index+1 : 0));
@@ -84,14 +83,14 @@ sal_Bool JavaOptions::initOptions(int ac, char* av[], sal_Bool bCmdFile)
 							{
 								tmp += " your input '" + OString(av[i+1]) + "'";
 							}
-							
+
 							throw IllegalArgument(tmp);
 						}
 					} else
 					{
 						s = av[i] + 2;
 					}
-					
+
 					m_options["-O"] = OString(s);
 					break;
 				case 'B':
@@ -108,14 +107,14 @@ sal_Bool JavaOptions::initOptions(int ac, char* av[], sal_Bool bCmdFile)
 							{
 								tmp += " your input '" + OString(av[i+1]) + "'";
 							}
-							
+
 							throw IllegalArgument(tmp);
 						}
 					} else
 					{
 						s = av[i] + 2;
 					}
-					
+
 					m_options["-B"] = OString(s);
 					break;
 				case 'n':
@@ -125,7 +124,7 @@ sal_Bool JavaOptions::initOptions(int ac, char* av[], sal_Bool bCmdFile)
 							tmp += " your input '" + OString(av[i]) + "'";
 						throw IllegalArgument(tmp);
 					}
-					
+
 					m_options["-nD"] = OString("");
 					break;
 				case 'T':
@@ -142,14 +141,14 @@ sal_Bool JavaOptions::initOptions(int ac, char* av[], sal_Bool bCmdFile)
 							{
 								tmp += " your input '" + OString(av[i+1]) + "'";
 							}
-							
+
 							throw IllegalArgument(tmp);
 						}
 					} else
 					{
 						s = av[i] + 2;
 					}
-					
+
 					if (m_options.count("-T") > 0)
 					{
 						OString tmp(m_options["-T"]);
@@ -187,7 +186,7 @@ sal_Bool JavaOptions::initOptions(int ac, char* av[], sal_Bool bCmdFile)
 
 						throw IllegalArgument(tmp);
 					}
-					
+
 					m_options["-G"] = OString("");
 					break;
 				case 'X': // support for eXtra type rdbs
@@ -205,18 +204,18 @@ sal_Bool JavaOptions::initOptions(int ac, char* av[], sal_Bool bCmdFile)
 							{
 								tmp += " your input '" + OString(av[i+1]) + "'";
 							}
-							
+
 							throw IllegalArgument(tmp);
 						}
 					} else
 					{
 						s = av[i] + 2;
 					}
-                    
+
                     m_extra_input_files.push_back( s );
 					break;
                 }
-                
+
 				default:
 					throw IllegalArgument("the option is unknown" + OString(av[i]));
 			}
@@ -241,14 +240,14 @@ sal_Bool JavaOptions::initOptions(int ac, char* av[], sal_Bool bCmdFile)
 						rargc++;
 					}
 					fclose(cmdFile);
-					
+
 					ret = initOptions(rargc, rargv, bCmdFile);
-					
-					for (long j=0; j < rargc; j++) 
+
+					for (long j=0; j < rargc; j++)
 					{
 						free(rargv[j]);
 					}
-				}		
+				}
 			} else
 			{
                 if (bCmdFile)
@@ -264,12 +263,12 @@ sal_Bool JavaOptions::initOptions(int ac, char* av[], sal_Bool bCmdFile)
                     }
                     m_inputFiles.push_back(OUStringToOString(system_filepath, osl_getThreadTextEncoding()));
                 }
-			}		
+			}
 		}
 	}
-	
-	return ret;	
-}	
+
+	return ret;
+}
 
 OString	JavaOptions::prepareHelp()
 {
@@ -280,7 +279,7 @@ OString	JavaOptions::prepareHelp()
 	help += "    -T<name>   = name specifies a type or a list of types. The output for this\n";
 	help += "      [t1;...]   type and all dependent types are generated. If no '-T' option is \n";
 	help += "                 specified, then output for all types is generated.\n";
-	help += "                 Example: 'com.sun.star.uno.XInterface' is a valid type.\n";		
+	help += "                 Example: 'com.sun.star.uno.XInterface' is a valid type.\n";
 	help += "    -B<name>   = name specifies the base node. All types are searched under this\n";
 	help += "                 node. Default is the root '/' of the registry files.\n";
 	help += "    -nD        = no dependent types are generated.\n";
@@ -288,15 +287,13 @@ OString	JavaOptions::prepareHelp()
 	help += "    -Gc        = generate only target files which content will be changed.\n";
 	help += "    -X<file>   = extra types which will not be taken into account for generation.\n\n";
 	help += prepareVersion();
-	
+
 	return help;
-}	
+}
 
 OString	JavaOptions::prepareVersion()
 {
 	OString version(m_program);
 	version += " Version 2.0\n\n";
 	return version;
-}	
-
-	
+}

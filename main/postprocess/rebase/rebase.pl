@@ -2,7 +2,7 @@
 eval 'exec perl -wS $0 ${1+"$@"}'
     if 0;
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -10,31 +10,31 @@ eval 'exec perl -wS $0 ${1+"$@"}'
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
 
 #
-# rebase.pl - rebase windows dlls 
+# rebase.pl - rebase windows dlls
 #
-# This perl script is to rebase all windows dlls. In principle this could 
+# This perl script is to rebase all windows dlls. In principle this could
 # be done with one simple command line like f.e.
 # rebase -b 0x68000000 -d -R foo_dir -N bar.txt $(SOLARBINDIR)$/*.dll
-# That would work fine for creating complete office install sets, but it 
-# could fail as soon as we are going to ship single dlls for a product 
+# That would work fine for creating complete office install sets, but it
+# could fail as soon as we are going to ship single dlls for a product
 # patch. Therefore, this wrapper perl script is used. It reads a given base
 # address file and rebases all files mentioned to the same address as
-# previously. New dlls get appended to the list.  
+# previously. New dlls get appended to the list.
 
 use strict;
 
@@ -42,7 +42,7 @@ use strict;
 
 my $myname         = '';
 my $options_string = ''; # order of options is important
-my %options_hash; 
+my %options_hash;
 my $rebase_files;
 my $misc_dir = $ENV{TEMP};
 my $lastaddress;
@@ -54,7 +54,7 @@ my @new_files;
 $myname = script_id();
 parse_options();
 my %lastrun = read_coffbase( \$lastaddress );
-# Get files specified on command line. Differ between those already 
+# Get files specified on command line. Differ between those already
 # listed in coffbase (%options_hash{'C'}) and additional ones.
 get_files( \@old_files, \@new_files );
 # Rebase libraries already listed in coffbase to the addresses given there.
@@ -79,11 +79,11 @@ sub script_id
     return $script_name;
 }
 
-    
+
 sub parse_options
 {
     use Getopt::Std;
-    if ( !getopts('C:b:de:l:m:R:N:v', \%options_hash) || ($#ARGV < 0) ) { 
+    if ( !getopts('C:b:de:l:m:R:N:v', \%options_hash) || ($#ARGV < 0) ) {
         print STDERR "Error: invalid command line.\n\n";
         usage ();
         exit 1;
@@ -183,6 +183,23 @@ sub get_files
 }
 
 
+# Which rebase to run.
+#
+# "rebase" by itself is ambiguous on this platform: Cygwin ships a tool of the
+# same name with an entirely different option set, and it comes first on PATH,
+# so the build got
+#
+#     rebase: unknown option -- e
+#
+# from Cygwin's rather than a complaint from Microsoft's.  REBASE_EXE lets the
+# makefile name the one it means; unset, this behaves exactly as before.
+sub rebase_command
+{
+    my $exe = $ENV{'REBASE_EXE'};
+    return "rebase" if ( !defined($exe) || $exe eq '' );
+    return '"' . $exe . '"';
+}
+
 sub rebase_again
 # rebase using given coffbase file
 {
@@ -190,7 +207,7 @@ sub rebase_again
     my $newfiles_ref = shift;
     my @grownfiles;
     my $solarbin ="$ENV{SOLARVERSION}/$ENV{INPATH}/bin$ENV{UPDMINOREXT}";
-    my $command = "rebase " . $options_string;
+    my $command = rebase_command() . " " . $options_string;
     if ( $ENV{WRAPCMD} ) {
         $command = $ENV{WRAPCMD} . " " . $command;
     }
@@ -252,7 +269,7 @@ sub rebase_again
 sub rebase_initially
 {
     my ($files_ref, $start_address) = @_;
-    my $command = "rebase ";
+    my $command = rebase_command() . " ";
     if ( $ENV{WRAPCMD} ) {
         $command = $ENV{WRAPCMD} . " " . $command;
     }
@@ -294,5 +311,3 @@ sub usage
     print "\t -v                      Verbose.\n";
     return;
 }
-    
-

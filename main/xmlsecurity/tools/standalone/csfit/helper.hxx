@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -83,11 +83,11 @@ class OInputStream : public WeakImplHelper1 < XInputStream >
 {
 	public:
 		OInputStream( const Sequence< sal_Int8 >&seq ) : m_seq( seq ), nPos( 0 ) {}
-		
+
 		virtual sal_Int32 SAL_CALL readBytes(
 			Sequence< sal_Int8 >& aData ,
 			sal_Int32 nBytesToRead
-		) throw( NotConnectedException, BufferSizeExceededException, IOException, RuntimeException )
+		)
 		{
 			nBytesToRead = ( nBytesToRead > m_seq.getLength() - nPos ) ?
 				m_seq.getLength() - nPos :
@@ -100,28 +100,28 @@ class OInputStream : public WeakImplHelper1 < XInputStream >
 		virtual sal_Int32 SAL_CALL readSomeBytes(
 			::com::sun::star::uno::Sequence< sal_Int8 >& aData ,
 			sal_Int32 nMaxBytesToRead
-		) throw( NotConnectedException, BufferSizeExceededException, IOException, RuntimeException )
+		)
 		{
 			return readBytes( aData, nMaxBytesToRead ) ;
 		}
 
 		virtual void SAL_CALL skipBytes(
 			sal_Int32 nBytesToSkip
-		) throw( NotConnectedException, BufferSizeExceededException, IOException, RuntimeException )
+		)
 		{
 			// not implemented
 		}
 
 		virtual sal_Int32 SAL_CALL available(
 			void
-		) throw( NotConnectedException, IOException, RuntimeException )
+		)
 		{
 			return m_seq.getLength() - nPos ;
 		}
 
 		virtual void SAL_CALL closeInput(
 			void
-		) throw( NotConnectedException, IOException, RuntimeException )
+		)
 		{
 			// not needed
 		}
@@ -149,7 +149,7 @@ class OOutputStream : public WeakImplHelper1 < XOutputStream >
 
 		virtual void SAL_CALL writeBytes(
 			const Sequence< sal_Int8 >& aData
-		) throw( NotConnectedException , BufferSizeExceededException , RuntimeException ) {
+		) {
 			if( !m_f ) {
 				m_f = fopen( m_pcFile , "w" ) ;
 			}
@@ -159,13 +159,13 @@ class OOutputStream : public WeakImplHelper1 < XOutputStream >
 
 		virtual void SAL_CALL flush(
 			void
-		) throw( NotConnectedException , BufferSizeExceededException , RuntimeException ) {
+		) {
 			fflush( m_f ) ;
 		}
 
 		virtual void SAL_CALL closeOutput(
 			void
-		) throw( NotConnectedException , BufferSizeExceededException , RuntimeException ) {
+		) {
 			fclose( m_f ) ;
 			m_f = 0 ;
 		}
@@ -194,13 +194,13 @@ class OUriBinding : public WeakImplHelper1 < ::com::sun::star::xml::crypto::XUri
 
 		virtual void SAL_CALL setUriBinding(
 			const ::rtl::OUString& aUri ,
-			const ::com::sun::star::uno::Reference< ::com::sun::star::io::XInputStream >& aInputStream 
-		) throw( ::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException ) {
+			const ::com::sun::star::uno::Reference< ::com::sun::star::io::XInputStream >& aInputStream
+		) {
 			m_vUris.push_back( aUri ) ;
 			m_vStreams.push_back( aInputStream ) ;
 		}
 
-		virtual ::com::sun::star::uno::Reference< ::com::sun::star::io::XInputStream > SAL_CALL getUriBinding( const ::rtl::OUString& uri ) throw( ::com::sun::star::uno::Exception, ::com::sun::star::uno::RuntimeException ) {
+		virtual ::com::sun::star::uno::Reference< ::com::sun::star::io::XInputStream > SAL_CALL getUriBinding( const ::rtl::OUString& uri ) {
 			::com::sun::star::uno::Reference< ::com::sun::star::io::XInputStream > xInputStream ;
 
 			int size = m_vUris.size() ;
@@ -210,7 +210,7 @@ class OUriBinding : public WeakImplHelper1 < ::com::sun::star::xml::crypto::XUri
 					break;
 				}
 			}
-										
+
 			return xInputStream;
 		}
 
@@ -227,11 +227,9 @@ Reference< XOutputStream > createStreamToFile( const OUString sFile ) ;
 /**
  * Helper : get service manager and context
  */
-Reference< XMultiComponentFactory > serviceManager( Reference< XComponentContext >& xContext , OUString sUnoUrl , OUString sRdbUrl  ) throw( RuntimeException , Exception ) ;
+Reference< XMultiComponentFactory > serviceManager( Reference< XComponentContext >& xContext , OUString sUnoUrl , OUString sRdbUrl  ) ;
 
 /**
  * Helper : Get password function for PKCS11 slot
  */
 char* PriPK11PasswordFunc( PK11SlotInfo *slot , PRBool retry , void* arg ) ;
-
-

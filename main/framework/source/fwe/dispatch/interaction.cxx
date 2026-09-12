@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -44,7 +44,7 @@ namespace framework{
     @attention      This implementation could be used one times only. We don't support a resetable continuation yet!
                     Why? Normally interaction should show a filter selection dialog and ask user for his decision.
                     He can select any filter - then instances of these class will be called by handler ... or user
-                    close dialog without any selection. Then another continuation should be slected by handler to
+                    close dialog without any selection. Then another continuation should be selected by handler to
                     abort continuations ... Retrying isn't very useful here ... I think.
 
     @implements     XInteractionFilterSelect
@@ -63,8 +63,8 @@ class ContinuationFilterSelect : public comphelper::OInteraction< ::com::sun::st
 
     // uno interface
     public:
-        virtual void            SAL_CALL setFilter( const ::rtl::OUString& sFilter ) throw( ::com::sun::star::uno::RuntimeException );
-        virtual ::rtl::OUString SAL_CALL getFilter(                                ) throw( ::com::sun::star::uno::RuntimeException );
+        virtual void            SAL_CALL setFilter( const ::rtl::OUString& sFilter );
+        virtual ::rtl::OUString SAL_CALL getFilter(                                );
 
     // member
     private:
@@ -84,7 +84,7 @@ ContinuationFilterSelect::ContinuationFilterSelect()
 //---------------------------------------------------------------------------------------------------------
 // handler should use it after selection to set user specified filter for transport
 //---------------------------------------------------------------------------------------------------------
-void SAL_CALL ContinuationFilterSelect::setFilter( const ::rtl::OUString& sFilter ) throw( css::uno::RuntimeException )
+void SAL_CALL ContinuationFilterSelect::setFilter( const ::rtl::OUString& sFilter )
 {
     m_sFilter = sFilter;
 }
@@ -92,7 +92,7 @@ void SAL_CALL ContinuationFilterSelect::setFilter( const ::rtl::OUString& sFilte
 //---------------------------------------------------------------------------------------------------------
 // read access to transported filter
 //---------------------------------------------------------------------------------------------------------
-::rtl::OUString SAL_CALL ContinuationFilterSelect::getFilter() throw( css::uno::RuntimeException )
+::rtl::OUString SAL_CALL ContinuationFilterSelect::getFilter()
 {
     return m_sFilter;
 }
@@ -105,8 +105,8 @@ public:
     ::rtl::OUString getFilter() const;
 
 public:
-    virtual ::com::sun::star::uno::Any SAL_CALL getRequest() throw( ::com::sun::star::uno::RuntimeException );
-    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Reference< ::com::sun::star::task::XInteractionContinuation > > SAL_CALL getContinuations() throw( ::com::sun::star::uno::RuntimeException );
+    virtual ::com::sun::star::uno::Any SAL_CALL getRequest();
+    virtual ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Reference< ::com::sun::star::task::XInteractionContinuation > > SAL_CALL getContinuations();
 
 private:
     ::com::sun::star::uno::Any                                                                                                 m_aRequest      ;
@@ -158,7 +158,7 @@ sal_Bool RequestFilterSelect_Impl::isAbort() const
 // handler call it to get type of request
 // Is hard coded to "please select filter" here. see ctor for further informations.
 //---------------------------------------------------------------------------------------------------------
-css::uno::Any SAL_CALL RequestFilterSelect_Impl::getRequest() throw( css::uno::RuntimeException )
+css::uno::Any SAL_CALL RequestFilterSelect_Impl::getRequest()
 {
     return m_aRequest;
 }
@@ -169,7 +169,7 @@ css::uno::Any SAL_CALL RequestFilterSelect_Impl::getRequest() throw( css::uno::R
 // After interaction we support read access on these continuations on our c++ interface to
 // return user decision.
 //---------------------------------------------------------------------------------------------------------
-css::uno::Sequence< css::uno::Reference< css::task::XInteractionContinuation > > SAL_CALL RequestFilterSelect_Impl::getContinuations() throw( css::uno::RuntimeException )
+css::uno::Sequence< css::uno::Reference< css::task::XInteractionContinuation > > SAL_CALL RequestFilterSelect_Impl::getContinuations()
 {
     return m_lContinuations;
 }
@@ -184,7 +184,7 @@ RequestFilterSelect::RequestFilterSelect( const ::rtl::OUString& sURL )
 RequestFilterSelect::~RequestFilterSelect()
 {
     pImp->release();
-}            
+}
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -207,7 +207,7 @@ sal_Bool RequestFilterSelect::isAbort() const
 
 uno::Reference < task::XInteractionRequest > RequestFilterSelect::GetRequest()
 {
-    return uno::Reference < task::XInteractionRequest > (pImp);        
+    return uno::Reference < task::XInteractionRequest > (pImp);
 }
 
 /*
@@ -227,19 +227,19 @@ public:
     ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Reference< ::com::sun::star::task::XInteractionContinuation > >    m_lContinuations;
     ContinuationAbort*                                                                                                         m_pAbort        ;
     ContinuationFilterSelect*                                                                                                  m_pFilter       ;
-};  
+};
 
 RequestAmbigousFilter::RequestAmbigousFilter( const ::rtl::OUString& sURL, const ::rtl::OUString& sSelectedFilter,
     const ::rtl::OUString& sDetectedFilter )
 {
     pImp = new RequestAmbigousFilter_Impl( sURL, sSelectedFilter, sDetectedFilter );
-    pImp->acquire();  
+    pImp->acquire();
 }
 
 RequestAmbigousFilter::~RequestAmbigousFilter()
 {
     pImp->release();
-}            
+}
 
 sal_Bool RequestAmbigousFilter::isAbort() const
 {
@@ -257,7 +257,7 @@ sal_Bool RequestAmbigousFilter::isAbort() const
 
 uno::Reference < task::XInteractionRequest > RequestAmbigousFilter::GetRequest()
 {
-    return uno::Reference < task::XInteractionRequest > (pImp);        
+    return uno::Reference < task::XInteractionRequest > (pImp);
 }
 
 //---------------------------------------------------------------------------------------------------------
@@ -324,36 +324,34 @@ css::uno::Sequence< css::uno::Reference< css::task::XInteractionContinuation > >
 }
 */
 
-class InteractionRequest_Impl : public ::cppu::WeakImplHelper1< ::com::sun::star::task::XInteractionRequest >   
+class InteractionRequest_Impl : public ::cppu::WeakImplHelper1< ::com::sun::star::task::XInteractionRequest >
 {
     uno::Any m_aRequest;
     uno::Sequence< ::com::sun::star::uno::Reference< ::com::sun::star::task::XInteractionContinuation > > m_lContinuations;
 
-public:    
-    InteractionRequest_Impl( const ::com::sun::star::uno::Any& aRequest, 
+public:
+    InteractionRequest_Impl( const ::com::sun::star::uno::Any& aRequest,
         const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Reference< ::com::sun::star::task::XInteractionContinuation > > lContinuations )
     {
         m_aRequest = aRequest;
         m_lContinuations = lContinuations;
     }
 
-    virtual uno::Any SAL_CALL getRequest() throw( uno::RuntimeException );
-    virtual uno::Sequence< uno::Reference< task::XInteractionContinuation > > SAL_CALL getContinuations() 
-            throw( uno::RuntimeException );
+    virtual uno::Any SAL_CALL getRequest();
+    virtual uno::Sequence< uno::Reference< task::XInteractionContinuation > > SAL_CALL getContinuations();
 };
 
-uno::Any SAL_CALL InteractionRequest_Impl::getRequest() throw( uno::RuntimeException )
+uno::Any SAL_CALL InteractionRequest_Impl::getRequest()
 {
     return m_aRequest;
 }
 
-uno::Sequence< uno::Reference< task::XInteractionContinuation > > SAL_CALL InteractionRequest_Impl::getContinuations() 
-    throw( uno::RuntimeException )
+uno::Sequence< uno::Reference< task::XInteractionContinuation > > SAL_CALL InteractionRequest_Impl::getContinuations()
 {
     return m_lContinuations;
 }
 
-uno::Reference < task::XInteractionRequest > InteractionRequest::CreateRequest( 
+uno::Reference < task::XInteractionRequest > InteractionRequest::CreateRequest(
     const uno::Any& aRequest, const uno::Sequence< uno::Reference< task::XInteractionContinuation > > lContinuations )
 {
     return new InteractionRequest_Impl( aRequest, lContinuations );

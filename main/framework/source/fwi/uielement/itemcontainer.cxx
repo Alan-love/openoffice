@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,7 +49,7 @@ namespace framework
 //	XInterface, XTypeProvider
 //*****************************************************************************************************************
 
-ItemContainer::ItemContainer( const ShareableMutex& rMutex ) : 
+ItemContainer::ItemContainer( const ShareableMutex& rMutex ) :
     m_aShareMutex( rMutex )
 {
 }
@@ -60,7 +60,7 @@ ItemContainer::ItemContainer( const ConstItemContainer& rConstItemContainer, con
     copyItemContainer( rConstItemContainer.m_aItemVector, rMutex );
 }
 
-ItemContainer::ItemContainer( const Reference< XIndexAccess >& rSourceContainer, const ShareableMutex& rMutex ) : 
+ItemContainer::ItemContainer( const Reference< XIndexAccess >& rSourceContainer, const ShareableMutex& rMutex ) :
     m_aShareMutex( rMutex )
 {
     if ( rSourceContainer.is() )
@@ -146,7 +146,7 @@ Reference< XIndexAccess > ItemContainer::deepCopyContainer( const Reference< XIn
 }
 
 // XUnoTunnel
-sal_Int64 ItemContainer::getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& rIdentifier ) throw(::com::sun::star::uno::RuntimeException)
+sal_Int64 ItemContainer::getSomething( const ::com::sun::star::uno::Sequence< sal_Int8 >& rIdentifier )
 {
     if( ( rIdentifier.getLength() == 16 ) && ( 0 == rtl_compareMemory( ItemContainer::GetUnoTunnelId().getConstArray(), rIdentifier.getConstArray(), 16 ) ) )
         return sal::static_int_cast< sal_Int64 >( reinterpret_cast< sal_IntPtr >( this ));
@@ -179,7 +179,6 @@ ItemContainer* ItemContainer::GetImplementation( const ::com::sun::star::uno::Re
 
 // XElementAccess
 sal_Bool SAL_CALL ItemContainer::hasElements()
-throw ( RuntimeException )
 {
     ShareGuard aLock( m_aShareMutex );
     return ( !m_aItemVector.empty() );
@@ -187,14 +186,12 @@ throw ( RuntimeException )
 
 // XIndexAccess
 sal_Int32 SAL_CALL ItemContainer::getCount()
-throw ( RuntimeException )
 {
     ShareGuard aLock( m_aShareMutex );
     return m_aItemVector.size();
 }
 
 Any SAL_CALL ItemContainer::getByIndex( sal_Int32 Index )
-throw ( IndexOutOfBoundsException, WrappedTargetException, RuntimeException )
 {
     ShareGuard aLock( m_aShareMutex );
     if ( sal_Int32( m_aItemVector.size()) > Index )
@@ -205,7 +202,6 @@ throw ( IndexOutOfBoundsException, WrappedTargetException, RuntimeException )
 
 // XIndexContainer
 void SAL_CALL ItemContainer::insertByIndex( sal_Int32 Index, const Any& aItem )
-throw ( IllegalArgumentException, IndexOutOfBoundsException, WrappedTargetException, RuntimeException )
 {
     Sequence< PropertyValue > aSeq;
     if ( aItem >>= aSeq )
@@ -228,7 +224,6 @@ throw ( IllegalArgumentException, IndexOutOfBoundsException, WrappedTargetExcept
 }
 
 void SAL_CALL ItemContainer::removeByIndex( sal_Int32 Index )
-throw ( IndexOutOfBoundsException, WrappedTargetException, RuntimeException )
 {
     ShareGuard aLock( m_aShareMutex );
 	if ( (sal_Int32)m_aItemVector.size() > Index )
@@ -242,7 +237,6 @@ throw ( IndexOutOfBoundsException, WrappedTargetException, RuntimeException )
 }
 
 void SAL_CALL ItemContainer::replaceByIndex( sal_Int32 Index, const Any& aItem )
-throw ( IllegalArgumentException, IndexOutOfBoundsException, WrappedTargetException, RuntimeException )
 {
     Sequence< PropertyValue > aSeq;
     if ( aItem >>= aSeq )
@@ -259,4 +253,3 @@ throw ( IllegalArgumentException, IndexOutOfBoundsException, WrappedTargetExcept
 }
 
 } // namespace framework
-

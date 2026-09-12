@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_sw.hxx"
@@ -110,9 +108,9 @@ class SwOLEListener_Impl : public ::cppu::WeakImplHelper1< embed::XStateChangeLi
 public:
     SwOLEListener_Impl( SwOLEObj* pObj );
     void Release();
-    virtual void SAL_CALL changingState( const lang::EventObject& aEvent, ::sal_Int32 nOldState, ::sal_Int32 nNewState ) throw (embed::WrongStateException, uno::RuntimeException);
-    virtual void SAL_CALL stateChanged( const lang::EventObject& aEvent, ::sal_Int32 nOldState, ::sal_Int32 nNewState ) throw (uno::RuntimeException);
-    virtual void SAL_CALL disposing( const lang::EventObject& aEvent ) throw (uno::RuntimeException);
+    virtual void SAL_CALL changingState( const lang::EventObject& aEvent, ::sal_Int32 nOldState, ::sal_Int32 nNewState );
+    virtual void SAL_CALL stateChanged( const lang::EventObject& aEvent, ::sal_Int32 nOldState, ::sal_Int32 nNewState );
+    virtual void SAL_CALL disposing( const lang::EventObject& aEvent );
 };
 
 SwOLEListener_Impl::SwOLEListener_Impl( SwOLEObj* pObj )
@@ -124,11 +122,11 @@ SwOLEListener_Impl::SwOLEListener_Impl( SwOLEObj* pObj )
     }
 }
 
-void SAL_CALL SwOLEListener_Impl::changingState( const lang::EventObject&, ::sal_Int32 , ::sal_Int32 ) throw (embed::WrongStateException, uno::RuntimeException)
+void SAL_CALL SwOLEListener_Impl::changingState( const lang::EventObject&, ::sal_Int32 , ::sal_Int32 )
 {
 }
 
-void SAL_CALL SwOLEListener_Impl::stateChanged( const lang::EventObject&, ::sal_Int32 nOldState, ::sal_Int32 nNewState ) throw (uno::RuntimeException)
+void SAL_CALL SwOLEListener_Impl::stateChanged( const lang::EventObject&, ::sal_Int32 nOldState, ::sal_Int32 nNewState )
 {
     if ( mpObj && nOldState == embed::EmbedStates::LOADED && nNewState == embed::EmbedStates::RUNNING )
     {
@@ -151,7 +149,7 @@ void SwOLEListener_Impl::Release()
     release();
 }
 
-void SAL_CALL SwOLEListener_Impl::disposing( const lang::EventObject& ) throw (uno::RuntimeException)
+void SAL_CALL SwOLEListener_Impl::disposing( const lang::EventObject& )
 {
     if ( mpObj && pOLELRU_Cache )
         pOLELRU_Cache->RemoveObj( *mpObj );
@@ -359,13 +357,13 @@ sal_Bool SwOLENode::SavePersistentData()
 				xChild->setParent( 0 );
 
           // pCnt->RemoveEmbeddedObject( aOLEObj.aName, sal_False );
-           /* #i119941: When cut or move the chart, SwUndoFlyBase::DelFly will call SaveSection to store the comtent to strorage. 
-           In this step, chart filter functions will be called. And chart filter will call chart core functions to create the chart again. 
-           Then chart core function will call the class ExplicitCategoryProvider to create data source. 
-           In this step, when SW data source provider create the data source, it will create a new SwFlyFrm. 
+           /* #i119941: When cut or move the chart, SwUndoFlyBase::DelFly will call SaveSection to store the content to storage.
+           In this step, chart filter functions will be called. And chart filter will call chart core functions to create the chart again.
+           Then chart core function will call the class ExplicitCategoryProvider to create data source.
+           In this step, when SW data source provider create the data source, it will create a new SwFlyFrm.
            But later in SwUndoFlyBase::DelFly, it will clear anchor related attributes of SwFlyFrm. Then finally null pointer occur.
            Resolution:
-           In pCnt->RemoveEmbeddedObject in SaveSection process of table chart, only remove the object from the object container, 
+           In pCnt->RemoveEmbeddedObject in SaveSection process of table chart, only remove the object from the object container,
            without removing it's storage and graphic stream. The chart already removed from formatter.> */
            sal_Bool	bChartWithInternalProvider = sal_False;
            sal_Bool	bKeepObjectToTempStorage = sal_True;
@@ -375,16 +373,16 @@ sal_Bool SwOLENode::SavePersistentData()
                uno::Reference< chart2::XChartDocument > xChart( xIP->getComponent(), UNO_QUERY );
                if ( xChart.is() && xChart->hasInternalDataProvider() )
                    bChartWithInternalProvider = sal_True;
-           }            
-            
+           }
+
            if ( IsChart() && sChartTblName.Len() && !bChartWithInternalProvider )
                bKeepObjectToTempStorage = sal_False;
            pCnt->RemoveEmbeddedObject( aOLEObj.aName, sal_False, bKeepObjectToTempStorage );
-           // modify end            
-            
-            
+           // modify end
+
+
 			// TODO/LATER: aOLEObj.aName has no meaning here, since the undo container contains the object
-			// by different name, in future it might makes sence that the name is transported here.
+			// by different name, in future it might makes sense that the name is transported here.
             aOLEObj.xOLERef.AssignToContainer( 0, aOLEObj.aName );
             try
             {
@@ -737,7 +735,7 @@ SwOLEObj::~SwOLEObj()
 			// successful closing of the object will automatically clear the reference then
 			xOLERef.Lock(sal_False);
 
-			// Always remove object from conteiner it is connected to
+			// Always remove object from container it is connected to
             try
             {
                 pCnt->RemoveEmbeddedObject( aName );
@@ -1042,3 +1040,4 @@ void SwOLELRUCache::RemoveObj( SwOLEObj& rObj )
         DELETEZ( pOLELRU_Cache );
 }
 
+/* vim: set noet sw=4 ts=4: */

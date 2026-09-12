@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -91,7 +91,7 @@ published service HierarchyDataReadAccess
 
         <ul>
         <li>
-        path = segment ( '/' segement )*
+        path = segment ( '/' segment )*
         </li>
         <li>
         segment = '[' quoted-string ']'
@@ -100,7 +100,7 @@ published service HierarchyDataReadAccess
         quoted-string = "'" escaped-string "'"
         </li>
         <li>
-        escaped-string = escaped accoding to XML attribute naming conventions
+        escaped-string = escaped according to XML attribute naming conventions
         </li>
         </ul>
 
@@ -130,7 +130,7 @@ published service HierarchyDataReadAccess
         <code>getByHierarchicalName( "Children/['subnode3']/Children" )</code>
         will give direct access to the "Children" data member of the child node
         named "subnode3" of the node. It will return an <atom>any</atom>
-        conntaining an implementation of service
+        containing an implementation of service
         <type>HierarchyDataReadAccess</type>, if it was called on a read-only
         node. It will return an implementation of service
         <type>HierarchyDataReadWriteAccess</type> if it was called on a

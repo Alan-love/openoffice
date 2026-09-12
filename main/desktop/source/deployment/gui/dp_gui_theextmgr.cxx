@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -89,7 +89,7 @@ TheExtensionManager::TheExtensionManager( Window *pParent,
     xNameAccessRepositories = uno::Reference< container::XNameAccess > (
         xConfig->createInstanceWithArguments( OUSTR("com.sun.star.configuration.ConfigurationAccess"),
                                               uno::Sequence< uno::Any >( args, 1 )), uno::UNO_QUERY_THROW);
-    try 
+    try
     {   //throws css::container::NoSuchElementException, css::lang::WrappedTargetException
         uno::Any value = xNameAccessRepositories->getByName( OUSTR( "WebsiteLink" ) );
         m_sGetExtensionsURL = value.get< OUString > ();
@@ -244,14 +244,14 @@ bool TheExtensionManager::installPackage( const OUString &rPackageURL, bool bWar
     bool bInstall = true;
     bool bInstallForAll = false;
 
-    // DV! missing function is read only repository from extension manager 
+    // DV! missing function is read only repository from extension manager
     if ( !bWarnUser && ! m_xExtensionManager->isReadOnlyRepository( SHARED_PACKAGE_MANAGER ) )
         bInstall = getDialogHelper()->installForAllUsers( bInstallForAll );
 
     if ( !bInstall )
         return false;
 
-    if ( bInstallForAll )    
+    if ( bInstallForAll )
         m_pExecuteCmdQueue->addExtension( rPackageURL, SHARED_PACKAGE_MANAGER, false );
     else
         m_pExecuteCmdQueue->addExtension( rPackageURL, USER_PACKAGE_MANAGER, bWarnUser );
@@ -427,9 +427,8 @@ bool TheExtensionManager::supportsOptions( const uno::Reference< deployment::XPa
 //------------------------------------------------------------------------------
 // XEventListener
 void TheExtensionManager::disposing( lang::EventObject const & rEvt )
-    throw ( uno::RuntimeException )
 {
-    bool shutDown = (rEvt.Source == m_xDesktop);       
+    bool shutDown = (rEvt.Source == m_xDesktop);
 
     if ( shutDown && m_xDesktop.is() )
     {
@@ -454,7 +453,6 @@ void TheExtensionManager::disposing( lang::EventObject const & rEvt )
 //------------------------------------------------------------------------------
 // XTerminateListener
 void TheExtensionManager::queryTermination( ::lang::EventObject const & )
-    throw ( frame::TerminationVetoException, uno::RuntimeException )
 {
     DialogHelper *pDialogHelper = getDialogHelper();
 
@@ -476,7 +474,6 @@ void TheExtensionManager::queryTermination( ::lang::EventObject const & )
 
 //------------------------------------------------------------------------------
 void TheExtensionManager::notifyTermination( ::lang::EventObject const & rEvt )
-    throw ( uno::RuntimeException )
 {
     disposing( rEvt );
 }
@@ -484,7 +481,6 @@ void TheExtensionManager::notifyTermination( ::lang::EventObject const & rEvt )
 //------------------------------------------------------------------------------
 // XModifyListener
 void TheExtensionManager::modified( ::lang::EventObject const & /*rEvt*/ )
-    throw ( uno::RuntimeException )
 {
     getDialogHelper()->prepareChecking();
     createPackageList();
@@ -524,4 +520,3 @@ void TheExtensionManager::modified( ::lang::EventObject const & /*rEvt*/ )
 }
 
 } //namespace dp_gui
-

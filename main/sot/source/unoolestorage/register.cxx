@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -28,10 +28,24 @@
 #include <com/sun/star/registry/XRegistryKey.hpp>
 #include <com/sun/star/registry/InvalidRegistryException.hpp>
 #include <cppuhelper/factory.hxx>
+#include <cppuhelper/implementationentry.hxx>
 
 #include "xolesimplestorage.hxx"
 
 using namespace ::com::sun::star;
+
+static struct ::cppu::ImplementationEntry g_component_entries[] =
+{
+    {
+        OLESimpleStorage::impl_staticCreateSelfInstance,
+        OLESimpleStorage::impl_staticGetImplementationName,
+        OLESimpleStorage::impl_staticGetSupportedServiceNames,
+        ::cppu::createSingleComponentFactory,
+        0,
+        0
+    },
+    { 0, 0, 0, 0, 0, 0 }
+};
 
 
 extern "C" {
@@ -41,29 +55,9 @@ SAL_DLLPUBLIC_EXPORT void SAL_CALL component_getImplementationEnvironment( const
 	*ppEnvTypeName = CPPU_CURRENT_LANGUAGE_BINDING_NAME;
 }
 
-SAL_DLLPUBLIC_EXPORT void * SAL_CALL component_getFactory( const sal_Char * pImplName, void * pServiceManager, void * /*pRegistryKey*/ )
+SAL_DLLPUBLIC_EXPORT void * SAL_CALL component_getFactory( const sal_Char * pImplName, void * pServiceManager, void * pRegistryKey )
 {
-	void * pRet = 0;
-	
-	::rtl::OUString aImplName( ::rtl::OUString::createFromAscii( pImplName ) );
-	uno::Reference< lang::XSingleServiceFactory > xFactory;
-
-	if ( pServiceManager && aImplName.equals( OLESimpleStorage::impl_staticGetImplementationName() ) )
-	{
-		xFactory= ::cppu::createSingleFactory( reinterpret_cast< lang::XMultiServiceFactory*>( pServiceManager ),
-											OLESimpleStorage::impl_staticGetImplementationName(),
-											OLESimpleStorage::impl_staticCreateSelfInstance,
-											OLESimpleStorage::impl_staticGetSupportedServiceNames() );
-	}
-		
-	if ( xFactory.is() )
-	{
-		xFactory->acquire();
-		pRet = xFactory.get();
-	}
-	
-	return pRet;
+    return ::cppu::component_getFactoryHelper( pImplName, pServiceManager, pRegistryKey, g_component_entries );
 }
 
 } // extern "C"
-

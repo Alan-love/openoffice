@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,18 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
 
 package util;
 
@@ -259,7 +258,7 @@ public class utils {
 
     /**
      *
-     * This method get's the user dir of the connected office
+     * This method gets the user dir of the connected office
      *
      */
     public static String getOfficeUserPath(XMultiServiceFactory msf) {
@@ -286,12 +285,12 @@ public class utils {
     }
 
     /**
-     * In the office there are some sttetings available. This function
+     * In the office there are some settings available. This function
      * returns the value of the given setting name. For Example the setting name "Temp"
      * "Temp" returns the temp folder of the office instance.
      * @param msf a XMultiServiceFactory
-     * @param setting  the name of the setting the value should be returned. 
-     * For example "Temp" reutrns the temp folder of the current office instance.
+     * @param setting  the name of the setting the value should be returned.
+     * For example "Temp" returns the temp folder of the current office instance.
      * @see com.sun.star.util.PathSettings
      * @return the value as String
      */
@@ -310,7 +309,7 @@ public class utils {
             settingPath = (String) pthSettings.getPropertyValue(setting);
 
         } catch (Exception e) {
-            System.out.println("Couldn't get stting value for " + setting);
+            System.out.println("Couldn't get setting value for " + setting);
             e.printStackTrace();
         }
         return settingPath;
@@ -337,7 +336,7 @@ public class utils {
     }
 
     /**
-     * This method returns the temp dicrectory of the user.
+     * This method returns the temp directory of the user.
      * Since Java 1.4 it is not possible to read environment variables. To workaround
      * this, the Java parameter -D could be used.
      */
@@ -359,7 +358,7 @@ public class utils {
 
     /**
      *
-     * This method get's the temp dir of the connected office
+     * This method gets the temp dir of the connected office
      *
      */
     public static String getOfficeTemp(XMultiServiceFactory msf) {
@@ -373,7 +372,7 @@ public class utils {
     }
 
     /**
-     * Gets StarOffice temp directory without 'file:///' prefix.
+     * Gets OpenOffice temp directory without 'file:///' prefix.
      * For example is useful for Registry URL specifying.
      * @msf Office factory for accessing its settings.
      * @return SOffice temporary directory in form for example
@@ -407,8 +406,8 @@ public class utils {
     }
 
     /**
-     * Gets StarOffice temp directory without 'file:///' prefix.
-     * and System dependend file separator
+     * Gets OpenOffice temp directory without 'file:///' prefix.
+     * and System dependent file separator
      */
     public static String getOfficeTempDirSys(XMultiServiceFactory msf) {
 
@@ -429,7 +428,7 @@ public class utils {
             sysDir += "/";
         }
 
-        // remove leading '/' and replace others with '\' on windows machines
+        // remove leading '/' and replace others with '\' on Windows machines
         if (sysDir.indexOf(":") != -1) {
             sysDir = sysDir.substring(1);
             sysDir = sysDir.replace('/', '\\');
@@ -454,7 +453,7 @@ public class utils {
             sysDir = fileURL.substring("file://".length());
         }
 
-        // remove leading '/' and replace others with '\' on windows machines
+        // remove leading '/' and replace others with '\' on Windows machines
         if (sysDir.indexOf(":") != -1) {
             sysDir = sysDir.substring(1);
             sysDir = sysDir.replace('/', '\\');
@@ -489,10 +488,10 @@ public class utils {
 
     /**
      * This method deletes via office the given file URL. It checks the existence
-     * of <CODE>fileURL</CODE>. If exists it will be deletet.
+     * of <CODE>fileURL</CODE>. If exists it will be deleted.
      * @param xMsf the multiservice factory
      * @param fileURL the file to delete
-     * @return true if the file could be deletet or the file does not exist
+     * @return true if the file could be deleted or the file does not exist
      */
     public static boolean deleteFile(XMultiServiceFactory xMsf, String fileURL) {
         boolean delete = true;
@@ -517,7 +516,7 @@ public class utils {
      * This method copies via office a given file to a new one
      * @param xMsf the multi service factory
      * @param source the source file
-     * @param destinaion the destination file
+     * @param destination the destination file
      * @return true at success
      */
     public static boolean copyFile(XMultiServiceFactory xMsf, String source, String destinaion) {
@@ -709,9 +708,9 @@ public class utils {
     }
 
     /** returns the path to the office binary folder
-     * 
+     *
      * @param msf The XMultiSeriveFactory
-     * @return the path to the office binrary or an empty string on any error
+     * @return the path to the office binary or an empty string on any error
      */
     public static String getOfficeBinPath(XMultiServiceFactory msf) {
         String sysBinDir = "";
@@ -724,7 +723,7 @@ public class utils {
     }
 
     /**
-     * Get an array of all property names from the property set. With the include 
+     * Get an array of all property names from the property set. With the include
      * and exclude parameters the properties can be filtered. <br>
      * Set excludePropertyAttribute = 0 and includePropertyAttribute = 0
      * to include all and exclude none.
@@ -780,7 +779,7 @@ public class utils {
         StringTokenizer commandTokens = new StringTokenizer(appExecCommand, " \t");
         String officeExecutable = "";
         String officeExecCommand = "soffice";
-        // is there a 'soffice' in the command? 2do: eliminate case sensitivity on windows
+        // is there a 'soffice' in the command? TODO: eliminate case sensitivity on Windows
         int index = -1;
         while (commandTokens.hasMoreTokens() && index == -1) {
             officeExecutable += commandTokens.nextToken() + " ";
@@ -800,7 +799,7 @@ public class utils {
             } else {
                 // is it an office installation?
                 f = new File(officeExecutable);
-                // one try for windows platform can't be wrong...
+                // one try for Windows platform can't be wrong...
                 if (!f.exists() || !f.isFile()) {
                     f = new File(officeExecutable + ".exe");
                 }
@@ -997,7 +996,7 @@ public class utils {
 
     /** returns a String which contains the current date and time<br>
      *  format: [DD.MM.YYYY - HH:MM:SS::mm]
-     * 
+     *
      ** @return a String which contains the current date and time
      */
     public static String getDateTime() {

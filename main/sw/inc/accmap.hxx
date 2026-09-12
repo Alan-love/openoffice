@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -121,7 +121,7 @@ class SwAccessibleMap : public ::accessibility::IAccessibleViewForwarder,
 		const ::com::sun::star::uno::Reference<
 			::com::sun::star::accessibility::XAccessible>& rAcc );
 	void DoInvalidateShapeSelection(sal_Bool bInvalidateFocusMode = sal_False);
-	
+
 	//Replace by DoInvalidateShapeSelection
 	//void DoInvalidateShapeFocus();
 	void InvalidateShapeSelection();
@@ -137,7 +137,7 @@ class SwAccessibleMap : public ::accessibility::IAccessibleViewForwarder,
 		::com::sun::star::accessibility::XAccessible>
             _GetDocumentView( sal_Bool bPagePreview );
 
-    /** method to build up a new data structure of the accessible pararaphs,
+    /** method to build up a new data structure of the accessible paragraphs,
         which have a selection
 
         OD 2005-12-13 #i27301#
@@ -189,7 +189,7 @@ public:
 	sal_Bool IsInSameLevel(const SdrObject* pObj, const SwFEShell* pFESh);
 	void AddShapeContext(const SdrObject *pObj,
 							 ::com::sun::star::uno::Reference < ::com::sun::star::accessibility::XAccessible > xAccShape);
-	
+
 	void AddGroupContext(const SdrObject *pParentObj,
 					::com::sun::star::uno::Reference < ::com::sun::star::accessibility::XAccessible > xAccParent);
 	void RemoveGroupContext(const SdrObject *pParentObj, ::com::sun::star::uno::Reference < ::com::sun::star::accessibility::XAccessible > xAccParent);
@@ -312,13 +312,11 @@ public:
 		const ::com::sun::star::uno::Reference< ::com::sun::star::drawing::XShape >& _rxShape,
 		const long _nIndex,
 		const ::accessibility::AccessibleShapeTreeInfo& _rShapeTreeInfo
-	)	throw (::com::sun::star::uno::RuntimeException);
+	);
 	virtual ::accessibility::AccessibleControlShape* GetAccControlShapeFromModel
-		(::com::sun::star::beans::XPropertySet* pSet) 
-		throw (::com::sun::star::uno::RuntimeException);
+		(::com::sun::star::beans::XPropertySet* pSet);
 	virtual ::com::sun::star::uno::Reference< ::com::sun::star::accessibility::XAccessible >   GetAccessibleCaption (
-		const ::com::sun::star::uno::Reference< ::com::sun::star::drawing::XShape > & xShape)
-    throw (::com::sun::star::uno::RuntimeException);
+		const ::com::sun::star::uno::Reference< ::com::sun::star::drawing::XShape > & xShape);
 
     // additional Core/Pixel conversions for internal use; also works
     // for preview
@@ -351,7 +349,7 @@ private:
 public:
 	virtual sal_Bool IsDocumentSelAll();
 
-	::com::sun::star::uno::WeakReference < ::com::sun::star::accessibility::XAccessible > 
+	::com::sun::star::uno::WeakReference < ::com::sun::star::accessibility::XAccessible >
 		GetCursorContext() const { return mxCursorContext; }
 
     //Para Container for InvalidateCursorPosition

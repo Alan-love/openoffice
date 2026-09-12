@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -40,6 +40,8 @@
 #include <cppuhelper/factory.hxx>
 #include <vector>
 #include <hash_map>
+#include <unordered_map>
+#include <string>
 
 #include <tools/resmgr.hxx>
 
@@ -176,24 +178,24 @@ cppu::IPropertyArrayHelper& SAL_CALL SolverComponent::getInfoHelper()
     return *getArrayHelper();
 }
 
-uno::Reference<beans::XPropertySetInfo> SAL_CALL SolverComponent::getPropertySetInfo() throw(uno::RuntimeException)
+uno::Reference<beans::XPropertySetInfo> SAL_CALL SolverComponent::getPropertySetInfo()
 {
     return createPropertySetInfo( getInfoHelper() );
 }
 
 // XSolverDescription
 
-OUString SAL_CALL SolverComponent::getComponentDescription() throw (uno::RuntimeException)
+OUString SAL_CALL SolverComponent::getComponentDescription()
 {
     return lcl_GetResourceString( RID_SOLVER_COMPONENT );
 }
 
-OUString SAL_CALL SolverComponent::getStatusDescription() throw (uno::RuntimeException)
+OUString SAL_CALL SolverComponent::getStatusDescription()
 {
     return maStatus;
 }
 
-OUString SAL_CALL SolverComponent::getPropertyDescription( const OUString& rPropertyName ) throw (uno::RuntimeException)
+OUString SAL_CALL SolverComponent::getPropertyDescription( const OUString& rPropertyName )
 {
     sal_uInt32 nResId = 0;
 	sal_Int32 nHandle = getInfoHelper().getHandleByName( rPropertyName );
@@ -230,79 +232,76 @@ OUString SAL_CALL SolverComponent::getPropertyDescription( const OUString& rProp
 
 // XSolver: settings
 
-uno::Reference<sheet::XSpreadsheetDocument> SAL_CALL SolverComponent::getDocument() throw(uno::RuntimeException)
+uno::Reference<sheet::XSpreadsheetDocument> SAL_CALL SolverComponent::getDocument()
 {
     return mxDoc;
 }
 
 void SAL_CALL SolverComponent::setDocument( const uno::Reference<sheet::XSpreadsheetDocument>& _document )
-                                throw(uno::RuntimeException)
 {
     mxDoc = _document;
 }
 
-table::CellAddress SAL_CALL SolverComponent::getObjective() throw(uno::RuntimeException)
+table::CellAddress SAL_CALL SolverComponent::getObjective()
 {
     return maObjective;
 }
 
-void SAL_CALL SolverComponent::setObjective( const table::CellAddress& _objective ) throw(uno::RuntimeException)
+void SAL_CALL SolverComponent::setObjective( const table::CellAddress& _objective )
 {
     maObjective = _objective;
 }
 
-uno::Sequence<table::CellAddress> SAL_CALL SolverComponent::getVariables() throw(uno::RuntimeException)
+uno::Sequence<table::CellAddress> SAL_CALL SolverComponent::getVariables()
 {
     return maVariables;
 }
 
 void SAL_CALL SolverComponent::setVariables( const uno::Sequence<table::CellAddress>& _variables )
-                                throw(uno::RuntimeException)
 {
     maVariables = _variables;
 }
 
-uno::Sequence<sheet::SolverConstraint> SAL_CALL SolverComponent::getConstraints() throw(uno::RuntimeException)
+uno::Sequence<sheet::SolverConstraint> SAL_CALL SolverComponent::getConstraints()
 {
     return maConstraints;
 }
 
 void SAL_CALL SolverComponent::setConstraints( const uno::Sequence<sheet::SolverConstraint>& _constraints )
-                                throw(uno::RuntimeException)
 {
     maConstraints = _constraints;
 }
 
-sal_Bool SAL_CALL SolverComponent::getMaximize() throw(uno::RuntimeException)
+sal_Bool SAL_CALL SolverComponent::getMaximize()
 {
     return mbMaximize;
 }
 
-void SAL_CALL SolverComponent::setMaximize( sal_Bool _maximize ) throw(uno::RuntimeException)
+void SAL_CALL SolverComponent::setMaximize( sal_Bool _maximize )
 {
     mbMaximize = _maximize;
 }
 
 // XSolver: get results
 
-sal_Bool SAL_CALL SolverComponent::getSuccess() throw(uno::RuntimeException)
+sal_Bool SAL_CALL SolverComponent::getSuccess()
 {
     return mbSuccess;
 }
 
-double SAL_CALL SolverComponent::getResultValue() throw(uno::RuntimeException)
+double SAL_CALL SolverComponent::getResultValue()
 {
     return mfResultValue;
 }
 
-uno::Sequence<double> SAL_CALL SolverComponent::getSolution() throw(uno::RuntimeException)
+uno::Sequence<double> SAL_CALL SolverComponent::getSolution()
 {
     return maSolution;
 }
 
 // -------------------------------------------------------------------------
 
-void SAL_CALL SolverComponent::solve() throw(uno::RuntimeException)
+void SAL_CALL SolverComponent::solve()
 {
     uno::Reference<frame::XModel> xModel( mxDoc, uno::UNO_QUERY );
     if ( !xModel.is() )
@@ -335,14 +334,16 @@ void SAL_CALL SolverComponent::solve() throw(uno::RuntimeException)
             aCellsHash[aCellAddr].reserve( nVariables + 1 );            // constraints: right hand side
     }
 
-    // set all variables to zero
-    //! store old values?
-    //! use old values as initial values?
-    std::vector<table::CellAddress>::const_iterator aVarIter;
-    for ( aVarIter = aVariableCells.begin(); aVarIter != aVariableCells.end(); ++aVarIter )
+    // Save the current values of the changing cells for use as a possible
+    // initial solution, then reset the cells to zero for model construction.
+    std::vector<double> aInitValues(nVariables);
+    for (nVar = 0; nVar < nVariables; ++nVar)
     {
-        lcl_SetValue( mxDoc, *aVarIter, 0.0 );
+        // read current value of the variable cell and store as initial value
+        aInitValues[nVar] = lcl_GetValue( mxDoc, aVariableCells[nVar] );
+        lcl_SetValue( mxDoc, aVariableCells[nVar], 0.0 );
     }
+    std::vector<table::CellAddress>::const_iterator aVarIter;
 
     // read initial values from all dependent cells
     ScSolverCellHashMap::iterator aCellsIter;
@@ -471,6 +472,117 @@ void SAL_CALL SolverComponent::solve() throw(uno::RuntimeException)
         }
     }
 
+    // Try to combine complementary <= and >= rows with identical coefficients
+    // into a single ranged row 'R' with RANGE = upper - lower.
+    // We do this before building the column-wise matrix. When a pair is
+    // merged we zero out the coefficients of the removed row so it is
+    // ignored when building the sparse column representation.
+    // Allocate a row-indexed range array up-front (one entry per original row).
+    double* pRangeValues = new double[nRows];
+    for (size_t i = 0; i < nRows; ++i) pRangeValues[i] = 0.0;
+
+    // Two-pass approach: first collect best lower/upper per coefficient
+    // signature (exact bitwise signature). Second, convert compatibles to
+    // ranged rows. This avoids online erase/replace semantics and ensures
+    // decisions are based on the original model.
+    struct RowPair { size_t lowerIdx; double lowerVal; size_t upperIdx; double upperVal; };
+    const size_t npos = static_cast<size_t>(-1);
+    std::unordered_map< std::string, RowPair > rowMap;
+    rowMap.reserve(nRows * 2);
+
+    // Pass 1: populate rowMap with tightest lower (max G) and tightest
+    // upper (min L) for each coefficient signature.
+    for (size_t i = 0; i < nRows; ++i)
+    {
+        char ti = pRowType[i];
+        if ( ti != 'L' && ti != 'G' )
+            continue;
+
+        const char* data = reinterpret_cast<const char*>(&pCompMatrix[i * nVariables]);
+        size_t len = (size_t)nVariables * sizeof(double);
+        std::string sig;
+        sig.assign(data, len);
+
+        auto it = rowMap.find(sig);
+        if ( it == rowMap.end() )
+        {
+            RowPair rp; rp.lowerIdx = npos; rp.upperIdx = npos; rp.lowerVal = 0.0; rp.upperVal = 0.0;
+            std::pair<std::unordered_map<std::string, RowPair>::iterator, bool> res = rowMap.insert(std::make_pair(sig, rp));
+            it = res.first;
+        }
+
+        RowPair &rp = it->second;
+        if ( ti == 'L' )
+        {
+            double v = pRHS[i];
+            if ( rp.upperIdx == npos || v < rp.upperVal )
+            {
+                rp.upperIdx = i;
+                rp.upperVal = v;
+            }
+        }
+        else // 'G'
+        {
+            double v = pRHS[i];
+            if ( rp.lowerIdx == npos || v > rp.lowerVal )
+            {
+                rp.lowerIdx = i;
+                rp.lowerVal = v;
+            }
+        }
+    }
+
+    // Pass 2: perform conversions for entries that have both bounds.
+    size_t nMergedRows = 0;
+    for (auto &kv : rowMap)
+    {
+        RowPair &rp = kv.second;
+        if ( rp.lowerIdx == npos || rp.upperIdx == npos )
+            continue;
+
+        size_t idxLower = rp.lowerIdx;
+        size_t idxUpper = rp.upperIdx;
+        double lower = rp.lowerVal;
+        double upper = rp.upperVal;
+
+        if ( lower <= upper )
+        {
+            // make upper the ranged row and mark lower as removed
+            pRowType[idxUpper] = 'R';
+            pRHS[idxUpper] = upper;
+            pRangeValues[idxUpper] = upper - lower;
+
+            pRowType[idxLower] = 'N';
+            pRHS[idxLower] = 0.0;
+
+            ++nMergedRows;
+            OSL_TRACE("Solver: merging rows %lu (G %.17g) and %lu (L %.17g) into ranged row %lu [%.17g, %.17g]\n",
+                      static_cast<unsigned long>(idxLower), lower,
+                      static_cast<unsigned long>(idxUpper), upper,
+                      static_cast<unsigned long>(idxUpper), lower, upper);
+        }
+        else
+        {
+            // invalid (contradictory) bounds: leave rows unchanged
+            OSL_TRACE("Solver: contradictory bounds for coeff-signature - lowerRow=%lu (%.17g) upperRow=%lu (%.17g); leaving rows unchanged\n",
+                      static_cast<unsigned long>(idxLower), lower,
+                      static_cast<unsigned long>(idxUpper), upper);
+        }
+    }
+
+    // After Pass 2 produce a summary trace (rows merged, ranged rows created,
+    // rows eliminated). This is the default diagnostic; per-row traces are
+    // emitted above and can be enabled/disabled by adjusting trace levels.
+    int nRangeCount_tmp = 0;
+    int nEliminated = 0;
+    for (size_t i = 0; i < nRows; ++i)
+    {
+        if ( pRowType[i] == 'R' ) ++nRangeCount_tmp;
+        if ( pRowType[i] == 'N' ) ++nEliminated;
+    }
+    OSL_TRACE("Solver: %lu input rows, %d ranged rows created, %d rows eliminated, %lu merged pairs\n",
+              static_cast<unsigned long>(nRows), nRangeCount_tmp, nEliminated, static_cast<unsigned long>(nMergedRows));
+
     // Find non-zero coefficients, column-wise
 
     int* pMatrixBegin = new int[nVariables+1];
@@ -483,6 +595,8 @@ void SAL_CALL SolverComponent::solve() throw(uno::RuntimeException)
         int nBegin = nMatrixPos;
         for (size_t nRow=0; nRow<nRows; nRow++)
         {
+            if ( pRowType[nRow] == 'N' )
+                continue;
             double fCoeff = pCompMatrix[ nRow * nVariables + nVar ];    // row-wise
             if ( fCoeff != 0.0 )
             {
@@ -497,6 +611,12 @@ void SAL_CALL SolverComponent::solve() throw(uno::RuntimeException)
     pMatrixBegin[nVariables] = nMatrixPos;
     delete[] pCompMatrix;
     pCompMatrix = NULL;
+
+    // Count ranged rows and keep the row-indexed pRangeValues allocated above.
+    int nRangeCount = 0;
+    for (size_t i = 0; i < nRows; ++i)
+        if ( pRowType[i] == 'R' )
+            ++nRangeCount;
 
     // apply settings to all variables
 
@@ -542,12 +662,32 @@ void SAL_CALL SolverComponent::solve() throw(uno::RuntimeException)
     int nObjectSense = mbMaximize ? SOLV_OBJSENS_MAX : SOLV_OBJSENS_MIN;
 
     HPROB hProb = CoinCreateProblem("");
-    int nResult = CoinLoadProblem( hProb, nVariables, nRows, nMatrixPos, 0,
+    int nResult = CoinLoadProblem( hProb, nVariables, nRows, nMatrixPos, nRangeCount,
                     nObjectSense, nObjectConst, pObjectCoeffs,
-                    pLowerBounds, pUpperBounds, pRowType, pRHS, NULL,
+                    pLowerBounds, pUpperBounds, pRowType, pRHS, pRangeValues,
                     pMatrixBegin, pMatrixCount, pMatrixIndex, pMatrix,
                     NULL, NULL, NULL );
-    nResult = CoinLoadInteger( hProb, pColType );
+    if ( nResult == SOLV_CALL_SUCCESS )
+        nResult = CoinLoadInteger( hProb, pColType );
+
+    if ( pRangeValues )
+    {
+        delete[] pRangeValues;
+        pRangeValues = NULL;
+    }
+
+    // Supply the current variable values as a possible initial solution.
+    // Pass the spreadsheet values unchanged; CoinMP/CBC is responsible for
+    // validating the supplied initial solution.
+    if ( nResult == SOLV_CALL_SUCCESS && !aInitValues.empty() )
+    {
+        int nLoadRc = CoinLoadInitValues( hProb, aInitValues.data() );
+        if ( nLoadRc != SOLV_CALL_SUCCESS )
+        {
+            // Non-fatal: initial values are an optimization hint only; proceed without them.
+            OSL_TRACE("CoinLoadInitValues failed: %d\n", nLoadRc);
+        }
+    }
 
     delete[] pColType;
     delete[] pMatrixIndex;
@@ -568,6 +708,14 @@ void SAL_CALL SolverComponent::solve() throw(uno::RuntimeException)
     // solve model
 
     nResult = CoinCheckProblem( hProb );
+    if (nResult != SOLV_CALL_SUCCESS)
+    {
+        // report invalid model
+
+       maStatus = lcl_GetResourceString( RID_ERROR_INVALIDMODEL );
+        CoinUnloadProblem(hProb);
+        return;
+    }
     nResult = CoinOptimizeProblem( hProb, 0 );
 
     mbSuccess = ( nResult == SOLV_CALL_SUCCESS );
@@ -586,8 +734,15 @@ void SAL_CALL SolverComponent::solve() throw(uno::RuntimeException)
             maStatus = lcl_GetResourceString( RID_ERROR_INFEASIBLE );
         else if ( nSolutionStatus == 2 )
             maStatus = lcl_GetResourceString( RID_ERROR_UNBOUNDED );
-        // TODO: detect timeout condition and report as RID_ERROR_TIMEOUT
-        // (currently reported as infeasible)
+	else if ( nSolutionStatus == 3 )
+            maStatus = lcl_GetResourceString(  RID_ERROR_ITERATIONLIMIT );
+	else if ( nSolutionStatus == 4 )
+            maStatus = lcl_GetResourceString( RID_ERROR_SOLVERERROR );
+        else if ( nSolutionStatus == 5 )
+            maStatus = lcl_GetResourceString( RID_ERROR_USERSTOP );
+	else if ( nSolutionStatus >= 6 )
+            maStatus = lcl_GetResourceString( RID_ERROR_UNKNOWN );
+
     }
 
     CoinUnloadProblem( hProb );
@@ -609,12 +764,12 @@ OUString SolverComponent_getImplementationName()
     return OUString::createFromAscii( "com.sun.star.comp.Calc.Solver" );
 }
 
-OUString SAL_CALL SolverComponent::getImplementationName() throw(uno::RuntimeException)
+OUString SAL_CALL SolverComponent::getImplementationName()
 {
     return SolverComponent_getImplementationName();
 }
 
-sal_Bool SAL_CALL SolverComponent::supportsService( const OUString& rServiceName ) throw(uno::RuntimeException)
+sal_Bool SAL_CALL SolverComponent::supportsService( const OUString& rServiceName )
 {
     const uno::Sequence< OUString > aServices = SolverComponent_getSupportedServiceNames();
     const OUString* pArray = aServices.getConstArray();
@@ -622,13 +777,12 @@ sal_Bool SAL_CALL SolverComponent::supportsService( const OUString& rServiceName
     return ::std::find( pArray, pArrayEnd, rServiceName ) != pArrayEnd;
 }
 
-uno::Sequence<OUString> SAL_CALL SolverComponent::getSupportedServiceNames() throw(uno::RuntimeException)
+uno::Sequence<OUString> SAL_CALL SolverComponent::getSupportedServiceNames()
 {
     return SolverComponent_getSupportedServiceNames();
 }
 
 uno::Reference<uno::XInterface> SolverComponent_createInstance( const uno::Reference<uno::XComponentContext>& rSMgr )
-    throw(uno::Exception)
 {
 	return (cppu::OWeakObject*) new SolverComponent( rSMgr );
 }
@@ -656,7 +810,7 @@ extern "C"
             if( aImplName.equals( SolverComponent_getImplementationName() ) )
                 xFactory = cppu::createSingleComponentFactory(
                         SolverComponent_createInstance,
-                        OUString::createFromAscii( pImplName ), 
+                        OUString::createFromAscii( pImplName ),
                         SolverComponent_getSupportedServiceNames() );
 
             if( xFactory.is() )
@@ -668,4 +822,3 @@ extern "C"
         return pRet;
     }
 }
-

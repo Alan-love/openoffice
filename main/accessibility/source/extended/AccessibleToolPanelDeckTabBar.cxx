@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -91,7 +91,7 @@ namespace accessibility
         }
 
         // XAccessible
-        virtual Reference< XAccessibleContext > SAL_CALL getAccessibleContext(  ) throw (RuntimeException)
+        virtual Reference< XAccessibleContext > SAL_CALL getAccessibleContext(  )
         {
             return m_xContext;
         }
@@ -327,7 +327,7 @@ namespace accessibility
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-	sal_Int32 SAL_CALL AccessibleToolPanelTabBar::getAccessibleChildCount(  ) throw (RuntimeException)
+	sal_Int32 SAL_CALL AccessibleToolPanelTabBar::getAccessibleChildCount(  )
     {
         MethodGuard aGuard( *m_pImpl );
 
@@ -340,7 +340,7 @@ namespace accessibility
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-	Reference< XAccessible > SAL_CALL AccessibleToolPanelTabBar::getAccessibleChild( sal_Int32 i_nIndex ) throw (IndexOutOfBoundsException, RuntimeException)
+	Reference< XAccessible > SAL_CALL AccessibleToolPanelTabBar::getAccessibleChild( sal_Int32 i_nIndex )
     {
         MethodGuard aGuard( *m_pImpl );
 
@@ -359,7 +359,7 @@ namespace accessibility
             Reference< XAccessibleContext > xScrollButtonContext( xScrollButtonAccessible->getAccessibleContext() );
             ENSURE_OR_RETURN( xScrollButtonContext.is(), "AccessibleToolPanelTabBar::getAccessibleChild: invalid button accessible context!", xScrollButtonAccessible );
             OSL_ENSURE( xScrollButtonContext->getAccessibleParent() == m_pImpl->getOwnAccessible(),
-                "AccessibleToolPanelTabBar::getAccessibleChild: wrong parent at the button's accesible!" );
+                "AccessibleToolPanelTabBar::getAccessibleChild: wrong parent at the button's accessible!" );
         #endif
             return xScrollButtonAccessible;
         }
@@ -368,14 +368,14 @@ namespace accessibility
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-	Reference< XAccessible > SAL_CALL AccessibleToolPanelTabBar::getAccessibleParent(  ) throw (RuntimeException)
+	Reference< XAccessible > SAL_CALL AccessibleToolPanelTabBar::getAccessibleParent(  )
     {
         MethodGuard aGuard( *m_pImpl );
         return m_pImpl->getAccessibleParent();
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-	sal_Int16 SAL_CALL AccessibleToolPanelTabBar::getAccessibleRole(  ) throw (RuntimeException)
+	sal_Int16 SAL_CALL AccessibleToolPanelTabBar::getAccessibleRole(  )
     {
         MethodGuard aGuard( *m_pImpl );
         return AccessibleRole::PAGE_TAB_LIST;
@@ -392,7 +392,7 @@ namespace accessibility
     }
 
 	//------------------------------------------------------------------------------------------------------------------
-	Reference< XAccessible > SAL_CALL AccessibleToolPanelTabBar::getAccessibleAtPoint( const UnoPoint& i_rPoint ) throw (RuntimeException)
+	Reference< XAccessible > SAL_CALL AccessibleToolPanelTabBar::getAccessibleAtPoint( const UnoPoint& i_rPoint )
     {
         MethodGuard aGuard( *m_pImpl );
 

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -64,19 +64,16 @@ namespace DOM { namespace events
     }
 
     Sequence< OUString > SAL_CALL CTestListener::getSupportedServiceNames()
-        throw (RuntimeException)
     {
         return CTestListener::_getSupportedServiceNames();
     }
 
     OUString SAL_CALL CTestListener::getImplementationName()
-        throw (RuntimeException)
     {
         return CTestListener::_getImplementationName();
     }
 
     sal_Bool SAL_CALL CTestListener::supportsService(const OUString& aServiceName)
-        throw (RuntimeException)
     {
         Sequence< OUString > supported = CTestListener::_getSupportedServiceNames();
         for (sal_Int32 i=0; i<supported.getLength(); i++)
@@ -88,7 +85,7 @@ namespace DOM { namespace events
 
     // --- XInitialize
 
-    void SAL_CALL CTestListener::initialize(const Sequence< Any >& args) throw(RuntimeException)
+    void SAL_CALL CTestListener::initialize(const Sequence< Any >& args)
     {
         if (args.getLength() < 3) throw IllegalArgumentException(
             OUString::createFromAscii("Wrong number of arguments"), Reference< XInterface >(), 0);
@@ -125,7 +122,7 @@ namespace DOM { namespace events
 
     // --- XEventListener
 
-    void SAL_CALL CTestListener::handleEvent(const Reference< XEvent >& evt) throw (RuntimeException)
+    void SAL_CALL CTestListener::handleEvent(const Reference< XEvent >& evt)
     {
         FILE* f = fopen("C:\\listener.out", "a");
         fprintf(f, "CTestListener::handleEvent in %s\n", U2S(m_name));

@@ -41,7 +41,7 @@
 #ifndef WIN32_LEAN_AND_MEAN
 #	define WIN32_LEAN_AND_MEAN
 # ifdef _MSC_VER
-#	pragma warning(push,1) 
+#	pragma warning(push,1)
 # endif
 #	include <windows.h>
 # ifdef _MSC_VER
@@ -185,7 +185,7 @@ bool Options::checkCommandFile (std::vector< std::string > & rArgs, char const *
 	return (fclose(fp) == 0);
 }
 
-bool Options::badOption(char const * reason, std::string const & rArg) throw(IllegalArgument)
+bool Options::badOption(char const * reason, std::string const & rArg)
 {
 	OStringBuffer message;
 	if (reason != 0)
@@ -226,7 +226,7 @@ OString convertIncPathtoShortWindowsPath(const OString& incPath) {
 }
 #endif
 
-bool Options::initOptions(std::vector< std::string > & rArgs) throw(IllegalArgument)
+bool Options::initOptions(std::vector< std::string > & rArgs)
 {
 	std::vector< std::string >::const_iterator first = rArgs.begin(), last = rArgs.end();
 	for (; first != last; ++first)
@@ -428,7 +428,6 @@ bool Options::isValid(const OString& option)
 }
 
 const OString& Options::getOption(const OString& option)
-	throw( IllegalArgument )
 {
 	if (!isValid(option))
 	{

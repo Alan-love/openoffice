@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -44,16 +44,16 @@ EditDataObject::EditDataObject()
 EditDataObject::~EditDataObject()
 {
 }
-		
+
 // uno::XInterface
-uno::Any EditDataObject::queryInterface( const uno::Type & rType ) throw(uno::RuntimeException)
+uno::Any EditDataObject::queryInterface( const uno::Type & rType )
 {
 	uno::Any aRet = ::cppu::queryInterface( rType, SAL_STATIC_CAST( datatransfer::XTransferable*, this ) );
 	return (aRet.hasValue() ? aRet : OWeakObject::queryInterface( rType ));
 }
 
 // datatransfer::XTransferable
-uno::Any EditDataObject::getTransferData( const datatransfer::DataFlavor& rFlavor ) throw(datatransfer::UnsupportedFlavorException, io::IOException, uno::RuntimeException)
+uno::Any EditDataObject::getTransferData( const datatransfer::DataFlavor& rFlavor )
 {
 	uno::Any aAny;
 
@@ -86,7 +86,7 @@ uno::Any EditDataObject::getTransferData( const datatransfer::DataFlavor& rFlavo
 	return aAny;
 }
 
-uno::Sequence< datatransfer::DataFlavor > EditDataObject::getTransferDataFlavors(  ) throw(uno::RuntimeException)
+uno::Sequence< datatransfer::DataFlavor > EditDataObject::getTransferDataFlavors(  )
 {
 	uno::Sequence< datatransfer::DataFlavor > aDataFlavors(3);
 	SotExchange::GetFormatDataFlavor( SOT_FORMATSTR_ID_EDITENGINE, aDataFlavors.getArray()[0] );
@@ -96,7 +96,7 @@ uno::Sequence< datatransfer::DataFlavor > EditDataObject::getTransferDataFlavors
 	return aDataFlavors;
 }
 
-sal_Bool EditDataObject::isDataFlavorSupported( const datatransfer::DataFlavor& rFlavor ) throw(uno::RuntimeException)
+sal_Bool EditDataObject::isDataFlavorSupported( const datatransfer::DataFlavor& rFlavor )
 {
 	sal_Bool bSupported = sal_False;
 

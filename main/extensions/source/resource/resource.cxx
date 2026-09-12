@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -77,15 +77,15 @@ public:
     static Reference< XInterface > Create( const Reference< XComponentContext >& _rxContext );
 
 	// XExactName
-	OUString  SAL_CALL			getExactName( const OUString & ApproximateName ) throw(RuntimeException);
+	OUString  SAL_CALL			getExactName( const OUString & ApproximateName );
 
 	// XInvokation
-    Reference< XIntrospectionAccess >  SAL_CALL getIntrospection(void)  throw(RuntimeException);
-    Any  SAL_CALL				invoke(const OUString& FunctionName, const Sequence< Any >& Params, Sequence< sal_Int16 >& OutParamIndex, Sequence< Any >& OutParam) throw(IllegalArgumentException, CannotConvertException, InvocationTargetException, RuntimeException);
-    void  SAL_CALL				setValue(const OUString& PropertyName, const Any& Value) throw(UnknownPropertyException, CannotConvertException, InvocationTargetException, RuntimeException);
-    Any  SAL_CALL				getValue(const OUString& PropertyName) throw(UnknownPropertyException, RuntimeException);
-    sal_Bool  SAL_CALL				hasMethod(const OUString& Name)  throw(RuntimeException);
-    sal_Bool  SAL_CALL				hasProperty(const OUString& Name)  throw(RuntimeException);
+    Reference< XIntrospectionAccess >  SAL_CALL getIntrospection(void);
+    Any  SAL_CALL				invoke(const OUString& FunctionName, const Sequence< Any >& Params, Sequence< sal_Int16 >& OutParamIndex, Sequence< Any >& OutParam);
+    void  SAL_CALL				setValue(const OUString& PropertyName, const Any& Value);
+    Any  SAL_CALL				getValue(const OUString& PropertyName);
+    sal_Bool  SAL_CALL				hasMethod(const OUString& Name);
+    sal_Bool  SAL_CALL				hasProperty(const OUString& Name);
 private:
 	Reference< XTypeConverter >			getTypeConverter() const;
 	Reference< XInvocation >			getDefaultInvocation() const;
@@ -183,7 +183,7 @@ Reference< XInvocation > ResourceService::getDefaultInvocation() const
 }
 
 // XExactName
-OUString	SAL_CALL ResourceService::getExactName( const OUString & ApproximateName ) throw(RuntimeException)
+OUString	SAL_CALL ResourceService::getExactName( const OUString & ApproximateName )
 {
 	OUString aName( ApproximateName );
 	aName = aName.toAsciiLowerCase();
@@ -208,8 +208,7 @@ OUString	SAL_CALL ResourceService::getExactName( const OUString & ApproximateNam
 }
 
 // XInvokation
-Reference< XIntrospectionAccess > SAL_CALL ResourceService::getIntrospection(void)  
-	throw(RuntimeException)
+Reference< XIntrospectionAccess > SAL_CALL ResourceService::getIntrospection(void)
 {
 	Reference< XInvocation > xI = getDefaultInvocation();
 	if( xI.is() )
@@ -220,12 +219,11 @@ Reference< XIntrospectionAccess > SAL_CALL ResourceService::getIntrospection(voi
 // XInvokation
 Any SAL_CALL ResourceService::invoke
 (
-	const OUString& FunctionName, 
-	const Sequence< Any >& Params, 
-	Sequence< sal_Int16 >& OutParamIndex, 
+	const OUString& FunctionName,
+	const Sequence< Any >& Params,
+	Sequence< sal_Int16 >& OutParamIndex,
 	Sequence< Any >& OutParam
 )
-	throw(IllegalArgumentException, CannotConvertException, InvocationTargetException, RuntimeException)
 {
     Any aRet;
 	if( FunctionName.equalsAscii("getString")
@@ -241,16 +239,16 @@ Any SAL_CALL ResourceService::invoke
             throw IllegalArgumentException();
         if( !pResMgr )
             throw IllegalArgumentException();
-        
+
         Sequence< OUString > aStrings( Params.getLength() );
         Sequence< sal_Bool > aBools( Params.getLength() );
         const Any* pIn = Params.getConstArray();
         OUString* pOutString = aStrings.getArray();
         sal_Bool* pOutBool = aBools.getArray();
-        
+
         Reference< XTypeConverter > xC = getTypeConverter();
         bool bGetBranch = FunctionName.equalsAscii( "getString" ) || FunctionName.equalsAscii( "getStrings" );
-            
+
         OGuard aGuard( Application::GetSolarMutex() );
         for( sal_Int32 n = 0; n < nElements; n++ )
         {
@@ -266,7 +264,7 @@ Any SAL_CALL ResourceService::invoke
             }
             if( nId > 0xFFFF || nId < 0 )
                 throw IllegalArgumentException();
-            
+
             if( bGetBranch )
             {
                 ResId aId( (sal_uInt16)nId, *pResMgr );
@@ -317,7 +315,7 @@ Any SAL_CALL ResourceService::invoke
             else
                 throw CannotConvertException();
         }
-        
+
         if( FunctionName.equalsAscii("getStringList") )
         {
             ResId aId( (sal_uInt16)nId, *pResMgr );
@@ -364,8 +362,7 @@ Any SAL_CALL ResourceService::invoke
 }
 
 // XInvokation
-void SAL_CALL ResourceService::setValue(const OUString& PropertyName, const Any& Value) 
-	throw(UnknownPropertyException, CannotConvertException, InvocationTargetException, RuntimeException)
+void SAL_CALL ResourceService::setValue(const OUString& PropertyName, const Any& Value)
 {
 	if( PropertyName.equalsAscii("FileName") )
 	{
@@ -401,8 +398,7 @@ void SAL_CALL ResourceService::setValue(const OUString& PropertyName, const Any&
 }
 
 // XInvokation
-Any SAL_CALL ResourceService::getValue(const OUString& PropertyName) 
-	throw(UnknownPropertyException, RuntimeException)
+Any SAL_CALL ResourceService::getValue(const OUString& PropertyName)
 {
 	OGuard aGuard( Application::GetSolarMutex() );
 	if( PropertyName.equalsAscii("FileName" ))
@@ -416,8 +412,7 @@ Any SAL_CALL ResourceService::getValue(const OUString& PropertyName)
 }
 
 // XInvokation
-sal_Bool SAL_CALL ResourceService::hasMethod(const OUString& Name)  
-	throw(RuntimeException)
+sal_Bool SAL_CALL ResourceService::hasMethod(const OUString& Name)
 {
 	if( Name.equalsAscii("getString")     ||
         Name.equalsAscii("getStrings")    ||
@@ -438,8 +433,7 @@ sal_Bool SAL_CALL ResourceService::hasMethod(const OUString& Name)
 }
 
 // XInvokation
-sal_Bool SAL_CALL ResourceService::hasProperty(const OUString& Name)  
-	throw(RuntimeException)
+sal_Bool SAL_CALL ResourceService::hasProperty(const OUString& Name)
 {
 	if( Name.equalsAscii("FileName") )
 		return sal_True;
@@ -464,4 +458,3 @@ namespace res
         return aInfo;
     }
 }
-

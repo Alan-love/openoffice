@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -99,14 +99,13 @@ void SvxShapeCollection::disposing() throw()
 
 // XComponent
 void SvxShapeCollection::dispose()
-	throw(::com::sun::star::uno::RuntimeException)
 {
 	// An frequently programming error is to release the last
 	// reference to this object in the disposing message.
-	// Make it rubust, hold a self Reference.
+	// Make it robust, hold a self Reference.
 	uno::Reference< lang::XComponent > xSelf( this );
 
-	// Guard dispose against multible threading
+	// Guard dispose against multiple threading
 	// Remark: It is an error to call dispose more than once
 	sal_Bool bDoDispose = sal_False;
 	{
@@ -158,39 +157,38 @@ void SvxShapeCollection::dispose()
 }
 
 // XComponent
-void SAL_CALL SvxShapeCollection::addEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& aListener ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL SvxShapeCollection::addEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& aListener )
 {
 	mrBHelper.addListener( ::getCppuType( &aListener ) , aListener );
 }
 
 // XComponent
-void SAL_CALL SvxShapeCollection::removeEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& aListener ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL SvxShapeCollection::removeEventListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XEventListener >& aListener )
 {
 	mrBHelper.removeListener( ::getCppuType( &aListener ) , aListener );
 }
 
 // XShapes
 //----------------------------------------------------------------------
-void SAL_CALL SvxShapeCollection::add( const Reference< drawing::XShape >& xShape ) throw( uno::RuntimeException )
+void SAL_CALL SvxShapeCollection::add( const Reference< drawing::XShape >& xShape )
 {
 	maShapeContainer.addInterface( xShape );
 }
 
 //----------------------------------------------------------------------
-void SAL_CALL SvxShapeCollection::remove( const uno::Reference< drawing::XShape >& xShape ) throw( uno::RuntimeException )
+void SAL_CALL SvxShapeCollection::remove( const uno::Reference< drawing::XShape >& xShape )
 {
 	maShapeContainer.removeInterface( xShape );
 }
 
 //----------------------------------------------------------------------
-sal_Int32 SAL_CALL SvxShapeCollection::getCount() throw( uno::RuntimeException )
+sal_Int32 SAL_CALL SvxShapeCollection::getCount()
 {
 	return maShapeContainer.getLength();
 }
 
 //----------------------------------------------------------------------
 uno::Any SAL_CALL SvxShapeCollection::getByIndex( sal_Int32 Index )
-	throw( lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException )
 {
 	if( Index < 0 || Index >= getCount() )
 		throw lang::IndexOutOfBoundsException();
@@ -204,13 +202,13 @@ uno::Any SAL_CALL SvxShapeCollection::getByIndex( sal_Int32 Index )
 // XElementAccess
 
 //----------------------------------------------------------------------
-uno::Type SAL_CALL SvxShapeCollection::getElementType() throw( uno::RuntimeException )
+uno::Type SAL_CALL SvxShapeCollection::getElementType()
 {
 	return ::getCppuType(( const Reference< drawing::XShape >*)0);
 }
 
 //----------------------------------------------------------------------
-sal_Bool SAL_CALL SvxShapeCollection::hasElements() throw( uno::RuntimeException )
+sal_Bool SAL_CALL SvxShapeCollection::hasElements()
 {
 	return getCount() != 0;
 }
@@ -219,7 +217,6 @@ sal_Bool SAL_CALL SvxShapeCollection::hasElements() throw( uno::RuntimeException
 // XServiceInfo
 //----------------------------------------------------------------------
 ::rtl::OUString SAL_CALL SvxShapeCollection::getImplementationName()
-	throw( uno::RuntimeException )
 {
 	return getImplementationName_Static();
 }
@@ -230,12 +227,11 @@ sal_Bool SAL_CALL SvxShapeCollection::hasElements() throw( uno::RuntimeException
 }
 
 sal_Bool SAL_CALL SvxShapeCollection::supportsService( const ::rtl::OUString& ServiceName )
-	throw( uno::RuntimeException )
 {
 	return comphelper::ServiceInfoHelper::supportsService( ServiceName, getSupportedServiceNames() );
 }
 
-uno::Sequence< ::rtl::OUString > SAL_CALL SvxShapeCollection::getSupportedServiceNames() throw( uno::RuntimeException )
+uno::Sequence< ::rtl::OUString > SAL_CALL SvxShapeCollection::getSupportedServiceNames()
 {
 	return getSupportedServiceNames_Static();
 }

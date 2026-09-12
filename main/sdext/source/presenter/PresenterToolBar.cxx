@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -106,11 +106,11 @@ namespace {
     {
     public:
         ElementMode (void);
-        
+
         SharedBitmapDescriptor mpIcon;
         OUString msAction;
         Text maText;
-        
+
         void ReadElementMode (
             const Reference<beans::XPropertySet>& rxProperties,
             const ::rtl::OUString& rsModeName,
@@ -130,13 +130,13 @@ public:
     css::uno::Reference<css::rendering::XCanvas> mxCanvas;
 };
 
-    
+
 
 
 //===== PresenterToolBar::Element =============================================
 
 namespace {
-    typedef cppu::WeakComponentImplHelper2< 
+    typedef cppu::WeakComponentImplHelper2<
         css::document::XEventListener,
         css::frame::XStatusListener
         > ElementInterfaceBase;
@@ -176,18 +176,15 @@ namespace {
 
         // lang::XEventListener
 
-        virtual void SAL_CALL disposing (const css::lang::EventObject& rEvent)
-            throw(css::uno::RuntimeException);
-    
+        virtual void SAL_CALL disposing (const css::lang::EventObject& rEvent);
+
         // document::XEventListener
 
-        virtual void SAL_CALL notifyEvent (const css::document::EventObject& rEvent)
-            throw(css::uno::RuntimeException);
+        virtual void SAL_CALL notifyEvent (const css::document::EventObject& rEvent);
 
         // frame::XStatusListener
 
-        virtual void SAL_CALL statusChanged (const css::frame::FeatureStateEvent& rEvent)
-            throw(css::uno::RuntimeException);
+        virtual void SAL_CALL statusChanged (const css::frame::FeatureStateEvent& rEvent);
 
     protected:
         ::rtl::Reference<PresenterToolBar> mpToolBar;
@@ -201,7 +198,7 @@ namespace {
         bool mbIsOver;
         bool mbIsPressed;
         bool mbIsSelected;
-    
+
         virtual awt::Size CreateBoundingSize (
             const Reference<rendering::XCanvas>& rxCanvas) = 0;
 
@@ -242,13 +239,12 @@ namespace {
 
         // lang::XEventListener
 
-        virtual void SAL_CALL disposing (const css::lang::EventObject& rEvent)
-            throw(css::uno::RuntimeException);
-    
+        virtual void SAL_CALL disposing (const css::lang::EventObject& rEvent);
+
     protected:
         virtual awt::Size CreateBoundingSize (
             const Reference<rendering::XCanvas>& rxCanvas);
-    
+
     private:
         bool mbIsListenerRegistered;
 
@@ -270,7 +266,7 @@ namespace {
     {
     public:
         Label (const ::rtl::Reference<PresenterToolBar>& rpToolBar);
-        
+
         void SetText (const OUString& rsText);
         virtual void Paint (
             const Reference<rendering::XCanvas>& rxCanvas,
@@ -438,7 +434,7 @@ void PresenterToolBar::Initialize (
             Reference<awt::XWindowPeer> xPeer (mxWindow, UNO_QUERY);
             if (xPeer.is())
                 xPeer->setBackground(util::Color(0xff000000));
-            
+
             mxWindow->setVisible(sal_True);
         }
 
@@ -597,7 +593,6 @@ Reference<XComponentContext> PresenterToolBar::GetComponentContext (void) const
 //-----  lang::XEventListener -------------------------------------------------
 
 void SAL_CALL PresenterToolBar::disposing (const lang::EventObject& rEventObject)
-    throw (RuntimeException)
 {
     if (rEventObject.Source == mxWindow)
         mxWindow = NULL;
@@ -607,9 +602,8 @@ void SAL_CALL PresenterToolBar::disposing (const lang::EventObject& rEventObject
 
 
 //----- XWindowListener -------------------------------------------------------
-    
+
 void SAL_CALL PresenterToolBar::windowResized (const awt::WindowEvent& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
     mbIsLayoutPending = true;
@@ -619,7 +613,6 @@ void SAL_CALL PresenterToolBar::windowResized (const awt::WindowEvent& rEvent)
 
 
 void SAL_CALL PresenterToolBar::windowMoved (const awt::WindowEvent& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
 }
@@ -628,7 +621,6 @@ void SAL_CALL PresenterToolBar::windowMoved (const awt::WindowEvent& rEvent)
 
 
 void SAL_CALL PresenterToolBar::windowShown (const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
     mbIsLayoutPending = true;
@@ -638,7 +630,6 @@ void SAL_CALL PresenterToolBar::windowShown (const lang::EventObject& rEvent)
 
 
 void SAL_CALL PresenterToolBar::windowHidden (const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
 }
@@ -649,7 +640,6 @@ void SAL_CALL PresenterToolBar::windowHidden (const lang::EventObject& rEvent)
 //----- XPaintListener --------------------------------------------------------
 
 void SAL_CALL PresenterToolBar::windowPaint (const css::awt::PaintEvent& rEvent)
-    throw (RuntimeException)
 {
     if ( ! mxCanvas.is())
         return;
@@ -663,7 +653,7 @@ void SAL_CALL PresenterToolBar::windowPaint (const css::awt::PaintEvent& rEvent)
 
     if (mbIsLayoutPending)
         Layout(mxCanvas);
-    
+
     Paint(rEvent.UpdateRect, aViewState);
 
     // Make the back buffer visible.
@@ -678,7 +668,6 @@ void SAL_CALL PresenterToolBar::windowPaint (const css::awt::PaintEvent& rEvent)
 //----- XMouseListener --------------------------------------------------------
 
 void SAL_CALL PresenterToolBar::mousePressed (const css::awt::MouseEvent& rEvent)
-    throw(css::uno::RuntimeException)
 {
     CheckMouseOver(rEvent, true, true);
 }
@@ -687,7 +676,6 @@ void SAL_CALL PresenterToolBar::mousePressed (const css::awt::MouseEvent& rEvent
 
 
 void SAL_CALL PresenterToolBar::mouseReleased (const css::awt::MouseEvent& rEvent)
-    throw(css::uno::RuntimeException)
 {
     CheckMouseOver(rEvent, true);
 }
@@ -696,7 +684,6 @@ void SAL_CALL PresenterToolBar::mouseReleased (const css::awt::MouseEvent& rEven
 
 
 void SAL_CALL PresenterToolBar::mouseEntered (const css::awt::MouseEvent& rEvent)
-    throw(css::uno::RuntimeException)
 {
     CheckMouseOver(rEvent, true);
 }
@@ -705,7 +692,6 @@ void SAL_CALL PresenterToolBar::mouseEntered (const css::awt::MouseEvent& rEvent
 
 
 void SAL_CALL PresenterToolBar::mouseExited (const css::awt::MouseEvent& rEvent)
-    throw(css::uno::RuntimeException)
 {
     CheckMouseOver(rEvent, false);
 }
@@ -714,9 +700,8 @@ void SAL_CALL PresenterToolBar::mouseExited (const css::awt::MouseEvent& rEvent)
 
 
 //----- XMouseMotionListener --------------------------------------------------
-    
+
 void SAL_CALL PresenterToolBar::mouseMoved (const css::awt::MouseEvent& rEvent)
-    throw (css::uno::RuntimeException)
 {
     ThrowIfDisposed();
 
@@ -727,7 +712,6 @@ void SAL_CALL PresenterToolBar::mouseMoved (const css::awt::MouseEvent& rEvent)
 
 
 void SAL_CALL PresenterToolBar::mouseDragged (const css::awt::MouseEvent& rEvent)
-    throw (css::uno::RuntimeException)
 {
     ThrowIfDisposed();
     (void)rEvent;
@@ -739,7 +723,6 @@ void SAL_CALL PresenterToolBar::mouseDragged (const css::awt::MouseEvent& rEvent
 //----- XDrawView -------------------------------------------------------------
 
 void SAL_CALL PresenterToolBar::setCurrentPage (const Reference<drawing::XDrawPage>& rxSlide)
-    throw (RuntimeException)
 {
     if (rxSlide != mxCurrentSlide)
     {
@@ -752,7 +735,6 @@ void SAL_CALL PresenterToolBar::setCurrentPage (const Reference<drawing::XDrawPa
 
 
 Reference<drawing::XDrawPage> SAL_CALL PresenterToolBar::getCurrentPage (void)
-    throw (RuntimeException)
 {
     return mxCurrentSlide;
 }
@@ -767,7 +749,7 @@ void PresenterToolBar::CreateControls (
 {
     if ( ! mxWindow.is())
         return;
-    
+
     // Expand the macro in the bitmap file names.
     PresenterConfigurationAccess aConfiguration (
         mxComponentContext,
@@ -880,7 +862,7 @@ void PresenterToolBar::Layout (
     for (iPart=maElementContainer.begin(),nIndex=0; iPart!=iEnd; ++iPart,++nIndex)
     {
         geometry::RealSize2D aSize (CalculatePartSize(rxCanvas, *iPart, bIsHorizontal));
-        
+
         // Remember the size of each part for later.
         aPartSizes[nIndex] = aSize;
 
@@ -890,7 +872,7 @@ void PresenterToolBar::Layout (
             nTotalHorizontalGap += ((*iPart)->size() - 1) * gnGapSize;
             nGapCount += (*iPart)->size()-1;
         }
-        
+
         // Orientation changes for each part.
         bIsHorizontal = !bIsHorizontal;
         // Width is accumulated.
@@ -931,12 +913,12 @@ void PresenterToolBar::Layout (
     // Place the parts.
     double nY ((aWindowBox.Height - aTotalSize.Height) / 2);
     bIsHorizontal = true;
-    
+
     maBoundingBox.X1 = nX;
     maBoundingBox.Y1 = nY;
     maBoundingBox.X2 = nX + aTotalSize.Width + nTotalHorizontalGap;
     maBoundingBox.Y2 = nY + aTotalSize.Height;
-    
+
     for (iPart=maElementContainer.begin(), nIndex=0; iPart!=iEnd; ++iPart,++nIndex)
     {
         geometry::RealRectangle2D aBoundingBox(
@@ -1120,7 +1102,7 @@ void PresenterToolBar::CheckMouseOver (
         {
             if (iElement->get() == NULL)
                 continue;
-        
+
             awt::Rectangle aBox ((*iElement)->GetBoundingBox());
             const bool bIsOver = bOverWindow
                 && aBox.X <= rEvent.X
@@ -1138,7 +1120,6 @@ void PresenterToolBar::CheckMouseOver (
 
 
 void PresenterToolBar::ThrowIfDisposed (void) const
-    throw (::com::sun::star::lang::DisposedException)
 {
 	if (rBHelper.bDisposed || rBHelper.bInDispose)
 	{
@@ -1192,7 +1173,7 @@ PresenterToolBarView::PresenterToolBarView (
             Reference<awt::XWindowPeer> xPeer (mxWindow, UNO_QUERY);
             if (xPeer.is())
                 xPeer->setBackground(util::Color(0xff000000));
-            
+
             mxWindow->setVisible(sal_True);
         }
     }
@@ -1219,7 +1200,7 @@ void SAL_CALL PresenterToolBarView::disposing (void)
     mpToolBar = NULL;
     if (xComponent.is())
         xComponent->dispose();
-    
+
     if (mxWindow.is())
     {
         mxWindow->removePaintListener(this);
@@ -1247,7 +1228,6 @@ void SAL_CALL PresenterToolBarView::disposing (void)
 //----- XPaintListener --------------------------------------------------------
 
 void SAL_CALL PresenterToolBarView::windowPaint (const css::awt::PaintEvent& rEvent)
-    throw (RuntimeException)
 {
     awt::Rectangle aWindowBox (mxWindow->getPosSize());
     mpPresenterController->GetCanvasHelper()->Paint(
@@ -1264,7 +1244,6 @@ void SAL_CALL PresenterToolBarView::windowPaint (const css::awt::PaintEvent& rEv
 //-----  lang::XEventListener -------------------------------------------------
 
 void SAL_CALL PresenterToolBarView::disposing (const lang::EventObject& rEventObject)
-    throw (RuntimeException)
 {
     if (rEventObject.Source == mxWindow)
         mxWindow = NULL;
@@ -1276,7 +1255,6 @@ void SAL_CALL PresenterToolBarView::disposing (const lang::EventObject& rEventOb
 //----- XResourceId -----------------------------------------------------------
 
 Reference<XResourceId> SAL_CALL PresenterToolBarView::getResourceId (void)
-    throw (RuntimeException)
 {
     return mxViewId;
 }
@@ -1285,7 +1263,6 @@ Reference<XResourceId> SAL_CALL PresenterToolBarView::getResourceId (void)
 
 
 sal_Bool SAL_CALL PresenterToolBarView::isAnchorOnly (void)
-    throw (RuntimeException)
 {
     return false;
 }
@@ -1296,7 +1273,6 @@ sal_Bool SAL_CALL PresenterToolBarView::isAnchorOnly (void)
 //----- XDrawView -------------------------------------------------------------
 
 void SAL_CALL PresenterToolBarView::setCurrentPage (const Reference<drawing::XDrawPage>& rxSlide)
-    throw (RuntimeException)
 {
     Reference<drawing::XDrawView> xToolBar (static_cast<XWeak*>(mpToolBar.get()), UNO_QUERY);
     if (xToolBar.is())
@@ -1307,7 +1283,6 @@ void SAL_CALL PresenterToolBarView::setCurrentPage (const Reference<drawing::XDr
 
 
 Reference<drawing::XDrawPage> SAL_CALL PresenterToolBarView::getCurrentPage (void)
-    throw (RuntimeException)
 {
     return NULL;
 }
@@ -1318,7 +1293,6 @@ Reference<drawing::XDrawPage> SAL_CALL PresenterToolBarView::getCurrentPage (voi
 //-----------------------------------------------------------------------------
 
 void PresenterToolBarView::ThrowIfDisposed (void) const
-    throw (::com::sun::star::lang::DisposedException)
 {
 	if (rBHelper.bDisposed || rBHelper.bInDispose)
 	{
@@ -1439,7 +1413,7 @@ bool Element::SetState (
 {
     bool bModified (mbIsOver != bIsOver || mbIsPressed != bIsPressed);
     bool bClicked (mbIsPressed && bIsOver && ! bIsPressed);
-    
+
     mbIsOver = bIsOver;
     mbIsPressed = bIsPressed;
 
@@ -1462,7 +1436,7 @@ bool Element::SetState (
             {
                 if (mpMode->msAction.getLength() <= 0)
                     break;
-                
+
                 if (mpToolBar.get() == NULL)
                     break;
 
@@ -1559,18 +1533,16 @@ void Element::UpdateState (void)
 //----- lang::XEventListener --------------------------------------------------
 
 void SAL_CALL Element::disposing (const css::lang::EventObject& rEvent)
-    throw(css::uno::RuntimeException)
 {
     (void)rEvent;
 }
-    
+
 
 
 
 //----- document::XEventListener ----------------------------------------------
 
 void SAL_CALL Element::notifyEvent (const css::document::EventObject& rEvent)
-    throw(css::uno::RuntimeException)
 {
     (void)rEvent;
     UpdateState();
@@ -1582,12 +1554,11 @@ void SAL_CALL Element::notifyEvent (const css::document::EventObject& rEvent)
 //----- frame::XStatusListener ------------------------------------------------
 
 void SAL_CALL Element::statusChanged (const css::frame::FeatureStateEvent& rEvent)
-    throw(css::uno::RuntimeException)
 {
     bool bIsSelected (mbIsSelected);
     bool bIsEnabled (rEvent.IsEnabled);
     rEvent.State >>= bIsSelected;
-    
+
     if (bIsSelected != mbIsSelected || bIsEnabled != mbIsEnabled)
     {
         mbIsEnabled = bIsEnabled;
@@ -1747,13 +1718,13 @@ void Button::Paint (
 
     if (mpMode.get() == NULL)
         return;
-    
+
     if (mpMode->mpIcon.get() == NULL)
         return;
 
     geometry::RealRectangle2D aTextBBox (mpMode->maText.GetBoundingBox(rxCanvas));
     sal_Int32 nTextHeight (sal::static_int_cast<sal_Int32>(0.5 + aTextBBox.Y2 - aTextBBox.Y1));
-    
+
     PaintIcon(rxCanvas, nTextHeight, rViewState);
     awt::Point aOffset(0,0);
     if ( ! IsEnabled())
@@ -1803,7 +1774,7 @@ void Button::PaintIcon (
 {
     if (mpMode.get() == NULL)
         return;
-    
+
     Reference<rendering::XBitmap> xBitmap (mpMode->mpIcon->GetBitmap(GetMode()));
     if (xBitmap.is())
     {
@@ -1841,13 +1812,12 @@ PresenterBitmapDescriptor::Mode Button::GetMode (void) const
 //----- lang::XEventListener --------------------------------------------------
 
 void SAL_CALL Button::disposing (const css::lang::EventObject& rEvent)
-    throw(css::uno::RuntimeException)
 {
     (void)rEvent;
     mbIsListenerRegistered = false;
     Element::disposing(rEvent);
 }
-    
+
 } // end of anonymous namespace
 
 
@@ -1870,13 +1840,13 @@ awt::Size Label::CreateBoundingSize (
 {
     if (mpMode.get() == NULL)
         return awt::Size(0,0);
-    
+
     geometry::RealRectangle2D aTextBBox (mpMode->maText.GetBoundingBox(rxCanvas));
     return awt::Size(
         sal::static_int_cast<sal_Int32>(0.5 + aTextBBox.X2 - aTextBBox.X1),
         sal::static_int_cast<sal_Int32>(0.5 + aTextBBox.Y2 - aTextBBox.Y1));
 }
- 
+
 
 
 
@@ -1909,7 +1879,7 @@ void Label::Paint (
     OSL_ASSERT(rxCanvas.is());
     if (mpMode.get() == NULL)
         return;
-    
+
     mpMode->maText.Paint(rxCanvas, rViewState, GetBoundingBox(), awt::Point(0,0));
 }
 
@@ -2024,7 +1994,7 @@ void Text::Paint (
         Sequence<double>(4),
         rendering::CompositeOperation::SOURCE);
     PresenterCanvasHelper::SetDeviceColor(aRenderState, mpFont->mnColor);
-    
+
     rxCanvas->drawText(
         aContext,
         mpFont->mxFont,
@@ -2114,7 +2084,7 @@ OUString TimeFormatter::FormatTime (const oslDateTime& rTime)
     const sal_Int32 nHours (sal::static_int_cast<sal_Int32>(rTime.Hours));
     const sal_Int32 nMinutes (sal::static_int_cast<sal_Int32>(rTime.Minutes));
     const sal_Int32 nSeconds(sal::static_int_cast<sal_Int32>(rTime.Seconds));
-    
+
     // Hours
     if (mbIs24HourFormat)
         sText.append(OUString::valueOf(nHours));
@@ -2282,7 +2252,7 @@ void PresentationTimeLabel::TimeHasChanged (const oslDateTime& rCurrentTime)
                 maStartTimeValue.Seconds += 1;
             maStartTimeValue.Nanosec = 0;
         }
-        
+
         TimeValue aElapsedTimeValue;
         aElapsedTimeValue.Seconds = aCurrentTimeValue.Seconds - maStartTimeValue.Seconds;
         aElapsedTimeValue.Nanosec = aCurrentTimeValue.Nanosec - maStartTimeValue.Nanosec;

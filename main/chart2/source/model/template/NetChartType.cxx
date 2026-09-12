@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_chartmodel.hxx"
 #include "NetChartType.hxx"
 #include "PropertyHelper.hxx"
 #include "macros.hxx"
@@ -63,8 +63,6 @@ NetChartType_Base::~NetChartType_Base()
 
 Reference< XCoordinateSystem > SAL_CALL
     NetChartType_Base::createCoordinateSystem( ::sal_Int32 DimensionCount )
-    throw (lang::IllegalArgumentException,
-           uno::RuntimeException)
 {
     if( DimensionCount != 2 )
         throw lang::IllegalArgumentException(
@@ -93,13 +91,12 @@ Reference< XCoordinateSystem > SAL_CALL
         aScaleData.AxisType = AxisType::REALNUMBER;
         xAxis->setScaleData( aScaleData );
     }
-    
+
     return xResult;
 }
 
 // ____ OPropertySet ____
 uno::Any NetChartType_Base::GetDefaultValue( sal_Int32 /*nHandle*/ ) const
-    throw(beans::UnknownPropertyException)
 {
     return uno::Any();
 }
@@ -146,7 +143,6 @@ struct StaticNetChartTypeInfo : public rtl::StaticAggregate< uno::Reference< bea
 
 // ____ XPropertySet ____
 uno::Reference< beans::XPropertySetInfo > SAL_CALL NetChartType_Base::getPropertySetInfo()
-    throw (uno::RuntimeException)
 {
     return *StaticNetChartTypeInfo::get();
 }
@@ -168,14 +164,12 @@ NetChartType::~NetChartType()
 
 // ____ XCloneable ____
 uno::Reference< util::XCloneable > SAL_CALL NetChartType::createClone()
-    throw (uno::RuntimeException)
 {
     return uno::Reference< util::XCloneable >( new NetChartType( *this ));
 }
 
 // ____ XChartType ____
 ::rtl::OUString SAL_CALL NetChartType::getChartType()
-    throw (uno::RuntimeException)
 {
     return CHART2_SERVICE_NAME_CHARTTYPE_NET;
 }

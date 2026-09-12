@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_dbtools.hxx"
 #include "connectivity/parameters.hxx"
 
 /** === begin UNO includes === **/
@@ -132,7 +132,7 @@ namespace dbtools
     }
 
     //--------------------------------------------------------------------
-    void ParameterManager::setAllParametersNull() SAL_THROW( ( SQLException, RuntimeException ) )
+    void ParameterManager::setAllParametersNull()
     {
         OSL_PRECOND( isAlive(), "ParameterManager::setAllParametersNull: not initialized, or already disposed!" );
         if ( !isAlive() )
@@ -251,7 +251,7 @@ namespace dbtools
 
     //--------------------------------------------------------------------
     void ParameterManager::classifyLinks( const Reference< XNameAccess >& _rxParentColumns,
-        const Reference< XNameAccess >& _rxColumns, ::std::vector< ::rtl::OUString >& _out_rAdditionalFilterComponents ) SAL_THROW(( Exception ))
+        const Reference< XNameAccess >& _rxColumns, ::std::vector< ::rtl::OUString >& _out_rAdditionalFilterComponents )
     {
         OSL_PRECOND( m_aMasterFields.getLength() == m_aDetailFields.getLength(),
             "ParameterManager::classifyLinks: master and detail fields should have the same length!" );
@@ -398,7 +398,7 @@ namespace dbtools
                 {
                     if ( sAdditionalFilter.getLength() )
                         sAdditionalFilter.append(s_sAnd);
-                    
+
                     sAdditionalFilter.appendAscii("( ",((sal_Int32)(sizeof("( ")-1)));
                     sAdditionalFilter.append(*aComponent);
                     sAdditionalFilter.appendAscii(" )",((sal_Int32)(sizeof(" )")-1)));
@@ -553,7 +553,7 @@ namespace dbtools
 
         try
         {
-            // the master and detail field( name)s of the 
+            // the master and detail field( name)s of the
             const ::rtl::OUString* pMasterFields = m_aMasterFields.getConstArray();
             const ::rtl::OUString* pDetailFields = m_aDetailFields.getConstArray();
 
@@ -787,7 +787,7 @@ namespace dbtools
     }
 
     //--------------------------------------------------------------------
-    bool ParameterManager::getColumns( Reference< XNameAccess >& /* [out] */ _rxColumns, bool _bFromComposer ) SAL_THROW(( Exception ))
+    bool ParameterManager::getColumns( Reference< XNameAccess >& /* [out] */ _rxColumns, bool _bFromComposer )
     {
         _rxColumns.clear();
 
@@ -817,7 +817,7 @@ namespace dbtools
             if ( !xParent.is() )
                 return false;
 
-            // the columns supplier: either from a composer, or directly from the 
+            // the columns supplier: either from a composer, or directly from the
             Reference< XColumnsSupplier > xParentColSupp;
             if ( _bFromComposer )
             {
@@ -832,7 +832,7 @@ namespace dbtools
             else
                 xParentColSupp = xParentColSupp.query( xParent );
 
-            // get the columns of the parent 
+            // get the columns of the parent
             if ( xParentColSupp.is() )
                 _out_rxParentColumns = xParentColSupp->getColumns();
         }
@@ -1105,7 +1105,7 @@ namespace dbtools
     //= OParameterContinuation
     //====================================================================
     //--------------------------------------------------------------------
-    void SAL_CALL OParameterContinuation::setParameters( const Sequence< PropertyValue >& _rValues ) throw( RuntimeException )
+    void SAL_CALL OParameterContinuation::setParameters( const Sequence< PropertyValue >& _rValues )
     {
 	    m_aValues = _rValues;
     }
@@ -1113,4 +1113,3 @@ namespace dbtools
 //........................................................................
 }   // namespace frm
 //........................................................................
-

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -62,7 +62,6 @@ OInputSeekStream::~OInputSeekStream()
 }
 
 uno::Sequence< uno::Type > SAL_CALL OInputSeekStream::getTypes()
-		throw ( uno::RuntimeException )
 {
 	static ::cppu::OTypeCollection* pTypeCollection = NULL ;
 
@@ -84,7 +83,6 @@ uno::Sequence< uno::Type > SAL_CALL OInputSeekStream::getTypes()
 }
 
 uno::Any SAL_CALL OInputSeekStream::queryInterface( const uno::Type& rType )
-		throw( uno::RuntimeException )
 {
 	// Attention:
 	//	Don't use mutex or guard in this method!!! Is a method of XInterface.
@@ -114,9 +112,6 @@ void SAL_CALL OInputSeekStream::release()
 
 
 void SAL_CALL OInputSeekStream::seek( sal_Int64 location )
-		throw ( lang::IllegalArgumentException,
-				io::IOException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 	if ( m_bDisposed )
@@ -135,8 +130,6 @@ void SAL_CALL OInputSeekStream::seek( sal_Int64 location )
 }
 
 sal_Int64 SAL_CALL OInputSeekStream::getPosition()
-		throw ( io::IOException, 
-				uno::RuntimeException)
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 	if ( m_bDisposed )
@@ -155,8 +148,6 @@ sal_Int64 SAL_CALL OInputSeekStream::getPosition()
 }
 
 sal_Int64 SAL_CALL OInputSeekStream::getLength()
-		throw ( io::IOException,
-				uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_rMutexRef->GetMutex() );
 	if ( m_bDisposed )
@@ -173,4 +164,3 @@ sal_Int64 SAL_CALL OInputSeekStream::getLength()
 
 	return m_xSeekable->getLength();
 }
-

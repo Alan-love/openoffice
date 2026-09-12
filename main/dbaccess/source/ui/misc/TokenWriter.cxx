@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -188,7 +188,7 @@ void ODatabaseImportExport::dispose()
     m_xFormatter.clear();
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL ODatabaseImportExport::disposing( const EventObject& Source ) throw(::com::sun::star::uno::RuntimeException)
+void SAL_CALL ODatabaseImportExport::disposing( const EventObject& Source )
 {
     RTL_LOGFILE_CONTEXT_AUTHOR( aLogger, "misc", "Ocke.Janssen@sun.com", "ODatabaseImportExport::disposing" );
 	DBG_CHKTHIS(ODatabaseImportExport,NULL);
@@ -1092,7 +1092,7 @@ void OHTMLImportExport::WriteCell( sal_Int32 nFormat,sal_Int32 nWidthPixel,sal_I
 		TAG_ON( OOO_STRING_SVTOOLS_HTML_linebreak );		// #42573# keine komplett leere Zelle
 	else
         HTMLOutFuncs::Out_String( (*m_pStream), rValue ,m_eDestEnc);
-        
+
 
 	if ( bStrikeout )	TAG_OFF( OOO_STRING_SVTOOLS_HTML_strike );
 	if ( bUnderline )	TAG_OFF( OOO_STRING_SVTOOLS_HTML_underline );

@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_macabdrv1.hxx"
 
 #include "MacabStatement.hxx"
 #include "MacabConnection.hxx"
@@ -68,7 +68,7 @@ namespace connectivity
 
 IMPLEMENT_SERVICE_INFO(MacabStatement, "com.sun.star.sdbc.drivers.MacabStatement", "com.sun.star.sdbc.Statement");
 //------------------------------------------------------------------------------
-MacabCommonStatement::MacabCommonStatement(MacabConnection* _pConnection ) 
+MacabCommonStatement::MacabCommonStatement(MacabConnection* _pConnection )
 	: MacabCommonStatement_BASE(m_aMutex),
 	OPropertySetHelper(MacabCommonStatement_BASE::rBHelper),
     m_aParser(_pConnection->getDriver()->getMSFactory()),
@@ -89,17 +89,17 @@ void MacabCommonStatement::disposing()
 	MacabCommonStatement_BASE::disposing();
 }
 // -----------------------------------------------------------------------------
-void MacabCommonStatement::resetParameters() const throw(::com::sun::star::sdbc::SQLException)
+void MacabCommonStatement::resetParameters() const
 {
     impl_throwError(STR_PARA_ONLY_PREPARED);
 }
 // -----------------------------------------------------------------------------
-void MacabCommonStatement::getNextParameter(::rtl::OUString &) const throw(::com::sun::star::sdbc::SQLException)
+void MacabCommonStatement::getNextParameter(::rtl::OUString &) const
 {
 	impl_throwError(STR_PARA_ONLY_PREPARED);
 }
 // -----------------------------------------------------------------------------
-MacabCondition *MacabCommonStatement::analyseWhereClause(const OSQLParseNode *pParseNode) const throw(SQLException)
+MacabCondition *MacabCommonStatement::analyseWhereClause(const OSQLParseNode *pParseNode) const
 {
 	if (pParseNode->count() == 3)
 	{
@@ -187,7 +187,7 @@ MacabCondition *MacabCommonStatement::analyseWhereClause(const OSQLParseNode *pP
 	else if (SQL_ISRULE(pParseNode, test_for_null) || SQL_ISRULE(pParseNode, like_predicate))
 	{
         const OSQLParseNode *pLeft = pParseNode->getChild(0);
-        const OSQLParseNode* pPart2 = pParseNode->getChild(1);		
+        const OSQLParseNode* pPart2 = pParseNode->getChild(1);
         const OSQLParseNode *pMiddleLeft = pPart2->getChild(0),
 	                        *pMiddleRight = pPart2->getChild(1),
 	                        *pRight = pPart2->getChild(2);
@@ -244,7 +244,7 @@ MacabCondition *MacabCommonStatement::analyseWhereClause(const OSQLParseNode *pP
     return 0;
 }
 // -----------------------------------------------------------------------------
-MacabOrder *MacabCommonStatement::analyseOrderByClause(const OSQLParseNode *pParseNode) const throw(SQLException)
+MacabOrder *MacabCommonStatement::analyseOrderByClause(const OSQLParseNode *pParseNode) const
 {
 	if (SQL_ISRULE(pParseNode, ordering_spec_commalist))
 	{
@@ -306,7 +306,7 @@ MacabOrder *MacabCommonStatement::analyseOrderByClause(const OSQLParseNode *pPar
 	return xTabs.begin()->first;
 }
 //------------------------------------------------------------------------------
-void MacabCommonStatement::setMacabFields(MacabResultSet *pResult) const throw(SQLException)
+void MacabCommonStatement::setMacabFields(MacabResultSet *pResult) const
 {
 	::vos::ORef<connectivity::OSQLColumns> xColumns;	// selected columns
 	MacabResultSetMetaData *pMeta;				// meta information - holds the list of AddressBook fields
@@ -324,7 +324,7 @@ void MacabCommonStatement::setMacabFields(MacabResultSet *pResult) const throw(S
 	pMeta->setMacabFields(xColumns);
 }
 // -------------------------------------------------------------------------
-void MacabCommonStatement::selectRecords(MacabResultSet *pResult) const throw(SQLException)
+void MacabCommonStatement::selectRecords(MacabResultSet *pResult) const
 {
 	const OSQLParseNode *pParseNode;
 	MacabCondition *pCondition;
@@ -352,7 +352,7 @@ void MacabCommonStatement::selectRecords(MacabResultSet *pResult) const throw(SQ
 	pResult->allMacabRecords();
 }
 // -------------------------------------------------------------------------
-void MacabCommonStatement::sortRecords(MacabResultSet *pResult) const throw(SQLException)
+void MacabCommonStatement::sortRecords(MacabResultSet *pResult) const
 {
 	const OSQLParseNode *pParseNode;
 	MacabOrder *pOrder;
@@ -370,7 +370,7 @@ void MacabCommonStatement::sortRecords(MacabResultSet *pResult) const throw(SQLE
 	}
 }
 //-----------------------------------------------------------------------------
-Any SAL_CALL MacabCommonStatement::queryInterface( const Type & rType ) throw(RuntimeException)
+Any SAL_CALL MacabCommonStatement::queryInterface( const Type & rType )
 {
 	Any aRet = MacabCommonStatement_BASE::queryInterface(rType);
 	if (!aRet.hasValue())
@@ -378,7 +378,7 @@ Any SAL_CALL MacabCommonStatement::queryInterface( const Type & rType ) throw(Ru
 	return aRet;
 }
 // -------------------------------------------------------------------------
-Sequence< Type > SAL_CALL MacabCommonStatement::getTypes(  ) throw(RuntimeException)
+Sequence< Type > SAL_CALL MacabCommonStatement::getTypes(  )
 {
 	::cppu::OTypeCollection aTypes(	::getCppuType( (const Reference< XMultiPropertySet > *)0 ),
 									::getCppuType( (const Reference< XFastPropertySet > *)0 ),
@@ -387,7 +387,7 @@ Sequence< Type > SAL_CALL MacabCommonStatement::getTypes(  ) throw(RuntimeExcept
 	return comphelper::concatSequences(aTypes.getTypes(),MacabCommonStatement_BASE::getTypes());
 }
 // -------------------------------------------------------------------------
-void SAL_CALL MacabCommonStatement::cancel(  ) throw(RuntimeException)
+void SAL_CALL MacabCommonStatement::cancel(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 
@@ -395,18 +395,18 @@ void SAL_CALL MacabCommonStatement::cancel(  ) throw(RuntimeException)
 	// cancel the current sql statement
 }
 // -------------------------------------------------------------------------
-void SAL_CALL MacabCommonStatement::close(  ) throw(SQLException, RuntimeException)
+void SAL_CALL MacabCommonStatement::close(  )
 {
 	{
 		::osl::MutexGuard aGuard( m_aMutex );
 		checkDisposed(MacabCommonStatement_BASE::rBHelper.bDisposed);
-			
+
 	}
 	dispose();
 }
 // -------------------------------------------------------------------------
 sal_Bool SAL_CALL MacabCommonStatement::execute(
-		const ::rtl::OUString& sql ) throw(SQLException, RuntimeException)
+		const ::rtl::OUString& sql )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(MacabCommonStatement_BASE::rBHelper.bDisposed);
@@ -417,7 +417,7 @@ sal_Bool SAL_CALL MacabCommonStatement::execute(
 }
 // -------------------------------------------------------------------------
 Reference< XResultSet > SAL_CALL MacabCommonStatement::executeQuery(
-		const ::rtl::OUString& sql ) throw(SQLException, RuntimeException)
+		const ::rtl::OUString& sql )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(MacabCommonStatement_BASE::rBHelper.bDisposed);
@@ -476,25 +476,25 @@ OSL_TRACE("Mac OS Address book - SQL Request: %s", OUtoCStr(sql));
 	return xRS;
 }
 // -------------------------------------------------------------------------
-Reference< XConnection > SAL_CALL MacabCommonStatement::getConnection(  ) throw(SQLException, RuntimeException)
+Reference< XConnection > SAL_CALL MacabCommonStatement::getConnection(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(MacabCommonStatement_BASE::rBHelper.bDisposed);
-		
+
 	// just return our connection here
 	return (Reference< XConnection >) m_pConnection;
 }
 // -------------------------------------------------------------------------
-sal_Int32 SAL_CALL MacabCommonStatement::executeUpdate( const ::rtl::OUString& ) throw(SQLException, RuntimeException)
+sal_Int32 SAL_CALL MacabCommonStatement::executeUpdate( const ::rtl::OUString& )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(MacabCommonStatement_BASE::rBHelper.bDisposed);
-		
-	// the return values gives information about how many rows are affected by executing the sql statement		
+
+	// the return values gives information about how many rows are affected by executing the sql statement
 	return 0;
 }
 // -------------------------------------------------------------------------
-Any SAL_CALL MacabCommonStatement::getWarnings(  ) throw(SQLException, RuntimeException)
+Any SAL_CALL MacabCommonStatement::getWarnings(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(MacabCommonStatement_BASE::rBHelper.bDisposed);
@@ -502,7 +502,7 @@ Any SAL_CALL MacabCommonStatement::getWarnings(  ) throw(SQLException, RuntimeEx
 	return makeAny(m_aLastWarning);
 }
 // -------------------------------------------------------------------------
-void SAL_CALL MacabCommonStatement::clearWarnings(  ) throw(SQLException, RuntimeException)
+void SAL_CALL MacabCommonStatement::clearWarnings(  )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 	checkDisposed(MacabCommonStatement_BASE::rBHelper.bDisposed);
@@ -540,14 +540,14 @@ sal_Bool MacabCommonStatement::convertFastPropertyValue(
 		Any &,
 		Any &,
 		sal_Int32,
-		const Any&) throw (::com::sun::star::lang::IllegalArgumentException)
+		const Any&)
 {
 	sal_Bool bConverted = sal_False;
-	// here we have to try to convert 
+	// here we have to try to convert
 	return bConverted;
 }
 // -------------------------------------------------------------------------
-void MacabCommonStatement::setFastPropertyValue_NoBroadcast(sal_Int32 nHandle,const Any&) throw (Exception)
+void MacabCommonStatement::setFastPropertyValue_NoBroadcast(sal_Int32 nHandle,const Any&)
 {
 	// set the value to whatever is necessary
 	switch (nHandle)
@@ -596,7 +596,7 @@ void SAL_CALL MacabCommonStatement::release() throw()
 	MacabCommonStatement_BASE::release();
 }
 // -----------------------------------------------------------------------------
-Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL MacabCommonStatement::getPropertySetInfo(  ) throw(RuntimeException)
+Reference< ::com::sun::star::beans::XPropertySetInfo > SAL_CALL MacabCommonStatement::getPropertySetInfo(  )
 {
 	return ::cppu::OPropertySetHelper::createPropertySetInfo(getInfoHelper());
 }

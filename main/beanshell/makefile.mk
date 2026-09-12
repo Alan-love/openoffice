@@ -1,5 +1,5 @@
 #**************************************************************
-#  
+#
 #  Licensed to the Apache Software Foundation (ASF) under one
 #  or more contributor license agreements.  See the NOTICE file
 #  distributed with this work for additional information
@@ -7,16 +7,16 @@
 #  to you under the Apache License, Version 2.0 (the
 #  "License"); you may not use this file except in compliance
 #  with the License.  You may obtain a copy of the License at
-#  
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-#  
+#
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
 #  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
-#  
+#
 #**************************************************************
 
 
@@ -44,10 +44,10 @@ all:
 
 # --- Files --------------------------------------------------------
 
-TARFILE_NAME=bsh-2.1.0-src
-TARFILE_MD5=34c726044fc4e2c7c3cf489fc239cdd5
-TARFILE_ROOTDIR=BeanShell-2.1.0
-PATCH_FILES=bsh-2.1.0-src.patch
+TARFILE_NAME=bsh-2.1.1-src
+TARFILE_MD5=f75fbfe6d5ce3568704f89ec5c3b34a7
+TARFILE_ROOTDIR=BeanShell-2.1.1
+PATCH_FILES=bsh-2.1.1-src.patch
 
 ADDITIONAL_FILES=makefile.mk
 

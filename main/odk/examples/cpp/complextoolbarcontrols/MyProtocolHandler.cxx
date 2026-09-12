@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -71,11 +71,11 @@ void BaseDispatch::ShowMessageBox( const Reference< XFrame >& rFrame, const ::rt
 
 void BaseDispatch::SendCommand( const com::sun::star::util::URL& aURL, const ::rtl::OUString& rCommand, const Sequence< NamedValue >& rArgs, sal_Bool bEnabled )
 {
-    Reference < XDispatch > xDispatch = 
+    Reference < XDispatch > xDispatch =
             aListenerHelper.GetDispatch( mxFrame, aURL.Path );
-    
+
     FeatureStateEvent aEvent;
-    
+
     aEvent.FeatureURL = aURL;
     aEvent.Source     = xDispatch;
     aEvent.IsEnabled  = bEnabled;
@@ -84,15 +84,15 @@ void BaseDispatch::SendCommand( const com::sun::star::util::URL& aURL, const ::r
     ControlCommand aCtrlCmd;
     aCtrlCmd.Command   = rCommand;
     aCtrlCmd.Arguments = rArgs;
-    
+
     aEvent.State <<= aCtrlCmd;
-    aListenerHelper.Notify( mxFrame, aEvent.FeatureURL.Path, aEvent ); 
+    aListenerHelper.Notify( mxFrame, aEvent.FeatureURL.Path, aEvent );
 }
 
 void BaseDispatch::SendCommandTo( const Reference< XStatusListener >& xControl, const URL& aURL, const ::rtl::OUString& rCommand, const Sequence< NamedValue >& rArgs, sal_Bool bEnabled )
 {
     FeatureStateEvent aEvent;
-    
+
     aEvent.FeatureURL = aURL;
     aEvent.Source     = (::com::sun::star::frame::XDispatch*) this;
     aEvent.IsEnabled  = bEnabled;
@@ -101,12 +101,12 @@ void BaseDispatch::SendCommandTo( const Reference< XStatusListener >& xControl, 
     ControlCommand aCtrlCmd;
     aCtrlCmd.Command   = rCommand;
     aCtrlCmd.Arguments = rArgs;
-    
+
     aEvent.State <<= aCtrlCmd;
     xControl->statusChanged( aEvent );
 }
 
-void SAL_CALL MyProtocolHandler::initialize( const Sequence< Any >& aArguments ) throw ( Exception, RuntimeException)
+void SAL_CALL MyProtocolHandler::initialize( const Sequence< Any >& aArguments )
 {
 	Reference < XFrame > xFrame;
 	if ( aArguments.getLength() )
@@ -119,14 +119,13 @@ void SAL_CALL MyProtocolHandler::initialize( const Sequence< Any >& aArguments )
 }
 
 Reference< XDispatch > SAL_CALL MyProtocolHandler::queryDispatch(	const URL& aURL, const ::rtl::OUString& sTargetFrameName, sal_Int32 nSearchFlags )
-				throw( RuntimeException )
 {
 	Reference < XDispatch > xRet;
 	if ( !mxFrame.is() )
 		return 0;
 
 	Reference < XController > xCtrl = mxFrame->getController();
-	if ( xCtrl.is() && !aURL.Protocol.compareToAscii( 
+	if ( xCtrl.is() && !aURL.Protocol.compareToAscii(
         RTL_CONSTASCII_STRINGPARAM( "vnd.demo.complextoolbarcontrols.demoaddon:" ) ) )
 	{
 		Reference < XTextViewCursorSupplier > xCursor( xCtrl, UNO_QUERY );
@@ -157,7 +156,6 @@ Reference< XDispatch > SAL_CALL MyProtocolHandler::queryDispatch(	const URL& aUR
 }
 
 Sequence < Reference< XDispatch > > SAL_CALL MyProtocolHandler::queryDispatches( const Sequence < DispatchDescriptor >& seqDescripts )
-			throw( RuntimeException )
 {
     sal_Int32 nCount = seqDescripts.getLength();
     Sequence < Reference < XDispatch > > lDispatcher( nCount );
@@ -169,13 +167,11 @@ Sequence < Reference< XDispatch > > SAL_CALL MyProtocolHandler::queryDispatches(
 }
 
 ::rtl::OUString MyProtocolHandler_getImplementationName ()
-	throw (RuntimeException)
 {
     return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( MYPROTOCOLHANDLER_IMPLEMENTATIONNAME ) );
 }
 
 sal_Bool SAL_CALL MyProtocolHandler_supportsService( const ::rtl::OUString& ServiceName )
-	throw (RuntimeException)
 {
     return (
             ServiceName.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM( MYPROTOCOLHANDLER_SERVICENAME ) ) ||
@@ -184,7 +180,6 @@ sal_Bool SAL_CALL MyProtocolHandler_supportsService( const ::rtl::OUString& Serv
 }
 
 Sequence< ::rtl::OUString > SAL_CALL MyProtocolHandler_getSupportedServiceNames(  )
-	throw (RuntimeException)
 {
 	Sequence < ::rtl::OUString > aRet(1);
     aRet[0] = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( MYPROTOCOLHANDLER_SERVICENAME ) );
@@ -194,31 +189,27 @@ Sequence< ::rtl::OUString > SAL_CALL MyProtocolHandler_getSupportedServiceNames(
 #undef SERVICE_NAME
 
 Reference< XInterface > SAL_CALL MyProtocolHandler_createInstance( const Reference< XComponentContext > & rContext)
-	throw( Exception )
 {
 	return (cppu::OWeakObject*) new MyProtocolHandler( rContext );
 }
 
 // XServiceInfo
 ::rtl::OUString SAL_CALL MyProtocolHandler::getImplementationName(  )
-	throw (RuntimeException)
 {
 	return MyProtocolHandler_getImplementationName();
 }
 
 sal_Bool SAL_CALL MyProtocolHandler::supportsService( const ::rtl::OUString& rServiceName )
-	throw (RuntimeException)
 {
     return MyProtocolHandler_supportsService( rServiceName );
 }
 
 Sequence< ::rtl::OUString > SAL_CALL MyProtocolHandler::getSupportedServiceNames(  )
-	throw (RuntimeException)
 {
     return MyProtocolHandler_getSupportedServiceNames();
 }
 
-void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < PropertyValue >& lArgs ) throw (RuntimeException)
+void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < PropertyValue >& lArgs )
 {
 	/* Its necessary to hold this object alive, till this method finish.
 	   May the outside dispatch cache (implemented by the menu/toolbar!)
@@ -299,9 +290,9 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
                     break;
                 }
             }
-			
+
             // just enable this command
-		    
+
             // set enable flag according to selection
             if ( aText.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM( "Button Disabled" ) ))
                 mbButtonEnabled = sal_False;
@@ -324,7 +315,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 
             // Notify listener about new state
             Reference < XDispatch > xDispatch = aListenerHelper.GetDispatch( mxFrame, aURL.Path );
-            aListenerHelper.Notify( mxFrame, aEvent.FeatureURL.Path, aEvent ); 
+            aListenerHelper.Notify( mxFrame, aEvent.FeatureURL.Path, aEvent );
         }
         else if ( !aURL.Path.compareToAscii( RTL_CONSTASCII_STRINGPARAM( "SpinfieldCmd" ) ) )
         {
@@ -341,13 +332,13 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
                     break;
                 }
             }
-            OSL_TRACE( "Dropdownbox control - selected entry text : %s", 
+            OSL_TRACE( "Dropdownbox control - selected entry text : %s",
                        rtl::OUStringToOString( aText, RTL_TEXTENCODING_UTF8 ).getStr() );
         }
 	}
 }
 
-void SAL_CALL BaseDispatch::addStatusListener( const Reference< XStatusListener >& xControl, const URL& aURL ) throw (RuntimeException)
+void SAL_CALL BaseDispatch::addStatusListener( const Reference< XStatusListener >& xControl, const URL& aURL )
 {
 	if ( aURL.Protocol.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM( "vnd.demo.complextoolbarcontrols.demoaddon:" ) ) )
 	{
@@ -409,7 +400,7 @@ void SAL_CALL BaseDispatch::addStatusListener( const Reference< XStatusListener 
 
             aArgs[0].Name = rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "List" ) );
             aArgs[0].Value <<= aContextMenu;
-            SendCommandTo( xControl, aURL, rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "SetList" ) ), aArgs, sal_True );            
+            SendCommandTo( xControl, aURL, rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "SetList" ) ), aArgs, sal_True );
 
             // set position according to enable/disable state of button
             sal_Int32 nPos( mbButtonEnabled ? 0 : 1 );
@@ -466,12 +457,12 @@ void SAL_CALL BaseDispatch::addStatusListener( const Reference< XStatusListener 
 	}
 }
 
-void SAL_CALL BaseDispatch::removeStatusListener( const Reference< XStatusListener >& xControl, const URL& aURL ) throw (RuntimeException)
+void SAL_CALL BaseDispatch::removeStatusListener( const Reference< XStatusListener >& xControl, const URL& aURL )
 {
 	aListenerHelper.RemoveListener( mxFrame, xControl, aURL.Path );
 }
 
-void SAL_CALL BaseDispatch::controlEvent( const ControlEvent& Event ) throw (RuntimeException)
+void SAL_CALL BaseDispatch::controlEvent( const ControlEvent& Event )
 {
     if ( Event.aURL.Protocol.equalsAsciiL( RTL_CONSTASCII_STRINGPARAM( "vnd.demo.complextoolbarcontrols.demoaddon:" ) ) )
 	{

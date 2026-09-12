@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,21 +49,21 @@ typedef CollTestImplHelper< ov::XCollection > ScVbaSheetObjects_BASE;
 class ScVbaSheetObjectsBase : public ScVbaSheetObjects_BASE
 {
 public:
-    explicit ScVbaSheetObjectsBase( const ScVbaObjectContainerRef& rxContainer ) throw (css::uno::RuntimeException);
+    explicit ScVbaSheetObjectsBase( const ScVbaObjectContainerRef& rxContainer );
     virtual ~ScVbaSheetObjectsBase();
 
     /** Updates the collection by fetching all shapes from the draw page. */
-    void collectShapes() throw (css::uno::RuntimeException);
-    
+    void collectShapes();
+
     // XEnumerationAccess
-    virtual css::uno::Reference< css::container::XEnumeration > SAL_CALL createEnumeration() throw (css::uno::RuntimeException);
+    virtual css::uno::Reference< css::container::XEnumeration > SAL_CALL createEnumeration();
 
     // XElementAccess
-    virtual css::uno::Type SAL_CALL getElementType() throw (css::uno::RuntimeException);
+    virtual css::uno::Type SAL_CALL getElementType();
 
     // ScVbaCollectionBase
     virtual css::uno::Any createCollectionObject( const css::uno::Any& rSource );
-    virtual css::uno::Any getItemByStringIndex( const ::rtl::OUString& rIndex ) throw (css::uno::RuntimeException);
+    virtual css::uno::Any getItemByStringIndex( const ::rtl::OUString& rIndex );
 
 protected:
     ScVbaObjectContainerRef mxContainer;
@@ -79,14 +79,14 @@ typedef ::cppu::ImplInheritanceHelper1< ScVbaSheetObjectsBase, ov::excel::XGraph
 class ScVbaGraphicObjectsBase : public ScVbaGraphicObjects_BASE
 {
 public:
-    explicit ScVbaGraphicObjectsBase( const ScVbaObjectContainerRef& rxContainer ) throw (css::uno::RuntimeException);
+    explicit ScVbaGraphicObjectsBase( const ScVbaObjectContainerRef& rxContainer );
 
     // XGraphicObjects
     virtual css::uno::Any SAL_CALL Add(
         const css::uno::Any& rLeft,
         const css::uno::Any& rTop,
         const css::uno::Any& rWidth,
-        const css::uno::Any& rHeight ) throw (css::uno::RuntimeException);
+        const css::uno::Any& rHeight );
 };
 
 // ============================================================================
@@ -99,7 +99,7 @@ public:
         const css::uno::Reference< ov::XHelperInterface >& rxParent,
         const css::uno::Reference< css::uno::XComponentContext >& rxContext,
         const css::uno::Reference< css::frame::XModel >& rxModel,
-        const css::uno::Reference< css::sheet::XSpreadsheet >& rxSheet ) throw (css::uno::RuntimeException);
+        const css::uno::Reference< css::sheet::XSpreadsheet >& rxSheet );
 
     VBAHELPER_DECL_XHELPERINTERFACE
 };

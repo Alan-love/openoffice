@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -357,7 +357,7 @@ String SvTreeListBox::GetEntryLongDescription( SvLBoxEntry* ) const
 	return tmp;
 }
 
-String SvTreeListBox::SearchEntryTextWithHeadTitle( SvLBoxEntry* pEntry ) 
+String SvTreeListBox::SearchEntryTextWithHeadTitle( SvLBoxEntry* pEntry )
 {
 	DBG_CHKTHIS(SvTreeListBox,0);
 	DBG_ASSERT( pEntry, "SvTreeListBox::SearchEntryText(): no entry" );
@@ -1166,7 +1166,7 @@ sal_Bool SvTreeListBox::Select( SvLBoxEntry* pEntry, sal_Bool bSelect )
 		{
 			SelectHdl();
 			// pImp->CallEventListeners( VCLEVENT_LISTBOX_SELECT, pEntry );
-			CallEventListeners( VCLEVENT_LISTBOX_TREESELECT, pEntry);			
+			CallEventListeners( VCLEVENT_LISTBOX_TREESELECT, pEntry);
 		}
 		else
 			DeselectHdl();
@@ -2745,7 +2745,7 @@ void SvTreeListBox::EnableList( bool _bEnable )
         ::com::sun::star::uno::Reference< XAccessible > xAccParent = pParent->GetAccessible();
         if ( xAccParent.is() )
 		{
-			// need to be done here to get the vclxwindow later on in the accessbile
+			// need to be done here to get the vclxwindow later on in the accessible
 			::com::sun::star::uno::Reference< ::com::sun::star::awt::XWindowPeer > xTemp(GetComponentInterface());
             xAccessible = pImp->m_aFactoryAccess.getFactory().createAccessibleTreeListBox( *this, xAccParent );
 		}
@@ -2806,4 +2806,3 @@ void SvTreeListBox::FillAccessibleStateSet( ::utl::AccessibleStateSetHelper& rSt
 {
       SvLBox::FillAccessibleStateSet( rStateSet );
 }
-

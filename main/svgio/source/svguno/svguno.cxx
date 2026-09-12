@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
@@ -33,6 +33,7 @@
 #include <com/sun/star/lang/XSingleServiceFactory.hpp>
 #include <uno/environment.h>
 #include <cppuhelper/factory.hxx>
+#include <cppuhelper/implementationentry.hxx>
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -47,14 +48,14 @@ namespace svgio
     {
         extern uno::Sequence< rtl::OUString > SAL_CALL XSvgParser_getSupportedServiceNames();
         extern rtl::OUString SAL_CALL XSvgParser_getImplementationName();
-        extern uno::Reference< uno::XInterface > SAL_CALL XSvgParser_createInstance( const uno::Reference< lang::XMultiServiceFactory > & );
+        extern uno::Reference< uno::XInterface > SAL_CALL XSvgParser_createInstance( const uno::Reference< uno::XComponentContext > & );
     } // end of namespace svgreader
 } // end of namespace svgio
 
 //////////////////////////////////////////////////////////////////////////////
 // component_getImplementationEnvironment
 
-extern "C" 
+extern "C"
 {
     SVGIO_DLLPUBLIC void SAL_CALL component_getImplementationEnvironment( const sal_Char ** ppEnvTypeName, uno_Environment ** /* ppEnv */ )
     {
@@ -65,29 +66,24 @@ extern "C"
 //////////////////////////////////////////////////////////////////////////////
 // component_getFactory
 
-extern "C" 
+static struct ::cppu::ImplementationEntry g_component_entries[] =
 {
-    SVGIO_DLLPUBLIC void* SAL_CALL component_getFactory( const sal_Char* pImplName, void* pServiceManager, void* /* pRegistryKey */ )
     {
-        uno::Reference< lang::XSingleServiceFactory > xFactory;
-        void* pRet = 0;
+        svgio::svgreader::XSvgParser_createInstance,
+        svgio::svgreader::XSvgParser_getImplementationName,
+        svgio::svgreader::XSvgParser_getSupportedServiceNames,
+        ::cppu::createSingleComponentFactory,
+        0,
+        0
+    },
+    { 0, 0, 0, 0, 0, 0 }
+};
 
-        if(svgio::svgreader::XSvgParser_getImplementationName().equalsAscii(pImplName))
-        {
-            xFactory = ::cppu::createSingleFactory(
-                reinterpret_cast< lang::XMultiServiceFactory * >(pServiceManager),
-                svgio::svgreader::XSvgParser_getImplementationName(),
-                svgio::svgreader::XSvgParser_createInstance,
-                svgio::svgreader::XSvgParser_getSupportedServiceNames());
-        }
-
-        if(xFactory.is())
-        {
-            xFactory->acquire();
-            pRet = xFactory.get();
-        }
-
-        return pRet;
+extern "C"
+{
+    SVGIO_DLLPUBLIC void* SAL_CALL component_getFactory( const sal_Char* pImplName, void* pServiceManager, void* pRegistryKey )
+    {
+        return ::cppu::component_getFactoryHelper( pImplName, pServiceManager, pRegistryKey, g_component_entries );
     }
 }
 

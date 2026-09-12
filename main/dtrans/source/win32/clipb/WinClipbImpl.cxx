@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -70,11 +70,11 @@ CWinClipbImpl* CWinClipbImpl::s_pCWinClipbImpl = NULL;
 osl::Mutex     CWinClipbImpl::s_aMutex;
 
 //------------------------------------------------------------------------
-// 
+//
 //------------------------------------------------------------------------
 
 CWinClipbImpl::CWinClipbImpl( const OUString& aClipboardName, CWinClipboard* theWinClipboard ) :
-	m_itsName( aClipboardName ),	
+	m_itsName( aClipboardName ),
 	m_pWinClipboard( theWinClipboard ),
 	m_pCurrentClipContent( NULL )
 {
@@ -87,7 +87,7 @@ CWinClipbImpl::CWinClipbImpl( const OUString& aClipboardName, CWinClipboard* the
 }
 
 //------------------------------------------------------------------------
-// 
+//
 //------------------------------------------------------------------------
 
 CWinClipbImpl::~CWinClipbImpl( )
@@ -103,14 +103,14 @@ CWinClipbImpl::~CWinClipbImpl( )
 // getContent
 //------------------------------------------------------------------------
 
-Reference< XTransferable > SAL_CALL CWinClipbImpl::getContents( ) throw( RuntimeException )
+Reference< XTransferable > SAL_CALL CWinClipbImpl::getContents( )
 {
     // use the shotcut or create a transferable from
     // system clipboard
     ClearableMutexGuard aGuard( m_ClipContentMutex );
 
 	if ( NULL != m_pCurrentClipContent )
-    {		
+    {
         return m_pCurrentClipContent->m_XTransferable;
     }
 
@@ -123,19 +123,19 @@ Reference< XTransferable > SAL_CALL CWinClipbImpl::getContents( ) throw( Runtime
 	// get the current dataobject from clipboard
 	IDataObjectPtr pIDataObject;
 	HRESULT hr = m_MtaOleClipboard.getClipboard( &pIDataObject );
-        
+
     if ( SUCCEEDED( hr ) )
     {
-	    // create an apartment neutral dataobject and initialize it with a 
+	    // create an apartment neutral dataobject and initialize it with a
 		// com smart pointer to the IDataObject from clipboard
 		IDataObjectPtr pIDo( new CAPNDataObject( pIDataObject ) );
-	    
+
 		CDTransObjFactory objFactory;
 
-		// remember pIDo destroys itself due to the smart pointer		
+		// remember pIDo destroys itself due to the smart pointer
 		rClipContent = objFactory.createTransferableFromDataObj( m_pWinClipboard->m_SrvMgr, pIDo );
     }
-	
+
 	return rClipContent;
 }
 
@@ -143,56 +143,55 @@ Reference< XTransferable > SAL_CALL CWinClipbImpl::getContents( ) throw( Runtime
 // setContent
 //------------------------------------------------------------------------
 
-void SAL_CALL CWinClipbImpl::setContents( 
+void SAL_CALL CWinClipbImpl::setContents(
 	const Reference< XTransferable >& xTransferable,
-	const Reference< XClipboardOwner >& xClipboardOwner ) 
-	throw( RuntimeException )
-{	
+	const Reference< XClipboardOwner >& xClipboardOwner )
+{
 	CDTransObjFactory objFactory;
 	IDataObjectPtr    pIDataObj;
-	
+
 	if ( xTransferable.is( ) )
 	{
         ClearableMutexGuard aGuard( m_ClipContentMutex );
 
-		m_pCurrentClipContent = new CXNotifyingDataObject( 
+		m_pCurrentClipContent = new CXNotifyingDataObject(
 			objFactory.createDataObjFromTransferable( m_pWinClipboard->m_SrvMgr , xTransferable ),
 			xTransferable,
 			xClipboardOwner,
 			this );
-        
+
         aGuard.clear( );
 
-		pIDataObj = IDataObjectPtr( m_pCurrentClipContent );		
+		pIDataObj = IDataObjectPtr( m_pCurrentClipContent );
 	}
-	
-	m_MtaOleClipboard.setClipboard(pIDataObj.get());	
+
+	m_MtaOleClipboard.setClipboard(pIDataObj.get());
 }
 
 //------------------------------------------------------------------------
-// 
+//
 //------------------------------------------------------------------------
 
-OUString SAL_CALL CWinClipbImpl::getName(  ) throw( RuntimeException )
+OUString SAL_CALL CWinClipbImpl::getName(  )
 {
 	return m_itsName;
 }
 
 //------------------------------------------------------------------------
-// 
+//
 //------------------------------------------------------------------------
 
-sal_Int8 SAL_CALL CWinClipbImpl::getRenderingCapabilities(  ) throw( RuntimeException )
+sal_Int8 SAL_CALL CWinClipbImpl::getRenderingCapabilities(  )
 {
 	return ( Delayed | Persistant );
 }
 
 //------------------------------------------------------------------------
-// 
+//
 //------------------------------------------------------------------------
 
-void SAL_CALL CWinClipbImpl::flushClipboard( ) throw( RuntimeException )
-{	
+void SAL_CALL CWinClipbImpl::flushClipboard( )
+{
     // sollte eigentlich hier stehen: ClearableMutexGuard aGuard( m_ClipContentMutex );
     // geht aber nicht, da FlushClipboard zurückruft und das DataObject
     // freigibt und damit würde es einen Deadlock in onReleaseDataObject geben
@@ -206,10 +205,10 @@ void SAL_CALL CWinClipbImpl::flushClipboard( ) throw( RuntimeException )
 
 	if ( NULL != m_pCurrentClipContent )
 		m_MtaOleClipboard.flushClipboard( );
-}	
+}
 
 //------------------------------------------------------------------------
-// 
+//
 //------------------------------------------------------------------------
 
 void SAL_CALL CWinClipbImpl::registerClipboardViewer( )
@@ -218,7 +217,7 @@ void SAL_CALL CWinClipbImpl::registerClipboardViewer( )
 }
 
 //------------------------------------------------------------------------
-// 
+//
 //------------------------------------------------------------------------
 
 void SAL_CALL CWinClipbImpl::unregisterClipboardViewer( )
@@ -227,19 +226,19 @@ void SAL_CALL CWinClipbImpl::unregisterClipboardViewer( )
 }
 
 //------------------------------------------------------------------------
-// 
+//
 //------------------------------------------------------------------------
 
-void SAL_CALL CWinClipbImpl::dispose() throw( RuntimeException )
+void SAL_CALL CWinClipbImpl::dispose()
 {
 	OSL_ENSURE( !m_pCurrentClipContent, "Clipboard was not flushed before shutdown!" );
 }
 
 //------------------------------------------------------------------------
-// 
+//
 //------------------------------------------------------------------------
 
-void WINAPI CWinClipbImpl::onClipboardContentChanged( void ) 
+void WINAPI CWinClipbImpl::onClipboardContentChanged( void )
 {
 	MutexGuard aGuard( s_aMutex );
 

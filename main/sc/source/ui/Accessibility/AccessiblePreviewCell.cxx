@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -103,7 +103,6 @@ void ScAccessiblePreviewCell::Notify( SfxBroadcaster& rBC, const SfxHint& rHint 
 //=====  XAccessibleComponent  ============================================
 
 uno::Reference< XAccessible > SAL_CALL ScAccessiblePreviewCell::getAccessibleAtPoint( const awt::Point& rPoint )
-								throw (uno::RuntimeException)
 {
     uno::Reference<XAccessible> xRet;
     if (containsPoint(rPoint))
@@ -120,7 +119,7 @@ uno::Reference< XAccessible > SAL_CALL ScAccessiblePreviewCell::getAccessibleAtP
     return xRet;
 }
 
-void SAL_CALL ScAccessiblePreviewCell::grabFocus() throw (uno::RuntimeException)
+void SAL_CALL ScAccessiblePreviewCell::grabFocus()
 {
  	ScUnoGuard aGuard;
     IsObjectValid();
@@ -134,7 +133,7 @@ void SAL_CALL ScAccessiblePreviewCell::grabFocus() throw (uno::RuntimeException)
 
 //=====  XAccessibleContext  ==============================================
 
-sal_Int32 SAL_CALL ScAccessiblePreviewCell::getAccessibleChildCount() throw(uno::RuntimeException)
+sal_Int32 SAL_CALL ScAccessiblePreviewCell::getAccessibleChildCount()
 {
 	ScUnoGuard aGuard;
     IsObjectValid();
@@ -144,7 +143,6 @@ sal_Int32 SAL_CALL ScAccessiblePreviewCell::getAccessibleChildCount() throw(uno:
 }
 
 uno::Reference< XAccessible > SAL_CALL ScAccessiblePreviewCell::getAccessibleChild(sal_Int32 nIndex)
-					        throw (uno::RuntimeException, lang::IndexOutOfBoundsException)
 {
 	ScUnoGuard aGuard;
     IsObjectValid();
@@ -154,7 +152,6 @@ uno::Reference< XAccessible > SAL_CALL ScAccessiblePreviewCell::getAccessibleChi
 }
 
 uno::Reference<XAccessibleStateSet> SAL_CALL ScAccessiblePreviewCell::getAccessibleStateSet()
-						    throw(uno::RuntimeException)
 {
 	ScUnoGuard aGuard;
 
@@ -186,13 +183,12 @@ uno::Reference<XAccessibleStateSet> SAL_CALL ScAccessiblePreviewCell::getAccessi
 
 //=====  XServiceInfo  ====================================================
 
-rtl::OUString SAL_CALL ScAccessiblePreviewCell::getImplementationName() throw(uno::RuntimeException)
+rtl::OUString SAL_CALL ScAccessiblePreviewCell::getImplementationName()
 {
 	return rtl::OUString(RTL_CONSTASCII_USTRINGPARAM("ScAccessiblePreviewCell"));
 }
 
 uno::Sequence<rtl::OUString> SAL_CALL ScAccessiblePreviewCell::getSupportedServiceNames()
-													throw(uno::RuntimeException)
 {
 	uno::Sequence< ::rtl::OUString > aSequence = ScAccessibleContextBase::getSupportedServiceNames();
     sal_Int32 nOldSize(aSequence.getLength());
@@ -208,7 +204,6 @@ uno::Sequence<rtl::OUString> SAL_CALL ScAccessiblePreviewCell::getSupportedServi
 
 uno::Sequence<sal_Int8> SAL_CALL
 	ScAccessiblePreviewCell::getImplementationId(void)
-    throw (uno::RuntimeException)
 {
     ScUnoGuard aGuard;
     IsObjectValid();
@@ -223,7 +218,7 @@ uno::Sequence<sal_Int8> SAL_CALL
 
 //====  internal  =========================================================
 
-Rectangle ScAccessiblePreviewCell::GetBoundingBoxOnScreen() const throw (uno::RuntimeException)
+Rectangle ScAccessiblePreviewCell::GetBoundingBoxOnScreen() const
 {
 	Rectangle aCellRect;
 	if (mpViewShell)
@@ -240,7 +235,7 @@ Rectangle ScAccessiblePreviewCell::GetBoundingBoxOnScreen() const throw (uno::Ru
 	return aCellRect;
 }
 
-Rectangle ScAccessiblePreviewCell::GetBoundingBox() const throw (uno::RuntimeException)
+Rectangle ScAccessiblePreviewCell::GetBoundingBox() const
 {
 	Rectangle aCellRect;
 	if (mpViewShell)
@@ -309,4 +304,3 @@ void ScAccessiblePreviewCell::CreateTextHelper()
         mpTextHelper->SetAdditionalChildStates( aChildStates );
 	}
 }
-

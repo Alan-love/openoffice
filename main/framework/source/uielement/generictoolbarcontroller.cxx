@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -144,7 +144,6 @@ GenericToolbarController::~GenericToolbarController()
 }
 
 void SAL_CALL GenericToolbarController::dispose()
-throw ( RuntimeException )
 {
     vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
 
@@ -155,7 +154,6 @@ throw ( RuntimeException )
 }
 
 void SAL_CALL GenericToolbarController::execute( sal_Int16 KeyModifier )
-throw ( RuntimeException )
 {
     Reference< XDispatch >       xDispatch;
     Reference< XURLTransformer > xURLTransformer;
@@ -210,7 +208,6 @@ throw ( RuntimeException )
 }
 
 void GenericToolbarController::statusChanged( const FeatureStateEvent& Event )
-throw ( RuntimeException )
 {
     vos::OGuard aSolarMutexGuard( Application::GetSolarMutex() );
 
@@ -343,7 +340,7 @@ MenuToolbarController::~MenuToolbarController()
         delete pMenu;
         pMenu = NULL;
     }
- 
+
 }
 
 class Toolbarmenu : public PopupMenu
@@ -355,7 +352,7 @@ class Toolbarmenu : public PopupMenu
 
 Toolbarmenu::Toolbarmenu()
 {
-    OSL_TRACE("**** contstructing Toolbarmenu 0x%x", this );
+    OSL_TRACE("**** constructing Toolbarmenu 0x%x", this );
 }
 
 Toolbarmenu::~Toolbarmenu()
@@ -363,15 +360,15 @@ Toolbarmenu::~Toolbarmenu()
     OSL_TRACE("**** destructing Toolbarmenu 0x%x", this );
 }
 
-void SAL_CALL MenuToolbarController::click() throw (RuntimeException)
+void SAL_CALL MenuToolbarController::click()
 {
     createPopupWindow();
 }
 
-Reference< XWindow > SAL_CALL 
-MenuToolbarController::createPopupWindow() throw (::com::sun::star::uno::RuntimeException)
+Reference< XWindow > SAL_CALL
+MenuToolbarController::createPopupWindow()
 {
-    if ( !pMenu ) 
+    if ( !pMenu )
     {
         Reference< XDispatchProvider > xDispatch;
         Reference< XURLTransformer > xURLTransformer( m_xServiceManager->createInstance( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.util.URLTransformer" ))), UNO_QUERY );
@@ -395,4 +392,3 @@ MenuToolbarController::createPopupWindow() throw (::com::sun::star::uno::Runtime
     return NULL;
 }
 } // namespace
-

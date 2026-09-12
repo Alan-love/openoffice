@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -88,7 +88,7 @@ SwFilterDetect::~SwFilterDetect()
 {
 }
 
-::rtl::OUString SAL_CALL SwFilterDetect::detect( uno::Sequence< beans::PropertyValue >& lDescriptor ) throw( uno::RuntimeException )
+::rtl::OUString SAL_CALL SwFilterDetect::detect( uno::Sequence< beans::PropertyValue >& lDescriptor )
 {
     REFERENCE< XInputStream > xStream;
     REFERENCE< XContent > xContent;
@@ -433,13 +433,13 @@ SwFilterDetect::~SwFilterDetect()
 SFX_IMPL_SINGLEFACTORY( SwFilterDetect )
 
 /* XServiceInfo */
-UNOOUSTRING SAL_CALL SwFilterDetect::getImplementationName() throw( UNORUNTIMEEXCEPTION )
+UNOOUSTRING SAL_CALL SwFilterDetect::getImplementationName()
 {
     return impl_getStaticImplementationName();
 }
                                                                                                                                 \
 /* XServiceInfo */
-sal_Bool SAL_CALL SwFilterDetect::supportsService( const UNOOUSTRING& sServiceName ) throw( UNORUNTIMEEXCEPTION )
+sal_Bool SAL_CALL SwFilterDetect::supportsService( const UNOOUSTRING& sServiceName )
 {
     UNOSEQUENCE< UNOOUSTRING >  seqServiceNames =   getSupportedServiceNames();
     const UNOOUSTRING*          pArray          =   seqServiceNames.getConstArray();
@@ -454,7 +454,7 @@ sal_Bool SAL_CALL SwFilterDetect::supportsService( const UNOOUSTRING& sServiceNa
 }
 
 /* XServiceInfo */
-UNOSEQUENCE< UNOOUSTRING > SAL_CALL SwFilterDetect::getSupportedServiceNames() throw( UNORUNTIMEEXCEPTION )
+UNOSEQUENCE< UNOOUSTRING > SAL_CALL SwFilterDetect::getSupportedServiceNames()
 {
     return impl_getStaticSupportedServiceNames();
 }
@@ -477,8 +477,7 @@ UNOOUSTRING SwFilterDetect::impl_getStaticImplementationName()
 }
 
 /* Helper for registry */
-UNOREFERENCE< UNOXINTERFACE > SAL_CALL SwFilterDetect::impl_createInstance( const UNOREFERENCE< UNOXMULTISERVICEFACTORY >& xServiceManager ) throw( UNOEXCEPTION )
+UNOREFERENCE< UNOXINTERFACE > SAL_CALL SwFilterDetect::impl_createInstance( const UNOREFERENCE< UNOXMULTISERVICEFACTORY >& xServiceManager )
 {
     return UNOREFERENCE< UNOXINTERFACE >( *new SwFilterDetect( xServiceManager ) );
 }
-

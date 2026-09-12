@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -125,7 +125,6 @@ ONE_INSTANCE_SERVICE_FACTORY_IMPL( ContentProvider );
 uno::Reference< ucb::XContent > SAL_CALL
 ContentProvider::queryContent(
         const uno::Reference< ucb::XContentIdentifier >& Identifier )
-    throw( ucb::IllegalIdentifierException, uno::RuntimeException )
 {
     Uri aUri( Identifier->getContentIdentifier() );
     if ( !aUri.isValid() )
@@ -163,7 +162,6 @@ ContentProvider::queryContent(
 uno::Reference< ucb::XContent > SAL_CALL
 ContentProvider::createDocumentContent(
         const uno::Reference< frame::XModel >& Model )
-    throw ( lang::IllegalArgumentException, uno::RuntimeException )
 {
     // model -> id -> content identifier -> queryContent
     if ( m_xDocsMgr.is() )
@@ -282,7 +280,7 @@ void ContentProvider::notifyDocumentClosed( const rtl::OUString & rDocId )
     if ( xRoot.is() )
     {
         // No document content found for rDocId but root content
-        // instanciated. Root content must announce document removal
+        // instantiated. Root content must announce document removal
         // to content event listeners.
         xRoot->notifyChildRemoved( rDocId );
     }
@@ -300,7 +298,7 @@ void ContentProvider::notifyDocumentOpened( const rtl::OUString & rDocId )
     ::ucbhelper::ContentRefList::const_iterator it  = aAllContents.begin();
     ::ucbhelper::ContentRefList::const_iterator end = aAllContents.end();
 
-    // Find root content. If instanciated let it propagate document insertion.
+    // Find root content. If instantiated let it propagate document insertion.
 
     while ( it != end )
     {
@@ -403,7 +401,6 @@ ContentProvider::queryStorageClone( const rtl::OUString & rUri ) const
 uno::Reference< io::XInputStream >
 ContentProvider::queryInputStream( const rtl::OUString & rUri,
                                    const rtl::OUString & rPassword ) const
-    throw ( packages::WrongPasswordException )
 {
     if ( m_xStgElemFac.is() )
     {
@@ -441,7 +438,6 @@ uno::Reference< io::XOutputStream >
 ContentProvider::queryOutputStream( const rtl::OUString & rUri,
                                     const rtl::OUString & rPassword,
                                     bool bTruncate ) const
-    throw ( packages::WrongPasswordException )
 {
     if ( m_xStgElemFac.is() )
     {
@@ -481,7 +477,6 @@ uno::Reference< io::XStream >
 ContentProvider::queryStream( const rtl::OUString & rUri,
                               const rtl::OUString & rPassword,
                               bool bTruncate ) const
-    throw ( packages::WrongPasswordException )
 {
     if ( m_xStgElemFac.is() )
     {
@@ -591,7 +586,7 @@ ContentProvider::queryStorageTitle( const rtl::OUString & rUri ) const
     else if ( aUri.isDocument() )
     {
         // for documents, title shall not be derived from URL. It shall
-        // be somethimg more 'speaking' than just the document UID.
+        // be something more 'speaking' than just the document UID.
         if ( m_xDocsMgr.is() )
             aTitle = m_xDocsMgr->queryStorageTitle( aUri.getDocumentId() );
     }
@@ -622,4 +617,3 @@ ContentProvider::queryDocumentModel( const rtl::OUString & rUri ) const
                 "ContentProvider::queryDocumentModel - no model!" );
     return xModel;
 }
-

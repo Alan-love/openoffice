@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -62,7 +62,7 @@ public:
         resource is requested.
     */
     enum Mode { Activation, Deactivation };
-    
+
     /** Create a new object that represents the request for activation or
         deactivation of the specified resource.
         @param rxsResourceId
@@ -74,14 +74,13 @@ public:
 	GenericConfigurationChangeRequest (
         const ::com::sun::star::uno::Reference<com::sun::star::drawing::framework::XResourceId>&
             rxResourceId,
-        const Mode eMode)
-        throw (::com::sun::star::lang::IllegalArgumentException);
-    
+        const Mode eMode);
+
 	virtual ~GenericConfigurationChangeRequest (void) throw();
 
-    
+
     // XConfigurationChangeOperation
-    
+
     /** The requested configuration change is executed on the given
         configuration.  Additionally to the explicitly requested change
         other changes have to be made as well.  See class description for an
@@ -91,8 +90,7 @@ public:
     */
     virtual void SAL_CALL execute (
         const ::com::sun::star::uno::Reference<
-            com::sun::star::drawing::framework::XConfiguration>& rxConfiguration)
-        throw (::com::sun::star::uno::RuntimeException);
+            com::sun::star::drawing::framework::XConfiguration>& rxConfiguration);
 
 
     // XNamed
@@ -100,14 +98,12 @@ public:
     /** Return a human readable string representation.  This is used for
         debugging purposes.
     */
-    virtual ::rtl::OUString SAL_CALL getName (void)
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getName (void);
 
     /** This call is ignored because the XNamed interface is (mis)used to
         give access to a human readable name for debugging purposes.
     */
-    virtual void SAL_CALL setName (const ::rtl::OUString& rName)
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL setName (const ::rtl::OUString& rName);
 
 private:
     const css::uno::Reference<css::drawing::framework::XResourceId> mxResourceId;

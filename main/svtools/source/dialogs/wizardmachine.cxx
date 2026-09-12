@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -113,7 +113,7 @@ namespace svt
 
         WizardState                     nFirstUnknownPage;
             // the WizardDialog does not allow non-linear transitions (e.g. it's
-            // not possible to add pages in a non-linear order), so we need some own maintainance data
+            // not possible to add pages in a non-linear order), so we need some own maintenance data
 
 		sal_Bool						m_bAutoNextButtonState;
 
@@ -478,7 +478,7 @@ namespace svt
 	//---------------------------------------------------------------------
 	sal_Bool OWizardMachine::skipBackwardUntil( WizardState _nTargetState )
     {
-		// alowed to leave the current page?
+		// allowed to leave the current page?
 		if ( !prepareLeaveCurrentState( eTravelBackward ) )
 			return sal_False;
 
@@ -507,7 +507,7 @@ namespace svt
     {
 		WizardState nCurrentState = getCurrentState();
 
-        // alowed to leave the current page?
+        // allowed to leave the current page?
         if ( !prepareLeaveCurrentState( nCurrentState < _nTargetState ? eTravelForward : eTravelBackward ) )
 			return sal_False;
 
@@ -546,7 +546,7 @@ namespace svt
 	sal_Bool OWizardMachine::skip(sal_Int32 _nSteps)
 	{
 		DBG_ASSERT(_nSteps > 0, "OWizardMachine::skip: invalid number of steps!");
-		// alowed to leave the current page?
+		// allowed to leave the current page?
 		if ( !prepareLeaveCurrentState( eTravelForward ) )
 			return sal_False;
 
@@ -612,7 +612,7 @@ namespace svt
 	{
 		DBG_ASSERT(m_pImpl->aStateHistory.size() > 0, "OWizardMachine::travelPrevious: have no previous page!");
 
-		// alowed to leave the current page?
+		// allowed to leave the current page?
 		if ( !prepareLeaveCurrentState( eTravelBackward ) )
 			return sal_False;
 

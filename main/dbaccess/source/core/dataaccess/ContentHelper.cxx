@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -91,12 +91,12 @@ using namespace ::cppu;
 DBG_NAME(OContentHelper_Impl)
 OContentHelper_Impl::OContentHelper_Impl()
 {
-	DBG_CTOR(OContentHelper_Impl,NULL);	
+	DBG_CTOR(OContentHelper_Impl,NULL);
 }
 // -----------------------------------------------------------------------------
 OContentHelper_Impl::~OContentHelper_Impl()
 {
-	DBG_DTOR(OContentHelper_Impl,NULL);	
+	DBG_DTOR(OContentHelper_Impl,NULL);
 }
 // -----------------------------------------------------------------------------
 
@@ -129,7 +129,7 @@ IMPLEMENT_SERVICE_INFO1(OContentHelper,"com.sun.star.comp.sdb.Content","com.sun.
 IMPLEMENT_IMPLEMENTATION_ID(OContentHelper)
 // -----------------------------------------------------------------------------
 // XContent
-Reference< XContentIdentifier > SAL_CALL OContentHelper::getIdentifier(  ) throw (RuntimeException)
+Reference< XContentIdentifier > SAL_CALL OContentHelper::getIdentifier(  )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
     ::rtl::OUStringBuffer aIdentifier;
@@ -165,7 +165,7 @@ Reference< XContentIdentifier > SAL_CALL OContentHelper::getIdentifier(  ) throw
 }
 
 // -----------------------------------------------------------------------------
-::rtl::OUString SAL_CALL OContentHelper::getContentType() throw (RuntimeException)
+::rtl::OUString SAL_CALL OContentHelper::getContentType()
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 
@@ -177,14 +177,14 @@ Reference< XContentIdentifier > SAL_CALL OContentHelper::getIdentifier(  ) throw
 	return *m_pImpl->m_aProps.aContentType;
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OContentHelper::addContentEventListener( const Reference< XContentEventListener >& _rxListener ) throw (RuntimeException)
+void SAL_CALL OContentHelper::addContentEventListener( const Reference< XContentEventListener >& _rxListener )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	if ( _rxListener.is() )
 		m_aContentListeners.addInterface(_rxListener);
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OContentHelper::removeContentEventListener( const Reference< XContentEventListener >& _rxListener ) throw (RuntimeException)
+void SAL_CALL OContentHelper::removeContentEventListener( const Reference< XContentEventListener >& _rxListener )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	if (_rxListener.is())
@@ -193,14 +193,14 @@ void SAL_CALL OContentHelper::removeContentEventListener( const Reference< XCont
 // -----------------------------------------------------------------------------
 
 // XCommandProcessor
-sal_Int32 SAL_CALL OContentHelper::createCommandIdentifier(  ) throw (RuntimeException)
+sal_Int32 SAL_CALL OContentHelper::createCommandIdentifier(  )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	// Just increase counter on every call to generate an identifier.
 	return ++m_nCommandId;
 }
 // -----------------------------------------------------------------------------
-Any SAL_CALL OContentHelper::execute( const Command& aCommand, sal_Int32 /*CommandId*/, const Reference< XCommandEnvironment >& Environment ) throw (Exception, CommandAbortedException, RuntimeException)
+Any SAL_CALL OContentHelper::execute( const Command& aCommand, sal_Int32 /*CommandId*/, const Reference< XCommandEnvironment >& Environment )
 {
 	Any aRet;
 	if ( aCommand.Name.compareToAscii( "getPropertyValues" ) == 0 )
@@ -286,13 +286,13 @@ Any SAL_CALL OContentHelper::execute( const Command& aCommand, sal_Int32 /*Comma
 	return aRet;
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OContentHelper::abort( sal_Int32 /*CommandId*/ ) throw (RuntimeException)
+void SAL_CALL OContentHelper::abort( sal_Int32 /*CommandId*/ )
 {
 }
 // -----------------------------------------------------------------------------
 
 // XPropertiesChangeNotifier
-void SAL_CALL OContentHelper::addPropertiesChangeListener( const Sequence< ::rtl::OUString >& PropertyNames, const Reference< XPropertiesChangeListener >& Listener ) throw (RuntimeException)
+void SAL_CALL OContentHelper::addPropertiesChangeListener( const Sequence< ::rtl::OUString >& PropertyNames, const Reference< XPropertiesChangeListener >& Listener )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	sal_Int32 nCount = PropertyNames.getLength();
@@ -314,7 +314,7 @@ void SAL_CALL OContentHelper::addPropertiesChangeListener( const Sequence< ::rtl
 	}
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OContentHelper::removePropertiesChangeListener( const Sequence< ::rtl::OUString >& PropertyNames, const Reference< XPropertiesChangeListener >& Listener ) throw (RuntimeException)
+void SAL_CALL OContentHelper::removePropertiesChangeListener( const Sequence< ::rtl::OUString >& PropertyNames, const Reference< XPropertiesChangeListener >& Listener )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	sal_Int32 nCount = PropertyNames.getLength();
@@ -338,22 +338,22 @@ void SAL_CALL OContentHelper::removePropertiesChangeListener( const Sequence< ::
 // -----------------------------------------------------------------------------
 
 // XPropertyContainer
-void SAL_CALL OContentHelper::addProperty( const ::rtl::OUString& /*Name*/, sal_Int16 /*Attributes*/, const Any& /*DefaultValue*/ ) throw (PropertyExistException, IllegalTypeException, IllegalArgumentException, RuntimeException) 
+void SAL_CALL OContentHelper::addProperty( const ::rtl::OUString& /*Name*/, sal_Int16 /*Attributes*/, const Any& /*DefaultValue*/ )
 {
     DBG_ERROR( "OContentHelper::addProperty: not implemented!" );
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OContentHelper::removeProperty( const ::rtl::OUString& /*Name*/ ) throw (UnknownPropertyException, NotRemoveableException, RuntimeException)
+void SAL_CALL OContentHelper::removeProperty( const ::rtl::OUString& /*Name*/ )
 {
     DBG_ERROR( "OContentHelper::removeProperty: not implemented!" );
 }
 // -----------------------------------------------------------------------------
 // XInitialization
-void SAL_CALL OContentHelper::initialize( const Sequence< Any >& _aArguments ) throw(Exception, RuntimeException)
+void SAL_CALL OContentHelper::initialize( const Sequence< Any >& _aArguments )
 {
 	const Any* pBegin = _aArguments.getConstArray();
 	const Any* pEnd = pBegin + _aArguments.getLength();
-	PropertyValue aValue;;
+	PropertyValue aValue;
 	for(;pBegin != pEnd;++pBegin)
 	{
 		*pBegin >>= aValue;
@@ -591,7 +591,7 @@ void OContentHelper::notifyPropertiesChange( const Sequence< PropertyChangeEvent
 		typedef Sequence< PropertyChangeEvent > PropertyEventSequence;
 		typedef ::std::map< XPropertiesChangeListener*, PropertyEventSequence* > PropertiesEventListenerMap;
 		PropertiesEventListenerMap aListeners;
-		
+
 
 		const PropertyChangeEvent* propertyChangeEvent = evt.getConstArray();
 
@@ -648,7 +648,7 @@ void OContentHelper::notifyPropertiesChange( const Sequence< PropertyChangeEvent
 // -----------------------------------------------------------------------------
 // com::sun::star::lang::XUnoTunnel
 //------------------------------------------------------------------
-sal_Int64 OContentHelper::getSomething( const Sequence< sal_Int8 > & rId ) throw (RuntimeException)
+sal_Int64 OContentHelper::getSomething( const Sequence< sal_Int8 > & rId )
 {
 	if (rId.getLength() == 16 && 0 == rtl_compareMemory(getUnoTunnelImplementationId().getConstArray(),  rId.getConstArray(), 16 ) )
 		return reinterpret_cast<sal_Int64>(this);
@@ -669,13 +669,13 @@ OContentHelper* OContentHelper::getImplementation( const Reference< XInterface >
 }
 
 // -----------------------------------------------------------------------------
-Reference< XInterface > SAL_CALL OContentHelper::getParent(  ) throw (RuntimeException)
+Reference< XInterface > SAL_CALL OContentHelper::getParent(  )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	return m_xParentContainer;
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OContentHelper::setParent( const Reference< XInterface >& _xParent ) throw (NoSupportException, RuntimeException)
+void SAL_CALL OContentHelper::setParent( const Reference< XInterface >& _xParent )
 {
 	::osl::MutexGuard aGuard(m_aMutex);
 	m_xParentContainer = _xParent;
@@ -697,9 +697,9 @@ void OContentHelper::impl_rename_throw(const ::rtl::OUString& _sNewName,bool _bN
 	    aChanges[0].PropertyHandle  = PROPERTY_ID_NAME;
         aChanges[0].OldValue        <<= m_pImpl->m_aProps.aTitle;
         aChanges[0].NewValue        <<= _sNewName;
-        
+
 		aGuard.clear();
-        
+
 		m_pImpl->m_aProps.aTitle = _sNewName;
         if ( _bNotify )
             notifyPropertiesChange( aChanges );
@@ -711,9 +711,9 @@ void OContentHelper::impl_rename_throw(const ::rtl::OUString& _sNewName,bool _bN
 	}
 }
 // -----------------------------------------------------------------------------
-void SAL_CALL OContentHelper::rename( const ::rtl::OUString& newName ) throw (SQLException, ElementExistException, RuntimeException)
+void SAL_CALL OContentHelper::rename( const ::rtl::OUString& newName )
 {
-	
+
     impl_rename_throw(newName);
 	//Reference<XNameContainer> xNameCont(m_xParentContainer,UNO_QUERY);
 	//if ( xNameCont.is() )
@@ -745,7 +745,7 @@ void SAL_CALL OContentHelper::rename( const ::rtl::OUString& newName ) throw (SQ
 	//}
 	//else
 	//	m_pImpl->m_aProps.aTitle = newName;
-	
+
 }
 // -----------------------------------------------------------------------------
 void OContentHelper::notifyDataSourceModified()
@@ -755,4 +755,3 @@ void OContentHelper::notifyDataSourceModified()
 //........................................................................
 }	// namespace dbaccess
 //........................................................................
-

@@ -19,8 +19,6 @@
  *
  *************************************************************/
 
-
-
 // MARKER(update_precomp.py): autogen include statement, do not remove
 #include "precompiled_svtools.hxx"
 #include <svtools/helpagentwindow.hxx>
@@ -177,5 +175,5 @@ namespace svt
 
 //........................................................................
 }	// namespace svt
-//........................................................................
 
+/* vim: set noet sw=4 ts=4: */

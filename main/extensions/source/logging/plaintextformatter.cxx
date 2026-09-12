@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -74,14 +74,14 @@ namespace logging
         virtual ~PlainTextFormatter();
 
         // XLogFormatter
-        virtual ::rtl::OUString SAL_CALL getHead(  ) throw (RuntimeException);
-        virtual ::rtl::OUString SAL_CALL format( const LogRecord& Record ) throw (RuntimeException);
-        virtual ::rtl::OUString SAL_CALL getTail(  ) throw (RuntimeException);
+        virtual ::rtl::OUString SAL_CALL getHead(  );
+        virtual ::rtl::OUString SAL_CALL format( const LogRecord& Record );
+        virtual ::rtl::OUString SAL_CALL getTail(  );
 
         // XServiceInfo
-		virtual ::rtl::OUString SAL_CALL getImplementationName() throw(RuntimeException);
-        virtual ::sal_Bool SAL_CALL supportsService( const ::rtl::OUString& _rServiceName ) throw(RuntimeException);
-        virtual Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames() throw(RuntimeException);
+		virtual ::rtl::OUString SAL_CALL getImplementationName();
+        virtual ::sal_Bool SAL_CALL supportsService( const ::rtl::OUString& _rServiceName );
+        virtual Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames();
 
     public:
         // XServiceInfo - static version
@@ -105,7 +105,7 @@ namespace logging
     }
 
     //--------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL PlainTextFormatter::getHead(  ) throw (RuntimeException)
+    ::rtl::OUString SAL_CALL PlainTextFormatter::getHead(  )
     {
         ::rtl::OUStringBuffer aHeader;
         aHeader.appendAscii( "  event no" );                 // column 1: the event number
@@ -120,9 +120,9 @@ namespace logging
         aHeader.appendAscii( "\n" );
         return aHeader.makeStringAndClear();
     }
-    
+
     //--------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL PlainTextFormatter::format( const LogRecord& _rRecord ) throw (RuntimeException)
+    ::rtl::OUString SAL_CALL PlainTextFormatter::format( const LogRecord& _rRecord )
     {
         char buffer[ 30 ];
         const int buffer_size = sizeof( buffer );
@@ -158,16 +158,16 @@ namespace logging
 
         return aLogEntry.makeStringAndClear();
     }
-    
+
     //--------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL PlainTextFormatter::getTail(  ) throw (RuntimeException)
+    ::rtl::OUString SAL_CALL PlainTextFormatter::getTail(  )
     {
         // no tail
         return ::rtl::OUString();
     }
 
     //--------------------------------------------------------------------
-    ::sal_Bool SAL_CALL PlainTextFormatter::supportsService( const ::rtl::OUString& _rServiceName ) throw(RuntimeException)
+    ::sal_Bool SAL_CALL PlainTextFormatter::supportsService( const ::rtl::OUString& _rServiceName )
     {
         const Sequence< ::rtl::OUString > aServiceNames( getSupportedServiceNames() );
         for (   const ::rtl::OUString* pServiceNames = aServiceNames.getConstArray();
@@ -178,25 +178,25 @@ namespace logging
                 return sal_True;
         return sal_False;
     }
-    
+
     //--------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL PlainTextFormatter::getImplementationName() throw(RuntimeException)
+    ::rtl::OUString SAL_CALL PlainTextFormatter::getImplementationName()
     {
         return getImplementationName_static();
     }
-    
+
     //--------------------------------------------------------------------
-    Sequence< ::rtl::OUString > SAL_CALL PlainTextFormatter::getSupportedServiceNames() throw(RuntimeException)
+    Sequence< ::rtl::OUString > SAL_CALL PlainTextFormatter::getSupportedServiceNames()
     {
         return getSupportedServiceNames_static();
     }
-    
+
     //--------------------------------------------------------------------
     ::rtl::OUString SAL_CALL PlainTextFormatter::getImplementationName_static()
     {
         return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.comp.extensions.PlainTextFormatter" ) );
     }
-    
+
     //--------------------------------------------------------------------
     Sequence< ::rtl::OUString > SAL_CALL PlainTextFormatter::getSupportedServiceNames_static()
     {

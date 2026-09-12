@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -51,24 +51,24 @@ bool operator==( const ::com::sun::star::awt::FontDescriptor& _lhs, const ::com:
 
 // -----------------------------------------------------------------------------
 // XContainer
-void OReportControlModel::addContainerListener( const uno::Reference< container::XContainerListener >& xListener ) throw (uno::RuntimeException)
+void OReportControlModel::addContainerListener( const uno::Reference< container::XContainerListener >& xListener )
 {
 	aContainerListeners.addInterface(xListener);
 }
 // -----------------------------------------------------------------------------
-void OReportControlModel::removeContainerListener( const uno::Reference< container::XContainerListener >& xListener ) throw (uno::RuntimeException)
+void OReportControlModel::removeContainerListener( const uno::Reference< container::XContainerListener >& xListener )
 {
 	aContainerListeners.removeInterface(xListener);
 }
 // -----------------------------------------------------------------------------
-::sal_Bool OReportControlModel::hasElements(  ) throw (uno::RuntimeException)
+::sal_Bool OReportControlModel::hasElements(  )
 {
 	::osl::MutexGuard aGuard(m_rMutex);
 	return !m_aFormatConditions.empty();
 }
 // -----------------------------------------------------------------------------
 // XIndexContainer
-void OReportControlModel::insertByIndex( ::sal_Int32 Index, const uno::Any& Element ) throw (lang::IllegalArgumentException, lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
+void OReportControlModel::insertByIndex( ::sal_Int32 Index, const uno::Any& Element )
 {
 	uno::Reference<report::XFormatCondition> xElement(Element,uno::UNO_QUERY);
 	if ( !xElement.is() )
@@ -90,7 +90,7 @@ void OReportControlModel::insertByIndex( ::sal_Int32 Index, const uno::Any& Elem
 	aContainerListeners.notifyEach(&container::XContainerListener::elementInserted,aEvent);
 }
 // -----------------------------------------------------------------------------
-void OReportControlModel::removeByIndex( ::sal_Int32 Index ) throw (lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
+void OReportControlModel::removeByIndex( ::sal_Int32 Index )
 {
 	uno::Any Element;
     uno::Reference< container::XContainer > xBroadcaster;
@@ -106,7 +106,7 @@ void OReportControlModel::removeByIndex( ::sal_Int32 Index ) throw (lang::IndexO
 }
 // -----------------------------------------------------------------------------
 // XIndexReplace
-void OReportControlModel::replaceByIndex( ::sal_Int32 Index, const uno::Any& Element ) throw (lang::IllegalArgumentException, lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
+void OReportControlModel::replaceByIndex( ::sal_Int32 Index, const uno::Any& Element )
 {
 	uno::Reference<report::XFormatCondition> xElement(Element,uno::UNO_QUERY);
 	if ( !xElement.is() )
@@ -123,13 +123,13 @@ void OReportControlModel::replaceByIndex( ::sal_Int32 Index, const uno::Any& Ele
 }
 // -----------------------------------------------------------------------------
 // XIndexAccess
-::sal_Int32 OReportControlModel::getCount(  ) throw (uno::RuntimeException)
+::sal_Int32 OReportControlModel::getCount(  )
 {
 	::osl::MutexGuard aGuard(m_rMutex);
 	return m_aFormatConditions.size();
 }
 // -----------------------------------------------------------------------------
-uno::Any OReportControlModel::getByIndex( ::sal_Int32 Index ) throw (lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
+uno::Any OReportControlModel::getByIndex( ::sal_Int32 Index )
 {
 	uno::Any aElement;
 	{
@@ -152,4 +152,3 @@ bool OReportControlModel::isInterfaceForbidden(const uno::Type& _rType)
 }
 // -----------------------------------------------------------------------------
 } // reportdesign
-

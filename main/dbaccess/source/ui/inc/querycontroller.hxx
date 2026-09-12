@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -89,7 +89,7 @@ namespace dbaui
 		::rtl::OUString	m_sUpdateCatalogName;   // catalog for update data
 		::rtl::OUString	m_sUpdateSchemaName;    // schema for update data
 		::rtl::OUString	m_sUpdateTableName;     // table for update data
-		mutable ::rtl::OUString	
+		mutable ::rtl::OUString
                         m_sName;			    // name of the query
 
 		sal_Int32		m_nVisibleRows;		// which rows the selection browse should show
@@ -152,12 +152,12 @@ namespace dbaui
 		void			clearFields();
 
         virtual void impl_onModifyChanged();
-		
+
 		// should the statement be parsed by our own sql parser
 		sal_Bool		isEsacpeProcessing()	const { return m_bEscapeProcessing; }
 		sal_Bool		isGraphicalDesign()     const { return m_bGraphicalDesign; }
 		sal_Bool		isDistinct()			const { return m_bDistinct; }
-		
+
 		::rtl::OUString	getStatement()			const { return m_sStatement; }
 		sal_Int32		getSplitPos()			const { return m_nSplitPos;}
 		sal_Int32		getVisibleRows()		const { return m_nVisibleRows; }
@@ -179,26 +179,26 @@ namespace dbaui
         DECLARE_XINTERFACE( )
         DECLARE_XTYPEPROVIDER( )
 		// XPropertySet
-		virtual com::sun::star::uno::Reference<com::sun::star::beans::XPropertySetInfo>  SAL_CALL getPropertySetInfo() throw(com::sun::star::uno::RuntimeException);
+		virtual com::sun::star::uno::Reference<com::sun::star::beans::XPropertySetInfo>  SAL_CALL getPropertySetInfo();
 		virtual ::cppu::IPropertyArrayHelper& SAL_CALL getInfoHelper();
 
 		// XEventListener
-		virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source ) throw(::com::sun::star::uno::RuntimeException);
+		virtual void SAL_CALL disposing( const ::com::sun::star::lang::EventObject& Source );
 
 		// ::com::sun::star::lang::XComponent
 		virtual void		SAL_CALL disposing();
 
-		virtual ::rtl::OUString SAL_CALL getImplementationName() throw(::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::uno::Sequence< ::rtl::OUString> SAL_CALL getSupportedServiceNames() throw(::com::sun::star::uno::RuntimeException);
+		virtual ::rtl::OUString SAL_CALL getImplementationName();
+		virtual ::com::sun::star::uno::Sequence< ::rtl::OUString> SAL_CALL getSupportedServiceNames();
 		// need by registration
-		static ::rtl::OUString getImplementationName_Static() throw( ::com::sun::star::uno::RuntimeException );
-		static ::com::sun::star::uno::Sequence< ::rtl::OUString > getSupportedServiceNames_Static(void) throw( ::com::sun::star::uno::RuntimeException );
+		static ::rtl::OUString getImplementationName_Static();
+		static ::com::sun::star::uno::Sequence< ::rtl::OUString > getSupportedServiceNames_Static(void);
 		static ::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >
 				SAL_CALL Create(const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory >&);
 
         // XController
-		virtual ::com::sun::star::uno::Any SAL_CALL getViewData(void) throw( ::com::sun::star::uno::RuntimeException );
-		virtual void SAL_CALL restoreViewData(const ::com::sun::star::uno::Any& Data) throw( ::com::sun::star::uno::RuntimeException );
+		virtual ::com::sun::star::uno::Any SAL_CALL getViewData(void);
+		virtual void SAL_CALL restoreViewData(const ::com::sun::star::uno::Any& Data);
 
 	private:
         virtual void    onLoadedMenu(const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XLayoutManager >& _xLayoutManager);
@@ -211,11 +211,11 @@ namespace dbaui
                                     ::com::sun::star::uno::Any& rOldValue,
 		                            sal_Int32 nHandle,
                                     const ::com::sun::star::uno::Any& rValue
-                                ) throw (::com::sun::star::lang::IllegalArgumentException);
+                                );
         virtual void SAL_CALL setFastPropertyValue_NoBroadcast(
 		                            sal_Int32 nHandle,
 		                            const ::com::sun::star::uno::Any& rValue
-                                ) throw (::com::sun::star::uno::Exception );
+                                );
 	    virtual void SAL_CALL getFastPropertyValue(
 		                            ::com::sun::star::uno::Any& rValue,
 		                            sal_Int32 nHandle
@@ -252,4 +252,3 @@ namespace dbaui
 	};
 }
 #endif // DBAUI_QUERYCONTROLLER_HXX
-

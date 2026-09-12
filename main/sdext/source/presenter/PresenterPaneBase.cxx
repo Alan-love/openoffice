@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -126,10 +126,10 @@ void PresenterPaneBase::disposing (void)
 void PresenterPaneBase::SetTitle (const OUString& rsTitle)
 {
     msTitle = rsTitle;
-    
+
     OSL_ASSERT(mpPresenterController.get()!=NULL);
     OSL_ASSERT(mpPresenterController->GetPaintManager().get()!=NULL);
-    
+
     mpPresenterController->GetPaintManager()->Invalidate(mxBorderWindow);
 }
 
@@ -209,7 +209,6 @@ awt::Point PresenterPaneBase::GetCalloutAnchor (void) const
 //----- XInitialization -------------------------------------------------------
 
 void SAL_CALL PresenterPaneBase::initialize (const Sequence<Any>& rArguments)
-    throw (Exception, RuntimeException)
 {
     ThrowIfDisposed();
 
@@ -249,7 +248,7 @@ void SAL_CALL PresenterPaneBase::initialize (const Sequence<Any>& rArguments)
                     static_cast<XWeak*>(this),
                     2);
             }
-            
+
             if ( ! (rArguments[3] >>= msTitle))
             {
                 throw lang::IllegalArgumentException(
@@ -276,13 +275,13 @@ void SAL_CALL PresenterPaneBase::initialize (const Sequence<Any>& rArguments)
             }
 
             CreateWindows(mxParentWindow, bIsWindowVisibleOnCreation);
-    
+
             if (mxBorderWindow.is())
             {
                 mxBorderWindow->addWindowListener(this);
                 mxBorderWindow->addPaintListener(this);
             }
-            
+
             CreateCanvases(mxParentWindow, xParentCanvas);
 
             // Raise new windows.
@@ -309,7 +308,6 @@ void SAL_CALL PresenterPaneBase::initialize (const Sequence<Any>& rArguments)
 //----- XResourceId -----------------------------------------------------------
 
 Reference<XResourceId> SAL_CALL PresenterPaneBase::getResourceId (void)
-    throw (RuntimeException)
 {
     ThrowIfDisposed();
     return mxPaneId;
@@ -319,7 +317,6 @@ Reference<XResourceId> SAL_CALL PresenterPaneBase::getResourceId (void)
 
 
 sal_Bool SAL_CALL PresenterPaneBase::isAnchorOnly (void)
-    throw (RuntimeException)
 {
     return true;
 }
@@ -330,7 +327,6 @@ sal_Bool SAL_CALL PresenterPaneBase::isAnchorOnly (void)
 //----- XWindowListener -------------------------------------------------------
 
 void SAL_CALL PresenterPaneBase::windowResized (const awt::WindowEvent& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
     ThrowIfDisposed();
@@ -341,7 +337,6 @@ void SAL_CALL PresenterPaneBase::windowResized (const awt::WindowEvent& rEvent)
 
 
 void SAL_CALL PresenterPaneBase::windowMoved (const awt::WindowEvent& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
     ThrowIfDisposed();
@@ -351,7 +346,6 @@ void SAL_CALL PresenterPaneBase::windowMoved (const awt::WindowEvent& rEvent)
 
 
 void SAL_CALL PresenterPaneBase::windowShown (const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
     ThrowIfDisposed();
@@ -361,7 +355,6 @@ void SAL_CALL PresenterPaneBase::windowShown (const lang::EventObject& rEvent)
 
 
 void SAL_CALL PresenterPaneBase::windowHidden (const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     (void)rEvent;
     ThrowIfDisposed();
@@ -373,7 +366,6 @@ void SAL_CALL PresenterPaneBase::windowHidden (const lang::EventObject& rEvent)
 //----- lang::XEventListener --------------------------------------------------
 
 void SAL_CALL PresenterPaneBase::disposing (const lang::EventObject& rEvent)
-    throw (RuntimeException)
 {
     if (rEvent.Source == mxBorderWindow)
     {
@@ -393,7 +385,7 @@ void PresenterPaneBase::CreateWindows (
 {
     if (mxPresenterHelper.is() && rxParentWindow.is())
     {
-        
+
         mxBorderWindow = mxPresenterHelper->createWindow(
             rxParentWindow,
             sal_False,
@@ -478,7 +470,7 @@ void PresenterPaneBase::PaintBorder (const awt::Rectangle& rUpdateBox)
         awt::Rectangle aLocalBorderBox (0,0, aBorderBox.Width, aBorderBox.Height);
 
         PaintBorderBackground(aLocalBorderBox, rUpdateBox);
-        
+
         if (mbHasCallout)
             mxBorderPainter->paintBorderWithCallout(
                 mxPaneId->getResourceURL(),
@@ -537,7 +529,6 @@ bool PresenterPaneBase::IsVisible (void) const
 
 
 void PresenterPaneBase::ThrowIfDisposed (void)
-    throw (::com::sun::star::lang::DisposedException)
 {
 	if (rBHelper.bDisposed || rBHelper.bInDispose)
 	{

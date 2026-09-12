@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -82,8 +82,8 @@ uno::Reference< io::XInputStream > OSeekableInputWrapper::CheckSeekableCanWrap(
 	if ( xSeek.is() )
 		return xInStream;
 
-	uno::Reference< io::XInputStream > xNewStream( 
-			static_cast< io::XInputStream* >( 
+	uno::Reference< io::XInputStream > xNewStream(
+			static_cast< io::XInputStream* >(
 				new OSeekableInputWrapper( xInStream, xFactory ) ) );
     return xNewStream;
 }
@@ -123,10 +123,6 @@ void OSeekableInputWrapper::PrepareCopy_Impl()
 // XInputStream
 //---------------------------------------------------------------------------
 sal_Int32 SAL_CALL OSeekableInputWrapper::readBytes( uno::Sequence< sal_Int8 >& aData, sal_Int32 nBytesToRead )
-	throw ( io::NotConnectedException,
-			io::BufferSizeExceededException,
-			io::IOException,
-			uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 
@@ -140,10 +136,6 @@ sal_Int32 SAL_CALL OSeekableInputWrapper::readBytes( uno::Sequence< sal_Int8 >& 
 
 //---------------------------------------------------------------------------
 sal_Int32 SAL_CALL OSeekableInputWrapper::readSomeBytes( uno::Sequence< sal_Int8 >& aData, sal_Int32 nMaxBytesToRead )
-	throw ( io::NotConnectedException,
-			io::BufferSizeExceededException,
-			io::IOException,
-			uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 
@@ -157,10 +149,6 @@ sal_Int32 SAL_CALL OSeekableInputWrapper::readSomeBytes( uno::Sequence< sal_Int8
 
 //---------------------------------------------------------------------------
 void SAL_CALL OSeekableInputWrapper::skipBytes( sal_Int32 nBytesToSkip )
-	throw ( io::NotConnectedException,
-			io::BufferSizeExceededException,
-			io::IOException,
-			uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 
@@ -174,9 +162,6 @@ void SAL_CALL OSeekableInputWrapper::skipBytes( sal_Int32 nBytesToSkip )
 
 //---------------------------------------------------------------------------
 sal_Int32 SAL_CALL OSeekableInputWrapper::available()
-	throw ( io::NotConnectedException,
-			io::IOException,
-			uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 
@@ -190,9 +175,6 @@ sal_Int32 SAL_CALL OSeekableInputWrapper::available()
 
 //---------------------------------------------------------------------------
 void SAL_CALL OSeekableInputWrapper::closeInput()
-	throw ( io::NotConnectedException,
-			io::IOException,
-			uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 
@@ -215,9 +197,6 @@ void SAL_CALL OSeekableInputWrapper::closeInput()
 // XSeekable
 //---------------------------------------------------------------------------
 void SAL_CALL OSeekableInputWrapper::seek( sal_Int64 location )
-	throw ( lang::IllegalArgumentException,
-			io::IOException,
-			uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 
@@ -231,8 +210,6 @@ void SAL_CALL OSeekableInputWrapper::seek( sal_Int64 location )
 
 //---------------------------------------------------------------------------
 sal_Int64 SAL_CALL OSeekableInputWrapper::getPosition()
-	throw ( io::IOException,
-			uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 
@@ -246,8 +223,6 @@ sal_Int64 SAL_CALL OSeekableInputWrapper::getPosition()
 
 //---------------------------------------------------------------------------
 sal_Int64 SAL_CALL OSeekableInputWrapper::getLength()
-	throw ( io::IOException,
-			uno::RuntimeException )
 {
 	::osl::MutexGuard aGuard( m_aMutex );
 
@@ -260,4 +235,3 @@ sal_Int64 SAL_CALL OSeekableInputWrapper::getLength()
 }
 
 }	// namespace comphelper
-

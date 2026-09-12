@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_connectivity.hxx"
+#include "precompiled_ado.hxx"
 #include "ado/Awrapado.hxx"
 #include "ado/Awrapadox.hxx"
 #include <comphelper/types.hxx>
@@ -476,10 +476,10 @@ WpADOProperties WpADOField::get_Properties()
 	return aProps;
 }
 
- sal_Int32 WpADOField::GetActualSize() const
+sal_IntPtr WpADOField::GetActualSize() const
 {
 	 OSL_ENSURE(pInterface,"Interface is null!");
-	sal_Int32 nActualSize=0;
+	ADO_LONGPTR nActualSize=0;
 	pInterface->get_ActualSize(&nActualSize);
 	return nActualSize;
 }
@@ -500,10 +500,10 @@ sal_Int32 WpADOField::GetStatus() const
 	return eADOSFieldAttributes;
 }
 
-sal_Int32 WpADOField::GetDefinedSize() const
+sal_IntPtr WpADOField::GetDefinedSize() const
 {
 	OSL_ENSURE(pInterface,"Interface is null!");
-	sal_Int32 nDefinedSize=0;
+	ADO_LONGPTR nDefinedSize=0;
 	pInterface->get_DefinedSize(&nDefinedSize);
 	return nDefinedSize;
 }
@@ -629,7 +629,7 @@ OLEVariant WpADOField::GetUnderlyingValue() const
 	pInterface->put_Type(eType);
 }
 
- sal_Bool WpADOField::PutDefinedSize(sal_Int32 _nDefSize)
+ sal_Bool WpADOField::PutDefinedSize(sal_IntPtr _nDefSize)
 {
 	 OSL_ENSURE(pInterface,"Interface is null!");
 	return (SUCCEEDED(pInterface->put_DefinedSize(_nDefSize)));
@@ -770,10 +770,10 @@ void WpADORecordset::Close()
 	return bSupports == VARIANT_TRUE;
 }
 
-PositionEnum WpADORecordset::get_AbsolutePosition()
+ sal_IntPtr WpADORecordset::get_AbsolutePosition()
 {
 	OSL_ENSURE(pInterface,"Interface is null!");
-	PositionEnum aTemp=adPosUnknown;
+	PositionEnum_Param aTemp=adPosUnknown;
 	pInterface->get_AbsolutePosition(&aTemp);
 	return aTemp;
 }
@@ -892,19 +892,19 @@ WpADOProperties WpADORecordset::get_Properties() const
 	return SUCCEEDED(pInterface->NextRecordset(&RecordsAffected,ppiRset));
 }
 
- sal_Bool WpADORecordset::get_RecordCount(sal_Int32 &_nRet) const
+ sal_Bool WpADORecordset::get_RecordCount(sal_IntPtr &_nRet) const
 {
 	 OSL_ENSURE(pInterface,"Interface is null!");
 	return SUCCEEDED(pInterface->get_RecordCount(&_nRet));
 }
 
- sal_Bool WpADORecordset::get_MaxRecords(sal_Int32 &_nRet) const
+ sal_Bool WpADORecordset::get_MaxRecords(sal_IntPtr &_nRet) const
 {
 	 OSL_ENSURE(pInterface,"Interface is null!");
 	return SUCCEEDED(pInterface->get_MaxRecords(&_nRet));
 }
 
- sal_Bool WpADORecordset::put_MaxRecords(sal_Int32 _nRet)
+ sal_Bool WpADORecordset::put_MaxRecords(sal_IntPtr _nRet)
 {
 	 OSL_ENSURE(pInterface,"Interface is null!");
 	return SUCCEEDED(pInterface->put_MaxRecords(_nRet));

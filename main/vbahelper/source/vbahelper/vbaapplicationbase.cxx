@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,20 +7,20 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
- 
+
 #include "vbahelper/vbaapplicationbase.hxx"
 
 #include <com/sun/star/container/XIndexAccess.hpp>
@@ -187,14 +187,14 @@ VbaApplicationBase::~VbaApplicationBase()
 }
 
 sal_Bool SAL_CALL
-VbaApplicationBase::getScreenUpdating() throw (uno::RuntimeException)
+VbaApplicationBase::getScreenUpdating()
 {
 	uno::Reference< frame::XModel > xModel( getCurrentDocument(), uno::UNO_QUERY_THROW );
 	return !xModel->hasControllersLocked();
 }
 
 void SAL_CALL
-VbaApplicationBase::setScreenUpdating(sal_Bool bUpdate) throw (uno::RuntimeException)
+VbaApplicationBase::setScreenUpdating(sal_Bool bUpdate)
 {
 	uno::Reference< frame::XModel > xModel( getCurrentDocument(), uno::UNO_QUERY_THROW );
     // #163808# use helper from module "basic" to lock all documents of this application
@@ -202,7 +202,7 @@ VbaApplicationBase::setScreenUpdating(sal_Bool bUpdate) throw (uno::RuntimeExcep
 }
 
 sal_Bool SAL_CALL
-VbaApplicationBase::getDisplayStatusBar() throw (uno::RuntimeException)
+VbaApplicationBase::getDisplayStatusBar()
 {
 	uno::Reference< frame::XModel > xModel( getCurrentDocument(), uno::UNO_QUERY_THROW );
     uno::Reference< frame::XFrame > xFrame( xModel->getCurrentController()->getFrame(), uno::UNO_QUERY_THROW );
@@ -219,7 +219,7 @@ VbaApplicationBase::getDisplayStatusBar() throw (uno::RuntimeException)
 }
 
 void SAL_CALL
-VbaApplicationBase::setDisplayStatusBar(sal_Bool bDisplayStatusBar) throw (uno::RuntimeException)
+VbaApplicationBase::setDisplayStatusBar(sal_Bool bDisplayStatusBar)
 {
 	uno::Reference< frame::XModel > xModel( getCurrentDocument(), uno::UNO_QUERY_THROW );
     uno::Reference< frame::XFrame > xFrame( xModel->getCurrentController()->getFrame(), uno::UNO_QUERY_THROW );
@@ -235,7 +235,7 @@ VbaApplicationBase::setDisplayStatusBar(sal_Bool bDisplayStatusBar) throw (uno::
                 return;
             }
             else if( !bDisplayStatusBar && xLayoutManager->isElementVisible( url ) ){
-                xLayoutManager->hideElement( url ); 
+                xLayoutManager->hideElement( url );
                 return;
             }
         }
@@ -244,35 +244,33 @@ VbaApplicationBase::setDisplayStatusBar(sal_Bool bDisplayStatusBar) throw (uno::
 }
 
 ::sal_Bool SAL_CALL VbaApplicationBase::getInteractive()
-    throw (uno::RuntimeException)
 {
 	uno::Reference< frame::XModel > xModel( getCurrentDocument(), uno::UNO_QUERY_THROW );
     uno::Reference< frame::XFrame > xFrame( xModel->getCurrentController()->getFrame(), uno::UNO_QUERY_THROW );
     uno::Reference< awt::XWindow2 > xWindow( xFrame->getContainerWindow(), uno::UNO_QUERY_THROW );
- 
+
     return xWindow->isEnabled();
 }
 
 void SAL_CALL VbaApplicationBase::setInteractive( ::sal_Bool bInteractive )
-    throw (uno::RuntimeException)
 {
 	uno::Reference< frame::XModel > xModel( getCurrentDocument(), uno::UNO_QUERY_THROW );
     // #163808# use helper from module "basic" to enable/disable all container windows of all documents of this application
     ::basic::vba::enableContainerWindowsOfAllDocuments( xModel, bInteractive );
 }
 
-sal_Bool SAL_CALL VbaApplicationBase::getVisible() throw (uno::RuntimeException)
+sal_Bool SAL_CALL VbaApplicationBase::getVisible()
 {
     return m_pImpl->mbVisible;    // dummy implementation
 }
 
-void SAL_CALL VbaApplicationBase::setVisible( sal_Bool bVisible ) throw (uno::RuntimeException)
+void SAL_CALL VbaApplicationBase::setVisible( sal_Bool bVisible )
 {
     m_pImpl->mbVisible = bVisible;  // dummy implementation
 }
 
 uno::Any SAL_CALL
-VbaApplicationBase::CommandBars( const uno::Any& aIndex ) throw (uno::RuntimeException)
+VbaApplicationBase::CommandBars( const uno::Any& aIndex )
 {
     uno::Reference< XCommandBars > xCommandBars( new ScVbaCommandBars( this, mxContext, uno::Reference< container::XIndexAccess >(), getCurrentDocument() ) );
     if( aIndex.hasValue() )
@@ -281,12 +279,12 @@ VbaApplicationBase::CommandBars( const uno::Any& aIndex ) throw (uno::RuntimeExc
 }
 
 ::rtl::OUString SAL_CALL
-VbaApplicationBase::getVersion() throw (uno::RuntimeException)
+VbaApplicationBase::getVersion()
 {
 	return rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(OFFICEVERSION));
 }
 
-uno::Any SAL_CALL VbaApplicationBase::Run( const ::rtl::OUString& MacroName, const uno::Any& varg1, const uno::Any& varg2, const uno::Any& varg3, const uno::Any& varg4, const uno::Any& varg5, const uno::Any& varg6, const uno::Any& varg7, const uno::Any& varg8, const uno::Any& varg9, const uno::Any& varg10, const uno::Any& varg11, const uno::Any& varg12, const uno::Any& varg13, const uno::Any& varg14, const uno::Any& varg15, const uno::Any& varg16, const uno::Any& varg17, const uno::Any& varg18, const uno::Any& varg19, const uno::Any& varg20, const uno::Any& varg21, const uno::Any& varg22, const uno::Any& varg23, const uno::Any& varg24, const uno::Any& varg25, const uno::Any& varg26, const uno::Any& varg27, const uno::Any& varg28, const uno::Any& varg29, const uno::Any& varg30 ) throw (uno::RuntimeException)
+uno::Any SAL_CALL VbaApplicationBase::Run( const ::rtl::OUString& MacroName, const uno::Any& varg1, const uno::Any& varg2, const uno::Any& varg3, const uno::Any& varg4, const uno::Any& varg5, const uno::Any& varg6, const uno::Any& varg7, const uno::Any& varg8, const uno::Any& varg9, const uno::Any& varg10, const uno::Any& varg11, const uno::Any& varg12, const uno::Any& varg13, const uno::Any& varg14, const uno::Any& varg15, const uno::Any& varg16, const uno::Any& varg17, const uno::Any& varg18, const uno::Any& varg19, const uno::Any& varg20, const uno::Any& varg21, const uno::Any& varg22, const uno::Any& varg23, const uno::Any& varg24, const uno::Any& varg25, const uno::Any& varg26, const uno::Any& varg27, const uno::Any& varg28, const uno::Any& varg29, const uno::Any& varg30 )
 {
 	::rtl::OUString aMacroName = MacroName.trim();
 	if (0 == aMacroName.indexOf('!'))
@@ -341,7 +339,6 @@ uno::Any SAL_CALL VbaApplicationBase::Run( const ::rtl::OUString& MacroName, con
 }
 
 void SAL_CALL VbaApplicationBase::OnTime( const uno::Any& aEarliestTime, const ::rtl::OUString& aFunction, const uno::Any& aLatestTime, const uno::Any& aSchedule )
-    throw ( uno::RuntimeException )
 {
     if ( !aFunction.getLength() )
         throw uno::RuntimeException( ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Unexpected function name!" ) ), uno::Reference< uno::XInterface >() );
@@ -373,14 +370,14 @@ void SAL_CALL VbaApplicationBase::OnTime( const uno::Any& aEarliestTime, const :
     }
 }
 
-float SAL_CALL VbaApplicationBase::CentimetersToPoints( float _Centimeters ) throw (uno::RuntimeException)
+float SAL_CALL VbaApplicationBase::CentimetersToPoints( float _Centimeters )
 {
     // i cm = 28.35 points
     static const float rate = 28.35f;
     return ( _Centimeters * rate );
 }
 
-uno::Any SAL_CALL VbaApplicationBase::getVBE() throw (uno::RuntimeException)
+uno::Any SAL_CALL VbaApplicationBase::getVBE()
 {
 	try // return empty object on error
 	{
@@ -405,7 +402,7 @@ VbaApplicationBase::getServiceImplName()
 	return sImplName;
 }
 
-uno::Sequence<rtl::OUString> 
+uno::Sequence<rtl::OUString>
 VbaApplicationBase::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > aServiceNames;
@@ -418,13 +415,12 @@ VbaApplicationBase::getServiceNames()
 }
 
 void SAL_CALL VbaApplicationBase::Undo()
-    throw (uno::RuntimeException)
 {
 	uno::Reference< frame::XModel > xModel( getCurrentDocument(), uno::UNO_QUERY_THROW );
 	dispatchRequests( xModel, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( ".uno:Undo" ) ) );
 }
 
-void VbaApplicationBase::Quit() throw (uno::RuntimeException)
+void VbaApplicationBase::Quit()
 {
     // need to stop basic
     SbMethod* pMeth = StarBASIC::GetActiveMethod();
@@ -432,11 +428,10 @@ void VbaApplicationBase::Quit() throw (uno::RuntimeException)
     {
         SbModule* pMod = dynamic_cast< SbModule* >( pMeth->GetParent() );
         if ( pMod )
-        { 
+        {
             StarBASIC* pBasic = dynamic_cast< StarBASIC* >( pMod->GetParent() );
             if ( pBasic )
                 pBasic->QuitAndExitApplication();
         }
     }
 }
-

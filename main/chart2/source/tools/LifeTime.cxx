@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,22 +7,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
-#include "precompiled_chart2.hxx"
+#include "precompiled_charttools.hxx"
 #include "LifeTime.hxx"
 #include "macros.hxx"
 #include <osl/diagnose.h>
@@ -119,7 +119,7 @@ bool LifeTimeManager::impl_isDisposed( bool bAssert )
 }
 
 		sal_Bool LifeTimeManager
-::dispose() throw(uno::RuntimeException)
+::dispose()
 {
 	//hold no mutex
 	{
@@ -141,7 +141,7 @@ bool LifeTimeManager::impl_isDisposed( bool bAssert )
 	//--do the disposing of listeners after calling this method
 	{
 		uno::Reference< lang::XComponent > xComponent =
-			uno::Reference< lang::XComponent >(m_pComponent);;
+			uno::Reference< lang::XComponent >(m_pComponent);
 		if(xComponent.is())
 		{
             // notify XCLoseListeners
@@ -203,7 +203,6 @@ bool CloseableLifeTimeManager::impl_isDisposedOrClosed( bool bAssert )
 
 		sal_Bool CloseableLifeTimeManager
 ::g_close_startTryClose(sal_Bool bDeliverOwnership)
-	throw ( uno::Exception )
 {
 	//no mutex is allowed to be acquired
 	{
@@ -234,12 +233,12 @@ bool CloseableLifeTimeManager::impl_isDisposedOrClosed( bool bAssert )
 	try
 	{
 		uno::Reference< util::XCloseable > xCloseable =
-			uno::Reference< util::XCloseable >(m_pCloseable);;
+			uno::Reference< util::XCloseable >(m_pCloseable);
 		if(xCloseable.is())
 		{
 			//--call queryClosing on all registered close listeners
 			::cppu::OInterfaceContainerHelper* pIC = m_aListenerContainer.getContainer(
-						::getCppuType((const uno::Reference< util::XCloseListener >*)0) );;
+						::getCppuType((const uno::Reference< util::XCloseListener >*)0) );
 			if( pIC )
 			{
 				//lang::EventObject aEvent( static_cast< util::XCloseable*>(xCloseable) );
@@ -281,7 +280,6 @@ bool CloseableLifeTimeManager::impl_isDisposedOrClosed( bool bAssert )
 
 	sal_Bool CloseableLifeTimeManager
 ::g_close_isNeedToCancelLongLastingCalls( sal_Bool bDeliverOwnership, util::CloseVetoException& ex )
-	throw ( util::CloseVetoException )
 {
 	//this method is called when no closelistener has had a veto during queryclosing
 	//the method returns false, if nothing stands against closing anymore
@@ -363,12 +361,12 @@ bool CloseableLifeTimeManager::impl_isDisposedOrClosed( bool bAssert )
 	uno::Reference< util::XCloseable > xCloseable=NULL;
 	try
 	{
-		xCloseable = uno::Reference< util::XCloseable >(m_pCloseable);;
+		xCloseable = uno::Reference< util::XCloseable >(m_pCloseable);
 		if(xCloseable.is())
 		{
 			//--call notifyClosing on all registered close listeners
 			::cppu::OInterfaceContainerHelper* pIC = m_aListenerContainer.getContainer(
-						::getCppuType((const uno::Reference< util::XCloseListener >*)0) );;
+						::getCppuType((const uno::Reference< util::XCloseListener >*)0) );
 			if( pIC )
 			{
 				//lang::EventObject aEvent( static_cast< util::XCloseable*>(xCloseable) );
@@ -403,7 +401,6 @@ bool CloseableLifeTimeManager::impl_isDisposedOrClosed( bool bAssert )
 
 	sal_Bool CloseableLifeTimeManager
 ::g_addCloseListener( const uno::Reference<	util::XCloseListener > & xListener )
-	throw(uno::RuntimeException)
 {
 	osl::Guard< osl::Mutex > aGuard( m_aAccessMutex );
 	//Mutex needs to be acquired exactly ones; will be released inbetween
@@ -450,7 +447,7 @@ bool CloseableLifeTimeManager::impl_isDisposedOrClosed( bool bAssert )
 ::startApiCall(sal_Bool bLongLastingCall)
 {
 	//Mutex needs to be acquired exactly ones; will be released inbetween
-	//mutex is requiered due to constructor of LifeTimeGuard
+	//mutex is required due to constructor of LifeTimeGuard
 
 	OSL_ENSURE( !m_bCallRegistered, "this method is only allowed ones" );
 	if(m_bCallRegistered)

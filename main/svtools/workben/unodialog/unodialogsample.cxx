@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -67,14 +67,14 @@ namespace udlg
         UnoDialogSkeleton( const Reference< XComponentContext >& _rxContext );
 
         // XTypeProvider
-		virtual Sequence< sal_Int8 > SAL_CALL getImplementationId() throw(RuntimeException);
+		virtual Sequence< sal_Int8 > SAL_CALL getImplementationId();
 
 		// XServiceInfo
-		virtual ::rtl::OUString SAL_CALL getImplementationName() throw(RuntimeException);
-        virtual Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames() throw(RuntimeException);
+		virtual ::rtl::OUString SAL_CALL getImplementationName();
+        virtual Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames();
 
 	    // XPropertySet
-	    virtual Reference< XPropertySetInfo >  SAL_CALL getPropertySetInfo() throw(RuntimeException);
+	    virtual Reference< XPropertySetInfo >  SAL_CALL getPropertySetInfo();
 	    virtual ::cppu::IPropertyArrayHelper& SAL_CALL getInfoHelper();
 
 	    // OPropertyArrayUsageHelper
@@ -82,8 +82,8 @@ namespace udlg
 
         // helper for factories
         static Reference< XInterface > SAL_CALL Create( const Reference< XComponentContext >& _rxContext );
-		static ::rtl::OUString SAL_CALL getImplementationName_static() throw(RuntimeException);
-        static Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames_static() throw(RuntimeException);
+		static ::rtl::OUString SAL_CALL getImplementationName_static();
+        static Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames_static();
 
     protected:
         ~UnoDialogSkeleton();
@@ -138,7 +138,7 @@ namespace udlg
     }
 
     //--------------------------------------------------------------------
-    Sequence< sal_Int8 > SAL_CALL UnoDialogSkeleton::getImplementationId() throw(RuntimeException)
+    Sequence< sal_Int8 > SAL_CALL UnoDialogSkeleton::getImplementationId()
     {
         static ::cppu::OImplementationId* pId = NULL;
         if ( !pId )
@@ -152,15 +152,15 @@ namespace udlg
         }
         return pId->getImplementationId();
     }
-    
+
     //--------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL UnoDialogSkeleton::getImplementationName_static() throw(RuntimeException)
+    ::rtl::OUString SAL_CALL UnoDialogSkeleton::getImplementationName_static()
     {
         return ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.comp.svtools.workben.UnoDialogSkeleton" ) );
     }
-    
+
     //--------------------------------------------------------------------
-    Sequence< ::rtl::OUString > SAL_CALL UnoDialogSkeleton::getSupportedServiceNames_static() throw(RuntimeException)
+    Sequence< ::rtl::OUString > SAL_CALL UnoDialogSkeleton::getSupportedServiceNames_static()
     {
         Sequence< ::rtl::OUString > aServices(1);
         aServices[0] = ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.ui.example.UnoDialogSample" ) );
@@ -168,19 +168,19 @@ namespace udlg
     }
 
     //--------------------------------------------------------------------
-    ::rtl::OUString SAL_CALL UnoDialogSkeleton::getImplementationName() throw(RuntimeException)
+    ::rtl::OUString SAL_CALL UnoDialogSkeleton::getImplementationName()
     {
         return getImplementationName_static();
     }
-    
+
     //--------------------------------------------------------------------
-    Sequence< ::rtl::OUString > SAL_CALL UnoDialogSkeleton::getSupportedServiceNames() throw(RuntimeException)
+    Sequence< ::rtl::OUString > SAL_CALL UnoDialogSkeleton::getSupportedServiceNames()
     {
         return getSupportedServiceNames_static();
     }
 
     //--------------------------------------------------------------------
-	Reference< XPropertySetInfo > SAL_CALL UnoDialogSkeleton::getPropertySetInfo() throw(RuntimeException)
+	Reference< XPropertySetInfo > SAL_CALL UnoDialogSkeleton::getPropertySetInfo()
     {
 	    return createPropertySetInfo( getInfoHelper() );
     }

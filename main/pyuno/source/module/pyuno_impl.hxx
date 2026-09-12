@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -46,15 +46,9 @@
 //
 // Local workarounds for compatibility issues
 //
-#if PY_MAJOR_VERSION >= 3
     #define PYSTR_FROMSTR               PyUnicode_FromString
     #define USTR_TO_PYSTR               ustring2PyUnicode
     #define PYSTR_CHECK                 PyUnicode_Check
-#else
-    #define PYSTR_FROMSTR               PyBytes_FromString
-    #define USTR_TO_PYSTR               ustring2PyString
-    #define PYSTR_CHECK                 PyBytes_Check
-#endif
 
 #include <rtl/string.hxx>
 inline void PyErr_SetString( PyObject* pyObj, const rtl::OString& rName) { PyErr_SetString( pyObj, rName.getStr());}
@@ -140,18 +134,14 @@ typedef struct
 } PyUNO;
 
 PyRef ustring2PyUnicode( const rtl::OUString &source );
-PyRef ustring2PyString( const ::rtl::OUString & source );
 rtl::OUString pyString2ustring( PyObject *str );
 
-    
-PyRef AnyToPyObject (const com::sun::star::uno::Any & a, const Runtime &r )
-    throw ( com::sun::star::uno::RuntimeException );
 
-com::sun::star::uno::Any PyObjectToAny (PyObject* o)
-    throw ( com::sun::star::uno::RuntimeException );
+PyRef AnyToPyObject (const com::sun::star::uno::Any & a, const Runtime &r );
 
-void raiseInvocationTargetExceptionWhenNeeded( const Runtime &runtime )
-    throw ( com::sun::star::reflection::InvocationTargetException );
+com::sun::star::uno::Any PyObjectToAny (PyObject* o);
+
+void raiseInvocationTargetExceptionWhenNeeded( const Runtime &runtime );
 
 // bool CheckPyObjectTypes (PyObject* o, Sequence<Type> types);
 // bool CheckPyObjectType (PyObject* o, Type type); //Only check 1 object.
@@ -180,20 +170,15 @@ PyRef getClass( const rtl::OUString & name , const Runtime & runtime );
 PyRef getAnyClass( const Runtime &);
 PyObject *PyUNO_invoke( PyObject *object, const char *name , PyObject *args );
 
-com::sun::star::uno::Any PyEnum2Enum( PyObject *obj )
-    throw ( com::sun::star::uno::RuntimeException );
-sal_Bool PyBool2Bool( PyObject *o, const Runtime & r )
-    throw ( com::sun::star::uno::RuntimeException );
-sal_Unicode PyChar2Unicode( PyObject *o )
-    throw ( com::sun::star::uno::RuntimeException );
-com::sun::star::uno::Type PyType2Type( PyObject * o )
-    throw( com::sun::star::uno::RuntimeException );
+com::sun::star::uno::Any PyEnum2Enum( PyObject *obj );
+sal_Bool PyBool2Bool( PyObject *o, const Runtime & r );
+sal_Unicode PyChar2Unicode( PyObject *o );
+com::sun::star::uno::Type PyType2Type( PyObject * o );
 
 void raisePyExceptionWithAny( const com::sun::star::uno::Any &a );
 const char *typeClassToString( com::sun::star::uno::TypeClass t );
 
-PyRef getObjectFromUnoModule( const Runtime &runtime, const char * object )
-    throw ( com::sun::star::uno::RuntimeException );
+PyRef getObjectFromUnoModule( const Runtime &runtime, const char * object );
 
 sal_Bool isInterfaceClass( const Runtime &, PyObject *obj );
 bool isInstanceOfStructOrException( PyObject *obj);
@@ -228,8 +213,7 @@ public:
     static void del( PyObject *self );
 
     static PyRef create(
-        const com::sun::star::uno::Reference< com::sun::star::uno::XComponentContext > & xContext )
-        throw ( com::sun::star::uno::RuntimeException );
+        const com::sun::star::uno::Reference< com::sun::star::uno::XComponentContext > & xContext );
 };
 
 
@@ -253,40 +237,27 @@ public:
     PyRef getWrappedObject() { return mWrappedObject; }
     com::sun::star::uno::Sequence< com::sun::star::uno::Type > getWrappedTypes() { return mTypes; }
     virtual ~Adapter();
-    
+
     // XInvocation
     virtual com::sun::star::uno::Reference< ::com::sun::star::beans::XIntrospectionAccess >
-           SAL_CALL getIntrospection(  ) throw (::com::sun::star::uno::RuntimeException);
+           SAL_CALL getIntrospection(  );
     virtual ::com::sun::star::uno::Any SAL_CALL invoke(
         const ::rtl::OUString& aFunctionName,
         const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aParams,
         ::com::sun::star::uno::Sequence< sal_Int16 >& aOutParamIndex,
-        ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aOutParam )
-        throw (::com::sun::star::lang::IllegalArgumentException,
-               ::com::sun::star::script::CannotConvertException,
-               ::com::sun::star::reflection::InvocationTargetException,
-               ::com::sun::star::uno::RuntimeException);
+        ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aOutParam );
 
     virtual void SAL_CALL setValue(
         const ::rtl::OUString& aPropertyName,
-        const ::com::sun::star::uno::Any& aValue )
-        throw (::com::sun::star::beans::UnknownPropertyException,
-               ::com::sun::star::script::CannotConvertException,
-               ::com::sun::star::reflection::InvocationTargetException,
-               ::com::sun::star::uno::RuntimeException);
+        const ::com::sun::star::uno::Any& aValue );
 
-    virtual ::com::sun::star::uno::Any SAL_CALL getValue( const ::rtl::OUString& aPropertyName )
-        throw (::com::sun::star::beans::UnknownPropertyException,
-               ::com::sun::star::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL hasMethod( const ::rtl::OUString& aName )
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual sal_Bool SAL_CALL hasProperty( const ::rtl::OUString& aName )
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Any SAL_CALL getValue( const ::rtl::OUString& aPropertyName );
+    virtual sal_Bool SAL_CALL hasMethod( const ::rtl::OUString& aName );
+    virtual sal_Bool SAL_CALL hasProperty( const ::rtl::OUString& aName );
 
     // XUnoTunnel
     virtual sal_Int64 SAL_CALL getSomething(
-        const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier )
-        throw (::com::sun::star::uno::RuntimeException);
+        const ::com::sun::star::uno::Sequence< sal_Int8 >& aIdentifier );
 };
 
 

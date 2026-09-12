@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -80,42 +80,31 @@ public:
     virtual ::com::sun::star::awt::Size getCurrentSizeForReference();
 
     // ____ XComponent ____
-    virtual void SAL_CALL dispose()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual void SAL_CALL dispose();
     virtual void SAL_CALL addEventListener( const ::com::sun::star::uno::Reference<
-                                            ::com::sun::star::lang::XEventListener >& xListener )
-        throw (::com::sun::star::uno::RuntimeException);
+                                            ::com::sun::star::lang::XEventListener >& xListener );
     virtual void SAL_CALL removeEventListener( const ::com::sun::star::uno::Reference<
-                                               ::com::sun::star::lang::XEventListener >& aListener )
-        throw (::com::sun::star::uno::RuntimeException);
+                                               ::com::sun::star::lang::XEventListener >& aListener );
 
     // ____ chart::XAxis ____
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet > SAL_CALL getAxisTitle(  ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet > SAL_CALL getMajorGrid(  ) throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet > SAL_CALL getMinorGrid(  ) throw (::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet > SAL_CALL getAxisTitle(  );
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet > SAL_CALL getMajorGrid(  );
+    virtual ::com::sun::star::uno::Reference< ::com::sun::star::beans::XPropertySet > SAL_CALL getMinorGrid(  );
 
     // ____ XShape ____
-    virtual ::com::sun::star::awt::Point SAL_CALL getPosition()
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL setPosition( const ::com::sun::star::awt::Point& aPosition )
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual ::com::sun::star::awt::Size SAL_CALL getSize()
-        throw (::com::sun::star::uno::RuntimeException);
-    virtual void SAL_CALL setSize( const ::com::sun::star::awt::Size& aSize )
-        throw (::com::sun::star::beans::PropertyVetoException,
-               ::com::sun::star::uno::RuntimeException);
+    virtual ::com::sun::star::awt::Point SAL_CALL getPosition();
+    virtual void SAL_CALL setPosition( const ::com::sun::star::awt::Point& aPosition );
+    virtual ::com::sun::star::awt::Size SAL_CALL getSize();
+    virtual void SAL_CALL setSize( const ::com::sun::star::awt::Size& aSize );
 
     // ____ XShapeDescriptor (base of XShape) ____
-    virtual ::rtl::OUString SAL_CALL getShapeType()
-        throw (::com::sun::star::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getShapeType();
 
     // ____ XNumberFormatsSupplier ____
     virtual ::com::sun::star::uno::Reference<
-                ::com::sun::star::beans::XPropertySet > SAL_CALL getNumberFormatSettings()
-            throw (::com::sun::star::uno::RuntimeException);
+                ::com::sun::star::beans::XPropertySet > SAL_CALL getNumberFormatSettings();
     virtual ::com::sun::star::uno::Reference<
-                ::com::sun::star::util::XNumberFormats > SAL_CALL getNumberFormats()
-            throw (::com::sun::star::uno::RuntimeException);
+                ::com::sun::star::util::XNumberFormats > SAL_CALL getNumberFormats();
 
 protected:
     // ____ WrappedPropertySet ____
@@ -129,7 +118,7 @@ private: //methods
 private: //member
     ::boost::shared_ptr< Chart2ModelContact >   m_spChart2ModelContact;
 	::cppu::OInterfaceContainerHelper           m_aEventListenerContainer;
-    
+
     tAxisType           m_eType;
     ::com::sun::star::uno::Any m_aTemporaryHelpStepValue;
 

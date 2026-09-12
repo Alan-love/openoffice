@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 #ifndef _FRAMEWORK_TITLEHELPER_HXX_
 #define _FRAMEWORK_TITLEHELPER_HXX_
@@ -92,9 +90,9 @@ class FWE_DLLPUBLIC TitleHelper : private ::cppu::BaseMutex
         /** set an outside component which uses this container and must be set
             as source of all broadcasted messages, exceptions.
 
-            It's holded weak only so we do not need any complex dispose sessions.
+            It's held weak only so we do not need any complex dispose sessions.
 
-            Note: Passing NULL as parameter will be alloed. It will reset the internal
+            Note: Passing NULL as parameter will be allowed. It will reset the internal
             member reference only.
 
             @param  xOwner
@@ -103,12 +101,12 @@ class FWE_DLLPUBLIC TitleHelper : private ::cppu::BaseMutex
         void setOwner (const css::uno::Reference< css::uno::XInterface >& xOwner);
 
         //---------------------------------------
-        /** set an outside component which provides the righht string and number for
+        /** set an outside component which provides the right string and number for
             an untitled component.
 
-            It's holded weak only so we do not need any complex dispose sessions.
+            It's held weak only so we do not need any complex dispose sessions.
 
-            Note: Passing NULL as parameter will be alloed. It will reset the internal
+            Note: Passing NULL as parameter will be allowed. It will reset the internal
             member reference only.
 
             @param  xNumbers
@@ -118,43 +116,35 @@ class FWE_DLLPUBLIC TitleHelper : private ::cppu::BaseMutex
 
         //---------------------------------------
         /** @see XTitle */
-        virtual ::rtl::OUString SAL_CALL getTitle()
-            throw (css::uno::RuntimeException);
+        virtual ::rtl::OUString SAL_CALL getTitle();
 
         //---------------------------------------
         /** @see XTitle */
-        virtual void SAL_CALL setTitle(const ::rtl::OUString& sTitle)
-            throw (css::uno::RuntimeException);
+        virtual void SAL_CALL setTitle(const ::rtl::OUString& sTitle);
 
         //---------------------------------------
         /** @see XTitleChangeBroadcaster */
-        virtual void SAL_CALL addTitleChangeListener(const css::uno::Reference< css::frame::XTitleChangeListener >& xListener)
-            throw (css::uno::RuntimeException);
+        virtual void SAL_CALL addTitleChangeListener(const css::uno::Reference< css::frame::XTitleChangeListener >& xListener);
 
         //---------------------------------------
         /** @see XTitleChangeBroadcaster */
-        virtual void SAL_CALL removeTitleChangeListener(const css::uno::Reference< css::frame::XTitleChangeListener >& xListener)
-            throw (css::uno::RuntimeException);
+        virtual void SAL_CALL removeTitleChangeListener(const css::uno::Reference< css::frame::XTitleChangeListener >& xListener);
 
         //---------------------------------------
         /** @see XTitleChangeListener */
-        virtual void SAL_CALL titleChanged(const css::frame::TitleChangedEvent& aEvent)
-            throw (css::uno::RuntimeException);
+        virtual void SAL_CALL titleChanged(const css::frame::TitleChangedEvent& aEvent);
 
         //---------------------------------------
         /** @see css.document.XEventListener */
-        virtual void SAL_CALL notifyEvent(const css::document::EventObject& aEvent)
-            throw (css::uno::RuntimeException);
+        virtual void SAL_CALL notifyEvent(const css::document::EventObject& aEvent);
 
         //---------------------------------------
         /** @see css.lang.XEventListener */
-        virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent)
-            throw (css::uno::RuntimeException);
+        virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent);
 
         //---------------------------------------
         /** @see css.frame.XFrameActionListener */
-        virtual void SAL_CALL frameAction(const css::frame::FrameActionEvent& aEvent)
-            throw(css::uno::RuntimeException);
+        virtual void SAL_CALL frameAction(const css::frame::FrameActionEvent& aEvent);
 
     //-------------------------------------------
     // internal
@@ -222,3 +212,5 @@ class FWE_DLLPUBLIC TitleHelper : private ::cppu::BaseMutex
 } // namespace framework
 
 #endif // _FRAMEWORK_TITLEHELPER_HXX_
+
+/* vim: set noet sw=4 ts=4: */

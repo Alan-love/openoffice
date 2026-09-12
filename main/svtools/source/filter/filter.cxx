@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -122,8 +122,8 @@ protected:
 
 	SvStream& 							mrStm;
 
-    virtual void SAL_CALL				writeBytes( const ::com::sun::star::uno::Sequence< sal_Int8 >& rData ) throw (::com::sun::star::io::NotConnectedException, ::com::sun::star::io::BufferSizeExceededException, ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException) { mrStm.Write( rData.getConstArray(), rData.getLength() ); }
-    virtual void SAL_CALL				flush() throw (::com::sun::star::io::NotConnectedException, ::com::sun::star::io::BufferSizeExceededException, ::com::sun::star::io::IOException, ::com::sun::star::uno::RuntimeException) { mrStm.Flush(); }
+    virtual void SAL_CALL				writeBytes( const ::com::sun::star::uno::Sequence< sal_Int8 >& rData ) { mrStm.Write( rData.getConstArray(), rData.getLength() ); }
+    virtual void SAL_CALL				flush() { mrStm.Flush(); }
     virtual void SAL_CALL				closeOutput() throw() {}
 
 public:
@@ -514,8 +514,32 @@ static sal_Bool ImpPeekGraphicFormat( SvStream& rStream, String& rFormatExtensio
 		bSomethingTested=sal_True;
 
 		i=0;
-		while (i<256 && sFirstBytes[i]<=32)
-			i++;
+
+		// A DXF file may begin with one or more 999 comment groups (each is a
+		// "999" code line followed by a comment value line), e.g. files written
+		// by Pro/ENGINEER. Skip them before looking for the first real group,
+		// otherwise such valid DXF files are rejected as an unknown format
+		// (issue 122565).
+		for (;;)
+		{
+			while (i<256 && sFirstBytes[i]<=32)
+				i++;
+			if ( i+3<256 && sFirstBytes[i]=='9' && sFirstBytes[i+1]=='9' &&
+				 sFirstBytes[i+2]=='9' && sFirstBytes[i+3]<=32 )
+			{
+				// skip the "999" code line and the comment value line after it
+				int nLine;
+				for ( nLine=0; nLine<2 && i<256; nLine++ )
+				{
+					while (i<256 && sFirstBytes[i]!='\n' && sFirstBytes[i]!='\r')
+						i++;
+					while (i<256 && (sFirstBytes[i]=='\n' || sFirstBytes[i]=='\r'))
+						i++;
+				}
+				continue;
+			}
+			break;
+		}
 
 		if (i<256)
 		{
@@ -563,7 +587,7 @@ static sal_Bool ImpPeekGraphicFormat( SvStream& rStream, String& rFormatExtensio
 			rStream.SetNumberFormatInt(NUMBERFORMAT_INT_BIGENDIAN);
 			rStream >> y1 >> x1 >> y2 >> x2;
 			rStream.SetNumberFormatInt(oldNumberFormat); // reset format
-			
+
 			if (x1 > x2 || y1 > y2 || // bad bdbox
 			    (x1 == x2 && y1 == y2) || // 1 pixel picture
 			    x2-x1 > 2048 || y2-y1 > 2048 ) // picture abnormally big
@@ -2044,14 +2068,14 @@ sal_uInt16 GraphicFilter::ExportGraphic( const Graphic& rGraphic, const String& 
 			else if( aFilterName.EqualsIgnoreCaseAscii( EXP_SVG ) )
 			{
                 bool bDone(false);
-               
+
                 // do we have a native SVG RenderGraphic, whose data can be written directly?
                 const SvgDataPtr aSvgDataPtr(rGraphic.getSvgData());
 
                 if(aSvgDataPtr.get() && aSvgDataPtr->getSvgDataArrayLength())
 				{
                     rOStm.Write(aSvgDataPtr->getSvgDataArray().get(), aSvgDataPtr->getSvgDataArrayLength());
-            
+
            			if( rOStm.GetError() )
                     {
                         nStatus = GRFILTER_IOERROR;
@@ -2073,7 +2097,7 @@ sal_uInt16 GraphicFilter::ExportGraphic( const Graphic& rGraphic, const String& 
                         {
                             ::com::sun::star::uno::Reference< ::com::sun::star::xml::sax::XDocumentHandler > xSaxWriter( xMgr->createInstance(
                                 ::rtl::OUString::createFromAscii( "com.sun.star.xml.sax.Writer" ) ), ::com::sun::star::uno::UNO_QUERY );
-							
+
 							com::sun::star::uno::Sequence< com::sun::star::uno::Any > aArguments( 1 );
 							aArguments[ 0 ] <<= aConfigItem.GetFilterData();
                             ::com::sun::star::uno::Reference< ::com::sun::star::svg::XSVGWriter > xSVGWriter( xMgr->createInstanceWithArguments(
@@ -2092,7 +2116,7 @@ sal_uInt16 GraphicFilter::ExportGraphic( const Graphic& rGraphic, const String& 
                                     SvMemoryStream aMemStm( 65535, 65535 );
 
                                     aMemStm.SetCompressMode( COMPRESSMODE_FULL );
-                                    
+
                                     // #119735# just use GetGDIMetaFile, it will create a bufferd version of contained bitmap now automatically
                                     ( (GDIMetaFile&) aGraphic.GetGDIMetaFile() ).Write( aMemStm );
 

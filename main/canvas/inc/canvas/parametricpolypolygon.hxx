@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -48,7 +48,7 @@ namespace canvas
     typedef ::cppu::WeakComponentImplHelper2< ::com::sun::star::rendering::XParametricPolyPolygon2D,
             		   			  		      ::com::sun::star::lang::XServiceInfo > ParametricPolyPolygon_Base;
 
-    class CANVASTOOLS_DLLPUBLIC ParametricPolyPolygon : public ::comphelper::OBaseMutex, 
+    class CANVASTOOLS_DLLPUBLIC ParametricPolyPolygon : public ::comphelper::OBaseMutex,
                                   public ParametricPolyPolygon_Base,
 							      private ::boost::noncopyable
     {
@@ -97,7 +97,7 @@ namespace canvas
         };
 
         static ::com::sun::star::uno::Sequence< ::rtl::OUString > getAvailableServiceNames();
-        static ParametricPolyPolygon* create( 
+        static ParametricPolyPolygon* create(
             const ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XGraphicDevice >& rDevice,
             const ::rtl::OUString& rServiceName,
             const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& rArgs );
@@ -106,61 +106,61 @@ namespace canvas
         virtual void SAL_CALL disposing();
 
         // XParametricPolyPolygon2D
-        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XPolyPolygon2D > SAL_CALL getOutline( double t ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Sequence< double > SAL_CALL getColor( double t ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Sequence< double > SAL_CALL getPointColor( const ::com::sun::star::geometry::RealPoint2D& point ) throw (::com::sun::star::lang::IllegalArgumentException, ::com::sun::star::uno::RuntimeException);
-	    virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XColorSpace > SAL_CALL getColorSpace() throw (::com::sun::star::uno::RuntimeException);
+        virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XPolyPolygon2D > SAL_CALL getOutline( double t );
+        virtual ::com::sun::star::uno::Sequence< double > SAL_CALL getColor( double t );
+        virtual ::com::sun::star::uno::Sequence< double > SAL_CALL getPointColor( const ::com::sun::star::geometry::RealPoint2D& point );
+	    virtual ::com::sun::star::uno::Reference< ::com::sun::star::rendering::XColorSpace > SAL_CALL getColorSpace();
 
         // XServiceInfo
-        virtual ::rtl::OUString SAL_CALL getImplementationName(  ) throw (::com::sun::star::uno::RuntimeException);
-        virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName ) throw (::com::sun::star::uno::RuntimeException);
-        virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  ) throw (::com::sun::star::uno::RuntimeException);
+        virtual ::rtl::OUString SAL_CALL getImplementationName(  );
+        virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName );
+        virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  );
 
         /// Query all defining values of this object atomically
         Values getValues() const;
-        
+
     protected:
         ~ParametricPolyPolygon(); // we're a ref-counted UNO class. _We_ destroy ourselves.
 
     private:
-        static ParametricPolyPolygon* createLinearHorizontalGradient( const ::com::sun::star::uno::Reference< 
-                                                                         ::com::sun::star::rendering::XGraphicDevice >& rDevice,  
-                                                                      const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Sequence< double > >& colors, 
+        static ParametricPolyPolygon* createLinearHorizontalGradient( const ::com::sun::star::uno::Reference<
+                                                                         ::com::sun::star::rendering::XGraphicDevice >& rDevice,
+                                                                      const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Sequence< double > >& colors,
                                                                       const ::com::sun::star::uno::Sequence< double >& stops );
-        static ParametricPolyPolygon* createEllipticalGradient( const ::com::sun::star::uno::Reference< 
-                                                                   ::com::sun::star::rendering::XGraphicDevice >& rDevice,  
+        static ParametricPolyPolygon* createEllipticalGradient( const ::com::sun::star::uno::Reference<
+                                                                   ::com::sun::star::rendering::XGraphicDevice >& rDevice,
                                                                 const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Sequence< double > >& colors,
                                                                 const ::com::sun::star::uno::Sequence< double >& stops,
                                                                 double fAspect );
-        static ParametricPolyPolygon* createRectangularGradient( const ::com::sun::star::uno::Reference< 
-                                                                    ::com::sun::star::rendering::XGraphicDevice >& rDevice,  
+        static ParametricPolyPolygon* createRectangularGradient( const ::com::sun::star::uno::Reference<
+                                                                    ::com::sun::star::rendering::XGraphicDevice >& rDevice,
                                                                  const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Sequence< double > >& colors,
                                                                  const ::com::sun::star::uno::Sequence< double >& stops,
                                                                  double fAspect );
 
         /// Private, because objects can only be created from the static factories
-        ParametricPolyPolygon( const ::com::sun::star::uno::Reference< 
-                               	::com::sun::star::rendering::XGraphicDevice >& 	rDevice,  
+        ParametricPolyPolygon( const ::com::sun::star::uno::Reference<
+                               	::com::sun::star::rendering::XGraphicDevice >& 	rDevice,
                                const ::basegfx::B2DPolygon& 					rGradientPoly,
                                GradientType	  									eType,
                                const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Sequence< double > >& 	colors,
                                const ::com::sun::star::uno::Sequence< double >& 	stops );
-        ParametricPolyPolygon( const ::com::sun::star::uno::Reference< 
-                               	::com::sun::star::rendering::XGraphicDevice >& 	rDevice,  
+        ParametricPolyPolygon( const ::com::sun::star::uno::Reference<
+                               	::com::sun::star::rendering::XGraphicDevice >& 	rDevice,
                                const ::basegfx::B2DPolygon& 					rGradientPoly,
                                GradientType	  									eType,
                                const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Sequence< double > >& 	colors,
                                const ::com::sun::star::uno::Sequence< double >& 	stops,
                                double											nAspectRatio );
-        ParametricPolyPolygon( const ::com::sun::star::uno::Reference< 
+        ParametricPolyPolygon( const ::com::sun::star::uno::Reference<
                                	::com::sun::star::rendering::XGraphicDevice >& 	rDevice,
                                GradientType	  									eType,
                                const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Sequence< double > >& 	colors,
                                const ::com::sun::star::uno::Sequence< double >& 	stops );
 
-    	::com::sun::star::uno::Reference< 
+    	::com::sun::star::uno::Reference<
 	        ::com::sun::star::rendering::XGraphicDevice > 	 mxDevice;
-                                                                      
+
         /// All defining values of this object
         const Values                                         maValues;
     };

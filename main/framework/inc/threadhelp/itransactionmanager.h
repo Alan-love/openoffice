@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -49,7 +49,7 @@ namespace framework{
 					If you whish to implement thread safe classes you should use these feature to protect
 					your code against calls at wrong time. e.g. you are not full initialized but somewhere
 					call an interface method (initialize phase means startup time from creating object till
-					calling specified first method e.g. XInitialization::initialze()!) then you should refuse
+					calling specified first method e.g. XInitialization::initialize()!) then you should refuse
                     this call. The same for closing/disposing the object!
 *//*-*************************************************************************************************************/
 enum EWorkingMode
@@ -114,7 +114,7 @@ enum EExceptionMode
     @descr          How can you use the transaction manager?
                     Use it in combination with an TransactionGuard, which register your transaction in ctor
                     and release in dtor automatically! Follow interface class can be used to make using
-                    of different manager implmentations possible by using same guard.
+                    of different manager implementations possible by using same guard.
 *//*-*************************************************************************************************************/
 class ITransactionManager
 {
@@ -135,8 +135,8 @@ class ITransactionManager
         virtual EWorkingMode getWorkingMode         (                                                ) const = 0;
         virtual void         setWorkingMode         ( EWorkingMode   eMode                           )       = 0;
         virtual sal_Bool     isCallRejected         ( ERejectReason& eReason                         ) const = 0;
-        virtual void         registerTransaction    ( EExceptionMode eMode  , ERejectReason& eReason ) throw( css::uno::RuntimeException, css::lang::DisposedException ) = 0;
-        virtual void         unregisterTransaction  (                                                ) throw( css::uno::RuntimeException, css::lang::DisposedException ) = 0;
+        virtual void         registerTransaction    ( EExceptionMode eMode  , ERejectReason& eReason ) = 0;
+        virtual void         unregisterTransaction  (                                                ) = 0;
 
 };      //  class ITransactionManager
 

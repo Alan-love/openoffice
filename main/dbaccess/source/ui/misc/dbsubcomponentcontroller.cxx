@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -226,7 +226,7 @@ namespace dbaui
     }
 
     //--------------------------------------------------------------------
-    Any SAL_CALL DBSubComponentController::queryInterface(const Type& _rType) throw (RuntimeException)
+    Any SAL_CALL DBSubComponentController::queryInterface(const Type& _rType)
     {
         if ( _rType.equals( XScriptInvocationContext::static_type() ) )
         {
@@ -237,9 +237,9 @@ namespace dbaui
 
         return DBSubComponentController_Base::queryInterface( _rType );
     }
-    
+
     //--------------------------------------------------------------------
-    Sequence< Type > SAL_CALL DBSubComponentController::getTypes(  ) throw (RuntimeException)
+    Sequence< Type > SAL_CALL DBSubComponentController::getTypes(  )
     {
         Sequence< Type > aTypes( DBSubComponentController_Base::getTypes() );
         if ( !m_pImpl->documentHasScriptSupport() )
@@ -255,7 +255,7 @@ namespace dbaui
         }
         return aTypes;
     }
-    
+
 	//--------------------------------------------------------------------
 	void DBSubComponentController::initializeConnection( const Reference< XConnection >& _rxForeignConn )
 	{
@@ -374,14 +374,14 @@ namespace dbaui
 	}
 
 	//--------------------------------------------------------------------
-	void SAL_CALL DBSubComponentController::disposing(const EventObject& _rSource) throw( RuntimeException )
+	void SAL_CALL DBSubComponentController::disposing(const EventObject& _rSource)
 	{
         if ( _rSource.Source == getConnection() )
         {
 		    if (    !m_pImpl->m_bSuspended // when already suspended then we don't have to reconnect
-			    &&	!getBroadcastHelper().bInDispose  
-			    &&	!getBroadcastHelper().bDisposed 
-			    &&	isConnected() 
+			    &&	!getBroadcastHelper().bInDispose
+			    &&	!getBroadcastHelper().bDisposed
+			    &&	isConnected()
 			    )
 		    {
 			    losingConnection();
@@ -429,18 +429,18 @@ namespace dbaui
     }
 
 	//--------------------------------------------------------------------
-	sal_Bool SAL_CALL DBSubComponentController::suspend(sal_Bool bSuspend) throw( RuntimeException )
+	sal_Bool SAL_CALL DBSubComponentController::suspend(sal_Bool bSuspend)
 	{
 		m_pImpl->m_bSuspended = bSuspend;
 		if ( !bSuspend && !isConnected() )
 			reconnect(sal_True);
 
-			
+
 		return sal_True;
 	}
 
     // -----------------------------------------------------------------------------
-    sal_Bool SAL_CALL DBSubComponentController::attachModel( const Reference< XModel > & _rxModel) throw( RuntimeException )
+    sal_Bool SAL_CALL DBSubComponentController::attachModel( const Reference< XModel > & _rxModel)
     {
         if ( !_rxModel.is() )
             return sal_False;
@@ -474,12 +474,12 @@ namespace dbaui
 
 	// -----------------------------------------------------------------------------
 	::rtl::OUString DBSubComponentController::getDataSourceName() const
-	{ 
+	{
 		::rtl::OUString sName;
         Reference< XPropertySet > xDataSourceProps( m_pImpl->m_aDataSource.getDataSourceProps() );
 		if ( xDataSourceProps.is() )
 			xDataSourceProps->getPropertyValue(PROPERTY_NAME) >>= sName;
-		return sName; 
+		return sName;
 	}
 	// -----------------------------------------------------------------------------
 	void DBSubComponentController::connectionLostMessage() const
@@ -491,13 +491,13 @@ namespace dbaui
 			pWin = VCLUnoHelper::GetWindow(xWindow);
 		if ( !pWin )
 			pWin = getView()->Window::GetParent();
-		
+
 		InfoBox(pWin, aMessage).Execute();
 	}
 	// -----------------------------------------------------------------------------
-	const Reference< XConnection >& DBSubComponentController::getConnection() const 
-	{ 
-		return m_pImpl->m_xConnection; 
+	const Reference< XConnection >& DBSubComponentController::getConnection() const
+	{
+		return m_pImpl->m_xConnection;
 	}
 
     // -----------------------------------------------------------------------------
@@ -531,7 +531,7 @@ namespace dbaui
     }
 
 	// -----------------------------------------------------------------------------
-    Reference< XDatabaseMetaData > DBSubComponentController::getMetaData( ) const 
+    Reference< XDatabaseMetaData > DBSubComponentController::getMetaData( ) const
     {
         Reference< XDatabaseMetaData > xMeta;
         try
@@ -578,12 +578,11 @@ namespace dbaui
     // -----------------------------------------------------------------------------
     // XTitle
     ::rtl::OUString SAL_CALL DBSubComponentController::getTitle()
-        throw (RuntimeException)
     {
         ::osl::MutexGuard aGuard( getMutex() );
         if ( m_bExternalTitle )
             return impl_getTitleHelper_throw()->getTitle ();
-        
+
         ::rtl::OUStringBuffer sTitle;
         Reference< XTitle > xTitle(getPrivateModel(),UNO_QUERY);
         if ( xTitle.is() )
@@ -602,7 +601,7 @@ namespace dbaui
     }
 
     // -----------------------------------------------------------------------------
-    Reference< XEmbeddedScripts > SAL_CALL DBSubComponentController::getScriptContainer() throw (RuntimeException)
+    Reference< XEmbeddedScripts > SAL_CALL DBSubComponentController::getScriptContainer()
     {
         ::osl::MutexGuard aGuard( getMutex() );
         if ( !m_pImpl->documentHasScriptSupport() )
@@ -612,28 +611,28 @@ namespace dbaui
     }
 
     // -----------------------------------------------------------------------------
-    void SAL_CALL DBSubComponentController::addModifyListener( const Reference< XModifyListener >& i_Listener ) throw (RuntimeException)
+    void SAL_CALL DBSubComponentController::addModifyListener( const Reference< XModifyListener >& i_Listener )
     {
         ::osl::MutexGuard aGuard( getMutex() );
         m_pImpl->m_aModifyListeners.addInterface( i_Listener );
     }
 
     // -----------------------------------------------------------------------------
-    void SAL_CALL DBSubComponentController::removeModifyListener( const Reference< XModifyListener >& i_Listener ) throw (RuntimeException)
+    void SAL_CALL DBSubComponentController::removeModifyListener( const Reference< XModifyListener >& i_Listener )
     {
         ::osl::MutexGuard aGuard( getMutex() );
         m_pImpl->m_aModifyListeners.removeInterface( i_Listener );
     }
 
     // -----------------------------------------------------------------------------
-    ::sal_Bool SAL_CALL DBSubComponentController::isModified(  ) throw (RuntimeException)
+    ::sal_Bool SAL_CALL DBSubComponentController::isModified(  )
     {
         ::osl::MutexGuard aGuard( getMutex() );
         return impl_isModified();
     }
 
     // -----------------------------------------------------------------------------
-    void SAL_CALL DBSubComponentController::setModified( ::sal_Bool i_bModified ) throw (PropertyVetoException, RuntimeException)
+    void SAL_CALL DBSubComponentController::setModified( ::sal_Bool i_bModified )
     {
         ::osl::ClearableMutexGuard aGuard( getMutex() );
 
@@ -665,4 +664,3 @@ namespace dbaui
 //........................................................................
 }	// namespace dbaui
 //........................................................................
-

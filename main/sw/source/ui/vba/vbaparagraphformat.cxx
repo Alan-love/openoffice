@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -48,100 +48,100 @@ SwVbaParagraphFormat::~SwVbaParagraphFormat()
 {
 }
 
-sal_Int32 SAL_CALL SwVbaParagraphFormat::getAlignment() throw (uno::RuntimeException)
+sal_Int32 SAL_CALL SwVbaParagraphFormat::getAlignment()
 {
     style::ParagraphAdjust aParaAdjust = style::ParagraphAdjust_LEFT;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaAdjust") ) ) >>= aParaAdjust;
     return getMSWordAlignment( aParaAdjust );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setAlignment( sal_Int32 _alignment ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setAlignment( sal_Int32 _alignment )
 {
     style::ParagraphAdjust aParaAdjust = ( style::ParagraphAdjust ) getOOoAlignment( _alignment );
     mxParaProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaAdjust") ), uno::makeAny( aParaAdjust ) );
 }
 
-float SAL_CALL SwVbaParagraphFormat::getFirstLineIndent() throw (uno::RuntimeException)
+float SAL_CALL SwVbaParagraphFormat::getFirstLineIndent()
 {
     sal_Int32 indent = 0;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaFirstLineIndent") ) ) >>= indent;
     return (float)( Millimeter::getInPoints( indent ) );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setFirstLineIndent( float _firstlineindent ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setFirstLineIndent( float _firstlineindent )
 {
     sal_Int32 indent = Millimeter::getInHundredthsOfOneMillimeter( _firstlineindent );
     mxParaProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaFirstLineIndent") ), uno::makeAny( indent ) );
 }
 
-uno::Any SAL_CALL SwVbaParagraphFormat::getKeepTogether() throw (uno::RuntimeException)
+uno::Any SAL_CALL SwVbaParagraphFormat::getKeepTogether()
 {
     sal_Bool bKeep = sal_False;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaKeepTogether") ) ) >>= bKeep;
     return uno::makeAny ( bKeep );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setKeepTogether( const uno::Any& _keeptogether ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setKeepTogether( const uno::Any& _keeptogether )
 {
     sal_Bool bKeep = sal_False;
     if( _keeptogether >>= bKeep )
     {
         mxParaProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaKeepTogether") ), uno::makeAny( bKeep ) );
-    }    
+    }
     else
     {
         DebugHelper::exception( SbERR_BAD_PARAMETER, rtl::OUString() );
     }
 }
 
-uno::Any SAL_CALL SwVbaParagraphFormat::getKeepWithNext() throw (uno::RuntimeException)
+uno::Any SAL_CALL SwVbaParagraphFormat::getKeepWithNext()
 {
     sal_Bool bKeep = sal_False;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaSplit") ) ) >>= bKeep;
     return uno::makeAny ( bKeep );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setKeepWithNext( const uno::Any& _keepwithnext ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setKeepWithNext( const uno::Any& _keepwithnext )
 {
     sal_Bool bKeep = sal_False;
     if( _keepwithnext >>= bKeep )
     {
         mxParaProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaSplit") ), uno::makeAny( bKeep ) );
-    }    
+    }
     else
     {
         DebugHelper::exception( SbERR_BAD_PARAMETER, rtl::OUString() );
     }
 }
 
-uno::Any SAL_CALL SwVbaParagraphFormat::getHyphenation() throw (uno::RuntimeException)
+uno::Any SAL_CALL SwVbaParagraphFormat::getHyphenation()
 {
     sal_Bool bHypn = sal_False;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaIsHyphenation") ) ) >>= bHypn;
     return uno::makeAny ( bHypn );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setHyphenation( const uno::Any& _hyphenation ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setHyphenation( const uno::Any& _hyphenation )
 {
     sal_Bool bHypn = sal_False;
     if( _hyphenation >>= bHypn )
     {
         mxParaProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaIsHyphenation") ), uno::makeAny( bHypn ) );
-    }    
+    }
     else
     {
         DebugHelper::exception( SbERR_BAD_PARAMETER, rtl::OUString() );
     }
 }
 
-float SAL_CALL SwVbaParagraphFormat::getLineSpacing() throw (uno::RuntimeException)
+float SAL_CALL SwVbaParagraphFormat::getLineSpacing()
 {
     style::LineSpacing aLineSpacing;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaLineSpacing") ) ) >>= aLineSpacing;
     return getMSWordLineSpacing( aLineSpacing );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setLineSpacing( float _linespacing ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setLineSpacing( float _linespacing )
 {
     style::LineSpacing aLineSpacing;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaLineSpacing") ) ) >>= aLineSpacing;
@@ -149,40 +149,40 @@ void SAL_CALL SwVbaParagraphFormat::setLineSpacing( float _linespacing ) throw (
     mxParaProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaLineSpacing") ), uno::makeAny( aLineSpacing ) );
 }
 
-sal_Int32 SAL_CALL SwVbaParagraphFormat::getLineSpacingRule() throw (uno::RuntimeException)
+sal_Int32 SAL_CALL SwVbaParagraphFormat::getLineSpacingRule()
 {
     style::LineSpacing aLineSpacing;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaLineSpacing") ) ) >>= aLineSpacing;
     return getMSWordLineSpacingRule( aLineSpacing );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setLineSpacingRule( sal_Int32 _linespacingrule ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setLineSpacingRule( sal_Int32 _linespacingrule )
 {
     style::LineSpacing aLineSpacing = getOOoLineSpacingFromRule( _linespacingrule );
     mxParaProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaLineSpacing") ), uno::makeAny( aLineSpacing ) );
 }
 
-uno::Any SAL_CALL SwVbaParagraphFormat::getNoLineNumber() throw (uno::RuntimeException)
+uno::Any SAL_CALL SwVbaParagraphFormat::getNoLineNumber()
 {
     sal_Bool noLineNum = sal_False;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaLineNumberCount") ) ) >>= noLineNum;
     return uno::makeAny ( noLineNum );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setNoLineNumber( const uno::Any& _nolinenumber ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setNoLineNumber( const uno::Any& _nolinenumber )
 {
     sal_Bool noLineNum = sal_False;
     if( _nolinenumber >>= noLineNum )
     {
         mxParaProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaLineNumberCount") ), uno::makeAny( noLineNum ) );
-    }    
+    }
     else
     {
         DebugHelper::exception( SbERR_BAD_PARAMETER, rtl::OUString() );
     }
 }
 
-sal_Int32 SAL_CALL SwVbaParagraphFormat::getOutlineLevel() throw (uno::RuntimeException)
+sal_Int32 SAL_CALL SwVbaParagraphFormat::getOutlineLevel()
 {
     sal_Int32 nLevel = word::WdOutlineLevel::wdOutlineLevelBodyText;
     rtl::OUString aHeading;
@@ -196,12 +196,12 @@ sal_Int32 SAL_CALL SwVbaParagraphFormat::getOutlineLevel() throw (uno::RuntimeEx
     return nLevel;
 }
 
-void SAL_CALL SwVbaParagraphFormat::setOutlineLevel( sal_Int32 /*_outlinelevel*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setOutlineLevel( sal_Int32 /*_outlinelevel*/ )
 {
     throw uno::RuntimeException( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("Not implemented") ), uno::Reference< uno::XInterface >() );
 }
 
-uno::Any SAL_CALL SwVbaParagraphFormat::getPageBreakBefore() throw (uno::RuntimeException)
+uno::Any SAL_CALL SwVbaParagraphFormat::getPageBreakBefore()
 {
     style::BreakType aBreakType;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("BreakType") ) ) >>= aBreakType;
@@ -209,7 +209,7 @@ uno::Any SAL_CALL SwVbaParagraphFormat::getPageBreakBefore() throw (uno::Runtime
     return uno::makeAny( bBreakBefore );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setPageBreakBefore( const uno::Any& _breakbefore ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setPageBreakBefore( const uno::Any& _breakbefore )
 {
     sal_Bool bBreakBefore = sal_False;
     if( _breakbefore >>= bBreakBefore )
@@ -231,76 +231,76 @@ void SAL_CALL SwVbaParagraphFormat::setPageBreakBefore( const uno::Any& _breakbe
                 aBreakType = style::BreakType_PAGE_AFTER;
         }
         mxParaProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("BreakType") ), uno::makeAny( aBreakType ) );
-    }    
+    }
     else
     {
         DebugHelper::exception( SbERR_BAD_PARAMETER, rtl::OUString() );
     }
 }
 
-float SAL_CALL SwVbaParagraphFormat::getSpaceBefore() throw (uno::RuntimeException)
+float SAL_CALL SwVbaParagraphFormat::getSpaceBefore()
 {
     sal_Int32 nSpace = 0;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaTopMargin") ) ) >>= nSpace;
     return (float)( Millimeter::getInPoints( nSpace ) );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setSpaceBefore( float _space ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setSpaceBefore( float _space )
 {
     sal_Int32 nSpace = Millimeter::getInHundredthsOfOneMillimeter( _space );
     mxParaProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaTopMargin") ), uno::makeAny( nSpace ) );
 }
 
-float SAL_CALL SwVbaParagraphFormat::getSpaceAfter() throw (uno::RuntimeException)
+float SAL_CALL SwVbaParagraphFormat::getSpaceAfter()
 {
     sal_Int32 nSpace = 0;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaBottomMargin") ) ) >>= nSpace;
     return (float)( Millimeter::getInPoints( nSpace ) );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setSpaceAfter( float _space ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setSpaceAfter( float _space )
 {
     sal_Int32 nSpace = Millimeter::getInHundredthsOfOneMillimeter( _space );
     mxParaProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaBottomMargin") ), uno::makeAny( nSpace ) );
 }
 
-float SAL_CALL SwVbaParagraphFormat::getLeftIndent() throw (uno::RuntimeException)
+float SAL_CALL SwVbaParagraphFormat::getLeftIndent()
 {
     sal_Int32 nIndent = 0;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaLeftMargin") ) ) >>= nIndent;
     return (float)( Millimeter::getInPoints( nIndent ) );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setLeftIndent( float _leftindent ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setLeftIndent( float _leftindent )
 {
     sal_Int32 nIndent = Millimeter::getInHundredthsOfOneMillimeter( _leftindent );
     mxParaProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaLeftMargin") ), uno::makeAny( nIndent ) );
 }
 
-float SAL_CALL SwVbaParagraphFormat::getRightIndent() throw (uno::RuntimeException)
+float SAL_CALL SwVbaParagraphFormat::getRightIndent()
 {
     sal_Int32 nIndent = 0;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaRightMargin") ) ) >>= nIndent;
     return (float)( Millimeter::getInPoints( nIndent ) );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setRightIndent( float _rightindent ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setRightIndent( float _rightindent )
 {
     sal_Int32 nIndent = Millimeter::getInHundredthsOfOneMillimeter( _rightindent );
     mxParaProps->setPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("ParaRightMargin") ), uno::makeAny( nIndent ) );
 }
 
-uno::Any SAL_CALL SwVbaParagraphFormat::getTabStops() throw (uno::RuntimeException)
+uno::Any SAL_CALL SwVbaParagraphFormat::getTabStops()
 {
     throw uno::RuntimeException( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("Not implemented") ), uno::Reference< uno::XInterface >() );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setTabStops( const uno::Any& /*_tabstops*/ ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setTabStops( const uno::Any& /*_tabstops*/ )
 {
     throw uno::RuntimeException( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("Not implemented") ), uno::Reference< uno::XInterface >() );
 }
 
-uno::Any SAL_CALL SwVbaParagraphFormat::getWidowControl() throw (uno::RuntimeException)
+uno::Any SAL_CALL SwVbaParagraphFormat::getWidowControl()
 {
     sal_Bool bWidow = sal_False;
     sal_Int8 nWidow = 0;
@@ -313,7 +313,7 @@ uno::Any SAL_CALL SwVbaParagraphFormat::getWidowControl() throw (uno::RuntimeExc
     return uno::makeAny( bWidow );
 }
 
-void SAL_CALL SwVbaParagraphFormat::setWidowControl( const uno::Any& _widowcontrol ) throw (uno::RuntimeException)
+void SAL_CALL SwVbaParagraphFormat::setWidowControl( const uno::Any& _widowcontrol )
 {
     // if we get true, the part of the paragraph on one page has to be
     // at least two lines
@@ -335,7 +335,7 @@ style::LineSpacing SwVbaParagraphFormat::getOOoLineSpacing( float _lineSpace, sa
     style::LineSpacing aLineSpacing;
     if( mode != style::LineSpacingMode::MINIMUM && mode != style::LineSpacingMode::FIX )
     {
-        // special behaviour of word: if the space is set to these values, the rule and 
+        // special behaviour of word: if the space is set to these values, the rule and
         // the height are changed accordingly
         if( _lineSpace == CHARACTER_INDENT_FACTOR )
         {
@@ -475,7 +475,7 @@ sal_Int32 SwVbaParagraphFormat::getMSWordLineSpacingRule( style::LineSpacing& rL
     return wdLineSpacing;
 }
 
-sal_Int16 SwVbaParagraphFormat::getCharHeight() throw (uno::RuntimeException)
+sal_Int16 SwVbaParagraphFormat::getCharHeight()
 {
     float fCharHeight = 0.0;
     mxParaProps->getPropertyValue( rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("CharHeight") ) ) >>= fCharHeight;
@@ -548,14 +548,14 @@ sal_Int32 SwVbaParagraphFormat::getMSWordAlignment( sal_Int32 _alignment )
     return wdAlignment;
 }
 
-rtl::OUString& 
+rtl::OUString&
 SwVbaParagraphFormat::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("SwVbaParagraphFormat") );
 	return sImplName;
 }
 
-uno::Sequence< rtl::OUString > 
+uno::Sequence< rtl::OUString >
 SwVbaParagraphFormat::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > aServiceNames;
@@ -566,4 +566,3 @@ SwVbaParagraphFormat::getServiceNames()
 	}
 	return aServiceNames;
 }
-

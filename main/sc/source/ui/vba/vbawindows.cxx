@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -65,12 +65,12 @@ protected:
 	Components::const_iterator m_it;
 
 public:
-	WindowComponentEnumImpl( const uno::Reference< uno::XComponentContext >& xContext, const Components& components ) throw ( uno::RuntimeException ) :  m_xContext( xContext ), m_components( components )
+	WindowComponentEnumImpl( const uno::Reference< uno::XComponentContext >& xContext, const Components& components ) :  m_xContext( xContext ), m_components( components )
 	{
 		m_it = m_components.begin();
 	}
 
-	WindowComponentEnumImpl( const uno::Reference< uno::XComponentContext >& xContext ) throw ( uno::RuntimeException ) :  m_xContext( xContext )
+	WindowComponentEnumImpl( const uno::Reference< uno::XComponentContext >& xContext ) :  m_xContext( xContext )
 	{
 		uno::Reference< lang::XMultiComponentFactory > xSMgr(
 			m_xContext->getServiceManager(), uno::UNO_QUERY_THROW );
@@ -87,12 +87,12 @@ public:
 		m_it = m_components.begin();
 	}
 	// XEnumeration
-	virtual ::sal_Bool SAL_CALL hasMoreElements(  ) throw (uno::RuntimeException)
+	virtual ::sal_Bool SAL_CALL hasMoreElements(  )
 	{
 		return m_it != m_components.end();
 	}
 
-	virtual uno::Any SAL_CALL nextElement(  ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
+	virtual uno::Any SAL_CALL nextElement(  )
 	{
 		if ( !hasMoreElements() )
 		{
@@ -108,7 +108,7 @@ class WindowEnumImpl : public  WindowComponentEnumImpl
 public:
 	WindowEnumImpl(const uno::Reference< uno::XComponentContext >& xContext, const Components& components, const uno::Any& aApplication ):WindowComponentEnumImpl( xContext, components ), m_aApplication( aApplication ){}
 	WindowEnumImpl( const uno::Reference< uno::XComponentContext >& xContext,  const uno::Any& aApplication ): WindowComponentEnumImpl( xContext ), m_aApplication( aApplication ) {}
-	virtual uno::Any SAL_CALL nextElement(  ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
+	virtual uno::Any SAL_CALL nextElement(  )
 	{
 		return ComponentToWindow( WindowComponentEnumImpl::nextElement(), m_xContext, m_aApplication );
 	}
@@ -149,16 +149,16 @@ public:
 	}
 
 	//XEnumerationAccess
-	virtual uno::Reference< container::XEnumeration > SAL_CALL createEnumeration(  ) throw (uno::RuntimeException)
+	virtual uno::Reference< container::XEnumeration > SAL_CALL createEnumeration(  )
 	{
 		return new WindowComponentEnumImpl( m_xContext, m_windows );
 	}
 	// XIndexAccess
-	virtual ::sal_Int32 SAL_CALL getCount(  ) throw (uno::RuntimeException)
+	virtual ::sal_Int32 SAL_CALL getCount(  )
 	{
 		return m_windows.size();
 	}
-	virtual uno::Any SAL_CALL getByIndex( ::sal_Int32 Index ) throw ( lang::IndexOutOfBoundsException, lang::WrappedTargetException, uno::RuntimeException)
+	virtual uno::Any SAL_CALL getByIndex( ::sal_Int32 Index )
 	{
 		if ( Index < 0
 			|| static_cast< Components::size_type >( Index ) >= m_windows.size() )
@@ -167,18 +167,18 @@ public:
 	}
 
 	//XElementAccess
-	virtual uno::Type SAL_CALL getElementType(  ) throw (uno::RuntimeException)
+	virtual uno::Type SAL_CALL getElementType(  )
 	{
 		return sheet::XSpreadsheetDocument::static_type(0);
 	}
 
-	virtual ::sal_Bool SAL_CALL hasElements(  ) throw (uno::RuntimeException)
+	virtual ::sal_Bool SAL_CALL hasElements(  )
 	{
 		return (m_windows.size() > 0);
 	}
 
 	//XNameAccess
-	virtual uno::Any SAL_CALL getByName( const ::rtl::OUString& aName ) throw (container::NoSuchElementException, lang::WrappedTargetException, uno::RuntimeException)
+	virtual uno::Any SAL_CALL getByName( const ::rtl::OUString& aName )
 	{
 		NameIndexHash::const_iterator it = namesToIndices.find( aName );
 		if ( it == namesToIndices.end() )
@@ -187,7 +187,7 @@ public:
 
 	}
 
-	virtual uno::Sequence< ::rtl::OUString > SAL_CALL getElementNames(  ) throw (uno::RuntimeException)
+	virtual uno::Sequence< ::rtl::OUString > SAL_CALL getElementNames(  )
 	{
 		uno::Sequence< ::rtl::OUString > names( namesToIndices.size() );
 		::rtl::OUString* pString = names.getArray();
@@ -195,11 +195,11 @@ public:
 		NameIndexHash::const_iterator it_end = namesToIndices.end();
 		for ( ; it != it_end; ++it, ++pString )
 			*pString = it->first;
-		return names;	
+		return names;
 	}
 
-	virtual ::sal_Bool SAL_CALL hasByName( const ::rtl::OUString& aName ) throw (uno::RuntimeException) 
-	{ 
+	virtual ::sal_Bool SAL_CALL hasByName( const ::rtl::OUString& aName )
+	{
 		NameIndexHash::const_iterator it = namesToIndices.find( aName );
 		return (it != namesToIndices.end());
 	}
@@ -207,7 +207,7 @@ public:
 };
 
 
-ScVbaWindows::ScVbaWindows( const uno::Reference< ov::XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext > & xContext, const uno::Reference< container::XIndexAccess >& xIndexAccess  ):  ScVbaWindows_BASE( xParent, xContext, xIndexAccess ) 
+ScVbaWindows::ScVbaWindows( const uno::Reference< ov::XHelperInterface >& xParent, const uno::Reference< uno::XComponentContext > & xContext, const uno::Reference< container::XIndexAccess >& xIndexAccess  ):  ScVbaWindows_BASE( xParent, xContext, xIndexAccess )
 {
 }
 
@@ -215,7 +215,7 @@ ScVbaWindows::ScVbaWindows( const uno::Reference< ov::XHelperInterface >& xParen
 {
 }
 uno::Reference< container::XEnumeration >
-ScVbaWindows::createEnumeration() throw (uno::RuntimeException)
+ScVbaWindows::createEnumeration()
 {
 	return new WindowEnumImpl( mxContext, Application() );
 }
@@ -226,28 +226,28 @@ ScVbaWindows::createCollectionObject( const css::uno::Any& aSource )
 	return ComponentToWindow( aSource,  mxContext, Application() );
 }
 
-uno::Type 
-ScVbaWindows::getElementType() throw (uno::RuntimeException)
+uno::Type
+ScVbaWindows::getElementType()
 {
 	return excel::XWindows::static_type(0);
 }
 
 
-void SAL_CALL 
-ScVbaWindows::Arrange( ::sal_Int32 /*ArrangeStyle*/, const uno::Any& /*ActiveWorkbook*/, const uno::Any& /*SyncHorizontal*/, const uno::Any& /*SyncVertical*/ ) throw (uno::RuntimeException)
+void SAL_CALL
+ScVbaWindows::Arrange( ::sal_Int32 /*ArrangeStyle*/, const uno::Any& /*ActiveWorkbook*/, const uno::Any& /*SyncHorizontal*/, const uno::Any& /*SyncVertical*/ )
 {
 	//#TODO #FIXME see what can be done for an implementation here
 }
 
 
-rtl::OUString& 
+rtl::OUString&
 ScVbaWindows::getServiceImplName()
 {
 	static rtl::OUString sImplName( RTL_CONSTASCII_USTRINGPARAM("ScVbaWindows") );
 	return sImplName;
 }
 
-css::uno::Sequence<rtl::OUString> 
+css::uno::Sequence<rtl::OUString>
 ScVbaWindows::getServiceNames()
 {
 	static uno::Sequence< rtl::OUString > sNames;

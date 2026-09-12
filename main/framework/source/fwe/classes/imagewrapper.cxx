@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -64,7 +64,7 @@ Sequence< sal_Int8 > ImageWrapper::GetUnoTunnelId()
 }
 
 // XBitmap
-com::sun::star::awt::Size SAL_CALL ImageWrapper::getSize() throw ( RuntimeException )
+com::sun::star::awt::Size SAL_CALL ImageWrapper::getSize()
 {
 	vos::OGuard	aGuard( Application::GetSolarMutex() );
 
@@ -74,7 +74,7 @@ com::sun::star::awt::Size SAL_CALL ImageWrapper::getSize() throw ( RuntimeExcept
 	return com::sun::star::awt::Size( aBitmapSize.Width(), aBitmapSize.Height() );
 }
 
-Sequence< sal_Int8 > SAL_CALL ImageWrapper::getDIB() throw ( RuntimeException )
+Sequence< sal_Int8 > SAL_CALL ImageWrapper::getDIB()
 {
 	vos::OGuard	aGuard( Application::GetSolarMutex() );
 
@@ -83,7 +83,7 @@ Sequence< sal_Int8 > SAL_CALL ImageWrapper::getDIB() throw ( RuntimeException )
 	return Sequence< sal_Int8 >( (sal_Int8*) aMem.GetData(), aMem.Tell() );
 }
 
-Sequence< sal_Int8 > SAL_CALL ImageWrapper::getMaskDIB() throw ( RuntimeException )
+Sequence< sal_Int8 > SAL_CALL ImageWrapper::getMaskDIB()
 {
 	vos::OGuard	aGuard( Application::GetSolarMutex() );
 	BitmapEx 	aBmpEx( m_aImage.GetBitmapEx() );
@@ -105,7 +105,7 @@ Sequence< sal_Int8 > SAL_CALL ImageWrapper::getMaskDIB() throw ( RuntimeExceptio
 }
 
 // XUnoTunnel
-sal_Int64 SAL_CALL ImageWrapper::getSomething( const Sequence< sal_Int8 >& aIdentifier ) throw ( RuntimeException )
+sal_Int64 SAL_CALL ImageWrapper::getSomething( const Sequence< sal_Int8 >& aIdentifier )
 {
     if ( aIdentifier == impl_getStaticIdentifier() )
         return reinterpret_cast< sal_Int64 >( this );
@@ -114,4 +114,3 @@ sal_Int64 SAL_CALL ImageWrapper::getSomething( const Sequence< sal_Int8 >& aIden
 }
 
 }
-

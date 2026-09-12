@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -62,12 +62,12 @@ public:
     explicit AsyncCallback(css::uno::Reference< css::uno::XComponentContext > const & context);
 
     // ::com::sun::star::lang::XServiceInfo:
-    virtual ::rtl::OUString SAL_CALL getImplementationName() throw (css::uno::RuntimeException);
-    virtual ::sal_Bool SAL_CALL supportsService(const ::rtl::OUString & ServiceName) throw (css::uno::RuntimeException);
-    virtual css::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames() throw (css::uno::RuntimeException);
+    virtual ::rtl::OUString SAL_CALL getImplementationName();
+    virtual ::sal_Bool SAL_CALL supportsService(const ::rtl::OUString & ServiceName);
+    virtual css::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames();
 
     // ::com::sun::star::awt::XRequestCallback:
-    virtual void SAL_CALL addCallback(const css::uno::Reference< css::awt::XCallback > & xCallback, const ::com::sun::star::uno::Any & aData) throw (css::uno::RuntimeException);
+    virtual void SAL_CALL addCallback(const css::uno::Reference< css::awt::XCallback > & xCallback, const ::com::sun::star::uno::Any & aData);
 
 private:
 
@@ -75,13 +75,13 @@ private:
     {
         CallbackData( const css::uno::Reference< css::awt::XCallback >& rCallback, const css::uno::Any& rAny ) :
             xCallback( rCallback ), aData( rAny ) {}
-        
+
         css::uno::Reference< css::awt::XCallback > xCallback;
         css::uno::Any                              aData;
     };
-  
+
     DECL_STATIC_LINK( AsyncCallback, Notify_Impl, CallbackData* );
-    
+
     AsyncCallback(AsyncCallback &); // not defined
     void operator =(AsyncCallback &); // not defined
 
@@ -95,12 +95,12 @@ AsyncCallback::AsyncCallback(css::uno::Reference< css::uno::XComponentContext > 
 {}
 
 // com.sun.star.uno.XServiceInfo:
-::rtl::OUString SAL_CALL AsyncCallback::getImplementationName() throw (css::uno::RuntimeException)
+::rtl::OUString SAL_CALL AsyncCallback::getImplementationName()
 {
     return comp_AsyncCallback::_getImplementationName();
 }
 
-::sal_Bool SAL_CALL AsyncCallback::supportsService(::rtl::OUString const & serviceName) throw (css::uno::RuntimeException)
+::sal_Bool SAL_CALL AsyncCallback::supportsService(::rtl::OUString const & serviceName)
 {
     const css::uno::Sequence< ::rtl::OUString > serviceNames = comp_AsyncCallback::_getSupportedServiceNames();
     for (::sal_Int32 i = 0; i < serviceNames.getLength(); ++i) {
@@ -110,13 +110,13 @@ AsyncCallback::AsyncCallback(css::uno::Reference< css::uno::XComponentContext > 
     return sal_False;
 }
 
-css::uno::Sequence< ::rtl::OUString > SAL_CALL AsyncCallback::getSupportedServiceNames() throw (css::uno::RuntimeException)
+css::uno::Sequence< ::rtl::OUString > SAL_CALL AsyncCallback::getSupportedServiceNames()
 {
     return comp_AsyncCallback::_getSupportedServiceNames();
 }
 
 // ::com::sun::star::awt::XRequestCallback:
-void SAL_CALL AsyncCallback::addCallback(const css::uno::Reference< css::awt::XCallback > & xCallback, const ::com::sun::star::uno::Any & aData) throw (css::uno::RuntimeException)
+void SAL_CALL AsyncCallback::addCallback(const css::uno::Reference< css::awt::XCallback > & xCallback, const ::com::sun::star::uno::Any & aData)
 {
     if ( Application::IsInMain() )
     {
@@ -139,7 +139,7 @@ IMPL_STATIC_LINK_NOINSTANCE( AsyncCallback, Notify_Impl, CallbackData*, pCallbac
     catch ( css::uno::Exception& )
     {
     }
-    
+
     delete pCallbackData;
     return 0;
 }
@@ -166,7 +166,6 @@ css::uno::Sequence< ::rtl::OUString > SAL_CALL _getSupportedServiceNames()
 
 css::uno::Reference< css::uno::XInterface > SAL_CALL _create(
     const css::uno::Reference< css::uno::XComponentContext > & context)
-        SAL_THROW((css::uno::Exception))
 {
     return static_cast< ::cppu::OWeakObject * >(new AsyncCallback(context));
 }

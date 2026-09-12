@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -76,8 +76,8 @@ TextBodyPropertiesContext::TextBodyPropertiesContext( ContextHandler& rParent,
     }
 	sValue = xAttributes->getOptionalValue( XML_bIns );
     if( sValue.getLength() ) {
-	sal_Int32 nBottonInset = ( sValue.getLength() != 0 ? GetCoordinate(  sValue ) : 45720 / 360 );
-	mrTextBodyProp.maPropertyMap[ PROP_TextLowerDistance ] <<= static_cast< sal_Int32 >( nBottonInset );
+	sal_Int32 nBottomInset = ( sValue.getLength() != 0 ? GetCoordinate(  sValue ) : 45720 / 360 );
+	mrTextBodyProp.maPropertyMap[ PROP_TextLowerDistance ] <<= static_cast< sal_Int32 >( nBottomInset );
     }
 
 	// ST_TextAnchoringType
@@ -95,7 +95,7 @@ TextBodyPropertiesContext::TextBodyPropertiesContext( ContextHandler& rParent,
 
     bool bAnchorCenter = aAttribs.getBool( XML_anchorCtr, false );
     if( bAnchorCenter )
-	mrTextBodyProp.maPropertyMap[ PROP_TextHorizontalAdjust ] <<= 
+	mrTextBodyProp.maPropertyMap[ PROP_TextHorizontalAdjust ] <<=
 	    TextHorizontalAdjust_CENTER;
 
 //   bool bCompatLineSpacing = aAttribs.getBool( XML_compatLnSpc, false );
@@ -128,7 +128,7 @@ TextBodyPropertiesContext::TextBodyPropertiesContext( ContextHandler& rParent,
 	<<= WritingMode_TB_RL;
       // workaround for TB_LR as using WritingMode2 doesn't work
     	if( !bAnchorCenter )
-    	    mrTextBodyProp.maPropertyMap[ PROP_TextHorizontalAdjust ] <<= 
+    	    mrTextBodyProp.maPropertyMap[ PROP_TextHorizontalAdjust ] <<=
     		TextHorizontalAdjust_LEFT;
     } else
       mrTextBodyProp.maPropertyMap[ PROP_TextWritingMode ]
@@ -137,13 +137,13 @@ TextBodyPropertiesContext::TextBodyPropertiesContext( ContextHandler& rParent,
 
 // --------------------------------------------------------------------
 
-void TextBodyPropertiesContext::endFastElement( sal_Int32 ) throw (SAXException, RuntimeException)
+void TextBodyPropertiesContext::endFastElement( sal_Int32 )
 {
 }
 
 // --------------------------------------------------------------------
 
-Reference< XFastContextHandler > TextBodyPropertiesContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& /*xAttributes*/) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > TextBodyPropertiesContext::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& /*xAttributes*/)
 {
 	Reference< XFastContextHandler > xRet;
 	switch( aElementToken )
@@ -180,4 +180,3 @@ Reference< XFastContextHandler > TextBodyPropertiesContext::createFastChildConte
 // --------------------------------------------------------------------
 
 } }
-

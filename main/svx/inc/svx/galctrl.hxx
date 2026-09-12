@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,19 +7,17 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
-
-
 
 #ifndef _SVX_GALCTRL_HXX_
 #define _SVX_GALCTRL_HXX_
@@ -33,9 +31,8 @@
 #include <vcl/menu.hxx>
 #include <vcl/edit.hxx>
 #include <vcl/combobox.hxx>
-#include <vcl/sound.hxx>
 #include <svl/slstitm.hxx>
-#include <svtools/transfer.hxx> 
+#include <svtools/transfer.hxx>
 #include <svtools/valueset.hxx>
 #include <svtools/brwbox.hxx>
 #include <svtools/grfmgr.hxx>
@@ -56,37 +53,37 @@ class GalleryBrowser2;
 class SVX_DLLPUBLIC GalleryPreview : public Window, public DropTargetHelper, public DragSourceHelper
 {
 private:
-	
-    GraphicObject		aGraphicObj;
+
+	GraphicObject		aGraphicObj;
 	Rectangle			aPreviewRect;
-    GalleryTheme*       mpTheme;
-						
+	GalleryTheme*		mpTheme;
+
 	SVX_DLLPRIVATE sal_Bool				ImplGetGraphicCenterRect( const Graphic& rGraphic, Rectangle& rResultRect ) const;
-    SVX_DLLPRIVATE void                InitSettings();
-						
+	SVX_DLLPRIVATE void					InitSettings();
+
 	// Window
 	SVX_DLLPRIVATE virtual void 		Paint(const Rectangle& rRect);
 	SVX_DLLPRIVATE virtual void 		MouseButtonDown(const MouseEvent& rMEvt);
 	SVX_DLLPRIVATE virtual void		Command(const CommandEvent& rCEvt);
-	SVX_DLLPRIVATE virtual void	    KeyInput( const KeyEvent& rKEvt );
-    SVX_DLLPRIVATE virtual void        DataChanged( const DataChangedEvent& rDCEvt );
+	SVX_DLLPRIVATE virtual void		KeyInput( const KeyEvent& rKEvt );
+	SVX_DLLPRIVATE virtual void			DataChanged( const DataChangedEvent& rDCEvt );
 
 
 	// DropTargetHelper
 	SVX_DLLPRIVATE virtual sal_Int8	AcceptDrop( const AcceptDropEvent& rEvt );
 	SVX_DLLPRIVATE virtual sal_Int8	ExecuteDrop( const ExecuteDropEvent& rEvt );
 
-    // DragSourceHelper
+	// DragSourceHelper
 	SVX_DLLPRIVATE virtual void		StartDrag( sal_Int8 nAction, const Point& rPosPixel );
 
 						DECL_LINK( MenuSelectHdl, Menu* );
-						
-public:					
-						
+
+public:
+
 						GalleryPreview( GalleryBrowser2* pParent, GalleryTheme* pTheme );
-                        GalleryPreview( Window* pParent, const ResId& rResId  );
+						GalleryPreview( Window* pParent, const ResId& rResId  );
 						~GalleryPreview();
-						
+
 	void				SetGraphic( const Graphic& rGraphic ) { aGraphicObj.SetGraphic( rGraphic ); }
 	bool				SetGraphic( const INetURLObject& );
 	void				PreviewMedia( const INetURLObject& rURL );
@@ -104,22 +101,22 @@ private:
 
 	GalleryTheme*		mpTheme;
 
-    void                InitSettings();
+	void				InitSettings();
 
 	// ValueSet
 	virtual void 		UserDraw( const UserDrawEvent& rUDEvt );
-	
-    // Window
-    virtual void		MouseButtonDown( const MouseEvent& rMEvt );
+
+	// Window
+	virtual void		MouseButtonDown( const MouseEvent& rMEvt );
 	virtual void		Command( const CommandEvent& rCEvt );
-	virtual void	    KeyInput( const KeyEvent& rKEvt );
-    virtual void        DataChanged( const DataChangedEvent& rDCEvt );
+	virtual void		KeyInput( const KeyEvent& rKEvt );
+	virtual void		DataChanged( const DataChangedEvent& rDCEvt );
 
 	// DropTargetHelper
 	virtual sal_Int8	AcceptDrop( const AcceptDropEvent& rEvt );
 	virtual sal_Int8	ExecuteDrop( const ExecuteDropEvent& rEvt );
 
-    // DragSourceHelper
+	// DragSourceHelper
 	virtual void		StartDrag( sal_Int8 nAction, const Point& rPosPixel );
 
 public:
@@ -139,27 +136,27 @@ class GalleryListView : public BrowseBox
 
 private:
 
-	Link                maSelectHdl;
-    GalleryTheme*		mpTheme;
-    sal_uIntPtr               mnCurRow;
-    sal_Bool                mbInit;
+	Link				maSelectHdl;
+	GalleryTheme*		mpTheme;
+	sal_uIntPtr				mnCurRow;
+	sal_Bool				mbInit;
 
-    void                InitSettings();
+	void				InitSettings();
 
 	// BrowseBox
-	virtual sal_Bool        SeekRow( long nRow );
-	virtual void        PaintField( OutputDevice& rDev, const Rectangle& rRect, sal_uInt16 nColumnId ) const;
-	virtual void        DoubleClick( const BrowserMouseEvent& rEvt );
-	virtual void        Select();
-	virtual sal_Int8    AcceptDrop( const BrowserAcceptDropEvent& rEvt );
-	virtual sal_Int8    ExecuteDrop( const BrowserExecuteDropEvent& rEvt );
-	virtual void	    KeyInput( const KeyEvent& rKEvt );
+	virtual sal_Bool		SeekRow( long nRow );
+	virtual void		PaintField( OutputDevice& rDev, const Rectangle& rRect, sal_uInt16 nColumnId ) const;
+	virtual void		DoubleClick( const BrowserMouseEvent& rEvt );
+	virtual void		Select();
+	virtual sal_Int8	AcceptDrop( const BrowserAcceptDropEvent& rEvt );
+	virtual sal_Int8	ExecuteDrop( const BrowserExecuteDropEvent& rEvt );
+	virtual void		KeyInput( const KeyEvent& rKEvt );
 
 	// Window
-    virtual void		Command( const CommandEvent& rCEvt );
-    virtual void        DataChanged( const DataChangedEvent& rDCEvt );
+	virtual void		Command( const CommandEvent& rCEvt );
+	virtual void		DataChanged( const DataChangedEvent& rDCEvt );
 
-    // DragSourceHelper
+	// DragSourceHelper
 	virtual void		StartDrag( sal_Int8 nAction, const Point& rPosPixel );
 
 public:
@@ -167,7 +164,7 @@ public:
 						GalleryListView( GalleryBrowser2* pParent, GalleryTheme* pTheme );
 						~GalleryListView();
 
-    void                SetSelectHdl( const Link& rSelectHdl ) { maSelectHdl = rSelectHdl; }
+	void				SetSelectHdl( const Link& rSelectHdl ) { maSelectHdl = rSelectHdl; }
 
 	/** GetCellText returns the text at the given position
 		@param	_nRow
@@ -179,9 +176,11 @@ public:
 	*/
 	virtual String	GetCellText(long _nRow, sal_uInt16 _nColId) const;
 
-    // from IAccessibleTableProvider
+	// from IAccessibleTableProvider
 	virtual Rectangle GetFieldCharacterBounds(sal_Int32 _nRow,sal_Int32 _nColumnPos,sal_Int32 nIndex);
 	virtual sal_Int32 GetFieldIndexAtPoint(sal_Int32 _nRow,sal_Int32 _nColumnPos,const Point& _rPoint);
 };
 
 #endif // _SVX_GALCTRL_HXX_
+
+/* vim: set noet sw=4 ts=4: */

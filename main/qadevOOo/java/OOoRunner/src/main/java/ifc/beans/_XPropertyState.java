@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -46,7 +46,7 @@ import com.sun.star.uno.UnoRuntime;
 *  <li><code> setPropertyToDefault()</code></li>
 *  <li><code> getPropertyDefault()</code></li>
 * </ul>
-* Test is <b> NOT </b> multithread compilant. <p>
+* Test is <b> NOT </b> multithread compliant. <p>
 * After test completion object environment has to be recreated. <p>
 * <b>Note:</b> object tested must also implement
 * <code>com.sun.star.beans.XPropertySet</code> interface.
@@ -149,12 +149,12 @@ public class _XPropertyState extends MultiMethodTest {
         */
         public void _getPropertyState(){
             boolean result = true ;
-            
+
             String localName = pName;
             if (localName == null) {
                 localName = (propertySetInfo.getProperties()[0]).Name;
-            }            
-            
+            }
+
             try {
                 PropertyState ps = oObj.getPropertyState(localName);
                 if (ps == null) {
@@ -177,12 +177,12 @@ public class _XPropertyState extends MultiMethodTest {
         */
         public void _getPropertyStates(){
             boolean result = true ;
-            
+
             String localName = pName;
             if (localName == null) {
                 localName = (propertySetInfo.getProperties()[0]).Name;
-            }            
-            
+            }
+
             try {
                 PropertyState[] ps = oObj.getPropertyStates
                     (new String[] {localName});
@@ -218,7 +218,7 @@ public class _XPropertyState extends MultiMethodTest {
         */
         public void _setPropertyToDefault(){
             requiredMethod("getPropertyDefault()") ;
-            
+
             if (pName == null) {
                 log.println("all found properties are read only");
                 tRes.tested("setPropertyToDefault()",Status.skipped(true));
@@ -267,4 +267,3 @@ public class _XPropertyState extends MultiMethodTest {
         }
 
  }// EOF _XPropertyState
-

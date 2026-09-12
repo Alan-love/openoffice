@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -52,18 +52,18 @@ namespace comphelper
 
 	protected:
 		/// implements the calculation of the bounding rectangle - still waiting to be overwritten
-		virtual ::com::sun::star::awt::Rectangle SAL_CALL implGetBounds(  ) throw (::com::sun::star::uno::RuntimeException) = 0;
+		virtual ::com::sun::star::awt::Rectangle SAL_CALL implGetBounds(  ) = 0;
 
 	protected:
 		/** non-virtual versions of the methods which can be implemented using <method>implGetBounds</method>
 			note: getLocationOnScreen relies on a valid parent (XAccessibleContext::getParent()->getAccessibleContext()),
 			     which itself implements XAccessibleComponent
 		*/
-		sal_Bool SAL_CALL containsPoint( const ::com::sun::star::awt::Point& aPoint ) throw (::com::sun::star::uno::RuntimeException);
-		::com::sun::star::awt::Point SAL_CALL getLocation(  ) throw (::com::sun::star::uno::RuntimeException);
-		::com::sun::star::awt::Point SAL_CALL getLocationOnScreen(  ) throw (::com::sun::star::uno::RuntimeException);
-		::com::sun::star::awt::Size SAL_CALL getSize(  ) throw (::com::sun::star::uno::RuntimeException);
-		::com::sun::star::awt::Rectangle SAL_CALL getBounds(  ) throw (::com::sun::star::uno::RuntimeException);
+		sal_Bool SAL_CALL containsPoint( const ::com::sun::star::awt::Point& aPoint );
+		::com::sun::star::awt::Point SAL_CALL getLocation(  );
+		::com::sun::star::awt::Point SAL_CALL getLocationOnScreen(  );
+		::com::sun::star::awt::Size SAL_CALL getSize(  );
+		::com::sun::star::awt::Rectangle SAL_CALL getBounds(  );
 	};
 
 	//=====================================================================
@@ -92,11 +92,11 @@ namespace comphelper
 		DECLARE_XTYPEPROVIDER( )
 
 		// XAccessibleComponent - default implementations
-		virtual sal_Bool SAL_CALL containsPoint( const ::com::sun::star::awt::Point& aPoint ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::awt::Point SAL_CALL getLocation(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::awt::Point SAL_CALL getLocationOnScreen(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::awt::Size SAL_CALL getSize(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::awt::Rectangle SAL_CALL getBounds(  ) throw (::com::sun::star::uno::RuntimeException);
+		virtual sal_Bool SAL_CALL containsPoint( const ::com::sun::star::awt::Point& aPoint );
+		virtual ::com::sun::star::awt::Point SAL_CALL getLocation(  );
+		virtual ::com::sun::star::awt::Point SAL_CALL getLocationOnScreen(  );
+		virtual ::com::sun::star::awt::Size SAL_CALL getSize(  );
+		virtual ::com::sun::star::awt::Rectangle SAL_CALL getBounds(  );
 	};
 
 	//=====================================================================
@@ -124,11 +124,11 @@ namespace comphelper
 		DECLARE_XTYPEPROVIDER( )
 
 		// XAccessibleComponent - default implementations
-		virtual sal_Bool SAL_CALL containsPoint( const ::com::sun::star::awt::Point& aPoint ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::awt::Point SAL_CALL getLocation(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::awt::Point SAL_CALL getLocationOnScreen(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::awt::Size SAL_CALL getSize(  ) throw (::com::sun::star::uno::RuntimeException);
-		virtual ::com::sun::star::awt::Rectangle SAL_CALL getBounds(  ) throw (::com::sun::star::uno::RuntimeException);
+		virtual sal_Bool SAL_CALL containsPoint( const ::com::sun::star::awt::Point& aPoint );
+		virtual ::com::sun::star::awt::Point SAL_CALL getLocation(  );
+		virtual ::com::sun::star::awt::Point SAL_CALL getLocationOnScreen(  );
+		virtual ::com::sun::star::awt::Size SAL_CALL getSize(  );
+		virtual ::com::sun::star::awt::Rectangle SAL_CALL getBounds(  );
 	};
 
 //.........................................................................
@@ -136,5 +136,3 @@ namespace comphelper
 //.........................................................................
 
 #endif // COMPHELPER_ACCESSIBLE_COMPONENT_HELPER_HXX
-
-

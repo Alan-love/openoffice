@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 // MARKER(update_precomp.py): autogen include statement, do not remove
@@ -111,7 +111,7 @@ void InsertSubMenuItems( Menu* pSubMenu, sal_uInt16& nItemId, Reference< XIndexC
         AddonsOptions aAddonOptions;
 	    const StyleSettings& rSettings = Application::GetSettings().GetStyleSettings();
 	    sal_Bool bHiContrast = rSettings.GetHighContrastMode();
-        
+
         OUString aSlotURL( RTL_CONSTASCII_USTRINGPARAM( "slot:" ));
 
 		for ( sal_Int32 i = 0; i < xIndexAccess->getCount(); i++ )
@@ -147,7 +147,7 @@ void InsertSubMenuItems( Menu* pSubMenu, sal_uInt16& nItemId, Reference< XIndexC
 							if ( nIndex >= 0 )
 							{
 								// Special code for our menu implementation: some menu items don't have a
-								// command url but uses the item id as a unqiue identifier. These entries
+								// command url but uses the item id as a unique identifier. These entries
 								// got a special url during conversion from menu=>actiontriggercontainer.
 								// Now we have to extract this special url and set the correct item id!!!
 								bSpecialItemId = sal_True;
@@ -207,7 +207,7 @@ void InsertSubMenuItems( Menu* pSubMenu, sal_uInt16& nItemId, Reference< XIndexC
 									}
 									else
 										aImage = Image( aBitmap );
-									
+
                                     if ( !!aImage )
 										pSubMenu->SetItemImage( nNewItemId, aImage );
 								}
@@ -253,7 +253,7 @@ void InsertSubMenuItems( Menu* pSubMenu, sal_uInt16& nItemId, Reference< XIndexC
 // implementation helper ( ActionTrigger => menu )
 // ----------------------------------------------------------------------------
 
-Reference< XPropertySet > CreateActionTrigger( sal_uInt16 nItemId, const Menu* pMenu, const Reference< XIndexContainer >& rActionTriggerContainer ) throw ( RuntimeException )
+Reference< XPropertySet > CreateActionTrigger( sal_uInt16 nItemId, const Menu* pMenu, const Reference< XIndexContainer >& rActionTriggerContainer )
 {
 	Reference< XPropertySet > xPropSet;
 
@@ -301,7 +301,7 @@ Reference< XPropertySet > CreateActionTrigger( sal_uInt16 nItemId, const Menu* p
 	return xPropSet;
 }
 
-Reference< XPropertySet > CreateActionTriggerSeparator( const Reference< XIndexContainer >& rActionTriggerContainer ) throw ( RuntimeException )
+Reference< XPropertySet > CreateActionTriggerSeparator( const Reference< XIndexContainer >& rActionTriggerContainer )
 {
 	Reference< XMultiServiceFactory > xMultiServiceFactory( rActionTriggerContainer, UNO_QUERY );
 	if ( xMultiServiceFactory.is() )
@@ -314,7 +314,7 @@ Reference< XPropertySet > CreateActionTriggerSeparator( const Reference< XIndexC
 	return Reference< XPropertySet >();
 }
 
-Reference< XIndexContainer > CreateActionTriggerContainer( const Reference< XIndexContainer >& rActionTriggerContainer ) throw ( RuntimeException )
+Reference< XIndexContainer > CreateActionTriggerContainer( const Reference< XIndexContainer >& rActionTriggerContainer )
 {
 	Reference< XMultiServiceFactory > xMultiServiceFactory( rActionTriggerContainer, UNO_QUERY );
 	if ( xMultiServiceFactory.is() )
@@ -390,7 +390,7 @@ void ActionTriggerHelper::FillActionTriggerContainerFromMenu(
 	FillActionTriggerContainerWithMenu( pMenu, xActionTriggerContainer );
 }
 
-Reference< XIndexContainer > ActionTriggerHelper::CreateActionTriggerContainerFromMenu( 
+Reference< XIndexContainer > ActionTriggerHelper::CreateActionTriggerContainerFromMenu(
 	// #110897#
 	const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory >& xServiceFactory,
     const Menu* pMenu,

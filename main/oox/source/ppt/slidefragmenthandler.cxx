@@ -1,5 +1,5 @@
 /**************************************************************
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,16 +7,16 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- * 
+ *
  *************************************************************/
 
 
@@ -70,7 +70,7 @@ SlideFragmentHandler::~SlideFragmentHandler() throw()
     mpSlidePersistPtr->getDrawing()->convertAndInsert();
 }
 
-Reference< XFastContextHandler > SlideFragmentHandler::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs ) throw (SAXException, RuntimeException)
+Reference< XFastContextHandler > SlideFragmentHandler::createFastChildContext( sal_Int32 aElementToken, const Reference< XFastAttributeList >& xAttribs )
 {
 	Reference< XFastContextHandler > xRet;
     AttributeList aAttribs( xAttribs );
@@ -86,12 +86,12 @@ Reference< XFastContextHandler > SlideFragmentHandler::createFastChildContext( s
 			aPropMap[ PROP_IsBackgroundObjectsVisible ] = Any( false );
 
 			Reference< XDrawPage > xSlide( mpSlidePersistPtr->getPage() );
-			PropertySet aSlideProp( xSlide );			
+			PropertySet aSlideProp( xSlide );
 			aSlideProp.setProperties( aPropMap );
 		}
 	}
 	case PPT_TOKEN( sldMaster ):		// CT_SlideMaster
-	case PPT_TOKEN( handoutMaster ):	// CT_HandoutMaster	
+	case PPT_TOKEN( handoutMaster ):	// CT_HandoutMaster
 	{
 		OptValue< bool > aShow = aAttribs.getBool( XML_show );
 		if( aShow.has() && !aShow.get() )
@@ -100,7 +100,7 @@ Reference< XFastContextHandler > SlideFragmentHandler::createFastChildContext( s
 			aPropMap[ PROP_Visible ] = Any( false );
 
 			Reference< XDrawPage > xSlide( mpSlidePersistPtr->getPage() );
-			PropertySet aSlideProp( xSlide );			
+			PropertySet aSlideProp( xSlide );
 			aSlideProp.setProperties( aPropMap );
 		}
 	    break;
@@ -162,7 +162,7 @@ Reference< XFastContextHandler > SlideFragmentHandler::createFastChildContext( s
                 mpSlidePersistPtr->setBackgroundProperties( pFillPropertiesPtr );
             }
             xRet.set( new ColorContext( *this, mpSlidePersistPtr->getBackgroundColor() ) );
-                
+
 		}
 		break;
 
@@ -190,7 +190,7 @@ Reference< XFastContextHandler > SlideFragmentHandler::createFastChildContext( s
 	return xRet;
 }
 
-void SAL_CALL SlideFragmentHandler::endDocument(  ) throw (::com::sun::star::xml::sax::SAXException, ::com::sun::star::uno::RuntimeException)
+void SAL_CALL SlideFragmentHandler::endDocument(  )
 {
 	try
 	{
@@ -216,4 +216,3 @@ void SAL_CALL SlideFragmentHandler::endDocument(  ) throw (::com::sun::star::xml
 }
 
 } }
-
